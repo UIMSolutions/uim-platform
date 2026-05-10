@@ -49,7 +49,8 @@ class TriggerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = TriggerId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+
+            auto e = usecase.getTrigger(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Trigger not found"); return; }
             res.writeJsonBody(e.triggerToJson(), 200);
         } catch (Exception e) {
@@ -59,11 +60,12 @@ class TriggerController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             TriggerDTO dto;
             dto.id = TriggerId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.commandId = j.getString("commandId");
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -73,7 +75,7 @@ class TriggerController : PlatformController {
             dto.inputMapping = j.getString("inputMapping");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createTrigger(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -93,7 +95,9 @@ class TriggerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             TriggerDTO dto;
+            dto.tenantId = tenantId;
             dto.id = TriggerId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -102,7 +106,7 @@ class TriggerController : PlatformController {
             dto.filterExpression = j.getString("filterExpression");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateTrigger(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -119,10 +123,11 @@ class TriggerController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = TriggerId(extractIdFromPath(path));
-            auto result = usecase.deleteTrigger(id);
+            
+            auto result = usecase.deleteTrigger(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Trigger deleted");

@@ -39,8 +39,9 @@ class AuditLogController : PlatformController {
 
   private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto j = req.json;
+
       auto r = WriteAuditLogRequest();
       r.tenantId = tenantId;
       r.userId = j.getString("userId");
@@ -62,7 +63,7 @@ class AuditLogController : PlatformController {
 
 
 
-      auto result = writeUsecase.writeLog(r);
+      auto result = writeUsecase.writeAuditLog(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
             .set("id", result.id)
@@ -79,7 +80,7 @@ class AuditLogController : PlatformController {
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto queryReq = AuditLogQueryRequest();
       queryReq.tenantId = tenantId;
 
@@ -97,7 +98,7 @@ class AuditLogController : PlatformController {
       queryReq.limit = 500;
       queryReq.offset = 0;
 
-      auto entries = retrieveUsecase.query(queryReq);
+      auto entries = retrieveUsecase.queryAuditLogs(queryReq);
       auto arr = entries.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -113,7 +114,7 @@ class AuditLogController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto id = AuditLogId(extractIdFromPath(req.requestURI));
       
       if (!retrieveUsecase.existsById(tenantId, id)) {
@@ -121,7 +122,7 @@ class AuditLogController : PlatformController {
         return;
       }
 
-      auto entry = retrieveUsecase.getById(tenantId, id);
+      auto entry = retrieveUsecase.getAuditLog(tenantId, id);
       auto resp = entry.toJson
         .set("message", "Audit log entry retrieved successfully");
 

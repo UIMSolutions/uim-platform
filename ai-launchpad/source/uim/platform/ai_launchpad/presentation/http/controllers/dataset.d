@@ -38,6 +38,7 @@ class DatasetController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       RegisterDatasetRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -46,7 +47,7 @@ class DatasetController : PlatformController {
       r.size = jsonLong(j, "size");
       r.labels = getStrings(j, "labels");
 
-      auto result = usecase.register(r);
+      auto result = usecase.registerDataset(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -68,8 +69,8 @@ class DatasetController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto datasets = scenarioId.isEmpty
-        ? usecase.listByConnection(tenantId, connectionId)
-        : usecase.listByScenario(tenantId, connectionId, scenarioId);
+        ? usecase.listDatasets(tenantId, connectionId)
+        : usecase.listDatasets(tenantId, connectionId, scenarioId);
 
       auto jarr = datasets.map!(ds => ds.toJson).array.toJson;
 
@@ -113,12 +114,13 @@ class DatasetController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchDatasetRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.datasetId = id;
       r.description = j.getString("description");
       r.status = j.getString("status");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchDataset(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Dataset updated successfully");
@@ -141,7 +143,7 @@ class DatasetController : PlatformController {
       auto result = usecase.deleteDataset(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("message", "Dataset removed successfully");
+          .set("message", "Dataset deleted successfully");
 
         res.writeJsonBody(resp, 204);
       } else {

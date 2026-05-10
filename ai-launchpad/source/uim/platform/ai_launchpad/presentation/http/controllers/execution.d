@@ -148,7 +148,8 @@ class ExecutionController : PlatformController {
       foreach (result; results) {
         auto rj = Json.emptyObject
           .set("id", result.id)
-          .set("success", result.success);
+          .set("success", result.success)
+          .set("message", result.success ? "Execution updated" : "Failed to update execution"); 
           
         if (result.error.length > 0)
           rj["error"] = Json(result.error);
@@ -174,7 +175,7 @@ class ExecutionController : PlatformController {
       auto result = usecase.deleteExecution(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("message", "Execution removed successfully");
+          .set("message", "Execution deleted successfully");
 
         res.writeJsonBody(resp, 204);
       } else {

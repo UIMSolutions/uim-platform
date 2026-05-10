@@ -32,7 +32,7 @@ class ConfigurationController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -41,7 +41,7 @@ class ConfigurationController : PlatformController {
       r.scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 
-      auto result = configurations.create(r);
+      auto result = configurations.createConfiguration(tenantId, r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -58,12 +58,13 @@ class ConfigurationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId();
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto configs = scenarioId.isEmpty
-        ? configurations.listByScenario(connectionId, ScenarioId(scenarioId)) : configurations.listByConnection(
-          connectionId);
+        ? configurations.listConfigurations(tenantId, ScenarioId(scenarioId)) : configurations.listConfigurations(
+          tenantId, connectionId);
 
       auto jarr = configs.map!(c => c.toJson).array.toJson;
 
@@ -80,11 +81,11 @@ class ConfigurationController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto c = configurations.getById(connectionId, id);
+      auto c = configurations.getConfiguration(tenantId, connectionId, id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
         return;
@@ -100,11 +101,11 @@ class ConfigurationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = configurations.remove(connectionId, id);
+      auto result = configurations.deleteConfiguration(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Configuration deleted");
@@ -118,28 +119,4 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  private Json serializeConfiguration(Configuration c) {
-    import uim.platform.ai_launchpad.domain.entities.configuration : ParameterBinding, InputArtifactBinding;
-
-    auto params = Json.emptyArray;
-    foreach (p; c.parameters) {
-      params ~= Json.emptyObject
-        .set("key", p.key)
-        .set("value", p.value);
-    }
-
-    auto artifacts = c.inputArtifacts.map!(a => Json.emptyObject
-        .set("key", a.key)
-        .set("artifactId", a.artifactId)).array.toJson;
-
-    return Json.emptyObject
-      .set("id", c.id)
-      .set("connectionId", c.connectionId)
-      .set("scenarioId", c.scenarioId)
-      .set("executableId", c.executableId)
-      .set("name", c.name)
-      .set("parameters", params)
-      .set("inputArtifacts", artifacts)
-      .set("createdAt", Json(c.createdAt));
-  }
 }

@@ -30,12 +30,15 @@ class CatalogController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = catalogs.list();
+            auto tenantId = req.getTenantId();
+
+            auto items = catalogs.listCatalogs(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Catalogs retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -45,10 +48,11 @@ class CatalogController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = CatalogId(extractIdFromPath(path));
-            auto e = catalogs.getById(id);
+
+            auto e = catalogs.getCatalog(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Catalog not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -58,18 +62,19 @@ class CatalogController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             CatalogDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.id = CatalogId(j.getString("id"));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.tags = j.getString("tags");
             dto.version_ = j.getString("version");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = catalogs.create(dto);
+            auto result = catalogs.createCatalog(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -86,17 +91,18 @@ class CatalogController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CatalogDTO dto;
+            dto.tenantId = tenantId;
             dto.catalogId = CatalogId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.tags = j.getString("tags");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = catalogs.update(dto);
+            auto result = catalogs.updateCatalog(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -116,7 +122,8 @@ class CatalogController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CatalogId(extractIdFromPath(path));
-            auto result = catalogs.remove(id);
+
+            auto result = catalogs.deleteCatalog(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

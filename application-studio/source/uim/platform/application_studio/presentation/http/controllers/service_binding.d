@@ -67,9 +67,10 @@ class ServiceBindingController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.devSpaceId = DevSpaceId(j.getString("devSpaceId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -80,7 +81,7 @@ class ServiceBindingController : PlatformController {
             dto.systemAlias = j.getString("systemAlias");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.createServiceBinding(tenantId, dto);
+            auto result = usecase.createServiceBinding(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -107,7 +108,7 @@ class ServiceBindingController : PlatformController {
             dto.serviceUrl = j.getString("serviceUrl");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.updateServiceBinding(tenantId, dto);
+            auto result = usecase.updateServiceBinding(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -128,7 +129,7 @@ class ServiceBindingController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = ServiceBindingId(extractIdFromPath(path));
 
-            auto result = usecase.removeServiceBinding(tenantId, id);
+            auto result = usecase.deleteServiceBinding(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Service binding deleted");

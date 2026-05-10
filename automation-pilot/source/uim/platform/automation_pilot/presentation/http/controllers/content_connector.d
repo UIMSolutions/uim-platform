@@ -30,7 +30,9 @@ class ContentConnectorController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+            
+            auto items = usecase.listContentConnectors(tenantId);
             auto jarr = items.map!(e => e.contentConnectorToJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -45,10 +47,11 @@ class ContentConnectorController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ContentConnectorId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+
+            auto e = usecase.getContentConnector(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Content connector not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -58,11 +61,11 @@ class ContentConnectorController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
             ContentConnectorDTO dto;
             dto.contentConnectorId = ContentConnectorId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.repositoryUrl = j.getString("repositoryUrl");
@@ -70,7 +73,7 @@ class ContentConnectorController : PlatformController {
             dto.path = j.getString("path");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createContentConnector(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -87,7 +90,7 @@ class ContentConnectorController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ContentConnectorDTO dto;
@@ -99,7 +102,7 @@ class ContentConnectorController : PlatformController {
             dto.path = j.getString("path");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateContentConnector(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -116,10 +119,11 @@ class ContentConnectorController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ContentConnectorId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+
+            auto result = usecase.deleteContentConnector(id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

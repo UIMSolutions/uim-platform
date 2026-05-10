@@ -30,13 +30,15 @@ class ExecutionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = executions.list();
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr);
+            auto tenantId = req.getTenantId();
 
+            auto items = executions.listExecutions(tenantId);
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+            auto resp = Json.emptyObject
+                .set("count", items.length)
+                .set("resources", jarr);
+    
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -45,11 +47,15 @@ class ExecutionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ExecutionId(extractIdFromPath(path));
-            auto e = executions.getById(id);
-            if (e.isNull) { writeError(res, 404, "Execution not found"); return; }
+
+            auto e = executions.getExecution(tenantId, id);
+            if (e.isNull) {
+                writeError(res, 404, "Execution not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -58,21 +64,22 @@ class ExecutionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             ExecutionDTO dto;
             dto.executionId = ExecutionId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.commandId = j.getString("commandId");
+            dto.tenantId = tenantId;
+            dto.commandId = CommandId(j.getString("commandId"));
             dto.inputValues = j.getString("inputValues");
-            dto.triggeredBy = j.getString("triggeredBy");
+            dto.triggeredBy = UserId(j.getString("triggeredBy"));
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = executions.create(dto);
+            auto result = executions.createExecution(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Execution created");
+                    .set("id", result.id)
+                    .set("message", "Execution created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -85,16 +92,18 @@ class ExecutionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
+
             ExecutionDTO dto;
+            dto.tenantId = tenantId;
             dto.executionId = ExecutionId(extractIdFromPath(path));
 
-            auto result = executions.update(dto);
+            auto result = executions.updateExecution(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Execution updated");
+                    .set("id", result.id)
+                    .set("message", "Execution updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -107,14 +116,15 @@ class ExecutionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ExecutionId(extractIdFromPath(path));
-            auto result = executions.remove(id);
+
+            auto result = executions.deleteExecution(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Execution deleted");
+                    .set("id", result.id)
+                    .set("message", "Execution deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

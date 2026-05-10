@@ -30,7 +30,9 @@ class CommandInputController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = commandInputs.list();
+            auto tenantId = req.getTenantId();
+            
+            auto items = commandInputs.listCommandInputs(tenantId);
             auto jarr = items.map!(e => e.commandInputToJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -48,7 +50,8 @@ class CommandInputController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CommandInputId(extractIdFromPath(path));
-            auto e = commandInputs.getById(id);
+
+            auto e = commandInputs.getCommandInput(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Input not found"); return; }
             res.writeJsonBody(e.commandInputToJson(), 200);
         } catch (Exception e) {
@@ -60,9 +63,10 @@ class CommandInputController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CommandInputDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.keys = j.getString("keys");
@@ -71,7 +75,7 @@ class CommandInputController : PlatformController {
             dto.commandId = j.getString("commandId");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = commandInputs.create(dto);
+            auto result = commandInputs.createCommandInput(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -92,6 +96,7 @@ class CommandInputController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CommandInputDTO dto;
+            dto.tenantId = tenantId;
             dto.commandInputId = CommandInputId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -99,7 +104,7 @@ class CommandInputController : PlatformController {
             dto.values = j.getString("values");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = commandInputs.update(dto);
+            auto result = commandInputs.updateCommandInput(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -119,7 +124,8 @@ class CommandInputController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CommandInputId(extractIdFromPath(path));
-            auto result = commandInputs.remove(id);
+
+            auto result = commandInputs.deleteCommandInput(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

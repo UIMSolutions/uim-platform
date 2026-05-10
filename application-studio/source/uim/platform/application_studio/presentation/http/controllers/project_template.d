@@ -68,7 +68,7 @@ class ProjectTemplateController : PlatformController {
             auto j = req.json;
             ProjectTemplateDTO dto;
             dto.projectTemplateId = ProjectTemplateId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -78,8 +78,7 @@ class ProjectTemplateController : PlatformController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto tenantId = req.getTenantId;
-            auto result = usecase.createProjectTemplate(tenantId, dto);
+            auto result = usecase.createProjectTemplate(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -99,14 +98,16 @@ class ProjectTemplateController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             ProjectTemplateDTO dto;
+            dto.tenantId = tenantId;
             dto.projectTemplateId = ProjectTemplateId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.updateProjectTemplate(tenantId, dto);
+            auto result = usecase.updateProjectTemplate(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -123,12 +124,10 @@ class ProjectTemplateController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(extractIdFromPath(path));
             auto tenantId = req.getTenantId;
-            auto result = usecase.removeProjectTemplate(tenantId, id);
+            auto result = usecase.deleteProjectTemplate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("message", "Project template deleted");

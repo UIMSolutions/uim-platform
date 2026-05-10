@@ -67,14 +67,15 @@ class DeploymentController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto deployments = scenarioId.isEmpty
-        ? usecase.listByConnection(tenantId, connectionId)
-        : usecase.listByScenario(tenantId, scenarioId, connectionId);
+        ? usecase.listDeployments(tenantId, connectionId)
+        : usecase.listDeployments(tenantId, connectionId, scenarioId);
 
       auto jarr = deployments.map!(d => d.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(deployments.length))
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Deployments retrieved");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -118,7 +119,7 @@ class DeploymentController : PlatformController {
       r.configurationId = j.getString("configurationId");
       r.ttl = j.getInteger("ttl");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchDeployment(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -145,12 +146,13 @@ class DeploymentController : PlatformController {
       r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array.toJson;
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = usecase.bulkDeploymentPatch(r);
+      auto results = usecase.bulkPatchDeployments(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
           .set("id", result.id)
-          .set("success", Json(result.success));
+          .set("success", result.success)
+          .set("message", result.success ? "Deployment updated" : "Failed to update deployment");
 
         if (result.error.length > 0)
           rj = rj.set("error", Json(result.error));
@@ -158,8 +160,8 @@ class DeploymentController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-        .set("results", jarr);
-        
+        .set("results", jarr)
+        .set("message", "Bulk deployment update completed");
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -175,7 +177,7 @@ class DeploymentController : PlatformController {
       auto result = usecase.deleteDeployment(tenantId, connectionId, id);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("message", "Deployment removed successfully"); 
+          .set("message", "Deployment deleted successfully"); 
           
         res.writeJsonBody(resp, 204);
       } else {

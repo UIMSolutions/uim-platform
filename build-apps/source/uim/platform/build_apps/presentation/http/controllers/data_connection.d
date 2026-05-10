@@ -30,7 +30,9 @@ class DataConnectionController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+
+            auto items = usecase.listDataConnections(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
@@ -46,10 +48,11 @@ class DataConnectionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = DataConnectionId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
+            auto dataConnectionId = DataConnectionId(extractIdFromPath(path));
+
+            auto e = usecase.getDataConnection(tenantId, dataConnectionId);
             if (e.isNull) { writeError(res, 404, "Data connection not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
@@ -59,11 +62,13 @@ class DataConnectionController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+            auto dataConnectionId = DataConnectionId(j.getString("id"));
+
             DataConnectionDTO dto;
-            dto.dataConnectionId = DataConnectionId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
+            dto.dataConnectionId = dataConnectionId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -77,7 +82,7 @@ class DataConnectionController : PlatformController {
             dto.destinationName = j.getString("destinationName");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createDataConnection(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -94,18 +99,19 @@ class DataConnectionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataConnectionDTO dto;
             dto.dataConnectionId = DataConnectionId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.baseUrl = j.getString("baseUrl");
             dto.basePath = j.getString("basePath");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateDataConnection(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -122,10 +128,11 @@ class DataConnectionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = DataConnectionId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+            auto dataConnectionId = DataConnectionId(extractIdFromPath(path));
+
+            auto result = usecase.deleteDataConnection(tenantId, dataConnectionId);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Data connection deleted");

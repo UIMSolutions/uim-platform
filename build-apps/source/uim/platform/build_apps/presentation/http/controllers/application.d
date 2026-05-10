@@ -20,7 +20,7 @@ class ApplicationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/build-apps/applications", &handleList);
         router.get("/api/v1/build-apps/applications/*", &handleGet);
         router.post("/api/v1/build-apps/applications", &handleCreate);
@@ -30,13 +30,14 @@ class ApplicationController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId();
+            auto items = usecase.listApplications(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Applications retrieved");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Applications retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -46,11 +47,15 @@ class ApplicationController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = ApplicationId(extractIdFromPath(path));
-            auto e = usecase.getById(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Application not found"); return; }
+
+            auto e = usecase.getApplication(tenantId, id);
+            if (e.isNull) {
+                writeError(res, 404, "Application not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -59,11 +64,11 @@ class ApplicationController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.appType = j.getString("appType");
@@ -76,11 +81,11 @@ class ApplicationController : PlatformController {
             dto.owner = j.getString("owner");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createApplication(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application created");
+                    .set("id", result.id)
+                    .set("message", "Application created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -93,22 +98,25 @@ class ApplicationController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
+            auto applicationId = ApplicationId(extractIdFromPath(path));
             auto j = req.json;
+
             ApplicationDTO dto;
-            dto.applicationId = ApplicationId(extractIdFromPath(path));
+            dto.applicationId = applicationId;
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
             dto.iconUrl = j.getString("iconUrl");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateApplication(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application updated");
+                    .set("id", result.id)
+                    .set("message", "Application updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -121,14 +129,14 @@ class ApplicationController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ApplicationId(extractIdFromPath(path));
-            auto result = usecase.remove(id);
+            auto applicationId = ApplicationId(extractIdFromPath(path));
+            auto result = usecase.deleteApplication(tenantId, applicationId);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Application deleted");
-                  
+                    .set("message", "Application deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

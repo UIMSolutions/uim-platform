@@ -30,7 +30,9 @@ class CommandController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = commands.list();
+            auto tenantId = req.getTenantId();
+
+            auto items = commands.listCommands(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
@@ -45,11 +47,11 @@ class CommandController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = CommandId(extractIdFromPath(path));
-            auto e = commands.getById(id);
+
+            auto e = commands.getCommand(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Command not found");
                 return;
@@ -62,11 +64,12 @@ class CommandController : PlatformController {
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = req.getTenantId();
             auto j = req.json;
+
             CommandDTO dto;
             dto.id = CommandId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.catalogId = CatalogId(j.getString("catalogId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -79,7 +82,7 @@ class CommandController : PlatformController {
             dto.tags = j.getString("tags");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = commands.create(dto);
+            auto result = commands.createCommand(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -96,11 +99,12 @@ class CommandController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
             auto j = req.json;
             CommandDTO dto;
+            dto.tenantId = tenantId;
             dto.commandId = CommandId(extractIdFromPath(path));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -110,7 +114,7 @@ class CommandController : PlatformController {
             dto.timeout = j.getString("timeout");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = commands.update(dto);
+            auto result = commands.updateCommand(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -127,11 +131,11 @@ class CommandController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto id = CommandId(extractIdFromPath(path));
-            auto result = commands.remove(id);
+
+            auto result = commands.deleteCommand(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

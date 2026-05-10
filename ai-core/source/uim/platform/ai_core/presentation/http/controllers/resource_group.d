@@ -57,8 +57,8 @@ class ResourceGroupController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
-      auto groups = groups.list(tenantId);
+      auto tenantId = req.getTenantId();
+      auto groups = groups.listResourceGroups(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (rg; groups) {
@@ -90,10 +90,10 @@ class ResourceGroupController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = req.getTenantId();
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
-      auto rg = groups.getbyId(id);
+      auto rg = groups.getResourceGroup(id);
       if (rg.isNull) {
         writeError(res, 404, "Resource group not found");
         return;
@@ -122,7 +122,7 @@ class ResourceGroupController : PlatformController {
       r.resourceGroupId = id;
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = groups.patch(r);
+      auto result = groups.patchResourceGroup(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("resourceGroupId", result.id)
@@ -142,7 +142,7 @@ class ResourceGroupController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = groups.removeById(id);
+      auto result = groups.deleteResourceGroup(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
