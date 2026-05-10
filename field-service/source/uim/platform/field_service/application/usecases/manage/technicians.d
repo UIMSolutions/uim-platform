@@ -18,29 +18,25 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Technician getById(TechnicianId id) {
+    Technician getTechnician(TenantId tenantId, TechnicianId id) {
         return repo.findById(tenantId, id);
     }
 
-    Technician[] list() {
-        return repo.findAll();
-    }
-
-    Technician[] listByTenant(TenantId tenantId) {
+    Technician[] listTechnicians(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Technician[] listByStatus(TechnicianStatus status) {
-        return repo.findByStatus(status);
+    Technician[] listTechnicians(TenantId tenantId, TechnicianStatus status) {
+        return repo.findByStatus(tenantId, status);
     }
 
-    Technician[] listByRegion(string region) {
-        return repo.findByRegion(region);
+    Technician[] listTechnicians(TenantId tenantId, string region) {
+        return repo.findByRegion(tenantId, region);
     }
 
-    CommandResult create(TechnicianDTO dto) {
+    CommandResult createTechnician(TechnicianDTO dto) {
         Technician t;
-        t.id = dto.id;
+        t.id = dto.technicianId;
         t.tenantId = dto.tenantId;
         t.firstName = dto.firstName;
         t.lastName = dto.lastName;
@@ -61,8 +57,8 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         return CommandResult(true, t.id.value, "");
     }
 
-    CommandResult update(TechnicianDTO dto) {
-        auto existing = repo.findById(dto.id);
+    CommandResult updateTechnician(TechnicianDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.technicianId);
         if (existing.isNull)
             return CommandResult(false, "", "Technician not found");
         if (dto.firstName.length > 0) existing.firstName = dto.firstName;
@@ -74,14 +70,14 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
-    }
+        }
 
-    CommandResult deleteTechnician(TechnicianId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteTechnician(TenantId tenantId, TechnicianId id) {
+        auto technician = repo.findById(tenantId, id);
+        if (technician.isNull)
             return CommandResult(false, "", "Technician not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(technician);
+        return CommandResult(true, technician.id.value, "");
     }
 }

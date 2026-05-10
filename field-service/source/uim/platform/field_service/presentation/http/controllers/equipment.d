@@ -30,8 +30,9 @@ class EquipmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listEquipments(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -48,10 +49,10 @@ class EquipmentController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Equipment not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            auto id = EquipmentId(extractIdFromPath(path));
+            auto equipment = usecase.getEquipment(tenantId, id);
+            if (equipment.isNull) { writeError(res, 404, "Equipment not found"); return; }
+            res.writeJsonBody(equipment.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -62,9 +63,9 @@ class EquipmentController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             EquipmentDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.customerId = j.getString("customerId");
+            dto.equipmentId = EquipmentId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.customerId = CustomerId(j.getString("customerId"))  ;
             dto.serialNumber = j.getString("serialNumber");
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -79,7 +80,7 @@ class EquipmentController : PlatformController {
             dto.measuringPoint = j.getString("measuringPoint");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createEquipment(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -99,8 +100,10 @@ class EquipmentController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             EquipmentDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.equipmentId = EquipmentId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.manufacturer = j.getString("manufacturer");
@@ -110,7 +113,7 @@ class EquipmentController : PlatformController {
             dto.nextServiceDate = j.getString("nextServiceDate");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateEquipment(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -130,7 +133,7 @@ class EquipmentController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = EquipmentId(extractIdFromPath(path));
-            auto result = usecase.deleteEquipment(id);
+            auto result = usecase.deleteEquipment(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Equipment deleted");

@@ -18,29 +18,25 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceCall getById(ServiceCallId id) {
+    ServiceCall getServiceCall(TenantId tenantId, ServiceCallId id) {
         return repo.findById(tenantId, id);
     }
 
-    ServiceCall[] list() {
-        return repo.findAll();
-    }
-
-    ServiceCall[] listByTenant(TenantId tenantId) {
+    ServiceCall[] listServiceCalls(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceCall[] listByStatus(ServiceCallStatus status) {
-        return repo.findByStatus(status);
+    ServiceCall[] listServiceCalls(TenantId tenantId, ServiceCallStatus status) {
+        return repo.findByStatus(tenantId, status);
     }
 
-    ServiceCall[] listByPriority(ServiceCallPriority priority) {
-        return repo.findByPriority(priority);
+    ServiceCall[] listServiceCalls(TenantId tenantId, ServiceCallPriority priority) {
+        return repo.findByPriority(tenantId, priority);
     }
 
-    CommandResult create(ServiceCallDTO dto) {
+    CommandResult createServiceCall(ServiceCallDTO dto) {
         ServiceCall sc;
-        sc.id = dto.id;
+        sc.id = dto.serviceCallId;
         sc.tenantId = dto.tenantId;
         sc.customerId = dto.customerId;
         sc.equipmentId = dto.equipmentId;
@@ -62,8 +58,8 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, sc.id.value, "");
     }
 
-    CommandResult update(ServiceCallDTO dto) {
-        auto existing = repo.findById(dto.id);
+    CommandResult updateServiceCall(ServiceCallDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.serviceCallId);
         if (existing.isNull)
             return CommandResult(false, "", "Service call not found");
         if (dto.subject.length > 0) existing.subject = dto.subject;
@@ -77,7 +73,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceCall(ServiceCallId id) {
+    CommandResult deleteServiceCall(TenantId tenantId, ServiceCallId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Service call not found");

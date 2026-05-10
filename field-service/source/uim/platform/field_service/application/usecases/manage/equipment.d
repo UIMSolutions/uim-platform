@@ -18,30 +18,26 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Equipment getById(EquipmentId id) {
+    Equipment getEquipment(TenantId tenantId, EquipmentId id) {
         return repo.findById(tenantId, id);
     }
 
-    Equipment[] list() {
-        return repo.findAll();
-    }
-
-    Equipment[] listByTenant(TenantId tenantId) {
+    Equipment[] listEquipments(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Equipment[] listByCustomer(CustomerId customerId) {
-        return repo.findByCustomer(customerId);
+    Equipment[] listEquipments(TenantId tenantId, CustomerId customerId) {
+        return repo.findByCustomer(tenantId, customerId);
     }
 
-    Equipment[] listByType(EquipmentType equipmentType) {
-        return repo.findByType(equipmentType);
+    Equipment[] listEquipments(TenantId tenantId, EquipmentType equipmentType) {
+        return repo.findByType(tenantId, equipmentType);
     }
 
-    CommandResult create(EquipmentDTO dto) {
+    CommandResult createEquipment(EquipmentDTO dto) {
         Equipment e;
-        e.id = dto.id;
-        e.tenantId = dto.tenantId;
+        e.initEntity(dto.tenantId, dto.createdBy);
+        e.id = dto.equipmentId;
         e.customerId = dto.customerId;
         e.serialNumber = dto.serialNumber;
         e.name = dto.name;
@@ -54,35 +50,34 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
         e.latitude = dto.latitude;
         e.longitude = dto.longitude;
         e.measuringPoint = dto.measuringPoint;
-        e.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidEquipment(e))
             return CommandResult(false, "", "Invalid equipment data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(EquipmentDTO dto) {
-        auto existing = repo.findById(dto.id);
-        if (existing.isNull)
+    CommandResult updateEquipment(EquipmentDTO dto) {
+        auto equipment = repo.findById(dto.tenantId, dto.equipmentId);
+        if (equipment.isNull)
             return CommandResult(false, "", "Equipment not found");
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.manufacturer.length > 0) existing.manufacturer = dto.manufacturer;
-        if (dto.model.length > 0) existing.model = dto.model;
-        if (dto.locationAddress.length > 0) existing.locationAddress = dto.locationAddress;
-        if (dto.lastServiceDate.length > 0) existing.lastServiceDate = dto.lastServiceDate;
-        if (dto.nextServiceDate.length > 0) existing.nextServiceDate = dto.nextServiceDate;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        if (dto.name.length > 0) equipment.name = dto.name;
+        if (dto.description.length > 0) equipment.description = dto.description;
+        if (dto.manufacturer.length > 0) equipment.manufacturer = dto.manufacturer;
+        if (dto.model.length > 0) equipment.model = dto.model;
+        if (dto.locationAddress.length > 0) equipment.locationAddress = dto.locationAddress;
+        if (dto.lastServiceDate.length > 0) equipment.lastServiceDate = dto.lastServiceDate;
+        if (dto.nextServiceDate.length > 0) equipment.nextServiceDate = dto.nextServiceDate;
+        if (!dto.updatedBy.isNull) equipment.updatedBy = dto.updatedBy;
+        repo.update(equipment);
+        return CommandResult(true, equipment.id.value, "");
     }
 
-    CommandResult deleteEquipment(EquipmentId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteEquipment(TenantId tenantId, EquipmentId id) {
+        auto equipment = repo.findById(tenantId, id);
+        if (equipment.isNull)
             return CommandResult(false, "", "Equipment not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(equipment);
+        return CommandResult(true, equipment.id.value, "");
     }
 }

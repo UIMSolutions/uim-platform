@@ -18,65 +18,68 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Customer getById(CustomerId id) {
+    Customer getCustomer(TenantId tenantId, CustomerId id) {
         return repo.findById(tenantId, id);
     }
 
-    Customer[] list() {
-        return repo.findAll();
-    }
-
-    Customer[] listByTenant(TenantId tenantId) {
+    Customer[] listCustomers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Customer[] listByType(CustomerType customerType) {
-        return repo.findByType(customerType);
+    Customer[] listCustomers(TenantId tenantId, CustomerType customerType) {
+        return repo.findByType(tenantId, customerType);
     }
 
-    CommandResult create(CustomerDTO dto) {
-        Customer c;
-        c.id = dto.id;
-        c.tenantId = dto.tenantId;
-        c.name = dto.name;
-        c.description = dto.description;
-        c.contactPerson = dto.contactPerson;
-        c.email = dto.email;
-        c.phone = dto.phone;
-        c.address = dto.address;
-        c.latitude = dto.latitude;
-        c.longitude = dto.longitude;
-        c.website = dto.website;
-        c.industry = dto.industry;
-        c.accountNumber = dto.accountNumber;
-        c.createdBy = dto.createdBy;
-        if (!FieldServiceValidator.isValidCustomer(c))
+    CommandResult createCustomer(CustomerDTO dto) {
+        Customer customer;
+        customer.initEntity(dto.tenantId, dto.createdBy);
+        customer.id = dto.customerId;
+        customer.name = dto.name;
+        customer.description = dto.description;
+        customer.contactPerson = dto.contactPerson;
+        customer.email = dto.email;
+        customer.phone = dto.phone;
+        customer.address = dto.address;
+        customer.latitude = dto.latitude;
+        customer.longitude = dto.longitude;
+        customer.website = dto.website;
+        customer.industry = dto.industry;
+        customer.accountNumber = dto.accountNumber;
+        if (!FieldServiceValidator.isValidCustomer(customer))
             return CommandResult(false, "", "Invalid customer data");
-        repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        repo.save(customer);
+        return CommandResult(true, customer.id.value, "");
     }
 
-    CommandResult update(CustomerDTO dto) {
-        auto existing = repo.findById(dto.id);
-        if (existing.isNull)
+    CommandResult updateCustomer(CustomerDTO dto) {
+        auto customer = repo.findById(dto.tenantId, dto.customerId);
+        if (customer.isNull)
             return CommandResult(false, "", "Customer not found");
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.contactPerson.length > 0) existing.contactPerson = dto.contactPerson;
-        if (dto.email.length > 0) existing.email = dto.email;
-        if (dto.phone.length > 0) existing.phone = dto.phone;
-        if (dto.address.length > 0) existing.address = dto.address;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+
+        if (dto.name.length > 0)
+            customer.name = dto.name;
+        if (dto.description.length > 0)
+            customer.description = dto.description;
+        if (dto.contactPerson.length > 0)
+            customer.contactPerson = dto.contactPerson;
+        if (dto.email.length > 0)
+            customer.email = dto.email;
+        if (dto.phone.length > 0)
+            customer.phone = dto.phone;
+        if (dto.address.length > 0)
+            customer.address = dto.address;
+        if (!dto.updatedBy.isNull)
+            customer.updatedBy = dto.updatedBy;
+        repo.update(customer);
+        return CommandResult(true, customer.id.value, "");
     }
 
-    CommandResult deleteCustomer(CustomerId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteCustomer(TenantId tenantId, CustomerId id) {
+        auto customer = repo.findById(tenantId, id);
+        if (customer.isNull)
             return CommandResult(false, "", "Customer not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(customer);
+        return CommandResult(true, customer.id.value, "");
     }
 }

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceCallDTO {
-    string id;
+    ServiceCallId serviceCallId;
     TenantId tenantId;
-    string customerId;
-    string equipmentId;
+    CustomerId customerId;
+    EquipmentId equipmentId;
     string subject;
     string description;
     string status;
@@ -40,7 +40,7 @@ struct ServiceCallDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("serviceCallId", serviceCallId)
             .set("tenantId", tenantId)
             .set("customerId", customerId)
             .set("equipmentId", equipmentId)
@@ -69,10 +69,10 @@ struct ServiceCallDTO {
 }
 
 struct ActivityDTO {
-    string id;
+    ActivityId activityId;
     TenantId tenantId;
-    string serviceCallId;
-    string technicianId;
+    ServiceCallId serviceCallId;
+    TechnicianId technicianId;
     string subject;
     string description;
     string activityType;
@@ -95,7 +95,7 @@ struct ActivityDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("activityId", activityId)
             .set("tenantId", tenantId)
             .set("serviceCallId", serviceCallId)
             .set("technicianId", technicianId)
@@ -122,10 +122,10 @@ struct ActivityDTO {
 }
 
 struct AssignmentDTO {
-    string id;
+    AssignmentId assignmentId;
     TenantId tenantId;
-    string activityId;
-    string technicianId;
+    ActivityId activityId;
+    TechnicianId technicianId;
     string status;
     string assignedDate;
     string acceptedDate;
@@ -142,7 +142,7 @@ struct AssignmentDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("assignmentId", assignmentId)
             .set("tenantId", tenantId)
             .set("activityId", activityId)
             .set("technicianId", technicianId)
@@ -163,9 +163,9 @@ struct AssignmentDTO {
 }
 
 struct EquipmentDTO {
-    string id;
+    EquipmentId equipmentId;
     TenantId tenantId;
-    string customerId;
+    CustomerId customerId;
     string serialNumber;
     string name;
     string description;
@@ -188,7 +188,7 @@ struct EquipmentDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("equipmentId", equipmentId)
             .set("tenantId", tenantId)
             .set("customerId", customerId)
             .set("serialNumber", serialNumber)
@@ -214,7 +214,7 @@ struct EquipmentDTO {
 }
 
 struct TechnicianDTO {
-    string id;
+    TechnicianId technicianId;
     TenantId tenantId;
     string firstName;
     string lastName;
@@ -237,7 +237,7 @@ struct TechnicianDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("technicianId", technicianId)
             .set("tenantId", tenantId)
             .set("firstName", firstName)
             .set("lastName", lastName)
@@ -261,7 +261,7 @@ struct TechnicianDTO {
 }
 
 struct CustomerDTO {
-    string id;
+    CustomerId customerId;
     TenantId tenantId;
     string name;
     string description;
@@ -283,7 +283,7 @@ struct CustomerDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("customerId", customerId)
             .set("tenantId", tenantId)
             .set("name", name)
             .set("description", description)
@@ -306,9 +306,9 @@ struct CustomerDTO {
 }
 
 struct SkillDTO {
-    string id;
+    SkillId skillId;
     TenantId tenantId;
-    string technicianId;
+    TechnicianId technicianId;
     string name;
     string description;
     string category;
@@ -324,7 +324,7 @@ struct SkillDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("skillId", skillId)
             .set("tenantId", tenantId)
             .set("technicianId", technicianId)
             .set("name", name)
@@ -343,18 +343,18 @@ struct SkillDTO {
 }
 
 struct SmartformDTO {
-    string id;
+    SmartformId smartformId;
     TenantId tenantId;
-    string serviceCallId;
-    string activityId;
+    ServiceCallId serviceCallId;
+    ActivityId activityId;
     string name;
     string description;
     string formType;
     string status;
     string templateId;
-    string submittedBy;
+    UserId submittedBy;
     string submittedDate;
-    string approvedBy;
+    UserId approvedBy;
     string approvedDate;
     string formData;
     string safetyLabel;
@@ -366,7 +366,7 @@ struct SmartformDTO {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id", id)
+            .set("smartformId", smartformId)
             .set("tenantId", tenantId)
             .set("serviceCallId", serviceCallId)
             .set("activityId", activityId)

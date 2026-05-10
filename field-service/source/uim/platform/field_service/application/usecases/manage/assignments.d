@@ -18,63 +18,59 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Assignment getById(AssignmentId id) {
+    Assignment getAssignment(TenantId tenantId, AssignmentId id) {
         return repo.findById(tenantId, id);
     }
 
-    Assignment[] list() {
-        return repo.findAll();
-    }
-
-    Assignment[] listByTenant(TenantId tenantId) {
+    Assignment[] listAssignments(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Assignment[] listByActivity(ActivityId activityId) {
-        return repo.findByActivity(activityId);
+    Assignment[] listAssignments(TenantId tenantId, ActivityId activityId) {
+        return repo.findByActivity(tenantId, activityId);
     }
 
-    Assignment[] listByTechnician(TechnicianId technicianId) {
-        return repo.findByTechnician(technicianId);
+    Assignment[] listAssignments(TenantId tenantId, TechnicianId technicianId) {
+        return repo.findByTechnician(tenantId, technicianId);
     }
 
-    CommandResult create(AssignmentDTO dto) {
-        Assignment a;
-        a.id = dto.id;
-        a.tenantId = dto.tenantId;
-        a.activityId = dto.activityId;
-        a.technicianId = dto.technicianId;
-        a.assignedDate = dto.assignedDate;
-        a.schedulingPolicy = dto.schedulingPolicy;
-        a.matchScore = dto.matchScore;
-        a.notes = dto.notes;
-        a.createdBy = dto.createdBy;
-        if (!FieldServiceValidator.isValidAssignment(a))
+    CommandResult createAssignment(AssignmentDTO dto) {
+        Assignment assignment;
+        assignment.initEntity(dto.tenantId, dto.createdBy);
+        assignment.id = dto.assignmentId;
+        assignment.activityId = dto.activityId;
+        assignment.technicianId = dto.technicianId;
+        assignment.assignedDate = dto.assignedDate;
+        assignment.schedulingPolicy = dto.schedulingPolicy;
+        assignment.matchScore = dto.matchScore;
+        assignment.notes = dto.notes;
+        if (!FieldServiceValidator.isValidAssignment(assignment))
             return CommandResult(false, "", "Invalid assignment data");
-        repo.save(a);
-        return CommandResult(true, a.id.value, "");
+
+        repo.save(assignment);
+        return CommandResult(true, assignment.id.value, "");
     }
 
-    CommandResult update(AssignmentDTO dto) {
-        auto existing = repo.findById(dto.id);
-        if (existing.isNull)
+    CommandResult updateAssignment(AssignmentDTO dto) {
+        auto assignment = repo.findById(dto.tenantId, dto.assignmentId);
+        if (assignment.isNull)
             return CommandResult(false, "", "Assignment not found");
-        if (dto.acceptedDate.length > 0) existing.acceptedDate = dto.acceptedDate;
-        if (dto.startedDate.length > 0) existing.startedDate = dto.startedDate;
-        if (dto.completedDate.length > 0) existing.completedDate = dto.completedDate;
-        if (dto.travelDistance.length > 0) existing.travelDistance = dto.travelDistance;
-        if (dto.notes.length > 0) existing.notes = dto.notes;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        if (dto.acceptedDate.length > 0) assignment.acceptedDate = dto.acceptedDate;
+        if (dto.startedDate.length > 0) assignment.startedDate = dto.startedDate;
+        if (dto.completedDate.length > 0) assignment.completedDate = dto.completedDate;
+        if (dto.travelDistance.length > 0) assignment.travelDistance = dto.travelDistance;
+        if (dto.notes.length > 0) assignment.notes = dto.notes;
+        if (!dto.updatedBy.isNull) assignment.updatedBy = dto.updatedBy;
+        repo.update(assignment);
+        return CommandResult(true, assignment.id.value, "");
     }
 
-    CommandResult deleteAssignment(AssignmentId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteAssignment(TenantId tenantId, AssignmentId id) {
+        auto assignment = repo.findById(tenantId, id);
+        if (assignment.isNull)
             return CommandResult(false, "", "Assignment not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(assignment);
+        return CommandResult(true, assignment.id.value, "");
     }
 }

@@ -30,8 +30,9 @@ class TechnicianController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listTechnicians(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -46,10 +47,10 @@ class TechnicianController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
+            auto id = TechnicianId(extractIdFromPath(path));
+            auto e = usecase.getTechnician(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Technician not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -60,8 +61,8 @@ class TechnicianController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             TechnicianDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.technicianId = TechnicianId(j.getString("id"));
+            dto.tenantId = tenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");
             dto.email = j.getString("email");
@@ -76,7 +77,7 @@ class TechnicianController : PlatformController {
             dto.travelRadius = j.getString("travelRadius");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createTechnician(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -96,7 +97,8 @@ class TechnicianController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             TechnicianDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.technicianId = TechnicianId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");
             dto.email = j.getString("email");
@@ -105,7 +107,7 @@ class TechnicianController : PlatformController {
             dto.address = j.getString("address");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateTechnician(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -125,7 +127,7 @@ class TechnicianController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = TechnicianId(extractIdFromPath(path));
-            auto result = usecase.deleteTechnician(id);
+            auto result = usecase.deleteTechnician(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Technician deleted");

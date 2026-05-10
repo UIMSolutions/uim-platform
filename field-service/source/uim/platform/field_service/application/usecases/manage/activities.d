@@ -18,70 +18,68 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Activity getById(ActivityId id) {
+    Activity getActivity(TenantId tenantId, ActivityId id) {
         return repo.findById(tenantId, id);
     }
 
-    Activity[] list() {
-        return repo.findAll();
-    }
-
-    Activity[] listByTenant(TenantId tenantId) {
+    Activity[] listActivities(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Activity[] listByServiceCall(ServiceCallId serviceCallId) {
-        return repo.findByServiceCall(serviceCallId);
+    Activity[] listActivities(TenantId tenantId, ServiceCallId serviceCallId) {
+        return repo.findByServiceCall(tenantId, serviceCallId);
     }
 
-    Activity[] listByTechnician(TechnicianId technicianId) {
-        return repo.findByTechnician(technicianId);
+    Activity[] listActivities(TenantId tenantId, TechnicianId technicianId) {
+        return repo.findByTechnician(tenantId, technicianId);
     }
 
-    CommandResult create(ActivityDTO dto) {
-        Activity a;
-        a.id = dto.id;
-        a.tenantId = dto.tenantId;
-        a.serviceCallId = dto.serviceCallId;
-        a.technicianId = dto.technicianId;
-        a.subject = dto.subject;
-        a.description = dto.description;
-        a.plannedStart = dto.plannedStart;
-        a.plannedEnd = dto.plannedEnd;
-        a.address = dto.address;
-        a.latitude = dto.latitude;
-        a.longitude = dto.longitude;
-        a.notes = dto.notes;
-        a.createdBy = dto.createdBy;
-        if (!FieldServiceValidator.isValidActivity(a))
+    CommandResult createActivity(ActivityDTO dto) {
+        Activity activity;
+        activity.id = dto.activityId;
+        activity.tenantId = dto.tenantId;
+        activity.serviceCallId = dto.serviceCallId;
+        activity.technicianId = dto.technicianId;
+        activity.subject = dto.subject;
+        activity.description = dto.description;
+        activity.plannedStart = dto.plannedStart;
+        activity.plannedEnd = dto.plannedEnd;
+        activity.address = dto.address;
+        activity.latitude = dto.latitude;
+        activity.longitude = dto.longitude;
+        activity.notes = dto.notes;
+        activity.createdBy = dto.createdBy;
+        if (!FieldServiceValidator.isValidActivity(activity))
             return CommandResult(false, "", "Invalid activity data");
-        repo.save(a);
-        return CommandResult(true, dto.id.value, "");
+
+        repo.save(activity);
+        return CommandResult(true, activity.id.value, "");
     }
 
-    CommandResult update(ActivityDTO dto) {
-        auto existing = repo.findById(dto.id);
-        if (existing.isNull)
+    CommandResult updateActivity(ActivityDTO dto) {
+        auto activity = repo.findById(dto.tenantId, dto.activityId);
+        if (activity.isNull)
             return CommandResult(false, "", "Activity not found");
-        if (dto.subject.length > 0) existing.subject = dto.subject;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.plannedStart.length > 0) existing.plannedStart = dto.plannedStart;
-        if (dto.plannedEnd.length > 0) existing.plannedEnd = dto.plannedEnd;
-        if (dto.actualStart.length > 0) existing.actualStart = dto.actualStart;
-        if (dto.actualEnd.length > 0) existing.actualEnd = dto.actualEnd;
-        if (dto.notes.length > 0) existing.notes = dto.notes;
-        if (dto.feedbackCode.length > 0) existing.feedbackCode = dto.feedbackCode;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        if (dto.subject.length > 0) activity.subject = dto.subject;
+        if (dto.description.length > 0) activity.description = dto.description;
+        if (dto.plannedStart.length > 0) activity.plannedStart = dto.plannedStart;
+        if (dto.plannedEnd.length > 0) activity.plannedEnd = dto.plannedEnd;
+        if (dto.actualStart.length > 0) activity.actualStart = dto.actualStart;
+        if (dto.actualEnd.length > 0) activity.actualEnd = dto.actualEnd;
+        if (dto.notes.length > 0) activity.notes = dto.notes;
+        if (dto.feedbackCode.length > 0) activity.feedbackCode = dto.feedbackCode;
+        if (!dto.updatedBy.isNull) activity.updatedBy = dto.updatedBy;
+        
+        repo.update(activity);
+        return CommandResult(true, activity.id.value, "");
     }
 
-    CommandResult deleteActivity(ActivityId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+    CommandResult deleteActivity(TenantId tenantId, ActivityId id) {
+        auto activity = repo.findById(tenantId, id);
+        if (activity.isNull)
             return CommandResult(false, "", "Activity not found");
             
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(activity);
+        return CommandResult(true, activity.id.value, "");
     }
 }

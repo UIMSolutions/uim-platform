@@ -30,8 +30,9 @@ class ServiceCallController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listServiceCalls(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -47,10 +48,10 @@ class ServiceCallController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Service call not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            auto id = ServiceCallId(extractIdFromPath(path));
+            auto serviceCall = usecase.getServiceCall(tenantId, id);
+            if (serviceCall.isNull) { writeError(res, 404, "Service call not found"); return; }
+            res.writeJsonBody(serviceCall.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -61,10 +62,10 @@ class ServiceCallController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ServiceCallDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.customerId = j.getString("customerId");
-            dto.equipmentId = j.getString("equipmentId");
+            dto.serviceCallId = ServiceCallId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.customerId = CustomerId(j.getString("customerId"));
+            dto.equipmentId = EquipmentId(j.getString("equipmentId"));
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
             dto.serviceType = j.getString("serviceType");
@@ -78,7 +79,7 @@ class ServiceCallController : PlatformController {
             dto.longitude = j.getString("longitude");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createServiceCall(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -99,7 +100,8 @@ class ServiceCallController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceCallDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.serviceCallId = ServiceCallId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
             dto.contactPerson = j.getString("contactPerson");
@@ -108,7 +110,7 @@ class ServiceCallController : PlatformController {
             dto.resolution = j.getString("resolution");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateServiceCall(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -128,7 +130,8 @@ class ServiceCallController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ServiceCallId(extractIdFromPath(path));
-            auto result = usecase.deleteServiceCall(id);
+            
+            auto result = usecase.deleteServiceCall(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Service call deleted");

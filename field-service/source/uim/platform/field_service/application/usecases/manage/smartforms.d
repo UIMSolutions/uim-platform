@@ -18,29 +18,25 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Smartform getById(SmartformId id) {
+    Smartform getSmartform(TenantId tenantId, SmartformId id) {
         return repo.findById(tenantId, id);
     }
 
-    Smartform[] list() {
-        return repo.findAll();
-    }
-
-    Smartform[] listByTenant(TenantId tenantId) {
+    Smartform[] listSmartforms(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Smartform[] listByServiceCall(ServiceCallId serviceCallId) {
-        return repo.findByServiceCall(serviceCallId);
+    Smartform[] listSmartforms(TenantId tenantId, ServiceCallId serviceCallId) {
+        return repo.findByServiceCall(tenantId, serviceCallId);
     }
 
-    Smartform[] listByActivity(ActivityId activityId) {
-        return repo.findByActivity(activityId);
+    Smartform[] listSmartforms(TenantId tenantId, ActivityId activityId) {
+        return repo.findByActivity(tenantId, activityId);
     }
 
-    CommandResult create(SmartformDTO dto) {
+    CommandResult createSmartform(SmartformDTO dto) {
         Smartform sf;
-        sf.id = dto.id;
+        sf.id = dto.smartformId;
         sf.tenantId = dto.tenantId;
         sf.serviceCallId = dto.serviceCallId;
         sf.activityId = dto.activityId;
@@ -52,11 +48,11 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         if (!FieldServiceValidator.isValidSmartform(sf))
             return CommandResult(false, "", "Invalid smartform data");
         repo.save(sf);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, sf.id.value, "");
     }
 
-    CommandResult update(SmartformDTO dto) {
-        auto existing = repo.findById(dto.id);
+    CommandResult updateSmartform(SmartformDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.smartformId);
         if (existing.isNull)
             return CommandResult(false, "", "Smartform not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -68,10 +64,10 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
         if (!dto.approvedBy.isNull) existing.approvedBy = dto.approvedBy;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSmartform(SmartformId id) {
+    CommandResult deleteSmartform(TenantId tenantId, SmartformId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Smartform not found");

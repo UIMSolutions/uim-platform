@@ -67,7 +67,7 @@ class AssignmentController : PlatformController {
             auto j = req.json;
 
             AssignmentDTO dto;
-            dto.id = j.getString("id");
+            dto.assignmentId = AssignmentId(j.getString("id"));
             dto.tenantId = tenantId;
             dto.activityId = j.getString("activityId");
             dto.technicianId = j.getString("technicianId");
@@ -98,7 +98,7 @@ class AssignmentController : PlatformController {
             auto j = req.json;
 
             AssignmentDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.assignmentId = AssignmentId(extractIdFromPath(path));
             dto.tenantId = tenantId;
             dto.acceptedDate = j.getString("acceptedDate");
             dto.startedDate = j.getString("startedDate");

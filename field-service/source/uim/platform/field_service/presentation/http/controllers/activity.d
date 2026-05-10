@@ -20,7 +20,7 @@ class ActivityController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/field-service/activities", &handleList);
         router.get("/api/v1/field-service/activities/*", &handleGet);
         router.post("/api/v1/field-service/activities", &handleCreate);
@@ -30,13 +30,15 @@ class ActivityController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
-            
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listActivities(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
+
             auto resp = Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr);
-                
+                .set("resources", jarr)
+                .set("message", "Activities retrieved successfully");
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -47,10 +49,13 @@ class ActivityController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Activity not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            auto id = ActivityId(extractIdFromPath(path));
+            Activity activity = usecase.getActivity(tenantId, id);
+            if (activity.isNull) {
+                writeError(res, 404, "Activity not found");
+                return;
+            }
+            res.writeJsonBody(activity.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -61,10 +66,10 @@ class ActivityController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ActivityDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.serviceCallId = j.getString("serviceCallId");
-            dto.technicianId = j.getString("technicianId");
+            dto.activityId = ActivityId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
+            dto.technicianId = TechnicianId(j.getString("technicianId"));
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
             dto.activityType = j.getString("activityType");
@@ -76,11 +81,11 @@ class ActivityController : PlatformController {
             dto.notes = j.getString("notes");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createActivity(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Activity created");
+                    .set("id", result.id)
+                    .set("message", "Activity created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -96,8 +101,10 @@ class ActivityController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             ActivityDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.activityId = ActivityId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
             dto.plannedStart = j.getString("plannedStart");
@@ -108,11 +115,11 @@ class ActivityController : PlatformController {
             dto.feedbackCode = j.getString("feedbackCode");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateActivity(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Activity updated");
+                    .set("id", result.id)
+                    .set("message", "Activity updated");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -128,10 +135,10 @@ class ActivityController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = ActivityId(extractIdFromPath(path));
-            auto result = usecase.deleteActivity(id);
+            auto result = usecase.deleteActivity(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Activity deleted");
+                    .set("message", "Activity deleted");
 
                 res.writeJsonBody(resp, 200);
             } else {

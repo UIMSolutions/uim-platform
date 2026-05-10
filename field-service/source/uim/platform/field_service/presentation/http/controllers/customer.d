@@ -30,8 +30,9 @@ class CustomerController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listCustomers(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -47,10 +48,11 @@ class CustomerController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Customer not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            auto id = CustomerId(extractIdFromPath(path));
+            
+            auto customer = usecase.getCustomer(tenantId, id);
+            if (customer.isNull) { writeError(res, 404, "Customer not found"); return; }
+            res.writeJsonBody(customer.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -61,8 +63,8 @@ class CustomerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             CustomerDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.customerId = CustomerId(j.getString("id"));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.customerType = j.getString("customerType");
@@ -77,7 +79,7 @@ class CustomerController : PlatformController {
             dto.accountNumber = j.getString("accountNumber");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createCustomer(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -97,8 +99,10 @@ class CustomerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
+
             CustomerDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.customerId = CustomerId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.contactPerson = j.getString("contactPerson");
@@ -107,7 +111,7 @@ class CustomerController : PlatformController {
             dto.address = j.getString("address");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateCustomer(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -127,7 +131,7 @@ class CustomerController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = CustomerId(extractIdFromPath(path));
-            auto result = usecase.deleteCustomer(id);
+            auto result = usecase.deleteCustomer(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Customer deleted");

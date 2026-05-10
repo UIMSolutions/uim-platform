@@ -30,8 +30,9 @@ class SmartformController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listSmartforms(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -47,10 +48,11 @@ class SmartformController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
+            auto id = SmartformId(extractIdFromPath(path));
+
+            auto e = usecase.getSmartform(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Smartform not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -60,11 +62,12 @@ class SmartformController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             SmartformDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.serviceCallId = j.getString("serviceCallId");
-            dto.activityId = j.getString("activityId");
+            dto.smartformId = SmartformId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
+            dto.activityId = ActivityId(j.getString("activityId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.formType = j.getString("formType");
@@ -72,7 +75,7 @@ class SmartformController : PlatformController {
             dto.safetyLabel = j.getString("safetyLabel");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createSmartform(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -93,17 +96,18 @@ class SmartformController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SmartformDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.smartformId = SmartformId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.formData = j.getString("formData");
             dto.signatureData = j.getString("signatureData");
-            dto.submittedBy = j.getString("submittedBy");
+            dto.submittedBy = UserId(j.getString("submittedBy"));
             dto.submittedDate = j.getString("submittedDate");
-            dto.approvedBy = j.getString("approvedBy");
+            dto.approvedBy = UserId(j.getString("approvedBy"));
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateSmartform(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -123,7 +127,7 @@ class SmartformController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = SmartformId(extractIdFromPath(path));
-            auto result = usecase.deleteSmartform(id);
+            auto result = usecase.deleteSmartform(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                 .set("message", "Smartform deleted");

@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface TechnicianRepository : ITenantRepository!(Technician, TechnicianId) {
 
-    size_t countByStatus(TechnicianStatus status);
-    Technician[] findByStatus(TechnicianStatus status);
-    void removeByStatus(TechnicianStatus status);
+    size_t countByStatus(TenantId tenantId, TechnicianStatus status);
+    Technician[] findByStatus(TenantId tenantId, TechnicianStatus status);
+    void removeByStatus(TenantId tenantId, TechnicianStatus status);
 
-    size_t countByRegion(string region);    
-    Technician[] findByRegion(string region);    
-    void removeByRegion(string region);    
+    size_t countByRegion(TenantId tenantId, string region);    
+    Technician[] findByRegion(TenantId tenantId, string region);    
+    void removeByRegion(TenantId tenantId, string region);    
 
 }

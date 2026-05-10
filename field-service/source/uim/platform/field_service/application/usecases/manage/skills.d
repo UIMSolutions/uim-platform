@@ -18,29 +18,25 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Skill getById(SkillId id) {
+    Skill getSkill(TenantId tenantId, SkillId id) {
         return repo.findById(tenantId, id);
     }
 
-    Skill[] list() {
-        return repo.findAll();
-    }
-
-    Skill[] listByTenant(TenantId tenantId) {
+    Skill[] listSkills(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Skill[] listByTechnician(TechnicianId technicianId) {
-        return repo.findByTechnician(technicianId);
+    Skill[] listSkills(TenantId tenantId, TechnicianId technicianId) {
+        return repo.findByTechnician(tenantId, technicianId);
     }
 
-    Skill[] listByCategory(SkillCategory category) {
-        return repo.findByCategory(category);
+    Skill[] listSkills(TenantId tenantId, SkillCategory category) {
+        return repo.findByCategory(tenantId, category);
     }
 
-    CommandResult create(SkillDTO dto) {
+    CommandResult createSkill(SkillDTO dto) {
         Skill s;
-        s.id = dto.id;
+        s.id = dto.skillId;
         s.tenantId = dto.tenantId;
         s.technicianId = dto.technicianId;
         s.name = dto.name;
@@ -56,8 +52,8 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, s.id.value, "");
     }
 
-    CommandResult update(SkillDTO dto) {
-        auto existing = repo.findById(dto.id);
+    CommandResult updateSkill(SkillDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.skillId);
         if (existing.isNull)
             return CommandResult(false, "", "Skill not found");
         if (dto.name.length > 0) existing.name = dto.name;
@@ -71,7 +67,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSkill(SkillId id) {
+    CommandResult deleteSkill(TenantId tenantId, SkillId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Skill not found");

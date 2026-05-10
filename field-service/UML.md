@@ -146,9 +146,9 @@ classDiagram
         +SmartformType formType
         +SmartformStatus status
         +string templateId
-        +string submittedBy
+        +UserId submittedBy
         +string submittedDate
-        +string approvedBy
+        +UserId approvedBy
         +string formData
         +string safetyLabel
         +string signatureData

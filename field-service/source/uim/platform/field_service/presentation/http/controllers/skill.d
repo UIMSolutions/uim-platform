@@ -30,8 +30,9 @@ class SkillController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
-            auto jarr = items.map!(e => toJson(e)).array.toJson;
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listSkills(tenantId);
+            auto jarr = items.map!(e => e.toJson).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -48,10 +49,10 @@ class SkillController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(tenantId, id);
+            auto id = SkillId(extractIdFromPath(path));
+            auto e = usecase.getSkill(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Skill not found"); return; }
-            res.writeJsonBody(toJson(e), 200);
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -62,9 +63,9 @@ class SkillController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             SkillDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
-            dto.technicianId = j.getString("technicianId");
+            dto.skillId = SkillId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.technicianId = TechnicianId(j.getString("technicianId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.category = j.getString("category");
@@ -75,7 +76,7 @@ class SkillController : PlatformController {
             dto.issuingAuthority = j.getString("issuingAuthority");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(dto);
+            auto result = usecase.createSkill(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -96,7 +97,8 @@ class SkillController : PlatformController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SkillDTO dto;
-            dto.id = extractIdFromPath(path);
+            dto.skillId = SkillId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.certificationDate = j.getString("certificationDate");
@@ -104,7 +106,7 @@ class SkillController : PlatformController {
             dto.issuingAuthority = j.getString("issuingAuthority");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(dto);
+            auto result = usecase.updateSkill(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -124,7 +126,7 @@ class SkillController : PlatformController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = SkillId(extractIdFromPath(path));
-            auto result = usecase.deleteSkill(id);
+            auto result = usecase.deleteSkill(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("message", "Skill deleted");
