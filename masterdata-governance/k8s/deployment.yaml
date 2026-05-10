@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: masterdata-governance
+  namespace: uim-platform
+  labels:
+    app: masterdata-governance
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: masterdata-governance
+  template:
+    metadata:
+      labels:
+        app: masterdata-governance
+    spec:
+      containers:
+      - name: masterdata-governance
+        image: uim-platform/masterdata-governance:latest
+        ports:
+        - containerPort: 8108
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: masterdata-governance-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8108
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8108
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

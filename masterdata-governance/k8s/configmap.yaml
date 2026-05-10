@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: masterdata-governance-config
+  namespace: uim-platform
+  labels:
+    app: masterdata-governance
+    part-of: uim-platform
+data:
+  MASTERDATA_GOVERNANCE_HOST: "0.0.0.0"
+  MASTERDATA_GOVERNANCE_PORT: "8108"
