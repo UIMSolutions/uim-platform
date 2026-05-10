@@ -20,24 +20,27 @@ class OAuthClientController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.post("/api/v1/oauth/clients",    &handleCreate);
-    router.get("/api/v1/oauth/clients",     &handleList);
-    router.get("/api/v1/oauth/clients/*",   &handleGet);
-    router.put("/api/v1/oauth/clients/*",   &handleUpdate);
+
+    router.post("/api/v1/oauth/clients", &handleCreate);
+    router.get("/api/v1/oauth/clients", &handleList);
+    router.get("/api/v1/oauth/clients/*", &handleGet);
+    router.put("/api/v1/oauth/clients/*", &handleUpdate);
     router.delete_("/api/v1/oauth/clients/*", &handleDelete);
   }
 
   // POST /api/v1/oauth/clients
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateOAuthClientRequest r;
-      r.clientId    = j.getString("clientId");
+      r.tenantId = tenantId;
+      r.clientId = j.getString("clientId");
       r.clientSecret = j.getString("clientSecret");
-      r.name        = j.getString("name");
+      r.name = j.getString("name");
       r.description = j.getString("description");
-      r.clientType  = j.getString("clientType");
-      r.appId       = j.getString("appId");
+      r.clientType = j.getString("clientType");
+      r.appId = j.getString("appId");
 
       auto gtArr = j["grantTypes"];
       if (gtArr.type == Json.Type.array)
@@ -54,9 +57,12 @@ class OAuthClientController : PlatformController {
         foreach (v; ruArr.byValue)
           r.redirectUris ~= v.get!string;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createOAuthClient(r);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
+        res.writeJsonBody(
+          Json.emptyObject
+            .set("id", result.id)
+            .set("message", "OAuth client created successfully"), 201);
       else
         writeError(res, 400, result.error);
     } catch (Exception e) {
@@ -67,14 +73,19 @@ class OAuthClientController : PlatformController {
   // GET /api/v1/oauth/clients
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto appId = req.params.get("appId", "");
-      auto clients = appId.length > 0 ? usecase.listByAppId(appId) : usecase.listAll();
+      auto clients = appId.length > 0
+        ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
+          tenantId);
+      auto jarr = clients.map!(c => c.toJson()).array;
 
-      auto jarr = Json.emptyArray;
-      foreach (c; clients)
-        jarr ~= clientToJson(c);
+      res.writeJsonBody(
+        Json.emptyObject
+          .set("items", jarr)
+          .set("totalCount", clients.length), 200)
+        .set("message", "OAuth clients retrieved successfully");
 
-      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", clients.length), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -83,13 +94,18 @@ class OAuthClientController : PlatformController {
   // GET /api/v1/oauth/clients/{id}
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto c = usecase.getById(id);
+      auto c = usecase.getOAuthClient(tenantId, id);
       if (c.id.length == 0) {
         writeError(res, 404, "OAuth client not found");
         return;
       }
-      res.writeJsonBody(clientToJson(c), 200);
+      res.writeJsonBody(
+        Json.emptyObject
+          .set("id", c.id)
+          .set("message", "OAuth client retrieved successfully")
+          .set("client", clientToJson(c)), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -98,11 +114,14 @@ class OAuthClientController : PlatformController {
   // PUT /api/v1/oauth/clients/{id}
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
+
       auto j = req.json;
       UpdateOAuthClientRequest r;
-      r.id          = id;
-      r.name        = j.getString("name");
+      r.id = id;
+      r.tenantId = tenantId;
+      r.name = j.getString("name");
       r.description = j.getString("description");
 
       auto gtArr = j["grantTypes"];
@@ -122,7 +141,10 @@ class OAuthClientController : PlatformController {
 
       auto result = usecase.update(r);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+        res.writeJsonBody(
+          Json.emptyObject
+            .set("id", result.id)
+            .set("message", "OAuth client updated successfully"), 200);
       else
         writeError(res, result.error == "OAuth client not found" ? 404 : 400, result.error);
     } catch (Exception e) {
@@ -133,10 +155,14 @@ class OAuthClientController : PlatformController {
   // DELETE /api/v1/oauth/clients/{id}
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto result = usecase.remove(id);
+      auto result = usecase.deleteOAuthClient(tenantId, id);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
+        res.writeJsonBody(
+          Json.emptyObject
+            .set("id", id)
+            .set("message", "OAuth client deleted successfully"), 200);
       else
         writeError(res, 404, result.error);
     } catch (Exception e) {
@@ -144,30 +170,4 @@ class OAuthClientController : PlatformController {
     }
   }
 
-  private Json clientToJson(OAuthClientEntity c) @safe {
-    auto gtArr = Json.emptyArray;
-    foreach (gt; c.grantTypes)
-      gtArr ~= Json(grantTypeToString(gt));
-
-    auto scArr = Json.emptyArray;
-    foreach (s; c.scopes)
-      scArr ~= Json(s);
-
-    auto ruArr = Json.emptyArray;
-    foreach (u; c.redirectUris)
-      ruArr ~= Json(u);
-
-    return Json.emptyObject
-      .set("id",           c.id)
-      .set("clientId",     c.clientId)
-      .set("name",         c.name)
-      .set("description",  c.description)
-      .set("clientType",   clientTypeToString(c.clientType))
-      .set("appId",        c.appId)
-      .set("grantTypes",   gtArr)
-      .set("scopes",       scArr)
-      .set("redirectUris", ruArr)
-      .set("createdAt",    c.createdAt)
-      .set("updatedAt",    c.updatedAt);
-  }
 }

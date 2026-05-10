@@ -14,10 +14,18 @@ mixin(ShowModule!());
 /// Assignment of a role collection to a specific user (or user group).
 /// Mirrors the SAP BTP user-role-collection assignment.
 struct UserAssignmentEntity {
-  UserAssignmentId id;
+  mixin TenantEntity!UserAssignmentId;
+
   string           userId;           // subject identifier from IdP
   string           userEmail;        // human-readable email
   RoleCollectionId roleCollectionId; // assigned role collection
   string           origin;           // IdP alias from which the user originates
-  long             createdAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("userId", userId)
+      .set("userEmail", userEmail)
+      .set("roleCollectionId", roleCollectionId)
+      .set("origin", origin);
+  }
 }

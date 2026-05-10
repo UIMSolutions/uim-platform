@@ -36,6 +36,7 @@ class KeyringController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateKeyringRequest r;
       r.tenantId = tenantId;
       r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
@@ -45,7 +46,7 @@ class KeyringController : PlatformController {
       r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = keyrings.create(r);
+      auto result = keyrings.createKeyring(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,9 +63,10 @@ class KeyringController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
-      auto rings = keyrings.listByNamespace(NamespaceId(namespaceId));
-
+      auto tenantId = req.getTenantId;
+      auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
+      
+      auto rings = keyrings.listByNamespace(tenantId, namespaceId);
       auto jarr = Json.emptyArray;
       foreach (k; rings) {
         jarr ~= Json.emptyObject
@@ -89,14 +91,14 @@ class KeyringController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
-      auto k = keyrings.getById(id);
+      auto k = keyrings.getById(tenantId, id);
 
       if (k.isNull) {
         writeError(res, 404, "Keyring not found");
         return;
       }
 
-      auto versions = keyrings.getVersions(k.id);
+      auto versions = keyrings.getVersions(tenantId, k.id);
 
       auto varr = Json.emptyArray;
       foreach (v; versions) {
@@ -150,7 +152,7 @@ class KeyringController : PlatformController {
       auto j = req.json;
       auto keyringId = CredentialId(j.getString("keyringId"));
 
-      auto result = keyrings.disable(keyringId);
+      auto result = keyrings.disable(tenantId, keyringId);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -168,7 +170,8 @@ class KeyringController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
-      auto result = keyrings.remove(id);
+
+      auto result = keyrings.deleteKeyring(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

@@ -14,11 +14,22 @@ mixin(ShowModule!());
 /// A role template that bundles one or more scopes into a named authorization unit.
 /// Administrators assign roles to role collections; role collections are assigned to users.
 struct RoleEntity {
-  RoleId   id;
+  mixin IdEntity!RoleId;
   string   name;             // unique role name, e.g. "Viewer"
   string   description;
   string[] scopeReferences;  // scope names or IDs included in this role
   string   appId;            // owning application
-  long     createdAt;
-  long     updatedAt;
+  
+  Json toJson() const {
+    auto srArr = Json.emptyArray;
+    foreach (s; scopeReferences)
+      srArr ~= Json(s);
+
+    return entityToJson
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("appId", appId)
+      .set("scopeReferences", srArr);
+  }
 }

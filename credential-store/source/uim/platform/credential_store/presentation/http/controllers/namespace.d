@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.namespace;
 
-// import uim.platform.credential_store.application.usecases.manage.namespaces;
+// import uim.platform.credential_store.application.usecases.manage.usecase;
 // import uim.platform.credential_store.application.dto;
 
 import uim.platform.credential_store;
@@ -15,33 +15,34 @@ mixin(ShowModule!());
 @safe:
 
 class NamespaceController : PlatformController {
-  private ManageNamespacesUseCase namespaces;
+  private ManageNamespacesUseCase usecase;
 
-  this(ManageNamespacesUseCase namespaces) {
-    this.namespaces = namespaces;
+  this(ManageNamespacesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/namespaces", &handleCreate);
-    router.get("/api/v1/namespaces", &handleList);
-    router.get("/api/v1/namespaces/*", &handleGet);
-    router.put("/api/v1/namespaces/*", &handleUpdate);
-    router.delete_("/api/v1/namespaces/*", &handleDelete);
+    router.post("/api/v1/usecase", &handleCreate);
+    router.get("/api/v1/usecase", &handleList);
+    router.get("/api/v1/usecase/*", &handleGet);
+    router.put("/api/v1/usecase/*", &handleUpdate);
+    router.delete_("/api/v1/usecase/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateNamespaceRequest r;
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = namespaces.create(r);
+      auto result = usecase.createNamespace(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,8 +60,8 @@ class NamespaceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto namespaces = namespaces.list(tenantId);
 
+      auto namespaces = usecase.list(tenantId);
       auto jarr = Json.emptyArray;
       foreach (ns; namespaces) {
         jarr ~= Json.emptyObject
@@ -72,7 +73,8 @@ class NamespaceController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", jarr)
-        .set("totalCount", namespaces.length);
+        .set("totalCount", namespaces.length)
+        .set("message", "Namespace list retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -81,11 +83,11 @@ class NamespaceController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
-      auto ns = namespaces.getById(id);
 
+      auto ns = usecase.getNamespace(tenantId, id);
       if (ns.isNull) {
         writeError(res, 404, "Namespace not found");
         return;
@@ -107,17 +109,21 @@ class NamespaceController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdateNamespaceRequest r;
+      r.tenantId = tenantId;
+      r.namespaceId = id;
       r.description = j.getString("description");
 
-      auto result = namespaces.update(id, r);
+      auto result = usecase.updateNamespace(tenantId, id, r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Namespace updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -129,11 +135,16 @@ class NamespaceController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
-      namespaces.remove(id);
-      res.writeJsonBody(Json.emptyObject, 204);
+
+      auto result = usecase.deleteNamespace(tenantId, id);
+      if (result.success) {
+        res.writeJsonBody(Json.emptyObject, 204);
+      } else {
+        writeError(res, 400, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

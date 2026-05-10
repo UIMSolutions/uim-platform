@@ -12,13 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 // ---------------------------------------------------------------------------
-// Shared result type
+// Shared result type re-exported from base service (CommandResult defined there)
 // ---------------------------------------------------------------------------
-struct CommandResult {
-  bool   success;
-  string id;
-  string error;
-}
 
 // ---------------------------------------------------------------------------
 // OAuth 2.0 Client DTOs
@@ -135,7 +130,7 @@ struct IssueTokenRequest {
   string   clientSecret;
   string   code;            // for authorization_code flow
   string   redirectUri;
-  string[] scope;
+  string[] scope_;
 }
 
 struct TokenResponse {

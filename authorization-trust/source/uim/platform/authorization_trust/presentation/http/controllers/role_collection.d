@@ -20,6 +20,7 @@ class RoleCollectionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/role-collections",    &handleCreate);
     router.get("/api/v1/role-collections",     &handleList);
     router.get("/api/v1/role-collections/*",   &handleGet);
@@ -29,6 +30,7 @@ class RoleCollectionController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRoleCollectionRequest r;
       r.name        = j.getString("name");
@@ -51,6 +53,7 @@ class RoleCollectionController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rcs = usecase.listAll();
       auto jarr = Json.emptyArray;
       foreach (rc; rcs)
@@ -63,6 +66,7 @@ class RoleCollectionController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto rc = usecase.getById(id);
       if (rc.id.length == 0) {
@@ -77,6 +81,7 @@ class RoleCollectionController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateRoleCollectionRequest r;
@@ -100,6 +105,7 @@ class RoleCollectionController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto result = usecase.remove(id);
       if (result.success)

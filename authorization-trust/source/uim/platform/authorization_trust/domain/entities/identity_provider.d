@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// A trusted identity provider (SAML 2.0 or OIDC).
 /// Mirrors the SAP BTP trust configuration for external IdPs.
 struct IdentityProviderEntity {
-  IdentityProviderId id;
+  mixin IdEntity!IdentityProviderId;
   string             alias_;       // unique short alias, e.g. "corporate-idp"
   string             displayName;
   IdpType            idpType;      // saml2 | oidc
@@ -25,6 +25,18 @@ struct IdentityProviderEntity {
   string             signingCert;  // PEM-encoded signing certificate
   bool               isActive;
   bool               isDefault;    // whether this is the default IdP for the tenant
-  long               createdAt;
-  long               updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("alias", alias_)
+      .set("displayName", displayName)
+      .set("idpType", idpType.to!string)
+      .set("metadataUrl", metadataUrl)
+      .set("entityId", entityId)
+      .set("ssoUrl", ssoUrl)
+      .set("sloUrl", sloUrl)
+      .set("signingCert", signingCert)
+      .set("isActive", isActive)
+      .set("isDefault", isDefault);
+  }
 }

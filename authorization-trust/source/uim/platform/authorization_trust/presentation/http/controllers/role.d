@@ -29,6 +29,7 @@ class RoleController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRoleRequest r;
       r.name        = j.getString("name");
@@ -52,6 +53,7 @@ class RoleController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto roles = usecase.listAll();
       auto jarr = Json.emptyArray;
       foreach (role; roles)
@@ -64,6 +66,7 @@ class RoleController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto role = usecase.getById(id);
       if (role.id.length == 0) {
@@ -78,6 +81,7 @@ class RoleController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateRoleRequest r;
@@ -101,6 +105,7 @@ class RoleController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto result = usecase.remove(id);
       if (result.success)
@@ -112,18 +117,4 @@ class RoleController : PlatformController {
     }
   }
 
-  private Json roleToJson(RoleEntity role) @safe {
-    auto srArr = Json.emptyArray;
-    foreach (s; role.scopeReferences)
-      srArr ~= Json(s);
-
-    return Json.emptyObject
-      .set("id",              role.id)
-      .set("name",            role.name)
-      .set("description",     role.description)
-      .set("scopeReferences", srArr)
-      .set("appId",           role.appId)
-      .set("createdAt",       role.createdAt)
-      .set("updatedAt",       role.updatedAt);
-  }
 }

@@ -28,7 +28,7 @@ import uim.platform.authorization_trust.application.usecases.manage.identity_pro
 
 // Controllers
 import uim.platform.authorization_trust.presentation.http.controllers.oauth_client;
-import uim.platform.authorization_trust.presentation.http.controllers.scope;
+import uim.platform.authorization_trust.presentation.http.controllers.scope_controller;
 import uim.platform.authorization_trust.presentation.http.controllers.role;
 import uim.platform.authorization_trust.presentation.http.controllers.role_collection;
 import uim.platform.authorization_trust.presentation.http.controllers.user_assignment;

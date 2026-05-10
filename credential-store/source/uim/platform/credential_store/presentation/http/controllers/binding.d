@@ -32,19 +32,21 @@ class BindingController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permission = j.getString("permission");
-      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array.toJson;
+      r.allowedNamespaces = j.getArray("allowedNamespaces")
+        .map!(ns => NamespaceId(ns.getString)).array.toJson;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = bindings.create(r);
+      auto result = bindings.createServiceBinding(r);
 
       // Return binding credentials (only shown once at creation)
       auto resp = Json.emptyObject
@@ -67,8 +69,8 @@ class BindingController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto bindings = bindings.list(tenantId);
 
+      auto bindings = bindings.listServiceBindings(tenantId);
       auto jarr = Json.emptyArray;
       foreach (b; bindings) {
         jarr ~= Json.emptyObject
@@ -90,11 +92,11 @@ class BindingController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
-      auto b = bindings.getById(id);
-
+      
+      auto b = bindings.getServiceBinding(tenantId, id);
       if (b.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -105,7 +107,8 @@ class BindingController : PlatformController {
         .set("name", b.name)
         .set("description", b.description)
         .set("clientId", b.clientId)
-        .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value).array.toJson)
+        .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value)
+            .array.toJson)
         .set("createdAt", b.createdAt)
         .set("expiresAt", b.expiresAt)
         .set("message", "Service binding retrieved successfully");
@@ -118,22 +121,26 @@ class BindingController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+
       UpdateServiceBindingRequest r;
+      r.id = id;
+      r.tenantId = tenantId;
       r.description = j.getString("description");
       r.permission = j.getString("permission");
       r.status = j.getString("status");
-      r.allowedNamespaces = j.getArray("allowedNamespaces").map!(ns => NamespaceId(ns.getString)).array.toJson;
+      r.allowedNamespaces = j.getArray("allowedNamespaces")
+        .map!(ns => NamespaceId(ns.getString)).array.toJson;
 
-      auto result = bindings.update(id, r);
+      auto result = bindings.updateServiceBinding(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Service binding updated successfully");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -144,12 +151,17 @@ class BindingController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
-      bindings.remove(id);
+      
+      auto result = bindings.deleteServiceBinding(tenantId, id);
 
-      res.writeJsonBody(Json.emptyObject, 204);
+      if (result.success) {
+        res.writeJsonBody(Json.emptyObject, 204);
+      } else {
+        writeError(res, 400, result.error);
+      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

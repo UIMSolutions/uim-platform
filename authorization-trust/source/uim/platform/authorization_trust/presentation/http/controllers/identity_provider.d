@@ -20,31 +20,38 @@ class IdentityProviderController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.post("/api/v1/identity-providers",    &handleCreate);
-    router.get("/api/v1/identity-providers",     &handleList);
-    router.get("/api/v1/identity-providers/*",   &handleGet);
-    router.put("/api/v1/identity-providers/*",   &handleUpdate);
+
+    router.post("/api/v1/identity-providers", &handleCreate);
+    router.get("/api/v1/identity-providers", &handleList);
+    router.get("/api/v1/identity-providers/*", &handleGet);
+    router.put("/api/v1/identity-providers/*", &handleUpdate);
     router.delete_("/api/v1/identity-providers/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
-      CreateIdentityProviderRequest r;
-      r.alias_       = j.getString("alias");
-      r.displayName  = j.getString("displayName");
-      r.idpType      = j.getString("idpType");
-      r.metadataUrl  = j.getString("metadataUrl");
-      r.entityId     = j.getString("entityId");
-      r.ssoUrl       = j.getString("ssoUrl");
-      r.sloUrl       = j.getString("sloUrl");
-      r.signingCert  = j.getString("signingCert");
-      r.isActive     = j.getBool("isActive");
-      r.isDefault    = j.getBool("isDefault");
 
-      auto result = usecase.create(r);
+      CreateIdentityProviderRequest r;
+      r.tenantId = tenantId;
+      r.alias_ = j.getString("alias");
+      r.displayName = j.getString("displayName");
+      r.idpType = j.getString("idpType");
+      r.metadataUrl = j.getString("metadataUrl");
+      r.entityId = j.getString("entityId");
+      r.ssoUrl = j.getString("ssoUrl");
+      r.sloUrl = j.getString("sloUrl");
+      r.signingCert = j.getString("signingCert");
+      r.isActive = j.getBool("isActive");
+      r.isDefault = j.getBool("isDefault");
+
+      auto result = usecase.createIdentityProvider(r);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
+        res.writeJsonBody(
+          Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Identity provider created successfully"), 201);
       else
         writeError(res, 400, result.error);
     } catch (Exception e) {
@@ -54,11 +61,16 @@ class IdentityProviderController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto idps = usecase.listAll();
+      auto tenantId = req.getTenantId;
+
+      auto idps = usecase.listIdentityProviders(tenantId);
       auto jarr = Json.emptyArray;
       foreach (idp; idps)
         jarr ~= idpToJson(idp);
-      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", idps.length), 200);
+      res.writeJsonBody(Json.emptyObject
+          .set("items", jarr)
+          .set("totalCount", idps.length)
+          .set("message", "Identity providers retrieved successfully"), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -66,8 +78,10 @@ class IdentityProviderController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto idp = usecase.getById(id);
+
+      auto idp = usecase.getIdentityProvider(tenantId, id);
       if (idp.id.length == 0) {
         writeError(res, 404, "Identity provider not found");
         return;
@@ -80,21 +94,25 @@ class IdentityProviderController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto j = req.json;
       UpdateIdentityProviderRequest r;
-      r.id          = id;
+      r.tenantId = tenantId;
+      r.identityProviderId = id;
       r.displayName = j.getString("displayName");
       r.metadataUrl = j.getString("metadataUrl");
-      r.ssoUrl      = j.getString("ssoUrl");
-      r.sloUrl      = j.getString("sloUrl");
+      r.ssoUrl = j.getString("ssoUrl");
+      r.sloUrl = j.getString("sloUrl");
       r.signingCert = j.getString("signingCert");
-      r.isActive    = j.getBool("isActive");
-      r.isDefault   = j.getBool("isDefault");
+      r.isActive = j.getBool("isActive");
+      r.isDefault = j.getBool("isDefault");
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateIdentityProvider(r);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+        res.writeJsonBody(Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Identity provider updated successfully"), 200);
       else
         writeError(res, result.error == "Identity provider not found" ? 404 : 400, result.error);
     } catch (Exception e) {
@@ -104,30 +122,18 @@ class IdentityProviderController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
-      auto result = usecase.remove(id);
+
+      auto result = usecase.deleteIdentityProvider(tenantId, id);
       if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
+        res.writeJsonBody(
+          Json.emptyObject.set("id", id)
+            .set("message", "Identity provider deleted successfully"), 200);
       else
         writeError(res, 404, result.error);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json idpToJson(IdentityProviderEntity idp) @safe {
-    return Json.emptyObject
-      .set("id",          idp.id)
-      .set("alias",       idp.alias_)
-      .set("displayName", idp.displayName)
-      .set("idpType",     idpTypeToString(idp.idpType))
-      .set("metadataUrl", idp.metadataUrl)
-      .set("entityId",    idp.entityId)
-      .set("ssoUrl",      idp.ssoUrl)
-      .set("sloUrl",      idp.sloUrl)
-      .set("isActive",    idp.isActive)
-      .set("isDefault",   idp.isDefault)
-      .set("createdAt",   idp.createdAt)
-      .set("updatedAt",   idp.updatedAt);
   }
 }

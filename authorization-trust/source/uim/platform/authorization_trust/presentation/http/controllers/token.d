@@ -22,6 +22,7 @@ class TokenController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/oauth/token", &handleToken);
   }
 
@@ -29,6 +30,7 @@ class TokenController : PlatformController {
   // Accepts form-encoded or JSON body with grant_type, client_id, client_secret, scope
   private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       string grantType;
       string clientId;
       string clientSecret;

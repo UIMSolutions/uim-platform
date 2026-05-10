@@ -20,6 +20,7 @@ class UserAssignmentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/user-assignments",    &handleCreate);
     router.get("/api/v1/user-assignments",     &handleList);
     router.get("/api/v1/user-assignments/*",   &handleGet);
@@ -28,6 +29,7 @@ class UserAssignmentController : PlatformController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateUserAssignmentRequest r;
       r.userId           = j.getString("userId");
@@ -47,6 +49,7 @@ class UserAssignmentController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto userId = req.params.get("userId", "");
       auto assignments = userId.length > 0 ? usecase.listByUserId(userId) : usecase.listAll();
       auto jarr = Json.emptyArray;
@@ -60,6 +63,7 @@ class UserAssignmentController : PlatformController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto ua = usecase.getById(id);
       if (ua.id.length == 0) {
@@ -74,6 +78,7 @@ class UserAssignmentController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req);
       auto result = usecase.remove(id);
       if (result.success)
@@ -83,15 +88,5 @@ class UserAssignmentController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json uaToJson(UserAssignmentEntity ua) @safe {
-    return Json.emptyObject
-      .set("id",               ua.id)
-      .set("userId",           ua.userId)
-      .set("userEmail",        ua.userEmail)
-      .set("roleCollectionId", ua.roleCollectionId)
-      .set("origin",           ua.origin)
-      .set("createdAt",        ua.createdAt);
   }
 }

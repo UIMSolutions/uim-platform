@@ -14,10 +14,16 @@ mixin(ShowModule!());
 /// A fine-grained authorization scope.
 /// Scopes are referenced by roles and requested by OAuth 2.0 clients.
 struct ScopeEntity {
-  ScopeId id;
+  mixin IdEntity!ScopeId;
   string  name;         // unique scope name, e.g. "app.Read"
   string  description;
   string  appId;        // owning application
-  long    createdAt;
-  long    updatedAt;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("appId", appId);
+  }
 }
