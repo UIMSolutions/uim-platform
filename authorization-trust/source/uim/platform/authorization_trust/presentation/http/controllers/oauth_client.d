@@ -1,0 +1,173 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.authorization_trust.presentation.http.controllers.oauth_client;
+
+import uim.platform.authorization_trust;
+
+mixin(ShowModule!());
+
+@safe:
+
+class OAuthClientController : PlatformController {
+  private ManageOAuthClientsUseCase usecase;
+
+  this(ManageOAuthClientsUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.post("/api/v1/oauth/clients",    &handleCreate);
+    router.get("/api/v1/oauth/clients",     &handleList);
+    router.get("/api/v1/oauth/clients/*",   &handleGet);
+    router.put("/api/v1/oauth/clients/*",   &handleUpdate);
+    router.delete_("/api/v1/oauth/clients/*", &handleDelete);
+  }
+
+  // POST /api/v1/oauth/clients
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      CreateOAuthClientRequest r;
+      r.clientId    = j.getString("clientId");
+      r.clientSecret = j.getString("clientSecret");
+      r.name        = j.getString("name");
+      r.description = j.getString("description");
+      r.clientType  = j.getString("clientType");
+      r.appId       = j.getString("appId");
+
+      auto gtArr = j["grantTypes"];
+      if (gtArr.type == Json.Type.array)
+        foreach (v; gtArr.byValue)
+          r.grantTypes ~= v.get!string;
+
+      auto scArr = j["scopes"];
+      if (scArr.type == Json.Type.array)
+        foreach (v; scArr.byValue)
+          r.scopes ~= v.get!string;
+
+      auto ruArr = j["redirectUris"];
+      if (ruArr.type == Json.Type.array)
+        foreach (v; ruArr.byValue)
+          r.redirectUris ~= v.get!string;
+
+      auto result = usecase.create(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
+      else
+        writeError(res, 400, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // GET /api/v1/oauth/clients
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto appId = req.params.get("appId", "");
+      auto clients = appId.length > 0 ? usecase.listByAppId(appId) : usecase.listAll();
+
+      auto jarr = Json.emptyArray;
+      foreach (c; clients)
+        jarr ~= clientToJson(c);
+
+      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", clients.length), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // GET /api/v1/oauth/clients/{id}
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto c = usecase.getById(id);
+      if (c.id.length == 0) {
+        writeError(res, 404, "OAuth client not found");
+        return;
+      }
+      res.writeJsonBody(clientToJson(c), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // PUT /api/v1/oauth/clients/{id}
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto j = req.json;
+      UpdateOAuthClientRequest r;
+      r.id          = id;
+      r.name        = j.getString("name");
+      r.description = j.getString("description");
+
+      auto gtArr = j["grantTypes"];
+      if (gtArr.type == Json.Type.array)
+        foreach (v; gtArr.byValue)
+          r.grantTypes ~= v.get!string;
+
+      auto scArr = j["scopes"];
+      if (scArr.type == Json.Type.array)
+        foreach (v; scArr.byValue)
+          r.scopes ~= v.get!string;
+
+      auto ruArr = j["redirectUris"];
+      if (ruArr.type == Json.Type.array)
+        foreach (v; ruArr.byValue)
+          r.redirectUris ~= v.get!string;
+
+      auto result = usecase.update(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+      else
+        writeError(res, result.error == "OAuth client not found" ? 404 : 400, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // DELETE /api/v1/oauth/clients/{id}
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto result = usecase.remove(id);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
+      else
+        writeError(res, 404, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private Json clientToJson(OAuthClientEntity c) @safe {
+    auto gtArr = Json.emptyArray;
+    foreach (gt; c.grantTypes)
+      gtArr ~= Json(grantTypeToString(gt));
+
+    auto scArr = Json.emptyArray;
+    foreach (s; c.scopes)
+      scArr ~= Json(s);
+
+    auto ruArr = Json.emptyArray;
+    foreach (u; c.redirectUris)
+      ruArr ~= Json(u);
+
+    return Json.emptyObject
+      .set("id",           c.id)
+      .set("clientId",     c.clientId)
+      .set("name",         c.name)
+      .set("description",  c.description)
+      .set("clientType",   clientTypeToString(c.clientType))
+      .set("appId",        c.appId)
+      .set("grantTypes",   gtArr)
+      .set("scopes",       scArr)
+      .set("redirectUris", ruArr)
+      .set("createdAt",    c.createdAt)
+      .set("updatedAt",    c.updatedAt);
+  }
+}
