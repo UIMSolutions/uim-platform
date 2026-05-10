@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.schema;
 
-// import vibe.http.server;
+
 // import vibe.http.router;
 // import vibe.data.json;
 // import uim.platform.identity.directory.application.usecases.manage.schemas;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.consent_record;
 
-// import vibe.http.server;
+
 // import vibe.http.router;
 // import vibe.data.json;
 

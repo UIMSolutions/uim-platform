@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.controllers.service_binding;
 
-// import vibe.http.server;
+
 // import vibe.http.router;
 // import vibe.data.json;
 
