@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: transport-config
+  namespace: uim-platform
+  labels:
+    app: transport
+    part-of: uim-platform
+data:
+  TRANSPORT_HOST: "0.0.0.0"
+  TRANSPORT_PORT: "8117"

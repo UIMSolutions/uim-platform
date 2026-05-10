@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transport
+  namespace: uim-platform
+  labels:
+    app: transport
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: transport
+  ports:
+  - name: http
+    port: 8117
+    targetPort: 8117
+    protocol: TCP
