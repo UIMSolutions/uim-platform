@@ -32,7 +32,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         v.name = r.name;
         v.description = r.description;
         v.status = VisibilityStatus.active;
-        v.processIds = r.processIds.map!(pid => ProcessId(pid)).array.toJson;
+        v.processIds = r.processIds.map!(pid => ProcessId(pid)).array;
         v.refreshIntervalSeconds = r.refreshIntervalSeconds;
 
         repo.save(v);

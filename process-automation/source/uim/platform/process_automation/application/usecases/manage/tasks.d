@@ -30,7 +30,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         t.description = r.description;
         t.status = TaskStatus.ready;
         t.assignee = r.assignee;
-        t.candidateUsers = r.candidateUsers.map!(u => UserId(u)).array.toJson;
+        t.candidateUsers = r.candidateUsers.map!(u => UserId(u)).array;
         t.candidateGroups = r.candidateGroups;
         t.formId = r.formId;
         t.dueDate = r.dueDate;

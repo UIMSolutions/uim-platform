@@ -33,7 +33,7 @@ class SearchController : PlatformController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;
 
       SearchLogsRequest r;
       r.tenantId = tenantId;
@@ -86,10 +86,10 @@ class SearchController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = LogEntryId(extractIdFromPath(req.requestURI.to!string));
-      auto entry = usecase.getLog(req.getTenantId, id);
+      auto entry = usecase.getLog(tenantId, id);
 
       if (entry.isNull) {
         writeError(res, 404, "Log entry not found");
