@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.credential;
 
-// import uim.platform.credential_store.application.usecases.manage.credentials;
+// import uim.platform.credential_store.application.usecases.manage.usecase;
 // import uim.platform.credential_store.application.dto;
 
 import uim.platform.credential_store;
@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 
 class CredentialController : PlatformController {
-  private ManageCredentialsUseCase credentials;
+  private ManageCredentialsUseCase usecase;
 
-  this(ManageCredentialsUseCase credentials) {
-    this.credentials = credentials;
+  this(ManageCredentialsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -91,7 +91,7 @@ class CredentialController : PlatformController {
       r.createdBy = UserId(j.getString("createdBy"));
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto result = credentials.createCredential(r);
+      auto result = usecase.createCredential(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -113,7 +113,7 @@ class CredentialController : PlatformController {
 
       Credential[] creds;
       if (!namespaceId.isEmpty) {
-        creds = credentials.listCredentials(tenantId, namespaceId, type);
+        creds = usecase.listCredentials(tenantId, namespaceId, type);
       }
 
       auto jarr = Json.emptyArray;
@@ -146,7 +146,7 @@ class CredentialController : PlatformController {
       // Support conditional read via If-None-Match
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
-      auto c = credentials.getCredential(tenantId, id);
+      auto c = usecase.getCredential(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Credential not found");
         return;
@@ -186,7 +186,7 @@ class CredentialController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
-      credentials.deleteCredential(tenantId, id);
+      usecase.deleteCredential(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

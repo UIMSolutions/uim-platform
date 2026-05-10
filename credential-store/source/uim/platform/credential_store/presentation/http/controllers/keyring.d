@@ -66,7 +66,7 @@ class KeyringController : PlatformController {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
       
-      auto rings = usecase.listByNamespace(tenantId, namespaceId);
+      auto rings = usecase.listCredentials(tenantId, namespaceId);
       auto jarr = Json.emptyArray;
       foreach (k; rings) {
         jarr ~= Json.emptyObject
@@ -91,7 +91,7 @@ class KeyringController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
-      auto k = usecase.getById(tenantId, id);
+      auto k = usecase.getCredential(tenantId, id);
 
       if (k.isNull) {
         writeError(res, 404, "Keyring not found");
@@ -152,7 +152,7 @@ class KeyringController : PlatformController {
       auto j = req.json;
       auto keyringId = CredentialId(j.getString("keyringId"));
 
-      auto result = usecase.disableKeyring(tenantId, keyringId);
+      auto result = usecase.disableCredential(tenantId, keyringId);
       if (result.success) {
         auto resp = Json.emptyObject
         .set("id", result.id);
@@ -171,7 +171,7 @@ class KeyringController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deleteKeyring(tenantId, id);
+      auto result = usecase.deleteCredential(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

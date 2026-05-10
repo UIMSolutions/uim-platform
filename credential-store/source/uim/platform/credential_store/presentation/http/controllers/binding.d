@@ -42,7 +42,7 @@ class BindingController : PlatformController {
       r.description = j.getString("description");
       r.permission = j.getString("permission");
       r.allowedNamespaces = j.getArray("allowedNamespaces")
-        .map!(ns => NamespaceId(ns.getString)).array.toJson;
+        .map!(ns => NamespaceId(ns.getString)).array;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(j.getString("createdBy"));
 
@@ -127,13 +127,13 @@ class BindingController : PlatformController {
       auto j = req.json;
 
       UpdateServiceBindingRequest r;
-      r.id = id;
+      r.serviceBindingId = id;
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.permission = j.getString("permission");
       r.status = j.getString("status");
       r.allowedNamespaces = j.getArray("allowedNamespaces")
-        .map!(ns => NamespaceId(ns.getString)).array.toJson;
+        .map!(ns => NamespaceId(ns.getString)).array;
 
       auto result = bindings.updateServiceBinding(r);
       if (result.success) {

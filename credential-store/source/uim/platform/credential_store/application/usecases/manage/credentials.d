@@ -107,11 +107,11 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
     return credentials.findByName(tenantId, namespaceId, name, parseCredentialType(type));
   }
 
-  Credential[] listCredentialsByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+  Credential[] listCredentials(TenantId tenantId, NamespaceId namespaceId) {
     return credentials.findByNamespace(tenantId, namespaceId);
   }
 
-  Credential[] listCredentialsByType(TenantId tenantId, NamespaceId namespaceId, string type) {
+  Credential[] listCredentials(TenantId tenantId, NamespaceId namespaceId, string type) {
     return credentials.findByNamespaceAndType(tenantId, namespaceId, parseCredentialType(type));
   }
 

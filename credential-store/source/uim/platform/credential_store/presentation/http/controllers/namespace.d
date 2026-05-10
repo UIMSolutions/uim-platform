@@ -114,12 +114,12 @@ class NamespaceController : PlatformController {
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
-      UpdateNamespaceRequest r;
-      r.tenantId = tenantId;
-      r.namespaceId = id;
-      r.description = j.getString("description");
+      UpdateNamespaceRequest request;
+      request.tenantId = tenantId;
+      request.namespaceId = id;
+      request.description = j.getString("description");
 
-      auto result = usecase.updateNamespace(tenantId, id, r);
+      auto result = usecase.updateNamespace(request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

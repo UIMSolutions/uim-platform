@@ -43,7 +43,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateNamespace(UpdateNamespaceRequest r) {
-    auto ns = namespaces.findById(r.tenantId, r.id);
+    auto ns = namespaces.findById(r.tenantId, r.namespaceId);
     if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
@@ -57,7 +57,6 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return namespaces.existsById(tenantId, id);
   }
 
-
   Namespace getNamespace(TenantId tenantId, NamespaceId id) {
     return namespaces.findById(tenantId, id);
   }
@@ -70,11 +69,14 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return namespaces.findByTenant(tenantId);
   }
 
+  CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    auto namespace = namespaces.findById(tenantId, namespaceId);
+    if (namespace.isNull)
+      return CommandResult(false, "", "Namespace not found");
 
-  CommandResult deleteNamespace(TenantId tenantId, NamespaceId id) {
-    namespaces.removeById(tenantId, id);
+    namespaces.remove(namespace);
+    return CommandResult(true, namespace.id.value, "");
   }
-
 
   size_t count(TenantId tenantId) {
     return namespaces.countByTenant(tenantId);

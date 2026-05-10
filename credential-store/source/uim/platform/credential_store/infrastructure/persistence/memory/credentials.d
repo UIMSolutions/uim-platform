@@ -19,7 +19,7 @@ mixin(ShowModule!());
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
 
   bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
-    return !findByName(namespaceId, name, type).isNull;
+    return findByTenant(tenantId).any!(c => c.namespaceId == namespaceId && c.name == name && c.type == type); 
   }
 
   Credential findByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {

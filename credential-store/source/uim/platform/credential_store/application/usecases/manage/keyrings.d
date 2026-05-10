@@ -33,7 +33,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0 || r.name.length > 255)
       return CommandResult(false, "", "Keyring name must be 1-255 characters");
 
-    auto existing = credRepo.findByName(r.namespaceId, r.name, CredentialType.keyring);
+    auto existing = credRepo.findByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring);
     if (!existing.isNull)
       return CommandResult(false, "", "Keyring already exists in this namespace");
 
@@ -82,10 +82,10 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     auto now = currentTimestamp();
 
     // Deactivate all current versions
-    versionRepo.deactivateAll(cred.id);
+    versionRepo.deactivateAll(cred.tenantId, cred.id);
 
     // Create new version
-    auto versionCount = versionRepo.countByKeyring(cred.id);
+    auto versionCount = versionRepo.countByKeyring(cred.tenantId, cred.id);
 
     KeyringVersion ver;
     ver.id = randomUUID();

@@ -51,6 +51,7 @@ struct UpdateCredentialRequest {
 
 struct CredentialResponse {
   CredentialId credentialId;
+  TenantId tenantId;
   string name;
   string type;
   string value;
