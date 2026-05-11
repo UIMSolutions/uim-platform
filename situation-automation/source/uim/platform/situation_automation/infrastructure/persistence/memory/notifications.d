@@ -12,34 +12,57 @@ mixin(ShowModule!());
 @safe:
 class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
 
+    // #region ByRecipient
     size_t countByRecipient(TenantId tenantId, string recipientId) {
         return findByRecipient(tenantId, recipientId).length;
     }
+
+    Notification[] filterByRecipient(Notification[] notifications, string recipientId) {
+        return notifications.filter!(n => n.recipientId == recipientId).array;
+    }
+
     Notification[] findByRecipient(TenantId tenantId, string recipientId) {
-        return findByTenant(tenantId).filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
+        return filterByRecipient(findByTenant(tenantId), recipientId);
     }
+
     void removeByRecipient(TenantId tenantId, string recipientId) {
-        findByRecipient(tenantId, recipientId).each!(n => remove(n.id));
+        findByRecipient(tenantId, recipientId).each!(n => remove(n));
+    }
+    // #endregion ByRecipient
+
+    // #region ByInstance
+    size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId) {
+        return findByInstance(tenantId, instanceId).length;
     }
 
-    size_t countByInstance(SituationInstanceId instanceId) {
-        return findByInstance(instanceId).length;
-    }
-    Notification[] findByInstance(SituationInstanceId instanceId) {
-        return findByTenant(tenantId).filter!(n => n.instanceId == instanceId).array;
-    }
-    void removeByInstance(SituationInstanceId instanceId) {
-        findByInstance(instanceId).each!(n => remove(n.id));
+    Notification[] filterByInstance(Notification[] notifications, SituationInstanceId instanceId) {
+        return notifications.filter!(n => n.instanceId == instanceId).array;
     }
 
+    Notification[] findByInstance(TenantId tenantId, SituationInstanceId instanceId) {
+        return filterByInstance(findByTenant(tenantId), instanceId);
+    }
+
+    void removeByInstance(TenantId tenantId, SituationInstanceId instanceId) {
+        findByInstance(tenantId, instanceId).each!(n => remove(n));
+    }
+    // #endregion ByInstance
+
+    // #region ByStatus
     size_t countByStatus(TenantId tenantId, NotificationStatus status) {
         return findByStatus(tenantId, status).length;
     }
-    Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
-        return findByTenant(tenantId).filter!(n => n.tenantId == tenantId && n.status == status).array;
-    }
-    void removeByStatus(TenantId tenantId, NotificationStatus status) {
-        findByStatus(tenantId, status).each!(n => remove(n.id));
+
+    Notification[] filterByStatus(Notification[] notifications, NotificationStatus status) {
+        return notifications.filter!(n => n.status == status).array;
     }
 
+    Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, NotificationStatus status) {
+        findByStatus(tenantId, status).each!(n => remove(n));
+    }
+    // #endregion ByStatus
 }

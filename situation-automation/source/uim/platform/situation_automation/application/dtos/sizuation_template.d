@@ -6,30 +6,30 @@ mixin(ShowModule!());
 @safe:
 struct CreateSituationTemplateRequest {
     TenantId tenantId;
-    string id;
+    SituationTemplateId situationTemplateId;
     string name;
     string description;
     string category;
     string defaultSeverity;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     string sourceSystem;
     string sourceTemplateId;
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
-    string escalationTargetUserId;
+    UserId escalationTargetUserId;
     UserId createdBy;
 }
 
 struct UpdateSituationTemplateRequest {
     TenantId tenantId;
-    string id;
+    SituationTemplateId situationTemplateId;
     string name;
     string description;
     string category;
     string defaultSeverity;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
-    string escalationTargetUserId;
+    UserId escalationTargetUserId;
     UserId updatedBy;
 }

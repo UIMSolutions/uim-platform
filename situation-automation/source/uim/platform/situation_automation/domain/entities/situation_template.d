@@ -47,8 +47,8 @@ struct SituationTemplate {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("category", category.toString())
-            .set("defaultSeverity", defaultSeverity.toString())
+            .set("category", category.to!string())
+            .set("defaultSeverity", defaultSeverity.to!string())
             .set("status", status.toString())
             .set("entityTypeId", entityTypeId)
             .set("conditions", conditions.map!(c => c.toJson()).array.toJson)

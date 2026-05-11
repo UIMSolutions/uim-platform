@@ -20,9 +20,9 @@ interface NotificationRepository : ITenantRepository!(Notification, Notification
     Notification[] findByRecipient(TenantId tenantId, string recipientId);
     void removeByRecipient(TenantId tenantId, string recipientId);
 
-    size_t countByInstance(SituationInstanceId instanceId);
-    Notification[] findByInstance(SituationInstanceId instanceId);
-    void removeByInstance(SituationInstanceId instanceId);
+    size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId);
+    Notification[] findByInstance(TenantId tenantId, SituationInstanceId instanceId);
+    void removeByInstance(TenantId tenantId, SituationInstanceId instanceId);
 
     size_t countByStatus(TenantId tenantId, NotificationStatus status);
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status);

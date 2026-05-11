@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 interface AutomationRuleRepository : ITenantRepository!(AutomationRule, AutomationRuleId) {
     
-    size_t countByTemplate(SituationTemplateId templateId);
-    AutomationRule[] findByTemplate(SituationTemplateId templateId);
-    void removeByTemplate(SituationTemplateId templateId);
+    size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
+    AutomationRule[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);
+    void removeByTemplate(TenantId tenantId, SituationTemplateId templateId);
     
     size_t countActive(TenantId tenantId);
     AutomationRule[] findActive(TenantId tenantId);

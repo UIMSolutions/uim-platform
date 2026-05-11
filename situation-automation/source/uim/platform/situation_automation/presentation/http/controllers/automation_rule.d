@@ -15,164 +15,164 @@ mixin(ShowModule!());
 @safe:
 
 class AutomationRuleController : PlatformController {
-    private ManageAutomationRulesUseCase usecase;
+  private ManageAutomationRulesUseCase usecase;
 
-    this(ManageAutomationRulesUseCase usecase) {
-        this.usecase = usecase;
+  this(ManageAutomationRulesUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
+    router.get("/api/v1/situation-automation/rules", &handleList);
+    router.get("/api/v1/situation-automation/rules/*", &handleGet);
+    router.post("/api/v1/situation-automation/rules", &handleCreate);
+    router.put("/api/v1/situation-automation/rules/*", &handleUpdate);
+    router.delete_("/api/v1/situation-automation/rules/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto j = req.json;
+      CreateAutomationRuleRequest r;
+      r.tenantId = tenantId;
+      r.templateId = SituationTemplateId(j.getString("templateId"));
+      r.id = AutomationRuleId(j.getString("id"));
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.priority = j.getString("priority");
+      r.executionOrder = j.getInteger("executionOrder");
+      r.createdBy = UserId(j.getString("createdBy"));
+
+      auto result = usecase.createAutomationRule(r);
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Automation rule created");
+
+        res.writeJsonBody(resp, 201);
+      } else {
+        writeError(res, 400, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto rules = usecase.listAutomationRules(tenantId);
 
-        router.get("/api/v1/situation-automation/rules", &handleList);
-        router.get("/api/v1/situation-automation/rules/*", &handleGet);
-        router.post("/api/v1/situation-automation/rules", &handleCreate);
-        router.put("/api/v1/situation-automation/rules/*", &handleUpdate);
-        router.delete_("/api/v1/situation-automation/rules/*", &handleDelete);
+      auto jarr = Json.emptyArray;
+      foreach (r; rules) {
+        jarr ~= Json.emptyObject
+          .set("id", r.id)
+          .set("name", r.name)
+          .set("templateId", r.templateId)
+          .set("status", r.status.to!string)
+          .set("priority", r.priority.to!string)
+          .set("enabled", r.enabled)
+          .set("executionOrder", r.executionOrder)
+          .set("triggerCount", r.triggerCount)
+          .set("successCount", r.successCount)
+          .set("failureCount", r.failureCount)
+          .set("createdAt", r.createdAt);
+      }
+
+      auto resp = Json.emptyObject
+        .set("count", Json(rules.length))
+        .set("resources", jarr);
+
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            CreateAutomationRuleRequest r;
-            r.tenantId = tenantId;
-            r.templateId = j.getString("templateId");
-            r.id = j.getString("id");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.priority = j.getString("priority");
-            r.executionOrder = j.getInteger("executionOrder");
-            r.createdBy = UserId(j.getString("createdBy"));
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
 
-            auto result = usecase.createAutomationRule(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation rule created");
-                
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+      auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      auto r = usecase.getAutomationRule(tenantId, id);
+      if (r.isNull) {
+        writeError(res, 404, "Automation rule not found");
+        return;
+      }
+
+      auto resp = Json.emptyObject
+        .set("id", r.id)
+        .set("name", r.name)
+        .set("description", r.description)
+        .set("templateId", r.templateId)
+        .set("status", r.status.to!string)
+        .set("priority", r.priority.to!string)
+        .set("enabled", r.enabled)
+        .set("executionOrder", r.executionOrder)
+        .set("createdBy", r.createdBy)
+        .set("updatedBy", r.updatedBy)
+        .set("createdAt", r.createdAt)
+        .set("updatedAt", r.updatedAt)
+        .set("lastTriggeredAt", r.lastTriggeredAt)
+        .set("triggerCount", r.triggerCount)
+        .set("successCount", r.successCount)
+        .set("failureCount", r.failureCount);
+
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto rules = usecase.listAutomationRules(tenantId);
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
 
-            auto jarr = Json.emptyArray;
-            foreach (r; rules) {
-                jarr ~= Json.emptyObject
-                    .set("id", r.id)
-                    .set("name", r.name)
-                    .set("templateId", r.templateId)
-                    .set("status", r.status.to!string)
-                    .set("priority", r.priority.to!string)
-                    .set("enabled", r.enabled)
-                    .set("executionOrder", r.executionOrder)
-                    .set("triggerCount", r.triggerCount)
-                    .set("successCount", r.successCount)
-                    .set("failureCount", r.failureCount)
-                    .set("createdAt", r.createdAt);
-            }
+      auto j = req.json;
+      UpdateAutomationRuleRequest r;
+      r.tenantId = tenantId;
+      r.automationRuleId = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.priority = j.getString("priority");
+      r.executionOrder = j.getInteger("executionOrder");
+      r.enabled = j.getBoolean("enabled", true);
+      r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto resp = Json.emptyObject
-                .set("count", Json(rules.length))
-                .set("resources", jarr);
+      auto result = usecase.updateAutomationRule(r);
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Automation rule updated");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        res.writeJsonBody(resp, 200);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getAutomationRule(tenantId, id);
-            if (r.isNull) {
-                writeError(res, 404, "Automation rule not found");
-                return;
-            }
+      auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteAutomationRule(tenantId, id);
+      if (result.success) {
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Automation rule deleted");
 
-            auto resp = Json.emptyObject
-                .set("id", r.id)
-                .set("name", r.name)
-                .set("description", r.description)
-                .set("templateId", r.templateId)
-                .set("status", r.status.to!string)
-                .set("priority", r.priority.to!string)
-                .set("enabled", r.enabled)
-                .set("executionOrder", r.executionOrder)
-                .set("createdBy", r.createdBy)
-                .set("updatedBy", r.updatedBy)
-                .set("createdAt", r.createdAt)
-                .set("updatedAt", r.updatedAt)
-                .set("lastTriggeredAt", r.lastTriggeredAt)
-                .set("triggerCount", r.triggerCount)
-                .set("successCount", r.successCount)
-                .set("failureCount", r.failureCount);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        res.writeJsonBody(resp, 200);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-
-            auto j = req.json;
-            UpdateAutomationRuleRequest r;
-            r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.priority = j.getString("priority");
-            r.executionOrder = j.getInteger("executionOrder");
-            r.enabled = j.getBoolean("enabled", true);
-            r.updatedBy = UserId(j.getString("updatedBy"));
-
-            auto result = usecase.updateAutomationRule(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation rule updated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-
-            auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteAutomationRule(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation rule deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+  }
 }

@@ -18,7 +18,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createSituationTemplate(CreateSituationTemplateRequest r) {
-        auto err = SituationEvaluator.validate(r.tenantId, r.situationTemplateId, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.situationTemplateId.value, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
@@ -26,21 +26,21 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Situation template already exists");
 
-        SituationTemplate temp;
-        temp.initEntity(r.tenantId, r.situationTemplateId, r.createdBy);
+        SituationTemplate templ;
+        templ.initEntity(r.tenantId, r.situationTemplateId, r.createdBy);
 
-        temp.name = r.name;
-        temp.description = r.description;
-        temp.status = TemplateStatus.draft;
-        temp.entityTypeId = r.entityTypeId;
-        temp.sourceSystem = r.sourceSystem;
-        temp.sourceTemplateId = r.sourceTemplateId;
-        temp.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
-        temp.escalationEnabled = r.escalationEnabled;
-        temp.escalationTargetUserId = r.escalationTargetUserId;
+        templ.name = r.name;
+        templ.description = r.description;
+        templ.status = TemplateStatus.draft;
+        templ.entityTypeId = r.entityTypeId;
+        templ.sourceSystem = r.sourceSystem;
+        templ.sourceTemplateId = r.sourceTemplateId;
+        templ.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
+        templ.escalationEnabled = r.escalationEnabled;
+        templ.escalationTargetUserId = r.escalationTargetUserId;
 
-        repo.save(temp);
-        return CommandResult(true, temp.id.value, "");
+        repo.save(templ);
+        return CommandResult(true, templ.id.value, "");
     }
 
     SituationTemplate getSituationTemplate(TenantId tenantId, SituationTemplateId id) {
@@ -56,23 +56,20 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSituationTemplate(UpdateSituationTemplateRequest r) {
-        auto existing = repo.findById(r.tenantId, r.situationTemplateId);
-        if (existing.isNull)
+        auto templ = repo.findById(r.tenantId, r.situationTemplateId);
+        if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.entityTypeId = r.entityTypeId;
-        existing.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
-        existing.escalationEnabled = r.escalationEnabled;
-        existing.escalationTargetUserId = r.escalationTargetUserId;
-        existing.updatedBy = r.updatedBy;
+        templ.updateEntity(r.updatedBy);
+        templ.name = r.name;
+        templ.description = r.description;
+        templ.entityTypeId = r.entityTypeId;
+        templ.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
+        templ.escalationEnabled = r.escalationEnabled;
+        templ.escalationTargetUserId = r.escalationTargetUserId;
 
-        import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
-
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(templ);
+        return CommandResult(true, templ.id.value, "");
     }
 
     CommandResult deleteSituationTemplate(TenantId tenantId, SituationTemplateId id) {

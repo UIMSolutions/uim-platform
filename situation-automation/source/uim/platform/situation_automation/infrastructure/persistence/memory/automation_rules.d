@@ -12,23 +12,34 @@ mixin(ShowModule!());
 @safe:
 class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, AutomationRuleId), AutomationRuleRepository {
 
-    size_t countByTemplate(SituationTemplateId templateId) {
-        return findByTemplate(templateId).length;
+    // #region ByTemplate
+    size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId) {
+        return findByTemplate(tenantId, templateId).length;
     }
-    AutomationRule[] findByTemplate(SituationTemplateId templateId) {
-        return findByTenant(tenantId).filter!(r => r.templateId == templateId).array;
+    AutomationRule[] filterByTemplate(AutomationRule[] rules, SituationTemplateId templateId) {
+        return rules.filter!(r => r.templateId == templateId).array;
     }
-    void removeByTemplate(SituationTemplateId templateId) {
-        findByTemplate(templateId).each!(r => remove(r.id));
+    AutomationRule[] findByTemplate(TenantId tenantId, SituationTemplateId templateId) {
+        return filterByTemplate(findByTenant(tenantId), templateId);
     }
+    void removeByTemplate(TenantId tenantId, SituationTemplateId templateId) {
+        findByTemplate(tenantId, templateId).each!(r => remove(r));
+    }
+    // #endregion ByTemplate
 
+    // #region Active rules
     size_t countActive(TenantId tenantId) {
         return findActive(tenantId).length;
     }
+    AutomationRule[] filterActive(AutomationRule[] rules) {
+        return rules.filter!(r => r.enabled && r.status == RuleStatus.active).array;
+    }
     AutomationRule[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(r => r.enabled && r.status == RuleStatus.active).array;
+        return filterActive(findByTenant(tenantId));
     }
     void removeActive(TenantId tenantId) {
-        findActive(tenantId).each!(r => remove(r.id));
+        findActive(tenantId).each!(r => remove(r));
     }
+    // #endregion Active rules
+
 }

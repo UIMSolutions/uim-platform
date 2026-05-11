@@ -16,7 +16,7 @@ struct DataContext {
 
     SituationInstanceId instanceId;
     string entityId;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     string[][] data;
     string sourceSystem;
     bool containsPersonalData;
@@ -27,7 +27,7 @@ struct DataContext {
         auto j = entityToJson
             .set("instanceId", instanceId.value)
             .set("entityId", entityId)
-            .set("entityTypeId", entityTypeId)
+            .set("entityTypeId", entityTypeId.value)
             .set("data", data.map!(row => row.array.toJson).array.toJson)
             .set("sourceSystem", sourceSystem)
             .set("containsPersonalData", containsPersonalData)

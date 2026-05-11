@@ -21,6 +21,19 @@ struct ApiConfig {
     string bodyTemplate;
     int timeoutSeconds;
     int retryCount;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("baseUrl", baseUrl)
+            .set("path", path)
+            .set("method", method.to!string())
+            .set("authType", authType)
+            .set("destinationName", destinationName)
+            .set("headers", headers.map!(h => [h[0], h[1]]).array.toJson)
+            .set("bodyTemplate", bodyTemplate)
+            .set("timeoutSeconds", timeoutSeconds)
+            .set("retryCount", retryCount);
+    }
 }
 
 struct SituationAction {
@@ -42,8 +55,8 @@ struct SituationAction {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("type", type.toString())
-            .set("status", status.toString())
+            .set("type", type.to!string())
+            .set("status", status.to!string())
             .set("apiConfig", apiConfig.toJson())
             .set("webhookUrl", webhookUrl)
             .set("emailTemplate", emailTemplate)

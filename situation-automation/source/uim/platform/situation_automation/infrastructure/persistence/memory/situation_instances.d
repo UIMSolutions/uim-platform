@@ -12,22 +12,25 @@ mixin(ShowModule!());
 @safe:
 class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId) {
 
-    size_t countByTemplate(SituationTemplateId templateId) {
-        return findByTemplate(templateId).length;
+    // #region ByTemplate
+    size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId) {
+        return findByTemplate(tenantId, templateId).length;
     }
 
     SituationInstance[] filterByTemplate(SituationInstance[] instances, SituationTemplateId templateId) {
         return instances.filter!(i => i.templateId == templateId).array;
     }
 
-    SituationInstance[] findByTemplate(SituationTemplateId templateId) {
+    SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId) {
         return filterByTemplate(findByTenant(tenantId), templateId);
     }
 
-    void removeByTemplate(SituationTemplateId templateId) {
-        findByTemplate(templateId).each!(i => remove(i));
+    void removeByTemplate(TenantId tenantId, SituationTemplateId templateId) {
+        findByTemplate(tenantId, templateId).each!(i => remove(i));
     }
+    // #endregion ByTemplate
 
+    // #region ByStatus
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
         return findByStatus(tenantId, status).length;
     }
@@ -43,7 +46,9 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
         findByStatus(tenantId, status).each!(i => remove(i));
     }
+    // #endregion ByStatus
 
+    // #region ByEntity
     size_t countByEntity(TenantId tenantId, string entityId) {
         return findByEntity(tenantId, entityId).length;
     }
@@ -59,5 +64,6 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     void removeByEntity(TenantId tenantId, string entityId) {
         findByEntity(tenantId, entityId).each!(i => remove(i));
     }
+    // #endregion ByEntity
 
 }

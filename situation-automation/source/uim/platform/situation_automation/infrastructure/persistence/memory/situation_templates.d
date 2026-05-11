@@ -12,30 +12,40 @@ mixin(ShowModule!());
 @safe:
 class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, SituationTemplateId), SituationTemplateRepository {
 
-size_t countByCategory(TenantId tenantId, SituationCategory category) {
+    // #region ByCategory
+    size_t countByCategory(TenantId tenantId, SituationCategory category) {
         return findByCategory(tenantId, category).length;
     }
+
     SituationTemplate[] filterByCategory(SituationTemplate[] templates, SituationCategory category) {
         return templates.filter!(t => t.category == category).array;
     }
+
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category) {
         return filterByCategory(findByTenant(tenantId), category);
     }
+
     void removeByCategory(TenantId tenantId, SituationCategory category) {
         findByCategory(tenantId, category).each!(t => remove(t));
     }
+    // #endregion ByCategory
 
+    // #region ByEntityType
     size_t countByEntityType(TenantId tenantId, string entityTypeId) {
         return findByEntityType(tenantId, entityTypeId).length;
     }
+
     SituationTemplate[] filterByEntityType(SituationTemplate[] templates, string entityTypeId) {
         return templates.filter!(t => t.entityTypeId == entityTypeId).array;
     }
+
     SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId) {
         return filterByEntityType(findByTenant(tenantId), entityTypeId);
     }
+
     void removeByEntityType(TenantId tenantId, string entityTypeId) {
         findByEntityType(tenantId, entityTypeId).each!(t => remove(t));
     }
-
+    // #endregion ByEntityType
+    
 }

@@ -18,9 +18,9 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createSituationInstance(CreateSituationInstanceRequest r) {
-        if (r.isNull)
+        if (r.situationInstanceId.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
-        if (r.templateId.isEmpty)
+        if (r.situationTemplateId.isEmpty)
             return CommandResult(false, "", "Template ID is required");
 
         auto existing = repo.findById(r.tenantId, r.situationInstanceId);
@@ -29,7 +29,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
 
         SituationInstance i;
         i.initEntity(r.tenantId, r.situationInstanceId);
-        i.templateId = r.templateId;
+        i.templateId = r.situationTemplateId;
         i.description = r.description;
         i.status = InstanceStatus.open;
         i.entityId = r.entityId;
@@ -39,7 +39,6 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         i.sourceSystem = r.sourceSystem;
         i.sourceInstanceId = r.sourceInstanceId;
         i.dueAt = r.dueAt;
-
         i.detectedAt = i.updatedAt;
 
         repo.save(i);

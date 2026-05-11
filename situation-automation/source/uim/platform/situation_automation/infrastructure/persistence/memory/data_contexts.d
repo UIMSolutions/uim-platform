@@ -12,19 +12,22 @@ mixin(ShowModule!());
 @safe:
 class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId), DataContextRepository {
 
-    size_t countByInstance(SituationInstanceId instanceId) {
-        return findByInstance(instanceId).length;
+    // #region ByInstance
+    size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId) {
+        return findByInstance(tenantId, instanceId).length;
     }
      DataContext[] filterByInstance(DataContext[] contexts, SituationInstanceId instanceId) {
         return contexts.filter!(d => d.instanceId == instanceId).array;
     }
-    DataContext[] findByInstance(SituationInstanceId instanceId) {
+    DataContext[] findByInstance(TenantId tenantId, SituationInstanceId instanceId) {
         return filterByInstance(findByTenant(tenantId), instanceId);
     }
-    void removeByInstance(SituationInstanceId instanceId) {
-        findByInstance(instanceId).each!(d => remove(d));
+    void removeByInstance(TenantId tenantId, SituationInstanceId instanceId) {
+        findByInstance(tenantId, instanceId).each!(d => remove(d));
     }
+    // #endregion ByInstance
 
+    // #region ByPersonalData
     size_t countByPersonalData(TenantId tenantId) {
         return findByPersonalData(tenantId).length;
     }
@@ -37,5 +40,6 @@ class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId
     void removeByPersonalData(TenantId tenantId) {
         findByPersonalData(tenantId).each!(d => remove(d));
     }
+    // #endregion ByPersonalData
 
 }

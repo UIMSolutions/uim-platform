@@ -12,14 +12,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
 
+    // #region ByType
     size_t countByType(TenantId tenantId, DashboardType type) {
         return findByType(tenantId, type).length;
     }
+    Dashboard[] filterByType(Dashboard[] dashboards, DashboardType type) {
+        return dashboards.filter!(d => d.type == type).array;
+    }
     Dashboard[] findByType(TenantId tenantId, DashboardType type) {
-        return findByTenant(tenantId).filter!(d => d.type == type).array;
+        return filterByType(findByTenant(tenantId), type);
     }
     void removeByType(TenantId tenantId, DashboardType type) {
-        findByType(tenantId, type).each!(d => remove(d.id));
+        findByType(tenantId, type).each!(d => remove(d));
     }
+    // #endregion ByType
 
 }

@@ -12,6 +12,7 @@ mixin(ShowModule!());
 @safe:
 class MemoryEntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), EntityTypeRepository {
 
+    // #region ByCategory
     size_t countByCategory(TenantId tenantId, EntityCategory category) {
         return findByCategory(tenantId, category).length;
     }
@@ -27,4 +28,6 @@ class MemoryEntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), 
     void removeByCategory(TenantId tenantId, EntityCategory category) {
         findByCategory(tenantId, category).each!(e => remove(e));
     }
+    // #endregion ByCategory
+
 }

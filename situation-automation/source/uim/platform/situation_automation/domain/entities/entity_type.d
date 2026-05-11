@@ -40,7 +40,7 @@ struct EntityType {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("category", category.toString())
+            .set("category", category.to!string())
             .set("sourceSystem", sourceSystem)
             .set("attributes", attributes.map!(attr => attr.toJson()).array.toJson)
             .set("relatedTemplateIds", relatedTemplateIds.array.toJson);

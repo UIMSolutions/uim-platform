@@ -18,7 +18,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createEntityType(CreateEntityTypeRequest r) {
-        auto err = SituationEvaluator.validate(r.tenantId, r.entityTypeId, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.entityTypeId.value, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct Notification {
     mixin TenantEntity!(NotificationId);
 
-    SituationInstanceId instanceId;
+    SituationInstanceId situationInstanceId;
     string recipientId;
     string title;
     string message;
@@ -27,13 +27,13 @@ struct Notification {
 
     Json toJson() const {
         auto j = entityToJson
-            .set("instanceId", instanceId.value)
+            .set("situationInstanceId", situationInstanceId.value)
             .set("recipientId", recipientId)
             .set("title", title)
             .set("message", message)
-            .set("channel", channel.toString())
-            .set("status", status.toString())
-            .set("priority", priority.toString())
+            .set("channel", channel.to!string())
+            .set("status", status.to!string())
+            .set("priority", priority.to!string())
             .set("actionUrl", actionUrl)
             .set("sentAt", sentAt)
             .set("readAt", readAt);

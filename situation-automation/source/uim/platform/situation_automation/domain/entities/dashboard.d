@@ -20,7 +20,7 @@ struct DashboardMetric {
     Json toJson() const {
         return Json.emptyObject
             .set("name", name)
-            .set("type", type.toString())
+            .set("type", type.to!string())
             .set("field", field)
             .set("filterExpression", filterExpression);
     }
@@ -59,11 +59,11 @@ struct Dashboard {
         auto j = entityToJson
             .set("name", name)
             .set("description", description)
-            .set("type", type.toString())
+            .set("type", type.to!string())
             .set("widgets", widgets.map!(w => w.toJson()).array.toJson)
-            .set("defaultTimeRange", Json.emptyObject
-                    .set("startTime", defaultTimeRange.startTime)
-                    .set("endTime", defaultTimeRange.endTime))
+            // TODO: .set("defaultTimeRange", Json.emptyObject
+            //         .set("startTime", defaultTimeRange.startTime)
+            //         .set("endTime", defaultTimeRange.endTime))
             .set("refreshIntervalSeconds", refreshIntervalSeconds);
 
         return j;

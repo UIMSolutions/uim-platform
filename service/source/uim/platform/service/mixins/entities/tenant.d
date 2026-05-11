@@ -70,7 +70,7 @@ mixin template TenantEntity(TId) {
   }
 
   void updatedEntity(UserId byUser) {
-    updateEntity();
+    updatedAt = Clock.currStdTime();
     updatedBy = byUser;
   }
 

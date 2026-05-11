@@ -35,9 +35,10 @@ class DataContextController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateDataContextRequest r;
             r.tenantId = tenantId;
-            r.instanceId = j.getString("instanceId");
+            r.instanceId = SituationInstanceId(j.getString("instanceId"));
             r.id = j.getString("id");
             r.entityId = j.getString("entityId");
             r.entityTypeId = j.getString("entityTypeId");

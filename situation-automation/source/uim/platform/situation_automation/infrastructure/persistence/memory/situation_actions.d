@@ -13,6 +13,7 @@ mixin(ShowModule!());
 
 class MemorySituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
 
+    // #region ByType
     size_t countByType(TenantId tenantId, ActionType type) {
         return findByType(tenantId, type).length;
     }
@@ -28,5 +29,6 @@ class MemorySituationActionRepository : TenantRepository!(SituationAction, Situa
     void removeByType(TenantId tenantId, ActionType type) {
         findByType(tenantId, type).each!(a => remove(a));
     }
+    // #endregion ByType
     
 }

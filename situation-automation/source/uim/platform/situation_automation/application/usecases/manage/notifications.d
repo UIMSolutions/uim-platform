@@ -18,7 +18,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createNotification(CreateNotificationRequest r) {
-        if (r.isNull)
+        if (r.notificationId.isEmpty)
             return CommandResult(false, "", "Notification ID is required");
         if (r.recipientId.isEmpty)
             return CommandResult(false, "", "Recipient ID is required");
@@ -30,14 +30,11 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         Notification n;
         n.initEntity(r.tenantId, r.notificationId);
         n.instanceId = r.situationInstanceId;
-        n.recipientId = r.recipientId;
+        n.recipientId = r.recipientId.value;
         n.title = r.title;
         n.message = r.message;
         n.status = NotificationStatus.pending;
         n.actionUrl = r.actionUrl;
-
-        import core.time : MonoTime;
-        n.createdAt = MonoTime.currTime.ticks;
 
         repo.save(n);
         return CommandResult(true, n.id.value, "");
@@ -55,30 +52,30 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         return repo.findByRecipient(tenantId, recipientId);
     }
 
-    Notification[] listNotifications(SituationInstanceId instanceId) {
-        return repo.findByInstance(instanceId);
+    Notification[] listNotifications(TenantId tenantId, SituationInstanceId instanceId) {
+        return repo.findByInstance(tenantId, instanceId);
     }
 
     CommandResult updateNotification(UpdateNotificationRequest r) {
-        auto existing = repo.findById(r.tenantId, r.notificationId);
-        if (existing.isNull)
+        auto notification = repo.findById(r.tenantId, r.notificationId);
+        if (notification.isNull)
             return CommandResult(false, "", "Notification not found");
 
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
 
         if (r.status == "sent") {
-            existing.status = NotificationStatus.sent;
-            existing.sentAt = now;
+            notification.status = NotificationStatus.sent;
+            notification.sentAt = now;
         } else if (r.status == "read") {
-            existing.status = NotificationStatus.read_;
-            existing.readAt = now;
+            notification.status = NotificationStatus.read_;
+            notification.readAt = now;
         } else if (r.status == "acknowledged") {
-            existing.status = NotificationStatus.acknowledged;
+            notification.status = NotificationStatus.acknowledged;
         }
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(notification);
+        return CommandResult(true, notification.id.value, "");
     }
 
     CommandResult deleteNotification(TenantId tenantId, NotificationId id) {

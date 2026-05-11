@@ -28,7 +28,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Data context already exists");
 
         DataContext d;
-        d.initEntity(r.tenantId, r.dataContextId, r.createdBy);
+        d.initEntity(r.tenantId, r.dataContextId);
 
         d.instanceId = r.situationInstanceId;
         d.entityId = r.entityId;
@@ -62,12 +62,12 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         if (context.isNull)
             return CommandResult(false, "", "Data context not found");
 
-        repo.remove(tenantId, context.id);
+        repo.remove(context);
         return CommandResult(true, context.id.value, "");
     }
 
     CommandResult deletePersonalData(TenantId tenantId) {
-        auto items = repo.findPersonalData(tenantId);
+        auto items = repo.findByPersonalData(tenantId);
         foreach (item; items) {
             repo.remove(item);
         }

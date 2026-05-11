@@ -21,9 +21,9 @@ struct RuleCondition {
     Json toJson() const {
         return Json.emptyObject
             .set("field", field)
-            .set("operator", operator)
+            .set("operator", operator.to!string())
             .set("value", value)
-            .set("logicalOp", logicalOp);
+            .set("logicalOp", logicalOp.to!string());
     }
 }
 
@@ -36,7 +36,7 @@ struct RuleAction {
     Json toJson() const {
         return Json.emptyObject
             .set("actionId", actionId)
-            .set("parameters", parameters)
+            .set("parameters", parameters.map!(row => row.array.toJson).array.toJson)
             .set("order", order)
             .set("stopOnFailure", stopOnFailure);
     }
@@ -64,8 +64,8 @@ struct AutomationRule {
             .set("templateId", templateId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status.toString())
-            .set("priority", priority.toString())
+            .set("status", status.to!string())
+            .set("priority", priority.to!string())
             .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
             .set("actions", actions.map!(a => a.toJson()).array.toJson)
             .set("executionOrder", executionOrder)

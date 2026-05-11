@@ -45,20 +45,17 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDashboard(UpdateDashboardRequest r) {
-        auto existing = repo.findById(r.tenantId, r.dashboardId);
-        if (existing.isNull)
+        auto dashboard = repo.findById(r.tenantId, r.dashboardId);
+        if (dashboard.isNull)
             return CommandResult(false, "", "Dashboard not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.refreshIntervalSeconds = r.refreshIntervalSeconds;
-        existing.updatedBy = r.updatedBy;
+        dashboard.updateEntity(r.updatedBy);
+        dashboard.name = r.name;
+        dashboard.description = r.description;
+        dashboard.refreshIntervalSeconds = r.refreshIntervalSeconds;
 
-        import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
-
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(dashboard);
+        return CommandResult(true, dashboard.id.value, "");
     }
 
     CommandResult deleteDashboard(TenantId tenantId, DashboardId id) {

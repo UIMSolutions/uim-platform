@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 interface DataContextRepository : ITenantRepository!(DataContext, DataContextId) {
 
-    size_t countByInstance(SituationInstanceId instanceId);
-    DataContext[] findByInstance(SituationInstanceId instanceId);
-    void removeByInstance(SituationInstanceId instanceId);
+    size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId);
+    DataContext[] findByInstance(TenantId tenantId, SituationInstanceId instanceId);
+    void removeByInstance(TenantId tenantId, SituationInstanceId instanceId);
 
     size_t countByPersonalData(TenantId tenantId);
     DataContext[] findByPersonalData(TenantId tenantId);

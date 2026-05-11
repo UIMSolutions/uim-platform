@@ -60,14 +60,11 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
+        rule.updateEntity(r.updatedBy);
         rule.name = r.name;
         rule.description = r.description;
         rule.executionOrder = r.executionOrder;
         rule.enabled = r.enabled;
-        rule.updatedBy = r.updatedBy;
-
-        import core.time : MonoTime;
-        rule.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(rule);
         return CommandResult(true, rule.id.value, "");

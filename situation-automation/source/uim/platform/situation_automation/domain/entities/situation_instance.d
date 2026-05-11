@@ -18,17 +18,27 @@ struct ResolutionInfo {
     string ruleId;
     string outcome;
     long resolvedAt;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("type", type.to!string())
+            .set("resolvedBy", resolvedBy)
+            .set("actionId", actionId)
+            .set("ruleId", ruleId)
+            .set("outcome", outcome)
+            .set("resolvedAt", resolvedAt);
+    }
 }
 
 struct SituationInstance {
     mixin TenantEntity!(SituationInstanceId);
 
-    SituationTemplateId templateId;
+    SituationTemplateId situationTemplateId;
     string description;
     InstanceStatus status;
     SituationSeverity severity;
     string entityId;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     string[][] contextData;
     ResolutionInfo resolution;
     string assignedTo;
@@ -40,20 +50,14 @@ struct SituationInstance {
     
     Json toJson() const {
         auto j = entityToJson
-            .set("templateId", templateId.value)
+            .set("situationTemplateId", situationTemplateId.value)
             .set("description", description)
-            .set("status", status)
-            .set("severity", severity)
+            .set("status", status.to!string())
+            .set("severity", severity.to!string())
             .set("entityId", entityId)
-            .set("entityTypeId", entityTypeId)
+            .set("entityTypeId", entityTypeId.value)
             .set("contextData", contextData.map!(cd => cd.array.toJson).array.toJson)
-            .set("resolution", resolution.type != ResolutionType.none ? Json.init
-                .set("type", resolution.type)
-                .set("resolvedBy", resolution.resolvedBy)
-                .set("actionId", resolution.actionId)
-                .set("ruleId", resolution.ruleId)
-                .set("outcome", resolution.outcome)
-                .set("resolvedAt", resolution.resolvedAt) : Json(null))
+            .set("resolution", resolution.toJson())
             .set("assignedTo", assignedTo)
             .set("sourceSystem", sourceSystem)
             .set("sourceInstanceId", sourceInstanceId)
