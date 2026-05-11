@@ -1,13 +1,17 @@
 module uim.platform.situation_automation.application.dtos.situation_instance;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateSituationInstanceRequest {
     TenantId tenantId;
-    string templateId;
-    string id;
+    SituationTemplateId situationTemplateId;
+    SituationInstanceId situationInstanceId;
     string description;
-    string severity;
+    SituationSeverity severity;
     string entityId;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     string[][] contextData;
     string assignedTo;
     string sourceSystem;
@@ -17,15 +21,15 @@ struct CreateSituationInstanceRequest {
 
 struct UpdateSituationInstanceRequest {
     TenantId tenantId;
-    string id;
+    SituationInstanceId situationInstanceId;
     string status;
-    string severity;
+    SituationSeverity severity;
     string assignedTo;
 }
 
 struct ResolveSituationRequest {
     TenantId tenantId;
-    string id;
+    SituationInstanceId situationInstanceId;
     string resolutionType;
     string resolvedBy;
     string actionId;

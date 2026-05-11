@@ -1,5 +1,9 @@
 module uim.platform.situation_automation.application.dtos.sizuation_template;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateSituationTemplateRequest {
     TenantId tenantId;
     string id;

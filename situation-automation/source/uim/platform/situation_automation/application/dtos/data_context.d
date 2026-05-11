@@ -1,11 +1,16 @@
 module uim.platform.situation_automation.application.dtos.data_context;
 
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 struct CreateDataContextRequest {
     TenantId tenantId;
-    string instanceId;
-    string id;
+    SituationInstanceId situationInstanceId;
+    DataContextId dataContextId;
     string entityId;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     string[][] data;
     string sourceSystem;
     bool containsPersonalData;
@@ -14,5 +19,5 @@ struct CreateDataContextRequest {
 
 struct DeleteDataContextRequest {
     TenantId tenantId;
-    string id;
+    DataContextId dataContextId;
 }

@@ -1,8 +1,12 @@
 module uim.platform.situation_automation.application.dtos.entity_type;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateEntityTypeRequest {
     TenantId tenantId;
-    string id;
+    EntityTypeId entityTypeId;
     string name;
     string description;
     string category;
@@ -12,7 +16,7 @@ struct CreateEntityTypeRequest {
 
 struct UpdateEntityTypeRequest {
     TenantId tenantId;
-    string id;
+    EntityTypeId entityTypeId;
     string name;
     string description;
     string category;

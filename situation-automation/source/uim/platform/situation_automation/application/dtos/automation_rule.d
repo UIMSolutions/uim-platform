@@ -1,22 +1,26 @@
 module uim.platform.situation_automation.application.dtos.automation_rule;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateAutomationRuleRequest {
     TenantId tenantId;
-    string templateId;
-    string id;
+    SituationTemplateId situationTemplateId;
+    AutomationRuleId automationRuleId;
     string name;
     string description;
-    string priority;
+    AutomationRulePriority priority;
     int executionOrder;
     UserId createdBy;
 }
 
 struct UpdateAutomationRuleRequest {
     TenantId tenantId;
-    string id;
+    AutomationRuleId automationRuleId;
     string name;
     string description;
-    string priority;
+    AutomationRulePriority priority;
     int executionOrder;
     bool enabled;
     UserId updatedBy;

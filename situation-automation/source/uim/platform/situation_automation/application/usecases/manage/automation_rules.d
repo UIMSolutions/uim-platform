@@ -27,26 +27,20 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Automation rule already exists");
 
         AutomationRule rule;
+        rule.initEntity(r.tenantId, r.createdBy);
         rule.id = r.id;
         rule.templateId = r.templateId;
-        rule.tenantId = r.tenantId;
         rule.name = r.name;
         rule.description = r.description;
         rule.status = RuleStatus.draft;
         rule.executionOrder = r.executionOrder;
         rule.enabled = true;
-        rule.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        rule.createdAt = now;
-        rule.updatedAt = now;
 
         repo.save(rule);
         return CommandResult(true, rule.id.value, "");
     }
 
-    AutomationRule getAutomationRule(AutomationRuleId id) {
+    AutomationRule getAutomationRule(TenantId tenantId, AutomationRuleId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -54,8 +48,8 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    AutomationRule[] listAutomationRules(SituationTemplateId templateId) {
-        return repo.findByTemplate(templateId);
+    AutomationRule[] listAutomationRules(TenantId tenantId, SituationTemplateId templateId) {
+        return repo.findByTemplate(tenantId, templateId);
     }
 
     AutomationRule[] listActiveAutomationRules(TenantId tenantId) {
@@ -63,24 +57,24 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAutomationRule(UpdateAutomationRuleRequest r) {
-        auto existing = repo.findById(r.id);
-        if (existing.isNull)
+        auto rule = repo.findById(r.tenantId, r.id);
+        if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.executionOrder = r.executionOrder;
-        existing.enabled = r.enabled;
-        existing.updatedBy = r.updatedBy;
+        rule.name = r.name;
+        rule.description = r.description;
+        rule.executionOrder = r.executionOrder;
+        rule.enabled = r.enabled;
+        rule.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        rule.updatedAt = MonoTime.currTime.ticks;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
-    CommandResult deleteAutomationRule(AutomationRuleId id) {
+    CommandResult deleteAutomationRule(TenantId tenantId, AutomationRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");

@@ -1,8 +1,12 @@
 module uim.platform.situation_automation.application.dtos.situation_action;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateSituationActionRequest {
     TenantId tenantId;
-    string id;
+    SituationActionId situationActionId;
     string name;
     string description;
     string type;
@@ -19,7 +23,7 @@ struct CreateSituationActionRequest {
 
 struct UpdateSituationActionRequest {
     TenantId tenantId;
-    string id;
+    SituationActionId situationActionId;
     string name;
     string description;
     string baseUrl;

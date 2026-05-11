@@ -1,10 +1,14 @@
 module uim.platform.situation_automation.application.dtos.notification;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateNotificationRequest {
     TenantId tenantId;
-    string instanceId;
-    string id;
-    string recipientId;
+    SituationInstanceId situationInstanceId;
+    NotificationId notificationId;
+    UserId recipientId;
     string title;
     string message;
     string channel;
@@ -14,6 +18,6 @@ struct CreateNotificationRequest {
 
 struct UpdateNotificationRequest {
     TenantId tenantId;
-    string id;
+    NotificationId notificationId;
     string status;
 }
