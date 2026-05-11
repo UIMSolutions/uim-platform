@@ -120,7 +120,7 @@ class DocumentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto doc = usecase.getDocument(tenantId, id);
       if (doc.isNull) {
         writeError(res, 404, "Document not found");
@@ -189,7 +189,7 @@ class DocumentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.archiveDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -208,7 +208,7 @@ class DocumentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.deleteDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

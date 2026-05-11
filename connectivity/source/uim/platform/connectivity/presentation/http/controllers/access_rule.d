@@ -88,7 +88,7 @@ class AccessRuleController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto rule = usecase.getAccessRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Access rule not found");

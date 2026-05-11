@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers.repository;
 
-
 // import vibe.http.router;
 // import vibe.data.json;
 // 
@@ -40,7 +39,7 @@ class RepositoryController : PlatformController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateRepositoryRequest();
@@ -84,10 +83,10 @@ class RepositoryController : PlatformController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto repository = usecase.getRepository(tenantId, id);
       if (repository.isNull) {
         writeError(res, 404, "Repository not found");
@@ -100,7 +99,7 @@ class RepositoryController : PlatformController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -129,10 +128,10 @@ class RepositoryController : PlatformController {
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.activateRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -149,10 +148,10 @@ class RepositoryController : PlatformController {
   }
 
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.archiveRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -168,10 +167,10 @@ class RepositoryController : PlatformController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.deleteRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

@@ -133,7 +133,7 @@ class BrowseController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = FavoriteId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.deleteFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

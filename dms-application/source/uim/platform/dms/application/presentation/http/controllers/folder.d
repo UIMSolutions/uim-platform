@@ -86,7 +86,7 @@ class FolderController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto folder = usecase.getFolder(tenantId, id);
       if (folder.isNull) {
         writeError(res, 404, "Folder not found");

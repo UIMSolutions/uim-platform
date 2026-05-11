@@ -28,7 +28,7 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
     this.configRepo = configRepo;
   }
 
-  CommandResult writeLog(WriteAuditLogRequest req) {
+  CommandResult writeAuditLog(WriteAuditLogRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 

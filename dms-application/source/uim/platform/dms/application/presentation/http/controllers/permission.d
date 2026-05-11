@@ -163,7 +163,7 @@ class PermissionController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

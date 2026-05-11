@@ -85,7 +85,7 @@ class ShareController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto share = usecase.getShare(tenantId, id);
       if (share.isNull) {
         writeError(res, 404, "Share not found");
@@ -101,7 +101,7 @@ class ShareController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -121,7 +121,7 @@ class ShareController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.deleteShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
