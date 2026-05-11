@@ -38,8 +38,8 @@ class NotificationController : PlatformController {
 
             CreateNotificationRequest r;
             r.tenantId = tenantId;
-            r.instanceId = j.getString("instanceId");
-            r.id = j.getString("id");
+            r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
+            r.notificationId = NotificationId(j.getString("id"));
             r.recipientId = j.getString("recipientId");
             r.title = j.getString("title");
             r.message = j.getString("message");
@@ -71,7 +71,7 @@ class NotificationController : PlatformController {
             foreach (n; notifications) {
                 jarr ~= Json.emptyObject
                     .set("id", n.id)
-                    .set("instanceId", n.instanceId)
+                    .set("instanceId", n.situationInstanceId.value)
                     .set("recipientId", n.recipientId)
                     .set("title", n.title)
                     .set("channel", n.channel.to!string)
@@ -95,8 +95,8 @@ class NotificationController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto n = usecase.getNotification(tenantId, id);
+            auto notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
+            auto n = usecase.getNotification(tenantId, notificationId);
             if (n.isNull) {
                 writeError(res, 404, "Notification not found");
                 return;
@@ -104,7 +104,7 @@ class NotificationController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("id", n.id)
-                .set("instanceId", n.instanceId)
+                .set("instanceId", n.situationInstanceId.value)
                 .set("recipientId", n.recipientId)
                 .set("title", n.title)
                 .set("message", n.message)
@@ -131,7 +131,7 @@ class NotificationController : PlatformController {
             
             UpdateNotificationRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
             r.status = j.getString("status");
 
             auto result = usecase.updateNotification(r);
@@ -152,9 +152,9 @@ class NotificationController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
 
-            auto result = usecase.deleteNotification(tenantId, id);
+            auto result = usecase.deleteNotification(tenantId, notificationId);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

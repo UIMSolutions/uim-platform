@@ -28,7 +28,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
 
         AutomationRule rule;
         rule.initEntity(r.tenantId, r.automationRuleId, r.createdBy);
-        rule.templateId = r.situationTemplateId;
+        rule.situationTemplateId = r.situationTemplateId;
         rule.name = r.name;
         rule.description = r.description;
         rule.status = RuleStatus.draft;
@@ -60,7 +60,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
-        rule.updateEntity(r.updatedBy);
+        rule.updatedAt = Clock.currStdTime();
         rule.name = r.name;
         rule.description = r.description;
         rule.executionOrder = r.executionOrder;

@@ -37,8 +37,8 @@ class AutomationRuleController : PlatformController {
       auto j = req.json;
       CreateAutomationRuleRequest r;
       r.tenantId = tenantId;
-      r.templateId = SituationTemplateId(j.getString("templateId"));
-      r.id = AutomationRuleId(j.getString("id"));
+      r.situationTemplateId = SituationTemplateId(j.getString("templateId"));
+      r.automationRuleId = AutomationRuleId(j.getString("id"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");
@@ -68,9 +68,9 @@ class AutomationRuleController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (r; rules) {
         jarr ~= Json.emptyObject
-          .set("id", r.id)
+          .set("id", r.id.value)
           .set("name", r.name)
-          .set("templateId", r.templateId)
+          .set("situationTemplateId", r.situationTemplateId.value)
           .set("status", r.status.to!string)
           .set("priority", r.priority.to!string)
           .set("enabled", r.enabled)
@@ -103,10 +103,10 @@ class AutomationRuleController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-        .set("id", r.id)
+        .set("id", r.id.value)
         .set("name", r.name)
         .set("description", r.description)
-        .set("templateId", r.templateId)
+        .set("situationTemplateId", r.situationTemplateId.value)
         .set("status", r.status.to!string)
         .set("priority", r.priority.to!string)
         .set("enabled", r.enabled)

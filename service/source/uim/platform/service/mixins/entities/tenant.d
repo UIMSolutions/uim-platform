@@ -63,12 +63,6 @@ mixin template TenantEntity(TId) {
     updatedAt = Clock.currStdTime();
   }
 
-  void updateEntity(TenantId newTenantId, TId newId) {
-    id = newId;
-    tenantId = newTenantId;
-    updatedAt = Clock.currStdTime();
-  }
-
   void updatedEntity(UserId byUser) {
     updatedAt = Clock.currStdTime();
     updatedBy = byUser;

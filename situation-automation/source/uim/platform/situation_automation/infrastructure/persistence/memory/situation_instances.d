@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId) {
+class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId), SituationInstanceRepository{
 
     // #region ByTemplate
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId) {
@@ -18,7 +18,7 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] filterByTemplate(SituationInstance[] instances, SituationTemplateId templateId) {
-        return instances.filter!(i => i.templateId == templateId).array;
+        return instances.filter!(i => i.situationTemplateId == templateId).array;
     }
 
     SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId) {

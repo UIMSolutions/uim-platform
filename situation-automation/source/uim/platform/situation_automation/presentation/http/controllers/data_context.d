@@ -38,10 +38,10 @@ class DataContextController : PlatformController {
 
             CreateDataContextRequest r;
             r.tenantId = tenantId;
-            r.instanceId = SituationInstanceId(j.getString("instanceId"));
-            r.id = j.getString("id");
+            r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
+            r.dataContextId = DataContextId(j.getString("id"));
             r.entityId = j.getString("entityId");
-            r.entityTypeId = j.getString("entityTypeId");
+            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.data = jsonKeyValuePairs(j, "data");
             r.sourceSystem = j.getString("sourceSystem");
             r.containsPersonalData = j.getBoolean("containsPersonalData");
@@ -82,7 +82,7 @@ class DataContextController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("count", Json(contexts.length))
-                .set("resources", jarr);
+                .set("resources", jarr)
                 .set("message", "Data contexts retrieved");
 
             res.writeJsonBody(resp, 200);
@@ -93,9 +93,9 @@ class DataContextController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+
+            auto tenantId = req.getTenantId;
+            auto id = DataContextId(extractIdFromPath(req.requestURI.to!string));
             auto d = usecase.getDataContext(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Data context not found");
@@ -103,10 +103,10 @@ auto tenantId = req.getTenantId;
             }
 
             auto resp = Json.emptyObject
-                .set("id", d.id)
-                .set("instanceId", d.instanceId)
+                .set("id", d.id.value)
+                .set("instanceId", d.instanceId.value)
                 .set("entityId", d.entityId)
-                .set("entityTypeId", d.entityTypeId)
+                .set("entityTypeId", d.entityTypeId.value)
                 .set("sourceSystem", d.sourceSystem)
                 .set("containsPersonalData", d.containsPersonalData)
                 .set("capturedAt", d.capturedAt)
@@ -120,9 +120,9 @@ auto tenantId = req.getTenantId;
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;    
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = DataContextId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteDataContext(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
@@ -141,6 +141,7 @@ auto tenantId = req.getTenantId;
     private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
+
             auto result = usecase.deletePersonalData(tenantId);
             if (result.success) {
                 auto resp = Json.emptyObject

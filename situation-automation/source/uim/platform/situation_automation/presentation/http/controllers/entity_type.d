@@ -38,7 +38,7 @@ class EntityTypeController : PlatformController {
             
             CreateEntityTypeRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -90,9 +90,9 @@ class EntityTypeController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto entityTypeId = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
 
-            auto et = usecase.getEntityType(tenantId, id);
+            auto et = usecase.getEntityType(tenantId, entityTypeId);
             if (et.isNull) {
                 writeError(res, 404, "Entity type not found");
                 return;
@@ -119,11 +119,11 @@ class EntityTypeController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-
             auto j = req.json;
+            
             UpdateEntityTypeRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.entityTypeId = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");

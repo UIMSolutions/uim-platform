@@ -31,19 +31,19 @@ class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, S
     // #endregion ByCategory
 
     // #region ByEntityType
-    size_t countByEntityType(TenantId tenantId, string entityTypeId) {
+    size_t countByEntityType(TenantId tenantId, EntityTypeId entityTypeId) {
         return findByEntityType(tenantId, entityTypeId).length;
     }
 
-    SituationTemplate[] filterByEntityType(SituationTemplate[] templates, string entityTypeId) {
+    SituationTemplate[] filterByEntityType(SituationTemplate[] templates, EntityTypeId entityTypeId) {
         return templates.filter!(t => t.entityTypeId == entityTypeId).array;
     }
 
-    SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId) {
+    SituationTemplate[] findByEntityType(TenantId tenantId, EntityTypeId entityTypeId) {
         return filterByEntityType(findByTenant(tenantId), entityTypeId);
     }
 
-    void removeByEntityType(TenantId tenantId, string entityTypeId) {
+    void removeByEntityType(TenantId tenantId, EntityTypeId entityTypeId) {
         findByEntityType(tenantId, entityTypeId).each!(t => remove(t));
     }
     // #endregion ByEntityType

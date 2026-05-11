@@ -41,9 +41,9 @@ class SituationTemplateController : PlatformController {
             r.situationTemplateId = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.defaultSeverity = j.getString("defaultSeverity");
-            r.entityTypeId = j.getString("entityTypeId");
+            r.situationCategory = j.getString("situationCategory").to!SituationCategory;
+            r.defaultSeverity = j.getString("defaultSeverity").to!SituationSeverity;
+            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceTemplateId = j.getString("sourceTemplateId");
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
@@ -143,15 +143,15 @@ class SituationTemplateController : PlatformController {
             r.situationTemplateId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.defaultSeverity = j.getString("defaultSeverity");
-            r.entityTypeId = j.getString("entityTypeId");
+            r.situationCategory = j.getString("situationCategory").to!SituationCategory;
+            r.defaultSeverity = j.getString("defaultSeverity").to!SituationSeverity;
+            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateSituationTemplate(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

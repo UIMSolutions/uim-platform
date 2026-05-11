@@ -38,7 +38,7 @@ class SituationActionController : PlatformController {
 
             CreateSituationActionRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.situationActionId = SituationActionId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -52,7 +52,7 @@ class SituationActionController : PlatformController {
             r.scriptContent = j.getString("scriptContent");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createSituationAction(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -70,7 +70,7 @@ class SituationActionController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto actions = usecase.list(tenantId);
+            auto actions = usecase.listSituationActions(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
@@ -113,7 +113,7 @@ class SituationActionController : PlatformController {
                 .set("destinationName", a.apiConfig.destinationName);
 
             auto resp = Json.emptyObject
-                .set("id", a.id)
+                .set("id", a.id.value)
                 .set("name", a.name)
                 .set("description", a.description)
                 .set("type", a.type.to!string)
@@ -141,7 +141,7 @@ class SituationActionController : PlatformController {
 
             UpdateSituationActionRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.situationActionId = SituationActionId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.baseUrl = j.getString("baseUrl");

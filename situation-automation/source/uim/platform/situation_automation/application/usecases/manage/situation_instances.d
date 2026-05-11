@@ -29,7 +29,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
 
         SituationInstance i;
         i.initEntity(r.tenantId, r.situationInstanceId);
-        i.templateId = r.situationTemplateId;
+        i.situationTemplateId = r.situationTemplateId;
         i.description = r.description;
         i.status = InstanceStatus.open;
         i.entityId = r.entityId;

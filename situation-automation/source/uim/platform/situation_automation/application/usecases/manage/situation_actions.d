@@ -57,7 +57,8 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         if (action.isNull)
             return CommandResult(false, "", "Situation action not found");
 
-        action.updateEntity(r.updatedBy);
+        action.updatedAt = Clock.currStdTime();
+        action.updatedBy = r.updatedBy;
         action.name = r.name;
         action.description = r.description;
         action.apiConfig.baseUrl = r.baseUrl;

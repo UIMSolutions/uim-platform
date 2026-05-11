@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 interface SituationInstanceRepository : ITenantRepository!(SituationInstance, SituationInstanceId) {
 
-    size_t countByTemplate(SituationTemplateId templateId);
-    SituationInstance[] findByTemplate(SituationTemplateId templateId);
-    void removeByTemplate(SituationTemplateId templateId);
+    size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
+    SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);
+    void removeByTemplate(TenantId tenantId, SituationTemplateId templateId);
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status);
     SituationInstance[] findByStatus(TenantId tenantId, InstanceStatus status);

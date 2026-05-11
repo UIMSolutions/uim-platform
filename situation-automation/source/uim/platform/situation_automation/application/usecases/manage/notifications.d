@@ -29,7 +29,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
         Notification n;
         n.initEntity(r.tenantId, r.notificationId);
-        n.instanceId = r.situationInstanceId;
+        n.situationInstanceId = r.situationInstanceId;
         n.recipientId = r.recipientId.value;
         n.title = r.title;
         n.message = r.message;
@@ -40,7 +40,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, n.id.value, "");
     }
 
-    Notification getNotificationById(TenantId tenantId, NotificationId id) {
+    Notification getNotification(TenantId tenantId, NotificationId id) {
         return repo.findById(tenantId, id);
     }
 

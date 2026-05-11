@@ -20,7 +20,7 @@ struct ConditionDefinition {
     Json toJson() const {
         return Json.emptyObject
             .set("field", field)
-            .set("operator", operator)
+            .set("operator", operator.to!string())
             .set("value", value)
             .set("valueType", valueType);
     }
@@ -34,14 +34,14 @@ struct SituationTemplate {
     SituationCategory category;
     SituationSeverity defaultSeverity;
     TemplateStatus status;
-    string entityTypeId;
+    EntityTypeId entityTypeId;
     ConditionDefinition[] conditions;
     string[] suggestedActionIds;
     string sourceSystem;
     string sourceTemplateId;
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;
-    string escalationTargetUserId;
+    UserId escalationTargetUserId;
     
     Json toJson() const {
         return entityToJson
@@ -49,14 +49,14 @@ struct SituationTemplate {
             .set("description", description)
             .set("category", category.to!string())
             .set("defaultSeverity", defaultSeverity.to!string())
-            .set("status", status.toString())
-            .set("entityTypeId", entityTypeId)
+            .set("status", status.to!string())
+            .set("entityTypeId", entityTypeId.value)
             .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
-            .set("suggestedActionIds", suggestedActionIds)
+            .set("suggestedActionIds", suggestedActionIds.toJson)
             .set("sourceSystem", sourceSystem)
             .set("sourceTemplateId", sourceTemplateId)
             .set("autoResolveTimeoutMinutes", autoResolveTimeoutMinutes)
             .set("escalationEnabled", escalationEnabled)
-            .set("escalationTargetUserId", escalationTargetUserId);
+            .set("escalationTargetUserId", escalationTargetUserId.value);
     }
 }

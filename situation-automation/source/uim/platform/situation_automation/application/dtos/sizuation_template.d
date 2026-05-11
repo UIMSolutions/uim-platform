@@ -9,8 +9,8 @@ struct CreateSituationTemplateRequest {
     SituationTemplateId situationTemplateId;
     string name;
     string description;
-    string category;
-    string defaultSeverity;
+    SituationCategory situationCategory;
+    SituationSeverity defaultSeverity;
     EntityTypeId entityTypeId;
     string sourceSystem;
     string sourceTemplateId;
@@ -25,8 +25,8 @@ struct UpdateSituationTemplateRequest {
     SituationTemplateId situationTemplateId;
     string name;
     string description;
-    string category;
-    string defaultSeverity;
+    SituationCategory situationCategory;
+    SituationSeverity defaultSeverity;
     EntityTypeId entityTypeId;
     int autoResolveTimeoutMinutes;
     bool escalationEnabled;

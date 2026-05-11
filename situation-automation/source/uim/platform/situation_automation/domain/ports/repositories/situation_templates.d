@@ -20,8 +20,8 @@ interface SituationTemplateRepository : ITenantRepository!(SituationTemplate, Si
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category);
     void removeByCategory(TenantId tenantId, SituationCategory category);
 
-    size_t countByEntityType(TenantId tenantId, string entityTypeId);
-    SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId);
-    void removeByEntityType(TenantId tenantId, string entityTypeId);
+    size_t countByEntityType(TenantId tenantId, EntityTypeId entityTypeId);
+    SituationTemplate[] findByEntityType(TenantId tenantId, EntityTypeId entityTypeId);
+    void removeByEntityType(TenantId tenantId, EntityTypeId entityTypeId);
 
 }

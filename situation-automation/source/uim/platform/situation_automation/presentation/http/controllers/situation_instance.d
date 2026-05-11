@@ -39,12 +39,12 @@ class SituationInstanceController : PlatformController {
 
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
-            r.templateId = j.getString("templateId");
-            r.id = j.getString("id");
+            r.situationTemplateId = SituationTemplateId(j.getString("situationTemplateId"));
+            r.situationInstanceId = SituationInstanceId(j.getString("id"));
             r.description = j.getString("description");
-            r.severity = j.getString("severity");
+            r.severity = j.getString("severity").to!SituationSeverity;
             r.entityId = j.getString("entityId");
-            r.entityTypeId = j.getString("entityTypeId");
+            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.contextData = jsonKeyValuePairs(j, "contextData");
             r.assignedTo = j.getString("assignedTo");
             r.sourceSystem = j.getString("sourceSystem");
@@ -75,7 +75,7 @@ class SituationInstanceController : PlatformController {
             foreach (i; instances) {
                 jarr ~= Json.emptyObject
                     .set("id", i.id)
-                    .set("templateId", i.templateId)
+                    .set("situationTemplateId", i.situationTemplateId)
                     .set("description", i.description)
                     .set("status", i.status.to!string)
                     .set("severity", i.severity.to!string)
@@ -118,7 +118,7 @@ class SituationInstanceController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("id", i.id)
-                .set("templateId", i.templateId)
+                .set("situationTemplateId", i.situationTemplateId)
                 .set("description", i.description)
                 .set("status", i.status.to!string)
                 .set("severity", i.severity.to!string)
@@ -147,9 +147,9 @@ class SituationInstanceController : PlatformController {
 
             UpdateSituationInstanceRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.situationInstanceId = id;
             r.status = j.getString("status");
-            r.severity = j.getString("severity");
+            r.severity = j.getString("severity").to!SituationSeverity;
             r.assignedTo = j.getString("assignedTo");
 
             auto result = usecase.updateSituationInstance(r);
@@ -184,7 +184,7 @@ class SituationInstanceController : PlatformController {
             auto j = req.json;
             ResolveSituationRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.situationInstanceId = id;
             r.resolutionType = j.getString("resolutionType");
             r.resolvedBy = j.getString("resolvedBy");
             r.actionId = j.getString("actionId");

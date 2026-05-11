@@ -37,7 +37,7 @@ class DashboardController : PlatformController {
             auto j = req.json;
             CreateDashboardRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.dashboardId = DashboardId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -88,9 +88,8 @@ class DashboardController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
             auto d = usecase.getDashboard(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Dashboard not found");
@@ -117,11 +116,11 @@ class DashboardController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-
             auto j = req.json;
+
             UpdateDashboardRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.dashboardId = DashboardId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");

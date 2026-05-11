@@ -36,7 +36,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
     }
 
     Notification[] filterByInstance(Notification[] notifications, SituationInstanceId instanceId) {
-        return notifications.filter!(n => n.instanceId == instanceId).array;
+        return notifications.filter!(n => n.situationInstanceId == instanceId).array;
     }
 
     Notification[] findByInstance(TenantId tenantId, SituationInstanceId instanceId) {

@@ -37,7 +37,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    EntityType getEntityTypeById(TenantId tenantId, EntityTypeId id) {
+    EntityType getEntityType(TenantId tenantId, EntityTypeId id) {
         return repo.findById(tenantId, id);
     }
 

@@ -51,7 +51,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    SituationTemplate[] listSituationTemplates(TenantId tenantId, string entityTypeId) {
+    SituationTemplate[] listSituationTemplates(TenantId tenantId, EntityTypeId entityTypeId) {
         return repo.findByEntityType(tenantId, entityTypeId);
     }
 
@@ -60,7 +60,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");
 
-        templ.updateEntity(r.updatedBy);
+        templ.updatedAt = Clock.currStdTime();
         templ.name = r.name;
         templ.description = r.description;
         templ.entityTypeId = r.entityTypeId;

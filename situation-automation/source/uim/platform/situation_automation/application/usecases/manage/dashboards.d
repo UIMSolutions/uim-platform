@@ -49,7 +49,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         if (dashboard.isNull)
             return CommandResult(false, "", "Dashboard not found");
 
-        dashboard.updateEntity(r.updatedBy);
+        dashboard.updatedAt = Clock.currStdTime();
         dashboard.name = r.name;
         dashboard.description = r.description;
         dashboard.refreshIntervalSeconds = r.refreshIntervalSeconds;

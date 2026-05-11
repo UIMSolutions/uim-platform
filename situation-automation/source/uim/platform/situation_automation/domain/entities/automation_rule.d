@@ -43,9 +43,9 @@ struct RuleAction {
 }
 
 struct AutomationRule {
-    mixin TenantEntity!(AutomationRuleId);
+    mixin TenantEntity!AutomationRuleId;
 
-    SituationTemplateId templateId;
+    SituationTemplateId situationTemplateId;
     string name;
     string description;
     RuleStatus status;
@@ -61,7 +61,7 @@ struct AutomationRule {
 
     Json toJson() const {
         return entityToJson
-            .set("templateId", templateId.value)
+            .set("situationTemplateId", situationTemplateId.value)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string())
