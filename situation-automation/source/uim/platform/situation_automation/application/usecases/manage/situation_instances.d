@@ -23,14 +23,13 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         if (r.templateId.isEmpty)
             return CommandResult(false, "", "Template ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (!existing.isNull)
             return CommandResult(false, "", "Situation instance already exists");
 
         SituationInstance i;
-        i.id = r.id;
+        i.initEntity(r.tenantId, r.situationInstanceId);
         i.templateId = r.templateId;
-        i.tenantId = r.tenantId;
         i.description = r.description;
         i.status = InstanceStatus.open;
         i.entityId = r.entityId;
@@ -41,16 +40,13 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         i.sourceInstanceId = r.sourceInstanceId;
         i.dueAt = r.dueAt;
 
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        i.detectedAt = now;
-        i.updatedAt = now;
+        i.detectedAt = i.updatedAt;
 
         repo.save(i);
         return CommandResult(true, i.id.value, "");
     }
 
-    SituationInstance getSituationInstance(SituationInstanceId id) {
+    SituationInstance getSituationInstance(TenantId tenantId, SituationInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -58,8 +54,8 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    SituationInstance[] listSituationInstances(SituationTemplateId templateId) {
-        return repo.findByTemplate(templateId);
+    SituationInstance[] listSituationInstances(TenantId tenantId, SituationTemplateId templateId) {
+        return repo.findByTemplate(tenantId, templateId);
     }
 
     SituationInstance[] listSituationInstances(TenantId tenantId, InstanceStatus status) {
@@ -67,7 +63,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSituationInstance(UpdateSituationInstanceRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
 
@@ -82,7 +78,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult resolveSituationInstance(ResolveSituationRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
 
@@ -101,7 +97,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSituationInstance(SituationInstanceId id) {
+    CommandResult deleteSituationInstance(TenantId tenantId, SituationInstanceId id) {
         auto instance = repo.findById(tenantId, id);
         if (instance.isNull)
             return CommandResult(false, "", "Situation instance not found");

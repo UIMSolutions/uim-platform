@@ -18,38 +18,32 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createSituationTemplate(CreateSituationTemplateRequest r) {
-        auto err = SituationEvaluator.validate(r.id, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.situationTemplateId, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.situationTemplateId);
         if (!existing.isNull)
             return CommandResult(false, "", "Situation template already exists");
 
-        SituationTemplate t;
-        t.id = r.id;
-        t.tenantId = r.tenantId;
-        t.name = r.name;
-        t.description = r.description;
-        t.status = TemplateStatus.draft;
-        t.entityTypeId = r.entityTypeId;
-        t.sourceSystem = r.sourceSystem;
-        t.sourceTemplateId = r.sourceTemplateId;
-        t.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
-        t.escalationEnabled = r.escalationEnabled;
-        t.escalationTargetUserId = r.escalationTargetUserId;
-        t.createdBy = r.createdBy;
+        SituationTemplate temp;
+        temp.initEntity(r.tenantId, r.situationTemplateId, r.createdBy);
 
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        t.createdAt = now;
-        t.updatedAt = now;
+        temp.name = r.name;
+        temp.description = r.description;
+        temp.status = TemplateStatus.draft;
+        temp.entityTypeId = r.entityTypeId;
+        temp.sourceSystem = r.sourceSystem;
+        temp.sourceTemplateId = r.sourceTemplateId;
+        temp.autoResolveTimeoutMinutes = r.autoResolveTimeoutMinutes;
+        temp.escalationEnabled = r.escalationEnabled;
+        temp.escalationTargetUserId = r.escalationTargetUserId;
 
-        repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        repo.save(temp);
+        return CommandResult(true, temp.id.value, "");
     }
 
-    SituationTemplate getSituationTemplate(SituationTemplateId id) {
+    SituationTemplate getSituationTemplate(TenantId tenantId, SituationTemplateId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -62,7 +56,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSituationTemplate(UpdateSituationTemplateRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.situationTemplateId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation template not found");
 
@@ -81,7 +75,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSituationTemplate(SituationTemplateId id) {
+    CommandResult deleteSituationTemplate(TenantId tenantId, SituationTemplateId id) {
         auto templ = repo.findById(tenantId, id);
         if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");

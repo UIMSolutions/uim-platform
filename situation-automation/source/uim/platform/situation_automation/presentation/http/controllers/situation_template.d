@@ -35,9 +35,10 @@ class SituationTemplateController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateSituationTemplateRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.situationTemplateId = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -50,7 +51,7 @@ class SituationTemplateController : PlatformController {
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createSituationTemplate(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -68,7 +69,7 @@ class SituationTemplateController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto templates = usecase.list(tenantId);
+            auto templates = usecase.listSituationTemplates(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (t; templates) {
@@ -98,10 +99,10 @@ class SituationTemplateController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto t = usecase.getById(tenantId, id);
+            auto t = usecase.getSituationTemplate(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Situation template not found");
                 return;
@@ -133,12 +134,13 @@ class SituationTemplateController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
 
             auto j = req.json;
             UpdateSituationTemplateRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.situationTemplateId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -166,10 +168,10 @@ class SituationTemplateController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteSituationTemplate(id);
+            auto result = usecase.deleteSituationTemplate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

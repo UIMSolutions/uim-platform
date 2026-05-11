@@ -16,7 +16,7 @@ class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, Automat
         return findByTemplate(templateId).length;
     }
     AutomationRule[] findByTemplate(SituationTemplateId templateId) {
-        return findAll().filter!(r => r.templateId == templateId).array;
+        return findByTenant(tenantId).filter!(r => r.templateId == templateId).array;
     }
     void removeByTemplate(SituationTemplateId templateId) {
         findByTemplate(templateId).each!(r => remove(r.id));

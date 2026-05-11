@@ -18,25 +18,19 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDashboard(CreateDashboardRequest r) {
-        auto err = SituationEvaluator.validate(r.id, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.dashboardId.value, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.dashboardId);
         if (!existing.isNull)
             return CommandResult(false, "", "Dashboard already exists");
 
         Dashboard d;
-        d.initEntity(r.tenantId, r.createdBy);
-        d.id = r.dashboardId;
+        d.initEntity(r.tenantId, r.dashboardId, r.createdBy);
         d.name = r.name;
         d.description = r.description;
         d.refreshIntervalSeconds = r.refreshIntervalSeconds;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        d.createdAt = now;
-        d.updatedAt = now;
 
         repo.save(d);
         return CommandResult(true, d.id.value, "");
@@ -51,7 +45,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDashboard(UpdateDashboardRequest r) {
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.dashboardId);
         if (existing.isNull)
             return CommandResult(false, "", "Dashboard not found");
 
@@ -73,6 +67,6 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Dashboard not found");
 
         repo.remove(dashboard);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, dashboard.id.value, "");
     }
 }

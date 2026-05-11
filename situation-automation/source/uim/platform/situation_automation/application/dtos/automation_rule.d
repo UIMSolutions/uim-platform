@@ -10,7 +10,7 @@ struct CreateAutomationRuleRequest {
     AutomationRuleId automationRuleId;
     string name;
     string description;
-    AutomationRulePriority priority;
+    string priority;
     int executionOrder;
     UserId createdBy;
 }
@@ -20,7 +20,7 @@ struct UpdateAutomationRuleRequest {
     AutomationRuleId automationRuleId;
     string name;
     string description;
-    AutomationRulePriority priority;
+    string priority;
     int executionOrder;
     bool enabled;
     UserId updatedBy;

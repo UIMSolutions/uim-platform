@@ -15,18 +15,24 @@ class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, S
 size_t countByCategory(TenantId tenantId, SituationCategory category) {
         return findByCategory(tenantId, category).length;
     }
+    SituationTemplate[] filterByCategory(SituationTemplate[] templates, SituationCategory category) {
+        return templates.filter!(t => t.category == category).array;
+    }
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category) {
-        return findAll().filter!(t => t.tenantId == tenantId && t.category == category).array;
+        return filterByCategory(findByTenant(tenantId), category);
     }
     void removeByCategory(TenantId tenantId, SituationCategory category) {
         findByCategory(tenantId, category).each!(t => remove(t));
     }
 
-    size_t countByPriority(TenantId tenantId, SituationPriority priority) {
-        return findByPriority(tenantId, priority).length;
+    size_t countByEntityType(TenantId tenantId, string entityTypeId) {
+        return findByEntityType(tenantId, entityTypeId).length;
+    }
+    SituationTemplate[] filterByEntityType(SituationTemplate[] templates, string entityTypeId) {
+        return templates.filter!(t => t.entityTypeId == entityTypeId).array;
     }
     SituationTemplate[] findByEntityType(TenantId tenantId, string entityTypeId) {
-        return findAll().filter!(t => t.tenantId == tenantId && t.entityTypeId == entityTypeId).array;
+        return filterByEntityType(findByTenant(tenantId), entityTypeId);
     }
     void removeByEntityType(TenantId tenantId, string entityTypeId) {
         findByEntityType(tenantId, entityTypeId).each!(t => remove(t));

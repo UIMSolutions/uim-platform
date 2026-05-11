@@ -18,19 +18,19 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDataContext(CreateDataContextRequest r) {
-        if (r.isNull)
+        if (r.dataContextId.isNull)
             return CommandResult(false, "", "Data context ID is required");
-        if (r.instanceId.isEmpty)
+        if (r.situationInstanceId.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.dataContextId);
         if (!existing.isNull)
             return CommandResult(false, "", "Data context already exists");
 
         DataContext d;
-        d.id = r.id;
-        d.instanceId = r.instanceId;
-        d.tenantId = r.tenantId;
+        d.initEntity(r.tenantId, r.dataContextId, r.createdBy);
+
+        d.instanceId = r.situationInstanceId;
         d.entityId = r.entityId;
         d.entityTypeId = r.entityTypeId;
         d.data = r.data;
@@ -53,7 +53,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    DataContext[] listDataContexts(TenantId tenantId, TSituationInstanceId instanceId) {
+    DataContext[] listDataContexts(TenantId tenantId, SituationInstanceId instanceId) {
         return repo.findByInstance(tenantId, instanceId);
     }
 

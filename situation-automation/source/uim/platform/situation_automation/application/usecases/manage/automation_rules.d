@@ -18,18 +18,17 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAutomationRule(CreateAutomationRuleRequest r) {
-        auto err = SituationEvaluator.validate(r.id, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.automationRuleId.value, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.automationRuleId);
         if (!existing.isNull)
             return CommandResult(false, "", "Automation rule already exists");
 
         AutomationRule rule;
-        rule.initEntity(r.tenantId, r.createdBy);
-        rule.id = r.id;
-        rule.templateId = r.templateId;
+        rule.initEntity(r.tenantId, r.automationRuleId, r.createdBy);
+        rule.templateId = r.situationTemplateId;
         rule.name = r.name;
         rule.description = r.description;
         rule.status = RuleStatus.draft;
@@ -57,7 +56,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAutomationRule(UpdateAutomationRuleRequest r) {
-        auto rule = repo.findById(r.tenantId, r.id);
+        auto rule = repo.findById(r.tenantId, r.automationRuleId);
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 

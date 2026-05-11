@@ -17,16 +17,16 @@ class MemorySituationActionRepository : TenantRepository!(SituationAction, Situa
         return findByType(tenantId, type).length;
     }
 
-    SituationAction[] filterByType(SituationAction[] actions, TenantId tenantId, ActionType type) {
-        return actions.filter!(a => a.tenantId == tenantId && a.type == type).array;
+    SituationAction[] filterByType(SituationAction[] actions, ActionType type) {
+        return actions.filter!(a => a.type == type).array;
     }
 
     SituationAction[] findByType(TenantId tenantId, ActionType type) {
-        return findAll().filter!(a => a.tenantId == tenantId && a.type == type).array;
+        return filterByType(findByTenant(tenantId), type);
     }
 
     void removeByType(TenantId tenantId, ActionType type) {
-        findByType(tenantId, type).removeAll;
+        findByType(tenantId, type).each!(a => remove(a));
     }
     
 }

@@ -45,7 +45,7 @@ class AutomationRuleController : PlatformController {
             r.executionOrder = j.getInteger("executionOrder");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createAutomationRule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -63,7 +63,7 @@ class AutomationRuleController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto rules = usecase.list(tenantId);
+            auto rules = usecase.listAutomationRules(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (r; rules) {
@@ -93,10 +93,10 @@ class AutomationRuleController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(tenantId, id);
+            auto r = usecase.getAutomationRule(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Automation rule not found");
                 return;
@@ -128,7 +128,7 @@ class AutomationRuleController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateAutomationRuleRequest r;
@@ -141,7 +141,7 @@ class AutomationRuleController : PlatformController {
             r.enabled = j.getBoolean("enabled", true);
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateAutomationRule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -158,10 +158,10 @@ class AutomationRuleController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteAutomationRule(id);
+            auto result = usecase.deleteAutomationRule(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

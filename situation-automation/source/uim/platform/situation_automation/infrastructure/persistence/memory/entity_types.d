@@ -16,11 +16,15 @@ class MemoryEntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), 
         return findByCategory(tenantId, category).length;
     }
 
+    EntityType[] filterByCategory(EntityType[] types, EntityCategory category) {
+        return types.filter!(e => e.category == category).array;
+    }
+
     EntityType[] findByCategory(TenantId tenantId, EntityCategory category) {
-        return findAll().filter!(e => e.tenantId == tenantId && e.category == category).array;
+        return filterByCategory(findByTenant(tenantId), tenantId, category);
     }
 
     void removeByCategory(TenantId tenantId, EntityCategory category) {
-        store = findAll().filter!(e => !(e.tenantId == tenantId && e.category == category)).array;
+        findByCategory(tenantId, category).each!(e => remove(e));
     }
 }

@@ -1,5 +1,9 @@
 module uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 // ID aliases
 struct SituationTemplateId  {
     string value;

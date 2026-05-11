@@ -18,32 +18,26 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createEntityType(CreateEntityTypeRequest r) {
-        auto err = SituationEvaluator.validate(r.id, r.name);
+        auto err = SituationEvaluator.validate(r.tenantId, r.entityTypeId, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.entityTypeId);
         if (!existing.isNull)
             return CommandResult(false, "", "Entity type already exists");
 
         EntityType e;
-        e.id = r.id;
-        e.tenantId = r.tenantId;
+        e.initEntity(r.tenantId, r.entityTypeId, r.createdBy);
+        
         e.name = r.name;
         e.description = r.description;
         e.sourceSystem = r.sourceSystem;
-        e.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        e.createdAt = now;
-        e.updatedAt = now;
 
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    EntityType getEntityTypeById(EntityTypeId id) {
+    EntityType getEntityTypeById(TenantId tenantId, EntityTypeId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -52,7 +46,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateEntityType(UpdateEntityTypeRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.entityTypeId);
         if (existing.isNull)
             return CommandResult(false, "", "Entity type not found");
 
@@ -67,7 +61,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteEntityType(EntityTypeId id) {
+    CommandResult deleteEntityType(TenantId tenantId, EntityTypeId id) {
         auto type = repo.findById(tenantId, id);
         if (type.isNull)
             return CommandResult(false, "", "Entity type not found");

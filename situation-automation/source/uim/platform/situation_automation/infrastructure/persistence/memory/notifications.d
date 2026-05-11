@@ -16,7 +16,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
         return findByRecipient(tenantId, recipientId).length;
     }
     Notification[] findByRecipient(TenantId tenantId, string recipientId) {
-        return findAll().filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
+        return findByTenant(tenantId).filter!(n => n.tenantId == tenantId && n.recipientId == recipientId).array;
     }
     void removeByRecipient(TenantId tenantId, string recipientId) {
         findByRecipient(tenantId, recipientId).each!(n => remove(n.id));
@@ -26,7 +26,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
         return findByInstance(instanceId).length;
     }
     Notification[] findByInstance(SituationInstanceId instanceId) {
-        return findAll().filter!(n => n.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(n => n.instanceId == instanceId).array;
     }
     void removeByInstance(SituationInstanceId instanceId) {
         findByInstance(instanceId).each!(n => remove(n.id));
@@ -36,7 +36,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
         return findByStatus(tenantId, status).length;
     }
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
-        return findAll().filter!(n => n.tenantId == tenantId && n.status == status).array;
+        return findByTenant(tenantId).filter!(n => n.tenantId == tenantId && n.status == status).array;
     }
     void removeByStatus(TenantId tenantId, NotificationStatus status) {
         findByStatus(tenantId, status).each!(n => remove(n.id));

@@ -12,7 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 struct SituationEvaluator {
-    static string validate(string id, string name) {
+    static string validate(TenantId tenantId, string id, string name) {
+        if (tenantId.isEmpty)
+            return "Tenant ID is required";
         if (id.isEmpty)
             return "ID is required";
         if (name.length == 0)

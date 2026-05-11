@@ -23,14 +23,13 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         if (r.recipientId.isEmpty)
             return CommandResult(false, "", "Recipient ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.notificationId);
         if (!existing.isNull)
             return CommandResult(false, "", "Notification already exists");
 
         Notification n;
-        n.id = r.id;
-        n.instanceId = r.instanceId;
-        n.tenantId = r.tenantId;
+        n.initEntity(r.tenantId, r.notificationId);
+        n.instanceId = r.situationInstanceId;
         n.recipientId = r.recipientId;
         n.title = r.title;
         n.message = r.message;
@@ -44,7 +43,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, n.id.value, "");
     }
 
-    Notification getNotificationById(NotificationId id) {
+    Notification getNotificationById(TenantId tenantId, NotificationId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -61,7 +60,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateNotification(UpdateNotificationRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.notificationId);
         if (existing.isNull)
             return CommandResult(false, "", "Notification not found");
 
@@ -82,7 +81,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteNotification(NotificationId id) {
+    CommandResult deleteNotification(TenantId tenantId, NotificationId id) {
         auto notification = repo.findById(tenantId, id);
         if (notification.isNull)
             return CommandResult(false, "", "Notification not found");

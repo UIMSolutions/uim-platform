@@ -44,7 +44,7 @@ class DashboardController : PlatformController {
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createDashboard(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -62,7 +62,7 @@ class DashboardController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto dashboards = usecase.list(tenantId);
+            auto dashboards = usecase.listDashboards(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; dashboards) {
@@ -91,7 +91,7 @@ class DashboardController : PlatformController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto d = usecase.getById(tenantId, id);
+            auto d = usecase.getDashboard(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Dashboard not found");
                 return;
@@ -116,7 +116,7 @@ class DashboardController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateDashboardRequest r;
@@ -127,7 +127,7 @@ class DashboardController : PlatformController {
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateDashboard(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -144,10 +144,10 @@ class DashboardController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteDashboard(id);
+            
+            auto result = usecase.deleteDashboard(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

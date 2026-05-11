@@ -35,6 +35,7 @@ class EntityTypeController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+            
             CreateEntityTypeRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
@@ -44,7 +45,7 @@ class EntityTypeController : PlatformController {
             r.sourceSystem = j.getString("sourceSystem");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createEntityType(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -62,7 +63,7 @@ class EntityTypeController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto types = usecase.list(tenantId);
+            auto types = usecase.listEntityTypes(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (et; types) {
@@ -88,10 +89,10 @@ class EntityTypeController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto et = usecase.getById(tenantId, id);
+
+            auto et = usecase.getEntityType(tenantId, id);
             if (et.isNull) {
                 writeError(res, 404, "Entity type not found");
                 return;
@@ -117,7 +118,7 @@ class EntityTypeController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto j = req.json;
             UpdateEntityTypeRequest r;
@@ -128,7 +129,7 @@ class EntityTypeController : PlatformController {
             r.category = j.getString("category");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateEntityType(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -145,10 +146,10 @@ class EntityTypeController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteEntityType(id);
+
+            auto result = usecase.deleteEntityType(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

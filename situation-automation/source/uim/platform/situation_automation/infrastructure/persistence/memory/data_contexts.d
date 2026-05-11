@@ -15,21 +15,27 @@ class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId
     size_t countByInstance(SituationInstanceId instanceId) {
         return findByInstance(instanceId).length;
     }
+     DataContext[] filterByInstance(DataContext[] contexts, SituationInstanceId instanceId) {
+        return contexts.filter!(d => d.instanceId == instanceId).array;
+    }
     DataContext[] findByInstance(SituationInstanceId instanceId) {
-        return findAll().filter!(d => d.instanceId == instanceId).array;
+        return filterByInstance(findByTenant(tenantId), instanceId);
     }
     void removeByInstance(SituationInstanceId instanceId) {
-        store = findAll().filter!(d => d.instanceId != instanceId).array;
+        findByInstance(instanceId).each!(d => remove(d));
     }
 
-    size_t countPersonalData(TenantId tenantId) {
-        return findPersonalData(tenantId).length;
+    size_t countByPersonalData(TenantId tenantId) {
+        return findByPersonalData(tenantId).length;
     }
-    DataContext[] findPersonalData(TenantId tenantId) {
-        return findAll().filter!(d => d.tenantId == tenantId && d.containsPersonalData).array;
+    DataContext[] filterByPersonalData(DataContext[] contexts) {
+        return contexts.filter!(d => d.containsPersonalData).array;
     }
-    void removePersonalData(TenantId tenantId) {
-        store = findAll().filter!(d => !(d.tenantId == tenantId && d.containsPersonalData)).array;
+    DataContext[] findByPersonalData(TenantId tenantId) {
+        return filterByPersonalData(findByTenant(tenantId));
+    }
+    void removeByPersonalData(TenantId tenantId) {
+        findByPersonalData(tenantId).each!(d => remove(d));
     }
 
 }

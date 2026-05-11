@@ -21,11 +21,11 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] findByTemplate(SituationTemplateId templateId) {
-        return findAll().filter!(i => i.templateId == templateId).array;
+        return filterByTemplate(findByTenant(tenantId), templateId);
     }
 
     void removeByTemplate(SituationTemplateId templateId) {
-        findByTemplate(templateId).removeAll;
+        findByTemplate(templateId).each!(i => remove(i));
     }
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
@@ -37,27 +37,27 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return findAll().filter!(i => i.tenantId == tenantId && i.status == status).array;
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
-        findByStatus(tenantId, status).removeAll;
+        findByStatus(tenantId, status).each!(i => remove(i));
     }
 
     size_t countByEntity(TenantId tenantId, string entityId) {
         return findByEntity(tenantId, entityId).length;
     }
 
-    SituationInstance[] filterByEntity(SituationInstance[] instances, TenantId tenantId, string entityId) {
-        return instances.filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
+    SituationInstance[] filterByEntity(SituationInstance[] instances, string entityId) {
+        return instances.filter!(i => i.entityId == entityId).array;
     }
 
     SituationInstance[] findByEntity(TenantId tenantId, string entityId) {
-        return findAll().filter!(i => i.tenantId == tenantId && i.entityId == entityId).array;
+        return filterByEntity(findByTenant(tenantId), entityId);
     }
 
     void removeByEntity(TenantId tenantId, string entityId) {
-        findByEntity(tenantId, entityId).removeAll;
+        findByEntity(tenantId, entityId).each!(i => remove(i));
     }
 
 }

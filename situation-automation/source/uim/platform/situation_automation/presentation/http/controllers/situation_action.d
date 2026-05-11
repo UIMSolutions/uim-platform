@@ -35,6 +35,7 @@ class SituationActionController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateSituationActionRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
@@ -96,10 +97,10 @@ class SituationActionController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = SituationActionId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto a = usecase.getById(tenantId, id);
+            auto a = usecase.getSituationAction(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Situation action not found");
                 return;
@@ -135,9 +136,9 @@ class SituationActionController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             UpdateSituationActionRequest r;
             r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
@@ -151,7 +152,7 @@ class SituationActionController : PlatformController {
             r.emailTemplate = j.getString("emailTemplate");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateSituationAction(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -168,10 +169,10 @@ class SituationActionController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = SituationActionId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteSituationAction(SituationActionId(id));
+            auto result = usecase.deleteSituationAction(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

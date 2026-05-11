@@ -36,6 +36,7 @@ class SituationInstanceController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
             r.templateId = j.getString("templateId");
@@ -50,7 +51,7 @@ class SituationInstanceController : PlatformController {
             r.sourceInstanceId = j.getString("sourceInstanceId");
             r.dueAt = jsonLong(j, "dueAt");
 
-            auto result = usecase.create(r);
+            auto result = usecase.createSituationInstance(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -68,7 +69,7 @@ class SituationInstanceController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto instances = usecase.list(tenantId);
+            auto instances = usecase.listSituationInstances(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
@@ -98,10 +99,10 @@ class SituationInstanceController : PlatformController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto i = usecase.getById(tenantId, id);
+            auto i = usecase.getSituationInstance(tenantId, id);
             if (i.isNull) {
                 writeError(res, 404, "Situation instance not found");
                 return;
@@ -140,17 +141,18 @@ class SituationInstanceController : PlatformController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
+            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
+
             UpdateSituationInstanceRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.id = id;
             r.status = j.getString("status");
             r.severity = j.getString("severity");
             r.assignedTo = j.getString("assignedTo");
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateSituationInstance(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -167,8 +169,8 @@ class SituationInstanceController : PlatformController {
 
     private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
             import std.string : lastIndexOf;
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto resolveIdx = lastIndexOf(path, "/resolve");
@@ -177,7 +179,7 @@ class SituationInstanceController : PlatformController {
                 return;
             }
             auto sub = path[0 .. resolveIdx];
-            auto id = extractIdFromPath(sub);
+            auto id = SituationInstanceId(extractIdFromPath(sub));
 
             auto j = req.json;
             ResolveSituationRequest r;
@@ -189,7 +191,7 @@ class SituationInstanceController : PlatformController {
             r.ruleId = j.getString("ruleId");
             r.outcome = j.getString("outcome");
 
-            auto result = usecase.resolve(r);
+            auto result = usecase.resolveSituationInstance(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -206,10 +208,11 @@ class SituationInstanceController : PlatformController {
 
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteSituationInstance((id));
+            
+            auto result = usecase.deleteSituationInstance(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

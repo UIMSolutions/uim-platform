@@ -35,6 +35,7 @@ class NotificationController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateNotificationRequest r;
             r.tenantId = tenantId;
             r.instanceId = j.getString("instanceId");
@@ -127,6 +128,7 @@ class NotificationController : PlatformController {
 
             auto tenantId = req.getTenantId;
             auto j = req.json;
+            
             UpdateNotificationRequest r;
             r.tenantId = tenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);

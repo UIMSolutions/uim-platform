@@ -21,7 +21,7 @@ interface DataContextRepository : ITenantRepository!(DataContext, DataContextId)
     void removeByInstance(SituationInstanceId instanceId);
 
     size_t countByPersonalData(TenantId tenantId);
-    DataContext[] findPersonalData(TenantId tenantId);
-    void removePersonalData(TenantId tenantId);
+    DataContext[] findByPersonalData(TenantId tenantId);
+    void removeByPersonalData(TenantId tenantId);
 
 }
