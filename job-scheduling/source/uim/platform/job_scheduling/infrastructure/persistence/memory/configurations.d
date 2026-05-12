@@ -13,24 +13,12 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : ConfigurationRepository {
-    private Configuration[string] store; // keyed by tenantId
-
-    bool existsByTenant(TenantId tenantId) {
-        return (tenantId in store) ? true : false;
-    }
-
-    Configuration findByTenant(TenantId tenantId) {
-        return existsByTenant(tenantId) ? store[tenantId] : Configuration.init;
-    }
-
-    void save(Configuration c) {
-        store[c.tenantId] = c;
-    }
-
-    void update(Configuration c) {
-        if (existsByTenant(c.tenantId)) {
-            store[c.tenantId] = c;
+class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
+    Configuration get(TenantId tenantId) {
+        auto configs = findByTenant(tenantId);
+        if (configs.length > 0) {
+            return configs[0];
         }
+        return Configuration.init;
     }
 }

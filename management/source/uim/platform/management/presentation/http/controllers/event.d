@@ -6,7 +6,7 @@
 module uim.platform.management.presentation.http.controllers.event;
 
 
-// import vibe.http.router;
+
 // import vibe.data.json;
 // 
 // import uim.platform.management.application.usecases.query_platform_events;

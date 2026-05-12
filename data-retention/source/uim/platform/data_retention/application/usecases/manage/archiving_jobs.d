@@ -82,7 +82,4 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, job.id.value, "");
     }
 
-
-
-
 }

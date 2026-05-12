@@ -212,7 +212,7 @@ package "Domain Entities" {
         +description: string
         +type: ScheduleType
         +format: ScheduleFormat
-        +status: ScheduleStatus
+        +status: JobScheduleStatus
         +active: bool
         +cronExpression: string
         +humanReadableSchedule: string
@@ -280,7 +280,7 @@ package "Value Types" {
         repeatInterval
         repeatAt
     }
-    enum ScheduleStatus {
+    enum JobScheduleStatus {
         active
         inactive
     }
@@ -302,7 +302,7 @@ Job ..> HttpMethod
 Job ..> JobStatus
 Schedule ..> ScheduleType
 Schedule ..> ScheduleFormat
-Schedule ..> ScheduleStatus
+Schedule ..> JobScheduleStatus
 RunLog ..> RunStatus
 Configuration "1" -- "1" TenantId : per tenant
 

@@ -12,8 +12,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository {
-    Configuration findByTenant(TenantId tenantId);
-    void save(Configuration c);
-    void update(Configuration c);
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+
+    Configuration get(TenantId tenantId);
 }

@@ -6,7 +6,7 @@
 module uim.platform.kyma.presentation.http.controllers.application;
 
 
-// import vibe.http.router;
+
 // import vibe.data.json;
 
 

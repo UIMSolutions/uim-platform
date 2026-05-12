@@ -39,8 +39,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Configuration not found");
 
     Deployment d;
-    d.id = randomUUID();
-    d.tenantId = r.tenantId;
+    d.initEntity(r.tenantId);
     d.resourceGroupId = r.resourceGroupId;
     d.configurationId = r.configurationId;
     d.scenarioId = conf.scenarioId;
@@ -49,16 +48,11 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     d.statusMessage = "Deployment created and pending";
     d.ttl = r.ttl;
 
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    d.createdAt = now;
-    d.updatedAt = now;
-
     deployments.save(d);
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult patch(PatchDeploymentRequest request) {
+  CommandResult patchDeployment(PatchDeploymentRequest request) {
     auto d = deployments.findById(request.deploymentId, request.resourceGroupId);
     if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
@@ -100,24 +94,24 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getDeployment(GetDeploymentRequest r) {
-    return deployments.findById(r.resourceGroupId, r.deploymentId);
+  Deployment getDeployment(TenantId tenantId, ResourceGroupId rgId, DeploymentId deploymentId) {
+    return deployments.findById(tenantId, rgId, deploymentId);
   }
 
-  Deployment[] listDeployments(ListDeploymentsRequest r) {
-    return deployments.findByResourceGroup(r.resourceGroupId);
+  Deployment[] listDeployments(TenantId tenantId, ResourceGroupId rgId) {
+    return deployments.findByResourceGroup(tenantId, rgId);
   }
 
-  Deployment[] listDeployments(ListDeploymentsByScenarioRequest r) {
-    return deployments.findByScenario(r.resourceGroupId, r.scenarioId);
+  Deployment[] listDeployments(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    return deployments.findByScenario(tenantId, rgId, scenarioId);
   }
 
-  Deployment[] listDeployments(ListDeploymentsByStatusRequest r) {
-    return deployments.findByStatus(r.resourceGroupId, r.status);
+  Deployment[] listDeployments(TenantId tenantId, ResourceGroupId rgId, DeploymentStatus status) {
+    return deployments.findByStatus(tenantId, rgId, status);
   }
 
-  CommandResult deleteDeployment(DeleteDeploymentRequest r) {
-    auto entity = deployments.findById(r.resourceGroupId, r.deploymentId);
+  CommandResult deleteDeployment(TenantId tenantId, ResourceGroupId rgId, DeploymentId deploymentId) {
+    auto entity = deployments.findById(tenantId, rgId, deploymentId);
     if (entity.isNull)
       return CommandResult(false, "", "Deployment not found");
 
@@ -125,7 +119,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(CountDeploymentsRequest r) {
-    return deployments.countByResourceGroup(r.resourceGroupId);
+  size_t count(TenantId tenantId, ResourceGroupId rgId) {
+    return deployments.countByResourceGroup(tenantId, rgId);
   }
 }

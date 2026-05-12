@@ -37,13 +37,12 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid cron expression");
 
         Schedule schedule;
-        schedule.id = randomUUID();
+        schedule.initEntity(request.tenantId);
         schedule.jobId = request.jobId;
-        schedule.tenantId = request.tenantId;
         schedule.description = request.description;
         schedule.type = request.type.to!ScheduleType;
         schedule.format = request.format.to!ScheduleFormat;
-        schedule.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        schedule.status = request.active ? JobScheduleStatus.active : JobScheduleStatus.inactive;
         schedule.active = request.active;
         schedule.cronExpression = request.cronExpression;
         schedule.humanReadableSchedule = request.humanReadableSchedule;
@@ -52,8 +51,6 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         schedule.time = request.time;
         schedule.startTime = request.startTime;
         schedule.endTime = request.endTime;
-        schedule.createdAt = now;
-        schedule.updatedAt = now;
 
         schedules.save(schedule);
         return CommandResult(true, schedule.id.value, "");
@@ -83,7 +80,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         if (request.description.length > 0)
             existing.description = request.description;
         existing.active = request.active;
-        existing.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        existing.status = request.active ? JobScheduleStatus.active : JobScheduleStatus.inactive;
         if (request.cronExpression.length > 0)
             existing.cronExpression = request.cronExpression;
         if (request.humanReadableSchedule.length > 0)
@@ -115,15 +112,19 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAllByJob(TenantId tenantId, JobId jobId) {
-        schedules.removeAllByJob(tenantId, jobId);
+        auto findings = schedules.findByJob(tenantId, jobId);
+        if (findings.length == 0)
+            return CommandResult(false, jobId, "No schedules found for the job");
+        
+        findings.each!(s => schedules.remove(s));
         return CommandResult(true, jobId, "");
     }
 
-    CommandResult activateAll(ActivateAllSchedulesRequest request) {
-        auto schedules = schedules.findByJob(request.tenantId, request.jobId);
-        foreach (s; schedules) {
+    CommandResult activateAllSchedules(ActivateAllSchedulesRequest request) {
+        auto findings = schedules.findByJob(request.tenantId, request.jobId);
+        foreach (s; findings) {
             s.active = request.active;
-            s.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+            s.status = request.active ? JobScheduleStatus.active : JobScheduleStatus.inactive;
             import core.time : MonoTime;
 
             s.updatedAt = MonoTime.currTime.ticks;

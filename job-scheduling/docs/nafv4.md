@@ -323,7 +323,7 @@ F-JS-04: Configuration Management
 │     description: string  │    │    │     description: string      │
 │     actionUrl: string    │    │    │     type: ScheduleType       │
 │     httpMethod: enum     │    │    │     format: ScheduleFormat   │
-│     type: JobType        │    │    │     status: ScheduleStatus   │
+│     type: JobType        │    │    │     status: JobScheduleStatus   │
 │     status: JobStatus    │    │    │     active: bool             │
 │     active: bool         │    │    │     cronExpression: string   │
 │     startTime: long      │    │    │     humanReadable: string    │

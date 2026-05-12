@@ -92,7 +92,7 @@ class ScenarioController : PlatformController {
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto s = usecase.getScenarioById(tenantId, rgId, id);
+      auto s = usecase.getScenario(tenantId, rgId, id);
       if (s.isNull) {
         writeError(res, 404, "Scenario not found");
         return;

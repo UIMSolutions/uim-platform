@@ -23,11 +23,11 @@ struct ScheduleValidator {
         return intervalSeconds > 0;
     }
 
-    static bool canActivate(ScheduleStatus current) {
-        return current == ScheduleStatus.inactive;
+    static bool canActivate(JobScheduleStatus current) {
+        return current == JobScheduleStatus.inactive;
     }
 
-    static bool canDeactivate(ScheduleStatus current) {
-        return current == ScheduleStatus.active;
+    static bool canDeactivate(JobScheduleStatus current) {
+        return current == JobScheduleStatus.active;
     }
 }

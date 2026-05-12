@@ -12,13 +12,13 @@ mixin(ShowModule!());
 
 @safe:
 struct Schedule {
-            mixin TenantEntity!ScheduleId;
-    
+    mixin TenantEntity!ScheduleId;
+
     JobId jobId;
     string description;
     ScheduleType type;
     ScheduleFormat format;
-    ScheduleStatus status;
+    JobScheduleStatus status;
     bool active;
     string cronExpression;
     string humanReadableSchedule;

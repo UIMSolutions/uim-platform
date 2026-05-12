@@ -12,12 +12,18 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-interface RunLogRepository {
-    RunLog findById(RunLogId id);
-    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId);
-    RunLog[] findByJob(JobId jobtenantId, id tenantId);
-    RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId);
-    void save(RunLog r);
-    void update(RunLog r);
-    size_t countBySchedule(ScheduleId scheduleId);
+interface RunLogRepository : ITenantRepository!(RunLog, RunLogId) {
+
+    size_t countBySchedule(TenantId tenantId, ScheduleId scheduleId);
+    RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId);
+    void removeBySchedule(TenantId tenantId, ScheduleId scheduleId);
+
+    size_t countByJob(TenantId tenantId, JobId jobId);
+    RunLog[] findByJob(TenantId tenantId, JobId jobId);
+    void removeByJob(TenantId tenantId, JobId jobId);
+
+    size_t countByStatus(TenantId tenantId, RunStatus status);
+    RunLog[] findByStatus(TenantId tenantId, RunStatus status);
+    void removeByStatus(TenantId tenantId, RunStatus status);
+
 }

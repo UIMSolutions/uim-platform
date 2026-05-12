@@ -77,9 +77,6 @@ struct ExecutionLogId {
 }
 
 
-
-
-
 /// Integration scenario lifecycle status.
 enum ScenarioStatus {
   draft,

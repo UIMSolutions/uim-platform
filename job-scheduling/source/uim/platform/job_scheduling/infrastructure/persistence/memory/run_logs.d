@@ -16,39 +16,60 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRunLogRepository : TenantRRepository!(RunLog, RunLogId), RunLogRepository {
+class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogRepository {
 
-    size_t countByStatus(TenantId tenantId, JobId jobId, RunStatus status) {
-        return findByStatus(tenantId, jobId, status).length;
-    }
-
-    RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
-        return findAll().filter!(r => r.scheduleId == scheduleId
-            && r.jobId == jobId && r.tenantId == tenantId).array;
-    }
-    void removeBySchedule(TenantId tenantId, ScheduleId scheduleId) {
-        findAll().filter!(r => r.scheduleId == scheduleId && r.tenantId == tenantId)
-            .each!(r => remove(r));
-    }
-
+    // #region ByJob
     size_t countByJob(TenantId tenantId, JobId jobId) {
         return findByJob(tenantId, jobId).length;
     }
-    RunLog[] findByJob(TenantId tenantId, JobId jobId) {
-        return findAll().filter!(r => r.jobId == jobId && r.tenantId == tenantId).array;
-    }
-    void removeByJob(TenantId tenantId, JobId jobId) {
-        findAll().filter!(r => r.jobId == jobId && r.tenantId == tenantId)
-            .each!(r => remove(r));
+
+    RunLog[] filterByJob(RunLog[] items, JobId jobId) {
+        return items.filter!(r => r.jobId == jobId).array;
     }
 
+    RunLog[] findByJob(TenantId tenantId, JobId jobId) {
+        return filterByJob(findByTenant(tenantId), jobId);
+    }
+
+    void removeByJob(TenantId tenantId, JobId jobId) {
+        findByJob(tenantId, jobId).each!(r => remove(r));
+    }
+    // #endregion ByJob
+
+    // #region ByStatus
+    size_t countByStatus(TenantId tenantId, RunStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    RunLog[] filterByStatus(RunLog[] items, RunStatus status) {
+        return items.filter!(r => r.status == status).array;
+    }
+
+    RunLog[] findByStatus(TenantId tenantId, RunStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, RunStatus status) {
+        findByStatus(tenantId, status).each!(r => remove(r));
+    }
+    // #endregion ByStatus
+
+    // #region BySchedule
     size_t countBySchedule(TenantId tenantId, ScheduleId scheduleId) {
-        return findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).array.length;
+        return findBySchedule(tenantId, scheduleId).length;
     }
+
+    RunLog[] filterBySchedule(RunLog[] items, ScheduleId scheduleId) {
+        return items.filter!(r => r.scheduleId == scheduleId).array;
+    }
+
     RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId) {
-        return findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).array;
+        return filterBySchedule(findByTenant(tenantId), scheduleId);
     }
+
     void removeBySchedule(TenantId tenantId, ScheduleId scheduleId) {
-        findAll().filter!(r => r.tenantId == tenantId && r.scheduleId == scheduleId).each!(r => remove(r));
+        findBySchedule(tenantId, scheduleId).each!(r => remove(r));
     }
+    // #endregion BySchedule
+
 }

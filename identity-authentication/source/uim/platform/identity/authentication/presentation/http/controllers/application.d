@@ -6,7 +6,7 @@
 module uim.platform.identity.authentication.presentation.http.controllers.application;
 
 
-// import vibe.http.router;
+
 // import vibe.data.json;
 // import uim.platform.identity.authentication.application.usecases.manage.applications;
 // import uim.platform.identity.authentication.application.dto;

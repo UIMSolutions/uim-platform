@@ -45,7 +45,7 @@ class ArtifactController : PlatformController {
       r.url = j.getString("url");
       r.labels = jsonKeyValuePairs(j, "labels");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createArtifact(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -89,7 +89,7 @@ class ArtifactController : PlatformController {
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto a = usecase.getArtifactById(tenantId, id, rgId);
+      auto a = usecase.getArtifact(tenantId, rgId, id);
       if (a.isNull) {
         writeError(res, 404, "Artifact not found");
         return;

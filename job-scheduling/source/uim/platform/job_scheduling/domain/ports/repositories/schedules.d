@@ -18,13 +18,13 @@ interface ScheduleRepository : ITenantRepository!(Schedule, ScheduleId) {
     Schedule[] findByJob(TenantId tenantId, JobId jobId);
     void removeByJob(TenantId tenantId, JobId jobId);
 
-    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
-    Schedule[] findByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
-    void removeByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId);
+    size_t countByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status, );
+    Schedule[] findByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status, );
+    void removeByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status, );
 
-    size_t countActiveByTenant(TenantId tenantId);
-    Schedule[] findActiveByTenant(TenantId tenantId);
-    void removeActiveByTenant(TenantId tenantId);
+    size_t countActive(TenantId tenantId);
+    Schedule[] findActive(TenantId tenantId);
+    void removeActive(TenantId tenantId);
 
     Schedule[] search(TenantId tenantId, string query);
 }

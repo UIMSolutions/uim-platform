@@ -6,7 +6,7 @@
 module uim.platform.management.presentation.http.controllers.entitlement;
 
 
-// import vibe.http.router;
+
 // import vibe.data.json;
 // 
 // import uim.platform.management.application.usecases.manage.entitlements;

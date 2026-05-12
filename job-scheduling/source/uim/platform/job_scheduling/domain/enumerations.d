@@ -32,7 +32,7 @@ enum ScheduleFormat {
     repeatAt,
 }
 
-enum ScheduleStatus {
+enum JobScheduleStatus {
     active,
     inactive,
 }

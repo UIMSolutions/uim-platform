@@ -39,7 +39,7 @@ struct RunLogId {
     mixin DomainId;
 }
 
-struct ConfigId {
+struct ConfigurationId {
     string value;
     
     this(string value) {

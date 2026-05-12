@@ -6,7 +6,7 @@
 module uim.platform.kyma.presentation.http.controllers.service_instance;
 
 
-// import vibe.http.router;
+
 // import vibe.data.json;
 
 // import uim.platform.kyma.application.usecases.manage.service_instances;

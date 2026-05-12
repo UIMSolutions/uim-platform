@@ -7,9 +7,6 @@ module uim.platform.document_ai.application.dto;
 
 import uim.platform.document_ai.domain.types;
 
-
-
-
 // --- Document ---
 
 struct UploadDocumentRequest {

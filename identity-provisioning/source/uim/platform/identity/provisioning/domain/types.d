@@ -81,9 +81,6 @@ struct ProvisionedEntityId {
 }
 
 
-
-
-
 // --- Enums ---
 
 /// Type of connected system.

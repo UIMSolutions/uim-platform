@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class DeploymentController : PlatformController {
-  private ManageDeploymentsUseCase deployments;
+  private ManageDeploymentsUseCase usercase;
 
-  this(ManageDeploymentsUseCase deployments) {
-    this.deployments = deployments;
+  this(ManageDeploymentsUseCase usercase) {
+    this.usercase = usercase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -34,15 +34,15 @@ class DeploymentController : PlatformController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-
       auto j = req.json;
+
       CreateDeploymentRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.configurationId = j.getString("configurationId");
+      r.configurationId = ConfigurationId(j.getString("configurationId"));
       r.ttl = j.getInteger("ttl");
 
-      auto result = deployments.create(r);
+      auto result = usercase.createDeployment(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,8 +62,8 @@ class DeploymentController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto deploys = deployments.listDeployments(tenantId, rgId);
-
+      
+      auto deploys = usercase.listDeployments(tenantId, rgId);
       auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -83,7 +83,7 @@ class DeploymentController : PlatformController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto deployment = deployments.getById(tenantId, rgId, id);
+      auto deployment = usercase.getDeployment(tenantId, rgId, id);
       if (deployment.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -109,7 +109,7 @@ class DeploymentController : PlatformController {
       request.configurationId = j.getString("configurationId");
       request.ttl = j.getInteger("ttl");
 
-      auto result = deployments.patch(request);
+      auto result = usercase.patchDeployment(request);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -130,7 +130,7 @@ class DeploymentController : PlatformController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = deployments.deleteDeployment(tenantId, rgId, id);
+      auto result = usercase.deleteDeployment(tenantId, rgId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

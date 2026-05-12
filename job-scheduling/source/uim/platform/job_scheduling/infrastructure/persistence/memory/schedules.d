@@ -19,73 +19,58 @@ mixin(ShowModule!());
 @safe:
 class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), ScheduleRepository {
 
-    Schedule findById(TenantId tenantId, ScheduleId id, JobId jobId) {
-        foreach (s; findByTenant(tenantId)) {
-            if (s.id == id && s.jobId == jobId)
-                return s;
-        }
-        return Schedule.init;
+    // #region ByJob
+    size_t countByJob(TenantId tenantId, JobId jobId) {
+        return findByJob(tenantId, jobId).length;
     }
 
-    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
-        return findByStatus(tenantId, status, jobId).length;
-    }
-
-    Schedule[] findByJob(Schedule[] items, JobId jobId) {
+    Schedule[] filterByJob(Schedule[] items, JobId jobId) {
         return items.filter!(s => s.jobId == jobId).array;
     }
 
     Schedule[] findByJob(TenantId tenantId, JobId jobId) {
-        return findByJob(findByTenant(tenantId), jobId);
+        return filterByJob(findByTenant(tenantId), jobId);
     }
 
     void removeByJob(TenantId tenantId, JobId jobId) {
-        return findByJob(tenantId, jobId).each!(s => remove(s));
+        findByJob(tenantId, jobId).each!(s => remove(s));
     }
+    // #endregion ByJob
 
-    size_t countByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
+    // #region ByStatus
+    size_t countByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
         return findByStatus(tenantId, status, jobId).length;
     }
 
-    Schedule[] findByStatus(TenantId tenantId, JobId jobId, ScheduleStatus status) {
-        return findByJob(tenantId, jobId).filter!(s => s.status == status).array;
+    Schedule[] filterByStatus(Schedule[] items, JobScheduleStatus status) {
+        return items.filter!(s => s.status == status).array;
     }
 
-    void removeByStatus(TenantId tenantId, ScheduleStatus status, JobId jobId) {
-        return findByStatus(tenantId, jobId, status).each!(s => remove(s));
+    Schedule[] findByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
-    Schedule[] findActiveByTenant(TenantId tenantId) {
+    void removeByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
+        findByStatus(tenantId, jobId, status).each!(s => remove(s));
+    }
+    // #endregion ByStatus
+
+    // #region Active
+    size_t countActive(TenantId tenantId) {
+        return findActive(tenantId).length;
+    }   
+    Schedule[] findActive(TenantId tenantId) {
         return findByTenant(tenantId).filter!(s => s.active).array;
     }
+    void removeActive(TenantId tenantId) {
+        return findActive(tenantId).each!(s => remove(s));
+    }
+    // #endregion Active
 
     Schedule[] search(TenantId tenantId, string query) {
         auto q = query.toLower;
-        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.toLower.canFind(q)).array;
+        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.toLower.canFind(
+                q)).array;
     }
 
-    void save(Schedule s) {
-        store ~= s;
-    }
-
-    void update(Schedule s) {
-        foreach (existing; findByTenant(s.tenantId)) {
-            if (existing.id == s.id && existing.jobId == s.jobId) {
-                existing = s;
-                return;
-            }
-        }
-    }
-
-    void remove(ScheduleId id, TenantId tenantId, JobId jobId) {
-         findByTenant(tenantId).filter!(s => !(s.id == id && s.jobId == jobId)).each!(s => remove(s));
-    }
-
-    void removeAllByJob(TenantId tenantId, JobId jobId) {
-        findByTenant(tenantId).filter!(s => !(s.jobId == jobId)).each!(s => remove(s));
-    }
-
-    size_t countByJob(TenantId tenantId, JobId jobId) {
-        return findByTenant(tenantId).filter!(s => s.jobId == jobId).array.length;
-    }
 }

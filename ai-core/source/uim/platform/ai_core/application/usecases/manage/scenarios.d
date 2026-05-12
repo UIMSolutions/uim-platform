@@ -25,19 +25,19 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createScenario(CreateScenarioRequest r) {
-    auto err = ScenarioValidator.validate(r.id, r.name);
+    auto err = ScenarioValidator.validate(r.scenarioId, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
 
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto existing = repo.findById(r.id, r.resourceGroupId);
+    auto existing = repo.findById(r.tenantId, r.resourceGroupId, r.scenarioId);
     if (!existing.isNull)
       return CommandResult(false, "", "Scenario already exists");
 
     Scenario s;
-    s.id = r.id;
+    s.id = r.scenarioId;
     s.tenantId = r.tenantId;
     s.resourceGroupId = r.resourceGroupId;
     s.name = r.name;
@@ -53,16 +53,16 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Scenario getScenario(GetScenarioRequest r) {
-    return repo.findById(r.id, r.resourceGroupId);
+  Scenario getScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+    return repo.findById(tenantId, rgId, id);
   }
 
-  Scenario[] listScenarios(ListScenariosRequest r) {
-    return repo.findByResourceGroup(r.resourceGroupId);
+  Scenario[] listScenarios(TenantId tenantId, ResourceGroupId rgId) {
+    return repo.findByResourceGroup(tenantId, rgId);
   }
 
-  CommandResult deleteScenario(DeleteScenarioRequest r) {
-    auto entity = repo.findById(r.id, r.resourceGroupId);
+  CommandResult deleteScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+    auto entity = repo.findById(tenantId, rgId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Scenario not found");
 
@@ -70,7 +70,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  size_t count(CountScenariosRequest r) {
-    return repo.countByResourceGroup(r.resourceGroupId);
+  size_t countScenarios(TenantId tenantId, ResourceGroupId rgId) {
+    return repo.countByResourceGroup(tenantId, rgId);
   }
 }

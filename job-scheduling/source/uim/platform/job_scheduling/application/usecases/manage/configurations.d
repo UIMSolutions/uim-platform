@@ -20,57 +20,56 @@ mixin(ShowModule!());
 // alias Configuration = uim.platform.job_scheduling.domain.entities.configuration.Configuration;
 
 class ManageConfigurationsUseCase { // TODO: UIMUseCase {
-    private ConfigurationRepository repo;
+  private ConfigurationRepository repo;
 
-    this(ConfigurationRepository repo) {
-        this.repo = repo;
+  this(ConfigurationRepository repo) {
+    this.repo = repo;
+  }
+
+  Configuration getConfiguration(TenantId tenantId) {
+    auto config = repo.get(tenantId);
+    if (!config.isNull)
+      config;
+
+    // Return default configuration
+    Configuration c;
+    c.initEntity(tenantId);
+
+    c.defaultRetries = 3;
+    c.defaultRetryDelayMs = 30000;
+    c.maxRunDurationMs = 600000;
+    c.enableAsyncMode = true;
+    c.enableAlertNotifications = false;
+    return c;
+  }
+
+  CommandResult updateConfiguration(UpdateConfigurationRequest request) {
+    import core.time : MonoTime;
+    auto now = MonoTime.currTime.ticks;
+
+    auto existing = repo.get(request.tenantId);
+    if (!repo.existsByTenant(request.tenantId)) {
+      // Create new configuration
+      Configuration c;
+      c.initEntity(request.tenantId);
+      c.defaultRetries = request.defaultRetries;
+      c.defaultRetryDelayMs = request.defaultRetryDelayMs;
+      c.maxRunDurationMs = request.maxRunDurationMs;
+      c.enableAsyncMode = request.enableAsyncMode;
+      c.enableAlertNotifications = request.enableAlertNotifications;
+
+      repo.save(c);
+      return CommandResult(true, c.id.value, "");
     }
 
-    Configuration getById(TenantId tenantId) {
-        if (!repo.existsByTenant(tenantId)) {
-            // Return default configuration
-            Configuration c;
-            c.tenantId = tenantId;
-            c.defaultRetries = 3;
-            c.defaultRetryDelayMs = 30000;
-            c.maxRunDurationMs = 600000;
-            c.enableAsyncMode = true;
-            c.enableAlertNotifications = false;
-            return c;
-        }
-        return repo.findByTenant(tenantId);
-    }
+    existing.defaultRetries = request.defaultRetries;
+    existing.defaultRetryDelayMs = request.defaultRetryDelayMs;
+    existing.maxRunDurationMs = request.maxRunDurationMs;
+    existing.enableAsyncMode = request.enableAsyncMode;
+    existing.enableAlertNotifications = request.enableAlertNotifications;
+    existing.updatedAt = now;
 
-    CommandResult update(UpdateConfigurationRequest request) {
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-
-        if (!repo.existsByTenant(request.tenantId)) {
-            // Create new configuration
-            import std.uuid : randomUUID;
-            Configuration c;
-            c.id = randomUUID();
-            c.tenantId = request.tenantId;
-            c.defaultRetries = request.defaultRetries;
-            c.defaultRetryDelayMs = request.defaultRetryDelayMs;
-            c.maxRunDurationMs = request.maxRunDurationMs;
-            c.enableAsyncMode = request.enableAsyncMode;
-            c.enableAlertNotifications = request.enableAlertNotifications;
-            c.createdAt = now;
-            c.updatedAt = now;
-            repo.save(c);
-            return CommandResult(true, c.id.value, "");
-        }
-
-        auto existing = repo.findByTenant(request.tenantId);
-        existing.defaultRetries = request.defaultRetries;
-        existing.defaultRetryDelayMs = request.defaultRetryDelayMs;
-        existing.maxRunDurationMs = request.maxRunDurationMs;
-        existing.enableAsyncMode = request.enableAsyncMode;
-        existing.enableAlertNotifications = request.enableAlertNotifications;
-        existing.updatedAt = now;
-
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
-    }
+    repo.update(existing);
+    return CommandResult(true, existing.id.value, "");
+  }
 }
