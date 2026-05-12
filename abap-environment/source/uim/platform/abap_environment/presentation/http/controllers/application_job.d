@@ -108,8 +108,8 @@ class ApplicationJobController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-
       auto j = req.json;
+
       UpdateApplicationJobRequest r;
       r.tenantId = tenantId;
       r.applicationJobId = id;
@@ -138,6 +138,7 @@ class ApplicationJobController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+      
       auto result = usecase.cancelJob(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

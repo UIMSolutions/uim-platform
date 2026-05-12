@@ -10,7 +10,7 @@ module uim.platform.job_scheduling.application.usecases.manage.configurations;
 // import uim.platform.job_scheduling.domain.ports.repositories.configurations;
 // import uim.platform.job_scheduling.application.dto;
 
-// import uim.platform.service;
+
 
 import uim.platform.job_scheduling;
 
@@ -29,7 +29,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   Configuration getConfiguration(TenantId tenantId) {
     auto config = repo.get(tenantId);
     if (!config.isNull)
-      config;
+      return config;
 
     // Return default configuration
     Configuration c;

@@ -31,7 +31,7 @@ class ConfigurationController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto config = usecase.getById(tenantId);
+            auto config = usecase.getConfiguration(tenantId);
 
             auto resp = Json.emptyObject
                 .set("defaultRetries", config.defaultRetries)
@@ -59,7 +59,7 @@ class ConfigurationController : PlatformController {
             r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);
             r.enableAlertNotifications = j.getBoolean("enableAlertNotifications", false);
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateConfiguration(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
