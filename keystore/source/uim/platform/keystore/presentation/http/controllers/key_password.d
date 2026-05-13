@@ -79,7 +79,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // DELETE /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  protected void handleGetDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_        = extractIdFromPath(req);
       auto accountId     = req.params.get("accountId", "");

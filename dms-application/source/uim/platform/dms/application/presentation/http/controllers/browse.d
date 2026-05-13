@@ -129,7 +129,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FavoriteId(extractIdFromPath(req.requestURI));

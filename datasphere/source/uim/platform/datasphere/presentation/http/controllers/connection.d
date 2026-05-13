@@ -10,7 +10,7 @@ module uim.platform.datasphere.presentation.http.controllers.connection;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -31,9 +31,10 @@ class ConnectionController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateConnectionRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -45,7 +46,7 @@ class ConnectionController : PlatformController {
       r.database = j.getString("database");
       r.user = j.getString("user");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createConnection(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -62,9 +63,10 @@ class ConnectionController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto connections = usecase.list(spaceId);
 
+      auto connections = usecase.listConnections(tenantId, spaceId);
       auto jarr = Json.emptyArray;
       foreach (c; connections) {
         jarr ~= Json.emptyObject
@@ -78,8 +80,9 @@ class ConnectionController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-        .set("count", Json(connections.length))
-        .set("resources", jarr);
+        .set("count", connections.length)
+        .set("resources", jarr)
+        .set("message", "Connections retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -88,12 +91,12 @@ class ConnectionController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto c = usecase.getById(id, spaceId);
+      auto c = usecase.getConnection(tenantId, spaceId, id);
       if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;
@@ -118,13 +121,13 @@ class ConnectionController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = usecase.deleteConnection(id, spaceId);
+      auto result = usecase.deleteConnection(tenantId, spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

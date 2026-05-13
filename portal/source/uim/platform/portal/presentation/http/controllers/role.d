@@ -118,7 +118,7 @@ class RoleController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto roleId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteRole(roleId);

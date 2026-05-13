@@ -136,7 +136,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -201,7 +201,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));

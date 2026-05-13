@@ -130,7 +130,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteUser(userId);

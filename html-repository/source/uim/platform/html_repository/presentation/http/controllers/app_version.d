@@ -10,7 +10,6 @@ module uim.platform.html_repository.presentation.http.controllers.app_version;
 
 // import uim.platform.htmls;
 
-
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -25,6 +24,7 @@ class AppVersionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/versions", &handleCreate);
     router.get("/api/v1/versions", &handleList);
     router.get("/api/v1/versions/*", &handleGet);
@@ -33,20 +33,22 @@ class AppVersionController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateAppVersionRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
+      r.appId = AppVersionId(j.getString("appId"));
       r.versionCode = j.getString("versionCode");
       r.description = j.getString("description");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createAppVersion(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Version created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -83,7 +85,7 @@ class AppVersionController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
@@ -113,7 +115,7 @@ class AppVersionController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -130,7 +132,7 @@ class AppVersionController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id);
-          
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -138,8 +140,8 @@ class AppVersionController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;

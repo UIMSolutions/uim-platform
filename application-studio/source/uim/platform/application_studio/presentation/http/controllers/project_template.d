@@ -122,7 +122,7 @@ class ProjectTemplateController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(extractIdFromPath(path));

@@ -106,7 +106,7 @@ class ExportController : ManageController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

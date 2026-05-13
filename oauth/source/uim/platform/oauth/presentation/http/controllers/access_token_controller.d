@@ -20,7 +20,7 @@ class AccessTokenController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/oauth/access-tokens", &handleList);
         router.get("/api/v1/oauth/access-tokens/*", &handleGet);
         router.post("/api/v1/oauth/access-tokens", &handleCreate);
@@ -30,13 +30,15 @@ class AccessTokenController : PlatformController {
 
     protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = usecase.list(tenantId);
+            auto tenantId = req.getTenantId;
+
+            auto items = usecase.listAccessTokens(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Access tokens retrieved successfully");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Access tokens retrieved successfully");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -48,9 +50,13 @@ class AccessTokenController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto e = usecase.getById(AccessTokenId(id));
-            if (e.isNull) { writeError(res, 404, "Access token not found"); return; }
+            auto id = AccessTokenId(extractIdFromPath(path));
+
+            auto e = usecase.getAccessToken(id);
+            if (e.isNull) {
+                writeError(res, 404, "Access token not found");
+                return;
+            }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -63,7 +69,7 @@ class AccessTokenController : PlatformController {
             auto j = req.json;
             AccessTokenDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.tokenValue = j.getString("tokenValue");
             dto.clientId = j.getString("clientId");
             dto.userId = j.getString("userId");
@@ -74,8 +80,8 @@ class AccessTokenController : PlatformController {
             auto result = usecase.create(dto);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Access token created");
+                    .set("id", result.id)
+                    .set("message", "Access token created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -86,15 +92,16 @@ class AccessTokenController : PlatformController {
         }
     }
 
-    protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = usecase.revoke(AccessTokenId(id));
+            auto id = AccessTokenId(extractIdFromPath(path));
+
+            auto result = usecase.revokeAccessToken(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Access token revoked");
+                    .set("message", "Access token revoked");
 
                 res.writeJsonBody(resp, 200);
             } else {
@@ -105,16 +112,17 @@ class AccessTokenController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto id = AccessTokenId(extractIdFromPath(path));
-            auto result = usecase.delete(id);
+            
+            auto result = usecase.deleteAccessToken(id);
             if (result.success) {
                 auto resp = Json.emptyObject
-                  .set("message", "Access token deleted");
-                  
+                    .set("message", "Access token deleted");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);

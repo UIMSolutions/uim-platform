@@ -105,7 +105,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSite(siteId);

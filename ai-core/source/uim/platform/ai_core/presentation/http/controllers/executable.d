@@ -125,7 +125,7 @@ class ExecutableController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));

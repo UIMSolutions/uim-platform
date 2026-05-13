@@ -137,7 +137,7 @@ class BusinessContextController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));

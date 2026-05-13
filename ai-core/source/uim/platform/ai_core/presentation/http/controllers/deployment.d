@@ -124,7 +124,7 @@ class DeploymentController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

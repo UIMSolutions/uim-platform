@@ -33,6 +33,7 @@ class TaskController : PlatformController {
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
+
       auto j = req.json;
       CreateTaskRequest r;
       r.tenantId = tenantId;
@@ -49,7 +50,7 @@ class TaskController : PlatformController {
       // r.createdAt = now;
       // r.updatedAt = now;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createTask(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -66,9 +67,10 @@ class TaskController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto tasks = usecase.list(spaceId);
 
+      auto tasks = usecase.listTasks(tenantId, spaceId);
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
         jarr ~= Json.emptyObject
@@ -82,7 +84,8 @@ class TaskController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("count", tasks.length)
-        .set("resources", jarr);
+        .set("resources", jarr)
+        .set("message", "Tasks retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -96,7 +99,7 @@ class TaskController : PlatformController {
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto t = usecase.getById(id, spaceId);
+      auto t = usecase.getTaskById(tenantId, spaceId, id);
       if (t.isNull) {
         writeError(res, 404, "Task not found");
         return;
@@ -123,16 +126,17 @@ class TaskController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deleteTask(spaceId, id);
+      auto result = usecase.deleteTask(tenantId, spaceId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto response = Json.emptyObject
+          .set("message", "Task deleted successfully"); 
+        res.writeJsonBody(response, 200);
       } else {
         writeError(res, 404, result.error);
       }

@@ -31,20 +31,21 @@ class RemoteTableController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateRemoteTableRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.connectionId = j.getString("connectionId");
+      r.connectionId = ConnectionId(j.getString("connectionId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.remoteSchema = j.getString("remoteSchema");
       r.remoteObjectName = j.getString("remoteObjectName");
       r.replicationMode = j.getString("replicationMode");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createRemoteTable(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,9 +62,10 @@ class RemoteTableController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto tables = usecase.list(spaceId);
 
+      auto tables = usecase.listRemoteTables(tenantId, spaceId);
       auto jarr = Json.emptyArray;
       foreach (rt; tables) {
         jarr ~= Json.emptyObject
@@ -90,12 +92,12 @@ class RemoteTableController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto rt = usecase.getById(spaceId, id);
+      auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
       if (rt.isNull) {
         writeError(res, 404, "Remote table not found");
         return;
@@ -120,13 +122,13 @@ class RemoteTableController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = usecase.deleteRemoteTable(spaceId, id);
+      auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

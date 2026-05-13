@@ -106,7 +106,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
@@ -214,7 +214,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DomainId(extractIdFromPath(req.requestURI));

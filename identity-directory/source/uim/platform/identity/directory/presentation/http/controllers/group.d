@@ -114,7 +114,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto groupId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteGroup(groupId);
@@ -147,7 +147,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

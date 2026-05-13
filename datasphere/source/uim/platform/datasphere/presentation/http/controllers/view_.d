@@ -155,7 +155,7 @@ class ViewController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

@@ -120,7 +120,7 @@ class ThemeController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto themeId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteTheme(themeId);

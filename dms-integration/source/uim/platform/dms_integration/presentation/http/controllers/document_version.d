@@ -92,7 +92,7 @@ class DocumentVersionController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

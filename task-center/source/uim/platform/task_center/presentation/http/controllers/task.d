@@ -266,7 +266,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
             auto tenantId = req.getTenantId;

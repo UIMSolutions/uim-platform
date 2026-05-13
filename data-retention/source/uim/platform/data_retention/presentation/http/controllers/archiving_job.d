@@ -64,8 +64,13 @@ class ArchivingJobController : PlatformController {
                     .set("status", aj.status.to!string)
                     .set("recordsProcessed", aj.recordsProcessed);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr)
-                    .set("totalCount", items.length), 200);
+
+            auto response = Json.emptyObject
+                .set("items", jarr)
+                .set("totalCount", items.length)
+                .set("message", "Archiving jobs retrieved");
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -81,7 +86,7 @@ class ArchivingJobController : PlatformController {
                 writeError(res, 404, "Archiving job not found");
                 return;
             }
-            res.writeJsonBody(Json.emptyObject
+            auto response = Json.emptyObject
                     .set("id", aj.id.value)
                     .set("applicationGroupId", aj.applicationGroupId.value)
                     .set("operationType", aj.operationType.to!string)
@@ -89,7 +94,9 @@ class ArchivingJobController : PlatformController {
                     .set("selectionCriteria", aj.selectionCriteria)
                     .set("recordsProcessed", aj.recordsProcessed)
                     .set("recordsFailed", aj.recordsFailed)
-                    .set("scheduledAt", aj.scheduledAt), 200);
+                    .set("scheduledAt", aj.scheduledAt);
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -112,7 +119,11 @@ class ArchivingJobController : PlatformController {
 
             auto result = usecase.updateArchivingJob(id, r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Archiving job updated");
+
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 400, result.error);
             }
@@ -127,7 +138,11 @@ class ArchivingJobController : PlatformController {
             auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
 
             usecase.deleteArchivingJob(tenantId, id);
-            res.writeJsonBody(Json.emptyObject, 204);
+            auto response = Json.emptyObject
+                .set("id", id)
+                .set("message", "Archiving job deleted");
+
+            res.writeJsonBody(response, 204);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

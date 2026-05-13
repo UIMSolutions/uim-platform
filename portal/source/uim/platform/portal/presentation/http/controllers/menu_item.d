@@ -110,7 +110,7 @@ class MenuItemController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = extractIdFromPath(req.requestURI);
       auto j = req.json;

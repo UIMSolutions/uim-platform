@@ -10,7 +10,7 @@ module uim.platform.datasphere.presentation.http.controllers.space;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -23,6 +23,7 @@ class SpaceController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/datasphere/spaces", &handleList);
     router.get("/api/v1/datasphere/spaces/*", &handleGet);
     router.post("/api/v1/datasphere/spaces", &handleCreate);
@@ -31,22 +32,23 @@ class SpaceController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateSpaceRequest r;
       r.tenantId = tenantId;
-      r.spaceId = j.getString("id");
+      r.spaceId = SpaceId(j.getString("id"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
-      auto result = usecase.create(r);
+      auto result = usecase.createSpace(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Space created");
+          .set("id", result.id)
+          .set("message", "Space created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -60,7 +62,7 @@ class SpaceController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto spaces = usecase.list(tenantId);
+      auto spaces = usecase.listSpaces(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (s; spaces) {
@@ -75,9 +77,9 @@ class SpaceController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("count", Json(spaces.length))
-            .set("resources", jarr)
-            .set("message", "Spaces retrieved successfully");
+        .set("count", Json(spaces.length))
+        .set("resources", jarr)
+        .set("message", "Spaces retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -86,25 +88,25 @@ class SpaceController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
-      auto s = usecase.getById(tenantId, id);
+      auto s = usecase.getSpace(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Space not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", s.id)
-            .set("name", s.name)
-            .set("description", s.description)
-            .set("businessName", s.businessName)
-            .set("priority", s.priority)
-            .set("enableAuditLog", s.enableAuditLog)
-            .set("createdAt", s.createdAt)
-            .set("updatedAt", s.updatedAt)
-            .set("message", "Space retrieved successfully");
+        .set("id", s.id)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("businessName", s.businessName)
+        .set("priority", s.priority)
+        .set("enableAuditLog", s.enableAuditLog)
+        .set("createdAt", s.createdAt)
+        .set("updatedAt", s.updatedAt)
+        .set("message", "Space retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -114,7 +116,7 @@ class SpaceController : PlatformController {
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
+      auto tenantId = req.getTenantId;
       auto j = req.json;
 
       UpdateSpaceRequest r;
@@ -125,12 +127,12 @@ class SpaceController : PlatformController {
       r.businessName = j.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateSpace(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Space updated");
-            
+          .set("id", result.id)
+          .set("message", "Space updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -140,12 +142,12 @@ class SpaceController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.delete(id);
+      auto result = usecase.deleteSpace(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

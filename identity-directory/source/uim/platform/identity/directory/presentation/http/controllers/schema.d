@@ -109,7 +109,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSchema(schemaId);
