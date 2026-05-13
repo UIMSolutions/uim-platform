@@ -7,7 +7,7 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers.
 
 
 
-// import vibe.data.json;
+
 // 
 
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.models;
@@ -37,7 +37,7 @@ class ModelController : PlatformController {
     router.post("/api/v1/models/train/*", &handleTrain);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -87,7 +87,7 @@ class ModelController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -104,7 +104,7 @@ class ModelController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

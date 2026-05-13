@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.schema;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.directory.application.usecases.manage.schemas;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.schema;
@@ -34,7 +34,7 @@ class SchemaController : PlatformController {
     router.delete_("/scim/Schemas/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -72,7 +72,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto schema = useCase.getSchema(schemaId);
@@ -87,7 +87,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto j = req.json;

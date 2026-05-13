@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.subscription;
 
 
 
-// import vibe.data.json;
+
 // 
 // import uim.platform.management.application.usecases.manage.subscriptions;
 // import uim.platform.management.application.dto;
@@ -84,7 +84,7 @@ class SubscriptionController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -98,7 +98,7 @@ class SubscriptionController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubscriptionId(extractId(req.requestURI));

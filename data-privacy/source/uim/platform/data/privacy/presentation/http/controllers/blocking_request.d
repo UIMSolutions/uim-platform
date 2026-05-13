@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.blocking_request;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
@@ -36,7 +36,7 @@ class BlockingController : PlatformController {
     router.delete_("/api/v1/blocking-requests/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -81,7 +81,7 @@ class BlockingController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
@@ -96,7 +96,7 @@ class BlockingController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

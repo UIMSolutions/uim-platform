@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.password_policy;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.directory.application.usecases.manage.password_policies;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.password_policy;
@@ -33,7 +33,7 @@ class PasswordPolicyController : PlatformController {
     router.get("/api/v1/password-policies/*", &handleGet);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -101,7 +101,7 @@ class PasswordPolicyController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto policyId = extractIdFromPath(req.requestURI);
       auto policy = useCase.getPolicy(policyId);

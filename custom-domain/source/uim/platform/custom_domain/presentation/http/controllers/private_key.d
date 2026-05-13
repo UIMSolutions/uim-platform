@@ -27,7 +27,7 @@ class PrivateKeyController : PlatformController {
         router.delete_("/api/v1/custom-domain/keys/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -56,7 +56,7 @@ class PrivateKeyController : PlatformController {
         }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto keys = usecase.listPrivateKeys(tenantId);
@@ -76,14 +76,14 @@ class PrivateKeyController : PlatformController {
             auto resp = Json.emptyObject
                 .set("count", Json(keys.length))
                 .set("resources", jarr);
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
@@ -113,7 +113,7 @@ class PrivateKeyController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));

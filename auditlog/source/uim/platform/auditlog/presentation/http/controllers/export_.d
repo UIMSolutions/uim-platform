@@ -7,7 +7,7 @@ module uim.platform.auditlog.presentation.http.controllers.export_;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.exports;
@@ -36,7 +36,7 @@ class ExportController : ManageController {
     router.delete_("/api/v1/exports/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -90,7 +90,7 @@ class ExportController : ManageController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

@@ -8,11 +8,13 @@ mixin(ShowModule!());
 class ArchivingJobController : PlatformController {
     private ManageArchivingJobsUseCase usecase;
 
-    this(ManageArchivingJobsUseCase usecase) { this.usecase = usecase; }
+    this(ManageArchivingJobsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/data-retention/archiving-jobs", &handleCreate);
         router.get("/api/v1/data-retention/archiving-jobs", &handleList);
         router.get("/api/v1/data-retention/archiving-jobs/*", &handleGet);
@@ -20,30 +22,39 @@ class ArchivingJobController : PlatformController {
         router.delete_("/api/v1/data-retention/archiving-jobs/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateArchivingJobRequest r;
             r.tenantId = tenantId;
-            r.applicationGroupId = j.getString("applicationGroupId");
+            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
             r.operationType = j.getString("operationType");
             r.selectionCriteria = j.getString("selectionCriteria");
             r.scheduledAt = jsonLong(j, "scheduledAt");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createArchivingJob(r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Archiving job created");
+
+                res.writeJsonBody(response, 201);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            
-            auto items = usecase.list(tenantId);
+
+            auto items = usecase.listArchivingJobs(tenantId);
             auto jarr = Json.emptyArray;
             foreach (aj; items) {
                 jarr ~= Json.emptyObject
@@ -53,52 +64,72 @@ class ArchivingJobController : PlatformController {
                     .set("status", aj.status.to!string)
                     .set("recordsProcessed", aj.recordsProcessed);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            res.writeJsonBody(Json.emptyObject.set("items", jarr)
+                    .set("totalCount", items.length), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto aj = usecase.getById(tenantId, id);
-            if (aj.isNull) { writeError(res, 404, "Archiving job not found"); return; }
+            auto tenantId = req.getTenantId;
+            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
+
+            auto aj = usecase.getArchivingJob(tenantId, id);
+            if (aj.isNull) {
+                writeError(res, 404, "Archiving job not found");
+                return;
+            }
             res.writeJsonBody(Json.emptyObject
-                .set("id", aj.id.value)
-                .set("applicationGroupId", aj.applicationGroupId.value)
-                .set("operationType", aj.operationType.to!string)
-                .set("status", aj.status.to!string)
-                .set("selectionCriteria", aj.selectionCriteria)
-                .set("recordsProcessed", aj.recordsProcessed)
-                .set("recordsFailed", aj.recordsFailed)
-                .set("scheduledAt", aj.scheduledAt), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                    .set("id", aj.id.value)
+                    .set("applicationGroupId", aj.applicationGroupId.value)
+                    .set("operationType", aj.operationType.to!string)
+                    .set("status", aj.status.to!string)
+                    .set("selectionCriteria", aj.selectionCriteria)
+                    .set("recordsProcessed", aj.recordsProcessed)
+                    .set("recordsFailed", aj.recordsFailed)
+                    .set("scheduledAt", aj.scheduledAt), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
+
             UpdateArchivingJobRequest r;
+            r.tenantId = tenantId;
+            r.archivingJobId = id;
+            r.operationType = j.getString("operationType").to!OperationType;
             r.status = j.getString("status");
             r.recordsProcessed = jsonInt(j, "recordsProcessed");
             r.recordsFailed = jsonInt(j, "recordsFailed");
             r.errorMessage = j.getString("errorMessage");
 
-            auto result = usecase.update(id, r);
+            auto result = usecase.updateArchivingJob(id, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
-            usecase.deleteArchivingJob(id);
+
+            usecase.deleteArchivingJob(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

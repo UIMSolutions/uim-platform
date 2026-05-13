@@ -8,7 +8,7 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;

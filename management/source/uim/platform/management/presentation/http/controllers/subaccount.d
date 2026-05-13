@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.subaccount;
 
 
 
-// import vibe.data.json;
+
 
 // import uim.platform.management.application.usecases.manage.subaccounts;
 // import uim.platform.management.application.dto;
@@ -37,7 +37,7 @@ class SubaccountController : PlatformController {
     router.delete_("/api/v1/subaccounts/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -95,7 +95,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -109,7 +109,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));

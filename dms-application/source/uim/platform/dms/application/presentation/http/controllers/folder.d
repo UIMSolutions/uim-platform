@@ -7,7 +7,7 @@ module uim.platform.dms.application.presentation.http.controllers.folder;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.folders;
@@ -39,7 +39,7 @@ class FolderController : PlatformController {
     router.get("/api/v1/folders/children/*", &handleListChildren);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class FolderController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
@@ -102,7 +102,7 @@ class FolderController : PlatformController {
     * Handles updating folder metadata (name, description).
     * The folder ID is extracted from the URL path.
     */
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));

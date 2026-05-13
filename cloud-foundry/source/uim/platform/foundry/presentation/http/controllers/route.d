@@ -7,7 +7,7 @@ module uim.platform.foundry.presentation.http.controllers.route;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.foundry.application.usecases.manage.routes;
@@ -46,7 +46,7 @@ class RouteController : PlatformController {
 
   // --- Routes ---
 
-  protected void handleGetCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -170,7 +170,7 @@ class RouteController : PlatformController {
 
   // --- Domains ---
 
-  protected void handleGetCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

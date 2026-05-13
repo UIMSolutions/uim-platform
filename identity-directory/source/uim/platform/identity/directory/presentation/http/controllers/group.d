@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.group;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.directory.application.usecases.manage.groups;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.group;
@@ -36,7 +36,7 @@ class GroupController : PlatformController {
     router.delete_("/scim/Groups/members", &handleDeleteMember);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -79,7 +79,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto groupId = extractIdFromPath(req.requestURI);
@@ -94,7 +94,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto groupId = extractIdFromPath(req.requestURI);

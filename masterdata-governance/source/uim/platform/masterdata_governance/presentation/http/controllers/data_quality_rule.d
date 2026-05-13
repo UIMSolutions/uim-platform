@@ -42,7 +42,7 @@ class DataQualityRuleController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -55,7 +55,7 @@ class DataQualityRuleController : PlatformController {
         }
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -92,7 +92,7 @@ class DataQualityRuleController : PlatformController {
         }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.group;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.authentication.application.usecases.manage.groups;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.group;
@@ -33,7 +33,7 @@ class GroupController : PlatformController {
     router.post("/api/v1/groups/members", &handleAddMember);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -73,7 +73,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
       auto tenantId = req.getTenantId;

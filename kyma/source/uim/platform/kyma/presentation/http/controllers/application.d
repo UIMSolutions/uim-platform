@@ -7,7 +7,7 @@ module uim.platform.kyma.presentation.http.controllers.application;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.kyma.application.usecases.manage.applications;
@@ -92,7 +92,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationId(extractIdFromPath(req.requestURI));
@@ -109,7 +109,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ApplicationId(extractIdFromPath(req.requestURI));
       auto j = req.json;

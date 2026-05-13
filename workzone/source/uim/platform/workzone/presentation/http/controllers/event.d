@@ -7,7 +7,7 @@ module uim.platform.workzone.presentation.http.event;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.workzone.application.usecases.manage.events;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
@@ -34,7 +34,7 @@ class EventController : PlatformController {
     router.delete_("/api/v1/events/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -87,7 +87,7 @@ class EventController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -103,7 +103,7 @@ class EventController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

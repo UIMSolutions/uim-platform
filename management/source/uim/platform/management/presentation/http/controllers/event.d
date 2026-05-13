@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.event;
 
 
 
-// import vibe.data.json;
+
 // 
 // import uim.platform.management.application.usecases.query_platform_events;
 // import uim.platform.management.domain.entities.platform_event;
@@ -60,7 +60,7 @@ class EventController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);

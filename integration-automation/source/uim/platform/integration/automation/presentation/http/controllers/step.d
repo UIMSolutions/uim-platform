@@ -7,7 +7,7 @@ module uim.platform.integration.automation.presentation.http.step;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.integration.automation.application.usecases.manage.steps;
@@ -59,7 +59,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

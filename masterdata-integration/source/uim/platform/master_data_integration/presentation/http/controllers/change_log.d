@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.presentation.http.controllers.change
 
 
 
-// import vibe.data.json;
+
 
 
 import uim.platform.master_data_integration.application.usecases.query_change_log;
@@ -65,7 +65,7 @@ class ChangeLogController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

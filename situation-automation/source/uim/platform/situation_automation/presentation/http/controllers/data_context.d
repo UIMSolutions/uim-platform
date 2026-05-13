@@ -31,7 +31,7 @@ class DataContextController : PlatformController {
         router.post("/api/v1/situation-automation/data-contexts/delete-personal-data", &handleDeletePersonalData);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -91,7 +91,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
             auto tenantId = req.getTenantId;

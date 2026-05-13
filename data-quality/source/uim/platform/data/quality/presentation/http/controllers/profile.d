@@ -7,7 +7,7 @@ module uim.platform.data.quality.presentation.http.controllers.profile;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.data.quality.application.usecases.profile_data;
@@ -80,7 +80,7 @@ class ProfileController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

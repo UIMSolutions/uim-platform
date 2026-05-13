@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.policy
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.authentication.application.usecases.manage.policies;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.policy;
@@ -32,7 +32,7 @@ class PolicyController : PlatformController {
     router.get("/api/v1/policies/*", &handleGet);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -84,7 +84,7 @@ class PolicyController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
 

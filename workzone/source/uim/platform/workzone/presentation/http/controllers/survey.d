@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.survey;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.workzone.application.usecases.manage.surveys;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
@@ -35,7 +35,7 @@ class SurveyController : PlatformController {
     router.delete_("/api/v1/surveys/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -84,7 +84,7 @@ class SurveyController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = SurveyId(extractIdFromPath(req.requestURI));
@@ -100,7 +100,7 @@ class SurveyController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

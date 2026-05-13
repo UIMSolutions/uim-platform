@@ -7,7 +7,7 @@ module uim.platform.dms.application.presentation.http.controllers.permission;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.permissions;
@@ -133,7 +133,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));

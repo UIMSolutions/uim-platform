@@ -7,7 +7,7 @@ module uim.platform.data.quality.presentation.http.controllers.cleansing_job;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
@@ -34,7 +34,7 @@ class CleansingJobController : PlatformController {
     router.get("/api/v1/cleansing-jobs/*", &handleGet);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -78,7 +78,7 @@ class CleansingJobController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CleansingJobId(extractIdFromPath(req.requestURI));

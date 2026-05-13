@@ -7,7 +7,7 @@ module uim.platform.object_store.presentation.http.controllers.object;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.object_store.application.usecases.manage.objects;
@@ -39,7 +39,7 @@ class ObjectController : PlatformController {
     router.get("/api/v1/objects/*/versions", &handleListVersions);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -94,7 +94,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -113,7 +113,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  protected void handleGetUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

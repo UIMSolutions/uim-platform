@@ -7,7 +7,7 @@ module uim.platform.destination.presentation.http.controllers.certificate;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.destination.application.usecases.manage.certificates;
@@ -121,7 +121,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));

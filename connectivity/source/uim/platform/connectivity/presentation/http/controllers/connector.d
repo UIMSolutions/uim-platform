@@ -7,7 +7,7 @@ module uim.platform.connectivity.presentation.http.controllers.connector;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.connectivity.application.usecases.manage.connectors;
@@ -82,7 +82,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));

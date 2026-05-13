@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.entitlement;
 
 
 
-// import vibe.data.json;
+
 // 
 // import uim.platform.management.application.usecases.manage.entitlements;
 // import uim.platform.management.application.dto;
@@ -90,7 +90,7 @@ class EntitlementController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -104,7 +104,7 @@ class EntitlementController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));

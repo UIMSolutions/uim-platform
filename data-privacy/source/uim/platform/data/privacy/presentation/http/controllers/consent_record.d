@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.consent_record;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.data.privacy.application.usecases.manage.consent_records;
@@ -113,7 +113,7 @@ class ConsentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));

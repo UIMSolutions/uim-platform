@@ -7,7 +7,7 @@ module uim.platform.auditlog.presentation.http.controllers.audit_log;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.auditlog.application.usecases.write.audit_log;
@@ -112,7 +112,7 @@ class AuditLogController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = AuditLogId(extractIdFromPath(req.requestURI));

@@ -38,7 +38,7 @@ class CredentialController : PlatformController {
 
   // --- Password endpoints ---
 
-  protected void handleGetCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Password(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "password");
   }
 
@@ -56,7 +56,7 @@ class CredentialController : PlatformController {
 
   // --- Key endpoints ---
 
-  protected void handleGetCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Key(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "key");
   }
 
@@ -74,7 +74,7 @@ class CredentialController : PlatformController {
 
   // --- Shared handlers ---
 
-  protected void handleGetCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleCreate(Credential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

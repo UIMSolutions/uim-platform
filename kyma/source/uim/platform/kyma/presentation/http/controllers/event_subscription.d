@@ -7,7 +7,7 @@ module uim.platform.kyma.presentation.http.controllers.event_subscription;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.kyma.application.usecases.manage.event_subscriptions;
@@ -38,7 +38,7 @@ class EventSubscriptionController : PlatformController {
     router.post("/api/v1/event-subscriptions/resume/*", &handleResume);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -102,7 +102,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -118,7 +118,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

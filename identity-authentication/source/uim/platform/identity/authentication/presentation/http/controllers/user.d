@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.user;
 // 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.authentication.application.usecases.manage.users;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.user;
@@ -34,7 +34,7 @@ class UserController : PlatformController {
     router.post("/api/v1/users/change-password", &handleChangePassword);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 auto tenantId = req.getTenantId;
       auto path = req.requestURI;
@@ -108,7 +108,7 @@ auto tenantId = req.getTenantId;
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto path = req.requestURI;

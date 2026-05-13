@@ -7,7 +7,7 @@ module uim.platform.portal.presentation.http.controllers.provider;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.portal.application.usecases.manage.providers;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.content_provider;
@@ -35,7 +35,7 @@ class ProviderController : PlatformController {
     router.delete_("/api/v1/providers/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -72,7 +72,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto provider = useCase.getProvider(providerId);
@@ -86,7 +86,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto j = req.json;

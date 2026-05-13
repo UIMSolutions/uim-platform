@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.presentation.http.proxy_system;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.identity.provisioning.application.usecases.manage.proxy_systems;
@@ -38,7 +38,7 @@ class ProxySystemController : PlatformController {
     router.post("/api/v1/proxy-systems/deactivate/*", &handleDeactivate);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class ProxySystemController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -98,7 +98,7 @@ class ProxySystemController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

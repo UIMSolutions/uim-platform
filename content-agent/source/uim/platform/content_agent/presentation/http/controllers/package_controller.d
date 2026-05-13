@@ -7,7 +7,7 @@ module uim.platform.content_agent.presentation.http.controllers.package_controll
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.content_agent.application.usecases.manage.content_packages;
@@ -37,7 +37,7 @@ class PackageController : PlatformController {
     router.post("/api/v1/packages/assemble", &handleAssemble);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -85,7 +85,7 @@ class PackageController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -103,7 +103,7 @@ class PackageController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

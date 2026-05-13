@@ -7,7 +7,7 @@ module uim.platform.foundry.presentation.http.controllers.service;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.foundry.application.usecases.manage.services;
@@ -45,7 +45,7 @@ class ServiceController : PlatformController {
 
   // --- Service Instances ---
 
-  protected void handleGetCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Instance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -110,7 +110,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleGetUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -157,7 +157,7 @@ class ServiceController : PlatformController {
 
   // --- Service Bindings ---
 
-  protected void handleGetCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(Binding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.http.controllers.transport_req
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.abap_environment.application.usecases.manage.transport_requests;
@@ -39,7 +39,7 @@ class TransportRequestController : PlatformController {
     router.delete_("/api/v1/transports/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -84,7 +84,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));

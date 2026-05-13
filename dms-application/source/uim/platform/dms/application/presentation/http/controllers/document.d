@@ -7,7 +7,7 @@ module uim.platform.dms.application.presentation.http.controllers.document;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.documents;
@@ -39,7 +39,7 @@ class DocumentController : PlatformController {
     router.post("/api/v1/documents/archive/*", &handleArchive);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenanId = req.getTenantId;
       auto j = req.json;
@@ -116,7 +116,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -132,7 +132,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));

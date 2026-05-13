@@ -7,7 +7,7 @@ module uim.platform.workzone.presentation.http.controllers.feed;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.workzone.application.usecases.manage.feeds;
 // import uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.types;
@@ -34,7 +34,7 @@ class FeedController : PlatformController {
       router.delete_("/api/v1/feeds/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto j = req.json;
         auto r = CreateFeedEntryRequest();
@@ -81,7 +81,7 @@ class FeedController : PlatformController {
       }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto id = extractIdFromPath(req.requestURI);
         auto tenantId = req.getTenantId;

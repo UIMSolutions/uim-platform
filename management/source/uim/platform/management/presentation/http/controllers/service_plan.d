@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.service_plan;
 
 
 
-// import vibe.data.json;
+
 // 
 // import uim.platform.management.application.usecases.manage.service_plans;
 // import uim.platform.management.application.dto;
@@ -34,7 +34,7 @@ class ServicePlanController : PlatformController {
     router.delete_("/api/v1/service-plans/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -95,7 +95,7 @@ class ServicePlanController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -109,7 +109,7 @@ class ServicePlanController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);

@@ -79,7 +79,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -106,7 +106,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  protected void handleGetUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

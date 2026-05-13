@@ -28,7 +28,7 @@ class ConfigurationController : PlatformController {
         router.put("/api/v1/scheduler/configuration", &handleUpdate);
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto config = usecase.getConfiguration(tenantId);
@@ -46,7 +46,7 @@ class ConfigurationController : PlatformController {
         }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;

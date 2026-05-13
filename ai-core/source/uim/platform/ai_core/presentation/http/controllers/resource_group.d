@@ -31,7 +31,7 @@ class ResourceGroupController : PlatformController {
     router.delete_("/api/v2/admin/resourceGroups/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -88,7 +88,7 @@ class ResourceGroupController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));

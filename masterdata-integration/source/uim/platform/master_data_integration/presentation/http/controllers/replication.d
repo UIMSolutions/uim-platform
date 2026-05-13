@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.presentation.http.replication;
 
 
 
-// import vibe.data.json;
+
 
 import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
 import uim.platform.master_data_integration.application.dto;
@@ -33,7 +33,7 @@ class ReplicationController : PlatformController {
     router.delete_("/api/v1/replication-jobs/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -90,7 +90,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));

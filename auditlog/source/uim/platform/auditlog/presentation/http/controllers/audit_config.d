@@ -7,7 +7,7 @@ module uim.platform.auditlog.presentation.http.controllers.audit_config;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.audit_config;
@@ -106,7 +106,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

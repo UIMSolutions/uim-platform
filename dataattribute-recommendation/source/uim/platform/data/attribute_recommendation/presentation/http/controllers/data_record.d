@@ -7,7 +7,7 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers.
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
@@ -38,7 +38,7 @@ class DataRecordController : PlatformController {
     router.delete_("/api/v1/data-records/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

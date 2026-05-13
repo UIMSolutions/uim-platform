@@ -7,7 +7,7 @@ module uim.platform.portal.presentation.http.controllers.catalog;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.portal.application.usecases.manage.catalogs;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.catalog;
@@ -36,7 +36,7 @@ class CatalogController : PlatformController {
     router.delete_("/api/v1/catalogs/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -72,7 +72,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       if (!useCase.existsCatalog(catalogId)) {
@@ -87,7 +87,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto j = req.json;

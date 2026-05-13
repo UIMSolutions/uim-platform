@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.http.controllers.business_role
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.business_roles;
@@ -49,7 +49,7 @@ class BusinessRoleController : PlatformController {
     router.delete_("/api/v1/business-roles/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -96,7 +96,7 @@ class BusinessRoleController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
@@ -116,7 +116,7 @@ class BusinessRoleController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));

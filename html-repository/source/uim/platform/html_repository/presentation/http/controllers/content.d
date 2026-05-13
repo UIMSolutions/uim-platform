@@ -31,7 +31,7 @@ class ContentController : PlatformController {
     router.get("/api/v1/content/*", &handleGet);
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;

@@ -8,11 +8,13 @@ mixin(ShowModule!());
 class ApplicationGroupController : PlatformController {
     private ManageApplicationGroupsUseCase usecase;
 
-    this(ManageApplicationGroupsUseCase usecase) { this.usecase = usecase; }
+    this(ManageApplicationGroupsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/data-retention/application-groups", &handleCreate);
         router.get("/api/v1/data-retention/application-groups", &handleList);
         router.get("/api/v1/data-retention/application-groups/*", &handleGet);
@@ -20,10 +22,11 @@ class ApplicationGroupController : PlatformController {
         router.delete_("/api/v1/data-retention/application-groups/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateApplicationGroupRequest r;
             r.tenantId = tenantId;
             r.name = j.getString("name");
@@ -31,25 +34,26 @@ class ApplicationGroupController : PlatformController {
             r.scope_ = j.getString("scope");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto appIdsVal = "applicationIds" in j;
-            if (appIdsVal !is null && (appIdsVal).isArray) {
-                foreach (item; *appIdsVal) {
-                    r.applicationIds ~= getString(item, "");
-                }
+            foreach (item; j.getArray("applicationIds")) {
+                r.applicationIds ~= getString(item, "");
             }
 
-            auto result = usecase.create(r);
+            auto result = usecase.createApplicationGroup(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            
-            auto items = usecase.list(tenantId);
+
+            auto items = usecase.listApplicationGroups(tenantId);
             auto jarr = Json.emptyArray;
             foreach (ag; items) {
                 jarr ~= Json.emptyObject
@@ -58,48 +62,70 @@ class ApplicationGroupController : PlatformController {
                     .set("scope", ag.scope_.to!string)
                     .set("isActive", ag.isActive);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            res.writeJsonBody(Json.emptyObject.set("items", jarr)
+                    .set("totalCount", items.length), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto ag = usecase.getById(tenantId, id);
-            if (ag.isNull) { writeError(res, 404, "Application group not found"); return; }
-            res.writeJsonBody(Json.emptyObject
-                .set("id", ag.id.value).set("name", ag.name)
+            auto tenantId = req.getTenantId;
+            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto ag = usecase.getApplicationGroup(tenantId, id);
+            if (ag.isNull) {
+                writeError(res, 404, "Application group not found");
+                return;
+            }
+
+            auto response = Json.emptyObject
+                .set("id", ag.id.value)
+                .set("name", ag.name)
                 .set("description", ag.description)
                 .set("scope", ag.scope_.to!string)
-                .set("isActive", ag.isActive), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                .set("isActive", ag.isActive);
+                
+            res.writeJsonBody(response, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
+
             UpdateApplicationGroupRequest r;
+            r.tenantId = tenantId;
+            r.applicationGroupId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.scope_ = j.getString("scope");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = usecase.update(id, r);
+            auto result = usecase.updateApplicationGroup(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            usecase.deleteApplicationGroup(id);
+            auto tenantId = req.getTenantId;
+            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
+
+            usecase.deleteApplicationGroup(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

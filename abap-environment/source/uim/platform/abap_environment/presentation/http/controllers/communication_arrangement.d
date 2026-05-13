@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.http.controllers.communication
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.communication_arrangements;
@@ -37,7 +37,7 @@ class CommunicationArrangementController : PlatformController {
     router.delete_("/api/v1/communication-arrangements/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -90,7 +90,7 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
@@ -111,7 +111,7 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));

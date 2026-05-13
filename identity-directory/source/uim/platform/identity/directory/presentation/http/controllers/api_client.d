@@ -7,7 +7,7 @@ module uim.platform.identity.directory.presentation.http.controllers.api_client;
 
 
 
-// import vibe.data.json;
+
 import uim.platform.identity.directory.application.usecases.manage.api_clients;
 import uim.platform.identity.directory.application.dto;
 import uim.platform.identity.directory.domain.entities.api_client;
@@ -29,7 +29,7 @@ class ApiClientController : PlatformController {
     router.delete_("/api/v1/api-clients/*", &handleRevoke);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class ApiClientController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto client = useCase.getClient(clientId);

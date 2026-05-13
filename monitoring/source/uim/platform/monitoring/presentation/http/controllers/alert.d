@@ -7,7 +7,7 @@ module uim.platform.monitoring.presentation.http.controllers.alert;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.monitoring.application.usecases.manage.alerts;
@@ -63,7 +63,7 @@ class AlertController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));

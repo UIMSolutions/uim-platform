@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.applic
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.authentication.application.usecases.manage.applications;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.application;
@@ -33,7 +33,7 @@ class ApplicationController : PlatformController {
     router.put("/api/v1/applications/*", &handleUpdate);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
       auto tenantId = req.getTenantId;
@@ -108,7 +108,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
 

@@ -8,11 +8,13 @@ mixin(ShowModule!());
 class BusinessPurposeController : PlatformController {
     private ManageBusinessPurposesUseCase usecase;
 
-    this(ManageBusinessPurposesUseCase usecase) { this.usecase = usecase; }
+    this(ManageBusinessPurposesUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/data-retention/business-purposes", &handleCreate);
         router.get("/api/v1/data-retention/business-purposes", &handleList);
         router.get("/api/v1/data-retention/business-purposes/*", &handleGet);
@@ -21,107 +23,156 @@ class BusinessPurposeController : PlatformController {
         router.delete_("/api/v1/data-retention/business-purposes/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateBusinessPurposeRequest r;
             r.tenantId = tenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.applicationGroupId = j.getString("applicationGroupId");
-            r.dataSubjectRoleId = j.getString("dataSubjectRoleId");
-            r.legalEntityId = j.getString("legalEntityId");
+            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
+            r.dataSubjectRoleId = DataSubjectRoleId(j.getString("dataSubjectRoleId"));
+            r.legalEntityId = LegalEntityId(j.getString("legalEntityId"));
             r.referenceDate = jsonLong(j, "referenceDate");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createBusinessPurpose(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.error);
             }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            
-            auto items = usecase.list(tenantId);
+
+            auto items = usecase.listBusinessPurposes(tenantId);
             auto jarr = Json.emptyArray;
             foreach (bp; items) {
                 jarr ~= Json.emptyObject
-                    .set("id", bp.id.value).set("name", bp.name)
+                    .set("id", bp.id.value)
+                    .set("name", bp.name)
                     .set("description", bp.description)
                     .set("applicationGroupId", bp.applicationGroupId.value)
                     .set("status", bp.status.to!string);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+            auto response = Json.emptyObject
+                .set("items", jarr)
+                .set("totalCount", items.length);
+
+            res.writeJsonBody(response, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto bp = usecase.getById(tenantId, id);
-            if (bp.isNull) { writeError(res, 404, "Business purpose not found"); return; }
+            auto tenantId = req.getTenantId;
+            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+
+            auto bp = usecase.getBusinessPurpose(tenantId, id);
+            if (bp.isNull) {
+                writeError(res, 404, "Business purpose not found");
+                return;
+            }
             res.writeJsonBody(Json.emptyObject
-                .set("id", bp.id.value).set("name", bp.name)
-                .set("description", bp.description)
-                .set("applicationGroupId", bp.applicationGroupId.value)
-                .set("dataSubjectRoleId", bp.dataSubjectRoleId.value)
-                .set("legalEntityId", bp.legalEntityId.value)
-                .set("status", bp.status.to!string)
-                .set("referenceDate", bp.referenceDate), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                    .set("id", bp.id.value).set("name", bp.name)
+                    .set("description", bp.description)
+                    .set("applicationGroupId", bp.applicationGroupId.value)
+                    .set("dataSubjectRoleId", bp.dataSubjectRoleId.value)
+                    .set("legalEntityId", bp.legalEntityId.value)
+                    .set("status", bp.status.to!string)
+                    .set("referenceDate", bp.referenceDate), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+
             auto j = req.json;
             UpdateBusinessPurposeRequest r;
+            r.tenantId = tenantId;
+            r.businessPurposeId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.applicationGroupId = j.getString("applicationGroupId");
-            r.dataSubjectRoleId = j.getString("dataSubjectRoleId");
-            r.legalEntityId = j.getString("legalEntityId");
+            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
+            r.dataSubjectRoleId = DataSubjectRoleId(j.getString("dataSubjectRoleId"));
+            r.legalEntityId = LegalEntityId(j.getString("legalEntityId"));
             r.referenceDate = jsonLong(j, "referenceDate");
 
-            auto result = usecase.update(id, r);
+            auto result = usecase.updateBusinessPurpose(r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("name", r.name)
+                    .set("description", r.description)
+                    .set("applicationGroupId", r.applicationGroupId.value)
+                    .set("dataSubjectRoleId", r.dataSubjectRoleId.value)
+                    .set("legalEntityId", r.legalEntityId.value)
+                    .set("referenceDate", r.referenceDate);
+                    
+                res.writeJsonBody(response, 200);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
+
             auto path = req.requestURI.to!string;
             // path: /api/v1/data-retention/business-purposes/{id}/activate
             auto parts = path.split("/");
             string id = "";
-            if (parts.length >= 6) id = parts[$ - 2];
+            if (parts.length >= 6)
+                id = parts[$ - 2];
 
-            auto result = usecase.activate(id);
+            auto result = usecase.activateBusinessPurpose(BusinessPurposeControllerId(id));
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "active"), 200);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("status", "active")
+                    .set("message", "Business purpose activated");
+
+                res.writeJsonBody(response, 200);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteBusinessPurpose(id);
+            auto tenantId = req.getTenantId;
+            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteBusinessPurpose(tenantId, id);
+
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

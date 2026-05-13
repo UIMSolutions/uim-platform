@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.presentation.http.transformation;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.identity.provisioning.application.usecases.manage.transformations;
@@ -38,7 +38,7 @@ class TransformationController : PlatformController {
     router.post("/api/v1/transformations/test", &handleTest);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -81,7 +81,7 @@ class TransformationController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -97,7 +97,7 @@ class TransformationController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

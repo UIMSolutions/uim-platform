@@ -7,7 +7,7 @@ module uim.platform.auditlog.presentation.http.controllers.retention;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.retention;
@@ -37,7 +37,7 @@ class RetentionController : ManageController {
     router.delete_("/api/v1/retention/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
       auto policyRequest = CreateRetentionPolicyRequest();
@@ -77,7 +77,7 @@ class RetentionController : ManageController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -92,7 +92,7 @@ class RetentionController : ManageController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
       auto policyRequest = UpdateRetentionPolicyRequest();

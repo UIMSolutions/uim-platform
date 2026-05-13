@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.presentation.http.user;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.identity.directory.application.usecases.manage.users;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.user;
@@ -36,7 +36,7 @@ class UserController : PlatformController {
     router.get("/scim/Users/.search", &handleSearch);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -85,7 +85,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto user = useCase.getUser(userId);
@@ -101,7 +101,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto j = req.json;

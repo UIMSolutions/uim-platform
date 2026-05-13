@@ -7,7 +7,7 @@ module uim.platform.portal.presentation.http.controllers.tile;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.portal.application.usecases.manage.tiles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.tile;
@@ -37,7 +37,7 @@ class TileController : PlatformController {
     router.delete_("/api/v1/tiles/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -91,7 +91,7 @@ class TileController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = extractIdFromPath(req.requestURI);
       auto tile = useCase.getTile(tileId);
@@ -105,7 +105,7 @@ class TileController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = extractIdFromPath(req.requestURI);
       auto j = req.json;

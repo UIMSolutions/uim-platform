@@ -7,7 +7,7 @@ module uim.platform.foundry.presentation.http.controllers.app;
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.foundry.application.usecases.manage.apps;
@@ -44,7 +44,7 @@ class AppController : PlatformController {
     router.delete_("/api/v1/apps/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -96,7 +96,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -112,7 +112,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;

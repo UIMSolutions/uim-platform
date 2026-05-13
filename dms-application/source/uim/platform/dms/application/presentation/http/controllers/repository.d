@@ -6,7 +6,7 @@
 module uim.platform.dms.application.presentation.http.controllers.repository;
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.repositories;
@@ -38,7 +38,7 @@ class RepositoryController : PlatformController {
     router.post("/api/v1/repositories/archive/*", &handleArchive);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
@@ -98,7 +98,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));

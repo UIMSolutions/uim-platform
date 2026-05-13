@@ -7,7 +7,7 @@ module uim.platform.content_agent.presentation.http.controllers.provider_control
 
 
 
-// import vibe.data.json;
+
 
 
 // import uim.platform.content_agent.application.usecases.manage.content_providers;
@@ -82,7 +82,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -97,7 +97,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

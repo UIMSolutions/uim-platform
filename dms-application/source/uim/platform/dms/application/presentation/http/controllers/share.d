@@ -7,7 +7,7 @@ module uim.platform.dms.application.presentation.http.controllers.share;
 
 
 
-// import vibe.data.json;
+
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.shares;
@@ -37,7 +37,7 @@ class ShareController : PlatformController {
     router.delete_("/api/v1/shares/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -81,7 +81,7 @@ class ShareController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));

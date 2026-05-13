@@ -7,7 +7,7 @@ module uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
 
 
 
-// import vibe.data.json;
+
 // 
 
 // import uim.platform.object_store.application.usecases.manage.lifecycle_rules;
@@ -36,7 +36,7 @@ class LifecycleRuleController : PlatformController {
     router.delete_("/api/v1/lifecycle-rules/*", &handleDelete);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -85,7 +85,7 @@ class LifecycleRuleController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -100,7 +100,7 @@ class LifecycleRuleController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -27,7 +27,7 @@ class DomainMappingController : PlatformController {
         router.delete_("/api/v1/custom-domain/mappings/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -59,7 +59,7 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto mappings = usecase.listDomainMappings(tenantId);
@@ -87,7 +87,7 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
@@ -118,7 +118,7 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));

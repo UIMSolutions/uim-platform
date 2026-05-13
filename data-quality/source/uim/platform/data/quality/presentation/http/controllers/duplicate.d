@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.presentation.http.controllers.duplicate;
 
-
-
-// import vibe.data.json;
-
-
 // import uim.platform.data.quality.application.usecases.detect_duplicates;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;
@@ -75,7 +70,7 @@ class DuplicateController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      
+
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;
       r.groupId = j.getString("groupId");
@@ -97,7 +92,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto groups = usecase.getUnresolved(tenantId);
@@ -114,7 +109,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

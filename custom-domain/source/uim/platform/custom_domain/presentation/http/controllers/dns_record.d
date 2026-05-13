@@ -28,11 +28,11 @@ class DnsRecordController : PlatformController {
         router.delete_("/api/v1/custom-domain/dns-records/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
-            
+
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
             r.id = DnsRecordId(j.getString("id"));
@@ -58,7 +58,7 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -88,7 +88,7 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
@@ -118,7 +118,7 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -144,7 +144,7 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));

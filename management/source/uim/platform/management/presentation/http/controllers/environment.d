@@ -7,7 +7,7 @@ module uim.platform.management.presentation.http.controllers.environment;
 
 
 
-// import vibe.data.json;
+
 // 
 // import uim.platform.management.application.usecases.manage.environment_instances;
 // import uim.platform.management.application.dto;
@@ -32,7 +32,7 @@ class EnvironmentController : PlatformController {
     router.post("/api/v1/environments/deprovision/*", &handleDeprovision);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -89,7 +89,7 @@ class EnvironmentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));
@@ -103,7 +103,7 @@ class EnvironmentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));

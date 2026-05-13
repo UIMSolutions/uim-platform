@@ -7,7 +7,7 @@ module uim.platform.portal.presentation.http.controllers.site;
 
 
 
-// import vibe.data.json;
+
 // import uim.platform.portal.application.usecases.manage.sites;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.site;
@@ -38,7 +38,7 @@ class SiteController : PlatformController {
     router.post("/api/v1/sites/archive/*", &handleArchive);
   }
 
-  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -74,7 +74,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto site = useCase.getSite(siteId);
@@ -88,7 +88,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto j = req.json;

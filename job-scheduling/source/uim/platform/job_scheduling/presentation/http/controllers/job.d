@@ -36,7 +36,7 @@ class JobController : PlatformController {
         router.delete_("/api/v1/scheduler/jobs/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -103,7 +103,7 @@ class JobController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = JobId(extractIdFromPath(req.requestURI.to!string));
@@ -121,7 +121,7 @@ class JobController : PlatformController {
         }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto jobId = JobId(extractIdFromPath(req.requestURI.to!string));

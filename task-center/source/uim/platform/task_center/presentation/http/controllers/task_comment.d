@@ -28,7 +28,7 @@ class TaskCommentController : PlatformController {
         router.delete_("/api/v1/task-center/comments/*", &handleDelete);
     }
 
-    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -76,7 +76,7 @@ class TaskCommentController : PlatformController {
         }
     }
 
-    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
@@ -91,7 +91,7 @@ class TaskCommentController : PlatformController {
         }
     }
 
-    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
