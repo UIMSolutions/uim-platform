@@ -34,6 +34,7 @@ class DataFlowController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       CreateDataFlowRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -59,6 +60,7 @@ class DataFlowController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto flows = usecase.list(spaceId);
 
@@ -89,7 +91,7 @@ class DataFlowController : PlatformController {
       auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto df = usecase.getById(spaceId, id);
+      auto df = usecase.getDataFlow(tenantId, spaceId, id);
       if (df.id.isEmpty) {
         writeError(res, 404, "Data flow not found");
         return;
@@ -105,6 +107,7 @@ class DataFlowController : PlatformController {
         .set("lastRunMessage", df.lastRunMessage)
         .set("createdAt", df.createdAt)
         .set("updatedAt", df.updatedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -117,7 +120,7 @@ class DataFlowController : PlatformController {
       auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = usecase.deleteDataFlow(spaceId, id);
+      auto result = usecase.deleteDataFlow(tenantId, spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

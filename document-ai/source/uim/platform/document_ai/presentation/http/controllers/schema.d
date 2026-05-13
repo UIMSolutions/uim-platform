@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.schema;
 
-import uim.platform.document_ai.application.usecases.manage.schemas;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.schema : Schema;
+// import uim.platform.document_ai.application.usecases.manage.schemas;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.schema : Schema;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class SchemaController : PlatformController {
   private ManageSchemasUseCase usecase;

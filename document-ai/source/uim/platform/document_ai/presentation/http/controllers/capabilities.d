@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.capabilities;
 
-import uim.platform.document_ai.application.usecases.get_capabilities;
+// import uim.platform.document_ai.application.usecases.get_capabilities;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class CapabilitiesController : PlatformController {
   private GetCapabilitiesUseCase usecase;

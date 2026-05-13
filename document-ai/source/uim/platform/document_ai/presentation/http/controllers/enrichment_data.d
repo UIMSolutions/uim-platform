@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.enrichment_data;
 
-import uim.platform.document_ai.application.usecases.manage.enrichment_data;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.enrichment_data : EnrichmentData;
+// import uim.platform.document_ai.application.usecases.manage.enrichment_data;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.enrichment_data : EnrichmentData;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class EnrichmentDataController : PlatformController {
   private ManageEnrichmentDataUseCase usecase;

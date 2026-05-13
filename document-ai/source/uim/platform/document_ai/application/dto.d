@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.dto;
 
-import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.types;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 // --- Document ---
 
 struct UploadDocumentRequest {

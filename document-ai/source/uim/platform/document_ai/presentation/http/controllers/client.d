@@ -5,13 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.client;
 
-import uim.platform.document_ai.application.usecases.manage.clients;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.client : Client;
+// import uim.platform.document_ai.application.usecases.manage.clients;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.client : Client;
 
 import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class ClientController : PlatformController {
   private ManageClientsUseCase usecase;
 
@@ -21,6 +24,7 @@ class ClientController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/admin/clients", &handleCreate);
     router.get("/api/v1/admin/clients", &handleList);
     router.get("/api/v1/admin/clients/*", &handleGet);
@@ -29,15 +33,16 @@ class ClientController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateClientRequest r;
       r.tenantId = tenantId;
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createClient(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", result.id)
@@ -55,8 +60,8 @@ class ClientController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto clients = usecase.list(tenantId);
 
+      auto clients = usecase.listClients(tenantId);
       auto jarr = Json.emptyArray;
       foreach (c; clients) {
         jarr ~= clientToJson(c);
@@ -73,12 +78,12 @@ class ClientController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
 
-      auto c = usecase.getById(tenantId, id);
+      auto c = usecase.getClient(tenantId, id);
       if (c.clientId.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
@@ -90,8 +95,8 @@ class ClientController : PlatformController {
     }
   }
 
-  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -102,12 +107,12 @@ class ClientController : PlatformController {
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchClient(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("clientId", result.id)
           .set("message", "Client updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -118,7 +123,7 @@ class ClientController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;

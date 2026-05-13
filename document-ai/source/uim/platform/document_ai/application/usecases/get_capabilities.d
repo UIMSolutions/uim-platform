@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.get_capabilities;
 
-import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.application.dto;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class GetCapabilitiesUseCase { // TODO: UIMUseCase {
   CapabilitiesResponse getCapabilities() {
     CapabilitiesResponse r;

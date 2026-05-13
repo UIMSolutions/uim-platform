@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.manage.training_jobs;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.training_job;
-import uim.platform.document_ai.domain.ports.repositories.training_jobs;
-import uim.platform.document_ai.domain.ports.repositories.documents;
-import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.training_job;
+// import uim.platform.document_ai.domain.ports.repositories.training_jobs;
+// import uim.platform.document_ai.domain.ports.repositories.documents;
+// import uim.platform.document_ai.application.dto;
 
-import std.uuid : randomUUID;
+// import std.uuid : randomUUID;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 
 class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
   private TrainingJobRepository jobRepo;

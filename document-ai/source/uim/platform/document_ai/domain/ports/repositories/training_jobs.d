@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.training_jobs;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.training_job;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.training_job;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 interface TrainingJobRepository {
   bool existsById(TrainingJobId id, ClientId clientId);
   TrainingJob findById(TrainingJobId id, ClientId clientId);

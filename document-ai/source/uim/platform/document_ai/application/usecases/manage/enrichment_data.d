@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.manage.enrichment_data;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.enrichment_data;
-import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
-import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.enrichment_data;
+// import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
+// import uim.platform.document_ai.application.dto;
 
-import std.uuid : randomUUID;
+// import std.uuid : randomUUID;
 
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
   private EnrichmentDataRepository repo;
 

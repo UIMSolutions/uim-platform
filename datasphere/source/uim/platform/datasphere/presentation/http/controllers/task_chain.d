@@ -10,7 +10,7 @@ module uim.platform.datasphere.presentation.http.controllers.task_chain;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -23,6 +23,7 @@ class TaskChainController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/datasphere/taskChains", &handleList);
     router.get("/api/v1/datasphere/taskChains/*", &handleGet);
     router.post("/api/v1/datasphere/taskChains", &handleCreate);
@@ -30,9 +31,10 @@ class TaskChainController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateTaskChainRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -45,11 +47,11 @@ class TaskChainController : PlatformController {
       // r.createdAt = now;
       // r.updatedAt = now;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createTaskChain(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task chain created");
+          .set("id", result.id)
+          .set("message", "Task chain created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -63,8 +65,8 @@ class TaskChainController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto chains = usecase.list(spaceId);
-
+      
+      auto chains = usecase.listTaskChains(spaceId);
       auto jarr = Json.emptyArray;
       foreach (tc; chains) {
         jarr ~= Json.emptyObject
@@ -80,7 +82,7 @@ class TaskChainController : PlatformController {
         .set("count", Json(chains.length))
         .set("resources", jarr)
         .set("message", "Task chains retrieved successfully");
-        
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -88,28 +90,28 @@ class TaskChainController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto tc = usecase.getById(spaceId, id);
+      auto tc = usecase.getTaskChain(spaceId, id);
       if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", tc.id)
-            .set("name", tc.name)
-            .set("description", tc.description)
-            .set("scheduleExpression", tc.scheduleExpression)
-            .set("lastRunAt", tc.lastRunAt)
-            .set("lastRunDurationMs", tc.lastRunDurationMs)
-            .set("lastRunMessage", tc.lastRunMessage)
-            .set("createdAt", tc.createdAt)
-            .set("updatedAt", tc.updatedAt)
-            .set("message", "Task chain retrieved successfully");
+        .set("id", tc.id)
+        .set("name", tc.name)
+        .set("description", tc.description)
+        .set("scheduleExpression", tc.scheduleExpression)
+        .set("lastRunAt", tc.lastRunAt)
+        .set("lastRunDurationMs", tc.lastRunDurationMs)
+        .set("lastRunMessage", tc.lastRunMessage)
+        .set("createdAt", tc.createdAt)
+        .set("updatedAt", tc.updatedAt)
+        .set("message", "Task chain retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -118,12 +120,12 @@ class TaskChainController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.delete (spaceId, id);
+      auto result = usecase.deleteTaskChain(tenantId, spaceId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

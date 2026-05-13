@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.training_job;
 
-import uim.platform.document_ai.application.usecases.manage.training_jobs;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.training_job : TrainingJob;
+// import uim.platform.document_ai.application.usecases.manage.training_jobs;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.training_job : TrainingJob;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class TrainingJobController : PlatformController {
   private ManageTrainingJobsUseCase usecase;
@@ -29,7 +33,7 @@ class TrainingJobController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateTrainingJobRequest r;
@@ -77,7 +81,7 @@ class TrainingJobController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -95,7 +99,7 @@ class TrainingJobController : PlatformController {
   }
 
   protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -111,7 +115,7 @@ class TrainingJobController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Training job updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -122,7 +126,7 @@ class TrainingJobController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));

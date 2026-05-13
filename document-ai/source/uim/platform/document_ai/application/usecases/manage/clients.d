@@ -5,14 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.manage.clients;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.client;
-import uim.platform.document_ai.domain.ports.repositories.clients;
-import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.client;
+// import uim.platform.document_ai.domain.ports.repositories.clients;
+// import uim.platform.document_ai.application.dto;
 
-import std.uuid : randomUUID;
+// import std.uuid : randomUUID;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
 
+@safe:
 class ManageClientsUseCase { // TODO: UIMUseCase {
   private ClientRepository repo;
 

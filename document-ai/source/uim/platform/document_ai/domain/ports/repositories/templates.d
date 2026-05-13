@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.templates;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.template_;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.template_;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 interface TemplateRepository {
   bool existsById(TemplateId id, ClientId clientId);
   Template findById(TemplateId id, ClientId clientId);

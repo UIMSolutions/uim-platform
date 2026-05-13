@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.manage.templates;
 
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.template_;
-import uim.platform.document_ai.domain.ports.repositories.templates;
-import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.template_;
+// import uim.platform.document_ai.domain.ports.repositories.templates;
+// import uim.platform.document_ai.application.dto;
 
-import std.uuid : randomUUID;
+// import std.uuid : randomUUID;
+import uim.platform.document_ai;
 
+mixin(ShowModule!());
+
+@safe:
 
 class ManageTemplatesUseCase { // TODO: UIMUseCase {
   private TemplateRepository repo;

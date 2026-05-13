@@ -10,7 +10,7 @@ module uim.platform.datasphere.presentation.http.controllers.data_access_control
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -23,7 +23,7 @@ class DataAccessControlController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/dataAccessControls", &handleList);
     router.get("/api/v1/datasphere/dataAccessControls/*", &handleGet);
     router.post("/api/v1/datasphere/dataAccessControls", &handleCreate);
@@ -31,9 +31,10 @@ class DataAccessControlController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateDataAccessControlRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -41,13 +42,14 @@ class DataAccessControlController : PlatformController {
       r.description = j.getString("description");
       r.criteriaType = j.getString("criteriaType");
       r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
-      r.assignedUserIds = j.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array.toJson;
+      r.assignedUserIds = j.getArray("assignedUserIds")
+        .map!(v => UserId(v.to!string)).array.toJson;
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDataAccessControl(r);
       if (result.success) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data access control created");
+          .set("id", result.id)
+          .set("message", "Data access control created");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -60,8 +62,9 @@ class DataAccessControlController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto controls = usecase.list(spaceId);
+      auto controls = usecase.listDataAccessControls(tenantId, spaceId);
 
       auto jarr = Json.emptyArray;
       foreach (dac; controls) {
@@ -74,9 +77,9 @@ class DataAccessControlController : PlatformController {
       }
 
       auto resp = Json.emptyObject
-            .set("count", controls.length)
-            .set("resources", jarr)
-            .set("message", "Data access controls retrieved successfully");
+        .set("count", controls.length)
+        .set("resources", jarr)
+        .set("message", "Data access controls retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -85,27 +88,29 @@ class DataAccessControlController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto dac = usecase.getById(spaceId, id);
+      auto dac = usecase.getDataAccessControl(tenantId, spaceId, id);
       if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
       }
 
       auto resp = Json.emptyObject
-            .set("id", dac.id)
-            .set("name", dac.name)
-            .set("description", dac.description)
-            .set("isEnabled", dac.isEnabled)
-            .set("targetViewIds", dac.targetViewIds.map!(v => v.toJson).array.toJson)
-            .set("assignedUserIds", dac.assignedUserIds.map!(v => v.toJson).array.toJson)
-            .set("createdAt", dac.createdAt)
-            .set("updatedAt", dac.updatedAt)
-            .set("message", "Data access control retrieved successfully");
+        .set("id", dac.id)
+        .set("name", dac.name)
+        .set("description", dac.description)
+        .set("isEnabled", dac.isEnabled)
+        .set("targetViewIds", dac.targetViewIds.map!(v => v.toJson)
+            .array.toJson)
+        .set("assignedUserIds", dac.assignedUserIds.map!(v => v.toJson)
+            .array.toJson)
+        .set("createdAt", dac.createdAt)
+        .set("updatedAt", dac.updatedAt)
+        .set("message", "Data access control retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -114,14 +119,17 @@ class DataAccessControlController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-            try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = usecase.deleteDataAccessControl(spaceId, id);
+      auto result = usecase.deleteDataAccessControl(tenantId, spaceId, id);
       if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
+        auto resp = Json.emptyObject
+          .set("message", "Data access control deleted"); 
+
+        res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 404, result.error);
       }

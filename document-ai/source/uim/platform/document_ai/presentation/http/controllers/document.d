@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.document;
 
-import uim.platform.document_ai.application.usecases.process_documents;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.document : Document;
+// import uim.platform.document_ai.application.usecases.process_documents;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.document : Document;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DocumentController : PlatformController {
   private ProcessDocumentsUseCase usecase;
@@ -21,6 +25,7 @@ class DocumentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/document/jobs", &handleUpload);
     router.get("/api/v1/document/jobs", &handleList);
     router.get("/api/v1/document/jobs/*", &handleGet);
@@ -30,9 +35,10 @@ class DocumentController : PlatformController {
   }
 
   protected void handleGetUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UploadDocumentRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -66,13 +72,13 @@ class DocumentController : PlatformController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto docs = usecase.list(clientId);
 
-        auto jarr = docs.map!(d => toJson(d)).array.toJson;
+      auto jarr = docs.map!(d => toJson(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", Json(docs.length))
         .set("resources", jarr)
         .set("message", "Document list retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -80,7 +86,7 @@ class DocumentController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -98,7 +104,7 @@ class DocumentController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -115,7 +121,7 @@ class DocumentController : PlatformController {
   }
 
   protected void handleGetConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -143,7 +149,6 @@ class DocumentController : PlatformController {
 
   protected void handleGetGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
 
       auto docId = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -199,7 +204,6 @@ class DocumentController : PlatformController {
   }
 
   private Json documentToJson(Document d) {
-    
 
     auto dj = Json.emptyObject
       .set("id", d.id)

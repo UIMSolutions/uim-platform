@@ -8,4 +8,5 @@ module uim.platform.document_ai.application.usecases;
 public {
   import uim.platform.document_ai.application.usecases.process_documents;
   import uim.platform.document_ai.application.usecases.get_capabilities;
+  import uim.platform.document_ai.application.usecases.manage;
 }

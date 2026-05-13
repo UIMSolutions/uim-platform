@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.document_type;
 
-import uim.platform.document_ai.application.usecases.manage.document_types;
-import uim.platform.document_ai.application.dto;
-import uim.platform.document_ai.domain.types;
-import uim.platform.document_ai.domain.entities.document_type : DocumentType;
+// import uim.platform.document_ai.application.usecases.manage.document_types;
+// import uim.platform.document_ai.application.dto;
+// import uim.platform.document_ai.domain.types;
+// import uim.platform.document_ai.domain.entities.document_type : DocumentType;
 
 import uim.platform.document_ai;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DocumentTypeController : PlatformController {
   private ManageDocumentTypesUseCase usecase;
@@ -21,6 +25,7 @@ class DocumentTypeController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/document-types", &handleCreate);
     router.get("/api/v1/document-types", &handleList);
     router.get("/api/v1/document-types/*", &handleGet);
@@ -29,9 +34,10 @@ class DocumentTypeController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateDocumentTypeRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -41,7 +47,7 @@ class DocumentTypeController : PlatformController {
       r.defaultSchemaId = j.getString("defaultSchemaId");
       r.supportedFileTypes = getStrings(j, "supportedFileTypes");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDocumentType(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -59,13 +65,9 @@ class DocumentTypeController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto types = usecase.list(clientId);
 
-      auto jarr = Json.emptyArray;
-      foreach (dt; types) {
-        jarr ~= docTypeToJson(dt);
-      }
-
+      auto types = usecase.listDocumentTypes(clientId);
+      auto jarr = types.map!(dt => dt.toJson).array.toJson;
       auto resp = Json.emptyObject
         .set("count", Json(types.length))
         .set("resources", jarr);
@@ -77,27 +79,37 @@ class DocumentTypeController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DocumentTypeId(extractIdFromPath(req.requestURI.to!string));
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto dt = usecase.getById(id, clientId);
+      auto dt = usecase.getDocumentType(tenantId, id, clientId);
       if (dt.isNull) {
         writeError(res, 404, "Document type not found");
         return;
       }
 
-      res.writeJsonBody(docTypeToJson(dt), 200);
+      auto resp = Json.emptyObject
+        .set("id", dt.id)
+        .set("name", dt.name)
+        .set("description", dt.description)
+        .set("category", dt.category)
+        .set("defaultSchemaId", dt.defaultSchemaId)
+        .set("supportedFileTypes", dt.supportedFileTypes)
+        .set("createdAt", dt.createdAt)
+        .set("updatedAt", dt.updatedAt);
+
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DocumentTypeId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
 
       UpdateDocumentTypeRequest r;
@@ -109,12 +121,12 @@ class DocumentTypeController : PlatformController {
       r.category = j.getString("category");
       r.defaultSchemaId = j.getString("defaultSchemaId");
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateDocumentType(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Document type updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -125,12 +137,12 @@ class DocumentTypeController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = DocumentTypeId(extractIdFromPath(req.requestURI.to!string));
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = usecase.deleteDocumentType(DocumentTypeId(id), clientId);
+      auto result = usecase.deleteDocumentType(tenantId, id, clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -139,17 +151,5 @@ class DocumentTypeController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json docTypeToJson(DocumentType dt) {
-    return Json.emptyObject
-      .set("id", dt.id)
-      .set("name", dt.name)
-      .set("description", dt.description)
-      .set("category", dt.category.to!string)
-      .set("defaultSchemaId", dt.defaultSchemaId)
-      .set("supportedFileTypes", toJsonArray(dt.supportedFileTypes))
-      .set("createdAt", dt.createdAt)
-      .set("updatedAt", dt.updatedAt);
   }
 }
