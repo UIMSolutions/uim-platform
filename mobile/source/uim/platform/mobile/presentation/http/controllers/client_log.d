@@ -27,7 +27,7 @@ class ClientLogController : PlatformController {
     router.get("/api/v1/logs/*", &handleGet);
   }
 
-  private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -59,7 +59,7 @@ class ClientLogController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
@@ -84,7 +84,7 @@ class ClientLogController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

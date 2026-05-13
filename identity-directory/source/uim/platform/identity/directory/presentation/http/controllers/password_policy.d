@@ -33,7 +33,7 @@ class PasswordPolicyController : PlatformController {
     router.get("/api/v1/password-policies/*", &handleGet);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class PasswordPolicyController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
@@ -82,7 +82,7 @@ class PasswordPolicyController : PlatformController {
     }
   }
 
-  private void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policy = useCase.getActivePolicy(tenantId);
@@ -101,7 +101,7 @@ class PasswordPolicyController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto policyId = extractIdFromPath(req.requestURI);
       auto policy = useCase.getPolicy(policyId);

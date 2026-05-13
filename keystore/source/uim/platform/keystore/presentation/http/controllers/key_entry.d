@@ -29,7 +29,7 @@ class KeyEntryController : PlatformController {
   }
 
   // POST /api/v1/keystores/{keystoreId}/entries
-  private void handleImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path      = req.requestPath.to!string;
       auto keystoreId = extractSegment(path, 4); // /api/v1/keystores/{id}/entries
@@ -61,7 +61,7 @@ class KeyEntryController : PlatformController {
   }
 
   // GET /api/v1/keystores/{keystoreId}/entries
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path       = req.requestPath.to!string;
       auto keystoreId = extractSegment(path, 4);
@@ -93,7 +93,7 @@ class KeyEntryController : PlatformController {
   }
 
   // GET /api/v1/keystores/{keystoreId}/entries/{id}
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id    = extractIdFromPath(req);
@@ -123,7 +123,7 @@ class KeyEntryController : PlatformController {
   }
 
   // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id     = KeyEntryId(extractIdFromPath(req));

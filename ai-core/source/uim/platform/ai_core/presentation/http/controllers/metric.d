@@ -28,7 +28,7 @@ class MetricController : PlatformController {
     router.get("/api/v2/lm/metrics", &handleGet);
   }
 
-  private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -55,7 +55,7 @@ class MetricController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto execId = req.params.get("executionId", "");

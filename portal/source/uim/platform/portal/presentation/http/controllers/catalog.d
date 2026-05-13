@@ -36,7 +36,7 @@ class CatalogController : PlatformController {
     router.delete_("/api/v1/catalogs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -58,7 +58,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto catalogs = useCase.listCatalogs(tenantId);
@@ -72,7 +72,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       if (!useCase.existsCatalog(catalogId)) {
@@ -87,7 +87,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -105,7 +105,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteCatalog(catalogId);

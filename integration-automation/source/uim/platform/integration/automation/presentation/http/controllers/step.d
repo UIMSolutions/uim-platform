@@ -39,7 +39,7 @@ class StepController : PlatformController {
     router.put("/api/v1/steps/assign/*", &handleAssign);
   }
 
-  private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
@@ -59,7 +59,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -75,7 +75,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
@@ -94,7 +94,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -117,7 +117,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -144,7 +144,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -171,7 +171,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -198,7 +198,7 @@ class StepController : PlatformController {
     }
   }
 
-  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

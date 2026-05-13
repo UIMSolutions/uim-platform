@@ -32,7 +32,7 @@ class ActivityController : PlatformController {
     router.get("/api/v1/activities/summary", &handleSummary);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -50,7 +50,7 @@ class ActivityController : PlatformController {
     }
   }
 
-  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);

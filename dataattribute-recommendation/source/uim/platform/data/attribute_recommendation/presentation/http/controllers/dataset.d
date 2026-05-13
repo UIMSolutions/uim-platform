@@ -37,7 +37,7 @@ class DatasetController : PlatformController {
     router.post("/api/v1/datasets/process/*", &handleProcess);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -63,7 +63,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       
@@ -81,7 +81,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -97,7 +97,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -125,7 +125,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -147,7 +147,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -169,7 +169,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

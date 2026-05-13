@@ -36,7 +36,7 @@ class ChannelController : PlatformController {
     router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -65,7 +65,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -83,7 +83,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
@@ -98,7 +98,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parts = splitPath(req.requestURI);
       if (parts.length < 5) {
@@ -124,7 +124,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parts = splitPath(req.requestURI);
       if (parts.length < 5) {
@@ -150,7 +150,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));

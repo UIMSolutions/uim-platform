@@ -38,43 +38,43 @@ class CredentialController : PlatformController {
 
   // --- Password endpoints ---
 
-  private void handleCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "password");
   }
 
-  private void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "password");
   }
 
-  private void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res);
   }
 
-  private void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res);
   }
 
   // --- Key endpoints ---
 
-  private void handleCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "key");
   }
 
-  private void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "key");
   }
 
-  private void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res);
   }
 
-  private void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res);
   }
 
   // --- Shared handlers ---
 
-  private void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleGetCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -106,7 +106,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  private void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleGetListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
@@ -138,7 +138,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  private void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
@@ -181,7 +181,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  private void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

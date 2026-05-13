@@ -29,7 +29,7 @@ class UserTaskFilterController : PlatformController {
         router.delete_("/api/v1/task-center/filters/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -55,7 +55,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
@@ -77,7 +77,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.algorithm : endsWith;
@@ -99,7 +99,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -126,7 +126,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private void handleSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -150,7 +150,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));

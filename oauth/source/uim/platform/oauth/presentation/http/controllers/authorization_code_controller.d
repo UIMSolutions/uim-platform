@@ -28,7 +28,7 @@ class AuthorizationCodeController : PlatformController {
         router.delete_("/api/v1/oauth/authorization-codes/*", &handleDelete);
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -47,7 +47,7 @@ class AuthorizationCodeController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -64,7 +64,7 @@ class AuthorizationCodeController : PlatformController {
         }
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -95,7 +95,7 @@ class AuthorizationCodeController : PlatformController {
         }
     }
 
-    private void handleMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -116,7 +116,7 @@ class AuthorizationCodeController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

@@ -30,7 +30,7 @@ class RegisteredApplicationController : PlatformController {
         router.delete_("/api/v1/personal-data/applications/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -60,7 +60,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto apps = usecase.list(tenantId);
@@ -77,7 +77,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -97,7 +97,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -128,7 +128,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -151,7 +151,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -174,7 +174,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);

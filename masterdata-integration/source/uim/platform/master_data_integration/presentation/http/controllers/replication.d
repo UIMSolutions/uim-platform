@@ -33,7 +33,7 @@ class ReplicationController : PlatformController {
     router.delete_("/api/v1/replication-jobs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -63,7 +63,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
@@ -90,7 +90,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -106,7 +106,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -143,7 +143,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -161,7 +161,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));

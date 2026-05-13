@@ -34,7 +34,7 @@ class ImportController : PlatformController {
     router.get("/api/v1/imports/*", &handleGet);
   }
 
-  private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -61,7 +61,7 @@ class ImportController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto jobs = usecase.listImportJobs(tenantId);
@@ -79,7 +79,7 @@ class ImportController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

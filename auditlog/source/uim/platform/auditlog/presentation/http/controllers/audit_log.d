@@ -37,7 +37,7 @@ class AuditLogController : PlatformController {
     router.get("/api/v1/auditlog/*", &handleGet);
   }
 
-  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto j = req.json;
@@ -78,7 +78,7 @@ class AuditLogController : PlatformController {
     }
   }
 
-  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId();
       auto queryReq = AuditLogQueryRequest();
@@ -112,7 +112,7 @@ class AuditLogController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = AuditLogId(extractIdFromPath(req.requestURI));

@@ -30,7 +30,7 @@ class ConnectionController : PlatformController {
     router.delete_("/api/v1/connections/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -56,7 +56,7 @@ class ConnectionController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
@@ -78,7 +78,7 @@ class ConnectionController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
@@ -95,7 +95,7 @@ class ConnectionController : PlatformController {
     }
   }
 
-  private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
@@ -122,7 +122,7 @@ class ConnectionController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));

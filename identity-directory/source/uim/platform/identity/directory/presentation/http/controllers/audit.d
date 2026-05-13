@@ -31,7 +31,7 @@ class AuditController : PlatformController {
     router.get("/api/v1/audit-logs/target/*", &handleByTarget);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto events = useCase.listEvents(tenantId);
@@ -47,7 +47,7 @@ class AuditController : PlatformController {
     }
   }
 
-  private void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto actorId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByActor(actorId);
@@ -63,7 +63,7 @@ class AuditController : PlatformController {
     }
   }
 
-  private void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto targetId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByTarget(targetId);

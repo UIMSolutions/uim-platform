@@ -39,7 +39,7 @@ class WorkflowController : PlatformController {
     router.delete_("/api/v1/workflows/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -84,7 +84,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -100,7 +100,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -120,7 +120,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -140,7 +140,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -160,7 +160,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -180,7 +180,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

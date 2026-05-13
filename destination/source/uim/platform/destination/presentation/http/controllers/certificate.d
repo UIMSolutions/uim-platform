@@ -38,7 +38,7 @@ class CertificateController : PlatformController {
     router.post("/api/v1/certificates/validate/*", &handleValidate);
   }
 
-  private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -73,7 +73,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -98,7 +98,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       // import std.datetime.systime : Clock;
@@ -121,7 +121,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
@@ -163,7 +163,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
@@ -182,7 +182,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));

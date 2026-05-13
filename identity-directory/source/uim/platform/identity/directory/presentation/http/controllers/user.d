@@ -36,7 +36,7 @@ class UserController : PlatformController {
     router.get("/scim/Users/.search", &handleSearch);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -68,7 +68,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto users = useCase.listUsers(tenantId);
@@ -85,7 +85,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto user = useCase.getUser(userId);
@@ -101,7 +101,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -130,7 +130,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteUser(userId);
@@ -144,7 +144,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -163,7 +163,7 @@ class UserController : PlatformController {
     }
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto filter = req.params.get("filter", "");

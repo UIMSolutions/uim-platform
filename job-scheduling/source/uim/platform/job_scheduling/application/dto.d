@@ -75,7 +75,7 @@ struct UpdateScheduleRequest {
 // --- Run Log ---
 
 struct UpdateRunLogRequest {
-    string runLogId;
+    RunLogId runLogId;
     TenantId tenantId;
     string status;
     string statusMessage;

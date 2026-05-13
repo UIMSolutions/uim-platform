@@ -75,7 +75,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto configs = useCase.listAuditConfigs();
       auto arr = configs.map!(c => c.toJson).array.toJson;
@@ -91,7 +91,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -106,7 +106,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -151,7 +151,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

@@ -28,7 +28,7 @@ class DeviceRegistrationController : PlatformController {
     router.delete_("/api/v1/devices/*", &handleDelete);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -55,7 +55,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
@@ -79,7 +79,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -106,7 +106,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -126,7 +126,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

@@ -28,21 +28,22 @@ class DnsRecordController : PlatformController {
         router.delete_("/api/v1/custom-domain/dns-records/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+            
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.customDomainId = j.getString("customDomainId");
+            r.id = DnsRecordId(j.getString("id"));
+            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.recordType = j.getString("recordType");
             r.hostname = j.getString("hostname");
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createDnsRecord(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
@@ -57,11 +58,11 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto records = usecase.list(tenantId);
 
+            auto records = usecase.listDnsRecords(tenantId);
             auto jarr = Json.emptyArray;
             foreach (r; records) {
                 jarr ~= Json.emptyObject
@@ -87,12 +88,12 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+            auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
             
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto r = usecase.getById(tenantId, id);
+            auto r = usecase.getDnsRecord(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "DNS record not found");
                 return;
@@ -100,16 +101,16 @@ class DnsRecordController : PlatformController {
 
             auto resp = Json.emptyObject
                 .set("id", Json(r.id))
-                .set("customDomainId", Json(r.customDomainId))
-                .set("recordType", Json(r.recordType.to!string))
-                .set("hostname", Json(r.hostname))
-                .set("value", Json(r.value))
-                .set("ttl", Json(r.ttl))
-                .set("validationStatus", Json(r.validationStatus.to!string))
-                .set("lastValidatedAt", Json(r.lastValidatedAt))
-                .set("createdBy", Json(r.createdBy))
-                .set("createdAt", Json(r.createdAt))
-                .set("updatedAt", Json(r.updatedAt));
+                .set("customDomainId", r.customDomainId)
+                .set("recordType", r.recordType.to!string)
+                .set("hostname", r.hostname)
+                .set("value", r.value)
+                .set("ttl", r.ttl)
+                .set("validationStatus", r.validationStatus.to!string)
+                .set("lastValidatedAt", r.lastValidatedAt)
+                .set("createdBy", r.createdBy)
+                .set("createdAt", r.createdAt)
+                .set("updatedAt", r.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -117,18 +118,18 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.id = DnsRecordId(extractIdFromPath(req.requestURI.to!string)) ;
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateDnsRecord(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -143,12 +144,12 @@ class DnsRecordController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteDnsRecord(id);
+            auto result = usecase.deleteDnsRecord(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

@@ -34,7 +34,7 @@ class FeedController : PlatformController {
       router.delete_("/api/v1/feeds/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto j = req.json;
         auto r = CreateFeedEntryRequest();
@@ -63,7 +63,7 @@ class FeedController : PlatformController {
       }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto tenantId = req.getTenantId;
         auto workspaceId = req.params.get("workspaceId", "");
@@ -81,7 +81,7 @@ class FeedController : PlatformController {
       }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto id = extractIdFromPath(req.requestURI);
         auto tenantId = req.getTenantId;
@@ -96,7 +96,7 @@ class FeedController : PlatformController {
       }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto id = extractIdFromPath(req.requestURI);
         auto tenantId = req.getTenantId;

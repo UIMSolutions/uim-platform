@@ -30,20 +30,20 @@ class CustomDomainController : PlatformController {
         router.delete_("/api/v1/custom-domain/domains/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateCustomDomainRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.customDomainId = CustomDomainId(j.getString("id"));
             r.domainName = j.getString("domainName");
             r.organizationId = j.getString("organizationId");
             r.spaceId = j.getString("spaceId");
             r.environment = j.getString("environment");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createCustomDomain(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -58,10 +58,10 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto domains = usecase.list(tenantId);
+            auto domains = usecase.listCustomDomains(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; domains) {
@@ -87,10 +87,9 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             // Check for /activate or /deactivate suffix — skip
             if (path.length > 9 && path[$ - 9 .. $] == "/activate")
@@ -98,8 +97,8 @@ class CustomDomainController : PlatformController {
             if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
                 return;
 
-            auto id = extractIdFromPath(path);
-            auto d = usecase.getById(tenantId, id);
+            auto id = CustomDomainId(extractIdFromPath(path));
+            auto d = usecase.getCustomDomain(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Custom domain not found");
                 return;
@@ -128,7 +127,7 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -158,7 +157,7 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -182,7 +181,7 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -204,7 +203,7 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

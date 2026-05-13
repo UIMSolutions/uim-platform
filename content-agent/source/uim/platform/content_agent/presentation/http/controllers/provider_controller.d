@@ -37,7 +37,7 @@ class ProviderController : PlatformController {
     router.post("/api/v1/providers/sync", &handleSync);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -64,7 +64,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto providers = usecase.listProviders(tenantId);
@@ -82,7 +82,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -97,7 +97,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -122,7 +122,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -141,7 +141,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

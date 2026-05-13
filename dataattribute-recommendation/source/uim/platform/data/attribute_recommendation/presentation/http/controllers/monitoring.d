@@ -34,7 +34,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto jobs = usecase.listTrainingJobs(tenantId);
@@ -52,7 +52,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -68,7 +68,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto deps = usecase.listDeploymentSummaries(tenantId);
@@ -85,7 +85,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getPipelineSummary(tenantId);

@@ -35,7 +35,7 @@ class SectionController : PlatformController {
     router.delete_("/api/v1/sections/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -56,7 +56,7 @@ class SectionController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = req.headers.get("X-Page-Id", "");
       auto sections = useCase.listSections(pageId);
@@ -69,7 +69,7 @@ class SectionController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto section = useCase.getSection(sectionId);
@@ -83,7 +83,7 @@ class SectionController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -100,7 +100,7 @@ class SectionController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto j = req.json;

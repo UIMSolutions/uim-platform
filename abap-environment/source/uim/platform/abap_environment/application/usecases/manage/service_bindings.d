@@ -38,7 +38,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.serviceDefinitionId = req.serviceDefinitionId;
     binding.name = req.name;
     binding.description = req.description;
-    binding.bindingType = parseBindingType(req.bindingType);
+    binding.bindingType =req.bindingType.to!BindingType;
     binding.status = BindingStatus.active;
     binding.endpoints = req.endpoints;
 
@@ -91,22 +91,4 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 }
 
-private BindingType parseBindingType(string s) {
-  switch (s) {
-  case "odataV2":
-    return BindingType.odataV2;
-  case "odataV4":
-    return BindingType.odataV4;
-  case "soapHttp":
-    return BindingType.soapHttp;
-  case "restHttp":
-    return BindingType.restHttp;
-  case "sql":
-    return BindingType.sql;
-  case "inboundRfc":
-    return BindingType.inboundRfc;
-  default:
-    return BindingType.odataV4;
-  }
-}
 

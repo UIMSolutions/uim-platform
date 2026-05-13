@@ -37,7 +37,7 @@ class PermissionController : PlatformController {
     router.post("/api/v1/permissions/check", &handleCheckAccess);
   }
 
-  private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -65,7 +65,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto resourceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -87,7 +87,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = UserId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -107,7 +107,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -133,7 +133,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));
@@ -159,7 +159,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));

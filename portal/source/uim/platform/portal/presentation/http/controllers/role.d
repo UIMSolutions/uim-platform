@@ -36,7 +36,7 @@ class RoleController : PlatformController {
     router.post("/api/v1/roles/assign", &handleAssign);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -57,7 +57,7 @@ class RoleController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
@@ -70,7 +70,7 @@ class RoleController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto roleId = extractIdFromPath(req.requestURI);
       auto role = useCase.getRole(roleId);
@@ -84,7 +84,7 @@ class RoleController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto roleId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -101,7 +101,7 @@ class RoleController : PlatformController {
     }
   }
 
-  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -118,7 +118,7 @@ class RoleController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto roleId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteRole(roleId);

@@ -38,7 +38,7 @@ class EventSubscriptionController : PlatformController {
     router.post("/api/v1/event-subscriptions/resume/*", &handleResume);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -75,7 +75,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
@@ -102,7 +102,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -118,7 +118,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -145,7 +145,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -160,7 +160,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -175,7 +175,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

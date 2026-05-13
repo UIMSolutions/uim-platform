@@ -29,7 +29,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // PUT /api/v1/passwords/{alias}  (set or overwrite a password)
-  private void handleSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_ = extractIdFromPath(req);
       auto j      = req.json;
@@ -52,7 +52,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // GET /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  private void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_       = extractIdFromPath(req);
       auto accountId    = req.params.get("accountId", "");
@@ -79,7 +79,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // DELETE /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  private void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_        = extractIdFromPath(req);
       auto accountId     = req.params.get("accountId", "");
@@ -97,7 +97,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // GET /api/v1/passwords?accountId=...&applicationId=...
-  private void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");

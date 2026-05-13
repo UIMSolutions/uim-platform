@@ -29,7 +29,7 @@ class ApiClientController : PlatformController {
     router.delete_("/api/v1/api-clients/*", &handleRevoke);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -58,7 +58,7 @@ class ApiClientController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto clients = useCase.listClients(tenantId);
@@ -82,7 +82,7 @@ class ApiClientController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto client = useCase.getClient(clientId);
@@ -103,7 +103,7 @@ class ApiClientController : PlatformController {
     }
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto error = useCase.revokeClient(clientId);

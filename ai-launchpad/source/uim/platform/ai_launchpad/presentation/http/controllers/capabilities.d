@@ -26,7 +26,7 @@ class CapabilitiesController : PlatformController {
     router.get("/api/v1/capabilities", &handleGet);
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto cap = usecase.getCapabilities(tenantId);

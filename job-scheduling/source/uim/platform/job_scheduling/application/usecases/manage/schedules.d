@@ -56,8 +56,8 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, schedule.id.value, "");
     }
 
-    Schedule getSchedule(TenantId tenantId, ScheduleId id, JobId jobId) {
-        return schedules.findById(tenantId, id, jobId);
+    Schedule getSchedule(TenantId tenantId, ScheduleId id) {
+        return schedules.findById(tenantId, id);
     }
 
     Schedule[] listSchedules(TenantId tenantId, JobId jobId) {
@@ -69,7 +69,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSchedule(UpdateScheduleRequest request) {
-        auto existing = schedules.findById(request.tenantId, request.scheduleId, request.jobId);
+        auto existing = schedules.findById(request.tenantId, request.scheduleId);
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
@@ -102,8 +102,8 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSchedule(TenantId tenantId, ScheduleId id, JobId jobId) {
-        auto existing = schedules.findById(tenantId, id, jobId);
+    CommandResult deleteSchedule(TenantId tenantId, ScheduleId id) {
+        auto existing = schedules.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
@@ -111,13 +111,13 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAllByJob(TenantId tenantId, JobId jobId) {
+    CommandResult deleteAllSchedules(TenantId tenantId, JobId jobId) {
         auto findings = schedules.findByJob(tenantId, jobId);
         if (findings.length == 0)
-            return CommandResult(false, jobId, "No schedules found for the job");
+            return CommandResult(false, jobId.value, "No schedules found for the job");
         
         findings.each!(s => schedules.remove(s));
-        return CommandResult(true, jobId, "");
+        return CommandResult(true, jobId.value, "");
     }
 
     CommandResult activateAllSchedules(ActivateAllSchedulesRequest request) {
@@ -130,7 +130,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
             s.updatedAt = MonoTime.currTime.ticks;
             schedules.update(s);
         }
-        return CommandResult(true, request.jobId, "");
+        return CommandResult(true, request.jobId.value, "");
     }
 
     private static ScheduleType parseScheduleType(string s) {

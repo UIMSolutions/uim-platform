@@ -30,7 +30,7 @@ class DashboardController : PlatformController {
     router.get("/api/v1/dashboard", &handleDashboard);
   }
 
-  private void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);

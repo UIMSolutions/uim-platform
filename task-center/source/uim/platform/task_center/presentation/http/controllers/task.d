@@ -33,7 +33,7 @@ class TaskController : PlatformController {
         router.delete_("/api/v1/task-center/tasks/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -68,7 +68,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
@@ -100,7 +100,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             if (pathEndsWithAction(path))
@@ -119,7 +119,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
@@ -149,7 +149,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
                 auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
@@ -173,7 +173,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
@@ -195,7 +195,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -220,7 +220,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -244,7 +244,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
@@ -266,7 +266,7 @@ class TaskController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
             auto tenantId = req.getTenantId;

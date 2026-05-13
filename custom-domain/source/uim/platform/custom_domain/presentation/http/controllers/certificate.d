@@ -30,7 +30,7 @@ class CertificateController : PlatformController {
         router.delete_("/api/v1/custom-domain/certificates/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -57,7 +57,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto certs = certificates.listCertificates(tenantId);
@@ -88,7 +88,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -132,7 +132,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -161,7 +161,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -190,7 +190,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -213,7 +213,7 @@ class CertificateController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

@@ -29,7 +29,7 @@ class PromptController : PlatformController {
     router.patch("/api/v1/genai/prompts/*", &handlePatch);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -64,7 +64,7 @@ r.tenantId = tenantId;
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto collectionId = CollectionId(req.headers.get("X-Collection-Id", ""));
@@ -85,7 +85,7 @@ r.tenantId = tenantId;
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));
@@ -102,7 +102,7 @@ r.tenantId = tenantId;
     }
   }
 
-  private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));

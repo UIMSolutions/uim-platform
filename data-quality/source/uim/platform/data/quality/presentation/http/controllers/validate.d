@@ -34,7 +34,7 @@ class ValidateController : PlatformController {
     router.get("/api/v1/validate/results/*", &handleGetResult);
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -51,7 +51,7 @@ class ValidateController : PlatformController {
     }
   }
 
-  private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -82,7 +82,7 @@ class ValidateController : PlatformController {
     }
   }
 
-  private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

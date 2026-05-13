@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
-  private DataControllerGroupRepository dataControllerGroups;
+  private DataControllerGroupRepository w;
 
   this(DataControllerGroupRepository dataControllerGroups) {
     this.dataControllerGroups = dataControllerGroups;
@@ -25,14 +25,11 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto g = DataControllerGroup();
-    g.id = randomUUID();
-    g.tenantId = req.tenantId;
+    g.initEntity(req.tenantId);
     g.name = req.name;
     g.description = req.description;
     g.controllerIds = req.controllerIds;
     g.isActive = true;
-    g.createdAt = now;
-    g.updatedAt = now;
 
     dataControllerGroups.save(g);
     return CommandResult(true, g.id.value, "");

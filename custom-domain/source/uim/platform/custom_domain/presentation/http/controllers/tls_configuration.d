@@ -28,13 +28,14 @@ class TlsConfigurationController : PlatformController {
         router.delete_("/api/v1/custom-domain/tls-configurations/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateTlsConfigurationRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = TlsConfigurationId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
@@ -45,7 +46,7 @@ class TlsConfigurationController : PlatformController {
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createTlsConfiguration(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -60,10 +61,10 @@ class TlsConfigurationController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto configs = usecase.list(tenantId);
+            auto configs = usecase.listTlsConfigurations(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; configs) {
@@ -89,12 +90,11 @@ class TlsConfigurationController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = usecase.getById(tenantId, id);
+            auto tenantId = req.getTenantId;
+            auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
+            auto c = usecase.getTlsConfiguration(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "TLS configuration not found");
                 return;
@@ -121,25 +121,25 @@ class TlsConfigurationController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto j = req.json;
+
             UpdateTlsConfigurationRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
             r.maxProtocolVersion = j.getString("maxProtocolVersion");
             r.http2Enabled = j.getBoolean("http2Enabled");
             r.hstsEnabled = j.getBoolean("hstsEnabled");
-            r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
+            r.hstsMaxAge = j.getLong("hstsMaxAge");
             r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateTlsConfiguration(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -154,12 +154,12 @@ class TlsConfigurationController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+            auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
             
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteTlsConfiguration(id);
+            auto result = usecase.deleteTlsConfiguration(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

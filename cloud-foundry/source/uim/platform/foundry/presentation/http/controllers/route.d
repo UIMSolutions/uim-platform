@@ -46,7 +46,7 @@ class RouteController : PlatformController {
 
   // --- Routes ---
 
-  private void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -74,7 +74,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
@@ -90,7 +90,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
@@ -106,7 +106,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
@@ -124,7 +124,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -146,7 +146,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto routeId = RouteId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -170,7 +170,7 @@ class RouteController : PlatformController {
 
   // --- Domains ---
 
-  private void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -196,7 +196,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);
@@ -214,7 +214,7 @@ class RouteController : PlatformController {
     }
   }
 
-  private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DomainId(extractIdFromPath(req.requestURI));

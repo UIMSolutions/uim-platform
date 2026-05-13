@@ -39,7 +39,7 @@ class DocumentController : PlatformController {
     router.post("/api/v1/documents/archive/*", &handleArchive);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenanId = req.getTenantId;
       auto j = req.json;
@@ -69,7 +69,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listDocuments(tenantId);
@@ -86,7 +86,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");
@@ -116,7 +116,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -132,7 +132,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -160,7 +160,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -185,7 +185,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -204,7 +204,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));

@@ -34,7 +34,7 @@ class ScheduleController : PlatformController {
         router.get("/api/v1/scheduler/schedules/search", &handleSearch);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -73,7 +73,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -95,7 +95,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -103,7 +103,7 @@ class ScheduleController : PlatformController {
             auto ids = extractJobAndScheduleIds(path);
             auto tenantId = req.getTenantId;
 
-            auto s = usecase.getById(ids[1], ids[0], tenantId);
+            auto s = usecase.getSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
             if (s.isNull) {
                 writeError(res, 404, "Schedule not found");
                 return;
@@ -115,7 +115,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -125,8 +125,8 @@ class ScheduleController : PlatformController {
 
             UpdateScheduleRequest r;
             r.tenantId = tenantId;
-            r.jobId = ids[0];
-            r.scheduleId = ids[1];
+            r.jobId = JobId(ids[0]);
+            r.scheduleId = ScheduleId(ids[1]);
             r.description = j.getString("description");
             r.active = j.getBoolean("active", true);
             r.cronExpression = j.getString("cron");
@@ -152,7 +152,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -171,7 +171,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -181,7 +181,7 @@ class ScheduleController : PlatformController {
 
             ActivateAllSchedulesRequest r;
             r.tenantId = tenantId;
-            r.jobId = jobId;
+            r.jobId = JobId(jobId);
             r.active = j.getBoolean("active", true);
 
             auto result = usecase.activateAll(r);
@@ -200,7 +200,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");

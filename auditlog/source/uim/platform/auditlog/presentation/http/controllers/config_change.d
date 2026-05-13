@@ -32,7 +32,7 @@ class ConfigChangeController : PlatformController {
     router.post("/api/v1/config-changes", &handleWrite);
   }
 
-  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

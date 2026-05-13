@@ -27,10 +27,11 @@ class TrustedCertificateController : PlatformController {
         router.delete_("/api/v1/custom-domain/trusted-certificates/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateTrustedCertificateRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
@@ -39,7 +40,7 @@ class TrustedCertificateController : PlatformController {
             r.authMode = j.getString("authMode");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createTrustedCertificate(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -54,10 +55,10 @@ class TrustedCertificateController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto certs = usecase.list(tenantId);
+            auto certs = usecase.listTrustedCertificates(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
@@ -76,19 +77,21 @@ class TrustedCertificateController : PlatformController {
 
             auto response = Json.emptyObject
                 .set("count", certs.length)
-                .set("resources", jarr);
+                .set("resources", jarr)
+                .set("message", "Trusted certificates retrieved successfully");
+
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = TrustedCertificateId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto c = usecase.getById(tenantId, id);
+            auto c = usecase.getTrustedCertificate(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Trusted certificate not found");
                 return;
@@ -114,11 +117,11 @@ class TrustedCertificateController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
+
             auto result = usecase.deleteTrustedCertificate(id);
             if (result.success) {
                 auto resp = Json.emptyObject

@@ -31,7 +31,7 @@ class SearchController : PlatformController {
     router.get("/api/v1/logs/*", &handleGet);
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -85,7 +85,7 @@ class SearchController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = LogEntryId(extractIdFromPath(req.requestURI.to!string));

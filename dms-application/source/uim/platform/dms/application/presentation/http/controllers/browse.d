@@ -39,7 +39,7 @@ class BrowseController : PlatformController {
     router.delete_("/api/v1/favorites/*", &handleDeleteFavorite);
   }
 
-  private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = FolderId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -61,7 +61,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -86,7 +86,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -110,7 +110,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
@@ -129,7 +129,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FavoriteId(extractIdFromPath(req.requestURI));

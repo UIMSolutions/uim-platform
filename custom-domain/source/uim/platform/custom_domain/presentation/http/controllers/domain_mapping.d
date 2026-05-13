@@ -27,10 +27,11 @@ class DomainMappingController : PlatformController {
         router.delete_("/api/v1/custom-domain/mappings/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateDomainMappingRequest r;
             r.tenantId = tenantId;
             r.id = j.getString("id");
@@ -43,7 +44,7 @@ class DomainMappingController : PlatformController {
             r.spaceId = j.getString("spaceId");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createDomainMapping(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -58,10 +59,10 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto mappings = usecase.list(tenantId);
+            auto mappings = usecase.listDomainMappings(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (m; mappings) {
@@ -86,30 +87,30 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto m = usecase.getById(tenantId, id);
+
+            auto m = usecase.getDomainMapping(tenantId, id);
             if (m.isNull) {
                 writeError(res, 404, "Domain mapping not found");
                 return;
             }
 
             auto resp = Json.emptyObject
-                .set("id", Json(m.id))
-                .set("customDomainId", Json(m.customDomainId))
-                .set("standardRoute", Json(m.standardRoute))
-                .set("customRoute", Json(m.customRoute))
-                .set("mappingType", Json(m.mappingType.to!string))
-                .set("status", Json(m.status.to!string))
-                .set("applicationName", Json(m.applicationName))
-                .set("organizationId", Json(m.organizationId))
-                .set("spaceId", Json(m.spaceId))
-                .set("createdBy", Json(m.createdBy))
-                .set("createdAt", Json(m.createdAt))
-                .set("updatedAt", Json(m.updatedAt));
+                .set("id", m.id)
+                .set("customDomainId", m.customDomainId)
+                .set("standardRoute", m.standardRoute)
+                .set("customRoute", m.customRoute)
+                .set("mappingType", m.mappingType.to!string)
+                .set("status", m.status.to!string)
+                .set("applicationName", m.applicationName)
+                .set("organizationId", m.organizationId)
+                .set("spaceId", m.spaceId)
+                .set("createdBy", m.createdBy)
+                .set("createdAt", m.createdAt)
+                .set("updatedAt", m.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -117,12 +118,12 @@ class DomainMappingController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteDomainMapping(id);
+
+            auto result = usecase.deleteDomainMapping(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

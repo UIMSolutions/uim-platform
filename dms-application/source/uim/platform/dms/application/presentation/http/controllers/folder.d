@@ -39,7 +39,7 @@ class FolderController : PlatformController {
     router.get("/api/v1/folders/children/*", &handleListChildren);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -65,7 +65,7 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listFolders(tenantId);
@@ -82,7 +82,7 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
@@ -102,7 +102,7 @@ class FolderController : PlatformController {
     * Handles updating folder metadata (name, description).
     * The folder ID is extracted from the URL path.
     */
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
@@ -129,7 +129,7 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
@@ -155,7 +155,7 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = FolderId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -174,7 +174,7 @@ class FolderController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));

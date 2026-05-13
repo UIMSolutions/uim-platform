@@ -37,7 +37,7 @@ class VersionController : PlatformController {
     router.get("/api/v1/versions/current/*", &handleGetCurrentVersion);
   }
 
-  private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -60,7 +60,7 @@ class VersionController : PlatformController {
     }
   }
 
-  private void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -93,7 +93,7 @@ class VersionController : PlatformController {
     }
   }
 
-  private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -115,7 +115,7 @@ class VersionController : PlatformController {
     }
   }
 
-  private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -134,7 +134,7 @@ class VersionController : PlatformController {
     }
   }
 
-  private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

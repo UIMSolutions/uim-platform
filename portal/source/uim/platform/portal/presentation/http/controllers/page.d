@@ -38,7 +38,7 @@ class PageController : PlatformController {
     router.delete_("/api/v1/pages/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -62,7 +62,7 @@ class PageController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
       // Use query param for site filter
@@ -78,7 +78,7 @@ class PageController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
       if (useCase.existsPage(pageId)) {
@@ -93,7 +93,7 @@ class PageController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -112,7 +112,7 @@ class PageController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
       auto j = req.json;

@@ -27,7 +27,7 @@ class PushNotificationController : PlatformController {
     router.delete_("/api/v1/push/notifications/*", &handleDelete);
   }
 
-  private void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -59,7 +59,7 @@ class PushNotificationController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto results = usecase.list(tenantId);
@@ -81,7 +81,7 @@ class PushNotificationController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -113,7 +113,7 @@ class PushNotificationController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));

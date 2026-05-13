@@ -27,20 +27,21 @@ class PrivateKeyController : PlatformController {
         router.delete_("/api/v1/custom-domain/keys/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreatePrivateKeyRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = PrivateKeyId(j.getString("id"));
             r.subject = j.getString("subject");
             r.domains = getStrings(j, "domains");
             r.algorithm = j.getString("algorithm");
             r.keySize = j.getInteger("keySize");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createPrivateKey(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -55,10 +56,10 @@ class PrivateKeyController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto keys = usecase.list(tenantId);
+            auto keys = usecase.listPrivateKeys(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (k; keys) {
@@ -75,28 +76,26 @@ class PrivateKeyController : PlatformController {
             auto resp = Json.emptyObject
                 .set("count", Json(keys.length))
                 .set("resources", jarr);
+                
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
+            auto tenantId = req.getTenantId;
+            auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
             
-
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto k = usecase.getById(tenantId, id);
+            auto k = usecase.getPrivateKey(tenantId, id);
             if (k.isNull) {
                 writeError(res, 404, "Private key not found");
                 return;
             }
 
-            auto domainsArr = Json.emptyArray;
-            foreach (d; k.domains) {
-                domainsArr ~= Json(d);
-            }
-
+            auto domainsArr = k.domains.map!(d => Json(d)).array.toJson;
+            
             auto resp = Json.emptyObject
                 .set("id", Json(k.id))
                 .set("subject", Json(k.subject))
@@ -114,12 +113,12 @@ class PrivateKeyController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
+            auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deletePrivateKey(id);
+            auto result = usecase.deletePrivateKey(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

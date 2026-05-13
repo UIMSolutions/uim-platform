@@ -35,7 +35,7 @@ class NotificationController : PlatformController {
     router.delete_("/api/v1/notifications/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -75,7 +75,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto recipientId = req.params.get("recipientId", "");
@@ -100,7 +100,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -116,7 +116,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  private void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -136,7 +136,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  private void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -156,7 +156,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

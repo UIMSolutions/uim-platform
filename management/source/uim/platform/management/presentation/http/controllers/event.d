@@ -30,7 +30,7 @@ class EventController : PlatformController {
     router.get("/api/v1/events/*", &handleGet);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");
@@ -60,7 +60,7 @@ class EventController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);

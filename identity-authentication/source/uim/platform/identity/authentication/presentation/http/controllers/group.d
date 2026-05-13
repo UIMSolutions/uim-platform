@@ -33,7 +33,7 @@ class GroupController : PlatformController {
     router.post("/api/v1/groups/members", &handleAddMember);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -57,7 +57,7 @@ class GroupController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -73,7 +73,7 @@ class GroupController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
       auto tenantId = req.getTenantId;
@@ -98,7 +98,7 @@ class GroupController : PlatformController {
     }
   }
 
-  private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

@@ -39,7 +39,7 @@ class ObjectController : PlatformController {
     router.get("/api/v1/objects/*/versions", &handleListVersions);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -68,7 +68,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
       auto path = req.requestURI;
@@ -94,7 +94,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -113,7 +113,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -138,7 +138,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -157,7 +157,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -184,7 +184,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // /api/v1/objects/{objectId}/versions
       auto path = req.requestURI;

@@ -35,7 +35,7 @@ class ConnectorController : PlatformController {
     router.delete_("/api/v1/connectors/*", &handleUnregister);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -64,7 +64,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto conns = usecase.listByTenant(tenantId);
@@ -82,7 +82,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
@@ -97,7 +97,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // Extract connector id from /api/v1/connectors/{id}/heartbeat
       auto uri = req.requestURI;
@@ -128,7 +128,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));

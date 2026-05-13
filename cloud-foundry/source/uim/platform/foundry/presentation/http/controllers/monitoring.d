@@ -29,7 +29,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/apps/*", &handleAppHealth);
   }
 
-  private void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
         auto tenantId = req.getTenantId;
       auto items = useCase.listAppHealth(tenantId);
@@ -48,7 +48,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -65,7 +65,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

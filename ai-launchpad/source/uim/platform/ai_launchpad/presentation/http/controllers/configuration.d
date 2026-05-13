@@ -30,7 +30,7 @@ class ConfigurationController : PlatformController {
     router.delete_("/api/v1/configurations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto j = req.json;
@@ -56,7 +56,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId();
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
@@ -79,7 +79,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
@@ -99,7 +99,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));

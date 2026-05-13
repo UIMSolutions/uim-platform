@@ -26,7 +26,7 @@ class OverviewController : PlatformController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);

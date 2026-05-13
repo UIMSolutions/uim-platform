@@ -203,8 +203,8 @@ enum ArrangementStatus {
 
 /// Binding type for service exposure.
 enum BindingType {
-  odataV2, // default
   odataV4,
+  odataV2, 
   soapHttp,
   restHttp,
   sql,

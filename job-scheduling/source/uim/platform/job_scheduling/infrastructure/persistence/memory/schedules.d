@@ -38,20 +38,20 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
     // #endregion ByJob
 
     // #region ByStatus
-    size_t countByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
-        return findByStatus(tenantId, status, jobId).length;
+    size_t countByStatus(TenantId tenantId, JobScheduleStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
     Schedule[] filterByStatus(Schedule[] items, JobScheduleStatus status) {
         return items.filter!(s => s.status == status).array;
     }
 
-    Schedule[] findByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
+    Schedule[] findByStatus(TenantId tenantId, JobScheduleStatus status) {
         return filterByStatus(findByTenant(tenantId), status);
     }
 
-    void removeByStatus(TenantId tenantId, JobId jobId, JobScheduleStatus status) {
-        findByStatus(tenantId, jobId, status).each!(s => remove(s));
+    void removeByStatus(TenantId tenantId, JobScheduleStatus status) {
+        findByStatus(tenantId, status).each!(s => remove(s));
     }
     // #endregion ByStatus
 
@@ -59,8 +59,11 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
     size_t countActive(TenantId tenantId) {
         return findActive(tenantId).length;
     }   
+    Schedule[] filterActive(Schedule[] items) {
+        return items.filter!(s => s.active).array;
+    }
     Schedule[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(s => s.active).array;
+        return filterActive(findByTenant(tenantId));
     }
     void removeActive(TenantId tenantId) {
         return findActive(tenantId).each!(s => remove(s));

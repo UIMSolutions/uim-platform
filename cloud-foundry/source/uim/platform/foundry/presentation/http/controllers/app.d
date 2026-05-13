@@ -44,7 +44,7 @@ class AppController : PlatformController {
     router.delete_("/api/v1/apps/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -79,7 +79,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
@@ -96,7 +96,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -112,7 +112,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -146,7 +146,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -164,7 +164,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -181,7 +181,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -198,7 +198,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -221,7 +221,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
@@ -238,7 +238,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
@@ -259,7 +259,7 @@ class AppController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));

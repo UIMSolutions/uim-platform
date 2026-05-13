@@ -38,7 +38,7 @@ class SiteController : PlatformController {
     router.post("/api/v1/sites/archive/*", &handleArchive);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -60,7 +60,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
@@ -74,7 +74,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto site = useCase.getSite(siteId);
@@ -88,7 +88,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -105,7 +105,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSite(siteId);
@@ -118,7 +118,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.publishSite(siteId);
@@ -131,7 +131,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleUnpublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUnpublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.unpublishSite(siteId);
@@ -144,7 +144,7 @@ class SiteController : PlatformController {
     }
   }
 
-  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.archiveSite(siteId);

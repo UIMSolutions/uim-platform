@@ -13,7 +13,7 @@ class HealthController : PlatformController {
     router.get("/api/v1/health", &handleHealth);
   }
 
-  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject;
     j["status"] = Json("UP");
     j["service"] = Json("Document AI Service");

@@ -29,7 +29,7 @@ class EncryptionController : PlatformController {
     router.post("/api/v1/encryption/decrypt", &handleDecrypt);
   }
 
-  private void handleGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -55,7 +55,7 @@ class EncryptionController : PlatformController {
     }
   }
 
-  private void handleEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -81,7 +81,7 @@ class EncryptionController : PlatformController {
     }
   }
 
-  private void handleDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

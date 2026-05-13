@@ -31,7 +31,7 @@ class DataContextController : PlatformController {
         router.post("/api/v1/situation-automation/data-contexts/delete-personal-data", &handleDeletePersonalData);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -62,7 +62,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto contexts = usecase.listDataContexts(tenantId);
@@ -91,7 +91,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
             auto tenantId = req.getTenantId;
@@ -118,7 +118,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -138,7 +138,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

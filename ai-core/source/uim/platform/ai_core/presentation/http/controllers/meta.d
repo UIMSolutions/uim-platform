@@ -14,7 +14,7 @@ class MetaController : PlatformController {
     router.get("/api/v2/lm/meta", &handleMeta);
   }
 
-  private void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject;
 
     auto logs = Json.emptyObject

@@ -38,7 +38,7 @@ class DataRecordController : PlatformController {
     router.delete_("/api/v1/data-records/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -83,7 +83,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto datasetId = DatasetId(extractIdFromPath(req.requestURI));
@@ -103,7 +103,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));
@@ -147,7 +147,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));

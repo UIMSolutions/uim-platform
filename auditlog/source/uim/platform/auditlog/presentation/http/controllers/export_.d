@@ -36,7 +36,7 @@ class ExportController : ManageController {
     router.delete_("/api/v1/exports/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -72,7 +72,7 @@ class ExportController : ManageController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       
@@ -90,7 +90,7 @@ class ExportController : ManageController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -106,7 +106,7 @@ class ExportController : ManageController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

@@ -39,7 +39,7 @@ class TransportRequestController : PlatformController {
     router.delete_("/api/v1/transports/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
@@ -84,7 +84,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
@@ -99,7 +99,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto requestId = TransportRequestId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
@@ -145,7 +145,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -167,7 +167,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));

@@ -27,7 +27,7 @@ class TransportRequestController : PlatformController {
         router.delete_("/api/v1/transport/requests/*", &handleDelete);
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto items = usecase.listRequests(tenantId);
@@ -38,7 +38,7 @@ class TransportRequestController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TransportRequestId(extractIdFromPath(req.requestURI.to!string));
@@ -50,7 +50,7 @@ class TransportRequestController : PlatformController {
         }
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -79,7 +79,7 @@ class TransportRequestController : PlatformController {
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TransportRequestId(extractIdFromPath(req.requestURI.to!string));
@@ -103,7 +103,7 @@ class TransportRequestController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TransportRequestId(extractIdFromPath(req.requestURI.to!string));

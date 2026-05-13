@@ -45,7 +45,7 @@ class ServiceController : PlatformController {
 
   // --- Service Instances ---
 
-  private void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -73,7 +73,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
@@ -91,7 +91,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -110,7 +110,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -157,7 +157,7 @@ class ServiceController : PlatformController {
 
   // --- Service Bindings ---
 
-  private void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -183,7 +183,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);
@@ -201,7 +201,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));

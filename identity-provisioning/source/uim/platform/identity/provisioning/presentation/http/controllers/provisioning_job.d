@@ -38,7 +38,7 @@ class ProvisioningJobController : PlatformController {
     router.delete_("/api/v1/provisioning-jobs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -84,7 +84,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -101,7 +101,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -123,7 +123,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -151,7 +151,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -172,7 +172,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

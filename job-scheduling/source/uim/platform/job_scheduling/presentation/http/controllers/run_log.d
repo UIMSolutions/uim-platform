@@ -31,7 +31,7 @@ class RunLogController : PlatformController {
         router.put("/api/v1/scheduler/jobs/*/runLogs/*", &handleUpdateStatus);
     }
 
-    private void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.string : split;
@@ -54,7 +54,7 @@ class RunLogController : PlatformController {
         }
     }
 
-    private void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.string : split;
@@ -76,7 +76,7 @@ class RunLogController : PlatformController {
         }
     }
 
-    private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -132,29 +132,4 @@ class RunLogController : PlatformController {
         return ids;
     }
 
-    private static Json runLogToJson(uim.platform.job_scheduling.domain.entities.run_log.RunLog l) {
-        return Json.emptyObject
-         .set("runLogId", l.id)
-         .set("scheduleId", l.scheduleId)
-         .set("jobId", l.jobId)
-         .set("status", runStatusStr(l.status))
-         .set("statusMessage", l.statusMessage)
-         .set("httpStatus", l.httpStatus)
-         .set("scheduledAt", l.scheduledAt)
-         .set("triggeredAt", l.triggeredAt)
-         .set("completedAt", l.completedAt)
-         .set("executionDurationMs", l.executionDurationMs)
-         .set("createdAt", l.createdAt);
-    }
-
-    private static string runStatusStr(uim.platform.job_scheduling.domain.types.RunStatus s) {
-        final switch (s) {
-            case uim.platform.job_scheduling.domain.types.RunStatus.scheduled: return "scheduled";
-            case uim.platform.job_scheduling.domain.types.RunStatus.triggered: return "triggered";
-            case uim.platform.job_scheduling.domain.types.RunStatus.running: return "running";
-            case uim.platform.job_scheduling.domain.types.RunStatus.completed: return "completed";
-            case uim.platform.job_scheduling.domain.types.RunStatus.failed: return "failed";
-            case uim.platform.job_scheduling.domain.types.RunStatus.deadLettered: return "deadLettered";
-        }
-    }
 }

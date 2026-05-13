@@ -28,7 +28,7 @@ class ConsentRecordController : PlatformController {
         router.delete_("/api/v1/personal-data/consents/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -59,7 +59,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
@@ -81,7 +81,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -101,7 +101,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    private void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
             auto path = req.requestURI.to!string;
@@ -129,7 +129,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = ConsentRecordId(extractIdFromPath(req.requestURI.to!string));

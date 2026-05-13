@@ -29,7 +29,7 @@ class FindController : PlatformController {
     router.get("/api/v1/destinations/find", &handleFind);
   }
 
-  private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       FindDestinationRequest r;
       r.tenantId = tenantId;

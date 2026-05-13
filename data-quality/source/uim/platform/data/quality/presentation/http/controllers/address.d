@@ -34,7 +34,7 @@ class AddressController : PlatformController {
     router.get("/api/v1/addresses", &handleList);
   }
 
-  private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -55,7 +55,7 @@ class AddressController : PlatformController {
     }
   }
 
-  private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -91,7 +91,7 @@ class AddressController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

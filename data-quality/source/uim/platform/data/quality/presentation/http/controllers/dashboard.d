@@ -32,7 +32,7 @@ class DashboardController : PlatformController {
     router.post("/api/v1/dashboard", &handleCompute);
   }
 
-  private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

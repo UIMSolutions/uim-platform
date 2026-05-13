@@ -31,7 +31,7 @@ class PurposeRecordController : PlatformController {
     router.delete_("/api/v1/purpose-records/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -60,7 +60,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -77,7 +77,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -93,7 +93,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       DeactivatePurposeRecordRequest r;
@@ -112,7 +112,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

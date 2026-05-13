@@ -36,7 +36,7 @@ class AlertController : PlatformController {
     router.delete_("/api/v1/alerts/*", &handleDelete);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto state = req.params.get("state", "");
@@ -63,7 +63,7 @@ class AlertController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));
@@ -78,7 +78,7 @@ class AlertController : PlatformController {
     }
   }
 
-  private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -103,7 +103,7 @@ class AlertController : PlatformController {
     }
   }
 
-  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -128,7 +128,7 @@ class AlertController : PlatformController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));

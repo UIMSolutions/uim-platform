@@ -28,7 +28,7 @@ class LogController : PlatformController {
     router.post("/api/v1/logs/batch", &handleBatchIngest);
   }
 
-  private void handleIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -64,7 +64,7 @@ class LogController : PlatformController {
     }
   }
 
-  private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

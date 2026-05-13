@@ -36,22 +36,23 @@ class DuplicateController : PlatformController {
     router.get("/api/v1/duplicates/*", &handleGet);
   }
 
-  private void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
       r.datasetId = j.getString("datasetId");
-      r.matchFields = getStringsArray(j, "matchFields");
-      r.strategy = parseStrategy(j.getString("strategy"));
-      r.threshold = getDouble(j, "threshold", 70.0);
+      r.matchFields = j.getStringsArray("matchFields");
+      r.strategy = j.getString("strategy").to!MatchStrategy;
+      r.threshold = j.getDouble("threshold", 70.0);
 
       foreach (item; j.getArray("records")) {
         if (item.isObject) {
           DuplicateRecordInput dri;
           dri.recordId = item.getString("recordId");
-          dri.fieldValues = jsonStrMap(item, "fieldValues");
+          dri.fieldValues = item.getArray("fieldValues").map!(v => v.to!string).array;
           r.records ~= dri;
         }
       }
@@ -70,10 +71,11 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;
       r.groupId = j.getString("groupId");
@@ -95,7 +97,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto groups = usecase.getUnresolved(tenantId);
@@ -103,7 +105,7 @@ class DuplicateController : PlatformController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(groups.length))
+        .set("totalCount", groups.length)
         .set("message", "Duplicate groups retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -112,7 +114,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
