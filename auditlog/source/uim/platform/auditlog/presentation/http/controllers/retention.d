@@ -37,7 +37,7 @@ class RetentionController : ManageController {
     router.delete_("/api/v1/retention/*", &handleDelete);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
       auto policyRequest = CreateRetentionPolicyRequest();

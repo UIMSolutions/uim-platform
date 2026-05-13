@@ -33,7 +33,7 @@ class GroupController : PlatformController {
     router.post("/api/v1/groups/members", &handleAddMember);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

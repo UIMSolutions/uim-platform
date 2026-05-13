@@ -35,7 +35,7 @@ class ContentController : PlatformController {
     router.post("/api/v1/content/publish/*", &handlePublish);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

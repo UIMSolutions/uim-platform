@@ -36,7 +36,7 @@ class RoleController : PlatformController {
     router.post("/api/v1/roles/assign", &handleAssign);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

@@ -20,10 +20,11 @@ class LegalEntityController : PlatformController {
         router.delete_("/api/v1/data-retention/legal-entities/*", &handleDelete);
     }
 
-    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateLegalEntityRequest r;
             r.tenantId = tenantId;
             r.name = j.getString("name");
@@ -32,7 +33,7 @@ class LegalEntityController : PlatformController {
             r.region = j.getString("region");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createLegalEntity(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -43,7 +44,7 @@ class LegalEntityController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             
-            auto items = usecase.list(tenantId);
+            auto items = usecase.listLegalEntity(tenantId);
             auto jarr = Json.emptyArray;
             foreach (le; items) {
                 jarr ~= Json.emptyObject
@@ -58,9 +59,10 @@ class LegalEntityController : PlatformController {
 
     protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto le = usecase.getById(tenantId, id);
+            auto tenantId = req.getTenantId;
+            auto id = LegalEntityId(extractIdFromPath(req.requestURI.to!string));
+
+            auto le = usecase.getLegalEntity(tenantId, id);
             if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", le.id.value).set("name", le.name)
@@ -72,9 +74,10 @@ class LegalEntityController : PlatformController {
 
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = LegalEntityId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
+
             UpdateLegalEntityRequest r;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -82,7 +85,7 @@ class LegalEntityController : PlatformController {
             r.region = j.getString("region");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = usecase.update(id, r);
+            auto result = usecase.updateLegalEntity(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.error); }
@@ -91,9 +94,10 @@ class LegalEntityController : PlatformController {
 
     protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            usecase.deleteLegalEntity(id);
+
+            usecase.deleteLegalEntity(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }

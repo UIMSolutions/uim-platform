@@ -37,7 +37,7 @@ class PackageController : PlatformController {
     router.post("/api/v1/packages/assemble", &handleAssemble);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

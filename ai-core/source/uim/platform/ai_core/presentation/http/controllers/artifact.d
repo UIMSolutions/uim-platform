@@ -30,7 +30,7 @@ class ArtifactController : PlatformController {
     router.delete_("/api/v2/lm/artifacts/*", &handleDelete);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

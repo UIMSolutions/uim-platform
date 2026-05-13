@@ -34,7 +34,7 @@ class ScheduleController : PlatformController {
         router.get("/api/v1/scheduler/schedules/search", &handleSearch);
     }
 
-    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

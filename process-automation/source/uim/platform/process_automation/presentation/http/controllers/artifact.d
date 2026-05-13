@@ -31,7 +31,7 @@ class ArtifactController : PlatformController {
         router.delete_("/api/v1/process-automation/store/artifacts/*", &handleDelete);
     }
 
-    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

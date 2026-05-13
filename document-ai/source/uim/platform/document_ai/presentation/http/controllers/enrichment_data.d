@@ -28,7 +28,7 @@ class EnrichmentDataController : PlatformController {
     router.delete_("/api/v1/enrichment-data/*", &handleDelete);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

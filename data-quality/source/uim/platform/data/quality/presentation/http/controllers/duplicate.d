@@ -32,13 +32,13 @@ class DuplicateController : PlatformController {
   }
 
   protected void handleGetDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
 
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
+      r.datasetId = DataSetId(j.getString("datasetId"));
       r.matchFields = j.getStringsArray("matchFields");
       r.strategy = j.getString("strategy").to!MatchStrategy;
       r.threshold = j.getDouble("threshold", 70.0);
@@ -67,7 +67,7 @@ class DuplicateController : PlatformController {
   }
 
   protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
 
@@ -110,7 +110,7 @@ class DuplicateController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

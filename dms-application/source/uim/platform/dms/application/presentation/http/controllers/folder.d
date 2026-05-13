@@ -39,7 +39,7 @@ class FolderController : PlatformController {
     router.get("/api/v1/folders/children/*", &handleListChildren);
   }
 
-  protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

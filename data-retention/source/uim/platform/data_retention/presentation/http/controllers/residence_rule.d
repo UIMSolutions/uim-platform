@@ -8,11 +8,13 @@ mixin(ShowModule!());
 class ResidenceRuleController : PlatformController {
     private ManageResidenceRulesUseCase usecase;
 
-    this(ManageResidenceRulesUseCase usecase) { this.usecase = usecase; }
+    this(ManageResidenceRulesUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/data-retention/residence-rules", &handleCreate);
         router.get("/api/v1/data-retention/residence-rules", &handleList);
         router.get("/api/v1/data-retention/residence-rules/*", &handleGet);
@@ -20,30 +22,42 @@ class ResidenceRuleController : PlatformController {
         router.delete_("/api/v1/data-retention/residence-rules/*", &handleDelete);
     }
 
-    protected void handleCreate((scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateResidenceRuleRequest r;
             r.tenantId = tenantId;
-            r.businessPurposeId = j.getString("businessPurposeId");
-            r.legalGroundId = j.getString("legalGroundId");
+            r.businessPurposeId = BusinessPurposeId(j.getString("businessPurposeId"));
+            r.legalGroundId = LegalGroundId(j.getString("legalGroundId"));
             r.duration = jsonInt(j, "duration");
             r.periodUnit = j.getString("periodUnit");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createResidenceRule(r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("businessPurposeId", r.businessPurposeId.value)
+                    .set("legalGroundId", r.legalGroundId.value)
+                    .set("duration", r.duration)
+                    .set("periodUnit", r.periodUnit)
+                    .set("isActive", true);
+                res.writeJsonBody(response, 201);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            
-            auto items = usecase.list(tenantId);
+
+            auto items = usecase.listResidenceRules(tenantId);
             auto jarr = Json.emptyArray;
             foreach (rr; items) {
                 jarr ~= Json.emptyObject
@@ -54,49 +68,76 @@ class ResidenceRuleController : PlatformController {
                     .set("periodUnit", rr.periodUnit.to!string)
                     .set("isActive", rr.isActive);
             }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+            auto response = Json.emptyObject
+                .set("items", jarr)
+                .set("totalCount", items.length)
+                .set("message", "Residence rules retrieved");
+
+            res.writeJsonBody(response, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto rr = usecase.getById(tenantId, id);
-            if (rr.isNull) { writeError(res, 404, "Residence rule not found"); return; }
+            auto tenantId = req.getTenantId;
+            auto id = ResidenceRuleId(extractIdFromPath(req.requestURI.to!string));
+
+            auto rr = usecase.getResidenceRule(tenantId, id);
+            if (rr.isNull) {
+                writeError(res, 404, "Residence rule not found");
+                return;
+            }
             res.writeJsonBody(Json.emptyObject
-                .set("id", rr.id.value)
-                .set("businessPurposeId", rr.businessPurposeId.value)
-                .set("legalGroundId", rr.legalGroundId.value)
-                .set("duration", rr.duration)
-                .set("periodUnit", rr.periodUnit.to!string)
-                .set("isActive", rr.isActive), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                    .set("id", rr.id.value)
+                    .set("businessPurposeId", rr.businessPurposeId.value)
+                    .set("legalGroundId", rr.legalGroundId.value)
+                    .set("duration", rr.duration)
+                    .set("periodUnit", rr.periodUnit.to!string)
+                    .set("isActive", rr.isActive), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = ResidenceRuleId(extractIdFromPath(req.requestURI.to!string));
+
             auto j = req.json;
             UpdateResidenceRuleRequest r;
             r.duration = jsonInt(j, "duration");
             r.periodUnit = j.getString("periodUnit");
             r.isActive = j.getBoolean("isActive", true);
 
-            auto result = usecase.update(id, r);
+            auto result = usecase.updateResidenceRule(id, r);
             if (result.success) {
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 400, result.error); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("duration", r.duration)
+                    .set("periodUnit", r.periodUnit.to!string)
+                    .set("isActive", r.isActive);
+
+                res.writeJsonBody(response, 200);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleGetDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto tenantId = req.getTenantId;
+            auto id = ResidenceRuleId(extractIdFromPath(req.requestURI.to!string));
             usecase.deleteResidenceRule(id);
             res.writeJsonBody(Json.emptyObject, 204);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }
