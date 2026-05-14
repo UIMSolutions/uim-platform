@@ -65,7 +65,7 @@ class FolderController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listFolders(tenantId);
@@ -155,7 +155,7 @@ class FolderController : PlatformController {
     }
   }
 
-  protected void handleGetListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = FolderId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

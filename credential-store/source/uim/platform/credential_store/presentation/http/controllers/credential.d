@@ -42,7 +42,7 @@ class CredentialController : PlatformController {
     handleCreateCredential(req, res, "password");
   }
 
-  protected void handleGetListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "password");
   }
 
@@ -60,7 +60,7 @@ class CredentialController : PlatformController {
     handleCreateCredential(req, res, "key");
   }
 
-  protected void handleGetListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "key");
   }
 
@@ -106,7 +106,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  protected void handleGetListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));

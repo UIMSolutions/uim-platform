@@ -57,7 +57,7 @@ class PromptCollectionController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));

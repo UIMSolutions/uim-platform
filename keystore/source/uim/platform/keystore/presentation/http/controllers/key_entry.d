@@ -61,7 +61,7 @@ class KeyEntryController : PlatformController {
   }
 
   // GET /api/v1/keystores/{keystoreId}/entries
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path       = req.requestPath.to!string;
       auto keystoreId = extractSegment(path, 4);

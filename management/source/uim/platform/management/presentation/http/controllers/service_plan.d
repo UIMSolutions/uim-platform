@@ -67,7 +67,7 @@ class ServicePlanController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto serviceName = req.params.get("serviceName");
       auto category = req.params.get("category");

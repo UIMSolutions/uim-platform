@@ -74,7 +74,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
@@ -196,7 +196,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);

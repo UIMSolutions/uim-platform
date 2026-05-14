@@ -28,7 +28,7 @@ class AccessTokenController : PlatformController {
         router.delete_("/api/v1/oauth/access-tokens/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

@@ -73,7 +73,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -98,7 +98,7 @@ class CertificateController : PlatformController {
     }
   }
 
-  protected void handleGetListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       // import std.datetime.systime : Clock;

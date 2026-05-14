@@ -21,7 +21,7 @@ class ServicePlanController : PlatformController {
         router.delete_("/api/v1/service-manager/service-plans/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

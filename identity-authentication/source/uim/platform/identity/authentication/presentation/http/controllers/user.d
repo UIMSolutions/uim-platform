@@ -64,7 +64,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.params.get("tenantId", "");
       if (tenantId.isEmpty)

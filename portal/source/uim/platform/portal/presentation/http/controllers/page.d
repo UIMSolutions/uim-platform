@@ -62,7 +62,7 @@ class PageController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
       // Use query param for site filter

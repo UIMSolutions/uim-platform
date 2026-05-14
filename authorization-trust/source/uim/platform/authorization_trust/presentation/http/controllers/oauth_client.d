@@ -71,7 +71,7 @@ class OAuthClientController : PlatformController {
   }
 
   // GET /api/v1/oauth/clients
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto appId = req.params.get("appId", "");

@@ -68,7 +68,7 @@ class PersonalDataModelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
@@ -90,7 +90,7 @@ class PersonalDataModelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listSpecialCategories(tenantId);

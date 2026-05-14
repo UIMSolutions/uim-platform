@@ -58,7 +58,7 @@ class TenantController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenants = useCase.listTenants();
       auto response = Json.emptyObject;

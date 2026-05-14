@@ -42,7 +42,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/summary", &handleSummary);
   }
 
-  protected void handleGetListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

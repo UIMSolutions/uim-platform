@@ -28,7 +28,7 @@ class DevSpaceController : PlatformController {
         router.delete_("/api/v1/application-studio/dev-spaces/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.listDevSpaces();
             auto jarr = items.map!(e => e.toJson()).array.toJson;

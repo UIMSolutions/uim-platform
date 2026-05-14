@@ -64,7 +64,7 @@ class KeystoreController : PlatformController {
   }
 
   // GET /api/v1/keystores?accountId=...&applicationId=...
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));

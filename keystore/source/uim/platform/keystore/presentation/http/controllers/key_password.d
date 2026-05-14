@@ -97,7 +97,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // GET /api/v1/passwords?accountId=...&applicationId=...
-  protected void handleGetListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");

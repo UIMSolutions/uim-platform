@@ -28,7 +28,7 @@ class OAuthClientController : PlatformController {
         router.delete_("/api/v1/oauth/clients/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.list(tenantId);
             auto jarr = Json.emptyArray;

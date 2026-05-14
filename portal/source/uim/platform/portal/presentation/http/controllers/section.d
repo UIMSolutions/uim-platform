@@ -56,7 +56,7 @@ class SectionController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = req.headers.get("X-Page-Id", "");
       auto sections = useCase.listSections(pageId);

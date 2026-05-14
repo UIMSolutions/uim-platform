@@ -68,7 +68,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  protected void handleGetListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
       auto path = req.requestURI;
@@ -184,7 +184,7 @@ class ObjectController : PlatformController {
     }
   }
 
-  protected void handleGetListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // /api/v1/objects/{objectId}/versions
       auto path = req.requestURI;

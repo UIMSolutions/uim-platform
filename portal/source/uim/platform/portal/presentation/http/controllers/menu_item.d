@@ -61,7 +61,7 @@ class MenuItemController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = req.headers.get("X-Site-Id", "");
       auto items = useCase.listMenuItems(siteId);

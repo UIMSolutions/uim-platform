@@ -60,7 +60,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  protected void handleGetListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
 

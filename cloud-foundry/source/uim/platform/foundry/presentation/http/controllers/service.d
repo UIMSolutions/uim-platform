@@ -73,7 +73,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleGetListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
@@ -183,7 +183,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleGetListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);

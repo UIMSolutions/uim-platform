@@ -60,7 +60,7 @@ class DataRetrievalController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");

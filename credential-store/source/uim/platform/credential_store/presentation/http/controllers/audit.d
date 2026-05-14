@@ -29,7 +29,7 @@ class AuditController : PlatformController {
     router.get("/api/v1/audit-logs/*", &handleGet);
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
       auto namespaceId = req.params.get("namespaceId", "");

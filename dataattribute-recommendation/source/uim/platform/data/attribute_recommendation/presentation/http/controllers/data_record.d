@@ -83,7 +83,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  protected void handleGetListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto datasetId = DatasetId(extractIdFromPath(req.requestURI));

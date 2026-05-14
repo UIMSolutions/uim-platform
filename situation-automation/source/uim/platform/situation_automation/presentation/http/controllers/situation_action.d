@@ -67,7 +67,7 @@ class SituationActionController : PlatformController {
         }
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto actions = usecase.listSituationActions(tenantId);

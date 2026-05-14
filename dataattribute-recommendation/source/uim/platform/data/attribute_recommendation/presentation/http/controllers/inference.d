@@ -110,7 +110,7 @@ class InferenceController : PlatformController {
     }
   }
 
-  protected void handleGetListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listRequests(tenantId);

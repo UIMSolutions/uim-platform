@@ -31,7 +31,7 @@ class RunLogController : PlatformController {
         router.put("/api/v1/scheduler/jobs/*/runLogs/*", &handleUpdateStatus);
     }
 
-    protected void handleGetListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.string : split;
@@ -54,7 +54,7 @@ class RunLogController : PlatformController {
         }
     }
 
-    protected void handleGetListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.string : split;

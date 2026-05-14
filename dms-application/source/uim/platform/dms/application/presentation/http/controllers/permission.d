@@ -65,7 +65,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleGetListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto resourceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -87,7 +87,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleGetListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = UserId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

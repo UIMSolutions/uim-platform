@@ -32,7 +32,7 @@ class ActivityController : PlatformController {
     router.get("/api/v1/activities/summary", &handleSummary);
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

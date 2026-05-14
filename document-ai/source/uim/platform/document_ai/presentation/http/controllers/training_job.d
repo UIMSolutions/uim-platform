@@ -61,7 +61,7 @@ class TrainingJobController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));

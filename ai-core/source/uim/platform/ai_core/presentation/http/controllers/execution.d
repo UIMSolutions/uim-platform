@@ -56,7 +56,7 @@ class ExecutionController : PlatformController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto executions = usecase.list(rgId);

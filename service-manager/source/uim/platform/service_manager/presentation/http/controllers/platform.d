@@ -31,7 +31,7 @@ class EnvironmentController : PlatformController {
         * @param req The HTTP request object containing details of the incoming request.
         * @param res The HTTP response object used to send back the response to the client.
         */
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

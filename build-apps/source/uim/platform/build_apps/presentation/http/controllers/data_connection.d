@@ -28,7 +28,7 @@ class DataConnectionController : PlatformController {
         router.delete_("/api/v1/build-apps/data-connections/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
 

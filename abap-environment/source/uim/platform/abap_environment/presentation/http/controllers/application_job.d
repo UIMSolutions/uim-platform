@@ -134,7 +134,7 @@ class ApplicationJobController : PlatformController {
     }
   }
 
-  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));

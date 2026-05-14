@@ -28,7 +28,7 @@ class BusinessPartnerController : PlatformController {
         router.delete_("/api/v1/masterdata-governance/business-partners/*", &handleDelete);
     }
 
-    protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto items = usecase.listBusinessPartners(tenantId);

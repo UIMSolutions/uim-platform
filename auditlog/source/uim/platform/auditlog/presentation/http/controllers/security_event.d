@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.security_event;
 
-
-
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.write.security_event;
@@ -32,7 +29,7 @@ class SecurityEventController : PlatformController {
   }
 
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = WriteSecurityEventRequest();
@@ -63,15 +60,12 @@ class SecurityEventController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Security event recorded");
-          
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
