@@ -95,7 +95,7 @@ class AuthorizationCodeController : PlatformController {
         }
     }
 
-    protected void handleGetMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

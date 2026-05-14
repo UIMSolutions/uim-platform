@@ -28,7 +28,7 @@ class MetricController : PlatformController {
     router.get("/api/v2/lm/metrics", &handleGet);
   }
 
-  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

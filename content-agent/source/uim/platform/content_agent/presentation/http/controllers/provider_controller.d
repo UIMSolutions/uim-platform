@@ -37,7 +37,7 @@ class ProviderController : PlatformController {
     router.post("/api/v1/providers/sync", &handleSync);
   }
 
-  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

@@ -48,7 +48,7 @@ class DomainDashboardController : PlatformController {
         }
     }
 
-    protected void handleGetRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             RefreshDashboardRequest r;

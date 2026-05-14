@@ -31,7 +31,7 @@ class TraceController : PlatformController {
     router.get("/api/v1/traces/*", &handleGetTrace);
   }
 
-  protected void handleGetIngestSpan(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleIngestSpan(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

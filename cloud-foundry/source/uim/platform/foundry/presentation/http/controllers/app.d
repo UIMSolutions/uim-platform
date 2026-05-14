@@ -36,7 +36,7 @@ class AppController : PlatformController {
     router.post("/api/v1/apps/stop/*", &handleStop);
     router.post("/api/v1/apps/restart/*", &handleRestart);
     router.post("/api/v1/apps/scale/*", &handleScale);
-    router.get("/api/v1/apps/env/*", &handleGetEnv);
+    router.get("/api/v1/apps/env/*", &handleEnv);
     router.put("/api/v1/apps/env/*", &handleSetEnv);
     // CRUD wildcard
     router.get("/api/v1/apps/*", &handleGet);

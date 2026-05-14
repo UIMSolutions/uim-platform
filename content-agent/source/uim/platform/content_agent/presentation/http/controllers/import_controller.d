@@ -34,7 +34,7 @@ class ImportController : PlatformController {
     router.get("/api/v1/imports/*", &handleGet);
   }
 
-  protected void handleGetStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

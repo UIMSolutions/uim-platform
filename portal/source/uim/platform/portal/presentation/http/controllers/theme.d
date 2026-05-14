@@ -73,7 +73,7 @@ class ThemeController : PlatformController {
     }
   }
 
-  protected void handleGetGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto theme = useCase.getDefaultTheme(tenantId);

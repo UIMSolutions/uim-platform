@@ -133,7 +133,7 @@ class BusinessPurposeController : PlatformController {
         }
     }
 
-    protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

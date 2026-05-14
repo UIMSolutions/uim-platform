@@ -116,7 +116,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  protected void handleGetMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -136,7 +136,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  protected void handleGetDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

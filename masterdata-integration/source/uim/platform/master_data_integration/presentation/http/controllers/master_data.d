@@ -89,7 +89,7 @@ class MasterDataController : PlatformController {
     }
   }
 
-  protected void handleGetLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto globalId = req.params.get("globalId", "");

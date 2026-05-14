@@ -27,12 +27,12 @@ class CredentialController : PlatformController {
     // Separate endpoints per credential type (SAP pattern)
     router.post("/api/v1/passwords", &handleCreatePassword);
     router.get("/api/v1/passwords", &handleListPasswords);
-    router.get("/api/v1/passwords/*", &handleGetPassword);
+    router.get("/api/v1/passwords/*", &handlePassword);
     router.delete_("/api/v1/passwords/*", &handleDeletePassword);
 
     router.post("/api/v1/keys", &handleCreateKey);
     router.get("/api/v1/keys", &handleListKeys);
-    router.get("/api/v1/keys/*", &handleGetKey);
+    router.get("/api/v1/keys/*", &handleKey);
     router.delete_("/api/v1/keys/*", &handleDeleteKey);
   }
 
@@ -46,8 +46,8 @@ class CredentialController : PlatformController {
     handleListCredentials(req, res, "password");
   }
 
-  protected void handleGetGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    handleGetCredential(req, res);
+  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    handleCredential(req, res);
   }
 
   protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -64,7 +64,7 @@ class CredentialController : PlatformController {
     handleListCredentials(req, res, "key");
   }
 
-  protected void handleGetGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res);
   }
 
@@ -138,7 +138,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  protected void handleGetGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

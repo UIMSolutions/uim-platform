@@ -31,7 +31,7 @@ class DocumentController : PlatformController {
     router.get("/api/v1/document/jobs/*", &handleGet);
     router.delete_("/api/v1/document/jobs/*", &handleDelete);
     router.post("/api/v1/document/jobs/confirm/*", &handleConfirm);
-    router.get("/api/v1/document/jobs/results/*", &handleGetResult);
+    router.get("/api/v1/document/jobs/results/*", &handleResult);
   }
 
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {

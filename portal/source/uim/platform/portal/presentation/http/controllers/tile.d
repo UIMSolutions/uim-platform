@@ -77,7 +77,7 @@ class TileController : PlatformController {
     }
   }
 
-  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");

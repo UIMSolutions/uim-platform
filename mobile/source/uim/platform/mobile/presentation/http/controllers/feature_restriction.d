@@ -156,7 +156,7 @@ class FeatureRestrictionController : PlatformController {
     }
   }
 
-  protected void handleGetEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

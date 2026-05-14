@@ -123,7 +123,7 @@ class GlobalAccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -136,7 +136,7 @@ class GlobalAccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
