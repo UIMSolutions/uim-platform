@@ -20,12 +20,12 @@ class ManageUserAssignmentsUseCase {
     this.roleCollectionRepo = roleCollectionRepo;
   }
 
-  CommandResult create(CreateUserAssignmentRequest r) {
+  CommandResult createUserAssignment(CreateUserAssignmentRequest r) {
     if (r.userId.length == 0)
       return CommandResult(false, "", "userId is required");
     if (r.roleCollectionId.length == 0)
       return CommandResult(false, "", "roleCollectionId is required");
-    if (!roleCollectionRepo.existsById(r.roleCollectionId))
+    if (!roleCollectionRepo.existsById(r.tenantId, r.roleCollectionId))
       return CommandResult(false, "", "Role collection not found");
 
     import std.uuid : randomUUID;
@@ -41,22 +41,20 @@ class ManageUserAssignmentsUseCase {
     return CommandResult(true, ua.id, "");
   }
 
-  CommandResult remove(UserAssignmentId id) {
-    if (!repo.existsById(id))
+  CommandResult removeUserAssignment(TenantId tenantId, UserAssignmentId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
       return CommandResult(false, "", "User assignment not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+
+    repo.remove(existing);
+    return CommandResult(true, existing.id, "");
   }
 
-  UserAssignmentEntity getById(UserAssignmentId id) {
-    return repo.findById(id);
+  UserAssignmentEntity getUserAssignment(TenantId tenantId, UserAssignmentId id) {
+    return repo.findById(tenantId, id);
   }
 
-  UserAssignmentEntity[] listAll() {
-    return repo.findAll();
-  }
-
-  UserAssignmentEntity[] listByUserId(string userId) {
-    return repo.findByUserId(userId);
+  UserAssignmentEntity[] listUserAssignments(TenantId tenantId, Tstring userId) {
+    return repo.findByUserId(tenantId, userId);
   }
 }

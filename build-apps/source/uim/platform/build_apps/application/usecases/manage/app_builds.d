@@ -18,52 +18,49 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    AppBuild getById(AppBuildId id) {
+    AppBuild getlistAppBuild(TenantId tenantId, AppBuildId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppBuild[] list() {
-        return repo.findAll();
-    }
-
-    AppBuild[] listByTenant(TenantId tenantId) {
+    AppBuild[] listAppBuilds(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    AppBuild[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult create(AppBuildDTO dto) {
+    CommandResult createAppBuild(AppBuildDTO dto) {
         AppBuild e;
-        e.id = AppBuildId(dto.id);
-        e.tenantId = dto.tenantId;
+        e.initEntity(dto.tenantId, dto.createdBy);
+        e.id = dto.appBuildId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
         e.buildConfig = dto.buildConfig;
         e.signingConfig = dto.signingConfig;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidAppBuild(e))
             return CommandResult(false, "", "Invalid app build data");
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(AppBuildDTO dto) {
-        if (!repo.existsById(AppBuildId(dto.id)))
+    CommandResult updateAppBuild(AppBuildDTO dto) {
+        auto existing = repo.findById(dto.tenantId, AppBuildId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "App build not found");
-        auto existing = repo.findById(AppBuildId(dto.id));
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAppBuild(AppBuildId id) {
+    CommandResult deleteAppBuild(TenantId tenantId, AppBuildId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App build not found");

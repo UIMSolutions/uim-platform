@@ -18,19 +18,15 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ContentConnector getById(ContentConnectorId id) {
+    ContentConnector getContentConnector(TenantId tenantId, ContentConnectorId id) {
         return repo.findById(tenantId, id);
     }
 
-    ContentConnector[] list() {
-        return repo.findAll();
-    }
-
-    ContentConnector[] listByTenant(TenantId tenantId) {
+    ContentConnector[] listContentConnectors(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult create(ContentConnectorDTO dto) {
+    CommandResult createContentConnector(ContentConnectorDTO dto) {
         ContentConnector cc;
         cc.id = ContentConnectorId(dto.id);
         cc.tenantId = dto.tenantId;
@@ -46,10 +42,11 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(ContentConnectorDTO dto) {
-        if (!repo.existsById(ContentConnectorId(dto.id)))
-            return CommandResult(false, "", "Content connector not found");
+    CommandResult updateContentConnector(ContentConnectorDTO dto) {
         auto existing = repo.findById(ContentConnectorId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Content connector not found");
+
         if (dto.name.length > 0)
             existing.name = dto.name;
         if (dto.description.length > 0)
@@ -62,11 +59,12 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
             existing.path = dto.path;
         if (!dto.updatedBy.isNull)
             existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteContentConnector(ContentConnectorId id) {
+    CommandResult deleteContentConnector(TenantId tenantId, ContentConnectorId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Content connector not found");

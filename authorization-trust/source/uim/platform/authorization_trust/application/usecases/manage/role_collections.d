@@ -18,7 +18,7 @@ class ManageRoleCollectionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateRoleCollectionRequest r) {
+  CommandResult createRoleCollection(CreateRoleCollectionRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Role collection name is required");
     if (repo.existsByName(r.name))
@@ -26,15 +26,13 @@ class ManageRoleCollectionsUseCase {
 
     import std.uuid : randomUUID;
     RoleCollectionEntity rc;
-    rc.id             = randomUUID().toString();
+    rc.initEntity(r.tenantId);
     rc.name           = r.name;
     rc.description    = r.description;
     rc.roleReferences = r.roleReferences.dup;
-    rc.createdAt      = currentTimestamp();
-    rc.updatedAt      = rc.createdAt;
 
     repo.save(rc);
-    return CommandResult(true, rc.id, "");
+    return CommandResult(true, rc.id.value, "");
   }
 
   CommandResult update(UpdateRoleCollectionRequest r) {
@@ -47,21 +45,23 @@ class ManageRoleCollectionsUseCase {
     rc.updatedAt = currentTimestamp();
 
     repo.update(rc);
-    return CommandResult(true, rc.id, "");
+    return CommandResult(true, rc.id.value, "");
   }
 
-  CommandResult remove(RoleCollectionId id) {
-    if (!repo.existsById(id))
+  CommandResult remove(TenantId tenantId, RoleCollectionId id) {
+    auto rc = repo.findById(tenantId, id);
+    if (rc.isNull)
       return CommandResult(false, "", "Role collection not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+
+    repo.remove(rc);
+    return CommandResult(true, rc.id.value, "");
   }
 
-  RoleCollectionEntity getById(RoleCollectionId id) {
-    return repo.findById(id);
+  RoleCollectionEntity getById(TenantId tenantId, RoleCollectionId id) {
+    return repo.findById(tenantId, id);
   }
 
-  RoleCollectionEntity[] listAll() {
-    return repo.findAll();
+  RoleCollectionEntity[] listAll(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 }

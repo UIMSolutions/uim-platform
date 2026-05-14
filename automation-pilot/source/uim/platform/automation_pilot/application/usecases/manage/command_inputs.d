@@ -48,14 +48,16 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(CommandInputDTO dto) {
-        if (!repo.existsById(CommandInputId(dto.id)))
-            return CommandResult(false, "", "Command input not found");
         auto existing = repo.findById(CommandInputId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Command input not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.keys.length > 0) existing.keys = dto.keys;
         if (dto.values.length > 0) existing.values = dto.values;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

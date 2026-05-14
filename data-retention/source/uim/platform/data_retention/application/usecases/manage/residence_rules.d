@@ -19,15 +19,12 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Duration must be positive");
 
         ResidenceRule rr;
-        rr.id = ResidenceRuleId(randomUUID().toString());
-        rr.tenantId = req.tenantId;
+        rr.initEntity(req.tenantId, req.createdBy);
         rr.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
         rr.duration = req.duration;
         rr.periodUnit = parsePeriodUnit(req.periodUnit);
         rr.isActive = true;
-        rr.createdBy = req.createdBy;
-        rr.createdAt = clockSeconds();
 
         repo.save(rr);
         return CommandResult(true, rr.id.value, "");
@@ -35,7 +32,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult updateResidenceRule(UpdateResidenceRuleRequest req) {
         auto rule = repo.findById(req.tenantId, req.id);
-        if (!repo.existsById(req.tenantId, req.id))
+        if (rule.isNull)
             return CommandResult(false, "", "Residence rule not found");
 
         if (req.duration > 0)

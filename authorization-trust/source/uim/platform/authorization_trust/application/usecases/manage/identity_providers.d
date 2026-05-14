@@ -62,18 +62,20 @@ class ManageIdentityProvidersUseCase {
     return CommandResult(true, idp.id, "");
   }
 
-  CommandResult remove(IdentityProviderId id) {
-    if (!repo.existsById(id))
+  CommandResult remove(TenantId tenantId, IdentityProviderId id) {
+    auto provider = repo.findById(tenantId, id);
+    if (provider.isNull)
       return CommandResult(false, "", "Identity provider not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+      
+    repo.remove(provider);
+    return CommandResult(true, provider.id.value, "");
   }
 
-  IdentityProviderEntity getById(IdentityProviderId id) {
-    return repo.findById(id);
+  IdentityProviderEntity getById(TenantId tenantId, IdentityProviderId id) {
+    return repo.findById(tenantId, id);
   }
 
-  IdentityProviderEntity[] listAll() {
-    return repo.findAll();
+  IdentityProviderEntity[] listAll(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 }

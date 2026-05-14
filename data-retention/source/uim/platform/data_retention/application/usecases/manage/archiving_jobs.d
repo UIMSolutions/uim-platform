@@ -15,29 +15,27 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     CommandResult createArchivingJob(CreateArchivingJobRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.applicationGroupId.length == 0)
+        if (req.applicationGroupId.isEmpty)
             return CommandResult(false, "", "Application group ID is required");
 
         ArchivingJob aj;
-        aj.id = ArchivingJobId(randomUUID().toString());
-        aj.tenantId = req.tenantId;
+        aj.initEntity(req.tenantId, req.createdBy);
+
         aj.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         aj.operationType = toArchivingJobOperationType(req.operationType);
         aj.status = ArchivingJobStatus.scheduled;
         aj.selectionCriteria = req.selectionCriteria;
         aj.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : clockSeconds();
-        aj.createdBy = req.createdBy;
-        aj.createdAt = clockSeconds();
 
         repo.save(aj);
         return CommandResult(true, aj.id.value, "");
     }
 
-    CommandResult updateArchivingJob(ArchivingJobId id, UpdateArchivingJobRequest req) {
-        if (!repo.existsById(id))
+    CommandResult updateArchivingJob(TenantId tenantId, ArchivingJobId id, UpdateArchivingJobRequest req) {
+        auto aj = repo.findById(tenantId, id);
+        if (aj.isNull)
             return CommandResult(false, "", "Archiving job not found");
 
-        auto aj = repo.findById(tenantId, id);
         if (req.status.length > 0)
             aj.status = toArchivingJobStatus(req.status);
         if (req.recordsProcessed > 0)
@@ -57,11 +55,11 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
 
-    bool hasArchivingJob(ArchivingJobId id) {
-        return repo.existsById(id);
+    bool hasArchivingJob(TenantId tenantId, ArchivingJobId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    ArchivingJob getArchivingJob(ArchivingJobId id) {
+    ArchivingJob getArchivingJob(TenantId tenantId, ArchivingJobId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -73,7 +71,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteArchivingJob(ArchivingJobId id) {
+    CommandResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Archiving job not found");

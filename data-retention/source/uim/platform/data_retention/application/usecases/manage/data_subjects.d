@@ -48,9 +48,10 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult blockDataSubject(DataSubjectId id) {
-        if (!repo.existsById(id))
-            return CommandResult(false, "", "Data subject not found");
         auto ds = repo.findById(tenantId, id);
+        if (ds.isNull)
+            return CommandResult(false, "", "Data subject not found");
+
         ds.lifecycleStatus = DataLifecycleStatus.blocked;
         ds.blockedAt = clockSeconds();
         ds.updatedAt = clockSeconds();

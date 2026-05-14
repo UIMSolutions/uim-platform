@@ -32,13 +32,8 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         if (r.actionUrl.length == 0 && r.type != "cloudFoundryTask")
             return CommandResult(false, "", "Action URL is required for HTTP jobs");
 
-        import std.uuid : randomUUID;
-
-        auto id = randomUUID();
-
         Job job;
-        job.id = id;
-        job.tenantId = r.tenantId;
+        job.initEntity(r.tenantId);
         job.name = r.name;
         job.description = r.description;
         job.actionUrl = r.actionUrl;
@@ -48,12 +43,6 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         job.active = r.active;
         job.startTime = r.startTime;
         job.endTime = r.endTime;
-
-        import core.time : MonoTime;
-
-        auto now = MonoTime.currTime.ticks;
-        job.createdAt = now;
-        job.updatedAt = now;
 
         repo.save(job);
         return CommandResult(true, job.id.value, "");
@@ -76,10 +65,10 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateJob(UpdateJobRequest r) {
-        if (!repo.existsById(r.tenantId, r.jobId))
+        auto existing = repo.findById(r.tenantId, r.jobId);
+        if (existing.isNull)
             return CommandResult(false, "", "Job not found");
 
-        auto existing = repo.findById(r.tenantId, r.jobId);
         if (r.name.length > 0)
             existing.name = r.name;
         if (r.description.length > 0)

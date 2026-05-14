@@ -33,7 +33,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
 
     DatabaseUser u;
     u.id = r.id;
-    u.tenantId = r.tenantId;
+    u.initEntity(r.tenantId);
     u.instanceId = r.instanceId;
     u.userName = r.userName;
     u.status = UserStatus.active;
@@ -41,16 +41,11 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     u.isRestricted = r.isRestricted;
     u.forcePasswordChange = r.forcePasswordChange;
 
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    u.createdAt = now;
-    u.updatedAt = now;
-
     repo.save(u);
     return CommandResult(true, u.id.value, "");
   }
 
-  DatabaseUser getDatabaseUser(DatabaseUserId id) {
+  DatabaseUser getDatabaseUser(TenantId tenantId, DatabaseUserId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -59,7 +54,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDatabaseUser(UpdateDatabaseUserRequest r) {
-    auto user = repo.findById(r.id);
+    auto user = repo.findById(r.tenantId, r.id);
     if (user.isNull)
       return CommandResult(false, "", "Database user not found");
 
@@ -74,7 +69,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, user.id.value, "");
   }
 
-  CommandResult deleteDatabaseUser(DatabaseUserId id) {
+  CommandResult deleteDatabaseUser(TenantId tenantId, DatabaseUserId id) {
     auto user = repo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "Database user not found");

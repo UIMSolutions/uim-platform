@@ -18,26 +18,22 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Application getById(ApplicationId id) {
+    Application getApplication(TenantId tenantId, ApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
-    Application[] list() {
-        return repo.findAll();
-    }
-
-    Application[] listByTenant(TenantId tenantId) {
+    Application[] listApplications(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Application[] listByOwner(string owner) {
-        return repo.findByOwner(owner);
+    Application[] listApplications(TenantId tenantId, string owner) {
+        return repo.findByOwner(tenantId, owner);
     }
 
     CommandResult create(ApplicationDTO dto) {
         Application e;
+        e.initEntity(dto.tenantId, dto.createdBy);
         e.id = ApplicationId(dto.id);
-        e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
@@ -47,27 +43,29 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         e.defaultLanguage = dto.defaultLanguage;
         e.supportedLanguages = dto.supportedLanguages;
         e.owner = dto.owner;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidApplication(e))
             return CommandResult(false, "", "Invalid application data");
+
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ApplicationDTO dto) {
-        if (!repo.existsById(ApplicationId(dto.id)))
+    CommandResult updateApplication(ApplicationDTO dto) {
+        auto existing = repo.findById(ApplicationId(dto.tenantId, dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Application not found");
-        auto existing = repo.findById(ApplicationId(dto.id));
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (dto.iconUrl.length > 0) existing.iconUrl = dto.iconUrl;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteApplication(ApplicationId id) {
+    CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Application not found");

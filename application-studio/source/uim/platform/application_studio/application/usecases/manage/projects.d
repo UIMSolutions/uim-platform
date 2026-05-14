@@ -22,20 +22,17 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         return projects.findById(tenantId, id);
     }
 
-    Project[] list() {
-        return projects.findAll();
-    }
-
-    Project[] listByTenant(TenantId tenantId) {
+    Project[] listProjects(TenantId tenantId) {
         return projects.findByTenant(tenantId);
     }
 
-    Project[] listByDevSpace(DevSpaceId devSpaceId) {
+    Project[] listProjects(DevSpaceId devSpaceId) {
         return projects.findByDevSpace(devSpaceId);
     }
 
-    CommandResult create(ProjectDTO dto) {
+    CommandResult createProject(ProjectDTO dto) {
         Project e;
+        
         e.id = ProjectId(dto.id);
         e.tenantId = dto.tenantId;
         e.devSpaceId = DevSpaceId(dto.devSpaceId);
@@ -49,24 +46,27 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidProject(e))
             return CommandResult(false, "", "Invalid project data");
+
         projects.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ProjectDTO dto) {
-        if (!projects.existsById(ProjectId(dto.id)))
-            return CommandResult(false, "", "Project not found");
+    CommandResult updateProject(ProjectDTO dto) {
         auto existing = projects.findById(ProjectId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Project not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.gitprojectssitoryUrl.length > 0) existing.gitprojectssitoryUrl = dto.gitprojectssitoryUrl;
         if (dto.gitBranch.length > 0) existing.gitBranch = dto.gitBranch;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         projects.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProject(ProjectId id) {
+    CommandResult deleteProject(TenantId tenantId, ProjectId id) {
         auto project = projects.findById(tenantId, id);
         if (project.isNull)
             return CommandResult(false, "", "Project not found");

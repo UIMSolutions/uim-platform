@@ -52,15 +52,16 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ExecutionDTO dto) {
-        if (!repo.existsById(ExecutionId(dto.id)))
-            return CommandResult(false, "", "Execution not found");
+    CommandResult updateExecution(ExecutionDTO dto) {
         auto existing = repo.findById(ExecutionId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Execution not found");
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteExecution(ExecutionId id) {
+    CommandResult deleteExecution(TenantId tenantId, ExecutionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Execution not found");

@@ -21,7 +21,7 @@ class ManageRolesUseCase {
   CommandResult createRole(CreateRoleRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Role name is required");
-    if (repo.existsByName(r.name, r.appId))
+    if (repo.existsByName(r.tenantId, r.name, r.appId))
       return CommandResult(false, "", "A role with this name already exists for the application");
 
     RoleEntity role;
@@ -36,8 +36,8 @@ class ManageRolesUseCase {
   }
 
   CommandResult updateRole(UpdateRoleRequest r) {
-    auto role = repo.findById(r.id);
-    if (role.id.length == 0)
+    auto role = repo.findById(r.tenantId, r.id);
+    if (role.isNull )
       return CommandResult(false, "", "Role not found");
 
     if (r.description.length > 0)     role.description = r.description;
@@ -48,12 +48,13 @@ class ManageRolesUseCase {
     return CommandResult(true, role.id, "");
   }
 
-  CommandResult remove(TenantId tenantId, RoleId id) {
-    if (!repo.existsById(tenantId, id))
+  CommandResult removeRole(TenantId tenantId, RoleId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
       return CommandResult(false, "", "Role not found");
 
-    repo.remove(tenantId, id);
-    return CommandResult(true, id, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
   RoleEntity getRole(TenantId tenantId, RoleId id) {

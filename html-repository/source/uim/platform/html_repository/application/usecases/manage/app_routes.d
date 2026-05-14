@@ -26,18 +26,13 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid path prefix");
 
         AppRoute route;
+        route.initEntity(request.tenantId, request.createdBy);
         with (route) {
-            id = randomUUID();
-            tenantId = request.tenantId;
             appId = request.appId;
             pathPrefix = request.pathPrefix;
             targetUrl = request.targetUrl;
             description = request.description;
             status = RouteStatus.active;
-            createdAt = currentTimestamp();
-            updatedAt = createdAt;
-            createdBy = request.createdBy;
-            updatedBy = request.createdBy;
             
             /* versionId = request.versionId;
             pathPrefix = request.pathPrefix;
@@ -52,10 +47,10 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppRoute(AppRouteId id, UpdateAppRouteRequest request) {
-        if (!repo.existsById(id))
+        auto route = repo.findById(tenantId, id);
+        if (route.isNull)
             return CommandResult(false, "", "Route not found");
 
-        auto route = repo.findById(tenantId, id);
         if (request.pathPrefix.length > 0)
             route.pathPrefix = request.pathPrefix;
         if (request.targetPath.length > 0)

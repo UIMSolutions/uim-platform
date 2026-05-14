@@ -52,19 +52,21 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(ScheduledExecutionDTO dto) {
-        if (!repo.existsById(ScheduledExecutionId(dto.id)))
-            return CommandResult(false, "", "Scheduled execution not found");
+    CommandResult updateScheduledExecution(ScheduledExecutionDTO dto) {
         auto existing = repo.findById(ScheduledExecutionId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Scheduled execution not found");
+
         if (dto.cronExpression.length > 0) existing.cronExpression = dto.cronExpression;
         if (dto.scheduledAt > 0) existing.scheduledAt = dto.scheduledAt;
         if (dto.description.length > 0) existing.description = dto.description;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        
         repo.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult deleteScheduledExecution(ScheduledExecutionId id) {
+    CommandResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Scheduled execution not found");

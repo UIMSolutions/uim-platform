@@ -53,8 +53,8 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateLifecycleRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
-    auto rule = ruleRepo.findById(tenantId, id);
+  CommandResult updateLifecycleRule(UpdateLifecycleRuleRequest req) {
+    auto rule = ruleRepo.findById(req.tenantId, req.id);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");
 
@@ -75,18 +75,18 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = Clock.currStdTime();
 
     ruleRepo.update(rule);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
-  LifecycleRule getLifecycleRule(LifecycleRuleId id) {
+  LifecycleRule getLifecycleRule(TenantId tenantId, LifecycleRuleId id) {
     return ruleRepo.findById(tenantId, id);
   }
 
-  LifecycleRule[] listLifecycleRules(BucketId bucketId) {
-    return ruleRepo.findByBucket(bucketId);
+  LifecycleRule[] listLifecycleRules(TenantId tenantId, BucketId bucketId) {
+    return ruleRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deleteLifecycleRule(LifecycleRuleId id) {
+  CommandResult deleteLifecycleRule(TenantId tenantId, LifecycleRuleId id) {
     auto rule = ruleRepo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");

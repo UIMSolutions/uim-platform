@@ -59,14 +59,10 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, sub.id.value, "");
   }
 
-  CommandResult updateEventSubscription(string subscriptionId, UpdateEventSubscriptionRequest request) {
-    return updateEventSubscription(EventSubscriptionId(subscriptionId), request);
-  }
-
-  CommandResult updateEventSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
+  CommandResult updateEventSubscription(UpdateEventSubscriptionRequest request) {
     if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
-    
+
     auto sub = subscriptionRepository.findById(subscriptionId);
     if (request.description.length > 0)
       sub.description = request.description;
@@ -91,22 +87,22 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, subscriptionId.value, "");
   }
 
-  CommandResult pauseEventSubscription(EventSubscriptionId subscriptionId) {
-    if (!subscriptionRepository.existsById(subscriptionId))
-      return CommandResult(false, "", "Subscription not found");
-    
+  CommandResult pauseEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
     auto sub = subscriptionRepository.findById(subscriptionId);
+    if (sub.isNull)
+      return CommandResult(false, "", "Subscription not found");
+
     sub.status = SubscriptionStatus.paused;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
     return CommandResult(true, subscriptionId.value, "");
   }
 
-  CommandResult resumeEventSubscription(EventSubscriptionId subscriptionId) {
-    if (!subscriptionRepository.existsById(subscriptionId))
-      return CommandResult(false, "", "Subscription not found");
-    
+  CommandResult resumeEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
     auto sub = subscriptionRepository.findById(subscriptionId);
+    if (sub.isNull)
+      return CommandResult(false, "", "Subscription not found");
+
     sub.status = SubscriptionStatus.active;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
@@ -121,32 +117,20 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return subscriptionRepository.findById(subscriptionId);
   }
 
-  EventSubscription[] listByNamespace(NamespaceId namespaceId) {
-    return subscriptionRepository.findByNamespace(namespaceId);
+  EventSubscription[] listByNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return subscriptionRepository.findByNamespace(tenantId, namespaceId);
   }
 
-  EventSubscription[] listByEnvironment(KymaEnvironmentId environmentId) {
-    return subscriptionRepository.findByEnvironment(environmentId);
+  EventSubscription[] listByEnvironment(TenantId tenantId, KymaEnvironmentId environmentId) {
+    return subscriptionRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  CommandResult deleteSubscription(EventSubscriptionId subscriptionId) {
-    if (!subscriptionRepository.existsById(subscriptionId))
+  CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+    auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
+    if (sub.isNull)
       return CommandResult(false, "", "Subscription not found");
 
-    subscriptionRepository.remove(subscriptionId);
-    return CommandResult(true, subscriptionId.value, "");
-  }
-
-  private EventTypeEncoding parseTypeEncoding(string encoding) {
-    switch (encoding) {
-    case "exact":
-      return EventTypeEncoding.exact;
-    case "prefix":
-      return EventTypeEncoding.prefix;
-    default:
-      return EventTypeEncoding.exact;
-    }
+    subscriptionRepository.remove(sub);
+    return CommandResult(true, sub.id.value, "");
   }
 }
-
-

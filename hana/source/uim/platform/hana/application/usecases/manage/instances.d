@@ -30,7 +30,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    if (repo.existsById(r.id))
+    if (repo.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Instance already exists");
 
     DatabaseInstance i;
