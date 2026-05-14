@@ -37,7 +37,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    // import std.uuid : randomUUID;
+   
 
     auto accessKeyId = randomUUID();
     auto secretKey = randomUUID();

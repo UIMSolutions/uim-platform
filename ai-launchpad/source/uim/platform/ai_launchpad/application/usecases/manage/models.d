@@ -25,10 +25,12 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult register(RegisterModelRequest r) {
-    if (r.name.length == 0) return CommandResult(false, "", "Model name is required");
+    if (r.name.length == 0)
+      return CommandResult(false, "", "Model name is required");
 
     Model m;
-    m.id = randomUUID();
+    m.initEntity(r.tenantId);
+
     m.connectionId = r.connectionId;
     m.name = r.name;
     m.version_ = r.version_;
@@ -39,39 +41,45 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     m.size = r.size;
     m.status = ModelStatus.available;
     m.labels = r.labels;
-    m.createdAt = "now";
-    m.updatedAt = "now";
+
     models.save(m);
     return CommandResult(true, m.id.value, "");
   }
 
-  Model getById(ConnectionId connectionId, ModelId id) {
-    return models.findById(connectionId, id);
+  Model getById(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+    return models.findById(tenantId, connectionId, id);
   }
 
-  Model[] listByConnection(ConnectionId connectionId) {
-    return models.findByConnection(connectionId);
+  Model[] listByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return models.findByConnection(tenantId, connectionId);
   }
 
-  Model[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
-    return models.findByScenario(connectionId, scenarioId);
+  Model[] listByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return models.findByScenario(tenantId, connectionId, scenarioId);
   }
 
   CommandResult patch(PatchModelRequest r) {
-    auto m = models.findById(r.connectionId, r.modelId);
-    if (m.isNull) return CommandResult(false, "", "Model not found");
-    if (r.description.length > 0) m.description = r.description;
-    if (r.status == "archived") m.status = ModelStatus.archived;
-    else if (r.status == "deprecated") m.status = ModelStatus.deprecated_;
-    m.updatedAt = "now";
+    auto m = models.findById(r.tenantId, r.connectionId, r.modelId);
+
+    if (m.isNull)
+      return CommandResult(false, "", "Model not found");
+    if (r.description.length > 0)
+      m.description = r.description;
+    if (r.status == "archived")
+      m.status = ModelStatus.archived;
+    else if (r.status == "deprecated")
+      m.status = ModelStatus.deprecated_;
+    m.updatedAt = Clock.currStdTime();
+
     models.save(m);
     return CommandResult(true, m.id.value, "");
   }
 
-  CommandResult deleteModel(ConnectionId connectionId, ModelId id) {
-    auto model = models.findById(connectionId, id);
-    if (model.isNull) return CommandResult(false, "", "Model not found");
-    
+  CommandResult deleteModel(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+    auto model = models.findById(tenantId, connectionId, id);
+    if (model.isNull)
+      return CommandResult(false, "", "Model not found");
+
     models.remove(model);
     return CommandResult(true, model.id.value, "");
   }

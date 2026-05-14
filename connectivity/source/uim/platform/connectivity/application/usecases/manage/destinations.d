@@ -39,11 +39,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.url.length == 0)
       return CommandResult(false, "", "Destination URL is required");
 
-    // import std.uuid : randomUUID;
+   
 
     Destination dest;
-    dest.id = randomUUID();
-    dest.tenantId = req.tenantId;
+    dest.initEntity(req.tenantId);
     dest.name = req.name;
     dest.description = req.description;
     dest.url = req.url;

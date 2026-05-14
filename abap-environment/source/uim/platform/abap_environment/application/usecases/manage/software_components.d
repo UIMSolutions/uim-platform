@@ -45,8 +45,8 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
     SoftwareComponent comp;
-    comp.id = randomUUID();
-    comp.tenantId = req.tenantId;
+    comp.initEntity(req.tenantId);
+    
     comp.systemInstanceId = req.systemInstanceId;
     comp.name = req.name;
     comp.description = req.description;
@@ -56,10 +56,6 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.branch = req.branch.length > 0 ? req.branch : "main";
     comp.branchStrategy = req.branchStrategy.to!BranchStrategy;
     comp.namespace = req.namespace;
-
-  
-    comp.createdAt = Clock.currStdTime();
-    comp.updatedAt = comp.createdAt;
 
     repo.save(comp);
     return CommandResult(true, comp.id.value, "");

@@ -112,12 +112,12 @@ struct DestinationResolver {
   }
 
   private static string generateMockOAuthToken(const ref Destination dest) {
-    // import std.uuid : randomUUID;
+   
     return "mock-oauth2-" ~ randomUUID().toString();
   }
 
   private static string generateMockSAMLToken(const ref Destination dest) {
-    // import std.uuid : randomUUID;
+   
     return "mock-saml-" ~ randomUUID().toString();
   }
 

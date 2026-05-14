@@ -35,8 +35,8 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     Configuration c;
-    c.id = randomUUID();
-    c.tenantId = r.tenantId;
+    c.initEntity(r.tenantId);
+
     c.resourceGroupId = r.resourceGroupId;
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;

@@ -42,12 +42,11 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Package name is required");
 
-    // import std.uuid : randomUUID;
+   
     auto id = randomUUID();
 
     ContentPackage pkg;
-    pkg.id = randomUUID();
-    pkg.tenantId = req.tenantId;
+    pkg.initEntity(req.tenantId, req.createdBy);
     pkg.subaccountId = req.subaccountId;
     pkg.name = req.name;
     pkg.description = req.description;
@@ -56,12 +55,6 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.items = req.items;
     pkg.tags = req.tags;
     pkg.status = PackageStatus.draft;
-    pkg.createdBy = req.createdBy;
-
-    import core.time : MonoTime;
-
-    pkg.createdAt = clockSeconds();
-    pkg.updatedAt = pkg.createdAt;
 
     packages.save(pkg);
     recordActivity(req.tenantId, ActivityType.packageCreated, id, req.name,
@@ -151,7 +144,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
       string entityId, string entityName, string desc, string by) {
-    // import std.uuid : randomUUID;
+   
     ContentActivity activity;
     activity.id = randomUUID();
     activity.tenantId = tenantId;

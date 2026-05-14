@@ -29,6 +29,9 @@ struct CreateBusinessRoleRequest {
 }
 
 struct UpdateBusinessRoleRequest {
+  TenantId tenantId;
+  BusinessRoleId businessRoleId;
+  
   string description;
   string roleType;
   string[] restrictionTypes;

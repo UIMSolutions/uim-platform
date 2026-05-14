@@ -94,7 +94,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult recordResult(RecordCheckResultRequest req) {
-    // import std.uuid : randomUUID;
+   
     auto id = randomUUID();
 
     HealthCheckResult r;

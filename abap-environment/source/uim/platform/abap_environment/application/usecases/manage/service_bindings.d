@@ -32,8 +32,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System instance ID is required");
 
     ServiceBinding binding;
-    binding.id = randomUUID();
-    binding.tenantId = req.tenantId;
+    binding.initEntity(req.tenantId);
     binding.systemInstanceId = req.systemInstanceId;
     binding.serviceDefinitionId = req.serviceDefinitionId;
     binding.name = req.name;
@@ -45,10 +44,6 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     // Generate service URL
     binding.serviceUrl = "/sap/opu/odata4/sap/" ~ req.name ~ "/";
     binding.metadataUrl = binding.serviceUrl ~ "$metadata";
-
-  
-    binding.createdAt = Clock.currStdTime();
-    binding.updatedAt = binding.createdAt;
 
     repo.save(binding);
     return CommandResult(true, binding.id.value, "");
@@ -66,7 +61,6 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (req.endpoints.length > 0)
       binding.endpoints = req.endpoints;
 
-  
     binding.updatedAt = Clock.currStdTime();
 
     repo.update(binding);

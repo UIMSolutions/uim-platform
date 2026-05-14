@@ -34,14 +34,13 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Model name is required");
 
     Prompt p;
-    p.id = randomUUID();
+    p.initEntity(r.tenantId, r.createdBy);
     p.collectionId = r.collectionId;
     p.name = r.name;
     p.modelName = r.modelName;
     p.modelVersion = r.modelVersion;
     p.inputParams = r.inputParams;
     p.status = PromptStatus.draft;
-    p.createdBy = r.createdBy;
 
     foreach (msg; r.messages) {
       if (msg.length >= 2) {
@@ -65,8 +64,6 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     if (!enricher.validateMessages(p))
       return CommandResult(false, "", "Prompt must have at least one user message");
 
-    p.createdAt = "now";
-    p.updatedAt = "now";
     repo.save(p);
     return CommandResult(true, p.id.value, "");
   }

@@ -26,14 +26,14 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
   CommandResult createDeployment(CreateDeploymentRequest r) {
     Deployment d;
-    d.id = randomUUID();
+    d.initEntity(r.tenantId);
+
     d.connectionId = r.connectionId;
     d.configurationId = r.configurationId;
     d.resourceGroupId = r.resourceGroupId;
     d.ttl = r.ttl;
     d.status = DeploymentStatus.pending;
-    d.createdAt = "now";
-    d.updatedAt = "now";
+
     repo.save(d);
     return CommandResult(true, d.id.value, "");
   }

@@ -29,7 +29,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult createConnection(CreateConnectionRequest r) {
     Connection c;
-    c.id = randomUUID();
+    c.initEntity(r.tenantId);
     c.name = r.name;
     c.url = r.url;
     c.authUrl = r.authUrl;
@@ -50,8 +50,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", vr.error);
 
     c.status = ConnectionStatus.active;
-    c.createdAt = "now";
-    c.updatedAt = "now";
+
     repo.save(c);
     return CommandResult(true, c.id.value, "");
   }
@@ -78,7 +77,8 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
       c.description = r.description;
     if (r.defaultResourceGroupId.length > 0)
       c.defaultResourceGroupId = r.defaultResourceGroupId;
-    c.updatedAt = "now";
+    c.updatedAt = Clock.currStdTime();
+
     repo.save(c);
     return CommandResult(true, c.id.value, "");
   }

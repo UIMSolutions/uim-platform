@@ -31,7 +31,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Configuration name is required");
 
     Configuration c;
-    c.id = randomUUID();
+    c.initEntity(r.tenantId);
     c.connectionId = r.connectionId;
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;
@@ -48,7 +48,6 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    c.createdAt = "now";
     repo.save(c);
     return CommandResult(true, c.id.value, "");
   }

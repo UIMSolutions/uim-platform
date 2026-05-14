@@ -115,7 +115,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
     foreach (r; req.metrics) {
-      // import std.uuid : randomUUID;
+     
       Metric m;
       m.id = randomUUID();
       m.tenantId = req.tenantId;

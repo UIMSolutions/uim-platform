@@ -44,8 +44,8 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, label.id.value, "");
   }
 
-  CommandResult updateLabel(LabelId id, UpdateLabelRequest req) {
-    if (!labels.existsById(id))
+  CommandResult updateLabel(TenantId tenantId, LabelId id, UpdateLabelRequest req) {
+    if (!labels.existsById(tenantId, id))
       return CommandResult(false, "", "Label not found");
 
     Label label = labels.findById(tenantId, id);
@@ -55,19 +55,19 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, label.id.value, "");
   }
 
-  Label getLabel(LabelId id) {
+  Label getLabel(TenantId tenantId, LabelId id) {
     return labels.findById(tenantId, id);
   }
 
-  Label[] listLabels(string resourceType, string resourceId) {
-    return labels.findByResource(resourceType.to!LabeledResourceType, resourceId);
+  Label[] listLabels(TenantId tenantId, string resourceType, string resourceId) {
+    return labels.findByResource(tenantId, resourceType.to!LabeledResourceType, resourceId);
   }
 
-  Label[] listLabels(string resourceType, string key) {
-    return labels.findByKey(resourceType.to!LabeledResourceType, key);
+  Label[] listLabels(TenantId tenantId, string resourceType, string key) {
+    return labels.findByKey(tenantId, resourceType.to!LabeledResourceType, key);
   }
 
-  CommandResult deleteLabel(LabelId id) {
+  CommandResult deleteLabel(TenantId tenantId, LabelId id) {
     auto label = labels.findById(tenantId, id);
     if (label.isNull)            
       return CommandResult(false, "", "Label not found");
@@ -76,8 +76,8 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, label.id.value, "");
   }
 
-  CommandResult deleteByResource(string resourceType, string resourceId) {
-    labels.removeByResource(resourceType.to!LabeledResourceType, resourceId);
+  CommandResult deleteByResource(TenantId tenantId, string resourceType, string resourceId) {
+    labels.removeByResource(tenantId, resourceType.to!LabeledResourceType, resourceId);
     return CommandResult(true, "", "");
   }
 

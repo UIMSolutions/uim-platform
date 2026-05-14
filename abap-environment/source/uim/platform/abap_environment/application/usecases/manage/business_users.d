@@ -45,8 +45,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Email '" ~ req.email ~ "' already in use");
 
     BusinessUser user;
-    user.id = randomUUID();
-    user.tenantId = req.tenantId;
+    user.initEntity(req.tenantId);
     user.systemInstanceId = req.systemInstanceId;
     user.username = req.username;
     user.firstName = req.firstName;
@@ -64,10 +63,6 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
         user.roleAssignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
       }
     }
-
-  
-    user.createdAt = Clock.currStdTime();
-    user.updatedAt = user.createdAt;
 
     repo.save(user);
     return CommandResult(true, user.id.value, "");

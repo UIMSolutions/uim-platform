@@ -47,8 +47,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System instance '" ~ req.name ~ "' already exists");
 
     SystemInstance inst;
-    inst.id = randomUUID();
-    inst.tenantId = req.tenantId;
+    inst.initEntity(req.tenantId) ;
     inst.subaccountId = req.subaccountId;
     inst.name = req.name;
     inst.description = req.description;
@@ -61,10 +60,6 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     inst.hanaMemorySize = req.hanaMemorySize > 0 ? req.hanaMemorySize : cast(ushort)16;
     inst.softwareVersion = req.softwareVersion;
     inst.stackVersion = req.stackVersion;
-
-  
-    inst.createdAt = Clock.currStdTime();
-    inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
     return CommandResult(true, inst.id.value, "");

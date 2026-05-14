@@ -31,8 +31,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     Metric m;
-    m.id = randomUUID();
-    m.tenantId = r.tenantId;
+    m.initEntity(r.tenantId) ;
     m.resourceGroupId = r.resourceGroupId;
     m.executionId = r.executionId;
 
@@ -72,9 +71,6 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
       }
     }
     m.customInfo = info;
-
-    import core.time : MonoTime;
-    m.createdAt = MonoTime.currTime.ticks;
 
     repo.save(m);
     return CommandResult(true,  m.id.value, "");

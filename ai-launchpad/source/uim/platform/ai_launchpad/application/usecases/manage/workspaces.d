@@ -29,14 +29,14 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workspace name is required");
 
     Workspace w;
-    w.id = randomUUID();
+    w.initEntity(r.tenantId);
+
     w.name = r.name;
     w.description = r.description;
     w.tenantId = r.tenantId;
     w.status = WorkspaceStatus.active;
     w.connectionCount = 0;
-    w.createdAt = "now";
-    w.updatedAt = "now";
+
     workspaces.save(w);
     return CommandResult(true, w.id.value, "");
   }
@@ -57,7 +57,8 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       w.name = r.name;
     if (r.description.length > 0)
       w.description = r.description;
-    w.updatedAt = "now";
+    w.updatedAt = Clock.currStdTime();
+    
     workspaces.save(w);
     return CommandResult(true, w.id.value, "");
   }

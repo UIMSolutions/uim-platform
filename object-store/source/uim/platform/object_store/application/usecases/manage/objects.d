@@ -142,7 +142,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
     // If versioning enabled, add a delete marker instead of removing
     if (bucket !is null && bucket.versioningEnabled) {
-      // import std.uuid : randomUUID;
+     
       auto versionId = randomUUID();
       auto ts = currentTimestamp();
 

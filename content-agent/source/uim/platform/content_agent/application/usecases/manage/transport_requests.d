@@ -17,8 +17,6 @@ import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 import uim.platform.content_agent.domain.services.transport_validator;
 import uim.platform.content_agent.domain.types;
 
-
-
 /// Application service for transport request lifecycle management.
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private TransportRequestRepository requestRepo;
@@ -27,7 +25,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(TransportRequestRepository requestRepo, ContentPackageRepository packageRepo,
-      TransportQueueRepository queueRepo, ContentActivityRepository activityRepo) {
+    TransportQueueRepository queueRepo, ContentActivityRepository activityRepo) {
     this.requestRepo = requestRepo;
     this.packageRepo = packageRepo;
     this.queueRepo = queueRepo;
@@ -54,12 +52,10 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     else
       queue = queueRepo.findDefault(req.tenantId);
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
+   
     TransportRequest tr;
-    tr.id = randomUUID();
-    tr.tenantId = req.tenantId;
+    tr.initEntity(req.tenantId, req.createdBy);
+
     tr.sourceSubaccount = req.sourceSubaccount;
     tr.targetSubaccount = req.targetSubaccount;
     tr.description = req.description;
@@ -67,9 +63,6 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.packageIds = req.packageIds;
     tr.queueId = queue.id;
     tr.status = TransportStatus.created;
-    tr.createdBy = req.createdBy;
-    tr.createdAt = clockSeconds();
-    tr.updatedAt = tr.createdAt;
 
     // Validate transport
     auto validation = TransportValidator.validate(tr, packages, queue);
@@ -85,7 +78,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     requestRepo.save(tr);
     recordActivity(req.tenantId, ActivityType.transportCreated, id,
-        req.description, "Transport request created", req.createdBy);
+      req.description, "Transport request created", req.createdBy);
 
     return CommandResult(true, id.value, "");
   }
@@ -104,7 +97,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     requestRepo.update(tr);
     recordActivity(req.tenantId, ActivityType.transportReleased, req.requestId,
-        tr.description, "Transport released", req.releasedBy);
+      tr.description, "Transport released", req.releasedBy);
 
     return CommandResult(true, req.requestId, "");
   }
@@ -135,18 +128,18 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by) {
-    // import std.uuid : randomUUID;
+    string entityId, string entityName, string desc, string by) {
+   
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    acr´tivity.initEntity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
     activity.entityName = entityName;
     activity.description = desc;
     activity.performedBy = by;
-    activity.timestamp = clockSeconds();
+    activity.timestamp = activity.createdAt;
+
     activityRepo.save(activity);
   }
 

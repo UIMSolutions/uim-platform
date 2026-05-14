@@ -92,7 +92,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
       string entityId, string entityName, string desc, string by) {
-    // import std.uuid : randomUUID;
+   
     ContentActivity activity;
     activity.id = randomUUID();
     activity.tenantId = tenantId;

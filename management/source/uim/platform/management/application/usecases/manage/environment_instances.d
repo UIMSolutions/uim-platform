@@ -101,8 +101,8 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, instance.id.value, "");
   }
   
-  CommandResult deprovisionEnvironmentInstance(DeprovisionEnvironmentInstanceRequest req) {
-    auto instance = repo.findById(req.tenantId, req.id);
+  CommandResult deprovisionEnvironmentInstance(TenantId tenantId, EnvironmentInstanceId id) {
+    auto instance = repo.findById(tenantId, id);
     if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
     if (!provisioner.canDelete(instance))

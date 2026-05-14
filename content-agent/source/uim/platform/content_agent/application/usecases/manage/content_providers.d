@@ -12,7 +12,6 @@ module uim.platform.content_agent.application.usecases.manage.content_providers;
 // import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 // import uim.platform.content_agent.domain.types;
 
-
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -39,19 +38,18 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Provider endpoint is required");
 
     ContentProvider provider;
-    provider.id = randomUUID();
-    provider.tenantId = req.tenantId;
+    provider.initEntity(req.tenantId, req.registeredBy);
+
     provider.name = req.name;
     provider.description = req.description;
     provider.endpoint = req.endpoint;
     provider.authToken = req.authToken;
     provider.status = ProviderStatus.active;
-    provider.createdBy = req.registeredBy;
     provider.registeredAt = clockSeconds();
 
     providerRepo.save(provider);
     recordActivity(req.tenantId, ActivityType.providerRegistered, id, req.name,
-        "Provider registered", req.registeredBy);
+      "Provider registered", req.registeredBy);
 
     return CommandResult(true, id.value, "");
   }
@@ -81,7 +79,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
     providerRepo.update(provider);
 
     recordActivity(provider.tenantId, ActivityType.providerDeregistered, id,
-        provider.name, "Provider deregistered", "");
+      provider.name, "Provider deregistered", "");
 
     return CommandResult(true, id.value, "");
   }
@@ -115,20 +113,19 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by) {
-    // import std.uuid : randomUUID;
+    string entityId, string entityName, string desc, string by) {
+   
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    activity.initEntity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
     activity.entityName = entityName;
     activity.description = desc;
     activity.performedBy = by;
-    activity.timestamp = clockSeconds();
+    activity.timestamp = activity.createdAt;
+
     activityRepo.save(activity);
   }
-
 
 }

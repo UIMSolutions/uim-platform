@@ -52,7 +52,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateApplicationJob(UpdateApplicationJobRequest request) {
-    auto job = jobs.findById(request.tenantId, request.id);
+    auto job = jobs.findById(request.tenantId, request.applicationJobId);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 

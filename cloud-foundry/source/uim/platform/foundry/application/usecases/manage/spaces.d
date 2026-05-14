@@ -50,16 +50,12 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space with this name already exists in org");
 
     auto now = Clock.currStdTime();
-    auto space = Space();
-    space.id = randomUUID();
+    Space space;
+    space.initEntity(req.tenantId, req.createdBy);
     space.orgId = req.orgId;
-    space.tenantId = req.tenantId;
     space.name = req.name;
     space.status = SpaceStatus.active;
     space.allowSsh = req.allowSsh;
-    space.createdBy = req.createdBy;
-    space.createdAt = now;
-    space.updatedAt = now;
 
     repo.save(space);
     return CommandResult(true, space.id.value, "");

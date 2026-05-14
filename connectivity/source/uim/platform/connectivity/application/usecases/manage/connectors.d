@@ -33,12 +33,12 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "",
           "Connector with locationId '" ~ req.locationId ~ "' already registered");
 
-    // import std.uuid : randomUUID;
+   
 
     CloudConnector cc;
-    cc.id = randomUUID();
+    cc.initEntity(req.tenantId);
+
     cc.subaccountId = req.subaccountId;
-    cc.tenantId = req.tenantId;
     cc.locationId = req.locationId;
     cc.description = req.description;
     cc.connectorVersion = req.connectorVersion;
@@ -48,7 +48,6 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     cc.tunnelEndpoint = req.tunnelEndpoint;
 
     repo.save(cc);
-
     // Record connection event
     recordLog(req.tenantId, ConnectivityEventType.connectionEstablished, cc.id.value,
         "CloudConnector", "Connector registered: " ~ req.locationId);
@@ -109,7 +108,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
       string sourceId, string sourceType, string message) {
-    // import std.uuid : randomUUID;
+   
 
     ConnectivityLog entry;
     entry.id = randomUUID();

@@ -33,13 +33,13 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (req.systemInstanceId.isEmpty())
       return CommandResult(false, "", "System instance ID is required");
 
-    auto existing = repo.findByName(req.systemInstanceId, req.name);
+    auto existing = repo.findByName(req.tenantId, req.systemInstanceId, req.name);
     if (!existing.isNull)
       return CommandResult(false, "", "Business role '" ~ req.name ~ "' already exists");
 
     BusinessRole role;
-    role.id = randomUUID();
-    role.tenantId = req.tenantId;
+    role.initEntity(req.tenantId);
+    
     role.systemInstanceId = req.systemInstanceId;
     role.name = req.name;
     role.description = req.description;
@@ -47,16 +47,12 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     role.restrictionTypes = req.restrictionTypes;
     role.assignedCatalogs = req.assignedCatalogs;
 
-  
-    role.createdAt = Clock.currStdTime();
-    role.updatedAt = role.createdAt;
-
     repo.save(role);
     return CommandResult(true, role.id.value, "");
   }
 
   CommandResult updateRole(UpdateBusinessRoleRequest req) {
-    auto role = repo.findById(req.tenantId, req.id);
+    auto role = repo.findById(req.tenantId, req.businessRoleId);
     if (role.isNull)
       return CommandResult(false, "", "Business role not found");
 

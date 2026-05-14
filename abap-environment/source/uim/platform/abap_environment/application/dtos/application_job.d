@@ -43,6 +43,9 @@ struct CreateApplicationJobRequest {
 }
 
 struct UpdateApplicationJobRequest {
+  TenantId tenantId;
+  ApplicationJobId applicationJobId;
+  
   string description;
   string frequency;
   long scheduledAt;

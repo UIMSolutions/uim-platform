@@ -29,7 +29,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Dataset name is required");
 
     Dataset d;
-    d.id = randomUUID();
+    d.initEntity(r.tenantId);
     d.connectionId = r.connectionId;
     d.name = r.name;
     d.description = r.description;
@@ -38,8 +38,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     d.size = r.size;
     d.status = DatasetStatus.available;
     d.labels = r.labels;
-    d.createdAt = "now";
-    d.updatedAt = "now";
+
     repo.save(d);
     return CommandResult(true, d.id.value, "");
   }

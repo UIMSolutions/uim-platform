@@ -55,8 +55,8 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
     }
 
     auto entry = AuditLogEntry();
-    entry.id = randomUUID();
-    entry.tenantId = req.tenantId;
+    entry.initEntity(req.tenantId);
+
     entry.userId = req.userId;
     entry.userName = req.userName;
     entry.serviceId = req.serviceId;
@@ -73,7 +73,7 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
     entry.userAgent = req.userAgent;
     entry.correlationId = req.correlationId;
     entry.originApp = req.originApp;
-    entry.timestamp = Clock.currStdTime();
+    entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
 
     logRepo.save(entry);
     return CommandResult(true, entry.id.value, "");

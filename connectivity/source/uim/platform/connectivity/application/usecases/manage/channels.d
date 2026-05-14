@@ -43,12 +43,12 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (req.backendHost.length == 0)
       return CommandResult(false, "", "Backend host is required");
 
-    // import std.uuid : randomUUID;
+   
 
     ServiceChannel ch;
-    ch.id = randomUUID();
+    ch.initEntity(req.tenantId);
+
     ch.connectorId = req.connectorId;
-    ch.tenantId = req.tenantId;
     ch.name = req.name;
     ch.channelType = req.channelType.to!ChannelType;
     ch.status = ChannelStatus.closed;

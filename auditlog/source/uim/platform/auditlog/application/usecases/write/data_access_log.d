@@ -15,7 +15,7 @@ module uim.platform.auditlog.application.usecases.write.data_access_log;
 // import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 // import uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog; 
+import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
@@ -36,10 +36,10 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     if (req.dataSubject.length == 0)
       return CommandResult(false, "", "Data subject is required");
 
-      // Create parent audit log entry
+    // Create parent audit log entry
     auto entry = AuditLogEntry();
-    entry.id = randomUUID();
-    entry.tenantId = req.tenantId;
+    entry.initEntity(req.tenantId);
+    
     entry.userId = req.accessedBy;
     entry.category = AuditCategory.dataAccess;
     entry.severity = AuditSeverity.info;
@@ -47,8 +47,11 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     entry.outcome = AuditOutcome.success;
     entry.objectType = req.dataObjectType;
     entry.objectId = req.dataObjectId;
-    entry.message = "Data access: %s / %s by %s purpose=%s".format(req.dataObjectType, req.dataObjectId, req.accessedBy, req.purpose);
-    entry.timestamp = Clock.currStdTime();
+    entry.message = "Data access: %s / %s by %s purpose=%s".format(
+      req.dataObjectType, req.dataObjectId, 
+      req.accessedBy, req.purpose);
+    entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
+
     auditRepo.save(entry);
 
     // Create data access record
@@ -63,6 +66,7 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     daLog.purpose = req.purpose;
     daLog.channel = req.channel;
     daLog.timestamp = entry.timestamp;
+
     dalRepo.save(daLog);
 
     return CommandResult(true, entry.id.value, "");

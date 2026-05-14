@@ -34,8 +34,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System instance ID is required");
 
     CommunicationArrangement arr;
-    arr.id = randomUUID();
-    arr.tenantId = req.tenantId;
+    arr.initEntity(req.tenantId);
     arr.systemInstanceId = req.systemInstanceId;
     arr.scenarioId = req.scenarioId;
     arr.name = req.name;
@@ -51,10 +50,6 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     arr.certificateId = req.certificateId;
     arr.inboundServices = req.inboundServices;
     arr.outboundServices = req.outboundServices;
-
-  
-    arr.createdAt = Clock.currStdTime();
-    arr.updatedAt = arr.createdAt;
 
     repo.save(arr);
     return CommandResult(true, arr.id.value, "");
