@@ -5,13 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.app_configuration;
 
-import uim.platform.mobile.application.usecases.manage.app_configurations;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.app_configurations;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
-
+@safe:
 class AppConfigurationController : PlatformController {
   private ManageAppConfigurationsUseCase usecase;
 
@@ -21,6 +24,7 @@ class AppConfigurationController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/configurations", &handleCreate);
     router.get("/api/v1/configurations", &handleList);
     router.get("/api/v1/configurations/*", &handleGet);
@@ -29,7 +33,7 @@ class AppConfigurationController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateAppConfigurationRequest r;
@@ -74,7 +78,7 @@ class AppConfigurationController : PlatformController {
         .set("items", items)
         .set("totalCount", results.length)
         .set("message", "App configurations retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -82,7 +86,7 @@ class AppConfigurationController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
@@ -109,7 +113,7 @@ class AppConfigurationController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
@@ -136,7 +140,7 @@ class AppConfigurationController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = AppConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAppConfiguration(id);
@@ -144,7 +148,7 @@ class AppConfigurationController : PlatformController {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App configuration deleted successfully");
-          
+
         res.writeJsonBody(resp, 204);
       } else {
         writeError(res, 400, result.error);

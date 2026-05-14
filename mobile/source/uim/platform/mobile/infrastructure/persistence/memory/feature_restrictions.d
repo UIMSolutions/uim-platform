@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.feature_restriction;
 
-import uim.platform.mobile.domain.entities.feature_restriction;
-import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.entities.feature_restriction;
+// import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
+// import uim.platform.mobile.domain.types;
 
 import uim.platform.mobile;
 
@@ -17,36 +17,36 @@ mixin(Showmodule!());
 
 class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,FeatureRestrictionId), FeatureRestrictionRepository {
 
-  bool existsByKey(MobileAppId appId, string featureKey) {
-    return findByApp(appId).any!(r => r.featureKey == featureKey);
+  bool existsByKey(TenantId tenantId, MobileAppId appId, string featureKey) {
+    return findByApp(tenantId, appId).any!(r => r.featureKey == featureKey);
   }
-  FeatureRestriction findByKey(MobileAppId appId, string featureKey) {
-    foreach (r; findByApp(appId)) {
+  FeatureRestriction findByKey(TenantId tenantId, MobileAppId appId, string featureKey) {
+    foreach (r; findByApp(tenantId, appId)) {
       if (r.featureKey == featureKey)
         return r;
     }
     return FeatureRestriction.init;
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  FeatureRestriction[] findByApp(MobileAppId appId) {
+  FeatureRestriction[] findByApp(TenantId tenantId, MobileAppId appId) {
     return findAll().filter!(r => r.appId == appId).array;
   }
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(r => remove(r));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(r => remove(r));
   }
 
-  size_t countEnabled(MobileAppId appId) {
-    return findEnabled(appId).length;
+  size_t countEnabled(TenantId tenantId, MobileAppId appId) {
+    return findEnabled(tenantId, appId).length;
   }
-  FeatureRestriction[] findEnabled(MobileAppId appId) {
-    return findByApp(appId).filter!(r => r.enabled).array;
+  FeatureRestriction[] findEnabled(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).filter!(r => r.enabled).array;
   }
-  void removeEnabled(MobileAppId appId) {
-    findEnabled(appId).each!(r => remove(r));
+  void removeEnabled(TenantId tenantId, MobileAppId appId) {
+    findEnabled(tenantId, appId).each!(r => remove(r));
   }
 
 }

@@ -17,44 +17,43 @@ mixin(Showmodule!());
 
 class MemoryAppConfigurationRepository : TenantRepository!(AppConfiguration, AppConfigurationId), AppConfigurationRepository {
   
-  bool existsByKey(MobileAppId appId, string key) {
-    return findByApp(appId).any!(c => c.key == key);
+  bool existsByKey(TenantId tenantId, MobileAppId appId, string key) {
+    return findByApp(tenantId, appId).any!(c => c.key == key);
   }
 
-  AppConfiguration findByKey(MobileAppId appId, string key) {
-    foreach (c; findByApp(appId)) {
+  AppConfiguration findByKey(TenantId tenantId, MobileAppId appId, string key) {
+    foreach (c; findByApp(tenantId, appId)) {
       if (c.key == key)
         return c;
     }
     return AppConfiguration.init;
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  AppConfiguration[] filterByApp(AppConfiguration[] configs, MobileAppId appId) {
-    return configs.filter!(c => c.appId == appId).array;
-  }
-  AppConfiguration[] findByApp(MobileAppId appId) {
-    return filterByApp(findAll().array, appId);
+  AppConfiguration[] findByApp(TenantId tenantId, MobileAppId appId) {
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(c => remove(c));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(c => remove(c));
   }
 
-  size_t countByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
-    return findByAppAndPlatform(appId, platform).length;
+  // #region ByAppAndPlatform
+  size_t countByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
+    return findByAppAndPlatform(tenantId, appId, platform).length;
   }
   AppConfiguration[] filterByAppAndPlatform(AppConfiguration[] configs, MobileAppId appId, AppPlatform platform) {
-    return configs.filter!(c => c.appId == appId && c.platform == platform).array;
+    return filterByApp(configs, appId).filter!(c => c.platform == platform).array;
   }
-  AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
-    return filterByAppAndPlatform(findByApp(appId), appId, platform);
+  AppConfiguration[] findByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
+    return filterByAppAndPlatform(findByApp(tenantId, appId), appId, platform);
   }
-  void removeByAppAndPlatform(MobileAppId appId, AppPlatform platform) {
-    findByAppAndPlatform(appId, platform).each!(c => remove(c));
+  void removeByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
+    findByAppAndPlatform(tenantId, appId, platform).each!(c => remove(c));
   }
+  // #endregion ByAppAndPlatform
 
 }

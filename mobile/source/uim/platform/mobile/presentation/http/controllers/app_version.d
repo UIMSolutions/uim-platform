@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.app_version;
 
-import uim.platform.mobile.application.usecases.manage.app_versions;
-import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http
+// import uim.platform.mobile.application.usecases.manage.app_versions;
+// import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.presentation.http
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class AppVersionController : PlatformController {
   private ManageAppVersionsUseCase usecase;

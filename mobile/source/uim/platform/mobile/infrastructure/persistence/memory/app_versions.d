@@ -17,10 +17,10 @@ mixin(Showmodule!());
 
 class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
-  AppVersion findLatest(MobileAppId appId, AppPlatform platform) {
+  AppVersion findLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     AppVersion latest = AppVersion.init;
     bool found = false;
-    foreach (v; findAll) {
+    foreach (v; findByTenant(tenantId)) {
       if (v.appId == appId && v.platform == platform) {
         if (!found || v.publishedAt > latest.publishedAt) {
           latest = v;
@@ -31,33 +31,33 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
     return latest;
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
   AppVersion[] filterByApp(AppVersion[] versions, MobileAppId appId) {
     return versions.filter!(v => v.appId == appId).array;
   }
 
-  AppVersion[] findByApp(MobileAppId appId) {
-    return filterByApp(findAll(), appId);
+  AppVersion[] findByApp(TenantId tenantId, MobileAppId appId) {
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(v => remove(v));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(v => remove(v));
   }
 
-  size_t countByStatus(MobileAppId appId, VersionStatus status) {
-    return findByStatus(appId, status).length;
+  size_t countByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status) {
+    return findByStatus(tenantId, appId, status).length;
   }
   AppVersion[] filterByStatus(AppVersion[] versions, VersionStatus status) {
     return versions.filter!(v => v.status == status).array;
   }
-  AppVersion[] findByStatus(MobileAppId appId, VersionStatus status) {
-    return filterByStatus(findByApp(appId), status);
+  AppVersion[] findByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status) {
+    return filterByStatus(findByApp(tenantId, appId), status);
   }
-  void removeByStatus(MobileAppId appId, VersionStatus status) {
-    findByStatus(appId, status).each!(v => remove(v));
+  void removeByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status) {
+    findByStatus(tenantId, appId, status).each!(v => remove(v));
   }
 
 }

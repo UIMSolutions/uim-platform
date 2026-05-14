@@ -9,4 +9,5 @@ public {
   import uim.platform.mobile.infrastructure.config;
   import uim.platform.mobile.infrastructure.container;
   import uim.platform.mobile.infrastructure.persistence;
+  import uim.platform.mobile.infrastructure.helpers;
 }

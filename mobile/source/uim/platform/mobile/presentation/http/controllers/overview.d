@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.overview;
 
-import uim.platform.mobile.application.usecases.get_overview;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.get_overview;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class OverviewController : PlatformController {
   private GetOverviewUseCase usecase;

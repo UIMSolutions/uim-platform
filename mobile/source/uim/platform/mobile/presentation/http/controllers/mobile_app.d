@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.mobile_app;
 
-import uim.platform.mobile.application.usecases.manage.mobile_apps;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.mobile_apps;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class MobileAppController : PlatformController {
   private ManageMobileAppsUseCase usecase;

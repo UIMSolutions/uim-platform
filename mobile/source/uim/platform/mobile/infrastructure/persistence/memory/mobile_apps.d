@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.mobile_app;
 
-import uim.platform.mobile.domain.entities.mobile_app;
-import uim.platform.mobile.domain.ports.repositories.mobile_apps;
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.entities.mobile_app;
+// import uim.platform.mobile.domain.ports.repositories.mobile_apps;
+// import uim.platform.mobile.domain.types;
 
 import uim.platform.mobile;
 
@@ -18,10 +18,10 @@ mixin(Showmodule!());
 class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
 
-  bool existsByBundleId(string bundleId) {
-    return findByBundleId(bundleId).id != MobileAppId.init;
+  bool existsByBundleId(TenantId tenantId, string bundleId) {
+    return findByBundleId(tenantId, bundleId).id != MobileAppId.init;
   }
-  MobileApp findByBundleId(string bundleId) {
+  MobileApp findByBundleId(TenantId tenantId, string bundleId) {
     foreach (a; findAll) {
       if (a.bundleId == bundleId)
         return a;
@@ -39,19 +39,4 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     return filterByPlatform(findByTenant(tenantId), platform);
   }
 
-  void save(MobileApp app) {
-    store[app.id] = app;
-  }
-
-  void update(MobileApp app) {
-    store[app.id] = app;
-  }
-
-  void remove(MobileAppId id) {
-    removeById(id);
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
-  }
 }

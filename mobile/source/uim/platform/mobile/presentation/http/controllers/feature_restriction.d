@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.feature_restriction;
 
-import uim.platform.mobile.application.usecases.manage.feature_restrictions;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.feature_restrictions;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class FeatureRestrictionController : PlatformController {
   private ManageFeatureRestrictionsUseCase usecase;

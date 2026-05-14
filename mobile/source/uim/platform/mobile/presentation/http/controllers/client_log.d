@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.client_log;
 
-import uim.platform.mobile.application.usecases.manage.client_logs;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.client_logs;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
+
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
-
+@safe:
 class ClientLogController : PlatformController {
   private ManageClientLogsUseCase usecase;
 

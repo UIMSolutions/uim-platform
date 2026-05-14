@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.user_session;
 
-import uim.platform.mobile.domain.entities.user_session;
-import uim.platform.mobile.domain.ports.repositories.user_sessions;
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.entities.user_session;
+// import uim.platform.mobile.domain.ports.repositories.user_sessions;
+// import uim.platform.mobile.domain.types;
 
 import uim.platform.mobile;
 
@@ -17,44 +17,47 @@ mixin(Showmodule!());
 
 class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId), UserSessionRepository {
   
-  size_t countByUser(UserId userId) {
-    return findByUser(userId).length;
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
   }
-  UserSession[] findByUser(UserId userId) {
-    return findAll().filter!(s => s.userId == userId).array;
+  UserSession[] findByUser(TenantId tenantId, UserId userId) {
+    return findAll().filter!(s => s.tenantId == tenantId && s.userId == userId).array;
   }
-  void removeByUser(UserId userId) {
-    findByUser(userId).each!(s => store.remove(s));
-  }
-
-  size_t countByDevice(DeviceRegistrationId deviceId) {
-    return findByDevice(deviceId).length;
-  }
-  UserSession[] findByDevice(DeviceRegistrationId deviceId) {
-    return findAll().filter!(s => s.deviceId == deviceId).array;
-  }
-  void removeByDevice(DeviceRegistrationId deviceId) {
-    findByDevice(deviceId).each!(s => store.remove(s));
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(s => store.remove(s));
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
+    return findByDevice(tenantId, deviceId).length;
   }
-  UserSession[] findByApp(MobileAppId appId) {
-    return findAll().filter!(s => s.appId == appId).array;
+  UserSession[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
+    return findAll().filter!(s => s.tenantId == tenantId && s.deviceId == deviceId).array;
   }
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(s => store.remove(s));
+  void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
+    findByDevice(tenantId, deviceId).each!(s => store.remove(s));
   }
 
-  size_t countActive(MobileAppId appId) {
-    return findActive(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
-  UserSession[] findActive(MobileAppId appId) {
-    return findAll().filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
+  UserSession[] findByApp(TenantId tenantId, MobileAppId appId) {
+    return findAll().filter!(s => s.tenantId == tenantId && s.appId == appId).array;
   }
-  void removeActive(MobileAppId appId) {
-    findActive(appId).each!(s => store.remove(s));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(s => store.remove(s));
+  }
+
+  size_t countActive(TenantId tenantId, MobileAppId appId) {
+    return findActive(tenantId, appId).length;
+  }
+  UserSession[] filterActive(UserSession[] sessions, MobileAppId appId) {
+    return sessions.filter!(s => s.appId == appId && s.status == SessionStatus.active).array;
+  }
+  UserSession[] findActive(TenantId tenantId, MobileAppId appId) {
+    return filterActive(findByApp(tenantId, appId), appId);
+  }
+  void removeActive(TenantId tenantId, MobileAppId appId) {
+    findActive(tenantId, appId).each!(s => store.remove(s));
   }
 
 }

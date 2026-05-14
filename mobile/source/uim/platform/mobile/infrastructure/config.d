@@ -7,7 +7,11 @@ module uim.platform.mobile.infrastructure.config;
 
 import std.process : environment;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8096;

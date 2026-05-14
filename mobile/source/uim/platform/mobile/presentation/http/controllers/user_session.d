@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.user_session;
 
-import uim.platform.mobile.application.usecases.manage.user_sessions;
-import uim.platform.mobile.application.dto;
-import uim.platform.mobile.presentation.http
+// import uim.platform.mobile.application.usecases.manage.user_sessions;
+// import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.presentation.http
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class UserSessionController : PlatformController {
   private ManageUserSessionsUseCase usecase;

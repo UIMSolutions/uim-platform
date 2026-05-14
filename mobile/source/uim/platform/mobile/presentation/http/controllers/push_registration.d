@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.push_registration;
 
-import uim.platform.mobile.application.usecases.manage.push_registrations;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.push_registrations;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class PushRegistrationController : PlatformController {
   private ManagePushRegistrationsUseCase usecase;

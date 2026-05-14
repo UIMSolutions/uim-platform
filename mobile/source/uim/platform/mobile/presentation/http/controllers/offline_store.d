@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.offline_store;
 
-import uim.platform.mobile.application.usecases.manage.offline_stores;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.offline_stores;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class OfflineStoreController : PlatformController {
   private ManageOfflineStoresUseCase usecase;

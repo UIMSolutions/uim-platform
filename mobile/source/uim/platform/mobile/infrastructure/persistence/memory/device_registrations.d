@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.device_registration;
 
-import uim.platform.mobile.domain.entities.device_registration;
-import uim.platform.mobile.domain.ports.repositories.device_registrations;
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.entities.device_registration;
+// import uim.platform.mobile.domain.ports.repositories.device_registrations;
+// import uim.platform.mobile.domain.types;
 
 import uim.platform.mobile;
 
@@ -17,11 +17,11 @@ mixin(Showmodule!());
 
 class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration, DeviceRegistrationId), DeviceRegistrationRepository {
 
-  bool existsByDeviceToken(string deviceToken) {
+  bool existsByDeviceToken(TenantId tenantId, string deviceToken) {
     return store.any!(r => r.deviceToken == deviceToken);
   }
 
-  DeviceRegistration findByDeviceToken(string deviceToken) {
+  DeviceRegistration findByDeviceToken(TenantId tenantId, string deviceToken) {
     foreach (r; findAll) {
       if (r.deviceToken == deviceToken)
         return r;
@@ -29,30 +29,30 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     return DeviceRegistration.init;
   }
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
   DeviceRegistration[] filterByApp(DeviceRegistration[] registrations, MobileAppId appId) {
     return registrations.filter!(r => r.appId == appId).array;
   }
-  DeviceRegistration[] findByApp(MobileAppId appId) {
+  DeviceRegistration[] findByApp(TenantId tenantId, MobileAppId appId) {
     return findAll().filter!(r => r.appId == appId).array;
   }
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(r => remove(r));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(r => remove(r));
   }
 
-  size_t countByUser(UserId userId) {
-    return findByUser(userId).length;
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
   }
   DeviceRegistration[] filterByUser(DeviceRegistration[] registrations, UserId userId) {
     return registrations.filter!(r => r.userId == userId).array;
   }
-  DeviceRegistration[] findByUser(UserId userId) {
+  DeviceRegistration[] findByUser(TenantId tenantId, UserId userId) {
     return findAll().filter!(r => r.userId == userId).array;
   }
-  void removeByUser(UserId userId) {
-    findByUser(userId).each!(r => remove(r));
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(r => remove(r));
   }
 
 }

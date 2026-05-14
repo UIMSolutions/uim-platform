@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.usage_report;
 
-import uim.platform.mobile.application.usecases.manage.usage_reports;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.usage_reports;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 class UsageReportController : PlatformController {
   private ManageUsageReportsUseCase usecase;

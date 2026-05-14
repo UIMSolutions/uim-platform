@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.push_notification;
 
-import uim.platform.mobile.application.usecases.manage.push_notifications;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.application.usecases.manage.push_notifications;
+// import uim.platform.mobile.application.dto;
+
+// import uim.platform.mobile;
+
 
 import uim.platform.mobile;
 
+mixin(Showmodule!());
 
-
+@safe:
 class PushNotificationController : PlatformController {
   private ManagePushNotificationsUseCase usecase;
 

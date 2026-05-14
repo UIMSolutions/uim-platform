@@ -17,42 +17,45 @@ mixin(Showmodule!());
 
 class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientResourceId), ClientResourceRepository {
   
-  bool existsByName(MobileAppId appId, string name) {
-    return findAll()().any!(r => r.appId == appId && r.name == name);
+  bool existsByName(TenantId tenantId, MobileAppId appId, string name) {
+    return findByTenant(tenantId).any!(r => r.appId == appId && r.name == name);
   }
 
-  ClientResource findByName(MobileAppId appId, string name) {
-      foreach (r; findAll()) {
+  ClientResource findByName(TenantId tenantId, MobileAppId appId, string name) {
+      foreach (r; findByTenant(tenantId)) {
         if (r.appId == appId && r.name == name)
         return r;
     }
     return ClientResource.init;
   }
+  void removeByName(TenantId tenantId, MobileAppId appId, string name) {
+    remove(findByName(tenantId, appId, name));
+  }
 
-  size_t count() {
-    return findAll()().values.length;
+  size_t count(TenantId tenantId) {
+    return findByTenant(tenantId).values.length;
   }
   ClientResource[] filterByApp(ClientResource[] resources, MobileAppId appId)  {
     return resources.filter!(r => r.appId == appId).array;
   }
-  ClientResource[] findByApp(MobileAppId appId) {
-    return filterByApp(findAll()().values.array, appId);
+  ClientResource[] findByApp(TenantId tenantId, MobileAppId appId) {
+    return filterByApp(findByTenant(tenantId).values.array, appId);
   }
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(r => remove(r));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(r => remove(r));
   }
 
-  size_t countByType(MobileAppId appId, ClientResourceType type) {
-    return findByType(appId, type).length;
+  size_t countByType(TenantId tenantId, MobileAppId appId, ClientResourceType type) {
+    return findByType(tenantId, appId, type).length;
   }
   ClientResource[] filterByType(ClientResource[] resources, ClientResourceType type) {
     return resources.filter!(r => r.type == type).array;
   }
-  ClientResource[] findByType(MobileAppId appId, ClientResourceType type) {
-    return filterByType(findByApp(appId), type);
+  ClientResource[] findByType(TenantId tenantId, MobileAppId appId, ClientResourceType type) {
+    return filterByType(findByApp(tenantId, appId), type);
   }
-  void removeByType(MobileAppId appId, ClientResourceType type) {
-    findByType(appId, type).each!(r => remove(r));
+  void removeByType(TenantId tenantId, MobileAppId appId, ClientResourceType type) {
+    findByType(tenantId, appId, type).each!(r => remove(r));
   }
 
 }

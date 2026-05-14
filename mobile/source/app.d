@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.mobile.infrastructure.config;
-import uim.platform.mobile.infrastructure.container;
+// import uim.platform.mobile.infrastructure.config;
+// import uim.platform.mobile.infrastructure.container;
+
+import uim.platform.mobile;
+
+mixin(Showmodule!());
 
 @safe:
 
