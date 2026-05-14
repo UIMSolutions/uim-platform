@@ -18,26 +18,23 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         this.configurations = configurations;
     }
 
-    RunConfiguration getById(RunConfigurationId id) {
+    RunConfiguration getRunConfiguration(RunConfigurationId id) {
         return configurations.findById(tenantId, id);
     }
 
-    RunConfiguration[] list() {
-        return configurations.findAll();
-    }
-
-    RunConfiguration[] listByTenant(TenantId tenantId) {
+    RunConfiguration[] listRunConfigurations(TenantId tenantId) {
         return configurations.findByTenant(tenantId);
     }
 
-    RunConfiguration[] listByProject(ProjectId projectId) {
-        return configurations.findByProject(projectId);
+    RunConfiguration[] listRunConfigurations(TenantId tenantId, ProjectId projectId) {
+        return configurations.findByProject(tenantId, projectId);
     }
 
-    CommandResult create(RunConfigurationDTO dto) {
+    CommandResult createRunConfiguration(RunConfigurationDTO dto) {
         RunConfiguration e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+
         e.id = RunConfigurationId(dto.id);
-        e.tenantId = dto.tenantId;
         e.projectId = ProjectId(dto.projectId);
         e.name = dto.name;
         e.description = dto.description;
@@ -46,14 +43,14 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         e.environmentVars = dto.environmentVars;
         e.port = dto.port;
         e.debugPort = dto.debugPort;
-        e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidRunConfiguration(e))
             return CommandResult(false, "", "Invalid run configuration data");
+
         configurations.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(RunConfigurationDTO dto) {
+    CommandResult updateRunConfiguration(RunConfigurationDTO dto) {
         auto existing = configurations.findById(RunConfigurationId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Run configuration not found");

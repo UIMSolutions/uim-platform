@@ -9,6 +9,7 @@ struct CreateCommunicationArrangementRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   CommunicationScenarioId scenarioId;
+  
   string name;
   string description;
   string direction; // "inbound", "outbound"

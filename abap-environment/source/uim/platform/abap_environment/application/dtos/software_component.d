@@ -9,6 +9,7 @@ mixin(ShowModule!());
 struct CreateSoftwareComponentRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
+
   string name;
   string description;
   string componentType; // "developmentPackage", "businessConfiguration", ...
@@ -32,21 +33,25 @@ struct CreateSoftwareComponentRequest {
 }
 
 struct CloneSoftwareComponentRequest {
+  TenantId tenantId;
   string branch;
   string commitId;
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
       .set("branch", branch)
       .set("commitId", commitId);
   }
 }
 
 struct PullSoftwareComponentRequest {
+  TenantId tenantId;
   string commitId;
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
       .set("commitId", commitId);
   }
 }

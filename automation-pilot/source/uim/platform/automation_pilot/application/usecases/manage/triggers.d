@@ -18,7 +18,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Trigger getById(TriggerId id) {
+    Trigger getTrigger(TenantId tenantId, TriggerId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -30,14 +30,15 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    Trigger[] listByCommand(CommandId commandId) {
-        return repo.findByCommand(commandId);
+    Trigger[] listByCommand(TenantId tenantId, CommandId commandId) {
+        return repo.findByCommand(tenantId, commandId);
     }
 
-    CommandResult create(TriggerDTO dto) {
+    CommandResult createTrigger(TriggerDTO dto) {
         Trigger t;
+        t.initEntity(dto.tenantId, dto.createdBy);
+
         t.id = TriggerId(dto.id);
-        t.tenantId = dto.tenantId;
         t.commandId = CommandId(dto.commandId);
         t.name = dto.name;
         t.description = dto.description;
@@ -45,17 +46,18 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         t.eventSource = dto.eventSource;
         t.filterExpression = dto.filterExpression;
         t.inputMapping = dto.inputMapping;
-        t.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidTrigger(t))
             return CommandResult(false, "", "Invalid trigger data");
+
         repo.save(t);
         return CommandResult(true, t.id.value, "");
     }
 
-    CommandResult update(TriggerDTO dto) {
-        if (!repo.existsById(TriggerId(dto.id)))
+    CommandResult updateTrigger(TriggerDTO dto) {
+        if (!repo.existsById(dto.tenantId, TriggerId(dto.id)))
             return CommandResult(false, "", "Trigger not found");
-        auto existing = repo.findById(TriggerId(dto.id));
+
+        auto existing = repo.findById(dto.tenantId, TriggerId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.eventType.length > 0) existing.eventType = dto.eventType;
@@ -66,7 +68,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTrigger(TriggerId id) {
+    CommandResult deleteTrigger(TenantId tenantId, TriggerId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Trigger not found");

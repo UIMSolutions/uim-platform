@@ -9,6 +9,7 @@ mixin(ShowModule!());
 struct CreateBusinessUserRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
+  
   string username;
   string firstName;
   string lastName;

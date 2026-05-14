@@ -18,23 +18,19 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         this.serviceBindings = serviceBindings;
     }
 
-    ServiceBinding getById(ServiceBindingId id) {
+    ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
         return serviceBindings.findById(tenantId, id);
     }
 
-    ServiceBinding[] list() {
-        return serviceBindings.findAll();
-    }
-
-    ServiceBinding[] listByTenant(TenantId tenantId) {
+    ServiceBinding[] listServiceBindings(TenantId tenantId) {
         return serviceBindings.findByTenant(tenantId);
     }
 
-    ServiceBinding[] listByDevSpace(DevSpaceId devSpaceId) {
-        return serviceBindings.findByDevSpace(devSpaceId);
+    ServiceBinding[] listServiceBindings(TenantId tenantId, DevSpaceId devSpaceId) {
+        return serviceBindings.findByDevSpace(tenantId, devSpaceId);
     }
 
-    CommandResult create(ServiceBindingDTO dto) {
+    CommandResult createServiceBinding(ServiceBindingDTO dto) {
         ServiceBinding e;
         e.id = ServiceBindingId(dto.id);
         e.tenantId = dto.tenantId;
@@ -53,8 +49,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(ServiceBindingDTO dto) {
-        auto existing = serviceBindings.findById(ServiceBindingId(dto.id));
+    CommandResult updateServiceBinding(ServiceBindingDTO dto) {
+        auto existing = serviceBindings.findById(TenantId(dto.tenantId), ServiceBindingId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Service binding not found");
 
@@ -71,7 +67,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult deleteServiceBinding(ServiceBindingId id) {
+    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
         auto binding = serviceBindings.findById(tenantId, id);
         if (binding.isNull)
             return CommandResult(false, "", "Service binding not found");

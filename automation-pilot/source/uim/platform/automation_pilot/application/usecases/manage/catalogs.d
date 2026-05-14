@@ -18,7 +18,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Catalog getById(CatalogId id) {
+    Catalog getCatalog(TenantId tenantId, CatalogId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -30,7 +30,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult create(CatalogDTO dto) {
+    CommandResult createCatalog(CatalogDTO dto) {
         Catalog c;
         c.initEntity(dto.tenantId, dto.createdBy);
         c.id = CatalogId(dto.id);
@@ -45,7 +45,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(CatalogDTO dto) {
+    CommandResult updateCatalog(CatalogDTO dto) {
         auto existing = repo.findById(CatalogId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Catalog not found");
@@ -59,7 +59,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCatalog(CatalogId id) {
+    CommandResult deleteCatalog(TenantId tenantId, CatalogId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Catalog not found");

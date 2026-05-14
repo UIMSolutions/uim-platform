@@ -30,7 +30,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         return repo.findByOwner(tenantId, owner);
     }
 
-    CommandResult create(ApplicationDTO dto) {
+    CommandResult createApplication(ApplicationDTO dto) {
         Application e;
         e.initEntity(dto.tenantId, dto.createdBy);
         e.id = ApplicationId(dto.id);

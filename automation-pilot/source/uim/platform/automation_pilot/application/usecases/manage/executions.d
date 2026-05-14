@@ -18,42 +18,39 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Execution getById(ExecutionId id) {
+    Execution getExecution(ExecutionId id) {
         return repo.findById(tenantId, id);
     }
 
-    Execution[] list() {
-        return repo.findAll();
-    }
-
-    Execution[] listByTenant(TenantId tenantId) {
+    Execution[] listExecutions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Execution[] listByCommand(CommandId commandId) {
-        return repo.findByCommand(commandId);
+    Execution[] listExecutions(TenantId tenantId, CommandId commandId) {
+        return repo.findByCommand(tenantId, commandId);
     }
 
-    Execution[] listByStatus(ExecutionStatus status) {
-        return repo.findByStatus(status);
+    Execution[] listExecutions(TenantId tenantId, ExecutionStatus status) {
+        return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult create(ExecutionDTO dto) {
+    CommandResult createExecution(ExecutionDTO dto) {
         Execution e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+
         e.id = ExecutionId(dto.id);
-        e.tenantId = dto.tenantId;
         e.commandId = CommandId(dto.commandId);
         e.inputValues = dto.inputValues;
         e.triggeredBy = dto.triggeredBy;
-        e.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidExecution(e))
             return CommandResult(false, "", "Invalid execution data");
+
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
     CommandResult updateExecution(ExecutionDTO dto) {
-        auto existing = repo.findById(ExecutionId(dto.id));
+        auto existing = repo.findById(dto.tenantId, ExecutionId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Execution not found");
 

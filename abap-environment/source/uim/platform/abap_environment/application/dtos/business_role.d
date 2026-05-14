@@ -9,6 +9,7 @@ mixin(ShowModule!());
 struct CreateBusinessRoleRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
+  
   string name;
   string description;
   string roleType; // "unrestricted", "restricted", "custom"

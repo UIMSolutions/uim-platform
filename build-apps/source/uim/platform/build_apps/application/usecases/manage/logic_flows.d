@@ -18,27 +18,23 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    LogicFlow getById(LogicFlowId id) {
+    LogicFlow getLogicFlow(TenantId tenantId, LogicFlowId id) {
         return repo.findById(tenantId, id);
     }
 
-    LogicFlow[] list() {
-        return repo.findAll();
-    }
-
-    LogicFlow[] listByTenant(TenantId tenantId) {
+    LogicFlow[] listLogicFlows(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    LogicFlow[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    LogicFlow[] listLogicFlows(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     LogicFlow[] listByPage(PageId pageId) {
         return repo.findByPage(pageId);
     }
 
-    CommandResult create(LogicFlowDTO dto) {
+    CommandResult createLogicFlow(LogicFlowDTO dto) {
         LogicFlow e;
         e.id = LogicFlowId(dto.id);
         e.tenantId = dto.tenantId;
@@ -58,7 +54,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(LogicFlowDTO dto) {
+    CommandResult updateLogicFlow(LogicFlowDTO dto) {
         if (!repo.existsById(LogicFlowId(dto.id)))
             return CommandResult(false, "", "Logic flow not found");
         auto existing = repo.findById(LogicFlowId(dto.id));

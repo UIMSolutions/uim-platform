@@ -13,21 +13,19 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Label[] listByTenant(TenantId tenantId) {
+    Label[] listLabels(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Label getById(TenantId tenantId, LabelId id) {
+    Label getLabel(TenantId tenantId, LabelId id) {
         return repo.findById(tenantId, id);
     }
 
-    Label[] listByResource(TenantId tenantId, string resourceType, string resourceId) {
+    Label[] listLabels(TenantId tenantId, string resourceType, string resourceId) {
         return repo.findByResource(tenantId, resourceType, resourceId);
     }
 
-    CommandResult create(TenantId tenantId, CreateLabelRequest dto) {
-        
-
+    CommandResult createLabel(TenantId tenantId, CreateLabelRequest dto) {
         Label e;
         e.id = LabelId(MonoTime.currTime.ticks.to!string);
         e.tenantId = tenantId;
@@ -44,16 +42,18 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, LabelId id, UpdateLabelRequest dto) {
-        auto existing = repo.findById(tenantId, id);
+    CommandResult updateLabel(UpdateLabelRequest dto) {
+        auto existing = repo.findById(dto.tenantId, LabelId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Label not found");
 
-        if (dto.key.length > 0) existing.key = dto.key;
-        if (dto.value.length > 0) existing.value = dto.value;
+        if (dto.key.length > 0)
+            existing.key = dto.key;
+        if (dto.value.length > 0)
+            existing.value = dto.value;
 
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteLabel(TenantId tenantId, LabelId id) {

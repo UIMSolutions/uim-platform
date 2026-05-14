@@ -18,26 +18,23 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ScheduledExecution getById(ScheduledExecutionId id) {
+    ScheduledExecution getScheduledExecution(TenantId tenantId, ScheduledExecutionId id) {
         return repo.findById(tenantId, id);
     }
 
-    ScheduledExecution[] list() {
-        return repo.findAll();
-    }
-
-    ScheduledExecution[] listByTenant(TenantId tenantId) {
+    ScheduledExecution[] listScheduledExecutions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ScheduledExecution[] listByCommand(CommandId commandId) {
-        return repo.findByCommand(commandId);
+    ScheduledExecution[] listScheduledExecutions(TenantId tenantId, CommandId commandId) {
+        return repo.findByCommand(tenantId, commandId);
     }
 
-    CommandResult create(ScheduledExecutionDTO dto) {
+    CommandResult createScheduledExecution(ScheduledExecutionDTO dto) {
         ScheduledExecution se;
+        se.initEntity(dto.tenantId, dto.createdBy);
+
         se.id = ScheduledExecutionId(dto.id);
-        se.tenantId = dto.tenantId;
         se.commandId = CommandId(dto.commandId);
         se.cronExpression = dto.cronExpression;
         se.scheduledAt = dto.scheduledAt;
@@ -45,15 +42,15 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         se.description = dto.description;
         se.maxRetries = dto.maxRetries;
         se.retryDelay = dto.retryDelay;
-        se.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidScheduledExecution(se))
             return CommandResult(false, "", "Invalid scheduled execution data");
+            
         repo.save(se);
         return CommandResult(true, dto.id.value, "");
     }
 
     CommandResult updateScheduledExecution(ScheduledExecutionDTO dto) {
-        auto existing = repo.findById(ScheduledExecutionId(dto.id));
+        auto existing = repo.findById(dto.tenantId, ScheduledExecutionId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Scheduled execution not found");
 

@@ -65,10 +65,6 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  CommandResult cloneComponent(string id, CloneSoftwareComponentRequest req) {
-    return cloneComponent(SoftwareComponentId(id), req);
-  }
-
   CommandResult cloneComponent(CloneSoftwareComponentRequest req) {
     auto comp = repo.findById(req.tenantId, req.id);
     if (comp.isNull)
@@ -134,8 +130,8 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  SoftwareComponent[] listComponents(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+  SoftwareComponent[] listComponents(TenantId tenantId, SystemInstanceId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
   CommandResult deleteComponent(TenantId tenantId, SoftwareComponentId id) {

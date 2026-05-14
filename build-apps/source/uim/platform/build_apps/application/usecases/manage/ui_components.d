@@ -18,19 +18,15 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UIComponent getById(UIComponentId id) {
+    UIComponent getUIComponent(TenantId tenantId, UIComponentId id) {
         return repo.findById(tenantId, id);
     }
 
-    UIComponent[] list() {
-        return repo.findAll();
-    }
-
-    UIComponent[] listByTenant(TenantId tenantId) {
+    UIComponent[] listUIComponents(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult create(UIComponentDTO dto) {
+    CommandResult createUIComponent(UIComponentDTO dto) {
         UIComponent e;
         e.id = UIComponentId(dto.id);
         e.tenantId = dto.tenantId;
@@ -51,8 +47,8 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(UIComponentDTO dto) {
-        if (!repo.existsById(UIComponentId(dto.id)))
+    CommandResult updateUIComponent(UIComponentDTO dto) {
+        if (!repo.existsById(tenantId, UIComponentId(dto.id)))
             return CommandResult(false, "", "UI component not found");
         auto existing = repo.findById(UIComponentId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
@@ -63,7 +59,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult deleteUIComponent(UIComponentId id) {
+    CommandResult deleteUIComponent(TenantId tenantId, UIComponentId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "UI component not found");

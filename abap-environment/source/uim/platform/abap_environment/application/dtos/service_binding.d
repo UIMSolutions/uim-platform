@@ -10,6 +10,7 @@ struct CreateServiceBindingRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   ServiceDefinitionId serviceDefinitionId;
+  
   string name;
   string description;
   string bindingType; // "odataV2", "odataV4", ...

@@ -13,20 +13,19 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceBinding[] listByTenant(TenantId tenantId) {
+    ServiceBinding[] listServiceBindings(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceBinding getById(TenantId tenantId, ServiceBindingId id) {
+    ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateServiceBindingRequest dto) {
-        
+    CommandResult createServiceBinding(CreateServiceBindingRequest dto) {
 
         ServiceBinding e;
         e.id = ServiceBindingId(MonoTime.currTime.ticks.to!string);
-        e.tenantId = tenantId;
+        e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.instanceId = ServiceInstanceId(dto.instanceId);
         e.parameters = dto.parameters;
@@ -46,7 +45,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest dto) {
+    CommandResult updateServiceBinding(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest dto) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Service binding not found");

@@ -18,22 +18,19 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         this.extensions = extensions;
     }
 
-    Extension getById(ExtensionId id) {
+    Extension getExtension(TenantId tenantId, ExtensionId id) {
         return extensions.findById(tenantId, id);
     }
 
-    Extension[] list() {
-        return extensions.findAll();
-    }
-
-    Extension[] listByTenant(TenantId tenantId) {
+    Extension[] listExtensions(TenantId tenantId) {
         return extensions.findByTenant(tenantId);
     }
 
-    CommandResult create(ExtensionDTO dto) {
+    CommandResult createExtension(ExtensionDTO dto) {
         Extension e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+        
         e.id = ExtensionId(dto.id);
-        e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
@@ -42,16 +39,16 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         e.dependencies = dto.dependencies;
         e.capabilities = dto.capabilities;
         e.iconUrl = dto.iconUrl;
-        e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidExtension(e))
             return CommandResult(false, "", "Invalid extension data");
+
         extensions.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ExtensionDTO dto) {
-        auto existing = extensions.findById(ExtensionId(dto.id));
-        if (extension.isNull)
+    CommandResult updateExtension(ExtensionDTO dto) {
+        auto existing = extensions.findById(dto.tenantId, ExtensionId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Extension not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
@@ -59,10 +56,10 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         extensions.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteExtension(ExtensionId id) {
+    CommandResult deleteExtension(TenantId tenantId, ExtensionId id) {
         auto extension = extensions.findById(tenantId, id);
         if (extension.isNull)
             return CommandResult(false, "", "Extension not found");
