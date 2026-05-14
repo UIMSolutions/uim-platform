@@ -82,7 +82,7 @@ class PasswordPolicyController : PlatformController {
     }
   }
 
-  protected void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policy = useCase.getActivePolicy(tenantId);

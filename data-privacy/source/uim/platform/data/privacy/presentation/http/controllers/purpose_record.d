@@ -93,7 +93,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       DeactivatePurposeRecordRequest r;

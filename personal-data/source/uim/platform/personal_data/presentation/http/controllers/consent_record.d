@@ -101,7 +101,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    protected void handleGetWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
             auto path = req.requestURI.to!string;

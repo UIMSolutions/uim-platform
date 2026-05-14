@@ -64,8 +64,8 @@ class CredentialController : PlatformController {
     handleListCredentials(req, res, "key");
   }
 
-  protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    handleGetCredential(req, res);
+  protected void handleKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    handleCredential(req, res);
   }
 
   protected void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -138,7 +138,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCredential(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

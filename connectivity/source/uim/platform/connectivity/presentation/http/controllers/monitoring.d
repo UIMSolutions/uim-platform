@@ -60,7 +60,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);
@@ -78,5 +78,4 @@ class MonitoringController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }

@@ -98,7 +98,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleGetAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.presentation.http.controllers.destination;
 
-
-
-
-
-
 // import uim.platform.connectivity.application.usecases.manage.destinations;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.destination;
@@ -18,7 +13,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class DestinationController : PlatformController {
+class DestinationController : ManageController {
   private ManageDestinationsUseCase usecase;
 
   this(ManageDestinationsUseCase usecase) {
@@ -35,189 +30,140 @@ class DestinationController : PlatformController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CreateDestinationRequest();
-      r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.url = j.getString("url");
-      r.destinationType = j.getString("type");
-      r.authType = j.getString("authentication");
-      r.proxyType = j.getString("proxyType");
-      r.user = j.getString("user");
-      r.password = j.getString("password");
-      r.clientId = j.getString("clientId");
-      r.clientSecret = j.getString("clientSecret");
-      r.tokenServiceUrl = j.getString("tokenServiceURL");
-      r.tokenServiceUser = j.getString("tokenServiceUser");
-      r.tokenServicePassword = j.getString("tokenServicePassword");
-      r.certificateId = j.getString("certificateId");
-      r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
-      r.properties = parseProperties(j);
-      r.additionalHeaders = parseHeaders(j);
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
 
-      auto result = usecase.createDestination(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Destination created");
+    auto dests = usecase.listDestinations(tenantId);
+    auto arr = dests.map!(d => d.toJson).array.toJson;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(dests.length))
+      .set("message", "Destinations retrieved successfully")
+      .set("statusCode", 200);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      
-      auto dests = usecase.listDestinations(tenantId);
-      auto arr = dests.map!(d => d.toJson).array.toJson;
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
+    auto r = CreateDestinationRequest();
+    r.tenantId = tenantId;
+    r.name = j.getString("name");
+    r.description = j.getString("description");
+    r.url = j.getString("url");
+    r.destinationType = j.getString("type");
+    r.authType = j.getString("authentication");
+    r.proxyType = j.getString("proxyType");
+    r.user = j.getString("user");
+    r.password = j.getString("password");
+    r.clientId = j.getString("clientId");
+    r.clientSecret = j.getString("clientSecret");
+    r.tokenServiceUrl = j.getString("tokenServiceURL");
+    r.tokenServiceUser = j.getString("tokenServiceUser");
+    r.tokenServicePassword = j.getString("tokenServicePassword");
+    r.certificateId = j.getString("certificateId");
+    r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(dests.length))
-        .set("message", "Destinations retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    foreach(prop; j.getArray("properties")) {
+      auto key = prop.getString("key");
+      auto value = prop.getString("value");
+      r.properties ~= DestinationProperty(key, value);
     }
+
+    foreach (header; j.getArray("additionalHeaders")) {
+      auto key = header.getString("key");
+      auto value = header.getString("value");
+      r.additionalHeaders ~= DestinationProperty(key, value);
+    }
+
+    auto result = usecase.createDestination(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Destination created")
+      .set("statusCode", 201);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto dest = usecase.getDestination(tenantId, id);
-      if (dest.isNull) {
-        writeError(res, 404, "Destination not found");
-        return;
-      }
-      res.writeJsonBody(dest.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = DestinationId(extractIdFromPath(req.requestURI));
+
+    auto dest = usecase.getDestination(tenantId, id);
+    if (dest.isNull) {
+      return Json.emptyObject
+        .set("message", "Destination not found")
+        .set("statusCode", 404);
     }
+    return dest.toJson
+      .set("message", "Destination retrieved successfully")
+      .set("statusCode", 200);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
-      auto r = UpdateDestinationRequest();
-      r.description = j.getString("description");
-      r.url = j.getString("url");
-      r.authType = j.getString("authentication");
-      r.proxyType = j.getString("proxyType");
-      r.user = j.getString("user");
-      r.password = j.getString("password");
-      r.clientId = j.getString("clientId");
-      r.clientSecret = j.getString("clientSecret");
-      r.tokenServiceUrl = j.getString("tokenServiceURL");
-      r.tokenServiceUser = j.getString("tokenServiceUser");
-      r.tokenServicePassword = j.getString("tokenServicePassword");
-      r.certificateId = j.getString("certificateId");
-      r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
-      r.properties = parseProperties(j);
-      r.additionalHeaders = parseHeaders(j);
+  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = DestinationId(extractIdFromPath(req.requestURI));
+    auto j = req.json;
 
-      r.tenantId = tenantId;
-      auto result = usecase.updateDestination(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Destination updated");
+    auto r = UpdateDestinationRequest();
+    r.tenantId = tenantId;
+    r.description = j.getString("description");
+    r.url = j.getString("url");
+    r.authType = j.getString("authentication");
+    r.proxyType = j.getString("proxyType");
+    r.user = j.getString("user");
+    r.password = j.getString("password");
+    r.clientId = j.getString("clientId");
+    r.clientSecret = j.getString("clientSecret");
+    r.tokenServiceUrl = j.getString("tokenServiceURL");
+    r.tokenServiceUser = j.getString("tokenServiceUser");
+    r.tokenServicePassword = j.getString("tokenServicePassword");
+    r.certificateId = j.getString("certificateId");
+    r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    foreach(prop; j.getArray("properties")) {
+      auto key = prop.getString("key");
+      auto value = prop.getString("value");
+      r.properties ~= DestinationProperty(key, value);
     }
+
+    foreach(header; j.getArray("additionalHeaders")) {
+      auto key = header.getString("key");
+      auto value = header.getString("value");
+      r.additionalHeaders ~= DestinationProperty(key, value);
+    }
+
+    auto result = usecase.updateDestination(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("message", result.error)
+        .set("statusCode", result.error == "Destination not found" ? 404 : 400);
+    }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Destination updated")
+      .set("statusCode", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteDestination(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Destination deleted");
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = DestinationId(extractIdFromPath(req.requestURI));
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeDest(const Destination d) {
-    auto j = Json.emptyObject
-      .set("id", d.id)
-      .set("tenantId", d.tenantId)
-      .set("name", d.name)
-      .set("description", d.description)
-      .set("url", d.url)
-      .set("type", d.destinationType.to!string)
-      .set("authentication", d.authType.to!string)
-      .set("proxyType", d.proxyType.to!string)
-      .set("cloudConnectorLocationId", d.cloudConnectorLocationId);
-
-    if (d.properties.length > 0) {
-      auto props = Json.emptyArray;
-      foreach (p; d.properties) {
-        props ~= Json.emptyObject
-          .set("key", p.key)
-          .set("value", p.value);
-      }
-      j["properties"] = props;
+    auto result = usecase.deleteDestination(tenantId, id);
+    if (result.isFailure()) {
+        return Json.emptyObject
+          .set("message", result.error)
+          .set("statusCode", result.error == "Destination not found" ? 404 : 400);
     }
 
-    if (d.additionalHeaders.length > 0) {
-      auto hdrs = Json.emptyArray;
-      foreach (h; d.additionalHeaders) {
-        hdrs ~= Json.emptyObject
-          .set("key", h.key)
-          .set("value", h.value);
-      }
-      j["additionalHeaders"] = hdrs;
-    }
-
-    return j
-      .set("createdBy", d.createdBy)
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt);
-  }
-
-  private static DestinationProperty[] parseProperties(Json j) {
-    DestinationProperty[] result = j.getArray("properties")
-      .filter!(item => item.isObject)
-      .map!(item => DestinationProperty(item.getString("key"), item.getString("value")))
-      .array;
-
-    return result;
-  }
-
-  private static DestinationProperty[] parseHeaders(Json j) {
-    DestinationProperty[] result;
-
-    foreach (item; j.getArray("additionalHeaders")) {
-      if (item.isObject)
-        result ~= DestinationProperty(item.getString("key"), item.getString("value"));
-    }
-    return result;
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Destination deleted")
+      .set("statusCode", 200);
   }
 }

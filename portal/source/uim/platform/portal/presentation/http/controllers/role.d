@@ -101,7 +101,7 @@ class RoleController : PlatformController {
     }
   }
 
-  protected void handleGetAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

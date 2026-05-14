@@ -29,13 +29,13 @@ class MonitoringController : PlatformController {
     super.registerRoutes(router);
     
     router.get("/api/v1/monitoring/logs", &handleGetLogs);
-    router.get("/api/v1/monitoring/logs/workflow/*", &handleGetWorkflowLogs);
-    router.get("/api/v1/monitoring/logs/step/*", &handleGetStepLogs);
-    router.get("/api/v1/monitoring/failures", &handleGetFailures);
-    router.get("/api/v1/monitoring/summary/*", &handleGetSummary);
+    router.get("/api/v1/monitoring/logs/workflow/*", &handleWorkflowLogs);
+    router.get("/api/v1/monitoring/logs/step/*", &handleStepLogs);
+    router.get("/api/v1/monitoring/failures", &handleFailures);
+    router.get("/api/v1/monitoring/summary/*", &handleSummary);
   }
 
-  protected void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -113,7 +113,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

@@ -34,7 +34,7 @@ class ProfileController : PlatformController {
     router.get("/api/v1/profiles/*", &handleGet);
   }
 
-  protected void handleGetProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
