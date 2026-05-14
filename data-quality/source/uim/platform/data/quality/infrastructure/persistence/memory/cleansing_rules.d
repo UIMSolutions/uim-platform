@@ -10,7 +10,7 @@ import uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 
 class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), CleansingRuleRepository {
 

@@ -10,7 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.business_
 // import uim.platform.abap_environment.domain.ports.repositories.business_users;
 // 
 // // import std.algorithm : filter;
-// // import std.array : array;
+//  
 
 import uim.platform.abap_environment;
 
@@ -19,53 +19,53 @@ mixin(ShowModule!());
 
 class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {
 
-  bool existsByUsername(SystemInstanceId systemId, string username) {
-    return findBySystem(systemId).any!(e => e.username == username);
+  bool existsByUsername(TenantId tenantId, SystemInstanceId systemId, string username) {
+    return findBySystem(tenantId, systemId).any!(e => e.username == username);
   }
 
-  BusinessUser findByUsername(SystemInstanceId systemId, string username) {
-    foreach (e; findBySystem(systemId))
+  BusinessUser findByUsername(TenantId tenantId, SystemInstanceId systemId, string username) {
+    foreach (e; findBySystem(tenantId, systemId))
       if (e.username == username)
         return e;
     return BusinessUser.init;
   }
 
-  void removeByUsername(SystemInstanceId systemId, string username) {
-    auto user = findByUsername(systemId, username);
+  void removeByUsername(TenantId tenantId, SystemInstanceId systemId, string username) {
+    auto user = findByUsername(tenantId, systemId, username);
     if (!user.isNull) {
       remove(user);
     }
   }
 
-  bool existsByEmail(SystemInstanceId systemId, string email) {
-    return findBySystem(systemId).any!(e => e.email == email);
+  bool existsByEmail(TenantId tenantId, SystemInstanceId systemId, string email) {
+    return findBySystem(tenantId, systemId).any!(e => e.email == email);
   }
 
-  BusinessUser findByEmail(SystemInstanceId systemId, string email) {
-    foreach (e; findBySystem(systemId))
+  BusinessUser findByEmail(TenantId tenantId, SystemInstanceId systemId, string email) {
+    foreach (e; findBySystem(tenantId, systemId))
       if (e.email == email)
         return e;
     return BusinessUser.init;
   }
 
-  void removeByEmail(SystemInstanceId systemId, string email) {
-    remove(findByEmail(systemId, email));
+  void removeByEmail(TenantId tenantId, SystemInstanceId systemId, string email) {
+    remove(findByEmail(tenantId, systemId, email));
   }
 
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
   BusinessUser[] filterBySystem(BusinessUser[] users, SystemInstanceId systemId) {
     return users.filter!(e => e.systemInstanceId == systemId).array;
   }
 
-  BusinessUser[] findBySystem(SystemInstanceId systemId) {
-    return filterBySystem(findAll(), systemId);
+  BusinessUser[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
 
 }

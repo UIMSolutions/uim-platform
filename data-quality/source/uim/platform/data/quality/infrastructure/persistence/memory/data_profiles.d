@@ -10,7 +10,7 @@ import uim.platform.data.quality.domain.entities.data_profile;
 import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 
 // import std.algorithm : filter, sort;
-// import std.array : array;
+ 
 
 class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId), DataProfileRepository {
 

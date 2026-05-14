@@ -10,7 +10,7 @@ import uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.ports.repositories.clients;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 
 class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
 

@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.presentation.http.controllers.access_rule;
 
-
-
-
-// 
-
 // import uim.platform.connectivity.application.usecases.manage.access_rules;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.access_rule;
@@ -35,6 +30,24 @@ class AccessRuleController : PlatformController {
     router.delete_("/api/v1/access-rules/*", &handleDelete);
   }
 
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+
+      auto rules = usecase.listAccessRules(tenantId);
+      auto arr = rules.map!(r => r.toJson).array.toJson;
+
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(rules.length))
+        .set("message", "Access rules retrieved successfully");
+
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
@@ -66,23 +79,7 @@ class AccessRuleController : PlatformController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
 
-      auto rules = usecase.listAccessRules(tenantId);
-      auto arr = rules.map!(r => r.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(rules.length))
-        .set("message", "Access rules retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {

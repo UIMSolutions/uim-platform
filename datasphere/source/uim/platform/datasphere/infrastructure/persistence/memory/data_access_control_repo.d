@@ -10,7 +10,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.data_access_con
 // import uim.platform.datasphere.domain.ports.repositories.data_access_controls;
 
 // import std.algorithm : filter, canFind;
-// import std.array : array;
+ 
 import uim.platform.datasphere;
 
 mixin(ShowModule!()); 

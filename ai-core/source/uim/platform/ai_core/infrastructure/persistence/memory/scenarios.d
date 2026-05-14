@@ -10,7 +10,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
 // import uim.platform.ai_core.domain.ports.repositories.scenarios;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.ai_core;
 
 mixin(ShowModule!()); 

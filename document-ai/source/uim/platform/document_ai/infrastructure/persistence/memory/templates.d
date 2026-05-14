@@ -10,7 +10,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.template;
 // import uim.platform.document_ai.domain.ports.repositories.templates;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.document_ai;
 
 mixin(ShowModule!());

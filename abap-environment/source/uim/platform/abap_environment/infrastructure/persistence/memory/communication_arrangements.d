@@ -10,8 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory
 // import uim.platform.abap_environment.domain.entities.communication_arrangement;
 // import uim.platform.abap_environment.domain.ports.repositories.communication_arrangements;
 
-// import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.abap_environment;
 
 mixin(ShowModule!());
@@ -20,38 +19,38 @@ mixin(ShowModule!());
 class MemoryCommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
   
   // #region BySystem
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
   CommunicationArrangement[] filterBySystem(CommunicationArrangement[] arrangements, SystemInstanceId systemId) {
     return arrangements.filter!(e => e.systemInstanceId == systemId).array;
   }
   
-  CommunicationArrangement[] findBySystem(SystemInstanceId systemId) {
+  CommunicationArrangement[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
     return filterBySystem(findAll(), systemId);
   }
 
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(ca => remove(ca));
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(ca => remove(ca));
   }
   // #endregion BySystem
 
   // #region ByDirection
-  size_t countByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return findByDirection(systemId, dir).length;
+  size_t countByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir) {
+    return findByDirection(tenantId, systemId, dir).length;
   }
 
   CommunicationArrangement[] filterByDirection(CommunicationArrangement[] arrangements, CommunicationDirection dir) {
     return arrangements.filter!(e => e.direction == dir).array;
   }
 
-  CommunicationArrangement[] findByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    return filterByDirection(findBySystem(systemId), dir);
+  CommunicationArrangement[] findByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir) {
+    return filterByDirection(findBySystem(tenantId, systemId), dir);
   }
 
-  void removeByDirection(SystemInstanceId systemId, CommunicationDirection dir) {
-    findByDirection(systemId, dir).each!(ca => remove(ca));
+  void removeByDirection(TenantId tenantId, SystemInstanceId systemId, CommunicationDirection dir) {
+    findByDirection(tenantId, systemId, dir).each!(ca => remove(ca));
   }
   // #endregion ByDirection
 

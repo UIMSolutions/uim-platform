@@ -10,7 +10,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.space;
 // import uim.platform.datasphere.domain.ports.repositories.spaces;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.datasphere;
 mixin(ShowModule!());
 @safe:

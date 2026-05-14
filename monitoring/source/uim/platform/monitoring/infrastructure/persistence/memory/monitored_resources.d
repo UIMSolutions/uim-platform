@@ -10,7 +10,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.monitored_resou
 // import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.monitoring;
 
 mixin(ShowModule!());

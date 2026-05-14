@@ -46,7 +46,8 @@ class SoftwareComponentController : ManageController {
       .set("status", 200)
       .set("items", arr)
       .set("totalCount", items.length)
-      .set("message", "Software components retrieved successfully");
+      .set("message", "Software components retrieved successfully")
+      .set("statusCode", 200);
   }
 
   override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -65,32 +66,39 @@ class SoftwareComponentController : ManageController {
     request.namespace = j.getString("namespace");
 
     auto result = usecase.createSoftwareComponent(request);
-    if (result.isSuccess()) {
-      return Json.emptyObject
-        .set("id", result.id)
-        .set("status", 201)
-        .set("message", "Software component created");
-    } else {
+    if (result.isFailure()) {
       return Json.emptyObject
         .set("status", 400)
+        .set("statusCode", 400)
         .set("error", result.error)
         .set("message", "Failed to create software component");
     }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("status", 201)
+      .set("statusCode", 201)
+      .set("message", "Software component created");
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-      auto comp = usecase.getSoftwareComponent(id);
-      if (comp.isNull) {
-        writeError(res, 404, "Software component not found");
-        return;
-      }
-      res.writeJsonBody(comp.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+
+    auto comp = usecase.getSoftwareComponent(tenantId, id);
+    if (comp.isNull) {
+      return Json.emptyObject
+        .set("status", 404)
+        .set("statusCode", 404)
+        .set("error", "Software component not found")
+        .set("message", "Software component not found");
     }
+
+    return Json.emptyObject
+      .set("status", 200)
+      .set("statusCode", 200)
+      .set("item", comp.toJson)
+      .set("message", "Software component retrieved successfully");
   }
 
   protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -98,6 +106,7 @@ class SoftwareComponentController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+      
       CloneSoftwareComponentRequest r;
       r.tenantId = tenantId;
       r.branch = j.getString("branch");
@@ -107,6 +116,7 @@ class SoftwareComponentController : ManageController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", 200)
+          .set("statusCode", 200)
           .set("message", "Software component cloned successfully");
 
         res.writeJsonBody(resp, 200);
@@ -146,17 +156,16 @@ class SoftwareComponentController : ManageController {
   override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto tenantId = req.getTenantId;
     auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-    
-    auto result = usecase.deleteSoftwareComponent(id);
-    if (result.isSuccess()) {
-      return Json.emptyObject
-        .set("status", 200)
-        .set("message", "Software component deleted successfully");
-    } else {
+
+    auto result = usecase.deleteSoftwareComponent(tenantId, id);
+    if (result.isFailure()) {
       return Json.emptyObject
         .set("status", 404)
         .set("error", result.error)
-        .set("message", "Software component not found");  
+        .set("message", "Software component not found");
     }
+    return Json.emptyObject
+      .set("status", 200)
+      .set("message", "Software component deleted successfully");
   }
 }

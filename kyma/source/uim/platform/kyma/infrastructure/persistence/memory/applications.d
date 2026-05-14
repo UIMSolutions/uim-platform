@@ -10,7 +10,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.applications;
 // import uim.platform.kyma.domain.ports.repositories.applications;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.kyma;
 
 mixin(ShowModule!());

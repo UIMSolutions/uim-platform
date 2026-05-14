@@ -10,7 +10,7 @@ import uim.platform.data.quality.domain.entities.validation_rule;
 import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 
 class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
 

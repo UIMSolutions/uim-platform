@@ -10,7 +10,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.spaces;
 // import uim.platform.foundry.domain.ports.repositories.space;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.foundry;
 
 mixin(ShowModule!());

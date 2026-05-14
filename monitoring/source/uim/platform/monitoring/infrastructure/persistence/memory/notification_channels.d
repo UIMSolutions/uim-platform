@@ -10,7 +10,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.notification_ch
 // import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.monitoring;
 
 mixin(ShowModule!());

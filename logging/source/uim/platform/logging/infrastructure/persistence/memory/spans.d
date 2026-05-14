@@ -10,7 +10,7 @@ module uim.platform.logging.infrastructure.persistence.memory.spans;
 // import uim.platform.logging.domain.types;
 // 
 // import std.algorithm : filter;
-// import std.array : array;
+ 
 import uim.platform.logging;
 
 mixin(ShowModule!());
