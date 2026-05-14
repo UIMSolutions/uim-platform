@@ -57,10 +57,9 @@ class ExportController : ManageController {
     jobRequest.timeTo = jsonLong(j, "timeTo");
 
     auto fmtStr = j.getString("format");
-    if (fmtStr == "csv")
-      jobRequest.format_ = ExportFormat.csv;
-    else
-      jobRequest.format_ = ExportFormat.json;
+    jobRequest.format_ = fmtStr == "csv"
+       ? ExportFormat.csv
+       : ExportFormat.json;
 
     // Parse category filter
     auto cats = getStrings(j, "categories");
@@ -99,9 +98,15 @@ class ExportController : ManageController {
     ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
     auto tenantId = req.getTenantId;
 
-    useCase.deleteExport(tenantId, jobId);
+    auto result = useCase.deleteExport(tenantId, jobId);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("statusCode", 400);
+    }
     return Json.emptyObject
       .set("status", "deleted")
+      .set("statusCode", 200)
       .set("message", "Export job deleted successfully");
   }
 }
