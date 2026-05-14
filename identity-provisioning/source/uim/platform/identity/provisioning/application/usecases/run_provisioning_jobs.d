@@ -54,17 +54,14 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     if (tgt.isNull)
       return CommandResult(false, "", "Target system not found");
 
-    auto now = Clock.currStdTime();
-    auto job = ProvisioningJob();
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    ProvisioningJob job;
+    job.initEntity(req.tenantId, req.createdBy);
+
     job.sourceSystemId = req.sourceSystemId;
     job.targetSystemId = req.targetSystemId;
     job.jobType = req.jobType;
     job.status = JobStatus.scheduled;
     job.schedule = req.schedule;
-    job.createdBy = req.createdBy;
-    job.createdAt = now;
 
     repo.save(job);
     return CommandResult(true, job.id.value, "");

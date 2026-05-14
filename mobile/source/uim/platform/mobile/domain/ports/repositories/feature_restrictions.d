@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.feature_restrictions;
 
-import uim.platform.mobile.domain.entities.feature_restriction;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface FeatureRestrictionRepository {
 
-  bool existsByKey(MobileAppId appId, string featureKey);
-  FeatureRestriction findByKey(MobileAppId appId, string featureKey);
-  void removeByKey(MobileAppId appId, string featureKey);
+  bool existsByKey(TenantId tenantId, MobileAppId appId, string featureKey);
+  FeatureRestriction findByKey(TenantId tenantId, MobileAppId appId, string featureKey);
+  void removeByKey(TenantId tenantId, MobileAppId appId, string featureKey);
 
-  size_t countByApp(MobileAppId appId);
-  FeatureRestriction[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  FeatureRestriction[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countEnabled(MobileAppId appId);
-  FeatureRestriction[] findEnabled(MobileAppId appId);
-  void removeEnabled(MobileAppId appId);
+  size_t countEnabled(TenantId tenantId, MobileAppId appId);
+  FeatureRestriction[] findEnabled(TenantId tenantId, MobileAppId appId);
+  void removeEnabled(TenantId tenantId, MobileAppId appId);
 
 }

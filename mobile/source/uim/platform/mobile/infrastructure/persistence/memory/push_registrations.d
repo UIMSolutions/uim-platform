@@ -10,7 +10,11 @@ import uim.platform.mobile.domain.ports.repositories.push_registrations;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : canFind, filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, PushRegistrationId), PushRegistrationRepository {
   

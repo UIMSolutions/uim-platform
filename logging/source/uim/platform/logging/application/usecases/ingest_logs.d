@@ -32,8 +32,8 @@ class IngestLogsUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
 
     LogEntry entry;
-    entry.id = randomUUID();
-    entry.tenantId = req.tenantId;
+    entry.initEntity(req.tenantId, req.createdBy);
+
     entry.streamId = req.streamId;
     entry.timestamp = clockSeconds();
     entry.level = LogParser.parseLevel(req.level);

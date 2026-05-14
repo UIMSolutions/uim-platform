@@ -31,8 +31,8 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     KymaEnvironment env;
-    env.id = randomUUID();
-    env.tenantId = req.tenantId;
+    env.initEntity(req.tenantId, req.createdBy);
+
     env.subaccountId = req.subaccountId;
     env.clusterId = "cluster-" ~ env.id.value[0 .. 8];
     env.name = req.name;
@@ -49,9 +49,6 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     env.oidcGroupsClaim = req.oidcGroupsClaim;
     env.oidcUsernameClaim = req.oidcUsernameClaim;
     env.administrators = req.administrators;
-    env.createdBy = req.createdBy;
-    env.createdAt = clockSeconds();
-    env.updatedAt = env.createdAt;
 
     repo.save(env);
     return CommandResult(true, env.id.value, "");

@@ -9,8 +9,11 @@ import uim.platform.mobile.domain.entities.feature_restriction;
 import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
 import uim.platform.mobile.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,FeatureRestrictionId), FeatureRestrictionRepository {
 

@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.push_registration;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct PushRegistration {
   mixin TenantEntity!(PushRegistrationId);
@@ -19,7 +23,7 @@ struct PushRegistration {
   long registeredAt;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("provider", provider.toString())
@@ -27,7 +31,5 @@ struct PushRegistration {
       .set("topics", topics)
       .set("status", status.toString())
       .set("registeredAt", registeredAt);
-
-    return j;
   }
 }

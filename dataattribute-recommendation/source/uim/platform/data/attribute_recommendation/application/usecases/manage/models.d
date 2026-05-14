@@ -44,10 +44,9 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Model configuration with this name already exists");
 
-    auto now = Clock.currStdTime();
-    auto config = ModelConfiguration();
-    config.id = randomUUID();
-    config.tenantId = req.tenantId;
+    ModelConfiguration config;
+    config.initEntity(req.tenantId, req.createdBy);
+ 
     config.datasetId = req.datasetId;
     config.name = req.name;
     config.description = req.description;
@@ -56,10 +55,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     config.featureColumns = req.featureColumns;
     config.hyperparameters = req.hyperparameters;
     config.status = ModelConfigStatus.draft;
-    config.createdBy = req.createdBy;
-    config.createdAt = now;
-    config.updatedAt = now;
-
+ 
     repo.save(config);
     return CommandResult(true, config.id.value, "");
   }

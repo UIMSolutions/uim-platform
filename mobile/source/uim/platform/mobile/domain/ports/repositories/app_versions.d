@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.app_versions;
 
-import uim.platform.mobile.domain.entities.app_version;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface AppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
 
-  bool existsLatest(MobileAppId appId, AppPlatform platform);
-  AppVersion findLatest(MobileAppId appId, AppPlatform platform);
-  void removeLatest(MobileAppId appId, AppPlatform platform);
+  bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform);
+  AppVersion findLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform);
+  void removeLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform);
 
-  size_t countByApp(MobileAppId appId);
-  AppVersion[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  AppVersion[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByStatus(MobileAppId appId, VersionStatus status);
-  AppVersion[] findByStatus(MobileAppId appId, VersionStatus status);
-  void removeByStatus(MobileAppId appId, VersionStatus status);
+  size_t countByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status);
+  AppVersion[] findByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status);
+  void removeByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status);
 
 }

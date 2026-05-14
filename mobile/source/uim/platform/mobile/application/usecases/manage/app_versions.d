@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.app_versions;
 
-import uim.platform.mobile.domain.ports.repositories.app_versions;
-import uim.platform.mobile.domain.entities.app_version;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.app_versions;
+// import uim.platform.mobile.domain.entities.app_version;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     private AppVersionRepository repo;
 
@@ -21,8 +25,8 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
 
     CommandResult createAppVersion(CreateAppVersionRequest r) {
         AppVersion ver;
-        ver.id = randomUUID();
-        ver.tenantId = r.tenantId;
+        ver.initEntity(r.tenantId, r.createdBy);
+
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
         ver.versionName = r.versionName;
@@ -34,9 +38,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         ver.mandatory = r.mandatory;
         ver.status = VersionStatus.draft;
         ver.releasedAt = r.releasedAt;
-        ver.createdAt = currentTimestamp();
-        ver.updatedAt = ver.createdAt;
-        ver.createdBy = r.createdBy;
+
         repo.save(ver);
         return CommandResult(true, ver.id.value, "");
     }

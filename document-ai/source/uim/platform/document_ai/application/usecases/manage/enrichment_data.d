@@ -31,8 +31,8 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     EnrichmentData ed;
-    ed.id = randomUUID();
-    ed.tenantId = r.tenantId;
+    ed.initEntity(r.tenantId) ;
+
     ed.clientId = r.clientId;
     ed.documentTypeId = r.documentTypeId;
     ed.name = r.name;
@@ -49,11 +49,6 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
       }
     }
     ed.fields = fields;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    ed.createdAt = now;
-    ed.updatedAt = now;
 
     repo.save(ed);
     return CommandResult(true, ed.id.value, "");

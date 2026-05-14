@@ -23,8 +23,8 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client name is required");
 
     Client client;
-    client.id = randomUUID();
-    client.tenantId = req.tenantId;
+    client.initEntity(req.tenantId, req.createdBy);
+
     client.name = req.name;
     client.description = req.description;
     client.clientType = parseClientType(req.clientType);
@@ -39,9 +39,6 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.authType = req.authType;
     client.clientIdRef = req.clientIdRef;
     client.certificateRef = req.certificateRef;
-    client.createdBy = req.createdBy;
-    client.createdAt = clockSeconds();
-    client.updatedAt = client.createdAt;
 
     repo.save(client);
     return CommandResult(true, client.id.value, "");

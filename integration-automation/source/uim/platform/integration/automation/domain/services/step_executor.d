@@ -101,10 +101,11 @@ class StepExecutor {
     return true;
   }
 
-  private void recordLog(WorkflowId workflowId, StepId steptenantId, id tenantId, string action,
+  private void recordLog(TenantId tenantId, WorkflowId workflowId, StepId stepId, string action,
       ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
-    auto log = ExecutionLog();
-    log.id = randomUUID();
+    ExecutionLog log;
+    log.initEntity(tenantId);
+
     log.workflowId = workflowId;
     log.stepId = stepId;
     log.tenantId = tenantId;
@@ -113,7 +114,8 @@ class StepExecutor {
     log.message = message;
     log.executedBy = executedBy;
     log.durationMs = durationMs;
-    log.timestamp = Clock.currStdTime();
+    log.timestamp = log.createdAt;
+
     logRepo.save(log);
   }
 }

@@ -26,18 +26,13 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid service instance name");
 
         ServiceInstance inst;
-        inst.id = randomUUID();
-        inst.tenantId = r.tenantId;
+        inst.initEntity(r.tenantId, r.createdBy);
         inst.spaceId = r.spaceId;
         inst.name = r.name;
         inst.plan = parsePlan(r.plan);
         inst.sizeQuotaMb = r.sizeQuotaMb > 0 ? r.sizeQuotaMb : 100;
         inst.sizeUsedMb = 0;
         inst.status = InstanceStatus.active;
-        inst.createdAt = currentTimestamp();
-        inst.updatedAt = inst.createdAt;
-        inst.createdBy = r.createdBy;
-        inst.updatedBy = r.createdBy;
 
         repo.save(inst);
         return CommandResult(true, inst.id.value, "");

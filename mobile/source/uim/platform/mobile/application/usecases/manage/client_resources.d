@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.client_resources;
 
-import uim.platform.mobile.domain.ports.repositories.client_resources;
-import uim.platform.mobile.domain.entities.client_resource;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.client_resources;
+// import uim.platform.mobile.domain.entities.client_resource;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     private ClientResourceRepository repo;
 
@@ -21,8 +25,8 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
 
     CommandResult createClientResource(CreateClientResourceRequest r) {
         ClientResource resource;
-        resource.id = randomUUID();
-        resource.tenantId = r.tenantId;
+        resource.initEntity(r.tenantId, r.createdBy);
+
         resource.appId = r.appId;
         resource.name = r.name;
         resource.description = r.description;
@@ -31,9 +35,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         resource.checksum = r.checksum;
         resource.sizeBytes = r.sizeBytes;
         resource.version_ = r.version_;
-        resource.createdAt = currentTimestamp();
-        resource.updatedAt = resource.createdAt;
-        resource.createdBy = r.createdBy;
+
         repo.save(resource);
         return CommandResult(true, resource.id.value, "");
     }

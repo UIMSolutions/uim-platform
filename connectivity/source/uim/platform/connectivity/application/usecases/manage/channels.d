@@ -119,13 +119,14 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
       string sourceId, string sourceType, string message) {
 
     ConnectivityLog entry;
-    entry.id = randomUUID();
-    entry.tenantId = tenantId;
+    entry.initEntity(tenantId);
+
     entry.eventType = evtType;
     entry.severity = LogSeverity.info;
     entry.sourceId = sourceId;
     entry.sourceType = sourceType;
     entry.message = message;
+    
     logRepo.save(entry);
   }
 }

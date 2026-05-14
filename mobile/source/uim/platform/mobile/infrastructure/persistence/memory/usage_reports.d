@@ -9,8 +9,11 @@ import uim.platform.mobile.domain.entities.usage_report;
 import uim.platform.mobile.domain.ports.repositories.usage_reports;
 import uim.platform.mobile.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId), UsageReportRepository {
   

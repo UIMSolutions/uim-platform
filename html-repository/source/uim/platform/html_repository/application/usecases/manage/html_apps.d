@@ -30,8 +30,8 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Application with this name already exists");
 
         HtmlApp app;
-        app.id = randomUUID();
-        app.tenantId = r.tenantId;
+        app.initEntity(r.tenantId, r.createdBy);
+
         app.spaceId = r.spaceId;
         app.serviceInstanceId = r.serviceInstanceId;
         app.name = r.name;
@@ -40,10 +40,6 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         app.visibility = parseVisibility(r.visibility);
         app.status = AppStatus.active;
         app.totalSizeBytes = 0;
-        app.createdAt = currentTimestamp();
-        app.updatedAt = app.createdAt;
-        app.createdBy = r.createdBy;
-        app.updatedBy = r.createdBy;
 
         repo.save(app);
         return CommandResult(true, app.id.value, "");

@@ -40,7 +40,11 @@ class TokenService {
   string buildAccessToken(string clientId, string[] scopes, int expiresInSeconds) @trusted {
     import std.format : format;
     import std.algorithm : joiner;
-    import std.array : array;
+    import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
     long issuedAt = currentTimestamp();
     long expiresAt = issuedAt + expiresInSeconds;

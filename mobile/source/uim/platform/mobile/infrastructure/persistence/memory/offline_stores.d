@@ -9,8 +9,11 @@ import uim.platform.mobile.domain.entities.offline_store;
 import uim.platform.mobile.domain.ports.repositories.offline_stores;
 import uim.platform.mobile.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStoreId), OfflineStoreRepository {
  

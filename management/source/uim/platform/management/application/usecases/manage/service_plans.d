@@ -29,7 +29,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Plan name is required");
 
     ServicePlan plan;
-    plan.id = randomUUID();
+    plan.initEntity(req.tenantId, req.createdBy);
+
     plan.serviceName = req.serviceName;
     plan.serviceDisplayName = req.serviceDisplayName;
     plan.planName = req.planName;
@@ -44,9 +45,6 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.unit = req.unit;
     plan.supportedPlatforms = req.supportedPlatforms;
     plan.providerDisplayName = req.providerDisplayName;
-    plan.createdAt = clockSeconds();
-    plan.updatedAt = plan.createdAt;
-    plan.metadata = req.metadata;
 
     servicePlans.save(plan);
     return CommandResult(true, plan.id.value, "");

@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.client_logs;
 
-import uim.platform.mobile.domain.entities.client_log_entry;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface ClientLogRepository : ITenantRepository!(ClientLogEntry, ClientLogEntryId) {
 
-  size_t countByApp(MobileAppId appId);
-  ClientLogEntry[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  ClientLogEntry[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByDevice(DeviceRegistrationId deviceId);
-  ClientLogEntry[] findByDevice(DeviceRegistrationId deviceId);
-  void removeByDevice(DeviceRegistrationId deviceId);
+  size_t countByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  ClientLogEntry[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
 
-  size_t countByLevel(MobileAppId appId, LogLevel level);
-  ClientLogEntry[] findByLevel(MobileAppId appId, LogLevel level);
-  void removeByLevel(MobileAppId appId, LogLevel level);
+  size_t countByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
+  ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
+  void removeByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
 
 }

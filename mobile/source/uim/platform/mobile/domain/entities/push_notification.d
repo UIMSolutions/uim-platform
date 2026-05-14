@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.push_notification;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct PushNotification {
   mixin TenantEntity!(PushNotificationId);
@@ -13,12 +17,12 @@ struct PushNotification {
   MobileAppId appId;
   string title;
   string body_;
-  string payload;          // JSON custom data
+  string payload; // JSON custom data
   PushProvider provider;
   NotificationStatus status;
   NotificationPriority priority;
-  string[] targetDevices;  // device registration IDs
-  string[] targetTopics;   // topic-based targeting
+  string[] targetDevices; // device registration IDs
+  string[] targetTopics; // topic-based targeting
   long scheduledAt;
   long sentAt;
   long expiresAt;
@@ -26,20 +30,20 @@ struct PushNotification {
   int failedCount;
 
   Json toJson() const {
-      return entityToJson
-          .set("appId", appId.value)
-          .set("title", title)
-          .set("body", body_)
-          .set("payload", payload)
-          .set("provider", provider.to!string)
-          .set("status", status.to!string)
-          .set("priority", priority.to!string)
-          .set("targetDevices", targetDevices.array.toJson)
-          .set("targetTopics", targetTopics.array.toJson)
-          .set("scheduledAt", scheduledAt)
-          .set("sentAt", sentAt)
-          .set("expiresAt", expiresAt)
-          .set("deliveredCount", deliveredCount)
-          .set("failedCount", failedCount);
+    return entityToJson
+      .set("appId", appId.value)
+      .set("title", title)
+      .set("body", body_)
+      .set("payload", payload)
+      .set("provider", provider.to!string)
+      .set("status", status.to!string)
+      .set("priority", priority.to!string)
+      .set("targetDevices", targetDevices.array.toJson)
+      .set("targetTopics", targetTopics.array.toJson)
+      .set("scheduledAt", scheduledAt)
+      .set("sentAt", sentAt)
+      .set("expiresAt", expiresAt)
+      .set("deliveredCount", deliveredCount)
+      .set("failedCount", failedCount);
   }
 }

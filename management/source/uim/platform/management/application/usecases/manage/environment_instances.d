@@ -49,7 +49,8 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", validation.reason);
 
     EnvironmentInstance inst;
-    inst.id = randomUUID();
+    inst.initEntity(req.tenantId, req.createdBy);
+
     inst.subaccountId = req.subaccountId;
     inst.globalAccountId = req.globalAccountId;
     inst.name = req.name;
@@ -61,9 +62,6 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     inst.memoryQuotaMb = req.memoryQuotaMb;
     inst.routeQuota = req.routeQuota;
     inst.serviceQuota = req.serviceQuota;
-    inst.createdBy = req.createdBy;
-    inst.createdAt = clockSeconds();
-    inst.updatedAt = inst.createdAt;
     inst.parameters = req.parameters;
     inst.labels = req.labels;
 
@@ -113,8 +111,8 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     repo.update(instance);
 
     // Complete deletion
-    repo.removeById(req.tenantId, req.id);
-    return CommandResult(true, req.id.value, "");
+    repo.removeById(tenantId, id);
+    return CommandResult(true, id.value, "");
   }
 
   EnvironmentInstance getEnvironmentInstance(TenantId tenantId, EnvironmentInstanceId id) {

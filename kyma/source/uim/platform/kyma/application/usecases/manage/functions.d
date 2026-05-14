@@ -36,10 +36,10 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
     ServerlessFunction serverlessFunction;
-    serverlessFunction.id = randomUUID();
+    serverlessFunction.initEntity(request.tenantId, request.createdBy);
+
     serverlessFunction.namespaceId = request.namespaceId;
     serverlessFunction.environmentId = request.environmentId;
-    serverlessFunction.tenantId = request.tenantId;
     serverlessFunction.name = request.name;
     serverlessFunction.description = request.description;
     serverlessFunction.runtime = request.runtime.toRuntime();
@@ -57,9 +57,6 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     serverlessFunction.labels = request.labels;
     serverlessFunction.timeoutSeconds = request.timeoutSeconds > 0 ? request.timeoutSeconds : 180;
     serverlessFunction.status = FunctionStatus.building;
-    serverlessFunction.createdBy = request.createdBy;
-    serverlessFunction.createdAt = clockSeconds();
-    serverlessFunction.updatedAt = serverlessFunction.createdAt;     
 
     auto validationErr = validator.validate(serverlessFunction);
     if (validationErr.length > 0)

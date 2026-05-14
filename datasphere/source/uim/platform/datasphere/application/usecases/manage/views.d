@@ -30,23 +30,16 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     View v;
+    v.initEntity(r.tenantId) ;
+
     v.id = id;
-    v.tenantId = r.tenantId;
     v.spaceId = r.spaceId;
     v.name = r.name;
     v.description = r.description;
     v.businessName = r.businessName;
     v.sqlExpression = r.sqlExpression;
     v.isExposed = r.isExposed;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    v.createdAt = now;
-    v.updatedAt = now;
 
     repo.save(v);
     return CommandResult(true, v.id.value, "");

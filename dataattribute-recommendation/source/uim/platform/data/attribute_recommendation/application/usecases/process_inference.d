@@ -40,17 +40,14 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     if (!engine.isDeploymentReady(req.tenantId, req.deploymentId))
       return CommandResult(false, "", "Deployment is not active");
 
-    auto now = Clock.currStdTime();
-    auto request = InferenceRequest();
-    request.id = randomUUID();
-    request.tenantId = req.tenantId;
+    InferenceRequest request;
+    request.initEntity(req.tenantId, req.createdBy);
+
     request.deploymentId = req.deploymentId;
     request.inputData = req.inputData;
     request.status = InferenceStatus.pending;
-    request.createdAt = now;
 
     requestRepo.save(request);
-
     // Process immediately
     auto result = engine.predict(request.id, req.tenantId);
     if (result.isNull)

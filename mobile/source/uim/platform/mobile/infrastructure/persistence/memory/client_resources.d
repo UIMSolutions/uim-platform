@@ -5,12 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.client_resource;
 
-import uim.platform.mobile.domain.entities.client_resource;
-import uim.platform.mobile.domain.ports.repositories.client_resources;
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.entities.client_resource;
+// import uim.platform.mobile.domain.ports.repositories.client_resources;
+// import uim.platform.mobile.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientResourceId), ClientResourceRepository {
   

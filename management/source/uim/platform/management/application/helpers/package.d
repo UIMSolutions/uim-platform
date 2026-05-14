@@ -15,8 +15,8 @@ void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, Subaccoun
  
 
   PlatformEvent event;
+  event.initEntity(gaId, subId, initiatedBy);
   
-  event.id = randomUUID();
   event.globalAccountId = gaId;
   event.subaccountId = subId;
   event.category = cat;
@@ -25,7 +25,7 @@ void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, Subaccoun
   event.description = desc;
   event.initiatedBy = initiatedBy;
   event.sourceService = sourceService;
-  event.timestamp = clockSeconds();
+  event.timestamp = event.createdAt;
 
   eventRepo.save(event);
 }

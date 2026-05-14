@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.offline_store;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct OfflineStore {
   mixin TenantEntity!(OfflineStoreId);
@@ -20,7 +24,7 @@ struct OfflineStore {
   long sizeBytes;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("name", name)
       .set("serviceUrl", serviceUrl)
@@ -30,6 +34,5 @@ struct OfflineStore {
       .set("lastSyncAt", lastSyncAt)
       .set("sizeBytes", sizeBytes);
 
-    return j;
   }
 }

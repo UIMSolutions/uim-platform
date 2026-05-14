@@ -25,8 +25,8 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Source client ID is required");
 
     ReplicationJob job;
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    job.initEntity(req.tenantId, req.createdBy);
+
     job.distributionModelId = req.distributionModelId;
     job.name = req.name.length > 0 ? req.name : "Replication-" ~ id[0 .. 8];
     job.description = req.description;
@@ -36,8 +36,6 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.sourceClientId = req.sourceClientId;
     job.targetClientIds = req.targetClientIds;
     job.isInitialLoad = req.isInitialLoad;
-    job.createdAt = clockSeconds();
-    job.createdBy = req.createdBy;
 
     repo.save(job);
     return CommandResult(true, job.id.value, "");

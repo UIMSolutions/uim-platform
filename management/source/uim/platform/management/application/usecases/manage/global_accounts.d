@@ -33,7 +33,8 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     GlobalAccount globalAccount;
-    globalAccount.id = randomUUID();
+    globalAccount.initEntity(req.tenantId, req.createdBy);
+
     globalAccount.displayName = req.displayName;
     globalAccount.description = req.description;
     globalAccount.contractNumber = req.contractNumber;
@@ -44,9 +45,6 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.contactEmail = req.contactEmail;
     globalAccount.maxSubaccounts = req.maxSubaccounts > 0 ? req.maxSubaccounts : 100;
     globalAccount.maxDirectories = req.maxDirectories > 0 ? req.maxDirectories : 20;
-    globalAccount.createdAt = clockSeconds();
-    globalAccount.updatedAt = globalAccount.createdAt;
-    globalAccount.createdBy = req.createdBy;
     globalAccount.customProperties = req.customProperties;
 
     repo.save(globalAccount);

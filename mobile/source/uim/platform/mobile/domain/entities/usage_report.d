@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.usage_report;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct UsageReport {
   mixin TenantEntity!(UsageReportId);
@@ -22,7 +26,7 @@ struct UsageReport {
   long timestamp;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("userId", userId)
@@ -33,7 +37,5 @@ struct UsageReport {
       .set("platform", platform)
       .set("appVersion", appVersion)
       .set("timestamp", timestamp);
-
-    return j;
   }
 }

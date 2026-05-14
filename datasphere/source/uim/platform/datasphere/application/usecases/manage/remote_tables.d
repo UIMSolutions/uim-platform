@@ -35,8 +35,8 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
 
     RemoteTable rt;
-    rt.id = randomUUID();
-    rt.tenantId = r.tenantId;
+    rt.initEntity(r.tenantId) ;
+
     rt.spaceId = r.spaceId;
     rt.connectionId = r.connectionId;
     rt.name = r.name;
@@ -44,11 +44,6 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
     rt.remoteSchema = r.remoteSchema;
     rt.remoteObjectName = r.remoteObjectName;
     rt.replicationMode = ReplicationMode.none;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    rt.createdAt = now;
-    rt.updatedAt = now;
 
     tables.save(rt);
     return CommandResult(true, rt.id.value, "");

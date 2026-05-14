@@ -57,17 +57,15 @@ class InferenceEngine {
     requestRepo.update(request);
 
     // Simulate prediction
-    auto result = InferenceResult();
-    result.id = randomUUID();
-    result.tenantId = tenantId;
-    result.requestId = requestId;
+    InferenceResult result;
+    result.initEntity(tenantId, request.createdBy);
+
+    result.requestId = request.id;
     result.predictions = `{"category":"Electronics","subcategory":"Smartphones","brand":"Generic"}`;
     result.confidenceScores = `{"category":0.95,"subcategory":0.87,"brand":0.72}`;
     result.processingTimeMs = 42;
-    result.createdAt = now;
 
     resultRepo.save(result);
-
     // Mark request as completed
     request.status = InferenceStatus.completed;
     requestRepo.update(request);

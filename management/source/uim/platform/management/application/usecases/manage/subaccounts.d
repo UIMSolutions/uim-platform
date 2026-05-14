@@ -41,7 +41,8 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
     Subaccount subaccount;
-    subaccount.id = randomUUID();
+    subaccount.initEntity(req.tenantId, req.createdBy);
+
     subaccount.globalAccountId = req.globalAccountId;
     subaccount.parentDirectoryId = req.parentDirectoryId;
     subaccount.displayName = req.displayName;
@@ -52,9 +53,6 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.betaEnabled = req.betaEnabled;
     subaccount.usedForProduction = req.usedForProduction;
     subaccount.status = SubaccountStatus.creating;
-    subaccount.createdAt = clockSeconds();
-    subaccount.updatedAt = subaccount.createdAt;
-    subaccount.createdBy = req.createdBy;
     subaccount.labels = req.labels;
     subaccount.customProperties = req.customProperties;
 
@@ -170,11 +168,12 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
+  private void emitEvent(TenantId tenantId, string gaId, string subId, PlatformEventCategory cat,
       string eventType, string desc, UserId initiatedBy) {
 
     PlatformEvent event;
-    event.id = randomUUID();
+    event.initEntity(tenantId);
+
     event.globalAccountId = gaId;
     event.subaccountId = subId;
     event.category = cat;
@@ -183,7 +182,8 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     event.description = desc;
     event.initiatedBy = initiatedBy;
     event.sourceService = "cloud-management";
-    event.timestamp = clockSeconds();
+    event.timestamp = event.createdAt;
+    
     eventRepo.save(event);
   }
 

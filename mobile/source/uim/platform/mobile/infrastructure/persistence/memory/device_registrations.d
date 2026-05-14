@@ -9,8 +9,11 @@ import uim.platform.mobile.domain.entities.device_registration;
 import uim.platform.mobile.domain.ports.repositories.device_registrations;
 import uim.platform.mobile.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration, DeviceRegistrationId), DeviceRegistrationRepository {
 

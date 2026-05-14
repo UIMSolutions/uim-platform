@@ -35,17 +35,14 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Target system with this name already exists");
 
     auto now = Clock.currStdTime();
-    auto sys = TargetSystem();
-    sys.id = randomUUID();
-    sys.tenantId = req.tenantId;
+    TargetSystem sys;
+    sys.initEntity(req.tenantId, req.createdBy);
+
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;
     sys.connectionConfig = req.connectionConfig;
     sys.status = SystemStatus.configuring;
-    sys.createdBy = req.createdBy;
-    sys.createdAt = now;
-    sys.updatedAt = now;
 
     repo.save(sys);
     return CommandResult(true, sys.id.value, "");

@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.offline_stores;
 
-import uim.platform.mobile.domain.ports.repositories.offline_stores;
-import uim.platform.mobile.domain.entities.offline_store;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.domain.services.offline_sync_service;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.offline_stores;
+// import uim.platform.mobile.domain.entities.offline_store;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.services.offline_sync_service;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
     private OfflineStoreRepository repo;
 
@@ -24,8 +28,8 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         if (!OfflineSyncService.validateStoreName(r.name))
             return CommandResult(false, "", "Invalid store name");
         OfflineStore store;
-        store.id = randomUUID();
-        store.tenantId = r.tenantId;
+        store.initEntity(r.tenantId, r.createdBy);
+
         store.appId = r.appId;
         store.name = r.name;
         store.description = r.description;
@@ -35,9 +39,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         store.syncPolicy = r.syncPolicy;
         store.conflictPolicy = r.conflictPolicy;
         store.status = OfflineStoreStatus.active;
-        store.createdAt = currentTimestamp();
-        store.updatedAt = store.createdAt;
-        store.createdBy = r.createdBy;
+
         repo.save(store);
         return CommandResult(true, store.id.value, "");
     }

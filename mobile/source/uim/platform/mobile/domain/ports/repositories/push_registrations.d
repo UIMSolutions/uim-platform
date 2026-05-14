@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.push_registrations;
 
-import uim.platform.mobile.domain.entities.push_registration;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface PushRegistrationRepository : ITenantRepository!(PushRegistration, PushRegistrationId) {
 
-  bool existsByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
-  PushRegistration findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
-  void findByDeviceAndApp(DeviceRegistrationId deviceId, MobileAppId appId);
+  bool existsByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
+  PushRegistration findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
+  void findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
 
-  size_t countByApp(MobileAppId appId);
-  PushRegistration[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  PushRegistration[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByTopic(MobileAppId appId, string topic);
-  PushRegistration[] findByTopic(MobileAppId appId, string topic);
-  void removeByTopic(MobileAppId appId, string topic);
+  size_t countByTopic(TenantId tenantId, MobileAppId appId, string topic);
+  PushRegistration[] findByTopic(TenantId tenantId, MobileAppId appId, string topic);
+  void removeByTopic(TenantId tenantId, MobileAppId appId, string topic);
 
 }

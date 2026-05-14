@@ -38,8 +38,8 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
     Destination d;
-    d.id = randomUUID();
-    d.tenantId = req.tenantId;
+    d.initEntity(req.tenantId, req.createdBy);
+
     d.subaccountId = req.subaccountId;
     d.serviceInstanceId = req.serviceInstanceId;
     d.name = req.name;
@@ -78,9 +78,6 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     d.properties = req.properties;
     foreach (s; req.fragmentIds)
       d.fragmentIds ~= FragmentId(s);
-    d.createdBy = req.createdBy;
-    d.createdAt = clockSeconds();
-    d.updatedAt = d.createdAt;
 
     repo.save(d);
     return CommandResult(true, d.id.value, "");

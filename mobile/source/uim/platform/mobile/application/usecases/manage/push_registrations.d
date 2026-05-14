@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.push_registrations;
 
-import uim.platform.mobile.domain.ports.repositories.push_registrations;
-import uim.platform.mobile.domain.entities.push_registration;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.push_registrations;
+// import uim.platform.mobile.domain.entities.push_registration;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     private PushRegistrationRepository repo;
 
@@ -19,62 +23,49 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult register(CreatePushRegistrationRequest r) {
+    CommandResult registerPushRegistration(CreatePushRegistrationRequest r) {
         auto existing = repo.findByDeviceAndApp(r.deviceId, r.appId);
         if (!existing.isNull) {
             existing.pushToken = r.pushToken;
             existing.topics = r.topics;
-            existing.updatedAt = currentTimestamp();
+            existing.updatedAt = Clock.currStdTime();
             repo.update(existing);
             return CommandResult(true, existing.id.value, "");
         }
         PushRegistration reg;
-        reg.id = randomUUID();
-        reg.tenantId = r.tenantId;
+        reg.initEntity(r.tenantId, r.createdBy);
+
         reg.appId = r.appId;
         reg.deviceId = r.deviceId;
         reg.provider = parseProvider(r.provider);
         reg.pushToken = r.pushToken;
         reg.topics = r.topics;
         reg.status = PushRegStatus.active;
-        reg.registeredAt = currentTimestamp();
+        reg.registeredAt = Clock.currStdTime();
         reg.updatedAt = reg.registeredAt;
+
         repo.save(reg);
         return CommandResult(true, reg.id.value, "");
     }
 
-    PushRegistration get_(PushRegistrationId id) {
+    PushRegistration getPushRegistration(PushRegistrationId id) {
         return repo.findById(tenantId, id);
     }
 
-    PushRegistration[] listByApp(MobileAppId appId) {
+    PushRegistration[] listPushRegistrationsByApp(MobileAppId appId) {
         return repo.findByApp(appId);
     }
 
-    PushRegistration[] listByTopic(MobileAppId appId, string topic) {
+    PushRegistration[] listPushRegistrationsByTopic(MobileAppId appId, string topic) {
         return repo.findByTopic(appId, topic);
     }
 
-    CommandResult delete(PushRegistrationId id) {
+    CommandResult deletePushRegistration(PushRegistrationId id) {
         repo.removeById(id);
+        return CommandResult(true, id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
+    size_t countPushRegistrationsByApp(MobileAppId appId) {
         return repo.countByApp(appId);
-    }
-
-    private static PushProvider parseProvider(string s) {
-        switch (s) {
-            case "apns": return PushProvider.apns;
-            case "fcm": return PushProvider.fcm;
-            case "wns": return PushProvider.wns;
-            case "webpush": return PushProvider.webpush;
-            default: return PushProvider.fcm;
-        }
-    }
-
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
     }
 }

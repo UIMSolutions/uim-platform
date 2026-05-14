@@ -33,10 +33,9 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
     Namespace ns;
+    ns.initEntity(req.tenantId, req.createdBy);
     with (ns) {
-      id = randomUUID();
       environmentId = req.environmentId;
-      tenantId = req.tenantId;
       name = req.name;
       description = req.description;
       status = NamespaceStatus.active;
@@ -49,9 +48,6 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
       istioInjection = req.istioInjection;
       labels = req.labels;
       annotations = req.annotations;
-      createdBy = req.createdBy;
-      createdAt = clockSeconds();
-      updatedAt = ns.createdAt;
     }
 
     namespaceRepository.save(ns);

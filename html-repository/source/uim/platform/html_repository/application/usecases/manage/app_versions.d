@@ -26,17 +26,13 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid version code");
 
         AppVersion ver;
-        ver.id = randomUUID();
-        ver.tenantId = r.tenantId;
+        ver.initEntity(r.tenantId, r.createdBy);
+
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
         ver.description = r.description;
         ver.status = VersionStatus.draft;
         ver.totalSizeBytes = 0;
-        ver.createdAt = currentTimestamp();
-        ver.updatedAt = ver.createdAt;
-        ver.createdBy = r.createdBy;
-        ver.updatedBy = r.createdBy;
 
         repo.save(ver);
         return CommandResult(true, ver.id.value, "");

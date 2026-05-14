@@ -92,8 +92,8 @@ class ImportContentUseCase { // TODO: UIMUseCase {
       string entityId, string entityName, string desc, string by) {
    
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    activity.initEntity(tenantId);
+
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
@@ -101,6 +101,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
     activity.description = desc;
     activity.performedBy = by;
     activity.timestamp = clockSeconds();
+
     activityRepo.save(activity);
   }
 

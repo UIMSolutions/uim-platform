@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.app_configurations;
 
-import uim.platform.mobile.domain.entities.app_configuration;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface AppConfigurationRepository : ITenantRepository!(AppConfiguration, AppConfigurationId) {
 
-  bool existsByKey(MobileAppId appId, string key);
-  AppConfiguration findByKey(MobileAppId appId, string key);
-  void removeByKey(MobileAppId appId, string key);
+  bool existsByKey(TenantId tenantId, MobileAppId appId, string key);
+  AppConfiguration findByKey(TenantId tenantId, MobileAppId appId, string key);
+  void removeByKey(TenantId tenantId, MobileAppId appId, string key);
 
-  size_t countByApp(MobileAppId appId);
-  AppConfiguration[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  AppConfiguration[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByAppAndPlatform(MobileAppId appId, AppPlatform platform);
-  AppConfiguration[] findByAppAndPlatform(MobileAppId appId, AppPlatform platform);
-  void removeByAppAndPlatform(MobileAppId appId, AppPlatform platform);
+  size_t countByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform);
+  AppConfiguration[] findByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform);
+  void removeByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform);
 
 }

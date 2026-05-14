@@ -5,17 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.push_notifications;
 
-import uim.platform.mobile.domain.entities.push_notification;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 interface PushNotificationRepository : ITenantRepository!(PushNotification, PushNotificationId) {
 
-  size_t countByApp(MobileAppId appId);
-  PushNotification[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  PushNotification[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByStatus(MobileAppId appId, NotificationStatus status);
-  PushNotification[] findByStatus(MobileAppId appId, NotificationStatus status);
+  size_t countByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status);
+  PushNotification[] findByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status);
   void removeByStatus(MobileAppId appId, NotificationStatus status);
 
 }

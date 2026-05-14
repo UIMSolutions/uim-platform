@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.services.offline_sync_service;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct OfflineSyncService {
   // Validate a defining request URL pattern

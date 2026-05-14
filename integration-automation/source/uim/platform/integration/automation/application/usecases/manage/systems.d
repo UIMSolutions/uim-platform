@@ -36,9 +36,8 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
 
-    auto sys = SystemConnection();
-    sys.id = randomUUID();
-    sys.tenantId = req.tenantId;
+    SystemConnection sys;
+
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;
@@ -51,9 +50,6 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     sys.region = req.region;
     sys.systemId = req.systemId;
     sys.tenant = req.tenant;
-    sys.createdBy = req.createdBy;
-    sys.createdAt = now;
-    sys.updatedAt = now;
 
     repo.save(sys);
     return CommandResult(true, sys.id.value, "");

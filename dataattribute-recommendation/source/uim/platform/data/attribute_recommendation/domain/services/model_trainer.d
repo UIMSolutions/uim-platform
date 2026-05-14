@@ -66,18 +66,15 @@ class ModelTrainer {
     configRepo.update(config);
 
     // Create training job
-    auto job = TrainingJob();
-    job.id = randomUUID();
-    job.tenantId = tenantId;
+    TrainingJob job;
+    job.initEntity(tenantId, userId);
+
     job.modelConfigId = configId;
     job.status = JobStatus.running;
     job.totalEpochs = 10;
-    job.startedAt = now;
-    job.createdBy = userId;
-    job.createdAt = now;
+    job.startedAt = job.createdAt;
 
     jobRepo.save(job);
-
     // Simulate immediate training completion with metrics
     completeTraining(job.tenantId, id);
 

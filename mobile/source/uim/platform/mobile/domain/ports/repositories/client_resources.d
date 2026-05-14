@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.client_resources;
 
-import uim.platform.mobile.domain.entities.client_resource;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface ClientResourceRepository : ITenantRepository!(ClientResource, ClientResourceId) {
 
-  bool existsByName(MobileAppId appId, string name);
-  ClientResource findByName(MobileAppId appId, string name);
-  void removeByName(MobileAppId appId, string name);
+  bool existsByName(TenantId tenantId, MobileAppId appId, string name);
+  ClientResource findByName(TenantId tenantId, MobileAppId appId, string name);
+  void removeByName(TenantId tenantId, MobileAppId appId, string name);
 
-  size_t countByApp(MobileAppId appId);
-  ClientResource[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  ClientResource[] findByApp(TenantId tenantId,   MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByType(MobileAppId appId, ClientResourceType type);
-  ClientResource[] findByType(MobileAppId appId, ClientResourceType type);
-  void removeByType(MobileAppId appId, ClientResourceType type);
+  size_t countByType(TenantId tenantId, MobileAppId appId, ClientResourceType type);
+  ClientResource[] findByType(TenantId tenantId, MobileAppId appId, ClientResourceType type);
+  void removeByType(TenantId tenantId, MobileAppId appId, ClientResourceType type);
 
 }

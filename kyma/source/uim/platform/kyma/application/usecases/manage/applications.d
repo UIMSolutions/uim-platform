@@ -33,10 +33,9 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     Application app;
+    app.initEntity(req.tenantId, req.createdBy);
     with(app) {
-      id = randomUUID();
       environmentId = req.environmentId;
-      tenantId = req.tenantId;
       name = req.name;
       description = req.description;
       status = AppConnectivityStatus.pairing;
@@ -44,9 +43,6 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       connectorUrl = req.connectorUrl;
       boundNamespaces = req.boundNamespaces;
       labels = req.labels;
-      createdBy = req.createdBy;
-      createdAt = clockSeconds();
-      updatedAt = app.createdAt;
     }
 
     // Convert API entries
@@ -156,8 +152,9 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.disconnected;
     app.updatedAt = clockSeconds();
+    
     appRepository.update(app);
-    return CommandResult(true, appid.value, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   bool hasApplication(string appId) {

@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.dto;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 
 // MobileApp DTOs
 struct CreateMobileAppRequest {

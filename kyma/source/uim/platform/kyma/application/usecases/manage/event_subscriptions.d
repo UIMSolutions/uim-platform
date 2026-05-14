@@ -34,10 +34,10 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
     EventSubscription sub;
-    sub.id = randomUUID();
+    sub.initEntity(req.tenantId, req.createdBy);
+
     sub.namespaceId = req.namespaceId;
     sub.environmentId = req.environmentId;
-    sub.tenantId = req.tenantId;
     sub.name = req.name;
     sub.description = req.description;
     sub.status = SubscriptionStatus.pending;
@@ -51,9 +51,6 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.exactTypeMatching = req.exactTypeMatching;
     sub.filterAttributes = req.filterAttributes;
     sub.labels = req.labels;
-    sub.createdBy = req.createdBy;
-    sub.createdAt = clockSeconds();
-    sub.updatedAt = sub.createdAt;
 
     subscriptionRepository.save(sub);
     return CommandResult(true, sub.id.value, "");

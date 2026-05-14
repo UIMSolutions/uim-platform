@@ -47,9 +47,9 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
 
-    auto dest = Destination();
-    dest.id = randomUUID();
-    dest.tenantId = req.tenantId;
+    Destination dest;
+    dest.initEntity(req.tenantId, req.createdBy);
+
     dest.name = req.name;
     dest.description = req.description;
     dest.systemId = req.systemId;
@@ -64,9 +64,6 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     dest.audience = req.audience;
     dest.scope_ = req.scope_;
     dest.isEnabled = true;
-    dest.createdBy = req.createdBy;
-    dest.createdAt = now;
-    dest.updatedAt = now;
 
     repo.save(dest);
     return CommandResult(true, dest.id.value, "");

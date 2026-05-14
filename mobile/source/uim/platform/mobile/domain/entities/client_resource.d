@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.client_resource;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 struct ClientResource {
   mixin TenantEntity!(ClientResourceId);
 
@@ -20,7 +23,7 @@ struct ClientResource {
   long version_;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("name", name)
       .set("description", description)
@@ -30,6 +33,5 @@ struct ClientResource {
       .set("sizeBytes", sizeBytes)
       .set("version", version_);
 
-    return j;
   }
 }

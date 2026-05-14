@@ -34,11 +34,10 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
     ApiRule rule;
+    rule.initEntity(req.tenantId, req.createdBy);
     with (rule) {
-      id = randomUUID();
       namespaceId = req.namespaceId;
       environmentId = req.environmentId;
-      tenantId = req.tenantId;
       name = req.name;
       description = req.description;
       status = ApiRuleStatus.notReady;
@@ -53,9 +52,6 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
       corsAllowMethods = req.corsAllowMethods;
       corsAllowHeaders = req.corsAllowHeaders;
       labels = req.labels;
-      createdBy = req.createdBy;
-      createdAt = clockSeconds();
-      updatedAt = createdAt;
     }
 
     // Convert rule entry DTOs

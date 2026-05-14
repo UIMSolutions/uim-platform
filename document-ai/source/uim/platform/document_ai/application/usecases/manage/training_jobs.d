@@ -42,8 +42,8 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     }
 
     TrainingJob tj;
-    tj.id = randomUUID();
-    tj.tenantId = r.tenantId;
+    tj.initEntity(r.tenantId) ;
+
     tj.clientId = r.clientId;
     tj.documentTypeId = r.documentTypeId;
     tj.schemaId = r.schemaId;
@@ -52,11 +52,6 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
     tj.modelVersion = "1.0";
     tj.status = TrainingJobStatus.pending;
     tj.documentCount = confirmedCount;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    tj.createdAt = now;
-    tj.updatedAt = now;
 
     jobRepo.save(tj);
     return CommandResult(true, tj.id.value, "");

@@ -6,8 +6,11 @@
 module uim.platform.authorization_trust.infrastructure.persistence.memory.oauth_clients;
 
 import uim.platform.authorization_trust;
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 mixin(ShowModule!());
 

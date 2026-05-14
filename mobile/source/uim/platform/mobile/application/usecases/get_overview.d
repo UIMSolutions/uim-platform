@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.get_overview;
 
-import uim.platform.mobile.domain.ports.repositories.mobile_apps;
-import uim.platform.mobile.domain.ports.repositories.device_registrations;
-import uim.platform.mobile.domain.ports.repositories.push_notifications;
-import uim.platform.mobile.domain.ports.repositories.usage_reports;
-import uim.platform.mobile.domain.ports.repositories.user_sessions;
-import uim.platform.mobile.domain.ports.repositories.client_logs;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
+// import uim.platform.mobile.domain.ports.repositories.mobile_apps;
+// import uim.platform.mobile.domain.ports.repositories.device_registrations;
+// import uim.platform.mobile.domain.ports.repositories.push_notifications;
+// import uim.platform.mobile.domain.ports.repositories.usage_reports;
+// import uim.platform.mobile.domain.ports.repositories.user_sessions;
+// import uim.platform.mobile.domain.ports.repositories.client_logs;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
     private MobileAppRepository appRepo;
     private DeviceRegistrationRepository deviceRepo;

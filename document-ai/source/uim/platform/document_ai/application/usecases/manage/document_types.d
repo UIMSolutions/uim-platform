@@ -31,20 +31,14 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     DocumentType dt;
-    dt.id = randomUUID();
-    dt.tenantId = r.tenantId;
+    dt.initEntity(r.tenantId) ;
+
     dt.clientId = r.clientId;
     dt.name = r.name;
     dt.description = r.description;
     dt.defaultSchemaId = r.defaultSchemaId;
     dt.supportedFileTypes = r.supportedFileTypes;
-
     dt.category = parseCategory(r.category);
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    dt.createdAt = now;
-    dt.updatedAt = now;
 
     repo.save(dt);
     return CommandResult(true, dt.id.value, "");

@@ -25,8 +25,8 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Namespace is required");
 
     DataModel model;
-    model.id = randomUUID();
-    model.tenantId = req.tenantId;
+    model.initEntity(req.tenantId, req.createdBy);
+
     model.name = req.name;
     model.namespace = req.namespace;
     model.version_ = req.version_.length > 0 ? req.version_ : "1.0.0";
@@ -36,9 +36,6 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     model.keyFields = req.keyFields;
     model.requiredFields = req.requiredFields;
     model.isActive = true;
-    model.createdBy = req.createdBy;
-    model.createdAt = clockSeconds();
-    model.updatedAt = model.createdAt;
 
     repo.save(model);
     return CommandResult(true, model.id.value, "");

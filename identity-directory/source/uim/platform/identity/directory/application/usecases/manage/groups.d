@@ -44,9 +44,13 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto groupId = randomUUID();
-    auto group = Group(groupId, req.tenantId, req.externalId, req.displayName, req.description,
-        GroupType.standard, req.members,
-        ["urn:ietf:params:scim:schemas:core:2.0:Group"], now, now,);
+    Group group;
+    group.initEntity(req.tenantId, req.createdBy);
+
+    // auto group = Group(groupId, req.externalId, req.displayName, req.description,
+    //     GroupType.standard, req.members,
+    //     ["urn:ietf:params:scim:schemas:core:2.0:Group"]);
+
     groupRepo.save(group);
 
     // Update user groupIds for initial members

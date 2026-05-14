@@ -27,8 +27,8 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid file path");
 
         AppFile file;
-        file.id = randomUUID();
-        file.tenantId = r.tenantId;
+        file.initEntity(r.tenantId, r.createdBy);
+
         file.appId = r.appId;
         file.versionId = r.versionId;
         file.filePath = r.filePath;
@@ -38,10 +38,6 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         file.etag = ContentDeliveryService.generateEtag(r.content);
         file.category = categorizeFile(r.filePath);
         file.content = r.content;
-        file.createdAt = currentTimestamp();
-        file.updatedAt = file.createdAt;
-        file.createdBy = r.createdBy;
-        file.updatedBy = r.createdBy;
 
         repo.save(file);
         return CommandResult(true, file.id.value, "");

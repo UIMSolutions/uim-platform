@@ -136,9 +136,9 @@ class ProvisioningEngine {
       entityRepo.save(entity);
 
       // Create log entry
-      auto log = ProvisioningLog();
-      log.id = randomUUID();
-      log.tenantId = tenantId;
+      ProvisioningLog log;
+      log.initEntity(tenantId, job.createdBy);
+
       log.jobId = job.id;
       log.entityType = eType;
       log.entityId = entity.externalId;
@@ -147,7 +147,7 @@ class ProvisioningEngine {
       log.sourceSystem = srcName;
       log.targetSystem = tgtName;
       log.details = `{"action":"created","entityId":"` ~ entity.id ~ `"}`;
-      log.createdAt = now;
+
       logRepo.save(log);
     }
   }

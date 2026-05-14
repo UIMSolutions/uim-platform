@@ -5,21 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.device_registrations;
 
-import uim.platform.mobile.domain.entities.device_registration;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface DeviceRegistrationRepository : ITenantRepository!(DeviceRegistration, DeviceRegistrationId) {
 
-  bool existsByDeviceToken(string deviceToken);
-  DeviceRegistration findByDeviceToken(string deviceToken);
-  void removeByDeviceToken(string deviceToken);
+  bool existsByDeviceToken(TenantId tenantId, string deviceToken);
+  DeviceRegistration findByDeviceToken(TenantId tenantId, string deviceToken);
+  void removeByDeviceToken(TenantId tenantId, string deviceToken);
 
-  size_t countByApp(MobileAppId appId);
-  DeviceRegistration[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  DeviceRegistration[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByUser(UserId userId);
-  DeviceRegistration[] findByUser(UserId userId);
-  void removeByUser(UserId userId);
+  size_t countByUser(TenantId tenantId, UserId userId);
+  DeviceRegistration[] findByUser(TenantId tenantId, UserId userId);
+  void removeByUser(TenantId tenantId, UserId userId);
 
 }

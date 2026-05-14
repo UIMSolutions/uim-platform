@@ -53,10 +53,9 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Proxy system with this name already exists");
 
-    auto now = Clock.currStdTime();
     auto sys = ProxySystem();
-    sys.id = randomUUID();
-    sys.tenantId = req.tenantId;
+    sys.initEntity(req.tenantId, req.createdBy);
+
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;
@@ -64,9 +63,6 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     sys.sourceSystemId = req.sourceSystemId;
     sys.targetSystemId = req.targetSystemId;
     sys.status = SystemStatus.configuring;
-    sys.createdBy = req.createdBy;
-    sys.createdAt = now;
-    sys.updatedAt = now;
 
     repo.save(sys);
     return CommandResult(true, sys.id.value, "");

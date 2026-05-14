@@ -5,25 +5,28 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.usage_reports;
 
-import uim.platform.mobile.domain.entities.usage_report;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface UsageReportRepository : ITenantRepository!(UsageReport, UsageReportId) {
 
-  size_t countByApp(MobileAppId appId);
-  UsageReport[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  UsageReport[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countByDevice(DeviceRegistrationId deviceId);
-  UsageReport[] findByDevice(DeviceRegistrationId deviceId);
-  void removeByDevice(DeviceRegistrationId deviceId);
+  size_t countByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  UsageReport[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
 
-  size_t countByUser(UserId userId);
-  UsageReport[] findByUser(UserId userId);
-  void removeByUser(UserId userId);
+  size_t countByUser(TenantId tenantId, UserId userId);
+  UsageReport[] findByUser(TenantId tenantId, UserId userId);
+  void removeByUser(TenantId tenantId, UserId userId);
 
-  size_t countByMetricType(MobileAppId appId, MetricType metricType);
-  UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType);
-  void removeByMetricType(MobileAppId appId, MetricType metricType);
+  size_t countByMetricType(TenantId tenantId, MobileAppId appId, MetricType metricType);
+  UsageReport[] findByMetricType(TenantId tenantId, MobileAppId appId, MetricType metricType);
+  void removeByMetricType(TenantId tenantId, MobileAppId appId, MetricType metricType);
 
 }

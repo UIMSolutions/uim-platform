@@ -33,8 +33,8 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
     DestinationFragment f;
-    f.id = randomUUID();
-    f.tenantId = req.tenantId;
+    f.initEntity(req.tenantId, req.createdBy);
+
     f.subaccountId = req.subaccountId;
     f.name = req.name;
     f.description = req.description;
@@ -51,9 +51,6 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     f.keystoreId = req.keystoreId;
     f.truststoreId = req.truststoreId;
     f.properties = req.properties;
-    f.createdBy = req.createdBy;
-    f.createdAt = clockSeconds();
-    f.updatedAt = f.createdAt;
 
     repo.save(f);
     return CommandResult(true, f.id.value, "");

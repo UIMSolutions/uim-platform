@@ -25,8 +25,8 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
    
 
     FilterRule rule;
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    rule.initEntity(req.tenantId, req.createdBy);
+
     rule.name = req.name;
     rule.description = req.description;
     rule.category = parseCategory(req.category);
@@ -35,9 +35,6 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.conditions = toConditions(req.conditions);
     rule.logicOperator = req.logicOperator.length > 0 ? req.logicOperator : "AND";
     rule.isActive = true;
-    rule.createdBy = req.createdBy;
-    rule.createdAt = clockSeconds();
-    rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
     return CommandResult(true, rule.id.value, "");

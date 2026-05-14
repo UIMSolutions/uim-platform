@@ -28,9 +28,9 @@ class CleanseAddressesUseCase { // TODO: UIMUseCase {
 
   /// Cleanse a single address.
   AddressRecord cleanse(CleanseAddressRequest req) {
-    auto record = AddressRecord();
-    record.id = randomUUID();
-    record.tenantId = req.tenantId;
+    AddressRecord record;
+    record.initEntity(req.tenantId, req.createdBy);
+
     record.sourceRecordId = req.sourceRecordId;
     record.inputLine1 = req.line1;
     record.inputLine2 = req.line2;
@@ -59,8 +59,8 @@ class CleanseAddressesUseCase { // TODO: UIMUseCase {
   }
 
   /// Retrieve by source record.
-  AddressRecord[] getBySourceRecord(RecordId sourceRecordtenantId, id tenantId) {
-    return repo.findBySourceRecord(sourceRecordtenantId, id);
+  AddressRecord[] getBySourceRecord(RecordId sourceRecordId, TenantId tenantId) {
+    return repo.findBySourceRecord(sourceRecordId, tenantId);
   }
 
   /// Retrieve by quality level.

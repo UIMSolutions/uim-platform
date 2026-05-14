@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.client_log_entry;
 
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 struct ClientLogEntry {
   mixin TenantEntity!(ClientLogEntryId);
 
@@ -24,7 +28,7 @@ struct ClientLogEntry {
   long uploadedAt;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("userId", userId)
@@ -38,6 +42,5 @@ struct ClientLogEntry {
       .set("timestamp", timestamp)
       .set("uploadedAt", uploadedAt);
 
-    return j;
   }
 }

@@ -27,8 +27,8 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
 
     RetentionPolicy p;
-    p.id = randomUUID();
-    p.tenantId = req.tenantId;
+    p.initEntity(req.tenantId, req.createdBy);
+
     p.name = req.name;
     p.description = req.description;
     p.dataType = req.dataType.to!DataType;
@@ -36,8 +36,6 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
     p.maxSizeGB = (req.maxSizeGB > 0) ? req.maxSizeGB : 10.0;
     p.isDefault = req.isDefault;
     p.isActive = true;
-    p.createdBy = req.createdBy;
-    p.createdAt = clockSeconds();
 
     auto validation = RetentionEvaluator.validate(p);
     if (!validation.valid) {

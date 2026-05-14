@@ -42,10 +42,9 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application with this name already exists in space");
 
     auto now = Clock.currStdTime();
-    auto app = Application();
-    app.id = randomUUID();
+    Application app;
+    app.initEntity(req.tenantId, req.createdBy);
     app.spaceId = req.spaceId;
-    app.tenantId = req.tenantId;
     app.name = req.name;
     app.state = AppState.stopped;
     app.instances = req.instances > 0 ? req.instances : 1;
@@ -59,9 +58,6 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.healthCheckTimeoutSec = req.healthCheckTimeoutSec > 0 ? req.healthCheckTimeoutSec : 60;
     app.environmentVariables = req.environmentVariables;
     app.dockerImage = req.dockerImage;
-    app.createdBy = req.createdBy;
-    app.createdAt = now;
-    app.updatedAt = now;
 
     apps.save(app);
     return CommandResult(true, app.id.value, "");

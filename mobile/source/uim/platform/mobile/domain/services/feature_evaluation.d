@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.services.feature_evaluation;
 
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.domain.entities.feature_restriction;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct FeatureEvaluationService {
   // Evaluate whether a feature is enabled for a given user/device

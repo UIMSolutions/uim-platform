@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.client_logs;
 
-import uim.platform.mobile.domain.ports.repositories.client_logs;
-import uim.platform.mobile.domain.entities.client_log_entry;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.client_logs;
+// import uim.platform.mobile.domain.entities.client_log_entry;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManageClientLogsUseCase { // TODO: UIMUseCase {
     private ClientLogRepository repo;
 
@@ -21,8 +25,8 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
 
     CommandResult upload(UploadClientLogRequest r) {
         ClientLogEntry entry;
-        entry.id = randomUUID();
-        entry.tenantId = r.tenantId;
+        entry.initEntity(r.tenantId, r.createdBy);
+
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;
         entry.userId = r.userId;
@@ -33,7 +37,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         entry.appVersion = r.appVersion;
         entry.osVersion = r.osVersion;
         entry.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
-        entry.createdAt = currentTimestamp();
+
         repo.save(entry);
         return CommandResult(true, entry.id.value, "");
     }

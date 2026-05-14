@@ -32,9 +32,9 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Scenario name is required");
 
-    auto scenario = IntegrationScenario();
-    scenario.id = randomUUID();
-    scenario.tenantId = req.tenantId;
+    IntegrationScenario scenario;
+    scenario.initEntity(req.tenantId, req.createdBy);
+
     scenario.name = req.name;
     scenario.description = req.description;
     scenario.category = req.category;
@@ -44,9 +44,6 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     scenario.targetSystemType = req.targetSystemType;
     scenario.prerequisites = req.prerequisites;
     scenario.stepTemplates = req.stepTemplates;
-    scenario.createdBy = req.createdBy;
-    scenario.createdAt = Clock.currStdTime();
-    scenario.updatedAt = scenario.createdAt;
 
     repo.save(scenario);
     return CommandResult(true, scenario.id.value, "");

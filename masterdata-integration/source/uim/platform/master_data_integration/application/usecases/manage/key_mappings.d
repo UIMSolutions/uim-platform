@@ -28,14 +28,12 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "At least one key mapping entry is required");
 
     KeyMapping mapping;
-    mapping.id = randomUUID();
-    mapping.tenantId = req.tenantId;
+    mapping.initEntity(req.tenantId);
+
     mapping.masterDataObjectId = req.masterDataObjectId;
     mapping.category = parseCategory(req.category);
     mapping.objectType = req.objectType;
     mapping.entries = toEntries(req.entries);
-    mapping.createdAt = clockSeconds();
-    mapping.updatedAt = mapping.createdAt;
 
     if (!resolver.isValid(mapping))
       return CommandResult(false, "",

@@ -5,14 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.mobile_apps;
 
-import uim.platform.mobile.domain.entities.mobile_app;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface MobileAppRepository : ITenantRepository!(MobileApp, MobileAppId) {
 
-  size_t countByBundleId(string bundleId);
-  MobileApp findByBundleId(string bundleId);
-  void removeByBundleId(string bundleId);
+  size_t countByBundleId(TenantId tenantId, string bundleId);
+  MobileApp findByBundleId(TenantId tenantId, string bundleId);
+  void removeByBundleId(TenantId tenantId, string bundleId);
 
   size_t countByPlatform(TenantId tenantId, AppPlatform platform);
   MobileApp[] findByPlatform(TenantId tenantId, AppPlatform platform);

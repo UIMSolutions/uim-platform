@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.push_notifications;
 
-import uim.platform.mobile.domain.ports.repositories.push_notifications;
-import uim.platform.mobile.domain.entities.push_notification;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.domain.services.push_delivery_service;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.push_notifications;
+// import uim.platform.mobile.domain.entities.push_notification;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.services.push_delivery_service;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     private PushNotificationRepository repo;
 
@@ -25,8 +29,8 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         if (!PushDeliveryService.validatePayloadSize(r.payload, provider))
             return CommandResult(false, "", "Payload exceeds maximum size for provider");
         PushNotification notif;
-        notif.id = randomUUID();
-        notif.tenantId = r.tenantId;
+        notif.initEntity(r.tenantId, r.createdBy);
+
         notif.appId = r.appId;
         notif.title = r.title;
         notif.body_ = r.body_;
@@ -38,8 +42,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         notif.targetTopics = r.targetTopics;
         notif.scheduledAt = r.scheduledAt;
         notif.expiresAt = r.expiresAt;
-        notif.createdAt = currentTimestamp();
-        notif.createdBy = r.createdBy;
+
         repo.save(notif);
         return CommandResult(true, notif.id.value, "");
     }

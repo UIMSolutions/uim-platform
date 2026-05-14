@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.app_configuration;
 
-import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 struct AppConfiguration {
   mixin TenantEntity!AppConfigurationId;
 

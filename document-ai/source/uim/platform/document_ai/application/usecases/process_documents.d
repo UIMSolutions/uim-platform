@@ -40,8 +40,8 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", validation.error);
 
     Document doc;
-    doc.id = randomUUID();
-    doc.tenantId = r.tenantId;
+    doc.initEnty(r.tenantId) ;
+
     doc.clientId = r.clientId;
     doc.fileName = r.fileName;
     doc.fileType = detectFileType(r.fileName);
@@ -53,6 +53,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     doc.language = r.language.length > 0 ? r.language : "en";
     doc.status = DocumentStatus.pending;
     doc.extractionMethod = ExtractionMethod.ml_model;
+    doc.uploadedAt = doc.createdAt;
 
     // Parse labels
     DocumentLabel[] labels;
@@ -65,12 +66,6 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
       }
     }
     doc.labels = labels;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    doc.uploadedAt = now;
-    doc.createdAt = now;
-    doc.updatedAt = now;
 
     docRepo.save(doc);
 
@@ -136,8 +131,8 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     import core.time : MonoTime;
 
     ExtractionResult result;
-    result.id = randomUUID();
-    result.tenantId = doc.tenantId;
+    result.initEntity(doc.tenantId);
+
     result.clientId = doc.clientId;
     result.documentId = doc.id;
     result.schemaId = doc.schemaId;
@@ -145,10 +140,6 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     result.overallConfidence = 0.85;
     result.extractedFieldCount = 0;
     result.totalPages = doc.pageCount > 0 ? doc.pageCount : 1;
-
-    auto now = MonoTime.currTime.ticks;
-    result.processedAt = now;
-    result.createdAt = now;
 
     resultRepo.save(result);
 

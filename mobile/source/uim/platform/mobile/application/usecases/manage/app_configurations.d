@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.app_configurations;
 
-import uim.platform.mobile.domain.ports.repositories.app_configurations;
-import uim.platform.mobile.domain.entities.app_configuration;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.app_configurations;
+// import uim.platform.mobile.domain.entities.app_configuration;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 
 class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     private AppConfigurationRepository repo;
@@ -24,17 +28,15 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
         AppConfiguration config;
-        config.id = randomUUID();
-        config.tenantId = r.tenantId;
+        config.initEntity(r.tenantId, r.createdBy);
+
         config.appId = r.appId;
         config.key = r.key;
         config.value = r.value;
         config.description = r.description;
         config.dataType = r.dataType;
         config.isSecret = r.isSecret;
-        config.createdAt = currentTimestamp();
-        config.updatedAt = config.createdAt;
-        config.createdBy = r.createdBy;
+
         repo.save(config);
         return CommandResult(true, config.id.value, "");
     }

@@ -30,12 +30,9 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     Connection c;
-    c.id = randomUUID();
-    c.tenantId = r.tenantId;
+    c.initEntity(r.tenantId, r.createdBy);
+
     c.spaceId = r.spaceId;
     c.name = r.name;
     c.description = r.description;
@@ -44,11 +41,6 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     c.database = r.database;
     c.user = r.user;
     c.isValid = false;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    c.createdAt = now;
-    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");

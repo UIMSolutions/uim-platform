@@ -5,13 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.offline_stores;
 
-import uim.platform.mobile.domain.entities.offline_store;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface OfflineStoreRepository : ITenantRepository!(OfflineStore, OfflineStoreId) {
 
-  size_t countByApp(MobileAppId appId);
-  OfflineStore[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  OfflineStore[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
 }

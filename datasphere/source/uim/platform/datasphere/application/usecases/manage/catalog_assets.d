@@ -30,12 +30,10 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     CatalogAsset ca;
+    ca.initEntity(r.tenantId);
+
     ca.id = r.assetId;
-    ca.tenantId = r.tenantId;
     ca.spaceId = r.spaceId;
     ca.name = r.name;
     ca.description = r.description;
@@ -44,11 +42,6 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     ca.owner = r.owner;
     ca.glossaryTerms = r.glossaryTerms;
     ca.qualityStatus = QualityStatus.unknown;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    ca.createdAt = now;
-    ca.updatedAt = now;
 
     repo.save(ca);
     return CommandResult(true, ca.id.value, "");

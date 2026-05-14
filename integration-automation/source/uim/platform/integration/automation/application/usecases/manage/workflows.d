@@ -59,9 +59,9 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
 
-    auto wf = Workflow();
-    wf.id = randomUUID();
-    wf.tenantId = req.tenantId;
+    Workflow wf;
+    wf.initEntity(req.tenantId, req.createdBy);
+
     wf.scenarioId = req.scenarioId;
     wf.name = req.name.length > 0 ? req.name : scenario.name;
     wf.description = req.description.length > 0 ? req.description : scenario.description;
@@ -71,18 +71,15 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     wf.completedSteps = 0;
     wf.sourceSystemConnectionId = req.sourceSystemConnectionId;
     wf.targetSystemConnectionId = req.targetSystemConnectionId;
-    wf.createdBy = req.createdBy;
-    wf.createdAt = now;
-    wf.updatedAt = now;
 
     workflowRepo.save(wf);
 
     // Instantiate workflow steps from scenario templates
     foreach (tmpl; scenario.stepTemplates) {
-      auto step = WorkflowStep();
-      step.id = randomUUID();
+      WorkflowStep step;
+      step.initEntity(req.tenantId);
+
       step.workflowId = wf.id;
-      step.tenantId = req.tenantId;
       step.name = tmpl.name;
       step.description = tmpl.description;
       step.type_ = tmpl.type_;
@@ -98,7 +95,6 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       if (tmpl.requiresTargetSystem)
         step.targetSystemConnectionId = req.targetSystemConnectionId;
       step.estimatedDurationMinutes = tmpl.estimatedDurationMinutes;
-      step.createdAt = now;
 
       // Resolve template dependencies (sequence numbers → step IDs)
       // Dependencies will be resolved by sequence number at runtime

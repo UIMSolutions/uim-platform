@@ -28,8 +28,8 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
 
     Span s;
-    s.id = randomUUID();
-    s.tenantId = req.tenantId;
+    s.initEntity(req.tenantId, req.createdBy);
+
     s.traceId = req.traceId;
     s.parentSpanId = req.parentSpanId;
     s.operationName = req.operationName;

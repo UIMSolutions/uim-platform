@@ -34,17 +34,14 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Dataset with this name already exists");
 
     auto now = Clock.currStdTime();
-    auto ds = Dataset();
-    ds.id = randomUUID();
-    ds.tenantId = req.tenantId;
+    Dataset ds;
+    ds.initEntity(req.tenantId, req.createdBy);
+
     ds.name = req.name;
     ds.description = req.description;
     ds.dataType = req.dataType;
     ds.columnDefinitions = req.columnDefinitions;
     ds.status = DatasetStatus.draft;
-    ds.createdBy = req.createdBy;
-    ds.createdAt = now;
-    ds.updatedAt = now;
 
     repo.save(ds);
     return CommandResult(true, ds.id.value, "");

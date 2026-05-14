@@ -33,8 +33,8 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Schema ID is required");
 
     Template t;
-    t.id = randomUUID();
-    t.tenantId = r.tenantId;
+    t.initEntity(r.tenantId) ;
+
     t.clientId = r.clientId;
     t.schemaId = r.schemaId;
     t.documentTypeId = r.documentTypeId;
@@ -61,11 +61,6 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
       }
     }
     t.regions = regions;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

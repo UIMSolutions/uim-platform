@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.mobile_apps;
 
-import uim.platform.mobile.domain.ports.repositories.mobile_apps;
-import uim.platform.mobile.domain.entities.mobile_app;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.mobile_apps;
+// import uim.platform.mobile.domain.entities.mobile_app;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 
 class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     private MobileAppRepository repo;
@@ -24,8 +28,8 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "App with this bundle ID already exists");
         MobileApp app;
-        app.id = randomUUID();
-        app.tenantId = r.tenantId;
+        app.initEntity(r.tenantId, r.createdBy);
+
         app.name = r.name;
         app.description = r.description;
         app.bundleId = r.bundleId;
@@ -36,10 +40,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         app.pushEnabled = r.pushEnabled;
         app.offlineEnabled = r.offlineEnabled;
         app.iconUrl = r.iconUrl;
-        app.createdAt = currentTimestamp();
-        app.updatedAt = app.createdAt;
-        app.createdBy = r.createdBy;
-        app.updatedBy = r.createdBy;
+
         repo.save(app);
         return CommandResult(true, app.id.value, "");
     }

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.usage_reports;
 
-import uim.platform.mobile.domain.ports.repositories.usage_reports;
-import uim.platform.mobile.domain.entities.usage_report;
-import uim.platform.mobile.domain.types;
-import uim.platform.mobile.application.dto;
-import std.uuid : randomUUID;
+// import uim.platform.mobile.domain.ports.repositories.usage_reports;
+// import uim.platform.mobile.domain.entities.usage_report;
+// import uim.platform.mobile.domain.types;
+// import uim.platform.mobile.application.dto;
+// import std.uuid : randomUUID;
 
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     private UsageReportRepository repo;
 

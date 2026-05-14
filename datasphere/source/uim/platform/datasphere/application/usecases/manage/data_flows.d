@@ -34,18 +34,13 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     import std.uuid : randomUUID;
 
     DataFlow df;
-    df.id = randomUUID();
-    df.tenantId = r.tenantId;
+    df,initEntity(r.tenantId, r.createdBy);
+
     df.spaceId = r.spaceId;
     df.name = r.name;
     df.description = r.description;
     df.status = FlowStatus.inactive;
     df.scheduleExpression = r.scheduleExpression;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    df.createdAt = now;
-    df.updatedAt = now;
 
     repo.save(df);
     return CommandResult(true, df.id.value, "");

@@ -32,8 +32,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Certificate with name '" ~ req.name ~ "' already exists");
 
     Certificate cert;
-    cert.id = randomUUID();
-    cert.tenantId = req.tenantId;
+    cert.initEntity(req.tenantId) ;
+
     cert.name = req.name;
     cert.description = req.description;
     cert.certType = req.certType.to!CertificateType;

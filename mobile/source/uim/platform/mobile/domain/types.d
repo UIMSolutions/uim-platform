@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
+
+@safe:
 // ID aliases
 struct MobileAppId  {
     string value;
@@ -142,8 +146,8 @@ enum DeviceStatus {
 
 // Push notification provider
 enum PushProvider {
-  apns,   // Apple Push Notification Service
   fcm,    // Firebase Cloud Messaging
+  apns,   // Apple Push Notification Service
   wns,    // Windows Notification Service
   w3c,    // W3C Web Push
 }

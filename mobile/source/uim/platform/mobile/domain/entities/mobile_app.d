@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.mobile_app;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 struct MobileApp {
   mixin TenantEntity!(MobileAppId);
@@ -22,7 +26,7 @@ struct MobileApp {
   string iconUrl;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("bundleId", bundleId)
@@ -33,7 +37,5 @@ struct MobileApp {
       .set("pushEnabled", pushEnabled)
       .set("offlineEnabled", offlineEnabled)
       .set("iconUrl", iconUrl);
-
-    return j;
   }
 }

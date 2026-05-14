@@ -31,14 +31,12 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "At least one label value is required");
 
     Label label;
-    label.id = randomUUID();
+    label.initEntity(req.tenantId, req.createdBy);
+
     label.resourceType = req.resourceType.to!LabeledResourceType;
     label.resourceId = req.resourceId;
     label.key = req.key;
     label.values = req.values;
-    label.createdBy = req.createdBy;
-    label.createdAt = clockSeconds();
-    label.updatedAt = label.createdAt;
 
     labels.save(label);
     return CommandResult(true, label.id.value, "");

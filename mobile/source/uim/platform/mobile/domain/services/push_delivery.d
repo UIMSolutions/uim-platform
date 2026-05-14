@@ -5,9 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.services.push_delivery_service;
 
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
 
+mixin(Showmodule!());
 
+@safe:
 
 struct PushDeliveryService {
   // Validate push notification payload size

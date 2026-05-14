@@ -5,25 +5,28 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.ports.repositories.user_sessions;
 
-import uim.platform.mobile.domain.entities.user_session;
-import uim.platform.mobile.domain.types;
+import uim.platform.mobile;
+
+mixin(Showmodule!());
+
+@safe:
 
 interface UserSessionRepository : ITenantRepository!(UserSession, UserSessionId) {
 
-  size_t countByUser(UserId userId);
-  UserSession[] findByUser(UserId userId);
-  void removeByUser(UserId userId);
+  size_t countByUser(TenantId tenantId, UserId userId);
+  UserSession[] findByUser(TenantId tenantId, UserId userId);
+  void removeByUser(TenantId tenantId, UserId userId);
 
-  size_t countByDevice(DeviceRegistrationId deviceId);
-  UserSession[] findByDevice(DeviceRegistrationId deviceId);
-  void removeByDevice(DeviceRegistrationId deviceId);
+  size_t countByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  UserSession[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
+  void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
 
-  size_t countByApp(MobileAppId appId);
-  UserSession[] findByApp(MobileAppId appId);
-  void removeByApp(MobileAppId appId);
+  size_t countByApp(TenantId tenantId, MobileAppId appId);
+  UserSession[] findByApp(TenantId tenantId, MobileAppId appId);
+  void removeByApp(TenantId tenantId, MobileAppId appId);
 
-  size_t countActive(MobileAppId appId);
-  UserSession[] findActive(MobileAppId appId);
-  void removeActive(MobileAppId appId);
+  size_t countActive(TenantId tenantId, MobileAppId appId);
+  UserSession[] findActive(TenantId tenantId, MobileAppId appId);
+  void removeActive(TenantId tenantId, MobileAppId appId);
 
 }
