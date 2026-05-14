@@ -31,12 +31,9 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
     return latest;
   }
 
+  // #region ByApp
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
-  }
-
-  AppVersion[] filterByApp(AppVersion[] versions, MobileAppId appId) {
-    return versions.filter!(v => v.appId == appId).array;
   }
 
   AppVersion[] findByApp(TenantId tenantId, MobileAppId appId) {
@@ -46,6 +43,7 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(v => remove(v));
   }
+  // #endregion ByApp
 
   size_t countByStatus(TenantId tenantId, MobileAppId appId, VersionStatus status) {
     return findByStatus(tenantId, appId, status).length;

@@ -20,12 +20,11 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
   }
-  ClientLogEntry[] filterByApp(ClientLogEntry[] entries, MobileAppId appId) {
-    return entries.filter!(e => e.appId == appId).array;
-  }
+
   ClientLogEntry[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId), appId);
   }
+
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(e => remove(e));
   }
@@ -33,12 +32,15 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
   size_t countByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
     return findByDevice(tenantId, deviceId).length;
   }
+
   ClientLogEntry[] filterByDevice(ClientLogEntry[] entries, DeviceRegistrationId deviceId) {
     return entries.filter!(e => e.deviceId == deviceId).array;
   }
+
   ClientLogEntry[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
     return filterByDevice(findByTenant(tenantId), deviceId);
   }
+
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
     findByDevice(tenantId, deviceId).each!(e => remove(e));
   }
@@ -46,12 +48,15 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
   size_t countByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
     return findByLevel(tenantId, appId, level).length;
   }
+
   ClientLogEntry[] filterByLevel(ClientLogEntry[] entries, MobileAppId appId, LogLevel level) {
     return entries.filter!(e => e.appId == appId && e.level == level).array;
   }
+
   ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
     return filterByLevel(findByApp(tenantId, appId), appId, level);
   }
+
   void removeByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
     findByLevel(tenantId, appId, level).each!(e => remove(e));
   }

@@ -20,12 +20,11 @@ class MemoryPushNotificationRepository : TenantRepository!(PushNotification, Pus
   size_t countByApp(MobileAppId appId) {
     return findByApp(appId).length;
   }
-  PushNotification[] filterByApp(PushNotification[] notifications, MobileAppId appId) {
-    return notifications.filter!(n => n.appId == appId).array;
-  }
+
   PushNotification[] findByApp(MobileAppId appId) {
     return filterByApp(findAll().array, appId);
   }
+
   void removeByApp(MobileAppId appId) {
     findByApp(appId).each!(n => remove(n));
   }
@@ -33,12 +32,15 @@ class MemoryPushNotificationRepository : TenantRepository!(PushNotification, Pus
   size_t countByStatus(MobileAppId appId, NotificationStatus status) {
     return findByStatus(appId, status).length;
   }
-  PushNotification[] filterByStatus(PushNotification[] notifications, NotificationStatus status) {  
+
+  PushNotification[] filterByStatus(PushNotification[] notifications, NotificationStatus status) {
     return notifications.filter!(n => n.status == status).array;
   }
+
   PushNotification[] findByStatus(MobileAppId appId, NotificationStatus status) {
     return filterByStatus(findByApp(appId), status);
-  }   
+  }
+
   void removeByStatus(MobileAppId appId, NotificationStatus status) {
     findByStatus(appId, status).each!(n => remove(n));
   }

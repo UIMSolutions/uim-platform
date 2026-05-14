@@ -35,9 +35,6 @@ class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientR
   size_t count(TenantId tenantId) {
     return findByTenant(tenantId).values.length;
   }
-  ClientResource[] filterByApp(ClientResource[] resources, MobileAppId appId)  {
-    return resources.filter!(r => r.appId == appId).array;
-  }
   ClientResource[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId).values.array, appId);
   }

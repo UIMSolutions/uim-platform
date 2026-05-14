@@ -16,7 +16,7 @@ mixin(Showmodule!());
 @safe:
 
 class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStoreId), OfflineStoreRepository {
- 
+
   bool existsByName(TenantId tenantId, MobileAppId appId, string name) {
     return findByApp(tenantId, appId).any!(s => s.name == name);
   }
@@ -32,12 +32,11 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
   }
-  OfflineStore[] filterByApp(OfflineStore[] stores, MobileAppId appId) {
-    return stores.filter!(s => s.appId == appId).array;
-  }
+
   OfflineStore[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return findAll().filter!(s => s.appId == appId).array;
+    return filterByApp(findByTenant(tenantId), appId);
   }
+
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(s => remove(s));
   }

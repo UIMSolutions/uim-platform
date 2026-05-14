@@ -33,14 +33,17 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
   PasswordPolicyResponse createPolicy(CreatePasswordPolicyRequest req) {
     auto now = Clock.currStdTime();
     auto policyId = randomUUID();
-    auto policy = PasswordPolicy(policyId, req.tenantId, req.name, req.description,
-        PasswordStrength.standard, req.minLength > 0 ? req.minLength : 8,
-        req.maxLength > 0 ? req.maxLength : 128, req.requireUppercase, req.requireLowercase,
-        req.requireDigit, req.requireSpecialChar, req.minUniqueChars, req.maxRepeatedChars,
-        req.passwordHistoryCount, req.maxFailedAttempts > 0 ? req.maxFailedAttempts : 5,
-        req.lockoutDurationMinutes > 0 ? req.lockoutDurationMinutes : 30,
-        req.expiryDays, 14, // warningDaysBeforeExpiry
-        true, now, now,);
+    PasswordPolicy policy;
+    policy.initEntity(req.tenantId);
+
+    // auto policy = PasswordPolicy(policyId,req.name, req.description,
+    //     PasswordStrength.standard, req.minLength > 0 ? req.minLength : 8,
+    //     req.maxLength > 0 ? req.maxLength : 128, req.requireUppercase, req.requireLowercase,
+    //     req.requireDigit, req.requireSpecialChar, req.minUniqueChars, req.maxRepeatedChars,
+    //     req.passwordHistoryCount, req.maxFailedAttempts > 0 ? req.maxFailedAttempts : 5,
+    //     req.lockoutDurationMinutes > 0 ? req.lockoutDurationMinutes : 30,
+    //     req.expiryDays, 14, // warningDaysBeforeExpiry
+    //     true, );
     policyRepo.save(policy);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId, AuditEventType.schemaCreated, // reuse event type

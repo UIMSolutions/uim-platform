@@ -30,22 +30,13 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     TaskChain tc;
-    tc.id = id;
-    tc.tenantId = r.tenantId;
+    tc.initEntity(r.tenantId);
     tc.spaceId = r.spaceId;
     tc.name = r.name;
     tc.description = r.description;
     tc.status = TaskStatus.scheduled;
     tc.scheduleExpression = r.scheduleExpression;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    tc.createdAt = now;
-    tc.updatedAt = now;
 
     repo.save(tc);
     return CommandResult(true, tc.id.value, "");
