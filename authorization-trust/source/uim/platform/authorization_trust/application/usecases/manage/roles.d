@@ -18,27 +18,24 @@ class ManageRolesUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateRoleRequest r) {
+  CommandResult createRole(CreateRoleRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Role name is required");
     if (repo.existsByName(r.name, r.appId))
       return CommandResult(false, "", "A role with this name already exists for the application");
 
-    import std.uuid : randomUUID;
     RoleEntity role;
-    role.id              = randomUUID().toString();
+    role.initEntity(r.tenantId);
     role.name            = r.name;
     role.description     = r.description;
     role.scopeReferences = r.scopeReferences.dup;
     role.appId           = r.appId;
-    role.createdAt       = currentTimestamp();
-    role.updatedAt       = role.createdAt;
 
     repo.save(role);
     return CommandResult(true, role.id, "");
   }
 
-  CommandResult update(UpdateRoleRequest r) {
+  CommandResult updateRole(UpdateRoleRequest r) {
     auto role = repo.findById(r.id);
     if (role.id.length == 0)
       return CommandResult(false, "", "Role not found");
@@ -51,18 +48,19 @@ class ManageRolesUseCase {
     return CommandResult(true, role.id, "");
   }
 
-  CommandResult remove(RoleId id) {
-    if (!repo.existsById(id))
+  CommandResult remove(TenantId tenantId, RoleId id) {
+    if (!repo.existsById(tenantId, id))
       return CommandResult(false, "", "Role not found");
-    repo.remove(id);
+
+    repo.remove(tenantId, id);
     return CommandResult(true, id, "");
   }
 
-  RoleEntity getById(RoleId id) {
-    return repo.findById(id);
+  RoleEntity getRole(TenantId tenantId, RoleId id) {
+    return repo.findById(tenantId, id);
   }
 
-  RoleEntity[] listAll() {
-    return repo.findAll();
+  RoleEntity[] listRoles(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 }

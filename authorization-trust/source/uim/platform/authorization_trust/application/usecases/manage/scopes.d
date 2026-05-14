@@ -49,18 +49,20 @@ class ManageScopesUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  CommandResult remove(ScopeId id) {
-    if (!repo.existsById(id))
+  CommandResult remove(TenantId tenantId, ScopeId id) {
+    auto s = repo.findById(tenantId, id);
+    if (s.isNull)
       return CommandResult(false, "", "Scope not found");
-    repo.remove(id);
+
+    repo.remove(s);
     return CommandResult(true, id, "");
   }
 
-  ScopeEntity getById(ScopeId id) {
-    return repo.findById(id);
+  ScopeEntity getById(TenantId tenantId, ScopeId id) {
+    return repo.findById(tenantId, id);
   }
 
-  ScopeEntity[] listAll() {
-    return repo.findAll();
+  ScopeEntity[] listAll(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 }

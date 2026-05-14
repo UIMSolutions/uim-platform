@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.destination.presentation.http.controllers.certificate;
 
-
-
-
-
-
 // import uim.platform.destination.application.usecases.manage.certificates;
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.certificate;
@@ -39,12 +34,12 @@ class CertificateController : PlatformController {
   }
 
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UploadCertificateRequest r;
-        r.tenantId = tenantId;
-        r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
+      r.tenantId = tenantId;
+      r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.certificateType = j.getString("type");
@@ -101,7 +96,6 @@ class CertificateController : PlatformController {
   protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-    
 
       auto now = Clock.currTime().toUnixTime();
       auto thirtyDays = now + 30 * 86_400;
@@ -122,10 +116,10 @@ class CertificateController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto c = usecase.getCertificate(id);
+      auto c = usecase.getCertificate(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Certificate not found");
         return;
@@ -137,18 +131,21 @@ class CertificateController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateCertificateRequest r;
+      r.tenantId = tenantId;
+      r.certificateId = id;
       r.description = j.getString("description");
       r.content = j.getString("content");
       r.password = j.getString("password");
       r.validFrom = jsonLong(j, "validFrom");
       r.validTo = jsonLong(j, "validTo");
 
-      auto result = usecase.updateCertificate(id, r);
+      auto result = usecase.updateCertificate(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -164,10 +161,11 @@ class CertificateController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteCertificate(id);
+
+      auto result = usecase.deleteCertificate(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
@@ -183,10 +181,10 @@ class CertificateController : PlatformController {
   }
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto result = usecase.validateCertificate(id);
+      auto result = usecase.validateCertificate(tenantId, id);
 
       auto resp = Json.emptyObject
         .set("isValid", result.isValid)
@@ -200,5 +198,4 @@ class CertificateController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }

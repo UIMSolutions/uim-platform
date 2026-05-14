@@ -14,7 +14,7 @@ struct CreateDestinationRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   ServiceInstanceId serviceInstanceId;
-  
+
   string name;
   string description;
   string destinationType; // "http", "rfc", "mail", "ldap"
@@ -108,6 +108,9 @@ struct UploadCertificateRequest {
 }
 
 struct UpdateCertificateRequest {
+  TenantId tenantId;
+  CertificateId certificateId;
+  
   string description;
   string content;
   string password;

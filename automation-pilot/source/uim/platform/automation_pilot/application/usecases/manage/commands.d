@@ -18,26 +18,22 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Command getById(CommandId id) {
+    Command getCommand(CommandId id) {
         return repo.findById(tenantId, id);
     }
 
-    Command[] list() {
-        return repo.findAll();
-    }
-
-    Command[] listByTenant(TenantId tenantId) {
+    Command[] listCommands(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Command[] listByCatalog(CatalogId catalogId) {
-        return repo.findByCatalog(catalogId);
+    Command[] listCommands(TenantId tenantId, CatalogId catalogId) {
+        return repo.findByCatalog(tenantId, catalogId);
     }
 
-    CommandResult create(CommandDTO dto) {
+    CommandResult createCommand(CommandDTO dto) {
         Command cmd;
+        cmd.initEntity(dto.tenantId, dto.createdBy);
         cmd.id = CommandId(dto.id);
-        cmd.tenantId = dto.tenantId;
         cmd.catalogId = CatalogId(dto.catalogId);
         cmd.name = dto.name;
         cmd.description = dto.description;
@@ -48,17 +44,18 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         cmd.timeout = dto.timeout;
         cmd.retryCount = dto.retryCount;
         cmd.tags = dto.tags;
-        cmd.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidCommand(cmd))
             return CommandResult(false, "", "Invalid command data");
+
         repo.save(cmd);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(CommandDTO dto) {
-        if (!repo.existsById(dto.commandId))
-            return CommandResult(false, "", "Command not found");
+    CommandResult updateCommand(CommandDTO dto) {
         auto existing = repo.findById(dto.commandId);
+        if (existing.isNull)
+            return CommandResult(false, "", "Command not found");
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.inputSchema.length > 0) existing.inputSchema = dto.inputSchema;

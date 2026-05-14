@@ -29,8 +29,10 @@ class FindController : PlatformController {
     router.get("/api/v1/destinations/find", &handleFind);
   }
 
-  protected void handleGetFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+      
       FindDestinationRequest r;
       r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");

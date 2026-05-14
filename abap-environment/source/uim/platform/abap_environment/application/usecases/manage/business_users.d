@@ -92,9 +92,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
       RoleAssignment[] assignments;
       foreach (roleId; req.roleIds) {
         auto roleIdObj = BusinessRoleId(roleId);
-        if (roleRepo.existsById(roleIdObj)) {
+        if (!roleIdObj.isNull) {
           auto role = roleRepo.findById(roleIdObj);
-          assignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
+          if (!role.isNull) {
+            assignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
+          }
         }
       }
       user.roleAssignments = assignments;

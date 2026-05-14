@@ -22,27 +22,23 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    Catalog[] list() {
-        return repo.findAll();
-    }
-
-    Catalog[] listByTenant(TenantId tenantId) {
+    Catalog[] listCatalogs(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Catalog[] listByStatus(CatalogStatus status) {
-        return repo.findByStatus(status);
+    Catalog[] listCatalogs(TenantId tenantId, CatalogStatus status) {
+        return repo.findByStatus(tenantId, status);
     }
 
     CommandResult create(CatalogDTO dto) {
         Catalog c;
+        c.initEntity(dto.tenantId, dto.createdBy);
         c.id = CatalogId(dto.id);
-        c.tenantId = dto.tenantId;
         c.name = dto.name;
         c.description = dto.description;
         c.tags = dto.tags;
         c.version_ = dto.version_;
-        c.createdBy = dto.createdBy;
+        
         if (!AutomationValidator.isValidCatalog(c))
             return CommandResult(false, "", "Invalid catalog data");
         repo.save(c);
@@ -50,13 +46,15 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(CatalogDTO dto) {
-        if (!repo.existsById(CatalogId(dto.id)))
-            return CommandResult(false, "", "Catalog not found");
         auto existing = repo.findById(CatalogId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Catalog not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.tags.length > 0) existing.tags = dto.tags;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

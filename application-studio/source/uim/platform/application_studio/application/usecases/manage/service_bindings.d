@@ -54,9 +54,10 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(ServiceBindingDTO dto) {
-        if (!serviceBindings.existsById(ServiceBindingId(dto.id)))
-            return CommandResult(false, "", "Service binding not found");
         auto existing = serviceBindings.findById(ServiceBindingId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Service binding not found");
+
         if (dto.name.length > 0)
             existing.name = dto.name;
         if (dto.description.length > 0)
@@ -65,6 +66,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
             existing.serviceUrl = dto.serviceUrl;
         if (!dto.updatedBy.isNull)
             existing.updatedBy = dto.updatedBy;
+            
         serviceBindings.update(existing);
         return CommandResult(true, dto.id.value, "");
     }

@@ -54,9 +54,10 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(RunConfigurationDTO dto) {
-        if (!configurations.existsById(RunConfigurationId(dto.id)))
-            return CommandResult(false, "", "Run configuration not found");
         auto existing = configurations.findById(RunConfigurationId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Run configuration not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.entryPoint.length > 0) existing.entryPoint = dto.entryPoint;

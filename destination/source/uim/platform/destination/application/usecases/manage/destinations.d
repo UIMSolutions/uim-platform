@@ -87,7 +87,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDestination(UpdateDestinationRequest req) {
-    auto d = repo.findById(req.tenantId, req.id);
+    auto d = repo.findById(req.tenantId, req.destinationId);
     if (d.isNull)
       return CommandResult(false, "", "Destination not found");
 

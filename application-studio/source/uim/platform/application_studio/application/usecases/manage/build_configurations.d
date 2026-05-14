@@ -53,9 +53,10 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(BuildConfigurationDTO dto) {
-        if (!configurations.existsById(BuildConfigurationId(dto.id)))
-            return CommandResult(false, "", "Build configuration not found");
         auto existing = configurations.findById(BuildConfigurationId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "Build configuration not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.buildCommand.length > 0) existing.buildCommand = dto.buildCommand;

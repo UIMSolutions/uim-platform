@@ -76,7 +76,7 @@ class DestinationController : PlatformController {
       r.fragmentIds = getStrings(j, "fragmentIds");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDestination(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -98,7 +98,8 @@ class DestinationController : PlatformController {
       auto instanceId = ServiceInstanceId(req.params.get("serviceInstanceId", ""));
 
       Destination[] destinations = instanceId.isEmpty
-        ? usecase.listBySubaccount(tenantId, subaccountId) : usecase.listByServiceInstance(tenantId, instanceId);
+        ? usecase.listDestinations(tenantId, subaccountId) 
+        : usecase.listDestinations(tenantId, instanceId);
 
       auto arr = destinations.map!(d => d.toJson).array.toJson;
 
@@ -134,8 +135,10 @@ class DestinationController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateDestinationRequest r;
       r.tenantId = tenantId;
+      r.destinationId = id;
       r.description = j.getString("description");
       r.url = j.getString("url");
       r.authenticationType = j.getString("authentication");
@@ -158,7 +161,7 @@ class DestinationController : PlatformController {
       r.properties = jsonStrMap(j, "properties");
       r.fragmentIds = getStrings(j, "fragmentIds");
 
-      auto result = usecase.updateDestination(id, r);
+      auto result = usecase.updateDestination(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

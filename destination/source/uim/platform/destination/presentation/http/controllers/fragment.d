@@ -60,7 +60,7 @@ class FragmentController : PlatformController {
       r.properties = jsonStrMap(j, "properties");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createFragment(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -97,7 +97,7 @@ class FragmentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = FragmentId(extractIdFromPath(req.requestURI));
-      auto f = usecase.getFragment(id);
+      auto f = usecase.getFragment(tenantId, id);
       if (f.isNull) {
         writeError(res, 404, "Fragment not found");
         return;
@@ -114,6 +114,8 @@ class FragmentController : PlatformController {
       auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateFragmentRequest r;
+      r.tenantId = tenantId;
+      r.fragmentId = id;
       r.description = j.getString("description");
       r.url = j.getString("url");
       r.authenticationType = j.getString("authentication");
@@ -128,7 +130,7 @@ class FragmentController : PlatformController {
       r.truststoreId = j.getString("truststoreId");
       r.properties = jsonStrMap(j, "properties");
 
-      auto result = usecase.updateFragment(id, r);
+      auto result = usecase.updateFragment(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -147,7 +149,8 @@ class FragmentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = FragmentId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteFragment(id);
+
+      auto result = usecase.deleteFragment(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)

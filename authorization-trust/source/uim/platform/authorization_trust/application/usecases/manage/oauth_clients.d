@@ -18,7 +18,7 @@ class ManageOAuthClientsUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateOAuthClientRequest r) {
+  CommandResult createOAuthClient(CreateOAuthClientRequest r) {
     if (r.clientId.length == 0)
       return CommandResult(false, "", "clientId is required");
     if (repo.existsByClientId(r.clientId))
@@ -27,6 +27,7 @@ class ManageOAuthClientsUseCase {
     import std.uuid : randomUUID;
     OAuthClientEntity c;
     c.id          = randomUUID().toString();
+    c.tenantId    = r.tenantId;
     c.clientId    = r.clientId;
     c.clientSecret = r.clientSecret.length > 0 ? TokenService.hashSecret(r.clientSecret) : "";
     c.name        = r.name;
@@ -44,9 +45,9 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  CommandResult update(UpdateOAuthClientRequest r) {
-    auto c = repo.findById(r.id);
-    if (c.id.length == 0)
+  CommandResult updateOAuthClient(UpdateOAuthClientRequest r) {
+    auto c = repo.findById(r.tenantId, r.id);
+    if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
 
     if (r.name.length > 0)       c.name = r.name;
@@ -54,9 +55,7 @@ class ManageOAuthClientsUseCase {
     if (r.scopes.length > 0)     c.scopes = r.scopes.dup;
     if (r.redirectUris.length > 0) c.redirectUris = r.redirectUris.dup;
     if (r.grantTypes.length > 0) {
-      c.grantTypes = [];
-      foreach (gt; r.grantTypes)
-        c.grantTypes ~= parseGrantType(gt);
+      c.grantTypes = r.grantTypes.map!(gt => parseGrantType(gt)).array;
     }
     c.updatedAt = currentTimestamp();
 
@@ -64,26 +63,28 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  CommandResult remove(OAuthClientId id) {
-    if (!repo.existsById(id))
+  CommandResult removeOAuthClient(TenantId tenantId, OAuthClientId id) {
+    auto c = repo.findById(tenantId, id);
+    if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
-    repo.remove(id);
+
+    repo.remove(c);
     return CommandResult(true, id, "");
   }
 
-  OAuthClientEntity getById(OAuthClientId id) {
-    return repo.findById(id);
+  OAuthClientEntity getOAuthClient(TenantId tenantId, OAuthClientId id) {
+    return repo.findById(tenantId, id);
   }
 
-  OAuthClientEntity getByClientId(string clientId) {
-    return repo.findByClientId(clientId);
+  OAuthClientEntity getOAuthClient(TenantId tenantId, string clientId) {
+    return repo.findByClientId(tenantId, clientId);
   }
 
-  OAuthClientEntity[] listAll() {
-    return repo.findAll();
+  OAuthClientEntity[] listOAuthClients(TenantId tenantId) {
+    return repo.findAll(tenantId);
   }
 
-  OAuthClientEntity[] listByAppId(string appId) {
-    return repo.findByAppId(appId);
+  OAuthClientEntity[] listOAuthClients(TenantId tenantId, string appId) {
+    return repo.findByAppId(tenantId, appId);
   }
 }
