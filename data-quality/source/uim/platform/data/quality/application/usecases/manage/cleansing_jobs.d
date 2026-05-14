@@ -30,14 +30,13 @@ class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
     if (req.datasetId.isEmpty)
       return CommandResult(false, "", "Dataset ID is required");
 
-    auto job = CleansingJob();
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    CleansingJob job;
+    job.initEntity(req.tenantId);
+
     job.datasetId = req.datasetId;
     job.requestedBy = req.requestedBy;
     job.status = JobStatus.pending;
     job.ruleIds = req.ruleIds;
-    job.createdAt = Clock.currStdTime();
 
     repo.save(job);
     return CommandResult(true, job.id.value, "");

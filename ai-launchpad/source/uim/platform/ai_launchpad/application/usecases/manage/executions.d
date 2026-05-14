@@ -26,13 +26,13 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
 
   CommandResult createExecution(CreateExecutionRequest r) {
     Execution e;
-    e.id = randomUUID();
+    e.initEntity(r.tenantId);
+    
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
     e.resourceGroupId = r.resourceGroupId;
     e.status = ExecutionStatus.pending;
-    e.createdAt = "now";
-    e.updatedAt = "now";
+
     executions.save(e);
     return CommandResult(true, e.id.value, "");
   }

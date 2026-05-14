@@ -29,19 +29,17 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
-    auto r = InformationReport();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
+    InformationReport r;
+    r.initEntity(req.tenantId, req.requestedBy);
+
     r.dataSubjectId = req.dataSubjectId;
     r.subjectRole = subject.subjectType;
-    r.requestedBy = req.requestedBy;
     r.status = InformationReportStatus.requested;
-    r.format = parseExportFormat(req.format);
+    r.format = req.format.to!parseExportFormat;
     r.targetSystems = req.targetSystems;
     r.categories = req.categories;
     r.reason = req.reason;
-    r.requestedAt = now;
+    r.requestedAt = r.createdAt;
 
     repo.save(r);
     return CommandResult(true, r.id.value, "");

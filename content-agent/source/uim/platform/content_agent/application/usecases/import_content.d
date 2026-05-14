@@ -39,13 +39,11 @@ class ImportContentUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Package not found");
 
     ImportJob job;
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    job.initEntity(req.tenantId, req.startedBy);
     job.packageId = req.packageId;
     job.transportRequestId = req.transportRequestId;
     job.sourceFilePath = req.sourceFilePath;
     job.status = ImportStatus.downloading;
-    job.createdBy = req.startedBy;
     job.startedAt = clockSeconds();
 
     importRepo.save(job);

@@ -40,9 +40,9 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
       columns ~= profileColumn(fieldName, req.records);
     }
 
-    auto profile = DataProfile();
-    profile.id = randomUUID();
-    profile.tenantId = req.tenantId;
+    DataProfile profile;
+    profile.initEntity(req.tenantId, req.requestedBy);
+    
     profile.datasetId = req.datasetId;
     profile.datasetName = req.datasetName;
     profile.totalRecords = req.records.length;

@@ -20,15 +20,16 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   CommandResult createSubprocess(CreateBusinessSubprocessRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+
     if (req.parentProcessId.isEmpty)
       return CommandResult(false, "", "Parent process ID is required");
+    
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
-    auto sp = BusinessSubprocess();
-    sp.id = randomUUID();
-    sp.tenantId = req.tenantId;
+    BusinessSubprocess sp;
+    sp.initEntity(req.tenantId, req.createdBy);
+
     sp.parentProcessId = req.parentProcessId;
     sp.name = req.name;
     sp.description = req.description;
@@ -36,9 +37,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     sp.dataCategories = req.dataCategories;
     sp.owner = req.owner;
     sp.isActive = true;
-    sp.createdAt = now;
-    sp.updatedAt = now;
-
+    
     repo.save(sp);
     return CommandResult(true, sp.id.value, "");
   }

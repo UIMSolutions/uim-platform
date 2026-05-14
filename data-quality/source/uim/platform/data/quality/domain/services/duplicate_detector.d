@@ -53,8 +53,8 @@ class DuplicateDetector {
 
       if (candidates.length > 1) {
         MatchGroup g;
-        g.id = randomUUID();
-        g.tenantId = tenantId;
+        g.initEntity(tenantId);
+
         g.datasetId = datasetId;
         g.strategy = strategy;
         g.candidates = candidates;

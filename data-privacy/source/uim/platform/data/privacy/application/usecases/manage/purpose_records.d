@@ -23,10 +23,9 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto now = Clock.currStdTime();
-    auto r = PurposeRecord();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
+    PurposeRecord r;
+    r.initEntity(req.tenantId);
+
     r.dataSubjectId = req.dataSubjectId;
     r.businessContextId = req.businessContextId;
     r.purpose = req.purpose;
@@ -36,8 +35,6 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     r.retentionDays = req.retentionDays;
     r.validFrom = req.validFrom > 0 ? req.validFrom : now;
     r.validUntil = req.validUntil;
-    r.createdAt = now;
-    r.updatedAt = now;
 
     repo.save(r);
     return CommandResult(true, r.id.value, "");

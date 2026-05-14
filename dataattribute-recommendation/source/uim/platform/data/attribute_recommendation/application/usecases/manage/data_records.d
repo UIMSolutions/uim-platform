@@ -39,18 +39,17 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
       return CommandResult(false, "", "Cannot add records to a processed or completed dataset");
 
-    auto record = DataRecord();
-    record.id = randomUUID();
+    DataRecord record;
+    record.initEntity(req.tenantId, req.createdBy);
+
     record.datasetId = req.datasetId;
     record.tenantId = req.tenantId;
     record.attributes = req.attributes;
     record.labels = req.labels;
     record.status = RecordStatus.pending;
-    record.createdBy = req.createdBy;
-    record.createdAt = Clock.currStdTime();
 
     repo.save(record);
-    return CommandResult(record.id.value, "");
+    return CommandResult(true, record.id.value, "");
   }
 
   DataRecord getDataRecord(TenantId tenantId, DataRecordId id) {

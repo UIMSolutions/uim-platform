@@ -32,10 +32,9 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     if (req.retentionDays <= 0)
       return CommandResult(false, "", "Retention days must be positive");
 
-    auto now = Clock.currStdTime();
-    auto rule = RetentionRule();
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    RetentionRule rule;
+    rule.initEntity(req.tenantId, req.startedBy);
+
     rule.name = req.name;
     rule.description = req.description;
     rule.purpose = req.purpose;
@@ -44,8 +43,6 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     rule.legalReference = req.legalReference;
     rule.status = RetentionRuleStatus.active;
     rule.isDefault = req.isDefault;
-    rule.createdAt = now;
-    rule.updatedAt = now;
 
     repo.save(rule);
     return CommandResult(true, rule.id.value, "");

@@ -16,6 +16,8 @@ mixin(ShowModule!());
 /// --- Global Account DTOs ---
 
 struct CreateGlobalAccountRequest {
+  TenantId tenantId;
+
   string displayName;
   string description;
   string contractNumber;
@@ -31,6 +33,9 @@ struct CreateGlobalAccountRequest {
 }
 
 struct UpdateGlobalAccountRequest {
+  TenantId tenantId;
+  GlobalAccountId globalAccountId;
+
   string displayName;
   string description;
   string costCenter;
@@ -39,10 +44,11 @@ struct UpdateGlobalAccountRequest {
 }
 
 /// --- Directory DTOs ---
-
 struct CreateDirectoryRequest {
+  TenantId tenantId;
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId;
+  
   string displayName;
   string description;
   string[] features; // "entitlements", "authorizations"
@@ -54,6 +60,9 @@ struct CreateDirectoryRequest {
 }
 
 struct UpdateDirectoryRequest {
+  TenantId tenantId;
+  DirectoryId directoryId;
+
   string displayName;
   string description;
   string[string] labels;
@@ -63,8 +72,10 @@ struct UpdateDirectoryRequest {
 /// --- Subaccount DTOs ---
 
 struct CreateSubaccountRequest {
+  TenantId tenantId;
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId;
+
   string displayName;
   string description;
   string subdomain;
@@ -78,6 +89,9 @@ struct CreateSubaccountRequest {
 }
 
 struct UpdateSubaccountRequest {
+  TenantId tenantId;
+  SubaccountId subaccountId;
+
   string displayName;
   string description;
   string usage;
@@ -88,16 +102,20 @@ struct UpdateSubaccountRequest {
 }
 
 struct MoveSubaccountRequest {
+  TenantId tenantId;
+  SubaccountId subaccountId;
   DirectoryId targetDirectoryId; // empty = move to global account root
 }
 
 /// --- Entitlement DTOs ---
 
 struct AssignEntitlementRequest {
+  TenantId tenantId;
   GlobalAccountId globalAccountId;
   DirectoryId directoryId;
   SubaccountId subaccountId;
   ServicePlanId servicePlanId;
+
   string serviceName;
   string planName;
   int quotaAssigned;
@@ -107,6 +125,9 @@ struct AssignEntitlementRequest {
 }
 
 struct UpdateEntitlementQuotaRequest {
+  TenantId tenantId;
+  EntitlementId entitlementId;
+
   int quotaAssigned;
   bool unlimited;
 }
@@ -114,8 +135,10 @@ struct UpdateEntitlementQuotaRequest {
 /// --- Environment Instance DTOs ---
 
 struct CreateEnvironmentInstanceRequest {
+  TenantId tenantId;
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
+
   string name;
   string description;
   string environmentType; // "cloudFoundry", "kyma", "abap"
@@ -130,6 +153,9 @@ struct CreateEnvironmentInstanceRequest {
 }
 
 struct UpdateEnvironmentInstanceRequest {
+  TenantId tenantId;
+  EnvironmentInstanceId instanceId;
+
   string description;
   int memoryQuotaMb;
   int routeQuota;
@@ -141,8 +167,10 @@ struct UpdateEnvironmentInstanceRequest {
 /// --- Subscription DTOs ---
 
 struct CreateSubscriptionRequest {
+  TenantId tenantId;
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
+
   string appName;
   string planName;
   UserId subscribedBy;
@@ -151,6 +179,9 @@ struct CreateSubscriptionRequest {
 }
 
 struct UpdateSubscriptionRequest {
+  TenantId tenantId;
+  SubscriptionId subscriptionId;
+
   string planName;
   string[string] parameters;
 }
@@ -158,6 +189,8 @@ struct UpdateSubscriptionRequest {
 /// --- Service Plan DTOs ---
 
 struct CreateServicePlanRequest {
+  TenantId tenantId;
+
   string serviceName;
   string serviceDisplayName;
   string planName;
@@ -176,6 +209,9 @@ struct CreateServicePlanRequest {
 }
 
 struct UpdateServicePlanRequest {
+  TenantId tenantId;
+  ServicePlanId servicePlanId;
+
   string planDisplayName;
   string description;
   string[] availableRegions;
@@ -188,6 +224,8 @@ struct UpdateServicePlanRequest {
 /// --- Label DTOs ---
 
 struct CreateLabelRequest {
+  TenantId tenantId;
+
   string resourceType; // "globalAccount", "directory", "subaccount"
   string resourceId;
   string key;
@@ -196,12 +234,16 @@ struct CreateLabelRequest {
 }
 
 struct UpdateLabelRequest {
+  TenantId tenantId;
+  LabelId labelId;
+
   string[] values;
 }
 
 /// --- Platform Event DTOs ---
 
 struct QueryEventsRequest {
+  TenantId tenantId;
   GlobalAccountId globalAccountId;
   SubaccountId subaccountId;
   string category;

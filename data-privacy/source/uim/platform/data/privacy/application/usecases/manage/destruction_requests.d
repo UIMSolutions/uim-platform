@@ -29,10 +29,9 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
-    auto r = DestructionRequest();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
+    DestructionRequest r;
+    r.initEntity(req.tenantId);
+
     r.dataSubjectId = req.dataSubjectId;
     r.requestedBy = req.requestedBy;
     r.status = DestructionStatus.scheduled;

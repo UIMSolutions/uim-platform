@@ -41,7 +41,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
 
     // Create keyring credential entry
     Credential cred;
-    cred.initEntity(r.tenantId);
+    cred.initEntity(r.tenantId, r.createdBy);
 
     cred.namespaceId = r.namespaceId;
     cred.name = r.name;
@@ -50,23 +50,19 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     cred.format = r.format;
     cred.status = CredentialStatus.active;
     cred.version_ = 1;
-    cred.createdBy = r.createdBy;
-    cred.updatedBy = r.createdBy;
 
     credRepo.save(cred);
 
     // Create initial version with generated key material
     KeyringVersion ver;
-    ver.id = randomUUID();
+    ver.initEntity(r.tenantId);
+
     ver.keyringId = cred.id;
-    ver.tenantId = r.tenantId;
     ver.versionNumber = 1;
     ver.keyMaterial = KeyringManager.generateKeyMaterial();
     ver.isActive = true;
-    ver.createdAt = now;
 
     versionRepo.save(ver);
-
     return CommandResult(true, cred.id.value, "");
   }
 
@@ -88,14 +84,14 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     auto versionCount = versionRepo.countByKeyring(cred.tenantId, cred.id);
 
     KeyringVersion ver;
-    ver.id = randomUUID();
+    ver.initEntity(r.tenantId);
+
     ver.keyringId = cred.id;
     ver.tenantId = r.tenantId;
     ver.versionNumber = versionCount + 1;
     ver.keyMaterial = KeyringManager.generateKeyMaterial();
     ver.isActive = true;
-    ver.createdAt = now;
-
+    
     versionRepo.save(ver);
 
     cred.version_ = cred.version_ + 1;

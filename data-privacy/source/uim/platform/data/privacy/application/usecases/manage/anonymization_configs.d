@@ -23,17 +23,14 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
-    auto c = AnonymizationConfig();
-    c.id = randomUUID();
-    c.tenantId = req.tenantId;
+    AnonymizationConfig c;
+    c.initEntity(req.tenantId, req.createdBy);
+
     c.name = req.name;
     c.description = req.description;
     c.status = AnonymizationConfigStatus.draft;
     c.isReversible = req.isReversible;
     c.targetSystems = req.targetSystems;
-    c.createdAt = now;
-    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");
@@ -56,7 +53,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0) c.description = req.description;
     c.isReversible = req.isReversible;
     if (req.targetSystems.length > 0) c.targetSystems = req.targetSystems;
-    c.updatedAt = Clock.currStdTime();
+    c.updatedAt = c.createdAt;
 
     repo.update(c);
     return CommandResult(true, c.id.value, "");

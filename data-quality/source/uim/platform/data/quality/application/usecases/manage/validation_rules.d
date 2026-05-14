@@ -32,9 +32,9 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    auto rule = ValidationRule();
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    ValidationRule rule;
+    rule.initEntity(req.tenantId, req.requestedBy);
+
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
@@ -51,8 +51,6 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     rule.crossFieldName = req.crossFieldName;
     rule.category = req.category;
     rule.priority = req.priority;
-    rule.createdAt = Clock.currStdTime();
-    rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
     return CommandResult(true, rule.id.value, "");
@@ -62,13 +60,13 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     if (req.ruleId.isNull)
       return CommandResult(false, "", "Rule ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.ruleId);
-    if (existing.isNull)
+    auto rule = repo.findById(req.tenantId, req.ruleId);
+    if (rule.isNull)
       return CommandResult(false, "", "Validation rule not found");
-    if (existing.tenantId != req.tenantId)
+      
+    if (rule.tenantId != req.tenantId)
       return CommandResult(false, "", "Tenant mismatch");
 
-    auto rule = *existing;
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;

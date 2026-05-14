@@ -43,10 +43,9 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Package name is required");
 
    
-    auto id = randomUUID();
-
     ContentPackage pkg;
     pkg.initEntity(req.tenantId, req.createdBy);
+
     pkg.subaccountId = req.subaccountId;
     pkg.name = req.name;
     pkg.description = req.description;
@@ -60,7 +59,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     recordActivity(req.tenantId, ActivityType.packageCreated, id, req.name,
         "Package created", req.createdBy);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, pkg.id.value, "");
   }
 
   CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
@@ -146,45 +145,16 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
       string entityId, string entityName, string desc, string by) {
    
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    activity.initEntity(tenantId);
+
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
     activity.entityName = entityName;
     activity.description = desc;
     activity.performedBy = by;
-    activity.timestamp = clockSeconds();
+    activity.timestamp = activity.createdAt;
+
     activities.save(activity);
-  }
-
-  private static ContentFormat parseContentFormat(string s) {
-    switch (s) {
-    case "zip":
-      return ContentFormat.zip;
-    case "json":
-      return ContentFormat.json;
-    default:
-      return ContentFormat.mtar;
-    }
-  }
-
-  private static PackageStatus parsePackageStatus(string s) {
-    switch (s) {
-    case "draft":
-      return PackageStatus.draft;
-    case "assembled":
-      return PackageStatus.assembled;
-    case "exported":
-      return PackageStatus.exported;
-    case "inTransport":
-      return PackageStatus.inTransport;
-    case "delivered":
-      return PackageStatus.delivered;
-    case "error":
-      return PackageStatus.error;
-    default:
-      return PackageStatus.draft;
-    }
   }
 }

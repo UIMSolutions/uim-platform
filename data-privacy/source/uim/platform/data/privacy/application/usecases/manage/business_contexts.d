@@ -25,8 +25,8 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ctx = BusinessContext();
-    ctx.id = randomUUID();
-    ctx.tenantId = req.tenantId;
+    ctx.initTenant(req.tenantId);
+
     ctx.name = req.name;
     ctx.description = req.description;
     ctx.controllerGroupId = req.controllerGroupId;
@@ -36,8 +36,6 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.purposes = req.purposes;
     ctx.dataCategoryAttributes = req.dataCategoryAttributes;
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
-    ctx.createdAt = now;
-    ctx.updatedAt = now;
 
     businessContexts.save(ctx);
     return CommandResult(true, ctx.id.value, "");

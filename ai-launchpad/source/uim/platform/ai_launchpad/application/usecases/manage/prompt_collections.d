@@ -29,14 +29,14 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Collection name is required");
 
     PromptCollection pc;
-    pc.id = randomUUID();
+    pc.initEntity(r.tenantId, r.createdBy);#
+
     pc.name = r.name;
     pc.description = r.description;
     pc.scenarioId = r.scenarioId;
     pc.workspaceId = r.workspaceId;
     pc.promptCount = 0;
-    pc.createdAt = "now";
-    pc.updatedAt = "now";
+
     collections.save(pc);
     return CommandResult(true, pc.id.value, "");
   }
@@ -63,6 +63,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     if (r.description.length > 0)
       pc.description = r.description;
     pc.updatedAt = "now";
+    
     collections.save(pc);
     return CommandResult(true, pc.id.value, "");
   }

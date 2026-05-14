@@ -43,8 +43,6 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (req.backendHost.length == 0)
       return CommandResult(false, "", "Backend host is required");
 
-   
-
     ServiceChannel ch;
     ch.initEntity(req.tenantId);
 

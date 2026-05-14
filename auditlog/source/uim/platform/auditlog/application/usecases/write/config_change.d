@@ -36,10 +36,9 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Config type is required");
 
     // Create parent audit log entry
-    auto entry = AuditLogEntry();
-    entry.id = randomUUID();
-    entry.tenantId = req.tenantId;
-    entry.userId = req.changedBy;
+    AuditLogEntry entry;
+    entry.initEntity(req.tenantId, req.changedBy);
+
     entry.category = AuditCategory.configuration;
     entry.severity = AuditSeverity.info;
     entry.action = AuditAction.configChange;
@@ -48,22 +47,22 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
     entry.objectId = req.configObjectId;
     entry.message = "Configuration change: %s / %s by %s".format(req.configType, req.configObjectId, req.changedBy);
     entry.attributes = req.changes;
-    entry.timestamp = Clock.currStdTime();
+    entry.timestamp = entry.createdAt; // Use the same timestamp for both records
+
     auditRepo.save(entry);
 
     // Create config change record
-    auto ccLog = ConfigChangeLog();
-    ccLog.id = randomUUID();
+    ConfigChangeLog ccLog;
+    ccLog.initEntity(req.tenantId, req.changedBy);
+
     ccLog.auditLogId = entry.id;
-    ccLog.tenantId = req.tenantId;
-    ccLog.changedBy = req.changedBy;
     ccLog.configType = req.configType;
     ccLog.configObjectId = req.configObjectId;
     ccLog.changes = req.changes;
     ccLog.reason = req.reason;
-    ccLog.timestamp = entry.timestamp;
-    cclRepo.save(ccLog);
+    ccLog.timestamp = ccLog.createdAt; // Use the same timestamp for both records
 
+    cclRepo.save(ccLog);
     return CommandResult(true, entry.id.value, "");
   }
 }

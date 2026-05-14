@@ -42,14 +42,13 @@ class ExportContentUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Package must be assembled before export");
 
     ExportJob job;
-    job.id = randomUUID();
-    job.tenantId = req.tenantId;
+    job.initEntity(req.tenantId, req.startedBy);
+    
     job.packageId = req.packageId;
     job.transportRequestId = req.transportRequestId;
     job.queueId = req.queueId;
     job.status = ExportStatus.assembling;
-    job.createdBy = req.startedBy;
-    job.startedAt = clockSeconds();
+    job.startedAt = job.createdAt;
 
     exportRepo.save(job);
 
@@ -60,12 +59,12 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     exportRepo.update(job);
 
     job.status = ExportStatus.completed;
-    job.completedAt = clockSeconds();
+    job.completedAt = job.updatedAt;
     exportRepo.update(job);
 
     // Update package status
     pkg.status = PackageStatus.exported;
-    pkg.updatedAt = clockSeconds();
+    pkg.updatedAt = pkg.updatedAt;
     packageRepo.update(pkg);
 
     recordActivity(req.tenantId, ActivityType.exportCompleted, id, pkg.name,
@@ -93,15 +92,16 @@ class ExportContentUseCase { // TODO: UIMUseCase {
   private void recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    activity.initEntity(tenantId);
+
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
     activity.entityName = entityName;
     activity.description = desc;
     activity.performedBy = by;
-    activity.timestamp = clockSeconds();
+
+    activity.timestamp = activity.createdAt;
     activityRepo.save(activity);
   }
 

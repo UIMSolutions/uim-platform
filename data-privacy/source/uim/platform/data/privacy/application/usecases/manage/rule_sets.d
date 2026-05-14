@@ -23,18 +23,15 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
     auto rs = RuleSet();
-    rs.id = randomUUID();
-    rs.tenantId = req.tenantId;
+    rs.initEntity(req.tenantId, req.requestedBy);
+
     rs.businessContextId = req.businessContextId;
     rs.name = req.name;
     rs.description = req.description;
     rs.status = RuleSetStatus.draft;
     rs.priority = req.priority;
-    rs.createdAt = now;
-    rs.updatedAt = now;
-
+    
     repo.save(rs);
     return CommandResult(true, rs.id.value, "");
   }

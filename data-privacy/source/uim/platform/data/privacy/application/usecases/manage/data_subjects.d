@@ -37,10 +37,9 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Data subject with this external ID already exists");
     }
 
-    auto now = Clock.currStdTime();
-    auto subject = DataSubject();
-    subject.id = randomUUID();
-    subject.tenantId = req.tenantId;
+    DataSubject subject;
+    subject.initEntity(req.tenantId, req.requestedBy);
+    
     subject.subjectType = req.subjectType;
     subject.externalId = req.externalId;
     subject.displayName = req.displayName;
@@ -48,8 +47,6 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     subject.sourceSystem = req.sourceSystem;
     subject.country = req.country;
     subject.isActive = true;
-    subject.createdAt = now;
-    subject.updatedAt = now;
 
     repo.save(subject);
     return CommandResult(true, subject.id.value, "");
