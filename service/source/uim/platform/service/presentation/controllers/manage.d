@@ -35,7 +35,7 @@ class ManageController : PlatformController {
   // #region list
   protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;
-    response.set("message", "List handler not implemented");
+    response.set("message", "List handler not implemented").set("statusCode", 200);
     return response;
   }
 
@@ -50,15 +50,15 @@ class ManageController : PlatformController {
   // #endregion list
 
   // #region create
-  protected Json createHandler(Json data) {
+  protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;
-    response.set("message", "Create handler not implemented");
+    response.set("message", "Create handler not implemented").set("statusCode", 201);
     return response;
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = createHandler(req.json);
+      auto response = createHandler(req, res);
       res.writeJsonBody(response, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -67,15 +67,15 @@ class ManageController : PlatformController {
   // #endregion create
 
   // #region get
-  protected Json getHandler(Json data) {
+  protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;
-    response.set("message", "Get handler not implemented");
+    response.set("message", "Get handler not implemented").set("statusCode", 200);
     return response;
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = getHandler(req.json);
+      auto response = getHandler(req, res);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -84,15 +84,15 @@ class ManageController : PlatformController {
   // #endregion get
 
   // #region update
-  protected Json updateHandler(Json data) {
+  protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;
-    response.set("message", "Update handler not implemented");
+    response.set("message", "Update handler not implemented").set("statusCode", 200);
     return response;
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = updateHandler(req.json);
+      auto response = updateHandler(req, res);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -103,7 +103,7 @@ class ManageController : PlatformController {
   // #region delete
   protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;
-    response.set("message", "Delete handler not implemented");
+    response.set("message", "Delete handler not implemented").set("statusCode", 200);
     return response;
   }
 

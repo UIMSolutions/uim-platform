@@ -28,7 +28,7 @@ class AuditConfigController : ManageController {
 
     router.post("/api/v1/configs", &handleCreate);
     router.get("/api/v1/configs", &handleList);
-    router.get("/api/v1/configs/*", &handleGetByTenant);
+    router.get("/api/v1/configs/*", &handleGet);
     router.put("/api/v1/configs/*", &handleUpdate);
     router.delete_("/api/v1/configs/*", &handleDelete);
   }
@@ -43,19 +43,19 @@ class AuditConfigController : ManageController {
       .set("message", "Audit configs retrieved successfully");
   }
 
-  override Json createHandler(Json data) {
+  override Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto request = CreateAuditConfigRequest();
-    request.tenantId = TenantId(data.getString("tenantId"));
-    request.name = data.getString("name");
-    request.logDataAccess = data.getBoolean("logDataAccess", true);
-    request.logDataModification = data.getBoolean("logDataModification", true);
-    request.logSecurityEvents = data.getBoolean("logSecurityEvents", true);
-    request.logConfigurationChanges = data.getBoolean("logConfigurationChanges", true);
-    request.enableDataMasking = data.getBoolean("enableDataMasking");
-    request.maskedFields = getStrings(data, "maskedFields");
-    request.excludedServices = getStrings(data, "excludedServices");
+    request.tenantId = TenantId(req.json.getString("tenantId"));
+    request.name = req.json.getString("name");
+    request.logDataAccess = req.json.getBoolean("logDataAccess", true);
+    request.logDataModification = req.json.getBoolean("logDataModification", true);
+    request.logSecurityEvents = req.json.getBoolean("logSecurityEvents", true);
+    request.logConfigurationChanges = req.json.getBoolean("logConfigurationChanges", true);
+    request.enableDataMasking = req.json.getBoolean("enableDataMasking");
+    request.maskedFields = getStrings(req.json, "maskedFields");
+    request.excludedServices = getStrings(req.json, "excludedServices");
 
-    auto sevStr = data.getString("minimumSeverity");
+    auto sevStr = req.json.getString("minimumSeverity");
     if (sevStr == "warning")
       request.minimumSeverity = AuditSeverity.warning;
     else if (sevStr == "error")
@@ -65,20 +65,20 @@ class AuditConfigController : ManageController {
     else
       request.minimumSeverity = AuditSeverity.info;
 
-    request.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
+    request.rateLimitPerSecond = req.json.getInteger("rateLimitPerSecond", 8);
 
     auto result = useCase.createAuditConfig(request);
     if (result.isSuccess()) {
       auto response = Json.emptyObject
         .set("id", result.id)
         .set("message", "Audit config created successfully")
-        .set("status", 201);
+        .set("statusCode", 201);
 
       return response;
     } else {
       return Json.emptyObject
         .set("error", "Failed to create audit config")
-        .set("status", 400);
+        .set("statusCode", 400);
     }
   }
 
@@ -89,10 +89,10 @@ class AuditConfigController : ManageController {
     if (cfg.isNull) {
       return Json.emptyObject
         .set("error", "Audit config not found")
-        .set("status", 404);
+        .set("statusCode", 404);
     }
     return cfg.toJson
-      .set("status", 200)
+      .set("statusCode", 200)
       .set("message", "Audit config retrieved successfully");
   }
 
@@ -129,7 +129,7 @@ class AuditConfigController : ManageController {
     if (result.isFailure()) {
       return Json.emptyObject
         .set("error", result.error)
-        .set("status", 400);
+        .set("statusCode", 400);
     }
     return Json.emptyObject
       .set("status", "updated")

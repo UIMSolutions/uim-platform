@@ -46,43 +46,40 @@ class RetentionController : ManageController {
       .set("totalCount", Json(policies.length));
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto json = req.json;
-      auto policyRequest = CreateRetentionPolicyRequest();
-      policyRequest.tenantId = req.getTenantId;
-      policyRequest.name = json.getString("name");
-      policyRequest.description = json.getString("description");
-      policyRequest.retentionDays = json.getInteger("retentionDays");
-      policyRequest.isDefault = json.getBoolean("isDefault");
-      policyRequest.categories = parseCategoryArray(json);
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto json = req.json;
+    auto policyRequest = CreateRetentionPolicyRequest();
+    policyRequest.tenantId = req.getTenantId;
+    policyRequest.name = json.getString("name");
+    policyRequest.description = json.getString("description");
+    policyRequest.retentionDays = json.getInteger("retentionDays");
+    policyRequest.isDefault = json.getBoolean("isDefault");
+    policyRequest.categories = json.getArray("categories").map!(c => c.toString.to!AuditCategory).array;
 
-      auto result = useCase.createPolicy(policyRequest);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = useCase.createPolicy(policyRequest);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("statusCode", 400);
     }
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("status", "created")
+      .set("statusCode", 201);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
-      if (!useCase.existsPolicy(tenantId, policyId)) {
-        writeError(res, 404, "Retention policy not found");
-        return;
-      }
-      auto policy = useCase.getPolicy(tenantId, policyId);
-      res.writeJsonBody(policy.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
+    auto tenantId = req.getTenantId;
+
+    auto policy = useCase.getPolicy(tenantId, policyId);
+    if (policy.isNull) {
+      return Json.emptyObject
+        .set("error", "Retention policy not found")
+        .set("statusCode", 404);
     }
+    return policy.toJson
+      .set("statusCode", 200);
   }
 
   override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -93,7 +90,7 @@ class RetentionController : ManageController {
     policyRequest.name = json.getString("name");
     policyRequest.description = json.getString("description");
     policyRequest.retentionDays = json.getInteger("retentionDays");
-    policyRequest.categories = parseCategoryArray(json);
+    policyRequest.categories = json.getArray("categories").map!(c => c.toString.to!AuditCategory).array;
 
     auto statusStr = json.getString("status");
     if (statusStr == "inactive")
@@ -114,23 +111,15 @@ class RetentionController : ManageController {
       .set("statusCode", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
-      useCase.deletePolicy(tenantId, policyId);
-      auto resp = Json.emptyObject
-        .set("status", "deleted");
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
+    auto tenantId = req.getTenantId;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static AuditCategory[] parseCategoryArray(Json j) {
-    auto cats = getStrings(j, "categories");
-    return cats.map!(c => toAuditCategory(c)).array;
+    useCase.deletePolicy(tenantId, policyId);
+    return Json.emptyObject
+      .set("status", "deleted")
+      .set("message", "Retention policy deleted successfully")
+      .set("statusCode", 200);
   }
 
 }

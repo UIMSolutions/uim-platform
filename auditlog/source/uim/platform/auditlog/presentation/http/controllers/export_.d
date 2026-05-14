@@ -68,98 +68,40 @@ class ExportController : ManageController {
       jobRequest.categories ~= toAuditCategory(c);
 
     auto result = useCase.createExport(jobRequest);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Export job created successfully");
-
-      res.writeJsonBody(resp, 201);
-    } else {
-      writeError(res, 400, result.error);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("statusCode", 400);
     }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Export job created successfully");
+
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
+    auto tenantId = req.getTenantId;
 
-      auto jobs = useCase.listExports(tenantId);
-      auto arr = jobs.map!(j => j.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(jobs.length))
-        .set("message", "Export jobs retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto job = useCase.getExport(tenantId, jobId);
+    if (job.isNull) {
+      return Json.emptyObject
+        .set("error", "Export job not found")
+        .set("statusCode", 404);
     }
+    return job.toJson
+      .set("statusCode", 200)
+      .set("message", "Export job retrieved successfully");
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
-      if (!useCase.hasExport(tenantId, jobId)) {
-        writeError(res, 404, "Export job not found");
-        return;
-      }
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
+    auto tenantId = req.getTenantId;
 
-      auto job = useCase.getExport(tenantId, jobId);
-      res.writeJsonBody(job.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
-      useCase.deleteExport(tenantId, jobId);
-      auto resp = Json.emptyObject
-        .set("status", "deleted")
-        .set("message", "Export job deleted successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeJob(const ExportJob exportJob) {
-    auto json = Json.emptyObject
-      .set("id", exportJob.id)
-      .set("tenantId", exportJob.tenantId)
-      .set("requestedBy", exportJob.requestedBy)
-      .set("format", exportJob.format_.to!string)
-      .set("status", exportJob.status.to!string)
-      .set("totalRecords", exportJob.totalRecords)
-      .set("downloadUrl", exportJob.downloadUrl)
-      .set("timeFrom", exportJob.timeFrom)
-      .set("timeTo", exportJob.timeTo)
-      .set("createdAt", exportJob.createdAt)
-      .set("completedAt", exportJob.completedAt)
-      .set("errorMessage", exportJob.errorMessage);
-
-    if (exportJob.categories.length > 0) {
-      auto cats = exportJob.categories.map!(c => Json(categoryToString(c))).array.toJson;
-      json["categories"] = cats;
-    }
-    return json;
-  }
-
-  private static string categoryToString(AuditCategory c) {
-    final switch (c) {
-    case AuditCategory.securityEvents:
-      return "audit.security-events";
-    case AuditCategory.configuration:
-      return "audit.configuration";
-    case AuditCategory.dataAccess:
-      return "audit.data-access";
-    case AuditCategory.dataModification:
-      return "audit.data-modification";
-    }
+    useCase.deleteExport(tenantId, jobId);
+    return Json.emptyObject
+      .set("status", "deleted")
+      .set("message", "Export job deleted successfully");
   }
 }
