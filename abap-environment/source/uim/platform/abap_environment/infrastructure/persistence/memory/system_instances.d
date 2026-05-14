@@ -37,8 +37,12 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
     return findByStatus(tenantId, status).length;
   }
 
+  SystemInstance[] filterByStatus(SystemInstance[] instances, SystemStatus status) {
+    return instances.filter!(e => e.status == status).array;
+  }
+  
   SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, SystemStatus status) {

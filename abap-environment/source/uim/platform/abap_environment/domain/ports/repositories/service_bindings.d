@@ -21,6 +21,6 @@ interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceB
 
   size_t countByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType);
   ServiceBinding[] findByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType);
-  void removeByType(SystemInstanceId systemId, BindingType bindingType);
+  void removeByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType);
 
 }

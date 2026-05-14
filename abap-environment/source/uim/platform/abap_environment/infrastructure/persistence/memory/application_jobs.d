@@ -24,8 +24,11 @@ class MemoryApplicationJobRepository : TenantRepository!(ApplicationJob, Applica
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
     return findBySystem(tenantId, systemId).length;
   }
+  ApplicationJob[] filterBySystem(ApplicationJob[] jobs, SystemInstanceId systemId) {
+    return jobs.filter!(e => e.systemInstanceId == systemId).array;
+  }
   ApplicationJob[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return findByTenant(tenantId).filter!(e => e.systemInstanceId == systemId).array;
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
     findBySystem(tenantId, systemId).each!(e => remove(e));
@@ -36,8 +39,11 @@ class MemoryApplicationJobRepository : TenantRepository!(ApplicationJob, Applica
   size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
     return findByStatus(tenantId, systemId, status).length;
   }
+  ApplicationJob[] filterByStatus(ApplicationJob[] jobs, JobStatus status) {
+    return jobs.filter!(e => e.status == status).array;
+  }
   ApplicationJob[] findByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
-    return findBySystem(tenantId, systemId).filter!(e => e.status == status).array;
+    return filterByStatus(findBySystem(tenantId, systemId), status);
   }
   void removeByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status) {
     findByStatus(tenantId, systemId, status).each!(e => remove(e));

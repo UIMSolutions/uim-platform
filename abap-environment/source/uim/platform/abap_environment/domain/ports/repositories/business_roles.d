@@ -21,6 +21,6 @@ interface BusinessRoleRepository : ITenantRepository!(BusinessRole, BusinessRole
 
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
   BusinessRole[] findBySystem(TenantId tenantId, SystemInstanceId systemId);
-  void removeBySystem(SystemInstanceId systemId);
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId);
 
 }

@@ -21,6 +21,6 @@ interface ApplicationJobRepository : ITenantRepository!(ApplicationJob, Applicat
 
   size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status);
   ApplicationJob[] findByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status);
-  void removeByStatus(SystemInstanceId systemId, JobStatus status);
+  void removeByStatus(TenantId tenantId, SystemInstanceId systemId, JobStatus status);
 
 }

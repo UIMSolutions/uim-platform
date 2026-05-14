@@ -19,27 +19,32 @@ mixin(ShowModule!());
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   // #region BySystem
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
-  ServiceBinding[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.systemInstanceId == systemId).array;
+  ServiceBinding[] filterBySystem(ServiceBinding[] bindings, SystemInstanceId systemId) {
+    return bindings.filter!(e => e.systemInstanceId == systemId).array;
   }
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
+  }
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
   // #endregion BySystem
 
   // #region ByType
-  size_t countByType(SystemInstanceId systemId, BindingType bindingType) {
-    return findByType(systemId, bindingType).length;
+  size_t countByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
+    return findByType(tenantId, systemId, bindingType).length;
   }
-  ServiceBinding[] findByType(SystemInstanceId systemId, BindingType bindingType) {
-    return findAll().filter!(e => e.systemInstanceId == systemId
-        && e.bindingType == bindingType).array;
+  ServiceBinding[] filterByType(ServiceBinding[] bindings, BindingType bindingType) {
+    return bindings.filter!(e => e.bindingType == bindingType).array;
   }
-  void removeByType(SystemInstanceId systemId, BindingType bindingType) {
-    findByType(systemId, bindingType).each!(e => remove(e));
+  ServiceBinding[] findByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
+    return filterByType(findBySystem(tenantId, systemId), bindingType);
+  }
+  void removeByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
+    findByType(tenantId, systemId, bindingType).each!(e => remove(e));
   }
   // #endregion ByType
   

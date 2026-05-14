@@ -18,25 +18,25 @@ mixin(ShowModule!());
 @safe:
 class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 
-  bool existsByName(SystemInstanceId systemId, string name) {
-    return findBySystem(systemId).any!(e => e.name == name);
+  bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    return findBySystem(tenantId, systemId).any!(e => e.name == name);
   }
 
-  SoftwareComponent findByName(SystemInstanceId systemId, string name) {
-    foreach (e; findBySystem(systemId))
+  SoftwareComponent findByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    foreach (e; findBySystem(tenantId, systemId))
       if (e.name == name)
         return e;
     return SoftwareComponent.init;
   }
 
-  void removeByName(SystemInstanceId systemId, string name) {
-    foreach (e; findBySystem(systemId))
+  void removeByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    foreach (e; findBySystem(tenantId, systemId))
       if (e.name == name)
         remove(e);
   }
 
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
   SoftwareComponent[] filterBySystem(SoftwareComponent[] components, SystemInstanceId systemId) {
@@ -44,11 +44,11 @@ class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, S
       .filter!(e => e.systemInstanceId == systemId)
       .array;
   }
-  SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
-    return filterBySystem(findAll(), systemId);
+  SoftwareComponent[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
 }

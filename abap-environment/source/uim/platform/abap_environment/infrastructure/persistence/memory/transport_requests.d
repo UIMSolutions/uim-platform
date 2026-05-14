@@ -20,44 +20,56 @@ mixin(ShowModule!());
 class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
 
   // #region BySystem
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
-  TransportRequest[] findBySystem(SystemInstanceId systemId) {
-    return findAll().filter!(e => e.sourceSystemId == systemId).array;
+  TransportRequest[] filterBySystem(TransportRequest[] requests, SystemInstanceId systemId) {
+    return requests.filter!(e => e.sourceSystemId == systemId).array;
   }
 
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  TransportRequest[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
+  }
+
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
   // #endregion BySystem
 
   // #region ByStatus
-  size_t countByStatus(SystemInstanceId systemId, TransportStatus status) {
-    return findByStatus(systemId, status).length;
+  size_t countByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
+    return findByStatus(tenantId, systemId, status).length;
   }
 
-  TransportRequest[] findByStatus(SystemInstanceId systemId, TransportStatus status) {
-    return findAll().filter!(e => e.sourceSystemId == systemId && e.status == status).array;
+TransportRequest[] filterByStatus(  TransportRequest[] requests, TransportStatus status) {
+    return requests.filter!(e => e.status == status).array;
   }
 
-  void removeByStatus(SystemInstanceId systemId, TransportStatus status) {
-    findByStatus(systemId, status).each!(e => remove(e));
+  TransportRequest[] findByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
+    return filterByStatus(filterBySystem(findByTenant(tenantId), systemId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
+    findByStatus(tenantId, systemId, status).each!(e => remove(e));
   }
   // #endregion ByStatus
 
   // #region ByOwner
-  size_t countByOwner(SystemInstanceId systemId, string owner) {
-    return findByOwner(systemId, owner).length;
+  size_t countByOwner(TenantId tenantId, SystemInstanceId systemId, string owner) {
+    return findByOwner(tenantId, systemId, owner).length;
   }
 
-  TransportRequest[] findByOwner(SystemInstanceId systemId, string owner) {
-    return findAll().filter!(e => e.sourceSystemId == systemId && e.owner == owner).array;
+  TransportRequest[] filterByOwner(TransportRequest[] requests, string owner) {
+    return requests.filter!(e => e.owner == owner).array;
   }
 
-  void removeByOwner(SystemInstanceId systemId, string owner) {
-    findByOwner(systemId, owner).each!(e => remove(e));
+  TransportRequest[] findByOwner(TenantId tenantId, SystemInstanceId systemId, string owner) {
+    return filterByOwner(findBySystem(tenantId, systemId), owner);
+  }
+
+  void removeByOwner(TenantId tenantId, SystemInstanceId systemId, string owner) {
+    findByOwner(tenantId, systemId, owner).each!(e => remove(e));
   }
   // #endregion ByOwner
 

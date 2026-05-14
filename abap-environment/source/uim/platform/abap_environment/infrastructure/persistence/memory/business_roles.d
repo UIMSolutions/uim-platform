@@ -19,41 +19,42 @@ mixin(ShowModule!());
 
 class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRoleId), BusinessRoleRepository {
 
-bool existsByName(SystemInstanceId systemId, string name) {
-    foreach (e; findAll())
-      if (e.systemInstanceId == systemId && e.name == name)
-        return true;
-    return false;
+  // #region ByName
+  bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    return findBySystem(tenantId, systemId).any!(e => e.name == name);
   }
 
-  BusinessRole findByName(SystemInstanceId systemId, string name) {
-    foreach (e; findAll())
-      if (e.systemInstanceId == systemId && e.name == name)
+  BusinessRole findByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    foreach (e; findBySystem(tenantId, systemId))
+      if (e.name == name)
         return e;
     return BusinessRole.init;
   }
-  void removeByName(SystemInstanceId systemId, string name) {
-    auto role = findByName(systemId, name);
+
+  void removeByName(TenantId tenantId, SystemInstanceId systemId, string name) {
+    auto role = findByName(tenantId, systemId, name);
     if (!role.isNull) {
       remove(role);
     }
   }
+  // #endregion ByName
 
-  size_t countBySystem(SystemInstanceId systemId) {
-    return findBySystem(systemId).length;
+  // #region BySystem
+  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return findBySystem(tenantId, systemId).length;
   }
 
   BusinessRole[] filterBySystem(BusinessRole[] roles, SystemInstanceId systemId) {
     return roles.filter!(e => e.systemInstanceId == systemId).array;
   }
 
-  BusinessRole[] findBySystem(SystemInstanceId systemId) {
-    return filterBySystem(findAll(), systemId);
+  BusinessRole[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
-  void removeBySystem(SystemInstanceId systemId) {
-    findBySystem(systemId).each!(e => remove(e));
+  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
+    findBySystem(tenantId, systemId).each!(e => remove(e));
   }
- 
+  // #endregion BySystem
 
 }

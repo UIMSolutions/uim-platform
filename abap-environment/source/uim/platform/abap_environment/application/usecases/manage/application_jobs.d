@@ -35,8 +35,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "System instance ID is required");
 
     ApplicationJob job;
-    job.id = randomUUID();
-    job.tenantId = request.tenantId;
+    job.initEntity(request.tenantId);
     job.systemInstanceId = request.systemInstanceId;
     job.name = request.name;
     job.description = request.description;
@@ -48,19 +47,11 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.status = JobStatus.scheduled;
     job.jobParameters = request.jobParameters;
 
-    // import std.datetime.systime : Clock;
-    job.createdAt = Clock.currStdTime();
-    job.updatedAt = job.createdAt;
-
     jobs.save(job);
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult updateJob(string id, UpdateApplicationJobRequest request) {
-    return updateJob(ApplicationJobId(id), request);
-  }
-
-  CommandResult updateJob(UpdateApplicationJobRequest request) {
+  CommandResult updateApplicationJob(UpdateApplicationJobRequest request) {
     auto job = jobs.findById(request.tenantId, request.id);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");
@@ -84,10 +75,6 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult cancelJob(string id) {
-    return cancelJob(ApplicationJobId(id));
-  }
-
   CommandResult cancelJob(TenantId tenantId, ApplicationJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
@@ -106,24 +93,12 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  ApplicationJob getJob(string id) {
-    return getJob(ApplicationJobId(id));
-  }
-
   ApplicationJob getJob(TenantId tenantId, ApplicationJobId id) {
     return jobs.findById(tenantId, id);
   }
 
-  ApplicationJob[] listJobs(string systemId) {
-    return listJobs(SystemInstanceId(systemId));
-  }
-
-  ApplicationJob[] listJobs(SystemInstanceId systemId) {
-    return jobs.findBySystem(systemId);
-  }
-
-  CommandResult deleteJob(string id) {
-    return deleteJob(ApplicationJobId(id));
+  ApplicationJob[] listJobs(TenantId tenantId, SystemInstanceId systemId) {
+    return jobs.findBySystem(tenantId, systemId);
   }
 
   CommandResult deleteJob(TenantId tenantId, ApplicationJobId id) {
