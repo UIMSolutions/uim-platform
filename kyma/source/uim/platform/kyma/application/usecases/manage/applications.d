@@ -197,12 +197,12 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApplication(ApplicationId appId) {
-    if (!appRepository.existsById(appId))
+    auto app = appRepository.findById(appId);
+    if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(appId);
-    appRepository.remove(appId);
-    return CommandResult(true, appid.value, "");
+    appRepository.remove(app);
+    return CommandResult(true, app.id.value, "");
   }
 
   private AppRegistrationType parseRegistrationType(string type) {

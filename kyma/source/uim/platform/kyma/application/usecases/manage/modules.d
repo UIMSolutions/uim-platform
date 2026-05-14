@@ -95,7 +95,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     mod.status = ModuleStatus.uninstalling;
     mod.updatedAt = clockSeconds();
     moduleRepository.update(mod);
-    return CommandResult(true, moduleid.value, "");
+    return CommandResult(true, mod.id.value, "");
   }
 
   CommandResult updateModule(string moduleId, UpdateModuleRequest request) {
@@ -154,23 +154,6 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Module not found");
 
     moduleRepository.remove(moduleId);
-    return CommandResult(true, moduleid.value, "");
-  }
-
-  private string[] getKnownDependencies(ModuleType type) {
-    switch (type) {
-    case ModuleType.apiGateway:
-      return ["istio"];
-    case ModuleType.serverless:
-      return null;
-    case ModuleType.eventing:
-      return ["nats"];
-    case ModuleType.keda:
-      return null;
-    case ModuleType.connectivityProxy:
-      return ["istio"];
-    default:
-      return null;
-    }
+    return CommandResult(true, moduleId.value, "");
   }
 }

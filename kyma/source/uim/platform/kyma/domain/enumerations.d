@@ -137,42 +137,17 @@ enum ModuleStatus {
 }
 
 /// Known Kyma module types.
-enum ModuleType {
-    istio,
-    apiGateway,
-    serverless,
-    eventing,
-    nats,
-    telemetry,
-    btp_operator,
-    keda,
-    connectivityProxy,
-    custom,
-}
-
-ModuleType toModuleType(string typeName) {
-    switch (typeName) {
-    case "istio":
-        return ModuleType.istio;
-    case "api-gateway":
-        return ModuleType.apiGateway;
-    case "serverless":
-        return ModuleType.serverless;
-    case "eventing":
-        return ModuleType.eventing;
-    case "nats":
-        return ModuleType.nats;
-    case "telemetry":
-        return ModuleType.telemetry;
-    case "btp-operator":
-        return ModuleType.btp_operator;
-    case "keda":
-        return ModuleType.keda;
-    case "connectivity-proxy":
-        return ModuleType.connectivityProxy;
-    default:
-        return ModuleType.custom;
-    }
+enum ModuleType : string {
+    istio = "istio",
+    apiGateway = "api-gateway",
+    serverless = "serverless",
+    eventing = "eventing",
+    nats = "nats",
+    telemetry = "telemetry",
+    btp_operator = "btp-operator",
+    keda = "keda",
+    connectivityProxy = "connectivity-proxy",
+    custom = "custom",
 }
 
 /// Application connectivity status.

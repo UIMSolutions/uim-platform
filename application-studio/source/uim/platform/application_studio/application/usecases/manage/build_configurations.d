@@ -18,26 +18,22 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         this.configurations = configurations;
     }
 
-    BuildConfiguration getById(BuildConfigurationId id) {
+    BuildConfiguration getBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
         return configurations.findById(tenantId, id);
     }
 
-    BuildConfiguration[] list() {
-        return configurations.findAll();
-    }
-
-    BuildConfiguration[] listByTenant(TenantId tenantId) {
+    BuildConfiguration[] listBuildConfigurations(TenantId tenantId) {
         return configurations.findByTenant(tenantId);
     }
 
-    BuildConfiguration[] listByProject(ProjectId projectId) {
-        return configurations.findByProject(projectId);
+    BuildConfiguration[] listBuildConfigurations(TenantId tenantId, ProjectId projectId) {
+        return configurations.findByProject(tenantId, projectId);
     }
 
-    CommandResult create(BuildConfigurationDTO dto) {
+    CommandResult createBuildConfiguration(BuildConfigurationDTO dto) {
         BuildConfiguration e;
+        e.initEntity(dto.tenantId, dto.createdBy);
         e.id = BuildConfigurationId(dto.id);
-        e.tenantId = dto.tenantId;
         e.projectId = ProjectId(dto.projectId);
         e.name = dto.name;
         e.description = dto.description;
@@ -45,15 +41,15 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         e.deployCommand = dto.deployCommand;
         e.artifactPath = dto.artifactPath;
         e.mtaDescriptor = dto.mtaDescriptor;
-        e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidBuildConfiguration(e))
             return CommandResult(false, "", "Invalid build configuration data");
+
         configurations.save(e);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(BuildConfigurationDTO dto) {
-        auto existing = configurations.findById(BuildConfigurationId(dto.id));
+    CommandResult updateBuildConfiguration(BuildConfigurationDTO dto) {
+        auto existing = configurations.findById(dto.tenantId, BuildConfigurationId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Build configuration not found");
 
@@ -62,11 +58,12 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.buildCommand.length > 0) existing.buildCommand = dto.buildCommand;
         if (dto.deployCommand.length > 0) existing.deployCommand = dto.deployCommand;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         configurations.update(existing);
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult deleteBuildConfiguration(BuildConfigurationId id) {
+    CommandResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
         auto config = configurations.findById(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Build configuration not found");

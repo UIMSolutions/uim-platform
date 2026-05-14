@@ -83,10 +83,10 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
-    if (!ruleRepository.existsById(id))
+    auto rule = ruleRepository.findById(tenantId, id);
+    if (rule.isNull)
       return CommandResult(false, "", "API rule not found");
 
-    auto rule = ruleRepository.findById(tenantId, id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.serviceName.length > 0)

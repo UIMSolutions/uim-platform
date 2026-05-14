@@ -35,7 +35,7 @@ class ManageRoleCollectionsUseCase {
     return CommandResult(true, rc.id.value, "");
   }
 
-  CommandResult update(UpdateRoleCollectionRequest r) {
+  CommandResult updateRoleCollection(UpdateRoleCollectionRequest r) {
     auto rc = repo.findById(r.id);
     if (rc.id.length == 0)
       return CommandResult(false, "", "Role collection not found");
@@ -48,7 +48,7 @@ class ManageRoleCollectionsUseCase {
     return CommandResult(true, rc.id.value, "");
   }
 
-  CommandResult remove(TenantId tenantId, RoleCollectionId id) {
+  CommandResult deleteRoleCollection(TenantId tenantId, RoleCollectionId id) {
     auto rc = repo.findById(tenantId, id);
     if (rc.isNull)
       return CommandResult(false, "", "Role collection not found");
@@ -57,11 +57,11 @@ class ManageRoleCollectionsUseCase {
     return CommandResult(true, rc.id.value, "");
   }
 
-  RoleCollectionEntity getById(TenantId tenantId, RoleCollectionId id) {
+  RoleCollectionEntity getRoleCollection(TenantId tenantId, RoleCollectionId id) {
     return repo.findById(tenantId, id);
   }
 
-  RoleCollectionEntity[] listAll(TenantId tenantId) {
+  RoleCollectionEntity[] listRoleCollections(TenantId tenantId) {
     return repo.findAll(tenantId);
   }
 }

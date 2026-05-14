@@ -18,7 +18,7 @@ class ManageScopesUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateScopeRequest r) {
+  CommandResult createScope(CreateScopeRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Scope name is required");
     if (repo.existsByName(r.name))
@@ -37,7 +37,7 @@ class ManageScopesUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  CommandResult update(UpdateScopeRequest r) {
+  CommandResult updateScope(UpdateScopeRequest r) {
     auto s = repo.findById(r.id);
     if (s.id.length == 0)
       return CommandResult(false, "", "Scope not found");
@@ -49,7 +49,7 @@ class ManageScopesUseCase {
     return CommandResult(true, s.id, "");
   }
 
-  CommandResult remove(TenantId tenantId, ScopeId id) {
+  CommandResult deleteScope(TenantId tenantId, ScopeId id) {
     auto s = repo.findById(tenantId, id);
     if (s.isNull)
       return CommandResult(false, "", "Scope not found");
@@ -58,11 +58,11 @@ class ManageScopesUseCase {
     return CommandResult(true, id, "");
   }
 
-  ScopeEntity getById(TenantId tenantId, ScopeId id) {
+  ScopeEntity getScope(TenantId tenantId, ScopeId id) {
     return repo.findById(tenantId, id);
   }
 
-  ScopeEntity[] listAll(TenantId tenantId) {
+  ScopeEntity[] listScopes(TenantId tenantId) {
     return repo.findAll(tenantId);
   }
 }

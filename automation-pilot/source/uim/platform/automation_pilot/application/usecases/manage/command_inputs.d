@@ -18,19 +18,15 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandInput getById(CommandInputId id) {
+    CommandInput getCommandInput(TenantId tenantId, CommandInputId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandInput[] list() {
-        return repo.findAll();
-    }
-
-    CommandInput[] listByTenant(TenantId tenantId) {
+    CommandInput[] listCommandInputs(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult create(CommandInputDTO dto) {
+    CommandResult createCommandInput(CommandInputDTO dto) {
         CommandInput ci;
         ci.id = CommandInputId(dto.id);
         ci.tenantId = dto.tenantId;
@@ -47,8 +43,8 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(CommandInputDTO dto) {
-        auto existing = repo.findById(CommandInputId(dto.id));
+    CommandResult updateCommandInput(CommandInputDTO dto) {
+        auto existing = repo.findById(dto.tenantId, CommandInputId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Command input not found");
 
@@ -62,7 +58,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCommandInput(CommandInputId id) {
+    CommandResult deleteCommandInput(TenantId tenantId, CommandInputId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Command input not found");

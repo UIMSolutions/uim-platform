@@ -41,7 +41,7 @@ class ManageUserAssignmentsUseCase {
     return CommandResult(true, ua.id, "");
   }
 
-  CommandResult removeUserAssignment(TenantId tenantId, UserAssignmentId id) {
+  CommandResult deleteUserAssignment(TenantId tenantId, UserAssignmentId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "User assignment not found");
