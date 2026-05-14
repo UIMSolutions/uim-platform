@@ -18,26 +18,23 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    DataConnection getById(DataConnectionId id) {
+    DataConnection getDataConnection(TenantId tenantId, DataConnectionId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataConnection[] list() {
-        return repo.findAll();
-    }
-
-    DataConnection[] listByTenant(TenantId tenantId) {
+    DataConnection[] listDataConnections(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataConnection[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    DataConnection[] listDataConnections(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult create(DataConnectionDTO dto) {
+    CommandResult createDataConnection(DataConnectionDTO dto) {
         DataConnection e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+
         e.id = DataConnectionId(dto.id);
-        e.tenantId = dto.tenantId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.name = dto.name;
         e.description = dto.description;
@@ -48,11 +45,11 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         e.queryParams = dto.queryParams;
         e.responseMapping = dto.responseMapping;
         e.destinationName = dto.destinationName;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidDataConnection(e))
             return CommandResult(false, "", "Invalid data connection");
+            
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(DataConnectionDTO dto) {

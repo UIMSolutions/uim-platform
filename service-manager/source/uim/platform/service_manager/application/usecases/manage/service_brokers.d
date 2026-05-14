@@ -13,25 +13,22 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceBroker[] listByTenant(TenantId tenantId) {
+    ServiceBroker[] listServiceBrokers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceBroker getById(TenantId tenantId, ServiceBrokerId id) {
+    ServiceBroker getServiceBroker(TenantId tenantId, ServiceBrokerId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateServiceBrokerRequest dto) {
-        
-
+    CommandResult createServiceBroker(TenantId tenantId, CreateServiceBrokerRequest dto) {
         ServiceBroker e;
+        e.initEntity(tenantId);
+
         e.id = ServiceBrokerId(MonoTime.currTime.ticks.to!string);
-        e.tenantId = tenantId;
         e.name = dto.name;
         e.description = dto.description;
         e.brokerUrl = dto.brokerUrl;
-        e.createdAt = MonoTime.currTime.ticks;
-        e.updatedAt = e.createdAt;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service broker name is required");
@@ -42,7 +39,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, ServiceBrokerId id, UpdateServiceBrokerRequest dto) {
+    CommandResult updateServiceBroker(TenantId tenantId, ServiceBrokerId id, UpdateServiceBrokerRequest dto) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Service broker not found");

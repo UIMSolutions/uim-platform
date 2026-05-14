@@ -13,20 +13,19 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceOffering[] listByTenant(TenantId tenantId) {
+    ServiceOffering[] listServiceOfferings(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceOffering getById(TenantId tenantId, ServiceOfferingId id) {
+    ServiceOffering getServiceOffering(TenantId tenantId, ServiceOfferingId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateServiceOfferingRequest dto) {
-        
-
+    CommandResult createServiceOffering(CreateServiceOfferingRequest dto) {
         ServiceOffering e;
+        e.initEntity(dto.tenantId);
+
         e.id = ServiceOfferingId(MonoTime.currTime.ticks.to!string);
-        e.tenantId = tenantId;
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;
@@ -34,7 +33,6 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         e.tags = dto.tags;
         e.metadata = dto.metadata;
         e.createdAt = MonoTime.currTime.ticks;
-        e.updatedAt = e.createdAt;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service offering name is required");
@@ -43,8 +41,8 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, ServiceOfferingId id, UpdateServiceOfferingRequest dto) {
-        auto existing = repo.findById(tenantId, id);
+    CommandResult updateServiceOffering(UpdateServiceOfferingRequest dto) {
+        auto existing = repo.findById(dto.tenantId, dto.id);
         if (existing.isNull)
             return CommandResult(false, "", "Service offering not found");
 
@@ -56,7 +54,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteServiceOffering(TenantId tenantId, ServiceOfferingId id) {

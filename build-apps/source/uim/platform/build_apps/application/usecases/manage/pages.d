@@ -18,26 +18,23 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Page getById(PageId id) {
+    Page getPage(TenantId tenantId, PageId id) {
         return repo.findById(tenantId, id);
     }
 
-    Page[] list() {
-        return repo.findAll();
-    }
-
-    Page[] listByTenant(TenantId tenantId) {
+    Page[] listPages(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Page[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    Page[] listPages(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult create(PageDTO dto) {
+    CommandResult createPage(PageDTO dto) {
         Page e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+        
         e.id = PageId(dto.id);
-        e.tenantId = dto.tenantId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.name = dto.name;
         e.description = dto.description;
@@ -48,17 +45,17 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         e.pageVariables = dto.pageVariables;
         e.sortOrder = dto.sortOrder;
         e.isStartPage = dto.isStartPage;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidPage(e))
             return CommandResult(false, "", "Invalid page data");
+
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(PageDTO dto) {
-        if (!repo.existsById(PageId(dto.id)))
+    CommandResult updatePage(PageDTO dto) {
+        if (!repo.existsById(dto.tenantId, PageId(dto.id)))
             return CommandResult(false, "", "Page not found");
-        auto existing = repo.findById(PageId(dto.id));
+        auto existing = repo.findById(dto.tenantId, PageId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.route.length > 0) existing.route = dto.route;
@@ -69,7 +66,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePage(PageId id) {
+    CommandResult deletePage(TenantId tenantId, PageId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Page not found");

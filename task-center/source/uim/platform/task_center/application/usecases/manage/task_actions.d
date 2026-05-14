@@ -18,19 +18,19 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAction getById(TenantId tenantId, string id) {
+    TaskAction getTaskAction(TenantId tenantId, TaskActionId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskAction[] listByTask(TenantId tenantId, string taskId) {
+    TaskAction[] listTaskActions(TenantId tenantId, TaskId taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
-    TaskAction[] listByPerformer(TenantId tenantId, string performerId) {
+    TaskAction[] listTaskActions(TenantId tenantId, PerformerId performerId) {
         return repo.findByPerformer(tenantId, performerId);
     }
 
-    CommandResult create(PerformTaskActionRequest req) {
+    CommandResult createTaskAction(PerformTaskActionRequest req) {
         TaskAction a;
         a.id = req.id;
         a.tenantId = req.tenantId;

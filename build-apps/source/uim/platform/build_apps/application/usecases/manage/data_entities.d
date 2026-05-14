@@ -18,26 +18,23 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    DataEntity getById(DataEntityId id) {
+    DataEntity getDataEntity(TenantId tenantId, DataEntityId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataEntity[] list() {
-        return repo.findAll();
-    }
-
-    DataEntity[] listByTenant(TenantId tenantId) {
+    DataEntity[] listDataEntities(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataEntity[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    DataEntity[] listDataEntities(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult create(DataEntityDTO dto) {
+    CommandResult createDataEntity(DataEntityDTO dto) {
         DataEntity e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+
         e.id = DataEntityId(dto.id);
-        e.tenantId = dto.tenantId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.name = dto.name;
         e.description = dto.description;
@@ -47,26 +44,28 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         e.validationRules = dto.validationRules;
         e.defaultValues = dto.defaultValues;
         e.relations = dto.relations;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidDataEntity(e))
             return CommandResult(false, "", "Invalid data entity");
+
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(DataEntityDTO dto) {
-        if (!repo.existsById(DataEntityId(dto.id)))
+    CommandResult updateDataEntity(DataEntityDTO dto) {
+        auto existing = repo.findById(dto.tenantId, DataEntityId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Data entity not found");
-        auto existing = repo.findById(DataEntityId(dto.id));
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.fields.length > 0) existing.fields = dto.fields;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDataEntity(DataEntityId id) {
+    CommandResult deleteDataEntity(TenantId tenantId, DataEntityId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data entity not found");

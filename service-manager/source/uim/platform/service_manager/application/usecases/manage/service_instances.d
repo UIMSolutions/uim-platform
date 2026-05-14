@@ -13,18 +13,18 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceInstance[] listByTenant(TenantId tenantId) {
+    ServiceInstance[] listServiceInstances(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceInstance getById(TenantId tenantId, ServiceInstanceId id) {
+    ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateServiceInstanceRequest dto) {
-        
-
+    CommandResult createServiceInstance(TenantId tenantId, CreateServiceInstanceRequest dto) {
         ServiceInstance e;
+        e.initEntity(tenantId);
+
         e.id = ServiceInstanceId(MonoTime.currTime.ticks.to!string);
         e.tenantId = tenantId;
         e.name = dto.name;
@@ -47,8 +47,8 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, ServiceInstanceId id, UpdateServiceInstanceRequest dto) {
-        auto existing = repo.findById(tenantId, id);
+    CommandResult updateServiceInstance(UpdateServiceInstanceRequest dto) {
+        auto existing = repo.findById(dto.tenantId, dto.id);
         if (existing.isNull)
             return CommandResult(false, "", "Service instance not found");
 
@@ -59,7 +59,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         existing.updatedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {

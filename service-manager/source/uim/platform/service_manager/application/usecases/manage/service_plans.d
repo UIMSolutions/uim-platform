@@ -21,12 +21,10 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateServicePlanRequest dto) {
-        
-
+    CommandResult createServicePlan(CreateServicePlanRequest dto) {
         ServicePlan e;
         e.id = ServicePlanId(MonoTime.currTime.ticks.to!string);
-        e.tenantId = tenantId;
+        e.tenantId = TenantId(dto.tenantId);
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;
@@ -44,8 +42,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, ServicePlanId id, UpdateServicePlanRequest dto) {
-        auto existing = repo.findById(tenantId, id);
+    CommandResult updateServicePlan(UpdateServicePlanRequest dto) {
+        auto existing = repo.findById(TenantId(dto.tenantId), ServicePlanId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Service plan not found");
 
@@ -60,8 +58,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
-        auto plan = repo.findById(tenantId, id);
+    CommandResult deleteServicePlan(DeleteServicePlanRequest dto) {
+        auto plan = repo.findById(TenantId(dto.tenantId), ServicePlanId(dto.id));
         if (plan.isNull)
             return CommandResult(false, "", "Service plan not found");
 

@@ -13,32 +13,30 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Operation[] listByTenant(TenantId tenantId) {
+    Operation[] listOperations(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Operation getById(TenantId tenantId, OperationId id) {
+    Operation getOperation(TenantId tenantId, OperationId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult create(TenantId tenantId, CreateOperationRequest dto) {
-        
-
+    CommandResult createOperation(TenantId tenantId, CreateOperationRequest dto) {
         Operation e;
+        e.initEntity(tenantId);
+
         e.id = OperationId(MonoTime.currTime.ticks.to!string);
-        e.tenantId = tenantId;
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;
         e.description = dto.description;
         e.status = OperationStatus.pending;
         e.createdAt = MonoTime.currTime.ticks;
-        e.updatedAt = e.createdAt;
 
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(TenantId tenantId, OperationId id, UpdateOperationRequest dto) {
+    CommandResult updateOperation(TenantId tenantId, OperationId id, UpdateOperationRequest dto) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Operation not found");

@@ -18,15 +18,11 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ProjectMember getById(ProjectMemberId id) {
+    ProjectMember getProjectMember(TenantId tenantId, ProjectMemberId id) {
         return repo.findById(tenantId, id);
     }
 
-    ProjectMember[] list() {
-        return repo.findAll();
-    }
-
-    ProjectMember[] listByTenant(TenantId tenantId) {
+    ProjectMember[] listProjectMembers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
@@ -34,9 +30,10 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         return repo.findByApplication(applicationId);
     }
 
-    CommandResult create(ProjectMemberDTO dto) {
+    CommandResult createProjectMember(ProjectMemberDTO dto) {
         ProjectMember e;
         e.id = ProjectMemberId(dto.id);
+        
         e.tenantId = dto.tenantId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.userId = dto.userId;
@@ -46,11 +43,12 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidProjectMember(e))
             return CommandResult(false, "", "Invalid project member data");
+
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ProjectMemberDTO dto) {
+    CommandResult updateProjectMember(ProjectMemberDTO dto) {
         if (!repo.existsById(ProjectMemberId(dto.id)))
             return CommandResult(false, "", "Project member not found");
         auto existing = repo.findById(ProjectMemberId(dto.id));
@@ -62,7 +60,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProjectMember(ProjectMemberId id) {
+    CommandResult deleteProjectMember(TenantId tenantId, ProjectMemberId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Project member not found");
