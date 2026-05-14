@@ -28,12 +28,13 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Backup ID and name are required");
 
-    if (repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.id);
+    if (!existing.isNull)
       return CommandResult(false, "", "Backup already exists");
 
     Backup b;
+    b.initEntity(r.tenantId);
     b.id = r.id;
-    b.tenantId = r.tenantId;
     b.instanceId = r.instanceId;
     b.name = r.name;
     b.status = BackupStatus.scheduled;
@@ -44,8 +45,6 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     b.schedule.retentionDays = r.retentionDays;
     b.schedule.enabled = true;
 
-    import core.time : MonoTime;
-    b.createdAt = MonoTime.currTime.ticks;
 
     repo.save(b);
     return CommandResult(true, b.id.value, "");
@@ -60,10 +59,10 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBackup(UpdateBackupRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "Backup not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.destination = r.destination;
     existing.schedule.cronExpression = r.cronExpression;

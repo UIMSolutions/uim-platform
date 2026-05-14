@@ -63,8 +63,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, certificate.id.value, "");
   }
 
-  CommandResult updateCertificate(TenantId tenantId, CertificateId id, UpdateCertificateRequest req) {
-    auto c = repo.findById(tenantId, id);
+  CommandResult updateCertificate(UpdateCertificateRequest req) {
+    auto c = repo.findById(req.tenantId, req.certificateId);
     if (c.isNull)
       return CommandResult(false, "", "Certificate not found");
 
@@ -120,18 +120,4 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-
-
-  private static CertificateFormat parseCertFormat(string s) {
-    switch (s) {
-    case "jks":
-      return CertificateFormat.jks;
-    case "pem":
-      return CertificateFormat.pem;
-    case "pfx":
-      return CertificateFormat.pfx;
-    default:
-      return CertificateFormat.p12;
-    }
-  }
 }

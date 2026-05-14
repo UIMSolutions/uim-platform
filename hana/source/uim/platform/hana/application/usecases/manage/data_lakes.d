@@ -28,22 +28,18 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Data lake ID and name are required");
 
-    if (repo.existsById(r.id))
+    auto datalake = repo.findById(r.tenantId, r.id);
+    if (!datalake.isNull)
       return CommandResult(false, "", "Data lake already exists");
 
     DataLake d;
-    d.id = r.id;
-    d.tenantId = r.tenantId;
+    d.initEntity(r.tenantId, r.createdBy);
+    d.id = r.datalakeId;
     d.instanceId = r.instanceId;
     d.name = r.name;
     d.description = r.description;
     d.status = DataLakeStatus.creating;
     d.computeNodes = r.computeNodes;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    d.createdAt = now;
-    d.updatedAt = now;
 
     repo.save(d);
     return CommandResult(true, d.id.value, "");
@@ -58,10 +54,10 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDataLake(UpdateDataLakeRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "Data lake not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.computeNodes = r.computeNodes;

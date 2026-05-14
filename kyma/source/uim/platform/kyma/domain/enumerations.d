@@ -39,20 +39,20 @@ enum FunctionRuntime {
     python312,
 }
 
-  FunctionRuntime toRuntime(string runtimeName) {
+FunctionRuntime toRuntime(string runtimeName) {
     switch (runtimeName) {
     case "nodejs18":
-      return FunctionRuntime.nodejs18;
+        return FunctionRuntime.nodejs18;
     case "nodejs20":
-      return FunctionRuntime.nodejs20;
+        return FunctionRuntime.nodejs20;
     case "python39":
-      return FunctionRuntime.python39;
+        return FunctionRuntime.python39;
     case "python312":
-      return FunctionRuntime.python312;
+        return FunctionRuntime.python312;
     default:
-      return FunctionRuntime.nodejs20;
+        return FunctionRuntime.nodejs20;
     }
-  }
+}
 
 /// Status of a serverless function.
 enum FunctionStatus {

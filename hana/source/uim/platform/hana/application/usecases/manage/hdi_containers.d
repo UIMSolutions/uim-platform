@@ -32,19 +32,14 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "HDI Container already exists");
 
     HDIContainer c;
+    c.initEntity(r.tenantId);
     c.id = r.id;
-    c.tenantId = r.tenantId;
     c.instanceId = r.instanceId;
     c.name = r.name;
     c.description = r.description;
     c.status = HDIContainerStatus.creating;
     c.appUser = r.appUser;
     c.grantedSchemas = r.grantedSchemas;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    c.createdAt = now;
-    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");

@@ -33,10 +33,10 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubjectRole(DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
-        if (!repo.existsById(id))
+        auto dsr = repo.findById(tenantId, id);
+        if (dsr.isNull)
             return CommandResult(false, "", "Data subject role not found");
 
-        auto dsr = repo.findById(tenantId, id);
         if (req.name.length > 0)
             dsr.name = req.name;
         if (req.description.length > 0)

@@ -19,8 +19,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Business purpose name is required");
 
         BusinessPurpose bp;
-        bp.id = BusinessPurposeId(randomUUID().toString());
-        bp.tenantId = req.tenantId;
+        bp.initEntity(req.tenantId, req.createdBy);
         bp.name = req.name;
         bp.description = req.description;
         bp.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
@@ -28,18 +27,16 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         bp.legalEntityId = LegalEntityId(req.legalEntityId);
         bp.referenceDate = req.referenceDate;
         bp.status = BusinessPurposeStatus.inactive;
-        bp.createdBy = req.createdBy;
-        bp.createdAt = clockSeconds();
 
         repo.save(bp);
         return CommandResult(true, bp.id.value, "");
     }
 
     CommandResult updateBusinessPurpose(BusinessPurposeId id, UpdateBusinessPurposeRequest req) {
-        if (!repo.existsById(id))
+        auto bp = repo.findById(tenantId, id);
+        if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 
-        auto bp = repo.findById(tenantId, id);
         if (req.name.length > 0)
             bp.name = req.name;
         if (req.description.length > 0)
@@ -60,10 +57,10 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateBusinessPurpose(BusinessPurposeId id) {
-        if (!repo.existsById(id))
+        auto bp = repo.findById(tenantId, id);
+        if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 
-        auto bp = repo.findById(tenantId, id);
         bp.status = BusinessPurposeStatus.active;
         bp.updatedAt = clockSeconds();
         repo.update(bp);

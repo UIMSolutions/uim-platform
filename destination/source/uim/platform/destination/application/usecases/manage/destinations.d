@@ -44,11 +44,11 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     d.serviceInstanceId = req.serviceInstanceId;
     d.name = req.name;
     d.description = req.description;
-    d.destinationType = parseDestType(req.destinationType);
+    d.destinationType = req.destinationType.to!DestinationType;
     d.url = req.url;
     d.authenticationType = DestinationResolver.parseAuthType(req.authenticationType);
     d.proxyType = DestinationResolver.parseProxyType(req.proxyType);
-    d.level = parseLevel(req.level);
+    d.level = req.level.to!DestinationLevel;
     d.status = DestinationStatus.active;
 
     d.urlPath = req.urlPath;
@@ -128,7 +128,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.sccVirtualPort > 0)
       d.sccVirtualPort = cast(ushort) req.sccVirtualPort;
     if (req.status.length > 0)
-      d.status = parseDestStatus(req.status);
+      d.status = req.status.to!DestinationStatus;
     if (req.properties.length > 0)
       d.properties = req.properties;
     if (req.fragmentIds.length > 0) {
@@ -150,11 +150,11 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  Destination[] listDestinationsByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+  Destination[] listDestinations(TenantId tenantId, ServiceInstanceId instanceId) {
     return repo.findByServiceInstance(tenantId, instanceId);
   }
 
-  Destination findDestinationByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+  Destination findDestination(TenantId tenantId, SubaccountId subaccountId, string name) {
     return repo.findByName(tenantId, subaccountId, name);
   }
 
@@ -165,38 +165,5 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
-  }
-
-  private static DestinationType parseDestType(string s) {
-    switch (s) {
-    case "rfc":
-      return DestinationType.rfc;
-    case "mail":
-      return DestinationType.mail;
-    case "ldap":
-      return DestinationType.ldap;
-    default:
-      return DestinationType.http;
-    }
-  }
-
-  private static DestinationLevel parseLevel(string s) {
-    switch (s) {
-    case "serviceInstance":
-      return DestinationLevel.serviceInstance;
-    default:
-      return DestinationLevel.subaccount;
-    }
-  }
-
-  private static DestinationStatus parseDestStatus(string s) {
-    switch (s) {
-    case "inactive":
-      return DestinationStatus.inactive;
-    case "error":
-      return DestinationStatus.error;
-    default:
-      return DestinationStatus.active;
-    }
   }
 }

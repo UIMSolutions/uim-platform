@@ -28,12 +28,13 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
-    if (repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.id);
+    if (!existing.isNull)
       return CommandResult(false, "", "Alert already exists");
 
     Alert a;
-    a.id = r.id;
-    a.tenantId = r.tenantId;
+    a.initEntity(r.tenantId);
+    a.id = r.alertId;
     a.instanceId = r.instanceId;
     a.name = r.name;
     a.description = r.description;
@@ -45,16 +46,11 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     a.threshold.criticalValue = r.criticalValue;
     a.threshold.unit = r.unit;
 
-    import core.time : MonoTime;
-
-    a.createdAt = MonoTime.currTime.ticks;
-    a.triggeredAt = a.createdAt;
-
     repo.save(a);
     return CommandResult(true, a.id.value, "");
   }
 
-  Alert getAlertById(AlertId id) {
+  Alert getAlertById(TenantId tenantId, AlertId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -67,10 +63,10 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult acknowledgeAlert(AcknowledgeAlertRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.alertId);
+    if (existing.isNull)
       return CommandResult(false, "", "Alert not found");
 
-    auto existing = repo.findById(r.id);
     existing.status = AlertStatus.acknowledged;
     existing.acknowledgedBy = r.acknowledgedBy;
 
@@ -83,10 +79,10 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateAlert(UpdateAlertRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.alertId);
+    if (existing.isNull)
       return CommandResult(false, "", "Alert not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.threshold.warningValue = r.warningValue;
@@ -96,7 +92,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteAlert(AlertId id) {
+  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Alert not found");

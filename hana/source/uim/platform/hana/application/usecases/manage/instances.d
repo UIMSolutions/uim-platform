@@ -34,8 +34,8 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Instance already exists");
 
     DatabaseInstance i;
+    i.initEntity(r.tenantId);
     i.id = r.id;
-    i.tenantId = r.tenantId;
     i.name = r.name;
     i.description = r.description;
     i.status = InstanceStatus.creating;
@@ -52,16 +52,11 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     i.resources.vcpus = r.vcpus;
     i.resources.storageGB = r.storageGB;
 
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    i.createdAt = now;
-    i.updatedAt = now;
-
     repo.save(i);
     return CommandResult(true, i.id.value, "");
   }
 
-  DatabaseInstance getDatabaseInstance(DatabaseInstanceId id) {
+  DatabaseInstance getDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -70,10 +65,10 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "Instance not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.resources.memoryGB = r.memoryGB;
@@ -92,10 +87,10 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult performInstanceAction(InstanceActionRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "Instance not found");
 
-    auto existing = repo.findById(r.id);
     switch (r.action) {
       case "start":
         existing.status = InstanceStatus.starting;
@@ -117,7 +112,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteDatabaseInstance(DatabaseInstanceId id) {
+  CommandResult deleteDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Instance not found");

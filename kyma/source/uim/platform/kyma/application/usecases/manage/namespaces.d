@@ -58,11 +58,11 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ns.id.value, "");
   }
 
-  CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
-    if (!namespaceRepository.existsById(id))
+  CommandResult updateNamespace(UpdateNamespaceRequest req) {
+    auto ns = namespaceRepository.findById(req.tenantId, req.id);
+    if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
-    auto ns = namespaceRepository.findById(tenantId, id);
     if (req.description.length > 0)
       ns.description = req.description;
     if (req.cpuLimit.length > 0)
@@ -85,39 +85,27 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     ns.updatedAt = clockSeconds();
 
     namespaceRepository.update(ns);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, ns.id.value, "");
   }
 
-  bool hasNamespace(NamespaceId namespaceId) {
-    return namespaceRepository.existsById(namespaceId);
+  bool hasNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return namespaceRepository.existsById(tenantId, namespaceId);
   }
 
-  Namespace getNamespace(NamespaceId namespaceId) {
-    return namespaceRepository.findById(namespaceId);
+  Namespace getNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    return namespaceRepository.findById(tenantId, namespaceId);
   }
 
-  Namespace[] listNamespaces(KymaEnvironmentId envId) {
+  Namespace[] listNamespaces(TenantId tenantId, KymaEnvironmentId envId) {
     return namespaceRepository.findByEnvironment(envId);
   }
 
-  CommandResult deleteNamespace(NamespaceId namespaceId) {
-    if (!namespaceRepository.existsById(namespaceId))
+  CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
+    auto ns = namespaceRepository.findById(tenantId, namespaceId);
+    if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 
-    namespaceRepository.remove(namespaceId);
-    return CommandResult(true, namespaceId.value, "");
-  }
-
-  private QuotaEnforcement parseQuotaEnforcement(string s) {
-    switch (s) {
-    case "enforce":
-      return QuotaEnforcement.enforce;
-    case "warn":
-      return QuotaEnforcement.warn_;
-    case "none":
-      return QuotaEnforcement.none;
-    default:
-      return QuotaEnforcement.enforce;
-    }
+    namespaceRepository.remove(ns);
+    return CommandResult(true, ns.id.value, "");
   }
 }

@@ -28,7 +28,7 @@ class TraceController : PlatformController {
 
     router.post("/api/v1/traces/spans", &handleIngestSpan);
     router.post("/api/v1/traces/spans/batch", &handleBatchIngest);
-    router.get("/api/v1/traces/*", &handleGetTrace);
+    router.get("/api/v1/traces/*", &handleTrace);
   }
 
   protected void handleIngestSpan(scope HTTPServerRequest req, scope HTTPServerResponse res) {

@@ -135,10 +135,10 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult connectApplication(ApplicationId appId) {
-    if (!appRepository.existsById(appId))
+    auto app = appRepository.findById(appId);
+    if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.connected;
     app.updatedAt = clockSeconds();
     appRepository.update(app);

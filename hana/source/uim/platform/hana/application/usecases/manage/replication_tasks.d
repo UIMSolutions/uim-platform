@@ -28,12 +28,12 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Replication task ID and name are required");
 
-    if (repo.existsById(r.id))
+    if (repo.existsById(r.tenantId, r.replicationTaskId))
       return CommandResult(false, "", "Replication task already exists");
 
-    ReplicationTask t;
+    ReplicationTask t;  
+    t.initEntity(r.tenantId);
     t.id = r.id;
-    t.tenantId = r.tenantId;
     t.instanceId = r.instanceId;
     t.name = r.name;
     t.description = r.description;
@@ -41,11 +41,6 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     t.sourceConnectionId = r.sourceConnectionId;
     t.targetConnectionId = r.targetConnectionId;
     t.scheduleExpression = r.scheduleExpression;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");
