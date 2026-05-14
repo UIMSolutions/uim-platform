@@ -32,11 +32,10 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Binding '" ~ req.name ~ "' already exists");
 
     ServiceBinding binding;
-    binding.id = randomUUID();
+    binding.initEntity(req.tenantId, req.createdBy);
     binding.serviceInstanceId = req.serviceInstanceId;
     binding.namespaceId = req.namespaceId;
     binding.environmentId = req.environmentId;
-    binding.tenantId = req.tenantId;
     binding.name = req.name;
     binding.description = req.description;
     binding.status = ServiceBindingStatus.creating;
@@ -44,19 +43,16 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.secretNamespace = req.secretNamespace;
     binding.parametersJson = req.parametersJson;
     binding.labels = req.labels;
-    binding.createdBy = req.createdBy;
-    binding.createdAt = clockSeconds();
-    binding.updatedAt = binding.createdAt;
 
     repo.save(binding);
     return CommandResult(true, binding.id.value, "");
   }
 
   CommandResult updateServiceBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
-    if (!repo.existsById(id))
+    auto binding = repo.findById(tenantId, id);
+    if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
-    auto binding = repo.findById(tenantId, id);
     if (req.description.length > 0)
       binding.description = req.description;
     if (req.secretName.length > 0)
@@ -88,7 +84,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteServiceBinding(ServiceBindingId id) {
-    if (!repo.existsById(id))
+    auto binding = repo.findById(tenantId, id);
+    if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
     repo.removeById(id);

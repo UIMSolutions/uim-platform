@@ -34,10 +34,9 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
 
     ServiceInstance inst;
-    inst.id = randomUUID();
+    inst.initEntity(req.tenantId, req.createdBy);
     inst.namespaceId = req.namespaceId;
     inst.environmentId = req.environmentId;
-    inst.tenantId = req.tenantId;
     inst.name = req.name;
     inst.description = req.description;
     inst.status = ServiceInstanceStatus.creating;
@@ -47,19 +46,16 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     inst.externalName = req.externalName;
     inst.parametersJson = req.parametersJson;
     inst.labels = req.labels;
-    inst.createdBy = req.createdBy;
-    inst.createdAt = clockSeconds();
-    inst.updatedAt = inst.createdAt;
 
     repo.save(inst);
     return CommandResult(true, inst.id.value, "");
   }
 
-  CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateServiceInstance(UpdateServiceInstanceRequest req) {
+    auto inst = repo.findById(req.tenantId, req.id);
+    if (inst.isNull)
       return CommandResult(false, "", "Service instance not found");
 
-    auto inst = repo.findById(tenantId, id);
     if (req.description.length > 0)
       inst.description = req.description;
     if (req.servicePlanName.length > 0)
@@ -77,27 +73,28 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  bool hasServiceInstance(ServiceInstanceId id) {
-    return repo.existsById(id);
+  bool hasServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  ServiceInstance getServiceInstance(ServiceInstanceId id) {
+  ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
-  ServiceInstance[] listServiceInstances(NamespaceId nsId) {
-    return repo.findByNamespace(nsId);
+  ServiceInstance[] listServiceInstances(TenantId tenantId, NamespaceId nsId) {
+    return repo.findByNamespace(tenantId, nsId);
   }
 
-  ServiceInstance[] listServiceInstances(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+  ServiceInstance[] listServiceInstances(TenantId tenantId, KymaEnvironmentId envId) {
+    return repo.findByEnvironment(tenantId, envId);
   }
 
-  CommandResult deleteServiceInstance(ServiceInstanceId id) {
-    if (!repo.existsById(id))
+  CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    auto inst = repo.findById(tenantId, id);
+    if (inst.isNull)
       return CommandResult(false, "", "Service instance not found");
       
-    repo.removeById(id);
+    repo.remove(inst);
     return CommandResult(true, id.value, "");
   }
 }

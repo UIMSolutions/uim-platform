@@ -54,10 +54,10 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTrigger(TriggerDTO dto) {
-        if (!repo.existsById(dto.tenantId, TriggerId(dto.id)))
+        auto existing = repo.findById(dto.tenantId, TriggerId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");
 
-        auto existing = repo.findById(dto.tenantId, TriggerId(dto.id));
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.eventType.length > 0) existing.eventType = dto.eventType;

@@ -36,8 +36,9 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
 
     CommandResult createLogicFlow(LogicFlowDTO dto) {
         LogicFlow e;
+        e.initEntity(dto.tenantId, dto.createdBy);
+
         e.id = LogicFlowId(dto.id);
-        e.tenantId = dto.tenantId;
         e.applicationId = ApplicationId(dto.applicationId);
         e.pageId = PageId(dto.pageId);
         e.name = dto.name;
@@ -47,27 +48,29 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         e.connections = dto.connections;
         e.variables = dto.variables;
         e.errorHandler = dto.errorHandler;
-        e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidLogicFlow(e))
             return CommandResult(false, "", "Invalid logic flow data");
+            
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
     CommandResult updateLogicFlow(LogicFlowDTO dto) {
-        if (!repo.existsById(LogicFlowId(dto.id)))
+        auto existing = repo.findById(dto.tenantId, LogicFlowId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Logic flow not found");
-        auto existing = repo.findById(LogicFlowId(dto.id));
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.nodes.length > 0) existing.nodes = dto.nodes;
         if (dto.connections.length > 0) existing.connections = dto.connections;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteLogicFlow(LogicFlowId id) {
+    CommandResult deleteLogicFlow(TenantId tenantId, LogicFlowId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Logic flow not found");

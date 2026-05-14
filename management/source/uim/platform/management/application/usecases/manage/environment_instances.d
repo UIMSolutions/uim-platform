@@ -78,11 +78,11 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, inst.id.value, "");
   }
 
-  CommandResult updateEnvironmentInstance(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateEnvironmentInstance(UpdateEnvironmentInstanceRequest req) {
+    auto instance = repo.findById(req.tenantId, req.id);
+    if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
 
-    auto instance = repo.findById(tenantId, id);
     if (req.description.length > 0)
       instance.description = req.description;
     if (req.memoryQuotaMb > 0)
@@ -101,11 +101,10 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, instance.id.value, "");
   }
   
-  CommandResult deprovisionEnvironmentInstance(EnvironmentInstanceId id) {
-    if (!repo.existsById(id))
+  CommandResult deprovisionEnvironmentInstance(DeprovisionEnvironmentInstanceRequest req) {
+    auto instance = repo.findById(req.tenantId, req.id);
+    if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
-
-    auto instance = repo.findById(tenantId, id);
     if (!provisioner.canDelete(instance))
       return CommandResult(false, "", "Environment cannot be deleted in current status");
 
@@ -114,34 +113,19 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     repo.update(instance);
 
     // Complete deletion
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.removeById(req.tenantId, req.id);
+    return CommandResult(true, req.id.value, "");
   }
 
-  EnvironmentInstance getEnvironmentInstance(EnvironmentInstanceId id) {
+  EnvironmentInstance getEnvironmentInstance(TenantId tenantId, EnvironmentInstanceId id) {
     return repo.findById(tenantId, id);
   }
 
-  EnvironmentInstance[] listEnvironmentInstances(SubaccountId subId) {
-    return repo.findBySubaccount(subId);
+  EnvironmentInstance[] listEnvironmentInstances(TenantId tenantId, SubaccountId subId) {
+    return repo.findBySubaccount(tenantId, subId);
   }
 
-  EnvironmentInstance[] listEnvironmentInstances(SubaccountId subId, string envType) {
-    return repo.findByType(subId, parseEnvironmentType(envType));
-  }
-
-  private EnvironmentType parseEnvironmentType(string envType) {
-    switch (envType.toLower()) {
-    case "cloudFoundry":
-      return EnvironmentType.cloudFoundry;
-    case "kyma":
-      return EnvironmentType.kyma;
-    case "abap":
-      return EnvironmentType.abap;
-    case "neo":
-      return EnvironmentType.neo;
-    default:
-      return EnvironmentType.cloudFoundry;
-    }
+  EnvironmentInstance[] listEnvironmentInstances(TenantId tenantId, SubaccountId subId, string envType) {
+    return repo.findByType(tenantId, subId, parseEnvironmentType(envType));
   }
 }

@@ -47,20 +47,22 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         e.destinationName = dto.destinationName;
         if (!BuildAppsValidator.isValidDataConnection(e))
             return CommandResult(false, "", "Invalid data connection");
-            
+
         repo.save(e);
         return CommandResult(true, e.id.value, "");
     }
 
     CommandResult update(DataConnectionDTO dto) {
-        if (!repo.existsById(DataConnectionId(dto.id)))
+        auto existing = repo.findById(DataConnectionId(dto.id));        
+        if (existing.isNull)
             return CommandResult(false, "", "Data connection not found");
-        auto existing = repo.findById(DataConnectionId(dto.id));
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.baseUrl.length > 0) existing.baseUrl = dto.baseUrl;
         if (dto.basePath.length > 0) existing.basePath = dto.basePath;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

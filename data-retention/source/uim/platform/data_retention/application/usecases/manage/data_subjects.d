@@ -33,10 +33,10 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubject(DataSubjectId id, UpdateDataSubjectRequest req) {
-        if (!repo.existsById(id))
+        auto ds = repo.findById(tenantId, id);
+        if (ds.isNull)
             return CommandResult(false, "", "Data subject not found");
 
-        auto ds = repo.findById(tenantId, id);
         if (req.lifecycleStatus.length > 0)
             ds.lifecycleStatus = parseLifecycleStatus(req.lifecycleStatus);
         if (req.roleId.length > 0)

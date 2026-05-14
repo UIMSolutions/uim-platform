@@ -48,13 +48,15 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateUIComponent(UIComponentDTO dto) {
-        if (!repo.existsById(tenantId, UIComponentId(dto.id)))
-            return CommandResult(false, "", "UI component not found");
         auto existing = repo.findById(UIComponentId(dto.id));
+        if (existing.isNull)
+            return CommandResult(false, "", "UI component not found");
+            
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        
         repo.update(existing);
         return CommandResult(true, dto.id.value, "");
     }

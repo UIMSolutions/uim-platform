@@ -25,7 +25,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     this.evaluator = evaluator;
   }
 
-  CommandResult assign(AssignEntitlementRequest request) {
+  CommandResult assignEntitlement(AssignEntitlementRequest request) {
     if (request.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (request.servicePlanId.isEmpty)
@@ -40,7 +40,8 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
       currentlyAssigned += e.quotaAssigned;
 
     Entitlement ent;
-    ent.id = randomUUID();
+    ent.initEntity(request.tenantId, request.assignedBy);
+
     ent.globalAccountId = request.globalAccountId;
     ent.directoryId = request.directoryId;
     ent.subaccountId = request.subaccountId;
@@ -53,66 +54,55 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     ent.autoAssign = request.autoAssign;
     ent.status = EntitlementStatus.active;
     ent.assignedAt = clockSeconds();
-    ent.updatedAt = ent.assignedAt;
     ent.assignedBy = request.assignedBy;
 
     repo.save(ent);
     return CommandResult(true, ent.id.value, "");
   }
 
-  CommandResult updateQuota(string id, UpdateEntitlementQuotaRequest request) {
-    return updateQuota(EntitlementId(id), request);
-  }
-
-  CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest request) {
-    if (!repo.existsById(id))
+  CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request) {
+    auto ent = repo.findById(request.tenantId, request.id);
+    if (ent.isNull)
       return CommandResult(false, "", "Entitlement not found");
 
-    auto ent = repo.findById(tenantId, id);
     ent.quotaAssigned = request.quotaAssigned;
     ent.unlimited = request.unlimited;
     ent.quotaRemaining = evaluator.calculateRemaining(request.quotaAssigned, ent.quotaUsed);
     ent.updatedAt = clockSeconds();
+
     repo.update(ent);
     return CommandResult(true, ent.id.value, "");
   }
 
-  CommandResult revoke(string id) {
-    return revoke(EntitlementId(id));
-  }
-
-  CommandResult revoke(EntitlementId id) {
-    if (!repo.existsById(id))
+  CommandResult revokeEntitlement(TenantId tenantId, EntitlementId id) {
+    auto ent = repo.findById(tenantId, id);
+    if (ent.isNull)
       return CommandResult(false, "", "Entitlement not found");
 
-    auto ent = repo.findById(tenantId, id);
     ent.status = EntitlementStatus.revoked;
     ent.updatedAt = clockSeconds();
+
     repo.update(ent);
     return CommandResult(true, ent.id.value, "");
   }
 
-  Entitlement getById(string id) {
-    return getById(EntitlementId(id));
-  }
-
-  Entitlement getById(EntitlementId id) {
+  Entitlement getEntitlement(TenantId tenantId, EntitlementId id) {
     return repo.findById(tenantId, id);
   }
 
-  Entitlement[] listByGlobalAccount(GlobalAccountId gaId) {
-    return repo.findByGlobalAccount(gaId);
+  Entitlement[] listEntitlements(TenantId tenantId, GlobalAccountId gaId) {
+    return repo.findByGlobalAccount(tenantId, gaId);
   }
 
-  Entitlement[] listBySubaccount(SubaccountId subId) {
-    return repo.findBySubaccount(subId);
+  Entitlement[] listEntitlements(TenantId tenantId, SubaccountId subId) {
+    return repo.findBySubaccount(tenantId, subId);
   }
 
-  Entitlement[] listByDirectory(DirectoryId dirId) {
-    return repo.findByDirectory(dirId);
+  Entitlement[] listEntitlements(TenantId tenantId, DirectoryId dirId) {
+    return repo.findByDirectory(tenantId, dirId);
   }
 
-  CommandResult deleteEntitlement(EntitlementId id) {
+  CommandResult deleteEntitlement(TenantId tenantId, EntitlementId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Entitlement not found");

@@ -53,15 +53,17 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updatePage(PageDTO dto) {
-        if (!repo.existsById(dto.tenantId, PageId(dto.id)))
-            return CommandResult(false, "", "Page not found");
         auto existing = repo.findById(dto.tenantId, PageId(dto.id));
+        if (existing.isNull )
+            return CommandResult(false, "", "Page not found");
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.route.length > 0) existing.route = dto.route;
         if (dto.layoutConfig.length > 0) existing.layoutConfig = dto.layoutConfig;
         if (dto.componentTree.length > 0) existing.componentTree = dto.componentTree;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

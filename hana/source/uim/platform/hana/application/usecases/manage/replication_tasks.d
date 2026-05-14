@@ -55,10 +55,10 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateReplicationTask(UpdateReplicationTaskRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.id);
+    if (existing.isNull)
       return CommandResult(false, "", "Replication task not found");
 
-    auto existing = repo.findById(r.id);
     existing.name = r.name;
     existing.description = r.description;
     existing.scheduleExpression = r.scheduleExpression;

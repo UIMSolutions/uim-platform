@@ -72,10 +72,10 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult releaseTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
-    if (!repo.existsById(tenantId, requestId))
+    auto transportRequest = repo.findById(tenantId, requestId);
+    if (transportRequest.isNull)
       return CommandResult(false, "", "Transport request not found");
 
-    auto transportRequest = repo.findById(tenantId, requestId);
     foreach (task; transportRequest.tasks) {
       if (task.id == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
