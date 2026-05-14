@@ -152,7 +152,7 @@ class ProcessController : PlatformController {
         }
     }
 
-    protected void handleGetDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

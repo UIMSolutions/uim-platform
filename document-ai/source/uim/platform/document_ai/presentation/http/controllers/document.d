@@ -34,7 +34,7 @@ class DocumentController : PlatformController {
     router.get("/api/v1/document/jobs/results/*", &handleGetResult);
   }
 
-  protected void handleGetUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -120,7 +120,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -147,7 +147,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto docId = extractIdFromPath(req.requestURI.to!string);

@@ -144,7 +144,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -163,7 +163,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto filter = req.params.get("filter", "");

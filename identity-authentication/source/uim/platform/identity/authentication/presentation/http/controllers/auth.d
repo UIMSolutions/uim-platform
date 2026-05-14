@@ -33,7 +33,7 @@ class AuthController : PlatformController {
     router.get("/api/v1/auth/health", &handleHealth);
   }
 
-  protected void handleGetLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -67,7 +67,7 @@ class AuthController : PlatformController {
     }
   }
 
-  protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -98,7 +98,7 @@ class AuthController : PlatformController {
     }
   }
 
-  protected void handleGetHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto response = Json.emptyObject;
     response["status"] = Json("healthy");
     response["service"] = Json("identity-authentication");

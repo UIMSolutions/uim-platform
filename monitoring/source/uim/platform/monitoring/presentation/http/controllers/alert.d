@@ -78,7 +78,7 @@ class AlertController : PlatformController {
     }
   }
 
-  protected void handleGetAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -103,7 +103,7 @@ class AlertController : PlatformController {
     }
   }
 
-  protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

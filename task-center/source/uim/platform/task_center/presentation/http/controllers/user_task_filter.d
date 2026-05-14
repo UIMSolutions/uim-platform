@@ -126,7 +126,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    protected void handleGetSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

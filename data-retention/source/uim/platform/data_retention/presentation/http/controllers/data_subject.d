@@ -113,7 +113,7 @@ class DataSubjectController : PlatformController {
         }
     }
 
-    protected void handleGetBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

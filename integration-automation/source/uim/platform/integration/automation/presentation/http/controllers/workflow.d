@@ -100,7 +100,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -120,7 +120,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlepend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -140,7 +140,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  protected void handleGetResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -160,7 +160,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  protected void handleGetTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -35,7 +35,7 @@ class EntitlementController : PlatformController {
     router.delete_("/api/v1/entitlements/*", &handleDelete);
   }
 
-  protected void handleGetAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -125,7 +125,7 @@ class EntitlementController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));

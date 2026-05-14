@@ -37,7 +37,7 @@ class ConsentController : PlatformController {
     router.delete_("/api/v1/consents/*", &handleDelete);
   }
 
-  protected void handleGetGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -131,7 +131,7 @@ class ConsentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

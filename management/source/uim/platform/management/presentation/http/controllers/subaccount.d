@@ -134,7 +134,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
@@ -154,7 +154,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
@@ -167,7 +167,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));

@@ -38,7 +38,7 @@ class ModuleController : PlatformController {
     router.delete_("/api/v1/modules/*", &handleDelete);
   }
 
-  protected void handleGetEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -125,7 +125,7 @@ class ModuleController : PlatformController {
     }
   }
 
-  protected void handleGetDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

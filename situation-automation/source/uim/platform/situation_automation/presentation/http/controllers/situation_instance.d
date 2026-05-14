@@ -167,7 +167,7 @@ class SituationInstanceController : PlatformController {
         }
     }
 
-    protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.string : lastIndexOf;
             auto tenantId = req.getTenantId;

@@ -35,7 +35,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/summary/*", &handleGetSummary);
   }
 
-  protected void handleGetGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -54,7 +54,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -74,7 +74,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto stepId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -94,7 +94,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       
@@ -113,7 +113,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

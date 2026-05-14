@@ -37,7 +37,7 @@ class PermissionController : PlatformController {
     router.post("/api/v1/permissions/check", &handleCheckAccess);
   }
 
-  protected void handleGetGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -107,7 +107,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleGetCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -159,7 +159,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));

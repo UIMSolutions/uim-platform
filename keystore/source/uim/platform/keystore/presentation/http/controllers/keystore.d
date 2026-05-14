@@ -33,7 +33,7 @@ class KeystoreController : PlatformController {
   }
 
   // POST /api/v1/keystores
-  protected void handleGetUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -171,7 +171,7 @@ class KeystoreController : PlatformController {
   }
 
   // GET /api/v1/keystores/resolve?name=...&accountId=...&applicationId=...&subscriptionId=...
-  protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto name = req.params.get("name", "");

@@ -145,7 +145,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  protected void handleGetPause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -160,7 +160,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  protected void handleGetResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

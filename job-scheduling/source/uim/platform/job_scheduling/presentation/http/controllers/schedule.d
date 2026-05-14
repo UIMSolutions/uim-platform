@@ -171,7 +171,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    protected void handleGetActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -200,7 +200,7 @@ class ScheduleController : PlatformController {
         }
     }
 
-    protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");

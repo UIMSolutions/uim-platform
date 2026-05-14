@@ -61,7 +61,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  protected void handleGetRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = RepositoryId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -86,7 +86,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  protected void handleGetAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

@@ -54,7 +54,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -70,7 +70,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -108,7 +108,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getPipelineSummary(tenantId);

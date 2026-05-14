@@ -35,7 +35,7 @@ class ConnectorController : PlatformController {
     router.delete_("/api/v1/connectors/*", &handleUnregister);
   }
 
-  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -97,7 +97,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  protected void handleGetHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // Extract connector id from /api/v1/connectors/{id}/heartbeat
       auto uri = req.requestURI;
@@ -128,7 +128,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  protected void handleGetUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));

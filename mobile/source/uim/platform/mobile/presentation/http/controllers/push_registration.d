@@ -28,7 +28,7 @@ class PushRegistrationController : PlatformController {
     router.delete_("/api/v1/push/registrations/*", &handleDelete);
   }
 
-  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

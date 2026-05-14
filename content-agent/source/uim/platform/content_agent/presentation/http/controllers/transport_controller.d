@@ -98,7 +98,7 @@ class TransportController : PlatformController {
     }
   }
 
-  protected void handleGetRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -123,7 +123,7 @@ class TransportController : PlatformController {
     }
   }
 
-  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

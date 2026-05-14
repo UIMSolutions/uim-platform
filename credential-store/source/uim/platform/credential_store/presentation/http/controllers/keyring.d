@@ -124,7 +124,7 @@ class KeyringController : PlatformController {
     }
   }
 
-  protected void handleGetRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -146,7 +146,7 @@ class KeyringController : PlatformController {
     }
   }
 
-  protected void handleGetDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

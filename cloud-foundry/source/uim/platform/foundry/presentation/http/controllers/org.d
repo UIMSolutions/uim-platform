@@ -133,7 +133,7 @@ class OrgController : PlatformController {
     }
   }
 
-  protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
@@ -154,7 +154,7 @@ class OrgController : PlatformController {
     }
   }
 
-  protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));

@@ -136,7 +136,7 @@ auto tenantId = req.getTenantId;
     }
   }
 
-  protected void handleGetChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

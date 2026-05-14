@@ -90,7 +90,7 @@ class CatalogAssetController : PlatformController {
     }
   }
 
-  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

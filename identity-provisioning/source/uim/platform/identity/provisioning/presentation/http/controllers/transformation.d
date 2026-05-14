@@ -124,7 +124,7 @@ class TransformationController : PlatformController {
     }
   }
 
-  protected void handleGetTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

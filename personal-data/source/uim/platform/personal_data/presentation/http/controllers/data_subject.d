@@ -81,7 +81,7 @@ class DataSubjectController : PlatformController {
         }
     }
 
-    protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto params = req.queryParams();
@@ -162,7 +162,7 @@ class DataSubjectController : PlatformController {
         }
     }
 
-    protected void handleGetBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -184,7 +184,7 @@ class DataSubjectController : PlatformController {
         }
     }
 
-    protected void handleGetErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

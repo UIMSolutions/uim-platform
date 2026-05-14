@@ -98,7 +98,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  protected void handleGetOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parts = splitPath(req.requestURI);
       if (parts.length < 5) {
@@ -124,7 +124,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  protected void handleGetClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parts = splitPath(req.requestURI);
       if (parts.length < 5) {

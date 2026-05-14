@@ -103,7 +103,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  protected void handleGetReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));

@@ -118,7 +118,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetPublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlelish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.publishSite(siteId);
@@ -131,7 +131,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetUnpublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUnpublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.unpublishSite(siteId);
@@ -144,7 +144,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleGetArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.archiveSite(siteId);

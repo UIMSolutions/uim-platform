@@ -52,7 +52,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -127,7 +127,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
@@ -147,7 +147,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleGetArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));

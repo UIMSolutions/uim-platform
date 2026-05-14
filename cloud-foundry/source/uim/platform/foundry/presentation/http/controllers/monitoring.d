@@ -48,7 +48,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -65,7 +65,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;

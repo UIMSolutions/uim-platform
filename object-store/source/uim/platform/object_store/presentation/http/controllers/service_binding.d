@@ -98,7 +98,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // /api/v1/service-bindings/{id}/revoke
       auto path = req.requestURI;

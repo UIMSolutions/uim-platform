@@ -29,7 +29,7 @@ class ChangeLogController : PlatformController {
     router.get("/api/v1/change-log/*", &handleGet);
   }
 
-  protected void handleGetQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ChangeLogQueryRequest r;
       r.tenantId = tenantId;

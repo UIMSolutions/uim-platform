@@ -146,7 +146,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -164,7 +164,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -181,7 +181,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -198,7 +198,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -221,7 +221,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
@@ -238,7 +238,7 @@ class AppController : PlatformController {
     }
   }
 
-  protected void handleGetSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));

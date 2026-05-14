@@ -163,7 +163,7 @@ class TaskController : PlatformController {
     }
   }
 
-  protected void handleGetClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto tenantId = req.getTenantId;
@@ -198,7 +198,7 @@ class TaskController : PlatformController {
     }
   }
 
-  protected void handleGetComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

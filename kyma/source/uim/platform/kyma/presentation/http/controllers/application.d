@@ -38,7 +38,7 @@ class ApplicationController : PlatformController {
     router.delete_("/api/v1/applications/*", &handleDelete);
   }
 
-  protected void handleGetRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -132,7 +132,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationId(extractIdFromPath(req.requestURI));
@@ -146,7 +146,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleGetDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationId(extractIdFromPath(req.requestURI));

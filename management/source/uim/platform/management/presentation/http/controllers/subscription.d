@@ -35,7 +35,7 @@ class SubscriptionController : PlatformController {
     router.post("/api/v1/subscriptions/unsubscribe/*", &handleUnsubscribe);
   }
 
-  protected void handleGetSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -117,7 +117,7 @@ class SubscriptionController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubscriptionId(extractId(req.requestURI));

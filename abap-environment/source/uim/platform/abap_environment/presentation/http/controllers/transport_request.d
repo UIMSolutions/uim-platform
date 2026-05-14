@@ -99,7 +99,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  protected void handleGetAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto requestId = TransportRequestId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  protected void handleGetRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
@@ -145,7 +145,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  protected void handleGetReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

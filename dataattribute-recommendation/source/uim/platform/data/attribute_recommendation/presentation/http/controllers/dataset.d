@@ -125,7 +125,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  protected void handleGetValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -147,7 +147,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  protected void handleGetProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

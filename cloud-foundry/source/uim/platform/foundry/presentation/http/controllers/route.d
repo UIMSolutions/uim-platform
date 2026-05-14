@@ -90,7 +90,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
@@ -124,7 +124,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -146,7 +146,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleGetUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto routeId = RouteId(extractIdFromPath(req.requestURI));
       auto j = req.json;

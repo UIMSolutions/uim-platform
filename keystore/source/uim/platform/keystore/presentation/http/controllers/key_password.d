@@ -29,7 +29,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // PUT /api/v1/passwords/{alias}  (set or overwrite a password)
-  protected void handleGetSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_ = extractIdFromPath(req);
       auto j      = req.json;
@@ -52,7 +52,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // GET /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  protected void handleGetGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto alias_       = extractIdFromPath(req);
       auto accountId    = req.params.get("accountId", "");

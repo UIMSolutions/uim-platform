@@ -62,7 +62,7 @@ class TraceController : PlatformController {
     }
   }
 
-  protected void handleGetBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -97,7 +97,7 @@ class TraceController : PlatformController {
     }
   }
 
-  protected void handleGetGetTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto tenantId = req.getTenantId;

@@ -170,7 +170,7 @@ class InstanceController : PlatformController {
     }
   }
 
-  protected void handleGetAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
       import std.string : lastIndexOf;

@@ -89,7 +89,7 @@ class WorkspaceController : PlatformController {
     }
   }
 
-  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));

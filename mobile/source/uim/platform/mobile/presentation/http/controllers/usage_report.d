@@ -27,7 +27,7 @@ class UsageReportController : PlatformController {
     router.get("/api/v1/usage/*", &handleGet);
   }
 
-  protected void handleGetReport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleReport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

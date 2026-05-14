@@ -162,7 +162,7 @@ class CheckController : PlatformController {
     }
   }
 
-  protected void handleGetRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -191,7 +191,7 @@ class CheckController : PlatformController {
     }
   }
 
-  protected void handleGetGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto checkId = HealthCheckId(extractIdFromPath(req.requestURI));

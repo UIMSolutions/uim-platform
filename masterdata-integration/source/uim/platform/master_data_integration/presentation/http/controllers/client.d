@@ -156,7 +156,7 @@ class ClientController : PlatformController {
     }
   }
 
-  protected void handleGetConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -170,7 +170,7 @@ class ClientController : PlatformController {
     }
   }
 
-  protected void handleGetDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

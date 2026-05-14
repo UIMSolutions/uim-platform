@@ -171,7 +171,7 @@ class JobController : PlatformController {
         }
     }
 
-    protected void handleGetCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -186,7 +186,7 @@ class JobController : PlatformController {
         }
     }
 
-    protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");

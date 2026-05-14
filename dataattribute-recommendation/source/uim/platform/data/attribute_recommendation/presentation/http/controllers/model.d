@@ -138,7 +138,7 @@ class ModelController : PlatformController {
     }
   }
 
-  protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -163,7 +163,7 @@ class ModelController : PlatformController {
     }
   }
 
-  protected void handleGetTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

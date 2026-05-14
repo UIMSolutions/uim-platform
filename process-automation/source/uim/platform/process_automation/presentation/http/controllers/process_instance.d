@@ -30,7 +30,7 @@ class ProcessInstanceController : PlatformController {
         router.delete_("/api/v1/process-automation/instances/*", &handleDelete);
     }
 
-    protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -120,7 +120,7 @@ class ProcessInstanceController : PlatformController {
         }
     }
 
-    protected void handleGetAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             import std.string : lastIndexOf;

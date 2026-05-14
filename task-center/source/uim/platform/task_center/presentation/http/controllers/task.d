@@ -149,7 +149,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
                 auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
@@ -173,7 +173,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
@@ -195,7 +195,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
@@ -220,7 +220,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -244,7 +244,7 @@ class TaskController : PlatformController {
         }
     }
 
-    protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"

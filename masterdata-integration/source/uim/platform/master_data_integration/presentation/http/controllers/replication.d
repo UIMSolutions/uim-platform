@@ -106,7 +106,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -125,7 +125,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  protected void handleGetPause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
@@ -143,7 +143,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));

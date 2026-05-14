@@ -31,7 +31,7 @@ class DuplicateController : PlatformController {
     router.get("/api/v1/duplicates/*", &handleGet);
   }
 
-  protected void handleGetDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -66,7 +66,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  protected void handleGetResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

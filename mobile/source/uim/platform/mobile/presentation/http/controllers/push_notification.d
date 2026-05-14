@@ -27,7 +27,7 @@ class PushNotificationController : PlatformController {
     router.delete_("/api/v1/push/notifications/*", &handleDelete);
   }
 
-  protected void handleGetSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

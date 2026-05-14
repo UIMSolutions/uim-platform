@@ -84,7 +84,7 @@ class KeyMappingController : PlatformController {
     }
   }
 
-  protected void handleGetLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       LookupKeyRequest r;
       r.tenantId = tenantId;

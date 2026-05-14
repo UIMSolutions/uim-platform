@@ -101,7 +101,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  protected void handleGetRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -151,7 +151,7 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  protected void handleGetCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -167,7 +167,7 @@ class ContentController : PlatformController {
     }
   }
 
-  protected void handleGetPublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

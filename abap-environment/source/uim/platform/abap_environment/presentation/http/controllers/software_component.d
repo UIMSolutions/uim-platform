@@ -93,7 +93,7 @@ class SoftwareComponentController : ManageController {
     }
   }
 
-  protected void handleGetClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
@@ -118,7 +118,7 @@ class SoftwareComponentController : ManageController {
     }
   }
 
-  protected void handleGetPull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));

@@ -36,7 +36,7 @@ class InferenceController : PlatformController {
     router.get("/api/v1/inference", &handleListRequests);
   }
 
-  protected void handleGetSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -62,7 +62,7 @@ class InferenceController : PlatformController {
     }
   }
 
-  protected void handleGetGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -89,7 +89,7 @@ class InferenceController : PlatformController {
     }
   }
 
-  protected void handleGetGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -47,7 +47,7 @@ class AuditController : PlatformController {
     }
   }
 
-  protected void handleGetByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto actorId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByActor(actorId);
@@ -63,7 +63,7 @@ class AuditController : PlatformController {
     }
   }
 
-  protected void handleGetByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto targetId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByTarget(targetId);

@@ -103,7 +103,7 @@ class ApiClientController : PlatformController {
     }
   }
 
-  protected void handleGetRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto error = useCase.revokeClient(clientId);

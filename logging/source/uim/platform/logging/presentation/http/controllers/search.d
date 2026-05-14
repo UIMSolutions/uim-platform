@@ -31,7 +31,7 @@ class SearchController : PlatformController {
     router.get("/api/v1/logs/*", &handleGet);
   }
 
-  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

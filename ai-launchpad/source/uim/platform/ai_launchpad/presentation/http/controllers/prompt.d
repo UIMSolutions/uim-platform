@@ -102,7 +102,7 @@ r.tenantId = tenantId;
     }
   }
 
-  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PromptId(extractIdFromPath(req.requestURI.to!string));

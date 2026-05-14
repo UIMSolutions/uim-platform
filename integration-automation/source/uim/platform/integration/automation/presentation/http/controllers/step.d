@@ -75,7 +75,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
@@ -94,7 +94,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlert(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -117,7 +117,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -144,7 +144,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -171,7 +171,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -198,7 +198,7 @@ class StepController : PlatformController {
     }
   }
 
-  protected void handleGetAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

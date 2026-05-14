@@ -62,7 +62,7 @@ class EventMessageController : PlatformController {
         }
     }
 
-    protected void handleGetPublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
@@ -96,7 +96,7 @@ class EventMessageController : PlatformController {
         }
     }
 
-    protected void handleGetAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

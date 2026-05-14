@@ -128,7 +128,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    protected void handleGetActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 
@@ -151,7 +151,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    protected void handleGetSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

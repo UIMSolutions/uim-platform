@@ -133,7 +133,7 @@ class ContentCacheController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGetPurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto result = usecase.purgeExpired(tenantId);

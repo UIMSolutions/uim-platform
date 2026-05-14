@@ -62,7 +62,7 @@ class MetricController : PlatformController {
     }
   }
 
-  protected void handleGetBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -95,7 +95,7 @@ class MetricController : PlatformController {
     }
   }
 
-  protected void handleGetQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto resourceId = req.params.get("resourceId", "");
@@ -120,7 +120,7 @@ class MetricController : PlatformController {
     }
   }
 
-  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));

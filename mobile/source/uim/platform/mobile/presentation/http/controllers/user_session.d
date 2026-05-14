@@ -106,7 +106,7 @@ class UserSessionController : PlatformController {
     }
   }
 
-  protected void handleGetTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

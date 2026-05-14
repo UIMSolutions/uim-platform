@@ -86,7 +86,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");
@@ -160,7 +160,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -185,7 +185,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleGetArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
