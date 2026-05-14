@@ -126,7 +126,7 @@ class MetricController : PlatformController {
       auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
       auto metricName = req.params.get("name", "");
 
-      // import std.datetime.systime : Clock;
+    
       auto now = Clock.currTime().toUnixTime();
       auto windowStart = now - 3600; // Default 1 hour window
 

@@ -46,7 +46,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.serviceUrl = "/sap/opu/odata4/sap/" ~ req.name ~ "/";
     binding.metadataUrl = binding.serviceUrl ~ "$metadata";
 
-    // import std.datetime.systime : Clock;
+  
     binding.createdAt = Clock.currStdTime();
     binding.updatedAt = binding.createdAt;
 
@@ -66,7 +66,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (req.endpoints.length > 0)
       binding.endpoints = req.endpoints;
 
-    // import std.datetime.systime : Clock;
+  
     binding.updatedAt = Clock.currStdTime();
 
     repo.update(binding);

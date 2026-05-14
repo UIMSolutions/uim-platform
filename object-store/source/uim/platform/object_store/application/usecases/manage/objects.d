@@ -243,6 +243,6 @@ private string generateEtag(string id) {
 }
 
 private long currentTimestamp() {
-  // import std.datetime.systime : Clock;
+
   return Clock.currStdTime();
 }

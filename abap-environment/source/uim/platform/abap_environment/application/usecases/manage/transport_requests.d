@@ -35,8 +35,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Source system ID is required");
 
     TransportRequest tr;
-    tr.id = randomUUID();
-    tr.tenantId = req.tenantId;
+    tr.initEntity(req.tenantId);
     tr.sourceSystemId = req.sourceSystemId;
     tr.targetSystemId = req.targetSystemId;
     tr.description = req.description;
@@ -44,30 +43,27 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.transportType = req.transportType.to!TransportType;
     tr.status = TransportStatus.modifiable;
 
-    // import std.datetime.systime : Clock;
-    tr.createdAt = Clock.currStdTime();
-
     repo.save(tr);
     return CommandResult(true, tr.id.value, "");
   }
 
   CommandResult addTask(TenantId tenantId, TransportRequestId requestId, AddTransportTaskRequest req) {
-    if (!repo.existsById(tenantId, requestId))
+    auto tr = repo.findById(tenantId, requestId);
+    if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
-    auto tr = repo.findById(tenantId, requestId);
     if (tr.status != TransportStatus.modifiable)
       return CommandResult(false, "", "Transport request is not modifiable");
 
     auto taskId = randomUUID().toString()[0 .. 8];
     TransportTask task;
-    task.id = taskId;
+    task.initEntity(taskId);
     task.owner = req.owner;
     task.status = TransportStatus.modifiable;
     task.description = req.description;
     task.objectList = req.objectList;
 
-    // import std.datetime.systime : Clock;
+  
     task.createdAt = Clock.currStdTime();
 
     tr.tasks ~= task;
@@ -93,7 +89,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         }
         task.status = TransportStatus.released;
 
-        // import std.datetime.systime : Clock;
+      
         task.releasedAt = Clock.currStdTime();
 
         repo.update(transportRequest);
@@ -120,7 +116,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     tr.status = TransportStatus.released;
 
-    // import std.datetime.systime : Clock;
+  
     tr.releasedAt = Clock.currStdTime();
 
     repo.update(tr);

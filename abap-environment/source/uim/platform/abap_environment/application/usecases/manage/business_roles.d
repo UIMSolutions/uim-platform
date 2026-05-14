@@ -47,7 +47,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     role.restrictionTypes = req.restrictionTypes;
     role.assignedCatalogs = req.assignedCatalogs;
 
-    // import std.datetime.systime : Clock;
+  
     role.createdAt = Clock.currStdTime();
     role.updatedAt = role.createdAt;
 
@@ -69,7 +69,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (req.assignedCatalogs.length > 0)
       role.assignedCatalogs = req.assignedCatalogs;
 
-    // import std.datetime.systime : Clock;
+  
     role.updatedAt = Clock.currStdTime();
 
     repo.update(role);

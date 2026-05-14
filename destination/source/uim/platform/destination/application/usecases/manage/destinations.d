@@ -86,8 +86,8 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
-    auto d = repo.findById(tenantId, id);
+  CommandResult updateDestination(UpdateDestinationRequest req) {
+    auto d = repo.findById(req.tenantId, req.id);
     if (d.isNull)
       return CommandResult(false, "", "Destination not found");
 
@@ -139,10 +139,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     d.updatedAt = clockSeconds();
 
     repo.update(d);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true,  d.id.value, "");
   }
 
-  Destination getDestination(DestinationId id) {
+  Destination getDestination(TenantId tenantId, DestinationId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -158,7 +158,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return repo.findByName(tenantId, subaccountId, name);
   }
 
-  CommandResult deleteDestination(DestinationId id) {
+  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Destination not found");

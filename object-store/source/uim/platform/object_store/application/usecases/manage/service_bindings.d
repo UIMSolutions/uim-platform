@@ -107,7 +107,7 @@ private string hashSecret(string secret) {
 }
 
 private long currentTimestamp() {
-  // import std.datetime.systime : Clock;
+
 
   return Clock.currStdTime();
 }

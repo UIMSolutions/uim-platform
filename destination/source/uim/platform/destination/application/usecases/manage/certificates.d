@@ -64,10 +64,10 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateCertificate(TenantId tenantId, CertificateId id, UpdateCertificateRequest req) {
-    if (!repo.existsById(id))
+    auto c = repo.findById(tenantId, id);
+    if (c.isNull)
       return CommandResult(false, "", "Certificate not found");
 
-    auto c = repo.findById(tenantId, id);
     if (req.description.length > 0)
       c.description = req.description;
     if (req.content.length > 0)

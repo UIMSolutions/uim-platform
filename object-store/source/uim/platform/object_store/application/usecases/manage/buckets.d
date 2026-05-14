@@ -130,7 +130,7 @@ private EncryptionType parseEncryptionType(string s) {
 private long currentTimestamp() {
   import core.time : Duration;
 
-  // import std.datetime.systime : Clock;
+
 
   return Clock.currStdTime();
 }

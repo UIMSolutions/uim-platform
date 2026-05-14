@@ -52,7 +52,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     arr.inboundServices = req.inboundServices;
     arr.outboundServices = req.outboundServices;
 
-    // import std.datetime.systime : Clock;
+  
     arr.createdAt = Clock.currStdTime();
     arr.updatedAt = arr.createdAt;
 
@@ -86,7 +86,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     if (req.outboundServices.length > 0)
       arr.outboundServices = req.outboundServices;
 
-    // import std.datetime.systime : Clock;
+  
     arr.updatedAt = Clock.currStdTime();
 
     repo.update(arr);

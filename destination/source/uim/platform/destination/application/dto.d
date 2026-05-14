@@ -14,6 +14,7 @@ struct CreateDestinationRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   ServiceInstanceId serviceInstanceId;
+  
   string name;
   string description;
   string destinationType; // "http", "rfc", "mail", "ldap"
@@ -60,6 +61,9 @@ struct CreateDestinationRequest {
 }
 
 struct UpdateDestinationRequest {
+  TenantId tenantId;
+  DestinationId destinationId;
+
   string description;
   string url;
   string authenticationType;
@@ -88,6 +92,7 @@ struct UpdateDestinationRequest {
 struct UploadCertificateRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
+
   string name;
   string description;
   string certificateType; // "keystore", "truststore"
@@ -115,6 +120,7 @@ struct UpdateCertificateRequest {
 struct CreateFragmentRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
+
   string name;
   string description;
   string level; // "subaccount", "serviceInstance"
@@ -134,6 +140,9 @@ struct CreateFragmentRequest {
 }
 
 struct UpdateFragmentRequest {
+  TenantId tenantId;
+  FragmentId fragmentId;
+
   string description;
   string url;
   string authenticationType;
