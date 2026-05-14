@@ -9,7 +9,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
 // import uim.platform.connectivity.domain.entities.access_rule;
 // import uim.platform.connectivity.domain.ports.repositories.access_rules;
 // 
-// // import std.algorithm : filter;
+// 
 //  
 
 import uim.platform.connectivity;

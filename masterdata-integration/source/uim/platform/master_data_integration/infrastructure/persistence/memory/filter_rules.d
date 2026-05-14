@@ -9,7 +9,7 @@ import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.ports.repositories.filter_rules;
 
-// import std.algorithm : filter;
+
  
 
 class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), FilterRuleRepository {

@@ -13,7 +13,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-// import std.algorithm : filter;
+
  
 
 class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {

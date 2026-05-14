@@ -9,7 +9,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.system_in
 // import uim.platform.abap_environment.domain.entities.system_instance;
 // import uim.platform.abap_environment.domain.ports.repositories.system_instances;
 // 
-// // import std.algorithm : filter;
+// 
 //  
 import uim.platform.abap_environment;
 
@@ -40,7 +40,7 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
   SystemInstance[] filterByStatus(SystemInstance[] instances, SystemStatus status) {
     return instances.filter!(e => e.status == status).array;
   }
-  
+
   SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
   }

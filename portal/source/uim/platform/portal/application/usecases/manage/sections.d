@@ -12,12 +12,11 @@ module uim.platform.portal.application.usecases.manage.sections;
 // import uim.platform.portal.domain.ports.repositories.pages;
 // import uim.platform.portal.application.dto;
 
-// import std.uuid;
-// import std.datetime.systime : Clock;
-// import std.algorithm : filter;
+
+
  
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
 mixin(ShowModule!());
@@ -39,16 +38,14 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     auto now = Clock.currStdTime();
     auto id = randomUUID();
     PortalSection section;
+    section.initEntity(req.tenantId);
     with (section) {
       id = id;
       pageId = req.pageId;
-      tenantId = req.tenantId;
       title = req.title;
       sortOrder = req.sortOrder;
       visible = req.visible;
       columns = req.columns > 0 ? req.columns : 3;
-      createdAt = now;
-      updatedAt = now;
     }
 
     page.sectionIds ~= id;
@@ -66,11 +63,11 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     return sectionRepo.findByPage(pageId);
   }
 
-  string updateSection(UpdateSectionRequest req) {
-    if (!sectionRepo.existsById(req.sectionId))
-      return "Section not found";
-
+  CommandResult updateSection(UpdateSectionRequest req) {
     auto section = sectionRepo.findById(req.sectionId);
+    if (section.isNull)
+      return CommandResult(false, "", "Section not found");
+
     with (section) {
       title = req.title.length > 0 ? req.title : title;
       sortOrder = req.sortOrder;
@@ -79,12 +76,12 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     sectionRepo.update(section);
-    return "";
+    return CommandResult(true, req.sectionId.value, "");
   }
 
   CommandResult deleteSection(SectionId sectionId, PageId pageId) {
     if (!sectionRepo.existsById(sectionId))
-      return "Section not found";
+      return CommandResult(false, "", "Section not found")  ;
 
     sectionRepo.remove(sectionId);
 
@@ -95,6 +92,6 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
       pageRepo.update(page);
     }
 
-    return "";
+    return CommandResult(true, sectionId.value, "");
   }
 }

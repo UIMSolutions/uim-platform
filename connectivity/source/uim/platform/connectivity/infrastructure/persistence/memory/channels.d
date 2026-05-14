@@ -9,7 +9,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.channels;
 // import uim.platform.connectivity.domain.entities.service_channel;
 // import uim.platform.connectivity.domain.ports.repositories.channels;
 // 
-// // import std.algorithm : filter;
+// 
 //  
 
 import uim.platform.connectivity;

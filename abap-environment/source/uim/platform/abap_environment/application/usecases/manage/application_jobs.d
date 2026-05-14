@@ -68,7 +68,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     if (request.jobParameters.length > 0)
       job.jobParameters = request.jobParameters;
 
-    // import std.datetime.systime : Clock;
+    
     job.updatedAt = Clock.currStdTime();
 
     jobs.update(job);
@@ -86,7 +86,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.status = JobStatus.canceled;
     job.active = false;
 
-    // import std.datetime.systime : Clock;
+    
     job.updatedAt = Clock.currStdTime();
 
     jobs.update(job);

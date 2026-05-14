@@ -10,8 +10,8 @@ module uim.platform.portal.application.usecases.manage.roles;
 // import uim.platform.portal.domain.ports.repositories.roles;
 // import uim.platform.portal.application.dto;
 
-// import std.uuid;
-// import std.datetime.systime : Clock;
+
+
 // import std.algorithm : canFind, filter;
  
 // import uim.platform.portal.domain.types;
@@ -39,16 +39,14 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
 
     auto existing = roleRepo.findByName(req.tenantId, req.name);
     Role role;
+    role.initEntity(req.tenantId);
     with (role) {
       roleId = randomUUID();
-      tenantId = req.tenantId;
       name = req.name;
       description = req.description;
       scope_ = req.scope_;
       userIds = null; // initially no users assigned
       groupIds = null; // initially no groups assigned
-      createdAt = Clock.currStdTime();
-      updatedAt = createdAt;
     }
     roleRepo.save(role);
     return RoleResponse(role.roleId, "");
@@ -62,25 +60,25 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     return roleRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateRole(UpdateRoleRequest req) {
-    if (!roleRepo.existsById(req.roleId))
-      return "Role not found";
-
+  CommandResult updateRole(UpdateRoleRequest req) {
     Role role = roleRepo.findById(req.roleId);
+    if (role.isNull)
+      return CommandResult(false, "", "Role not found");
+
     with (role) {
       name = req.name.length > 0 ? req.name : name;
       description = req.description;
       updatedAt = Clock.currStdTime();
     }
     roleRepo.update(role);
-    return "";
+    return CommandResult(true, req.roleId.value, "");
   }
 
-  string assignRole(AssignRoleRequest req) {
-    if (!roleRepo.existsById(req.roleId))
-      return "Role not found";
-
+  CommandResult assignRole(AssignRoleRequest req) {
     Role role = roleRepo.findById(req.roleId);
+    if (role.isNull)
+      return CommandResult(false, "", "Role not found");
+
     with (role) {
       foreach (uid; req.userIds) {
         if (userIds.isNull)
@@ -99,27 +97,28 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     }
 
     roleRepo.update(role);
-    return "";
+    return CommandResult(true, req.roleId.value, "");
   }
 
-  string unassignUsers(RoleId roleId, string[] unassignUserIds) {
-    if (!roleRepo.existsById(roleId))
-      return "Role not found";
-
+  CommandResult unassignUsers(RoleId roleId, string[] unassignUserIds) {
     auto role = roleRepo.findById(roleId);
+    if (role.isNull)
+      return CommandResult(false, "", "Role not found");
+
     with (role) {
       userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array.toJson;
       updatedAt = Clock.currStdTime();
     }
     roleRepo.update(role);
-    return "";
+    return CommandResult(true, roleId.value, "");
   }
 
   CommandResult deleteRole(RoleId id) {
-    if (!roleRepo.existsById(id))
-      return "Role not found";
+    auto role = roleRepo.findById(id);
+    if (role.isNull)
+      return CommandResult(false, "", "Role not found");
 
-    roleRepo.removeById(id);
-    return "";
+    roleRepo.remove(role);
+    return CommandResult(true, id.value, "");
   }
 }

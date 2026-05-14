@@ -13,7 +13,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-// import std.algorithm : filter;
+
  
 
 class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {

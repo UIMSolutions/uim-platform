@@ -9,7 +9,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.namespaces;
 // import uim.platform.kyma.domain.entities.namespace;
 // import uim.platform.kyma.domain.ports.repositories.namespaces;
 
-// import std.algorithm : filter;
+
  
 import uim.platform.kyma;
 

@@ -60,10 +60,10 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateFragment(UpdateFragmentRequest req) {
-    if (!repo.existsById(req.fragmentId))
+    auto fragment = repo.findById(req.tenantId, req.fragmentId);
+    if (fragment.isNull)
       return CommandResult(false, "", "Fragment not found");
 
-    auto fragment = repo.findById(req.tenantId, req.fragmentId);
     if (req.description.length > 0)
       fragment.description = req.description;
     if (req.url.length > 0)
