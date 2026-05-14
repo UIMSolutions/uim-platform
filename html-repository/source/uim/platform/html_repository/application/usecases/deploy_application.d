@@ -39,30 +39,29 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Version not found");
 
         DeploymentRecord record;
-        record.id = randomUUID();
-        record.tenantId = r.tenantId;
+        record.initEntity(r.tenantId);
+
         record.appId = r.appId;
         record.versionId = r.versionId;
         record.serviceInstanceId = r.serviceInstanceId;
         record.operation = parseOperation(r.operation);
         record.status = DeploymentStatus.completed;
-        record.startedAt = currentTimestamp();
-        record.completedAt = currentTimestamp();
-        record.createdAt = currentTimestamp();
+        record.startedAt = record.createdAt;
+        record.completedAt = record.createdAt;
         record.deployedBy = r.deployedBy;
 
         deploymentRepo.save(record);
 
         // Update app's active version
         app.activeVersionId = r.versionId;
-        app.updatedAt = currentTimestamp();
+        app.updatedAt = record.createdAt;
         appRepo.update(app);
 
         // Mark version as active
         version_.status = VersionStatus.active;
-        version_.deployedAt = currentTimestamp();
-        versionRepo.update(version_);
+        version_.deployedAt = record.createdAt;
 
+        versionRepo.update(version_);
         return CommandResult(true, record.id.value, "");
     }
 

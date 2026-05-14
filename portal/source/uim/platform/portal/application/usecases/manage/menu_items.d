@@ -40,10 +40,9 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       return MenuItemResponse(MenuItemId(""), "Site not found");
 
     MenuItem item;
+    item.initEntity(req.tenantId);
     with (item) {
-      menuItemId = randomUUID();
       siteId = req.siteId;
-      tenantId = req.tenantId;
       title = req.title;
       icon = req.icon;
       parentId = req.parentId;
@@ -53,8 +52,6 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
-      createdAt = Clock.currStdTime();
-      updatedAt = createdAt;
     }
     menuRepo.save(item);
 

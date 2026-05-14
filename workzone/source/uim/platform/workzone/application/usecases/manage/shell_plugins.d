@@ -29,9 +29,9 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Plugin name is required");
 
     auto now = Clock.currStdTime();
-    auto p = ShellPlugin();
-    p.id = randomUUID();
-    p.tenantId = req.tenantId;
+    ShellPlugin p;
+    p.initEntity(req.tenantId, req.requestedBy);
+
     p.name = req.name;
     p.description = req.description;
     p.version_ = req.version_;
@@ -41,7 +41,6 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     p.status = PluginStatus.inactive;
     p.hookPoints = req.hookPoints;
     p.installedAt = now;
-    p.updatedAt = now;
 
     repo.save(p);
     return CommandResult(true, p.id.value, "");

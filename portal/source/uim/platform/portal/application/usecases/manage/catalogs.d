@@ -31,17 +31,14 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
       return CatalogResponse(CatalogId(""), "Catalog title is required");
 
     Catalog catalog;
+    catalog.initEntity(req.tenantId);
     with (catalog) {
-      tenantId = req.tenantId;
-      catalogId = randomUUID();
       title = req.title;
       description = req.description;
       providerId = req.providerId;
       tileIds = [];
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       active = req.active;
-      createdAt = Clock.currStdTime();
-      updatedAt = createdAt;
     }
     catalogRepo.save(catalog);
     return CatalogResponse(catalog.catalogId, "");

@@ -31,11 +31,9 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
       return TileResponse("", "Tile title is required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID();
     Tile tile;
+    tile.initEntity(req.tenantId, req.requestedBy);
     with (tile) {
-      tileId = id;
-      tenantId = req.tenantId;
       catalogId = req.catalogId;
       title = req.title;
       subtitle = req.subtitle;
@@ -52,12 +50,10 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
       config = req.configuration;
       sortOrder = 0; // default sort order
       visible = true; // default visibility
-      createdAt = now;
-      updatedAt = now;
     }
 
     tileRepo.save(tile);
-    return TileResponse(id.value, "");
+    return TileResponse(tile.tileId, "");
   }
 
   Tile getTile(TileId id) {

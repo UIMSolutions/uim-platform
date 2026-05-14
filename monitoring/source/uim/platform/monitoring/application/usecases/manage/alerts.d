@@ -95,11 +95,9 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
       double currentValue, double thresholdValue, ThresholdOperator op,
       AlertSeverity severity, string message) {
    
-    auto id = randomUUID();
-
     Alert alert;
-    alert.id = id;
-    alert.tenantId = tenantId;
+    alert.initEntity(tenantId);
+
     alert.ruleId = ruleId;
     alert.resourceId = resourceId;
     alert.ruleName = ruleName;

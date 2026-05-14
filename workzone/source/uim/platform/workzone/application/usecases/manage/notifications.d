@@ -28,9 +28,9 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Notification title is required");
 
-    auto n = Notification();
-    n.id = randomUUID();
-    n.tenantId = req.tenantId;
+    Notification n;
+    n.initEntity(req.tenantId, req.requestedBy);
+
     n.recipientId = req.recipientId;
     n.title = req.title;
     n.body_ = req.body_;
@@ -40,7 +40,6 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     n.actionUrl = req.actionUrl;
     n.priority = req.priority;
     n.status = NotificationStatus.unread;
-    n.createdAt = Clock.currStdTime();
     n.expiresAt = req.expiresAt;
 
     repo.save(n);

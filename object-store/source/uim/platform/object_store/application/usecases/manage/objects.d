@@ -52,8 +52,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", quotaResult.error);
 
     StorageObject obj;
-    obj.id = randomUUID();
-    obj.tenantId = req.tenantId;
+    obj.initEntity(req.tenantId, req.createdBy);
+
     obj.bucketId = req.bucketId;
     obj.key = req.key;
     obj.contentType = req.contentType.length > 0 ? req.contentType : "application/octet-stream";
@@ -61,17 +61,12 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     obj.etag = generateEtag(id);
     obj.metadata = req.metadata;
     obj.storageClass = parseStorageClass(req.storageClass);
-    obj.createdBy = req.createdBy;
-    obj.createdAt = currentTimestamp();
-    ;
-    obj.updatedAt = obj.createdAt;
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
-      auto versionId = randomUUID();
       ObjectVersion ver;
-      ver.id = versionId;
-      ver.tenantId = req.tenantId;
+      ver.initEntity(req.tenantId, req.createdBy);
+
       ver.objectId = id;
       ver.versionTag = "v1";
       ver.size = req.size;
@@ -79,9 +74,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       ver.contentType = obj.contentType;
       ver.isLatest = true;
       ver.isDeleteMarker = false;
-      ver.createdBy = req.createdBy;
-      ver.createdAt = obj.createdAt;
-      obj.currentVersionId = versionId;
+
+      obj.currentVersionId = ver.id;
       versionRepo.save(ver);
     }
 

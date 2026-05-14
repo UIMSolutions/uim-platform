@@ -34,8 +34,8 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
             return CommandResult(true, existing.id.value, "");
         }
         DeviceRegistration reg;
-        reg.id = randomUUID();
-        reg.tenantId = r.tenantId;
+        reg.initEntity(r.tenantId);
+
         reg.appId = r.appId;
         reg.deviceModel = r.deviceModel;
         reg.osVersion = r.osVersion;
@@ -47,6 +47,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         reg.lastConnectedAt = currentTimestamp();
         reg.registeredAt = currentTimestamp();
         reg.updatedAt = reg.registeredAt;
+
         repo.save(reg);
         return CommandResult(true, reg.id.value, "");
     }

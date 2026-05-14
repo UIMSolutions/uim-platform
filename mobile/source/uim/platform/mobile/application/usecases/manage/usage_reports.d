@@ -25,8 +25,8 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
 
     CommandResult report(ReportUsageRequest r) {
         UsageReport usage;
-        usage.id = randomUUID();
-        usage.tenantId = r.tenantId;
+        usage.initEntity(r.tenantId);
+
         usage.appId = r.appId;
         usage.deviceId = r.deviceId;
         usage.userId = r.userId;
@@ -36,7 +36,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         usage.screenName = r.screenName;
         usage.duration = r.duration;
         usage.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
-        usage.createdAt = currentTimestamp();
+
         repo.save(usage);
         return CommandResult(true, usage.id.value, "");
     }

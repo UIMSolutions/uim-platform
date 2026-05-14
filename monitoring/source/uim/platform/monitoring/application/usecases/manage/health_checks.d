@@ -94,12 +94,10 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult recordResult(RecordCheckResultRequest req) {
-   
-    auto id = randomUUID();
 
     HealthCheckResult r;
-    r.id = id;
-    r.tenantId = req.tenantId;
+    r.initEntity(req.tenantId);
+
     r.checkId = req.checkId;
     r.resourceId = req.resourceId;
     r.status = req.status.to!CheckStatus;

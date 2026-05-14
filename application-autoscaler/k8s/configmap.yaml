@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-autoscaler-config
+  labels:
+    app: application-autoscaler
+    part-of: uim-platform
+data:
+  APPLICATION_AUTOSCALER_HOST: "0.0.0.0"
+  APPLICATION_AUTOSCALER_PORT: "8097"

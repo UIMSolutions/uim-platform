@@ -25,8 +25,8 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Source client ID is required");
 
     DistributionModel model;
-    model.id = randomUUID();
-    model.tenantId = req.tenantId;
+    model.initEntity(req.tenantId, req.createdBy);
+
     model.name = req.name;
     model.description = req.description;
     model.status = DistributionModelStatus.draft;
@@ -38,9 +38,6 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.filterRuleIds = req.filterRuleIds;
     model.autoReplicate = req.autoReplicate;
     model.cronSchedule = req.cronSchedule;
-    model.createdBy = req.createdBy;
-    model.createdAt = clockSeconds();
-    model.updatedAt = model.createdAt;
 
     repo.save(model);
     return CommandResult(true, model.id.value, "");

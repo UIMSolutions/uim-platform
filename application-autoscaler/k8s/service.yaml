@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: application-autoscaler
+  labels:
+    app: application-autoscaler
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: application-autoscaler
+  ports:
+  - name: http
+    port: 8097
+    targetPort: 8097
+    protocol: TCP

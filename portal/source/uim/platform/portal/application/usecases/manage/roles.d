@@ -38,10 +38,10 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
       return RoleResponse(RoleId(""), "Role with this name already exists");
 
     auto existing = roleRepo.findByName(req.tenantId, req.name);
+    
     Role role;
     role.initEntity(req.tenantId);
     with (role) {
-      roleId = randomUUID();
       name = req.name;
       description = req.description;
       scope_ = req.scope_;

@@ -40,7 +40,8 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     }
 
     Subscription subscription;
-    subscription.id = randomUUID();
+    subscription.initEntity(request.tenantId);
+
     subscription.subaccountId = request.subaccountId;
     subscription.globalAccountId = request.globalAccountId;
     subscription.appName = request.appName;

@@ -1,0 +1,181 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.application_autoscaler.presentation.http.controllers.policies;
+
+import uim.platform.application_autoscaler;
+
+mixin(ShowModule!());
+
+@safe:
+
+class ScalingPolicyController : PlatformController {
+  private ManageScalingPoliciesUseCase usecase;
+
+  this(ManageScalingPoliciesUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.post("/api/v1/policies",    &handleCreate);
+    router.get("/api/v1/policies",     &handleList);
+    router.get("/api/v1/policies/*",   &handleGet);
+    router.put("/api/v1/policies/*",   &handleUpdate);
+    router.delete_("/api/v1/policies/*", &handleDelete);
+  }
+
+  // POST /api/v1/policies
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      CreateScalingPolicyRequest r;
+      r.appId            = j.getString("app_id");
+      r.tenantId         = j.getString("tenant_id");
+      r.instanceMinCount = j.getInt("instance_min_count");
+      r.instanceMaxCount = j.getInt("instance_max_count");
+      r.timezone         = j.getString("timezone");
+      r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
+
+      auto rulesJ = j["scaling_rules"];
+      if (rulesJ.type == Json.Type.array)
+        foreach (rj; rulesJ.byValue) {
+          ScalingRuleRequest rr;
+          rr.metricType         = rj.getString("metric_type");
+          rr.customMetricName   = rj.getString("custom_metric_name");
+          rr.threshold          = rj.getInt("threshold");
+          rr.operator           = rj.getString("operator");
+          rr.breachDurationSecs = rj.getInt("breach_duration_secs");
+          rr.coolDownSecs       = rj.getInt("cool_down_secs");
+          rr.adjustment         = rj.getString("adjustment");
+          r.scalingRules       ~= rr;
+        }
+
+      auto recurJ = j["recurring_schedules"];
+      if (recurJ.type == Json.Type.array)
+        foreach (sj; recurJ.byValue) {
+          RecurringScheduleRequest rs;
+          rs.startTime               = sj.getString("start_time");
+          rs.endTime                 = sj.getString("end_time");
+          rs.startDate               = sj.getString("start_date");
+          rs.endDate                 = sj.getString("end_date");
+          rs.instanceMinCount        = sj.getInt("instance_min_count");
+          rs.instanceMaxCount        = sj.getInt("instance_max_count");
+          rs.initialMinInstanceCount = sj.getInt("initial_min_instance_count");
+          auto dwJ = sj["days_of_week"];
+          if (dwJ.type == Json.Type.array)
+            foreach (d; dwJ.byValue) rs.daysOfWeek ~= d.get!int;
+          auto dmJ = sj["days_of_month"];
+          if (dmJ.type == Json.Type.array)
+            foreach (d; dmJ.byValue) rs.daysOfMonth ~= d.get!int;
+          r.recurringSchedules ~= rs;
+        }
+
+      auto sdJ = j["specific_date_schedules"];
+      if (sdJ.type == Json.Type.array)
+        foreach (sj; sdJ.byValue) {
+          SpecificDateScheduleRequest sd;
+          sd.startDateTime           = sj.getString("start_date_time");
+          sd.endDateTime             = sj.getString("end_date_time");
+          sd.instanceMinCount        = sj.getInt("instance_min_count");
+          sd.instanceMaxCount        = sj.getInt("instance_max_count");
+          sd.initialMinInstanceCount = sj.getInt("initial_min_instance_count");
+          r.specificDateSchedules   ~= sd;
+        }
+
+      auto result = usecase.createPolicy(r);
+      if (result.success)
+        res.writeJsonBody(
+          Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Scaling policy created successfully"), 201);
+      else
+        writeError(res, 400, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // GET /api/v1/policies
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto policies = usecase.listPolicies(tenantId);
+      auto arr = Json.emptyArray;
+      foreach (p; policies) arr ~= p.toJson();
+      res.writeJsonBody(
+        Json.emptyObject
+          .set("items", arr)
+          .set("totalCount", policies.length), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // GET /api/v1/policies/{id}
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto p = usecase.getPolicy(id);
+      if (p.id.length == 0) {
+        writeError(res, 404, "Policy not found");
+        return;
+      }
+      res.writeJsonBody(p.toJson(), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // PUT /api/v1/policies/{id}
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto j = req.json;
+      UpdateScalingPolicyRequest r;
+      r.id               = id;
+      r.instanceMinCount = j.getInt("instance_min_count");
+      r.instanceMaxCount = j.getInt("instance_max_count");
+      r.timezone         = j.getString("timezone");
+      r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
+
+      auto rulesJ = j["scaling_rules"];
+      if (rulesJ.type == Json.Type.array)
+        foreach (rj; rulesJ.byValue) {
+          ScalingRuleRequest rr;
+          rr.metricType         = rj.getString("metric_type");
+          rr.customMetricName   = rj.getString("custom_metric_name");
+          rr.threshold          = rj.getInt("threshold");
+          rr.operator           = rj.getString("operator");
+          rr.breachDurationSecs = rj.getInt("breach_duration_secs");
+          rr.coolDownSecs       = rj.getInt("cool_down_secs");
+          rr.adjustment         = rj.getString("adjustment");
+          r.scalingRules       ~= rr;
+        }
+
+      auto result = usecase.updatePolicy(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", id).set("message", "Policy updated"), 200);
+      else
+        writeError(res, 400, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // DELETE /api/v1/policies/{id}
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto id = extractIdFromPath(req);
+      auto result = usecase.deletePolicy(id);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("message", "Policy deleted"), 200);
+      else
+        writeError(res, 404, result.error);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+}
