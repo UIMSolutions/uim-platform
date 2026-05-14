@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.retention;
 
-
-
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.retention;
@@ -37,6 +34,18 @@ class RetentionController : ManageController {
     router.delete_("/api/v1/retention/*", &handleDelete);
   }
 
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+
+    auto policies = useCase.listPolicies(tenantId);
+    auto arr = policies.map!(p => p.toJson).array.toJson;
+
+    return Json.emptyObject
+      .set("statusCode", 200)
+      .set("items", arr)
+      .set("totalCount", Json(policies.length));
+  }
+
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
@@ -61,22 +70,6 @@ class RetentionController : ManageController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto policies = useCase.listPolicies(tenantId);
-      auto arr = policies.map!(p => p.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(policies.length));
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
@@ -92,36 +85,33 @@ class RetentionController : ManageController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto json = req.json;
-      auto policyRequest = UpdateRetentionPolicyRequest();
-      policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-      policyRequest.tenantId = req.getTenantId;
-      policyRequest.name = json.getString("name");
-      policyRequest.description = json.getString("description");
-      policyRequest.retentionDays = json.getInteger("retentionDays");
-      policyRequest.categories = parseCategoryArray(json);
+  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto json = req.json;
+    auto policyRequest = UpdateRetentionPolicyRequest();
+    policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
+    policyRequest.tenantId = req.getTenantId;
+    policyRequest.name = json.getString("name");
+    policyRequest.description = json.getString("description");
+    policyRequest.retentionDays = json.getInteger("retentionDays");
+    policyRequest.categories = parseCategoryArray(json);
 
-      auto statusStr = json.getString("status");
-      if (statusStr == "inactive")
-        policyRequest.status = RetentionStatus.inactive;
-      else if (statusStr == "expired")
-        policyRequest.status = RetentionStatus.expired;
-      else
-        policyRequest.status = RetentionStatus.active;
+    auto statusStr = json.getString("status");
+    if (statusStr == "inactive")
+      policyRequest.status = RetentionStatus.inactive;
+    else if (statusStr == "expired")
+      policyRequest.status = RetentionStatus.expired;
+    else
+      policyRequest.status = RetentionStatus.active;
 
-      auto result = useCase.updatePolicy(policyRequest);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated");
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = useCase.updatePolicy(policyRequest);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("statusCode", 400);
     }
+    return Json.emptyObject
+      .set("status", "updated")
+      .set("statusCode", 200);
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -142,6 +132,5 @@ class RetentionController : ManageController {
     auto cats = getStrings(j, "categories");
     return cats.map!(c => toAuditCategory(c)).array;
   }
-
 
 }

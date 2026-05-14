@@ -11,7 +11,6 @@ module uim.platform.html_repository.presentation.http.controllers.deployment;
 
 // import uim.platform.htmls;
 
-
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -28,15 +27,17 @@ class DeploymentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/deployments", &handleCreate);
     router.get("/api/v1/deployments", &handleList);
     router.get("/api/v1/deployments/*", &handleGet);
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       DeployApplicationRequest r;
       r.tenantId = tenantId;
       r.appId = j.getString("appId");
@@ -78,12 +79,13 @@ class DeploymentController : PlatformController {
         .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
-    } catch (Exception e)
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    } 
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;

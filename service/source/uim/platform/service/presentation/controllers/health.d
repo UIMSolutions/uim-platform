@@ -50,7 +50,7 @@ class HealthController : PlatformController {
     router.get("/api/v1/health", &handleHealth);
   }
 
-  protected void handleGetHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject
     .set("status", "UP")
     .set("serviceName", serviceName)

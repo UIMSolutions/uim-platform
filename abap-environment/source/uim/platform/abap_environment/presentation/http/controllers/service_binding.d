@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.service_binding;
 
-
-
-
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.service_bindings;
@@ -20,7 +17,7 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class ServiceBindingController : PlatformController {
+class ServiceBindingController : ManageController {
   private ManageServiceBindingsUseCase usecase;
 
   this(ManageServiceBindingsUseCase usecase) {
@@ -37,113 +34,98 @@ class ServiceBindingController : PlatformController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto j = req.json;
-      CreateServiceBindingRequest r;
-      r.tenantId = tenantId;
-      r.systemInstanceId = j.getString("systemInstanceId");
-      r.serviceDefinitionId = j.getString("serviceDefinitionId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.bindingType = j.getString("bindingType");
+    auto bindings = usecase.listBindings(tenantId, systemId);
+    auto arr = bindings.map!(b => b.toJson).array.toJson;
 
-      auto result = usecase.createBinding(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Service binding created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", bindings.length)
+      .set("status", 200)
+      .set("message", "Service bindings retrieved successfully");
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
 
-      auto bindings = usecase.listBindings(tenantId, systemId);
-      auto arr = bindings.map!(b => b.toJson).array.toJson;
+    CreateServiceBindingRequest r;
+    r.tenantId = tenantId;
+    r.systemInstanceId = j.getString("systemInstanceId");
+    r.serviceDefinitionId = j.getString("serviceDefinitionId");
+    r.name = j.getString("name");
+    r.description = j.getString("description");
+    r.bindingType = j.getString("bindingType");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", bindings.length);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.createServiceBinding(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", 400)
+        .set("error", result.error)
+        .set("message", "Failed to create service binding");
     }
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("status", 201)
+      .set("message", "Service binding created");
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
 
-      auto binding = usecase.getBinding(tenantId, id);
-      if (binding.isNull) {
-        writeError(res, 404, "Service binding not found");
-        return;
-      }
-      res.writeJsonBody(binding.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto binding = usecase.getServiceBinding(tenantId, id);
+    if (binding.isNull) {
+      return Json.emptyObject
+        .set("status", 404)
+        .set("error", "Service binding not found")
+        .set("message", "Service binding not found");
     }
+    return Json.emptyObject
+      .set("item", binding.toJson)
+      .set("status", 200)
+      .set("message", "Service binding retrieved successfully");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto j = req.json;
 
-      auto j = req.json;
-      UpdateServiceBindingRequest r;
-      r.tenantId = tenantId;
-      r.serviceBindingId = id;
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+    UpdateServiceBindingRequest r;
+    r.tenantId = tenantId;
+    r.serviceBindingId = id;
+    r.description = j.getString("description");
+    r.status = j.getString("status");
 
-      auto result = usecase.updateBinding(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Service binding updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.updateServiceBinding(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", 404)
+        .set("error", result.error)
+        .set("message", "Service binding not found");
     }
+    return Json.emptyObject
+      .set("status", 200)
+      .set("message", "Service binding updated");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
-      
-      auto result = usecase.deleteBinding(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Service binding deleted");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
 
+    auto result = usecase.deleteServiceBinding(tenantId, id);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", 404)
+        .set("error", result.error)
+        .set("message", "Service binding not found");
+    }
+    return Json.emptyObject
+      .set("status", 200)
+      .set("message", "Service binding deleted");
+  }
 }

@@ -22,6 +22,7 @@ class HDIContainerController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/hana/hdiContainers", &handleList);
     router.get("/api/v1/hana/hdiContainers/*", &handleGet);
     router.post("/api/v1/hana/hdiContainers", &handleCreate);
@@ -30,9 +31,10 @@ class HDIContainerController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateHDIContainerRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
@@ -42,7 +44,7 @@ class HDIContainerController : PlatformController {
       r.appUser = j.getString("appUser");
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createHDIContainer(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -60,7 +62,7 @@ class HDIContainerController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto containers = usecase.list(tenantId);
+      auto containers = usecase.listHDIContainers(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (c; containers) {
@@ -85,7 +87,7 @@ class HDIContainerController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto c = usecase.getById(tenantId, id);
@@ -116,17 +118,17 @@ class HDIContainerController : PlatformController {
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-
+      auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateHDIContainerRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateHDIContainer(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -142,10 +144,11 @@ class HDIContainerController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));
-      auto result = usecase.deleteHDIContainer(id);
+
+      auto result = usecase.deleteHDIContainer(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

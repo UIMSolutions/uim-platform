@@ -23,6 +23,7 @@ class DatabaseUserController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/hana/users", &handleList);
     router.get("/api/v1/hana/users/*", &handleGet);
     router.post("/api/v1/hana/users", &handleCreate);
@@ -31,9 +32,10 @@ class DatabaseUserController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateDatabaseUserRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
@@ -46,12 +48,12 @@ class DatabaseUserController : PlatformController {
       r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
       r.roles = getStrings(j, "roles");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createDatabaseUser(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Database user created");
-        
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -64,7 +66,7 @@ class DatabaseUserController : PlatformController {
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto users = usecase.list(tenantId);
+      auto users = usecase.listDatabaseUsers(tenantId);
 
       auto jarr = Json.emptyArray;
       foreach (u; users) {
@@ -88,10 +90,11 @@ class DatabaseUserController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto u = usecase.getById(tenantId, id);
+      auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+
+      auto u = usecase.getDatabaseUser(tenantId, id);
       if (u.isNull) {
         writeError(res, 404, "Database user not found");
         return;
@@ -117,19 +120,18 @@ class DatabaseUserController : PlatformController {
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
 
       auto j = req.json;
       UpdateDatabaseUserRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
       r.password = j.getString("password");
       r.defaultSchema = j.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange");
       r.roles = getStrings(j, "roles");
 
-      auto result = usecase.update(r);
+      auto result = usecase.updateDatabaseUser(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -145,10 +147,11 @@ class DatabaseUserController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
-      auto result = usecase.deleteDatabaseUser(DatabaseUserId(id));
+      auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+
+      auto result = usecase.deleteDatabaseUser(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {

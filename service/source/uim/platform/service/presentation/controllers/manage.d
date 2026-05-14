@@ -66,6 +66,40 @@ class ManageController : PlatformController {
   }
   // #endregion create
 
+  // #region get
+  protected Json getHandler(Json data) {
+    Json response = Json.emptyObject;
+    response.set("message", "Get handler not implemented");
+    return response;
+  }
+
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getHandler(req.json);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion get
+
+  // #region update
+  protected Json updateHandler(Json data) {
+    Json response = Json.emptyObject;
+    response.set("message", "Update handler not implemented");
+    return response;
+  }
+
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = updateHandler(req.json);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion update
+
   // #region delete
   protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     Json response = Json.emptyObject;

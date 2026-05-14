@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.software_component;
 
-
-
-
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.software_components;
@@ -19,7 +16,7 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-class SoftwareComponentController : PlatformController {
+class SoftwareComponentController : ManageController {
   private ManageSoftwareComponentsUseCase usecase;
 
   this(ManageSoftwareComponentsUseCase usecase) {
@@ -37,60 +34,55 @@ class SoftwareComponentController : PlatformController {
     router.delete_("/api/v1/software-components/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      CreateSoftwareComponentRequest request;
-      request.tenantId = req.getTenantId;
-      request.systemInstanceId = j.getString("systemInstanceId");
-      request.name = j.getString("name");
-      request.description = j.getString("description");
-      request.componentType = j.getString("componentType");
-      request.repositoryUrl = j.getString("repositoryUrl");
-      request.branch = j.getString("branch");
-      request.branchStrategy = j.getString("branchStrategy");
-      request.namespace = j.getString("namespace");
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
+    if (systemId.isEmpty)
+      systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto result = usecase.createComponent(request);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto items = usecase.listComponents(systemId);
+    auto arr = items.map!(comp => comp.toJson).array.toJson;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return Json.emptyObject
+      .set("status", 200)
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Software components retrieved successfully");
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
-      if (systemId.isEmpty)
-        systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
 
-      auto items = usecase.listComponents(systemId);
-      auto arr = items.map!(comp => comp.toJson).array.toJson;
+    CreateSoftwareComponentRequest request;
+    request.tenantId = tenantId;
+    request.systemInstanceId = j.getString("systemInstanceId");
+    request.name = j.getString("name");
+    request.description = j.getString("description");
+    request.componentType = j.getString("componentType");
+    request.repositoryUrl = j.getString("repositoryUrl");
+    request.branch = j.getString("branch");
+    request.branchStrategy = j.getString("branchStrategy");
+    request.namespace = j.getString("namespace");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Software components retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.createSoftwareComponent(request);
+    if (result.isSuccess()) {
+      return Json.emptyObject
+        .set("id", result.id)
+        .set("status", 201)
+        .set("message", "Software component created");
+    } else {
+      return Json.emptyObject
+        .set("status", 400)
+        .set("error", result.error)
+        .set("message", "Failed to create software component");
     }
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-      auto comp = usecase.getComponent(id);
+      auto comp = usecase.getSoftwareComponent(id);
       if (comp.isNull) {
         writeError(res, 404, "Software component not found");
         return;
@@ -102,18 +94,20 @@ class SoftwareComponentController : PlatformController {
   }
 
   protected void handleGetClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       CloneSoftwareComponentRequest r;
+      r.tenantId = tenantId;
       r.branch = j.getString("branch");
       r.commitId = j.getString("commitId");
 
-      auto result = usecase.cloneComponent(id, r);
+      auto result = usecase.cloneSoftwareComponent(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "cloned");
+          .set("status", 200)
+          .set("message", "Software component cloned successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -125,17 +119,20 @@ class SoftwareComponentController : PlatformController {
   }
 
   protected void handleGetPull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       PullSoftwareComponentRequest r;
+      r.tenantId = tenantId;
       r.commitId = j.getString("commitId");
 
-      auto result = usecase.pullComponent(id, r);
+      auto result = usecase.pullSoftwareComponent(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", "pulled");
+          .set("status", 200)
+          .set("message", "Software component pulled successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -146,22 +143,20 @@ class SoftwareComponentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteComponent(id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleted");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+    
+    auto result = usecase.deleteSoftwareComponent(id);
+    if (result.isSuccess()) {
+      return Json.emptyObject
+        .set("status", 200)
+        .set("message", "Software component deleted successfully");
+    } else {
+      return Json.emptyObject
+        .set("status", 404)
+        .set("error", result.error)
+        .set("message", "Software component not found");  
     }
   }
-
 }

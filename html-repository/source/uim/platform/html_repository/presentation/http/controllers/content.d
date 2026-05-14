@@ -28,18 +28,19 @@ class ContentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/content/*", &handleGet);
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto path = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
+      auto path = AppFileId(extractIdFromPath(req.requestURI.to!string));
       if (path.length == 0) {
         writeError(res, 404, "Content not found");
         return;
       }
-      auto entry = fileUc.getById(path, tenantId);
+      auto entry = fileUc.getAppFile(path, tenantId);
       if (entry.isNull) {
         writeError(res, 404, "Content not found");
         return;

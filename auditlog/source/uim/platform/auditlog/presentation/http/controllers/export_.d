@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.export_;
 
-
-
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.exports;
@@ -36,49 +33,59 @@ class ExportController : ManageController {
     router.delete_("/api/v1/exports/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      CreateExportJobRequest jobRequest = CreateExportJobRequest();
-      jobRequest.tenantId = req.getTenantId;
-      jobRequest.requestedBy = j.getString("requestedBy");
-      jobRequest.timeFrom = jsonLong(j, "timeFrom");
-      jobRequest.timeTo = jsonLong(j, "timeTo");
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
 
-      auto fmtStr = j.getString("format");
-      if (fmtStr == "csv")
-        jobRequest.format_ = ExportFormat.csv;
-      else
-        jobRequest.format_ = ExportFormat.json;
+    auto jobs = useCase.listExports(tenantId);
+    auto arr = jobs.map!(j => j.toJson).array.toJson;
 
-      // Parse category filter
-      auto cats = getStrings(j, "categories");
-      foreach (c; cats)
-        jobRequest.categories ~= toAuditCategory(c);
+    return Json.emptyObject
+      .set("status", 200)
+      .set("items", arr)
+      .set("totalCount", Json(jobs.length))
+      .set("message", "Export jobs retrieved successfully");
+  }
 
-      auto result = useCase.createExport(jobRequest);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Export job created successfully");
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    CreateExportJobRequest jobRequest = CreateExportJobRequest();
+    jobRequest.tenantId = tenantId;
+    jobRequest.requestedBy = j.getString("requestedBy");
+    jobRequest.timeFrom = jsonLong(j, "timeFrom");
+    jobRequest.timeTo = jsonLong(j, "timeTo");
+
+    auto fmtStr = j.getString("format");
+    if (fmtStr == "csv")
+      jobRequest.format_ = ExportFormat.csv;
+    else
+      jobRequest.format_ = ExportFormat.json;
+
+    // Parse category filter
+    auto cats = getStrings(j, "categories");
+    foreach (c; cats)
+      jobRequest.categories ~= toAuditCategory(c);
+
+    auto result = useCase.createExport(jobRequest);
+    if (result.isSuccess()) {
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Export job created successfully");
+
+      res.writeJsonBody(resp, 201);
+    } else {
+      writeError(res, 400, result.error);
     }
   }
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      
+
       auto jobs = useCase.listExports(tenantId);
       auto arr = jobs.map!(j => j.toJson).array.toJson;
-      
+
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", Json(jobs.length))
@@ -142,8 +149,6 @@ class ExportController : ManageController {
     }
     return json;
   }
-
-
 
   private static string categoryToString(AuditCategory c) {
     final switch (c) {

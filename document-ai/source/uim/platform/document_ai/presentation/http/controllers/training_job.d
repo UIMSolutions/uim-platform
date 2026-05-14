@@ -25,6 +25,7 @@ class TrainingJobController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/training/jobs", &handleCreate);
     router.get("/api/v1/training/jobs", &handleList);
     router.get("/api/v1/training/jobs/*", &handleGet);
@@ -36,6 +37,7 @@ class TrainingJobController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateTrainingJobRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -44,7 +46,7 @@ class TrainingJobController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createTrainingJob(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -61,16 +63,14 @@ class TrainingJobController : PlatformController {
 
   protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto jobs = usecase.list(clientId);
+      auto jobs = usecase.listTrainingJobs(tenantId, clientId);
 
-      auto jarr = Json.emptyArray;
-      foreach (tj; jobs) {
-        jarr ~= jobToJson(tj);
-      }
+      auto jarr = jobs.map!(tj => jobToJson(tj)).array.toJson;
 
       auto resp = Json.emptyObject
-        .set("count", Json(jobs.length))
+        .set("count", jobs.length)
         .set("resources", jarr)
         .set("message", "Training job list retrieved successfully");
 
@@ -86,7 +86,7 @@ class TrainingJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto tj = usecase.getById(id, clientId);
+      auto tj = usecase.getTrainingJob(tenantId, id, clientId);
       if (tj.isNull) {
         writeError(res, 404, "Training job not found");
         return;
@@ -98,7 +98,7 @@ class TrainingJobController : PlatformController {
     }
   }
 
-  protected void handleGetPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -110,7 +110,7 @@ class TrainingJobController : PlatformController {
       r.trainingJobId = id;
       r.targetStatus = j.getString("targetStatus");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchTrainingJob(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -131,7 +131,7 @@ class TrainingJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = usecase.deleteTrainingJob(id, clientId);
+      auto result = usecase.deleteTrainingJob(tenantId, id, clientId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
@@ -146,9 +146,9 @@ class TrainingJobController : PlatformController {
     auto mArr = Json.emptyArray;
     foreach (m; tj.metrics) {
       mArr ~= Json.emptyObject
-        .set("name", Json(m.name))
-        .set("value", Json(m.value))
-        .set("timestamp", Json(m.timestamp));
+        .set("name", m.name)
+        .set("value", m.value)
+        .set("timestamp", m.timestamp);
     }
 
     return Json.emptyObject

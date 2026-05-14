@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.audit_config;
 
-
-
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.audit_config;
@@ -34,6 +31,16 @@ class AuditConfigController : ManageController {
     router.get("/api/v1/configs/*", &handleGetByTenant);
     router.put("/api/v1/configs/*", &handleUpdate);
     router.delete_("/api/v1/configs/*", &handleDelete);
+  }
+
+  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto configs = useCase.listAuditConfigs();
+    auto arr = configs.map!(c => c.toJson).array.toJson;
+
+    return Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", configs.length)
+      .set("message", "Audit configs retrieved successfully");
   }
 
   override Json createHandler(Json data) {
@@ -75,120 +82,69 @@ class AuditConfigController : ManageController {
     }
   }
 
-  protected void handleGetList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto configs = useCase.listAuditConfigs();
-      auto arr = configs.map!(c => c.toJson).array.toJson;
+  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", configs.length)
-        .set("message", "Audit configs retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto cfg = useCase.getAuditConfig(tenantId);
+    if (cfg.isNull) {
+      return Json.emptyObject
+        .set("error", "Audit config not found")
+        .set("status", 404);
     }
+    return cfg.toJson
+      .set("status", 200)
+      .set("message", "Audit config retrieved successfully");
   }
 
-  protected void handleGetGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
 
-      if (!useCase.existsAuditConfig(tenantId)) {
-        writeError(res, 404, "Audit config not found");
-        return;
-      }
-      auto cfg = useCase.getAuditConfig(tenantId);
-      res.writeJsonBody(cfg.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto j = req.json;
+    auto r = UpdateAuditConfigRequest();
+    r.id = AuditConfigId(extractIdFromPath(req.requestURI));
+    r.tenantId = tenantId;
+    r.name = j.getString("name");
+    r.logDataAccess = j.getBoolean("logDataAccess", true);
+    r.logDataModification = j.getBoolean("logDataModification", true);
+    r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
+    r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
+    r.enableDataMasking = j.getBoolean("enableDataMasking");
+    r.maskedFields = getStrings(j, "maskedFields");
+    r.excludedServices = getStrings(j, "excludedServices");
+    r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
+
+    r.status = j.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
+
+    auto sevStr = j.getString("minimumSeverity");
+    if (sevStr == "warning")
+      r.minimumSeverity = AuditSeverity.warning;
+    else if (sevStr == "error")
+      r.minimumSeverity = AuditSeverity.error;
+    else if (sevStr == "critical")
+      r.minimumSeverity = AuditSeverity.critical;
+    else
+      r.minimumSeverity = AuditSeverity.info;
+
+    auto result = useCase.updateAuditConfig(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("status", 400);
     }
+    return Json.emptyObject
+      .set("status", "updated")
+      .set("message", "Audit config updated successfully")
+      .set("statusCode", 200);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       auto tenantId = req.getTenantId;
-
-      auto j = req.json;
-      auto r = UpdateAuditConfigRequest();
-      r.id = AuditConfigId(extractIdFromPath(req.requestURI));
-      r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.logDataAccess = j.getBoolean("logDataAccess", true);
-      r.logDataModification = j.getBoolean("logDataModification", true);
-      r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
-      r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
-      r.enableDataMasking = j.getBoolean("enableDataMasking");
-      r.maskedFields = getStrings(j, "maskedFields");
-      r.excludedServices = getStrings(j, "excludedServices");
-      r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
-
-      r.status = j.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
-
-      auto sevStr = j.getString("minimumSeverity");
-      if (sevStr == "warning")
-        r.minimumSeverity = AuditSeverity.warning;
-      else if (sevStr == "error")
-        r.minimumSeverity = AuditSeverity.error;
-      else if (sevStr == "critical")
-        r.minimumSeverity = AuditSeverity.critical;
-      else
-        r.minimumSeverity = AuditSeverity.info;
-
-      auto result = useCase.updateAuditConfig(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Audit config updated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
+
       useCase.deleteAuditConfig(tenantId, id);
-      auto resp = Json.emptyObject
+      return Json.emptyObject
         .set("status", "deleted")
+        .set("statusCode", 200)
         .set("message", "Audit config deleted successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeConfig(const AuditConfig c) {
-    auto json = Json.emptyObject
-      .set("id", c.id.toJson)
-      .set("tenantId", c.tenantId.toJson)
-      .set("name", c.name.toJson)
-      .set("status", c.status.to!string.toJson)
-      .set("logDataAccess", c.logDataAccess.toJson)
-      .set("logDataModification", c.logDataModification.toJson)
-      .set("logSecurityEvents", c.logSecurityEvents.toJson)
-      .set("logConfigurationChanges", c.logConfigurationChanges.toJson)
-      .set("enableDataMasking", c.enableDataMasking.toJson)
-      .set("minimumSeverity", c.minimumSeverity.to!string.toJson)
-      .set("rateLimitPerSecond", c.rateLimitPerSecond.toJson)
-      .set("createdAt", c.createdAt.toJson)
-      .set("updatedAt", c.updatedAt.toJson);
-
-    if (c.maskedFields.length > 0) {
-      json["maskedFields"] = c.maskedFields.map!(f => Json(f)).array.toJson;
-    }
-    if (c.excludedServices.length > 0) {
-      json["excludedServices"] = c.excludedServices.map!(s => Json(s)).array.toJson;
-    }
-    return json;
   }
 }
