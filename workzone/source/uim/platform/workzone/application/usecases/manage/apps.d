@@ -28,10 +28,9 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "App name is required");
 
-    auto now = Clock.currStdTime();
-    auto app = AppRegistration();
-    app.id = randomUUID();
-    app.tenantId = req.tenantId;
+    AppRegistration app;
+    app.initEntity(req.tenantId);
+
     app.name = req.name;
     app.description = req.description;
     app.launchUrl = req.launchUrl;
@@ -42,8 +41,6 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.supportedPlatforms = req.supportedPlatforms;
     app.tags = req.tags;
     app.appConfig = req.appConfig;
-    app.createdAt = now;
-    app.updatedAt = now;
 
     repo.save(app);
     return CommandResult(true, app.id.value, "");

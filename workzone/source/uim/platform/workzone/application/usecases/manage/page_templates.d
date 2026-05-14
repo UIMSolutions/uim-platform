@@ -28,18 +28,15 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Page template name is required");
 
-    auto now = Clock.currStdTime();
-    auto t = PageTemplate();
-    t.id = randomUUID();
-    t.tenantId = req.tenantId;
+    PageTemplate t;
+    t.initEntity(req.tenantId, req.requestedBy);
+
     t.name = req.name;
     t.description = req.description;
     t.thumbnailUrl = req.thumbnailUrl;
     t.sections = req.sections;
     t.isDefault = req.isDefault;
     t.isPublic = req.isPublic;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

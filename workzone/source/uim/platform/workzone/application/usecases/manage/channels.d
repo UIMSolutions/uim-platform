@@ -28,17 +28,14 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    auto now = Clock.currStdTime();
-    auto ch = Channel();
-    ch.id = randomUUID();
+    Channel ch;
+    ch.initEntity(req.tenantId);
+
     ch.workspaceId = req.workspaceId;
-    ch.tenantId = req.tenantId;
     ch.name = req.name;
     ch.description = req.description;
     ch.channelType = req.channelType;
     ch.config = req.config;
-    ch.createdAt = now;
-    ch.updatedAt = now;
 
     repo.save(ch);
     return CommandResult(true, ch.id.value, "");

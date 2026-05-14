@@ -28,10 +28,9 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Card title is required");
 
-    auto now = Clock.currStdTime();
-    auto c = Card();
-    c.id = randomUUID();
-    c.tenantId = req.tenantId;
+    Card c;
+    c.initEntity(req.tenantId, req.authorId);
+
     c.title = req.title;
     c.subtitle = req.subtitle;
     c.description = req.description;
@@ -39,9 +38,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.cardType = req.cardType;
     c.dataSource = req.dataSource;
     c.manifest = req.manifest;
-    c.createdAt = now;
-    c.updatedAt = now;
-
+    
     repo.save(c);
     return CommandResult(true, c.id.value, "");
   }

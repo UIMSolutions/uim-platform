@@ -28,11 +28,10 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Event title is required");
 
-    auto now = Clock.currStdTime();
-    auto e = Event();
-    e.id = randomUUID();
+    Event e;
+    e.initEntity(req.tenantId);
+
     e.workspaceId = req.workspaceId;
-    e.tenantId = req.tenantId;
     e.title = req.title;
     e.description = req.description;
     e.location = req.location;
@@ -46,8 +45,6 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.endTime = req.endTime;
     e.timezone = req.timezone;
     e.recurrenceRule = req.recurrenceRule;
-    e.createdAt = now;
-    e.updatedAt = now;
 
     repo.save(e);
     return CommandResult(true, e.id.value, "");

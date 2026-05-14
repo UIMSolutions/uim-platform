@@ -29,10 +29,10 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Survey title is required");
 
     auto now = Clock.currStdTime();
-    auto s = Survey();
-    s.id = randomUUID();
+    Survey s;
+    s.initEntity(req.tenantId);
+
     s.workspaceId = req.workspaceId;
-    s.tenantId = req.tenantId;
     s.title = req.title;
     s.description = req.description;
     s.creatorId = req.creatorId;
@@ -43,8 +43,6 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     s.allowMultipleResponses = req.allowMultipleResponses;
     s.startsAt = req.startsAt;
     s.endsAt = req.endsAt;
-    s.createdAt = now;
-    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id.value, "");

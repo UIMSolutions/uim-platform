@@ -28,19 +28,16 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Forum topic title is required");
 
-    auto now = Clock.currStdTime();
-    auto t = ForumTopic();
-    t.id = randomUUID();
+    ForumTopic t;
+    t.initEntity(req.tenantId);
+
     t.workspaceId = req.workspaceId;
-    t.tenantId = req.tenantId;
     t.title = req.title;
     t.body_ = req.body_;
     t.authorId = req.authorId;
     t.authorName = req.authorName;
     t.status = ForumTopicStatus.open;
     t.tags = req.tags;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

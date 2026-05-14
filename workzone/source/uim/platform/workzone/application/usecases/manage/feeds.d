@@ -25,10 +25,10 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createEntry(CreateFeedEntryRequest req) {
-    auto entry = FeedEntry();
-    entry.id = randomUUID();
+    FeedEntry entry;
+    entry.initEntity(req.tenantId, req.actorId);
+
     entry.workspaceId = req.workspaceId;
-    entry.tenantId = req.tenantId;
     entry.actorId = req.actorId;
     entry.actorName = req.actorName;
     entry.action = req.action;
@@ -36,7 +36,6 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     entry.objectId = req.objectId;
     entry.objectTitle = req.objectTitle;
     entry.message = req.message;
-    entry.createdAt = Clock.currStdTime();
 
     repo.save(entry);
     return CommandResult(true, entry.id.value, "");

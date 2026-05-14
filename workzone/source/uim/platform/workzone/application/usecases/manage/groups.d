@@ -29,15 +29,13 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "WZGroup name is required");
 
     auto now = Clock.currStdTime();
-    auto g = WZGroup();
-    g.id = randomUUID();
-    g.tenantId = req.tenantId;
+    WZGroup g;
+    g.initEntity(req.tenantId);
+    
     g.name = req.name;
     g.description = req.description;
     // TODO: g.groupType = req.groupType;
     g.active = true;
-    g.createdAt = now;
-    g.updatedAt = now;
 
     repo.save(g);
     return CommandResult(true, g.id.value, "");

@@ -29,9 +29,9 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "WZTask title is required");
 
     auto now = Clock.currStdTime();
-    auto t = WZTask();
-    t.id = randomUUID();
-    t.tenantId = req.tenantId;
+    WZTask t;
+    t.initEntity(req.tenantId);
+
     t.assigneeId = req.assigneeId;
     t.assigneeName = req.assigneeName;
     t.creatorId = req.creatorId;
@@ -46,8 +46,6 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.category = req.category;
     t.tags = req.tags;
     t.dueDate = req.dueDate;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

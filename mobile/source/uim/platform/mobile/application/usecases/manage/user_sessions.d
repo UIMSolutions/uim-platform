@@ -25,8 +25,8 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
 
     CommandResult createUserSession(CreateUserSessionRequest r) {
         UserSession session;
-        session.id = randomUUID();
-        session.tenantId = r.tenantId;
+        session.initEntity(r.tenantId);
+
         session.appId = r.appId;
         session.userId = r.userId;
         session.deviceId = r.deviceId;
@@ -35,8 +35,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         session.status = SessionStatus.active;
         session.startedAt = currentTimestamp();
         session.lastActivityAt = session.startedAt;
-        session.createdAt = session.startedAt;
-        session.updatedAt = session.startedAt;
+
         repo.save(session);
         return CommandResult(true, session.id.value, "");
     }

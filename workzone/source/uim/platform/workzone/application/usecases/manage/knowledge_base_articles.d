@@ -28,11 +28,10 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Article title is required");
 
-    auto now = Clock.currStdTime();
-    auto a = KnowledgeBaseArticle();
-    a.id = randomUUID();
+    KnowledgeBaseArticle a;
+    a.initEntity(req.tenantId);
+
     a.workspaceId = req.workspaceId;
-    a.tenantId = req.tenantId;
     a.title = req.title;
     a.body_ = req.body_;
     a.summary = req.summary;
@@ -43,8 +42,6 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     a.tags = req.tags;
     a.language = req.language;
     a.version_ = 1;
-    a.createdAt = now;
-    a.updatedAt = now;
 
     repo.save(a);
     return CommandResult(true, a.id.value, "");

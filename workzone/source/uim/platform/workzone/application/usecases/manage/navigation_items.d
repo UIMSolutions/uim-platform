@@ -28,11 +28,10 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Navigation item title is required");
 
-    auto now = Clock.currStdTime();
-    auto n = NavigationItem();
-    n.id = randomUUID();
+    NavigationItem n;
+    n.initEntity(req.tenantId);
+
     n.siteId = req.siteId;
-    n.tenantId = req.tenantId;
     n.title = req.title;
     n.icon = req.icon;
     // TODO: n.itemType = req.itemType;
@@ -43,8 +42,6 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.sortOrder = req.sortOrder;
     n.visible = true;
     n.openInNewWindow = req.openInNewWindow;
-    n.createdAt = now;
-    n.updatedAt = now;
 
     repo.save(n);
     return CommandResult(true, n.id.value, "");

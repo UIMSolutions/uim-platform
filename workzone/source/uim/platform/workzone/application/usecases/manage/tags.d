@@ -32,15 +32,12 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Tag with this name already exists");
 
-    auto now = Clock.currStdTime();
-    auto t = Tag();
-    t.id = randomUUID();
-    t.tenantId = req.tenantId;
+    Tag t;
+    t.initEntity(req.tenantId);
     t.name = req.name;
     t.description = req.description;
     t.color = req.color;
     t.parentTagId = req.parentTagId;
-    t.createdAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

@@ -30,10 +30,10 @@ class ManageContentUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Content title is required");
 
     auto now = Clock.currStdTime();
-    auto item = ContentItem();
-    item.id = randomUUID();
+    ContentItem item;
+    item.initEntity(req.tenantId, req.authorId);
+
     item.workspaceId = req.workspaceId;
-    item.tenantId = req.tenantId;
     item.title = req.title;
     item.body_ = req.body_;
     item.summary = req.summary;
@@ -43,8 +43,6 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     item.authorName = req.authorName;
     item.tags = req.tags;
     item.language = req.language;
-    item.createdAt = now;
-    item.updatedAt = now;
 
     repo.save(item);
     return CommandResult(true, item.id.value, "");
