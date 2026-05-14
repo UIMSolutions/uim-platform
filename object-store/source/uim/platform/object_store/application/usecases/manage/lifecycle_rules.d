@@ -26,21 +26,20 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createRule(CreateLifecycleRuleRequest req) {
+  CommandResult createLifecycleRule(CreateLifecycleRuleRequest req) {
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Rule name is required");
 
-    auto bucket = bucketRepo.findById(req.bucketId);
+    auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
     
     LifecycleRule rule;
-    rule.id = randomUUID();
-    rule.tenantId = req.tenantId;
+    rule.initEntity(req.tenantId, req.createdBy);
     rule.bucketId = req.bucketId;
     rule.name = req.name;
     rule.prefix = req.prefix;
@@ -49,18 +48,15 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.transitionDays = req.transitionDays;
     rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
     rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
-    rule.createdBy = req.createdBy;
-    rule.createdAt = currentTimestamp();
-    rule.updatedAt = rule.createdAt;
 
     ruleRepo.save(rule);
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
+  CommandResult updateLifecycleRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Rule not found");
+      return CommandResult(false, "", "Lifecycle rule not found");
 
     if (req.name.length > 0)
       rule.name = req.name;
@@ -76,54 +72,27 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
     if (req.abortIncompleteUploadDays > 0)
       rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
-    rule.updatedAt = currentTimestamp();
+    rule.updatedAt = Clock.currStdTime();
 
     ruleRepo.update(rule);
     return CommandResult(true, id.value, "");
   }
 
-  LifecycleRule getRule(LifecycleRuleId id) {
+  LifecycleRule getLifecycleRule(LifecycleRuleId id) {
     return ruleRepo.findById(tenantId, id);
   }
 
-  LifecycleRule[] listRules(BucketId bucketId) {
+  LifecycleRule[] listLifecycleRules(BucketId bucketId) {
     return ruleRepo.findByBucket(bucketId);
   }
 
-  CommandResult deleteRule(LifecycleRuleId id) {
+  CommandResult deleteLifecycleRule(LifecycleRuleId id) {
     auto rule = ruleRepo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Rule not found");
+      return CommandResult(false, "", "Lifecycle rule not found");
 
-    ruleRepo.removeById(id);
+    ruleRepo.remove(rule);
     return CommandResult(true, id.value, "");
   }
 }
 
-private RuleStatus parseRuleStatus(string s) {
-  switch (s) {
-  case "disabled":
-    return RuleStatus.disabled;
-  default:
-    return RuleStatus.enabled;
-  }
-}
-
-private StorageClass parseStorageClass(string s) {
-  switch (s) {
-  case "nearline":
-    return StorageClass.nearline;
-  case "coldline":
-    return StorageClass.coldline;
-  case "archive":
-    return StorageClass.archive;
-  default:
-    return StorageClass.nearline;
-  }
-}
-
-private long currentTimestamp() {
-
-
-  return Clock.currStdTime();
-}

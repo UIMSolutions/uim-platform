@@ -36,11 +36,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    auto existing = repo.findByUsername(req.systemInstanceId, req.username);
+    auto existing = repo.findByUsername(req.tenantId, req.systemInstanceId, req.username);
     if (!existing.isNull)
       return CommandResult(false, "", "Username '" ~ req.username ~ "' already exists");
 
-    auto emailCheck = repo.findByEmail(req.systemInstanceId, req.email);
+    auto emailCheck = repo.findByEmail(req.tenantId, req.systemInstanceId, req.email);
     if (!emailCheck.isNull)
       return CommandResult(false, "", "Email '" ~ req.email ~ "' already in use");
 
@@ -58,8 +58,8 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     // Assign roles
     foreach (roleId; req.roleIds) {
       auto roleIdObj = BusinessRoleId(roleId);
-      if (roleRepo.existsById(roleIdObj)) {
-        auto role = roleRepo.findById(roleIdObj);
+      if (roleRepo.existsById(req.tenantId, roleIdObj)) {
+        auto role = roleRepo.findById(req.tenantId, roleIdObj);
       
         user.roleAssignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
       }
@@ -93,7 +93,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
       foreach (roleId; req.roleIds) {
         auto roleIdObj = BusinessRoleId(roleId);
         if (!roleIdObj.isNull) {
-          auto role = roleRepo.findById(roleIdObj);
+          auto role = roleRepo.findById(req.tenantId, roleIdObj);
           if (!role.isNull) {
             assignments ~= RoleAssignment(roleIdObj, role.name, Clock.currStdTime());
           }
@@ -113,8 +113,8 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  BusinessUser[] listUsers(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+  BusinessUser[] listUsers(TenantId tenantId, SystemInstanceId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
   CommandResult deleteBusinessUser(TenantId tenantId, BusinessUserId id) {

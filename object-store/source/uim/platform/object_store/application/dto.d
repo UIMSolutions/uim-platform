@@ -15,6 +15,7 @@ mixin(ShowModule!());
 
 struct CreateBucketRequest {
   TenantId tenantId;
+
   string name;
   string region;
   string storageClass; // "standard", "nearline", "coldline", "archive"
@@ -26,6 +27,9 @@ struct CreateBucketRequest {
 }
 
 struct UpdateBucketRequest {
+  TenantId tenantId;
+  BucketId bucketId;
+
   string storageClass;
   bool versioningEnabled;
   string encryptionType;
@@ -38,6 +42,7 @@ struct UpdateBucketRequest {
 struct CreateObjectRequest {
   TenantId tenantId;
   BucketId bucketId;
+
   string key;
   string contentType;
   long size;
@@ -66,6 +71,7 @@ struct CopyObjectRequest {
 struct CreateAccessPolicyRequest {
   TenantId tenantId;
   BucketId bucketId;
+
   string name;
   string effect; // "allow", "deny"
   string principal;
@@ -75,6 +81,9 @@ struct CreateAccessPolicyRequest {
 }
 
 struct UpdateAccessPolicyRequest {
+  TenantId tenantId;
+  AccessPolicyId accessPolicyId;
+  
   string name;
   string effect;
   string principal;

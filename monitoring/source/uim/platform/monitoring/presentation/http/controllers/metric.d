@@ -36,7 +36,7 @@ class MetricController : PlatformController {
     router.get("/api/v1/metrics/summary", &handleSummary);
   }
 
-  protected void handleGetPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

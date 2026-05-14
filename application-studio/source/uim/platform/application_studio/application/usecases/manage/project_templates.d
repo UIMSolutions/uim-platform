@@ -18,19 +18,15 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ProjectTemplate getById(ProjectTemplateId id) {
+    ProjectTemplate getProjectTemplate(TenantId tenantId, ProjectTemplateId id) {
         return repo.findById(tenantId, id);
     }
 
-    ProjectTemplate[] list() {
-        return repo.findAll();
-    }
-
-    ProjectTemplate[] listByTenant(TenantId tenantId) {
+    ProjectTemplate[] listProjectTemplates(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult create(ProjectTemplateDTO dto) {
+    CommandResult createProjectTemplate(ProjectTemplateDTO dto) {
         ProjectTemplate e;
         e.id = ProjectTemplateId(dto.id);
         e.tenantId = dto.tenantId;
@@ -45,22 +41,24 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidProjectTemplate(e))
             return CommandResult(false, "", "Invalid project template data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(ProjectTemplateDTO dto) {
-        if (!repo.existsById(ProjectTemplateId(dto.id)))
+    CommandResult updateProjectTemplate(ProjectTemplateDTO dto) {
+        auto existing = repo.findById(TenantId(dto.tenantId), ProjectTemplateId(dto.id));
+        if (existing.isNull)
             return CommandResult(false, "", "Project template not found");
-        auto existing = repo.findById(ProjectTemplateId(dto.id));
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProjectTemplate(ProjectTemplateId id) {
+    CommandResult deleteProjectTemplate(TenantId tenantId, ProjectTemplateId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Project template not found");

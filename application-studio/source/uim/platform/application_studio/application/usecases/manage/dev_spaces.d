@@ -18,23 +18,19 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    DevSpace getById(DevSpaceId id) {
+    DevSpace getDevSpace(TenantId tenantId, DevSpaceId id) {
         return repo.findById(tenantId, id);
     }
 
-    DevSpace[] list() {
-        return repo.findAll();
-    }
-
-    DevSpace[] listByTenant(TenantId tenantId) {
+    DevSpace[] listDevSpaces(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DevSpace[] listByOwner(string owner) {
-        return repo.findByOwner(owner);
+    DevSpace[] listDevSpaces(TenantId tenantId, string owner) {
+        return repo.findByOwner(tenantId, owner);
     }
 
-    CommandResult create(DevSpaceDTO dto) {
+    CommandResult createDevSpace(DevSpaceDTO dto) {
         DevSpace e;
         e.id = dto.devSpaceId;
         e.tenantId = dto.tenantId;
@@ -54,19 +50,21 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.devSpaceId.value, "");
     }
 
-    CommandResult update(DevSpaceDTO dto) {
-        if (!repo.existsById(dto.devSpaceId))
+    CommandResult updateDevSpace(DevSpaceDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.devSpaceId);
+        if (existing.isNull)
             return CommandResult(false, "", "Dev space not found");
-        auto existing = repo.findById(dto.devSpaceId);
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.extensions.length > 0) existing.extensions = dto.extensions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         repo.update(existing);
         return CommandResult(true, dto.devSpaceId.value, "");
     }
 
-    CommandResult deleteDevSpace(DevSpaceId id) {
+    CommandResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Dev space not found");

@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.presentation.http.controllers.check;
 
-
-
-
-
-
 // import uim.platform.monitoring.application.usecases.manage.health_checks;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.health_check;
@@ -32,7 +27,7 @@ class CheckController : PlatformController {
 
     router.post("/api/v1/checks", &handleCreate);
     router.get("/api/v1/checks", &handleList);
-    router.get("/api/v1/checks/results/*", &handleGetResults);
+    router.get("/api/v1/checks/results/*", &handleResults);
     router.get("/api/v1/checks/*", &handleGet);
     router.put("/api/v1/checks/*", &handleUpdate);
     router.delete_("/api/v1/checks/*", &handleDelete);
@@ -40,9 +35,10 @@ class CheckController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       CreateHealthCheckRequest r;
       r.tenantId = tenantId;
       r.resourceId = j.getString("resourceId");
@@ -65,7 +61,7 @@ class CheckController : PlatformController {
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "Health check created successfully"); 
+          .set("message", "Health check created successfully");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -163,7 +159,7 @@ class CheckController : PlatformController {
   }
 
   protected void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       RecordCheckResultRequest r;

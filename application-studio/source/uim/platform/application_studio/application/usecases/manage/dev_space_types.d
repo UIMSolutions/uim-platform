@@ -12,25 +12,21 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
-    private DevSpaceTypespaceTypessitory spaceTypes;
+    private DevSpaceTypeRepository spaceTypes;
 
-    this(DevSpaceTypespaceTypessitory spaceTypes) {
+    this(DevSpaceTypeRepository spaceTypes) {
         this.spaceTypes = spaceTypes;
     }
 
-    DevSpaceType getById(DevSpaceTypeId id) {
+    DevSpaceType getDevSpaceType(DevSpaceTypeId id) {
         return spaceTypes.findById(tenantId, id);
     }
 
-    DevSpaceType[] list() {
-        return spaceTypes.findAll();
-    }
-
-    DevSpaceType[] listByTenant(TenantId tenantId) {
+    DevSpaceType[] listDevSpaceTypes(TenantId tenantId) {
         return spaceTypes.findByTenant(tenantId);
     }
 
-    CommandResult create(DevSpaceTypeDTO dto) {
+    CommandResult createDevSpaceType(DevSpaceTypeDTO dto) {
         DevSpaceType e;
         e.id = DevSpaceTypeId(dto.id);
         e.tenantId = dto.tenantId;
@@ -47,14 +43,16 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dto.id.value, "");
     }
 
-    CommandResult update(DevSpaceTypeDTO dto) {
-        if (!spaceTypes.existsById(DevSpaceTypeId(dto.id)))
-            return CommandResult(false, "", "Dev space type not found");
+    CommandResult updateDevSpaceType(DevSpaceTypeDTO dto) {
         auto existing = spaceTypes.findById(DevSpaceTypeId(dto.id));
+        if (existing.isNull) 
+            return CommandResult(false, "", "Dev space type not found");
+De
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.predefinedExtensions.length > 0) existing.predefinedExtensions = dto.predefinedExtensions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+
         spaceTypes.update(existing);
         return CommandResult(true, dto.id.value, "");
     }

@@ -68,7 +68,6 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
       role.restrictionTypes = req.restrictionTypes;
     if (req.assignedCatalogs.length > 0)
       role.assignedCatalogs = req.assignedCatalogs;
-
   
     role.updatedAt = Clock.currStdTime();
 
@@ -76,16 +75,16 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, role.id.value, "");
   }
 
-  bool existsRole(BusinessRoleId id) {
-    return repo.existsById(id);
+  bool existsRole(TenantId tenantId, BusinessRoleId id) {
+    return repo.existsById(tenantId, id);
   }
 
   BusinessRole getRole(TenantId tenantId, BusinessRoleId id) {
     return repo.findById(tenantId, id);
   }
 
-  BusinessRole[] listRoles(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+  BusinessRole[] listRoles(TenantId tenantId, SystemInstanceId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
   CommandResult deleteBusinessRole(TenantId tenantId, BusinessRoleId id) {

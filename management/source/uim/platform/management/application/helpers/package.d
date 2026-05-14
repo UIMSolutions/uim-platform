@@ -15,6 +15,7 @@ void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, Subaccoun
   // import std.uuid : randomUUID;
 
   PlatformEvent event;
+  
   event.id = randomUUID();
   event.globalAccountId = gaId;
   event.subaccountId = subId;
@@ -25,5 +26,6 @@ void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, Subaccoun
   event.initiatedBy = initiatedBy;
   event.sourceService = sourceService;
   event.timestamp = clockSeconds();
+
   eventRepo.save(event);
 }

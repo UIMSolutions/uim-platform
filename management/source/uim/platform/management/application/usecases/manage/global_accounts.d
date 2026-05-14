@@ -78,10 +78,10 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult suspendGlobalAccount(GlobalAccountId accountId) {
-    if (!repo.existsById(accountId))
+    auto globalAccount = repo.findById(accountId);
+    if (globalAccount.isNull)
       return CommandResult(false, "", "Global account not found");
 
-    auto globalAccount = repo.findById(accountId);
     if (globalAccount.status != GlobalAccountStatus.active)
       return CommandResult(false, "", "Only active accounts can be suspended");
 

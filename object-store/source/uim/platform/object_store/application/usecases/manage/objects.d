@@ -96,8 +96,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, obj.id.value, "");
   }
 
-  CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
-    auto obj = objectRepo.findById(tenantId, id);
+  CommandResult updateObjectMetadata(UpdateObjectMetadataRequest req) {
+    auto obj = objectRepo.findById(req.tenantId, req.objectId);
     if (obj.isNull || obj.isNull)
       return CommandResult(false, "", "Object not found");
 
@@ -113,32 +113,32 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  StorageObject getObject(ObjectId id) {
+  StorageObject getObject(TenantId tenantId, ObjectId id) {
     return objectRepo.findById(tenantId, id);
   }
 
-  StorageObject getObjectByKey(BucketId bucketId, string key) {
-    return objectRepo.findByKey(bucketId, key);
+  StorageObject getObjectByKey(TenantId tenantId, BucketId bucketId, string key) {
+    return objectRepo.findByKey(tenantId, bucketId, key);
   }
 
-  StorageObject[] listObjects(BucketId bucketId) {
-    return objectRepo.findByBucket(bucketId);
+  StorageObject[] listObjects(TenantId tenantId, BucketId bucketId) {
+    return objectRepo.findByBucket(tenantId, bucketId);
   }
 
-  StorageObject[] listObjectsByPrefix(BucketId bucketId, string prefix) {
-    return objectRepo.findByPrefix(bucketId, prefix);
+  StorageObject[] listObjectsByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {
+    return objectRepo.findByPrefix(tenantId, bucketId, prefix);
   }
 
-  ObjectVersion[] listVersions(ObjectId objectId) {
-    return versionRepo.findByObject(objectId);
+  ObjectVersion[] listVersions(TenantId tenantId, ObjectId objectId) {
+    return versionRepo.findByObject(tenantId, objectId);
   }
 
-  CommandResult deleteObject(ObjectId id) {
+  CommandResult deleteObject(TenantId tenantId, ObjectId id) {
     auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 
-    auto bucket = bucketRepo.findById(obj.bucketId);
+    auto bucket = bucketRepo.findById(tenantId, obj.bucketId);
 
     // If versioning enabled, add a delete marker instead of removing
     if (bucket !is null && bucket.versioningEnabled) {
@@ -169,8 +169,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       objectRepo.update(obj);
     } else {
       // Hard delete
-      versionRepo.removeByObject(id);
-      objectRepo.removeById(id);
+      versionRepo.removeByObject(tenantId, id);
+      objectRepo.removeById(tenantId, id);
     }
 
     // Update bucket counters
@@ -185,11 +185,11 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult copyObject(CopyObjectRequest req) {
-    auto sourceObj = objectRepo.findByKey(req.sourceBucketId, req.sourceKey);
+    auto sourceObj = objectRepo.findByKey(req.tenantId, req.sourceBucketId, req.sourceKey);
     if (sourceObj.isNull || sourceObj.isNull)
       return CommandResult(false, "", "Source object not found");
 
-    auto destBucket = bucketRepo.findById(req.destBucketId);
+    auto destBucket = bucketRepo.findById(req.tenantId, req.destBucketId);
     if (destBucket.isNull || destBucket.isNull)
       return CommandResult(false, "", "Destination bucket not found");
 
@@ -198,18 +198,15 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", quotaResult.error);
 
     auto copy = new StorageObject();
-    copy.id = randomUUID();
-    copy.tenantId = req.tenantId;
+    copy.initEntity(req.tenantId);
     copy.bucketId = req.destBucketId;
     copy.key = req.destKey;
     copy.contentType = sourceObj.contentType;
     copy.size = sourceObj.size;
-    copy.etag = generateEtag(id);
+    copy.etag = generateEtag(copy.id.value);
     copy.metadata = sourceObj.metadata;
     copy.storageClass = sourceObj.storageClass;
     copy.createdBy = req.createdBy;
-    copy.createdAt = currentTimestamp();
-    copy.updatedAt = copy.createdAt;
 
     objectRepo.save(copy);
 

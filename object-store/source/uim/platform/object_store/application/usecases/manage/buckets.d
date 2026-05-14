@@ -34,26 +34,22 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
-    Bucket bucket ;
-    bucket.id = randomUUID();
-    bucket.tenantId = req.tenantId;
+    Bucket bucket;
+    bucket.initEntity(req.tenantId, req.createdBy);
     bucket.name = req.name;
     bucket.region = req.region;
-    bucket.storageClass = parseStorageClass(req.storageClass);
+    bucket.storageClass = req.storageClass.to!StorageClass;
     bucket.versioningEnabled = req.versioningEnabled;
-    bucket.encryptionType = parseEncryptionType(req.encryptionType);
+    bucket.encryptionType = req.encryptionType.to!EncryptionType;
     bucket.encryptionKeyId = req.encryptionKeyId;
     bucket.quotaBytes = req.quotaBytes;
-    bucket.createdBy = req.createdBy;
-    bucket.createdAt = currentTimestamp();
-    bucket.updatedAt = bucket.createdAt;
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
       return CommandResult(false, "", encResult.error);
 
     repo.save(bucket);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, bucket.id.value, "");
   }
 
   CommandResult updateBucket(BucketId id, UpdateBucketRequest req) {
@@ -62,15 +58,15 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Bucket not found");
 
     if (req.storageClass.length > 0)
-      bucket.storageClass = parseStorageClass(req.storageClass);
+      bucket.storageClass = req.storageClass.to!StorageClass;
     bucket.versioningEnabled = req.versioningEnabled;
     if (req.encryptionType.length > 0)
-      bucket.encryptionType = parseEncryptionType(req.encryptionType);
+      bucket.encryptionType = req.encryptionType.to!EncryptionType;
     if (req.encryptionKeyId.length > 0)
       bucket.encryptionKeyId = req.encryptionKeyId;
     if (req.quotaBytes > 0)
       bucket.quotaBytes = req.quotaBytes;
-    bucket.updatedAt = currentTimestamp();
+    bucket.updatedAt = Clock.currStdTime();
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
@@ -96,41 +92,8 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
     if (bucket.objectCount > 0)
       return CommandResult(false, "", "Bucket is not empty");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(bucket);
+    return CommandResult(true, bucket.id.value, "");
   }
 }
 
-private StorageClass parseStorageClass(string s) {
-  switch (s) {
-  case "nearline":
-    return StorageClass.nearline;
-  case "coldline":
-    return StorageClass.coldline;
-  case "archive":
-    return StorageClass.archive;
-  default:
-    return StorageClass.standard;
-  }
-}
-
-private EncryptionType parseEncryptionType(string s) {
-  switch (s) {
-  case "sse_s3":
-    return EncryptionType.sse_s3;
-  case "sse_kms":
-    return EncryptionType.sse_kms;
-  case "sse_c":
-    return EncryptionType.sse_c;
-  default:
-    return EncryptionType.none;
-  }
-}
-
-private long currentTimestamp() {
-  import core.time : Duration;
-
-
-
-  return Clock.currStdTime();
-}

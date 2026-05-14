@@ -25,40 +25,37 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createPolicy(CreateAccessPolicyRequest req) {
+  CommandResult createAccessPolicy(CreateAccessPolicyRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Policy name is required");
+
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
-    auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
 
     AccessPolicy policy;
-    policy.id = randomUUID();
-    policy.tenantId = req.tenantId;
+    policy.initEntity(req.tenantId, req.createdBy);
     policy.bucketId = req.bucketId;
     policy.name = req.name;
-    policy.effect = parseEffect(req.effect);
+    policy.effect = req.effect.to!PolicyEffect;
     policy.principal = req.principal;
     policy.actions = req.actions;
     policy.resources = req.resources;
-    policy.createdBy = req.createdBy;
-    policy.createdAt = currentTimestamp();
-    policy.updatedAt = policy.createdAt;
-
+ 
     policyRepo.save(policy);
     return CommandResult(true, policy.id.value, "");
   }
 
-  CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
-    if (!policyRepo.existsById(id))
+  CommandResult updateAccessPolicy(UpdateAccessPolicyRequest req) {
+    auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
+    if (policy.isNull)
       return CommandResult(false, "", "Policy not found");
 
-    auto policy = policyRepo.findById(tenantId, id);
     if (req.name.length > 0)
       policy.name = req.name;
     if (req.effect.length > 0)
@@ -69,41 +66,27 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
       policy.actions = req.actions;
     if (req.resources.length > 0)
       policy.resources = req.resources;
-    policy.updatedAt = currentTimestamp();
+    policy.updatedAt = Clock.currStdTime();
 
     policyRepo.update(policy);
     return CommandResult(true, policy.id.value, "");
   }
 
-  AccessPolicy getPolicy(AccessPolicyId id) {
+  AccessPolicy getAccessPolicy(TenantId tenantId, AccessPolicyId id) {
     return policyRepo.findById(tenantId, id);
   }
 
-  AccessPolicy[] listPolicies(BucketId bucketId) {
-    return policyRepo.findByBucket(bucketId);
+  AccessPolicy[] listAccessPolicies(TenantId tenantId, BucketId bucketId) {
+    return policyRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deletePolicy(AccessPolicyId id) {
-    auto policy = policyRepo.findById(tenantId, id);
+  CommandResult deleteAccessPolicy(UpdateAccessPolicyRequest req) {
+    auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Policy not found");
+      return CommandResult(false, "", "Access policy not found");
 
-    policyRepo.removeById(id);
+    policyRepo.remove(policy);
     return CommandResult(true, policy.id.value, "");
   }
 }
 
-private PolicyEffect parseEffect(string s) {
-  switch (s) {
-  case "deny":
-    return PolicyEffect.deny;
-  default:
-    return PolicyEffect.allow;
-  }
-}
-
-private long currentTimestamp() {
-
-
-  return Clock.currStdTime();
-}
