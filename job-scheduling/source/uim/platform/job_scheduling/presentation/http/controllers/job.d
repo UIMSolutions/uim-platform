@@ -49,8 +49,8 @@ class JobController : PlatformController {
             r.httpMethod = j.getString("httpMethod");
             r.type = j.getString("type");
             r.active = j.getBoolean("active", true);
-            r.startTime = jsonLong(j, "startTime");
-            r.endTime = jsonLong(j, "endTime");
+            r.startTime = getLong(j, "startTime");
+            r.endTime = getLong(j, "endTime");
 
             auto result = usecase.createJob(r);
             if (!result.success) {
@@ -68,11 +68,11 @@ class JobController : PlatformController {
                 sr.active = getBoolean(sj, "active", true);
                 sr.cronExpression = getString(sj, "cron");
                 sr.humanReadableSchedule = getString(sj, "humanReadableSchedule");
-                sr.repeatInterval = jsonLong(sj, "repeatInterval");
-                sr.repeatAt = getString(sj, "repeatAt");
-                sr.time = getString(sj, "time");
-                sr.startTime = jsonLong(sj, "startTime");
-                sr.endTime = jsonLong(sj, "endTime");
+                sr.repeatInterval = getLong(sj, "repeatInterval");
+                sr.repeatAt = getLong(sj, "repeatAt");
+                sr.time = getLong(sj, "time");
+                sr.startTime = getLong(sj, "startTime");
+                sr.endTime = getLong(sj, "endTime");
 
                 scheduleUsecase.createSchedule(sr);
             }
@@ -108,13 +108,13 @@ class JobController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = JobId(extractIdFromPath(req.requestURI.to!string));
 
-            auto job = usecase.getById(tenantId, id);
+            auto job = usecase.getJob(tenantId, id);
             if (job.isNull) {
                 writeError(res, 404, "Job not found");
                 return;
             }
 
-            auto resp = jobToDetailJson(job);
+            auto resp = job.toJson();
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -135,8 +135,8 @@ class JobController : PlatformController {
             r.actionUrl = j.getString("action");
             r.httpMethod = j.getString("httpMethod");
             r.active = j.getBoolean("active", true);
-            r.startTime = jsonLong(j, "startTime");
-            r.endTime = jsonLong(j, "endTime");
+            r.startTime = getLong(j, "startTime");
+            r.endTime = getLong(j, "endTime");
 
             auto result = usecase.updateJob(r);
             if (result.success) {
@@ -159,8 +159,8 @@ class JobController : PlatformController {
             auto jobId = JobId(extractIdFromPath(req.requestURI.to!string));
 
             // Delete all schedules first
-            scheduleUsecase.removeAllByJob(tenantId, jobId);
-            auto result = usecase.delete(tenantId, jobId);
+            scheduleUsecase.deleteAllSchedules(tenantId, jobId);
+            auto result = usecase.deleteJob(tenantId, jobId);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
@@ -176,9 +176,9 @@ class JobController : PlatformController {
             auto tenantId = req.getTenantId;
 
             auto resp = Json.emptyObject
-                .set("total", usecase.count(tenantId))
-                .set("active", usecase.countActive(tenantId))
-                .set("inactive", usecase.countInactive(tenantId));
+                .set("total", usecase.countJobs(tenantId))
+                .set("active", usecase.countActiveJobs(tenantId))
+                .set("inactive", usecase.countInactiveJobs(tenantId));
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -191,7 +191,7 @@ class JobController : PlatformController {
             auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
-            auto jobs = usecase.searchJobs(query, tenantId);
+            auto jobs = usecase.searchJobs(tenantId, query);
             auto jarr = jobs.map!(job => job.toJson).array.toJson;
 
             auto resp = Json.emptyObject
@@ -201,45 +201,6 @@ class JobController : PlatformController {
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
-        }
-    }
-
-    private static Json jobToJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
-        return Json.emptyObject
-            .set("jobId", job.id)
-            .set("name", job.name)
-            .set("description", job.description)
-            .set("action", job.actionUrl)
-            .set("active", job.active)
-            .set("createdAt", job.createdAt);
-    }
-
-    private static Json jobToDetailJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
-        return Json.emptyObject
-            .set("jobId", job.id)
-            .set("name", job.name)
-            .set("description", job.description)
-            .set("action", job.actionUrl)
-            .set("httpMethod", httpMethodStr(job.httpMethod))
-            .set("active", job.active)
-            .set("startTime", job.startTime)
-            .set("endTime", job.endTime)
-            .set("createdAt", job.createdAt)
-            .set("updatedAt", job.updatedAt);
-    }
-
-    private static string httpMethodStr(uim.platform.job_scheduling.domain.types.HttpMethod m) {
-        final switch (m) {
-        case uim.platform.job_scheduling.domain.types.HttpMethod.get:
-            return "GET";
-        case uim.platform.job_scheduling.domain.types.HttpMethod.post:
-            return "POST";
-        case uim.platform.job_scheduling.domain.types.HttpMethod.put:
-            return "PUT";
-        case uim.platform.job_scheduling.domain.types.HttpMethod.delete_:
-            return "DELETE";
-        case uim.platform.job_scheduling.domain.types.HttpMethod.patch:
-            return "PATCH";
         }
     }
 }

@@ -39,7 +39,7 @@ class RunLogController : PlatformController {
             auto ids = extractIds(path);
             auto tenantId = req.getTenantId;
 
-            auto logs = usecase.listBySchedule(ids[1], ids[0], tenantId);
+            auto logs = usecase.listRunLogs(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
 
             auto jarr = logs.map!(l => toJson(l)).array.toJson;
 
@@ -59,10 +59,10 @@ class RunLogController : PlatformController {
             
             import std.string : split;
             auto path = req.requestURI.to!string;
-            auto jobId = extractJobId(path);
+            auto jobId = JobId(extractJobId(path));
             auto tenantId = req.getTenantId;
 
-            auto logs = usecase.listByJob(jobId, tenantId);
+            auto logs = usecase.listRunLogs(tenantId, jobId);
 
             auto jarr = logs.map!(log => toJson(log)).array.toJson;
             auto resp = Json.emptyObject
@@ -80,7 +80,7 @@ class RunLogController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto runLogId = extractIdFromPath(path);
+            auto runLogId = RunLogId(extractIdFromPath(path));
             auto j = req.json;
 
             UpdateRunLogRequest r;

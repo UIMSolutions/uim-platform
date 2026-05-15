@@ -36,7 +36,7 @@ class ScheduleController : PlatformController {
 
     protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
@@ -51,13 +51,13 @@ class ScheduleController : PlatformController {
             r.active = j.getBoolean("active", true);
             r.cronExpression = j.getString("cron");
             r.humanReadableSchedule = j.getString("humanReadableSchedule");
-            r.repeatInterval = jsonLong(j, "repeatInterval");
-            r.repeatAt = j.getString("repeatAt");
-            r.time = j.getString("time");
-            r.startTime = jsonLong(j, "startTime");
-            r.endTime = jsonLong(j, "endTime");
+            r.repeatInterval = getLong(j, "repeatInterval");
+            r.repeatAt = getLong(j, "repeatAt");
+            r.time = getLong(j, "time");
+            r.startTime = getLong(j, "startTime");
+            r.endTime = getLong(j, "endTime");
 
-            auto result = usecase.create(r);
+            auto result = usecase.createSchedule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -75,19 +75,17 @@ class ScheduleController : PlatformController {
 
     protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto path = req.requestURI.to!string;
-            auto jobId = extractJobIdFromSchedulePath(path);
             auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto jobId = JobId(extractJobIdFromSchedulePath(path));
 
-            auto schedules = usecase.list(tenantId, jobId);
-
+            auto schedules = usecase.listSchedules(tenantId, jobId);
             auto jarr = schedules.map!(s => toJson(s)).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("total", schedules.length)
-                .set("results", jarr);
+                .set("results", jarr)
+                .set("message", "Schedules retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -97,11 +95,11 @@ class ScheduleController : PlatformController {
 
     protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.getTenantId;
 
             auto s = usecase.getSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
             if (s.isNull) {
@@ -109,7 +107,7 @@ class ScheduleController : PlatformController {
                 return;
             }
 
-            res.writeJsonBody(scheduleToDetailJson(s), 200);
+            res.writeJsonBody(s.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -117,8 +115,7 @@ class ScheduleController : PlatformController {
 
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             auto j = req.json;
@@ -131,18 +128,18 @@ class ScheduleController : PlatformController {
             r.active = j.getBoolean("active", true);
             r.cronExpression = j.getString("cron");
             r.humanReadableSchedule = j.getString("humanReadableSchedule");
-            r.repeatInterval = jsonLong(j, "repeatInterval");
-            r.repeatAt = j.getString("repeatAt");
-            r.time = j.getString("time");
-            r.startTime = jsonLong(j, "startTime");
-            r.endTime = jsonLong(j, "endTime");
+            r.repeatInterval = getLong(j, "repeatInterval");
+            r.repeatAt = getLong(j, "repeatAt");
+            r.time = getLong(j, "time");
+            r.startTime = getLong(j, "startTime");
+            r.endTime = getLong(j, "endTime");
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateSchedule(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Schedule updated");
-                
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 404, result.error);
@@ -154,11 +151,9 @@ class ScheduleController : PlatformController {
 
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.getTenantId;
 
             auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
             if (result.success) {
@@ -173,24 +168,22 @@ class ScheduleController : PlatformController {
 
     protected void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto jobId = extractJobIdFromSchedulePath(path);
+            auto jobId = JobId(extractJobIdFromSchedulePath(path));
             auto j = req.json;
 
             ActivateAllSchedulesRequest r;
             r.tenantId = tenantId;
-            r.jobId = JobId(jobId);
+            r.jobId = jobId;
             r.active = j.getBoolean("active", true);
 
-            auto result = usecase.activateAll(r);
+            auto result = usecase.activateAllSchedules(r);
             if (result.success) {
                 auto resp = Json.emptyObject
-                    .set("message", r.active 
-                        ? "All schedules activated"
-                        : "All schedules deactivated");
-                
+                    .set("message", r.active
+                            ? "All schedules activated" : "All schedules deactivated");
+
                 res.writeJsonBody(resp, 200);
             } else {
                 writeError(res, 400, result.error);
@@ -205,7 +198,7 @@ class ScheduleController : PlatformController {
             auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
-            auto schedules = usecase.search(query, tenantId);
+            auto schedules = usecase.searchSchedules(query, tenantId, query);
 
             auto jarr = schedules.map!(s => toJson(s)).array.toJson;
 
@@ -248,33 +241,4 @@ class ScheduleController : PlatformController {
         return ids;
     }
 
-    private static Json scheduleToJson(
-        ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
-        return Json.emptyObject
-            .set("scheduleId", s.id)
-            .set("jobId", s.jobId)
-            .set("description", s.description)
-            .set("active", s.active)
-            .set("nextRunAt", s.nextRunAt)
-            .set("createdAt", s.createdAt);
-    }
-
-    private static Json scheduleToDetailJson(
-        ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
-        return Json.emptyObject
-            .set("scheduleId", s.id)
-            .set("jobId", s.jobId)
-            .set("description", s.description)
-            .set("active", s.active)
-            .set("cron", s.cronExpression)
-            .set("humanReadableSchedule", s.humanReadableSchedule)
-            .set("repeatInterval", s.repeatInterval)
-            .set("repeatAt", s.repeatAt)
-            .set("time", s.time)
-            .set("startTime", s.startTime)
-            .set("endTime", s.endTime)
-            .set("nextRunAt", s.nextRunAt)
-            .set("createdAt", s.createdAt)
-            .set("updatedAt", s.updatedAt);
-    }
 }

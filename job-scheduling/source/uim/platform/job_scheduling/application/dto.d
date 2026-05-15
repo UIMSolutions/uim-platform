@@ -51,8 +51,8 @@ struct CreateScheduleRequest {
     string cronExpression;
     string humanReadableSchedule;
     long repeatInterval;
-    string repeatAt;
-    string time;
+    long repeatAt;
+    long time;
     long startTime;
     long endTime;
 }
@@ -66,8 +66,8 @@ struct UpdateScheduleRequest {
     string cronExpression;
     string humanReadableSchedule;
     long repeatInterval;
-    string repeatAt;
-    string time;
+    long repeatAt;
+    long time;
     long startTime;
     long endTime;
 }

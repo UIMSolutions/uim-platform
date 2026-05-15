@@ -31,10 +31,11 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
 
         Job job;
         job.initEntity(r.tenantId);
+
         job.name = r.name;
         job.description = r.description;
         job.actionUrl = r.actionUrl;
-        job.httpMethod = parseHttpMethod(r.httpMethod);
+        job.httpMethod = r.httpMethod.to!HttpMethod;
         job.type = parseJobType(r.type);
         job.status = r.active ? JobStatus.active : JobStatus.inactive;
         job.active = r.active;
@@ -45,19 +46,19 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, job.id.value, "");
     }
 
-    Job getById(TenantId tenantId, JobId id) {
+    Job getJob(TenantId tenantId, JobId id) {
         return repo.findById(tenantId, id);
     }
 
-    Job getByName(TenantId tenantId, string name) {
+    Job getJob(TenantId tenantId, string name) {
         return repo.findByName(tenantId, name);
     }
 
-    Job[] list(TenantId tenantId) {
+    Job[] listJobs(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Job[] search(TenantId tenantId, string query) {
+    Job[] searchJobs(TenantId tenantId, string query) {
         return repo.search(tenantId, query);
     }
 
@@ -73,7 +74,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         if (r.actionUrl.length > 0)
             existing.actionUrl = r.actionUrl;
         if (r.httpMethod.length > 0)
-            existing.httpMethod = parseHttpMethod(r.httpMethod);
+            existing.httpMethod = r.httpMethod.to!HttpMethod;
         existing.active = r.active;
         existing.status = r.active ? JobStatus.active : JobStatus.inactive;
         existing.startTime = r.startTime;
@@ -106,23 +107,6 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
 
     size_t countInactiveJobs(TenantId tenantId) {
         return repo.countInactiveByTenant(tenantId);
-    }
-
-    private static HttpMethod parseHttpMethod(string method) {
-        switch (method) {
-        case "GET":
-            return HttpMethod.get;
-        case "POST":
-            return HttpMethod.post;
-        case "PUT":
-            return HttpMethod.put;
-        case "DELETE":
-            return HttpMethod.delete_;
-        case "PATCH":
-            return HttpMethod.patch;
-        default:
-            return HttpMethod.get;
-        }
     }
 
     private static JobType parseJobType(string type) {

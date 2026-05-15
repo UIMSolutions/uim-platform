@@ -66,7 +66,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
         return filterActive(findByTenant(tenantId));
     }
     void removeActive(TenantId tenantId) {
-        return findActive(tenantId).each!(s => remove(s));
+        findActive(tenantId).each!(s => remove(s));
     }
     // #endregion Active
 

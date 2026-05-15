@@ -35,6 +35,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
 
         Schedule schedule;
         schedule.initEntity(request.tenantId);
+
         schedule.jobId = request.jobId;
         schedule.description = request.description;
         schedule.type = request.type.to!ScheduleType;
@@ -130,25 +131,4 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, request.jobId.value, "");
     }
 
-    private static ScheduleType parseScheduleType(string s) {
-        switch (s) {
-        case "recurring":
-            return ScheduleType.recurring;
-        default:
-            return ScheduleType.oneTime;
-        }
-    }
-
-    private static ScheduleFormat parseScheduleFormat(string s) {
-        switch (s) {
-        case "humanReadable":
-            return ScheduleFormat.humanReadable;
-        case "repeatInterval":
-            return ScheduleFormat.repeatInterval;
-        case "repeatAt":
-            return ScheduleFormat.repeatAt;
-        default:
-            return ScheduleFormat.cron;
-        }
-    }
 }

@@ -23,8 +23,8 @@ struct Schedule {
     string cronExpression;
     string humanReadableSchedule;
     long repeatInterval;
-    string repeatAt;
-    string time;
+    long repeatAt;
+    long time;
     long startTime;
     long endTime;
     long nextRunAt;
