@@ -70,9 +70,9 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
 
     request.status = req.status;
     if (req.status == BlockingStatus.active)
-      request.activatedAt = Clock.currStdTime();
+      request.activatedAt = currentTimestamp();
     if (req.status == BlockingStatus.released)
-      request.releasedAt = Clock.currStdTime();
+      request.releasedAt = currentTimestamp();
 
     blockingRequests.update(request);
     return CommandResult(true, request.id.value, "");

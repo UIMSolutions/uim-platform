@@ -37,7 +37,7 @@ class LegalBasisEvaluator {
     
 
     LegalBasisEvaluation result;
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Check legal grounds
     auto grounds = groundRepo.findActive(tenantId, subjectId);

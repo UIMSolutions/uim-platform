@@ -48,7 +48,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
     entry.message = buildSecurityMessage(req);
     entry.ipAddress = req.ipAddress;
     entry.userAgent = req.userAgent;
-    entry.timestamp = Clock.currStdTime();
+    entry.timestamp = currentTimestamp();
 
     auditRepo.save(entry);
 

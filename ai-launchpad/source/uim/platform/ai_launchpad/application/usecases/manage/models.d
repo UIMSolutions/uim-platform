@@ -67,7 +67,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       m.status = ModelStatus.archived;
     else if (r.status == "deprecated")
       m.status = ModelStatus.deprecated_;
-    m.updatedAt = Clock.currStdTime();
+    m.updatedAt = currentTimestamp();
 
     models.save(m);
     return CommandResult(true, m.id.value, "");

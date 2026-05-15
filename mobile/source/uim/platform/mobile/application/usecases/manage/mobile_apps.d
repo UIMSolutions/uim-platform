@@ -72,7 +72,8 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         auto app = repo.findById(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
-        repo.removeById(id);
+
+        repo.remove(id);
         return CommandResult(true, app.id.value, "");
     }
 
@@ -90,8 +91,4 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

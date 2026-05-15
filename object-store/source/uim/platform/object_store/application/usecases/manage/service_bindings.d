@@ -73,11 +73,11 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = bindingRepo.findById(tenantId, id);
-    if (binding.isNull || binding.isNull)
+    if (binding.isNull)
       return CommandResult(false, "", "Binding not found");
 
-    bindingRepo.removeById(id);
-    return CommandResult(true, id.value, "");
+    bindingRepo.remove(binding);
+    return CommandResult(true, binding.id.value, "");
   }
 }
 
@@ -100,8 +100,3 @@ private string hashSecret(string secret) {
   return toHexString(hash).idup;
 }
 
-private long currentTimestamp() {
-
-
-  return Clock.currStdTime();
-}

@@ -26,7 +26,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Provider name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ExternalContentProvider p;
     p.initEntity8(req.tenantId);
 
@@ -64,7 +64,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     if (req.endpointUrl.length > 0)
       p.endpointUrl = req.endpointUrl;
     // TODO: p.status = req.status;
-    p.updatedAt = Clock.currStdTime();
+    p.updatedAt = currentTimestamp();
 
     repo.update(p);
     return CommandResult(true, p.id.value, "");
@@ -75,7 +75,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     if (p.isNull)
       return CommandResult(false, "", "Provider not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(p);
+    return CommandResult(true, p.id.value, "");
   }
 }

@@ -38,7 +38,7 @@ class VersioningService {
       return false; // already checked out
 
     doc.status = DocumentStatus.locked;
-    doc.updatedAt = Clock.currStdTime();
+    doc.updatedAt = currentTimestamp();
     docs.update(doc);
     return true;
   }
@@ -85,7 +85,7 @@ class VersioningService {
     doc.currentVersionId = ver.id;
     doc.mimeType = mimeType;
     doc.fileSize = fileSize;
-    doc.updatedAt = Clock.currStdTime();
+    doc.updatedAt = currentTimestamp();
     docs.update(doc);
 
     return ver;
@@ -100,7 +100,7 @@ class VersioningService {
       return false;
 
     doc.status = DocumentStatus.active;
-    doc.updatedAt = Clock.currStdTime();
+    doc.updatedAt = currentTimestamp();
     docs.update(doc);
     return true;
   }

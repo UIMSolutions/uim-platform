@@ -32,7 +32,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Dataset with this name already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Dataset ds;
     ds.initEntity(req.tenantId, req.createdBy);
 
@@ -74,7 +74,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
       updated.description = req.description;
     if (req.columnDefinitions.length > 0)
       updated.columnDefinitions = req.columnDefinitions;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -92,7 +92,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (ds.columnDefinitions.length == 0)
       return CommandResult(false, "", "Column definitions are required before validation");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ds.rowCount = recordRepo.countByDataset(tenantId, id);
     ds.status = DatasetStatus.ready;
     ds.validationMessage = "Validation successful";
@@ -111,7 +111,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (ds.status != DatasetStatus.ready)
       return CommandResult(false, "", "Dataset must be in 'ready' status to process");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ds.status = DatasetStatus.completed;
     ds.updatedAt = now;
 

@@ -33,7 +33,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
     if (req.requestedBy.isNull)
       return CommandResult(false, "", "Requester is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto job = ExportJob();
     job.initEntity(req.tenantId);
 
@@ -49,7 +49,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
         req.timeTo, int.max, 0);
     job.totalRecords = logs.length;
     job.status = ExportStatus.completed;
-    job.completedAt = Clock.currStdTime();
+    job.completedAt = currentTimestamp();
     job.downloadUrl = "/api/v1/exports/" ~ job.id.value ~ "/download";
 
     jobs.save(job);

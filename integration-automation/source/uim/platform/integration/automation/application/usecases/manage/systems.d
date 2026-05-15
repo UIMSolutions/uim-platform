@@ -31,8 +31,6 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     if (req.host.length == 0)
       return CommandResult(false, "", "Host is required");
 
-    auto now = Clock.currStdTime();
-
     SystemConnection sys;
 
     sys.name = req.name;
@@ -65,12 +63,13 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSystem(UpdateSystemRequest req) {
-    if (req.isNull)
+    if (req.systemId.isNull)
       return CommandResult(false, "", "System ID is required");
+
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.systemId);
     if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
@@ -97,7 +96,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
       updated.systemId = req.systemId;
     if (req.tenant.length > 0)
       updated.tenant = req.tenant;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -108,8 +107,8 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
   /// Test a system connection (simulated).
@@ -120,8 +119,8 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
 
     // Simulate connection test — in production, would actually ping the system
     sys.status = ConnectionStatus.active;
-    sys.updatedAt = Clock.currStdTime();
+    sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, sys.id.value, "");
   }
 }

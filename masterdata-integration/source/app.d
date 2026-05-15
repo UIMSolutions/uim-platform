@@ -9,9 +9,13 @@ moduleule app;
 
 // import vibe.core.core : runApplication;
 
-import uim.platform.master_data_integration.infrastructure.config;
-import uim.platform.master_data_integration.infrastructure.container;
+// import uim.platform.master_data_integration.infrastructure.config;
+// import uim.platform.master_data_integration.infrastructure.container;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.stdio : writefln;
 
 @safe:

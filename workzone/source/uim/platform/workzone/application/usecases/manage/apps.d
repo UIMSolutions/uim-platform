@@ -71,7 +71,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       app.icon = req.icon;
     app.status = req.status;
     app.appConfig = req.appConfig;
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
 
     repo.update(app);
     return CommandResult(true, app.id.value, "");
@@ -82,7 +82,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "App not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

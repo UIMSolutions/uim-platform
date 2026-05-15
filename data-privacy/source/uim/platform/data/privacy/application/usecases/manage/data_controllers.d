@@ -23,7 +23,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto c = DataController();
     c.initEntity(req.tenantId);
     c.name = req.name;
@@ -63,7 +63,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     if (req.country.length > 0) c.country = req.country;
     if (req.dpoName.length > 0) c.dpoName = req.dpoName;
     if (req.dpoEmail.length > 0) c.dpoEmail = req.dpoEmail;
-    c.updatedAt = Clock.currStdTime();
+    c.updatedAt = currentTimestamp();
 
     repo.update(c);
     return CommandResult(true, c.id.value, "");

@@ -58,7 +58,7 @@ class DuplicateDetector {
         g.survivorRecordId = records[i].recordId;
         g.candidates[0].isSurvivor = true;
         g.resolved = false;
-        g.detectedAt = Clock.currStdTime();
+        g.detectedAt = currentTimestamp();
         groups ~= g;
         grouped[i] = true;
       }

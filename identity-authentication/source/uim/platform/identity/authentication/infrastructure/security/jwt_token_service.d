@@ -30,7 +30,7 @@ class JwtTokenService : TokenService {
   string generateToken(User user, Application app, TokenType tokenType, string[] scopes) {
     // import std.array : join;
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto payload = user.id.value ~ "|" ~ app.id.value ~ "|" ~ tokenType.to!string ~ "|" ~ scopes.join(
         ",") ~ "|" ~ now.to!string;
 

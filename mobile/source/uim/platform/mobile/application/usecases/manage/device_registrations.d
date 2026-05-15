@@ -51,10 +51,11 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, reg.id.value, "");
     }
 
-    CommandResult updateStatus(DeviceRegistrationId id, string status) {
+    CommandResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status) {
         auto reg = repo.findById(tenantId, id);
         if (reg.isNull)
             return CommandResult(false, "", "Device not found");
+
         switch (status) {
             case "locked": reg.status = DeviceStatus.locked; break;
             case "wiped": reg.status = DeviceStatus.wiped; break;
@@ -66,24 +67,29 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, reg.id.value, "");
     }
 
-    DeviceRegistration get_(DeviceRegistrationId id) {
+    DeviceRegistration getDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
         return repo.findById(tenantId, id);
     }
 
-    DeviceRegistration[] listByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    DeviceRegistration[] listByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
     DeviceRegistration[] listByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult delete(DeviceRegistrationId id) {
-        repo.removeById(id);
+    CommandResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
+        auto reg = repo.findById(tenantId, id);
+        if (reg.isNull)
+            return CommandResult(false, "", "Device not found");
+
+        repo.remove(reg);
+        return CommandResult(true, reg.id.value, "Device deleted successfully.");
     }
 
-    size_t countByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
     private static AppPlatform parsePlatform(string s) {
@@ -96,8 +102,4 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

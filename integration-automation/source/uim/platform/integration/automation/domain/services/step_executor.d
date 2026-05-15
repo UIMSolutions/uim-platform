@@ -36,7 +36,7 @@ class StepExecutor {
       return false;
 
     step.status = StepStatus.inProgress;
-    step.startedAt = Clock.currStdTime();
+    step.startedAt = currentTimestamp();
     stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.started",
@@ -53,7 +53,7 @@ class StepExecutor {
       return false;
 
     long startTime = step.startedAt;
-    long endTime = Clock.currStdTime();
+    long endTime = currentTimestamp();
 
     step.status = StepStatus.completed;
     step.result = result;
@@ -74,7 +74,7 @@ class StepExecutor {
 
     step.status = StepStatus.failed;
     step.errorMessage = errorMessage;
-    step.completedAt = Clock.currStdTime();
+    step.completedAt = currentTimestamp();
     stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.failed",
@@ -90,7 +90,7 @@ class StepExecutor {
 
     step.status = StepStatus.skipped;
     step.result = reason;
-    step.completedAt = Clock.currStdTime();
+    step.completedAt = currentTimestamp();
     stepRepo.update(step);
 
     recordLog(step.workflowId, steptenantId, id, "step.skipped",

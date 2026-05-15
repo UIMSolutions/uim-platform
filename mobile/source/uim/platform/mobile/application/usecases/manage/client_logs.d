@@ -41,28 +41,33 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    ClientLogEntry get_(ClientLogEntryId id) {
+    ClientLogEntry getClientLog(TenantId tenantId, ClientLogEntryId id) {
         return repo.findById(tenantId, id);
     }
 
-    ClientLogEntry[] listByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    ClientLogEntry[] listClientLogs(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    ClientLogEntry[] listByDevice(DeviceRegistrationId deviceId) {
-        return repo.findByDevice(deviceId);
+    ClientLogEntry[] listClientLogs(TenantId tenantId, DeviceRegistrationId deviceId) {
+        return repo.findByDevice(tenantId, deviceId);
     }
 
-    ClientLogEntry[] listByLevel(MobileAppId appId, string level) {
-        return repo.findByLevel(appId, parseLogLevel(level));
+    ClientLogEntry[] listClientLogs(TenantId tenantId, MobileAppId appId, string level) {
+        return repo.findByLevel(tenantId, appId, parseLogLevel(level));
     }
 
-    CommandResult delete(ClientLogEntryId id) {
-        repo.removeById(id);
+    CommandResult deleteClientLog(TenantId tenantId, ClientLogEntryId id) {
+        auto entry = repo.findById(tenantId, id);
+        if (entry.isNull)
+            return CommandResult(false, "", "Client log entry not found");
+
+        repo.remove(entry);
+        return CommandResult(true, entry.id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countClientLogs(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
     private static LogLevel parseLogLevel(string s) {
@@ -76,8 +81,4 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

@@ -64,7 +64,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Purpose record already deactivated");
 
     r.status = PurposeRecordStatus.deactivated;
-    r.deactivatedAt = Clock.currStdTime();
+    r.deactivatedAt = currentTimestamp();
     r.updatedAt = r.deactivatedAt;
 
     repo.update(r);

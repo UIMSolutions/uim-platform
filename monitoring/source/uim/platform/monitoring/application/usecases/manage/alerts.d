@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.application.usecases.manage.alerts;
+module uim.platform.monitoring.application.usecases.manage.repo;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.alert;
-// import uim.platform.monitoring.domain.ports.repositories.alerts;
+// import uim.platform.monitoring.domain.ports.repositories.repo;
 // import uim.platform.monitoring.domain.types;
 // 
 import uim.platform.monitoring;
@@ -16,38 +16,38 @@ mixin(ShowModule!());
 @safe:
 /// Application service for alert lifecycle management (list, acknowledge, resolve).
 class ManageAlertsUseCase { // TODO: UIMUseCase {
-  private AlertRepository alerts;
+  private AlertRepository repo;
 
-  this(AlertRepository alerts) {
-    this.alerts = alerts;
+  this(AlertRepository repo) {
+    this.repo = repo;
   }
 
   bool hasAlert(TenantId tenantId, AlertId id) {
-    return alerts.existsById(tenantId, id);
+    return repo.existsById(tenantId, id);
   }
 
   Alert getAlert(TenantId tenantId, AlertId id) {
-    return alerts.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Alert[] listAlerts(TenantId tenantId) {
-    return alerts.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   Alert[] listByState(TenantId tenantId, AlertState state) {
-    return alerts.findByState(tenantId, state);
+    return repo.findByState(tenantId, state);
   }
 
   Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return alerts.findBySeverity(tenantId, severity);
+    return repo.findBySeverity(tenantId, severity);
   }
 
   Alert[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return alerts.findByResource(tenantId, resourceId);
+    return repo.findByResource(tenantId, resourceId);
   }
 
   CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
-    auto alert = alerts.findById(req.tenantId, req.alertId);
+    auto alert = repo.findById(req.tenantId, req.alertId);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -58,12 +58,12 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     alert.acknowledgedBy = req.acknowledgedBy;
     alert.acknowledgedAt = clockSeconds();
 
-    alerts.update(alert);
+    repo.update(alert);
     return CommandResult(true, alert.id.value, "");
   }
 
   CommandResult resolveAlert(ResolveAlertRequest req) {
-    auto alert = alerts.findById(req.tenantId, req.alertId);
+    auto alert = repo.findById(req.tenantId, req.alertId);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -74,16 +74,16 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     alert.resolvedBy = req.resolvedBy;
     alert.resolvedAt = clockSeconds();
 
-    alerts.update(alert);
+    repo.update(alert);
     return CommandResult(true, alert.id.value, "");
   }
 
   CommandResult deleteAlert(TenantId tenantId, AlertId id) {
-    auto alert = alerts.findById(tenantId, id);
+    auto alert = repo.findById(tenantId, id);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
-    alerts.removeById(tenantId, id);
+    repo.remove(alert);
     return CommandResult(true, alert.id.value, "");
   }
 
@@ -108,7 +108,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     alert.message = message;
     alert.triggeredAt = clockSeconds();
 
-    alerts.save(alert);
+    repo.save(alert);
     return CommandResult(true, alert.id.value, "");
   }
 

@@ -71,7 +71,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
       comp.branch = req.branch;
 
   
-    comp.clonedAt = Clock.currStdTime();
+    comp.clonedAt = currentTimestamp();
     comp.updatedAt = comp.clonedAt;
 
     // Simulate successful clone
@@ -100,7 +100,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     comp.status = ComponentStatus.pulling;
 
   
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Simulate pull
     comp.status = ComponentStatus.cloned;

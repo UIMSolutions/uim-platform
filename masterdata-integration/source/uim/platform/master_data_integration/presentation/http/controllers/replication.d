@@ -9,11 +9,15 @@ module uim.platform.master_data_integration.presentation.http.replication;
 
 
 
-import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.replication_job;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.replication_job;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 class ReplicationController : PlatformController {
   private ManageReplicationJobsUseCase usecase;
 

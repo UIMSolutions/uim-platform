@@ -162,47 +162,12 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApiRule(ApiRuleId id) {
-    if (!ruleRepository.existsById(id))
+    auto rule = ruleRepository.findById(tenantId, id);
+    if (rule.isNull)
       return CommandResult(false, "", "API rule not found");
 
-    auto rule = ruleRepository.findById(tenantId, id);
-    ruleRepository.removeById(id);
+    ruleRepository.remove(rule);
     return CommandResult(true, rule.id.value, "");
   }
 
-  private AccessStrategy parseAccessStrategy(string strategyName) {
-    switch (strategyName.toLower()) {
-    case "noAuth":
-      return AccessStrategy.noAuth;
-    case "oauth2_introspection":
-      return AccessStrategy.oauth2Introspection;
-    case "jwt":
-      return AccessStrategy.jwt;
-    case "allow":
-      return AccessStrategy.allowAll;
-    default:
-      return AccessStrategy.noAuth;
-    }
-  }
-
-  private ApiHttpMethod parseHttpMethod(string method) {
-    switch (method.toUpper()) {
-    case "GET":
-      return ApiHttpMethod.get_;
-    case "POST":
-      return ApiHttpMethod.post_;
-    case "PUT":
-      return ApiHttpMethod.put_;
-    case "PATCH":
-      return ApiHttpMethod.patch_;
-    case "DELETE":
-      return ApiHttpMethod.delete_;
-    case "HEAD":
-      return ApiHttpMethod.head_;
-    case "OPTIONS":
-      return ApiHttpMethod.options_;
-    default:
-      return ApiHttpMethod.get_;
-    }
-  }
 }

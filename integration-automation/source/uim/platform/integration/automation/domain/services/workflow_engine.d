@@ -61,7 +61,7 @@ class WorkflowEngine {
     if (completed >= wf.totalSteps) {
     
       wf.status = WorkflowStatus.completed;
-      wf.completedAt = Clock.currStdTime();
+      wf.completedAt = currentTimestamp();
       workflowRepo.update(wf);
       return true;
     }

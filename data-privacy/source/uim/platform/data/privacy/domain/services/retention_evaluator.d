@@ -33,7 +33,7 @@ class RetentionEvaluator {
     
 
     RetentionEvaluation result;
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Find rules for this purpose
     auto rules = ruleRepo.findByPurpose(tenantId, purpose);

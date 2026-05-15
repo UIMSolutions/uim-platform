@@ -24,6 +24,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   CommandResult createDistributionModel(CreateDistributionModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Distribution model name is required");
+
     if (req.sourceClientId.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
@@ -46,8 +47,8 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateDistributionModel(DistributionModelId id, UpdateDistributionModelRequest req) {
-    auto model = repo.findById(tenantId, id);
+  CommandResult updateDistributionModel(UpdateDistributionModelRequest req) {
+    auto model = repo.findById(req.tenantId, req.id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 
@@ -60,7 +61,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (req.targetClientIds.length > 0)
       model.targetClientIds = req.targetClientIds;
     if (req.categories.length > 0)
-      model.categories = parseCategories(req.categories);
+      model.categories = req.categories.map!(c => parseCategory(c)).array;
     if (req.dataModelIds.length > 0)
       model.dataModelIds = req.dataModelIds;
     if (req.filterRuleIds.length > 0)
@@ -74,7 +75,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult activateDistributionModel(DistributionModelId id) {
+  CommandResult activateDistributionModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -84,7 +85,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult deactivateDistributionModel(DistributionModelId id) {
+  CommandResult deactivateDistributionModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -94,7 +95,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  DistributionModel getDistributionModel(DistributionModelId id) {
+  DistributionModel getDistributionModel(TenantId tenantId, DistributionModelId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -106,12 +107,12 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return repo.findByStatus(tenantId, parseStatus(status));
   }
 
-  CommandResult deleteDistributionModel(DistributionModelId id) {
+  CommandResult deleteDistributionModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 
-    repo.removeById(id);
+    repo.removeBy(model);
     return CommandResult(true, model.id.value, "");
   }
 
@@ -139,41 +140,6 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     default:
       return DistributionModelStatus.draft;
     }
-  }
-
-  private MasterDataCategory[] parseCategories(string[] cats) {
-    MasterDataCategory[] result;
-    foreach (s; cats) {
-      switch (s) {
-      case "businessPartner":
-        result ~= MasterDataCategory.businessPartner;
-        break;
-      case "costCenter":
-        result ~= MasterDataCategory.costCenter;
-        break;
-      case "profitCenter":
-        result ~= MasterDataCategory.profitCenter;
-        break;
-      case "companyCode":
-        result ~= MasterDataCategory.companyCode;
-        break;
-      case "workforcePerson":
-        result ~= MasterDataCategory.workforcePerson;
-        break;
-      case "bankAccount":
-        result ~= MasterDataCategory.bankAccount;
-        break;
-      case "plant":
-        result ~= MasterDataCategory.plant;
-        break;
-      case "custom":
-        result ~= MasterDataCategory.custom;
-        break;
-      default:
-        break;
-      }
-    }
-    return result;
   }
 }
 

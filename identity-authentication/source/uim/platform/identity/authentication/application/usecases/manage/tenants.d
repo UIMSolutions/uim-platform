@@ -28,7 +28,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
     if (existing != Tenant.init)
       return TenantResponse("", "Subdomain already in use");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto tenant = Tenant(randomUUID().toString(), req.name, req.subdomain,
         req.defaultSsoProtocol, req.allowedAuthMethods, req.mfaEnforced, [], now, now);
     tenantRepo.save(tenant);
@@ -53,7 +53,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
     if (req.allowedAuthMethods.length > 0)
       tenant.allowedAuthMethods = req.allowedAuthMethods;
 
-    tenant.updatedAt = Clock.currStdTime();
+    tenant.updatedAt = currentTimestamp();
     tenantRepo.update(tenant);
     return CommnandResult(true, tenant.id.value, "");
   }

@@ -30,7 +30,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
 
   /// Create a new API client.
   ApiClientResponse createClient(CreateApiClientRequest req) {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto id = randomUUID();
     auto clientId = randomUUID();
     auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();

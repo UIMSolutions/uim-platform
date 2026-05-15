@@ -64,7 +64,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
       bucket.encryptionKeyId = req.encryptionKeyId;
     if (req.quotaBytes > 0)
       bucket.quotaBytes = req.quotaBytes;
-    bucket.updatedAt = Clock.currStdTime();
+    bucket.updatedAt = currentTimestamp();
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)

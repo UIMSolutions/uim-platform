@@ -91,7 +91,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
       updated.description = req.description;
     if (req.connectionConfig.length > 0)
       updated.connectionConfig = req.connectionConfig;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -106,7 +106,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Connection configuration is required before activation");
 
     sys.status = SystemStatus.active;
-    sys.updatedAt = Clock.currStdTime();
+    sys.updatedAt = currentTimestamp();
 
     repo.update(sys);
     return CommandResult(true, sys.id.value, "");
@@ -118,7 +118,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Proxy system not found");
 
     sys.status = SystemStatus.inactive;
-    sys.updatedAt = Clock.currStdTime();
+    sys.updatedAt = currentTimestamp();
     
     repo.update(sys);
     return CommandResult(true, sys.id.value, "");

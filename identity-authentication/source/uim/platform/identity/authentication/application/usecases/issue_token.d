@@ -58,7 +58,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     if (app.clientSecret != req.clientSecret)
       return TokenResponse("", "", "", "Invalid client credentials");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Generate access token
     auto accessTokenValue = tokenSvc.generateToken(user, app, TokenType.access, req.scopes);

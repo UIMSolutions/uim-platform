@@ -92,7 +92,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (req.hyperparameters.length > 0)
       updated.hyperparameters = req.hyperparameters;
     updated.modelType = req.modelType;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -111,7 +111,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Target and feature columns must be defined");
 
     config.status = ModelConfigStatus.ready;
-    config.updatedAt = Clock.currStdTime();
+    config.updatedAt = currentTimestamp();
     
     repo.update(config);
     return CommandResult(true, config.id.value, "");

@@ -127,7 +127,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     user.active = req.active;
     user.status = req.active ? UserStatus.active : UserStatus.inactive;
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
@@ -145,7 +145,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     user.active = false;
     user.status = UserStatus.inactive;
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
@@ -191,7 +191,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     }
 
     user.passwordHash = passwordSvc.hashPassword(newPassword);
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,

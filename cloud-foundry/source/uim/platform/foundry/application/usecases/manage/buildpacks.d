@@ -33,7 +33,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Buildpack with this name already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto buildpack = Buildpack();
     buildpack.initEntity(req.tenantId, req.createdBy);
 
@@ -82,7 +82,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
       updated.filename = req.filename;
     updated.enabled = req.enabled;
     updated.locked = req.locked;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     buildpacks.update(updated);
     return CommandResult(true, updated.id.value, "");

@@ -24,7 +24,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
 
   /// Profile a dataset and compute column statistics.
   DataProfile profile(ProfileDatasetRequest req) {
-    auto startTime = Clock.currStdTime();
+    auto startTime = currentTimestamp();
 
     // Discover all field names
     string[string] fieldIndex;
@@ -57,7 +57,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
     }
 
     profile.rating = scoreToRating(profile.overallQualityScore);
-    profile.profiledAt = Clock.currStdTime();
+    profile.profiledAt = currentTimestamp();
     profile.duration = (profile.profiledAt - startTime) / 10_000; // ms
 
     repo.save(profile);

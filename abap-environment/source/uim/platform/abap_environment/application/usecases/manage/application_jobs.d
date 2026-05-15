@@ -66,7 +66,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
       job.jobParameters = request.jobParameters;
 
     
-    job.updatedAt = Clock.currStdTime();
+    job.updatedAt = currentTimestamp();
 
     jobs.update(job);
     return CommandResult(true, job.id.value, "");
@@ -84,7 +84,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     job.active = false;
 
     
-    job.updatedAt = Clock.currStdTime();
+    job.updatedAt = currentTimestamp();
 
     jobs.update(job);
     return CommandResult(true, job.id.value, "");

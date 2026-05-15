@@ -10,86 +10,94 @@ mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.
-struct MasterDataObjectId  {
-    string value;
+struct MasterDataObjectId {
+  string value;
 
-    this(string value) {
-        this.value = value;
-    }
+  this(string value) {
+    this.value = value;
+  }
 
-    mixin DomainId;
+  mixin DomainId;
 }
-struct DataModelId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct DataModelId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct DistributionModelId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct DistributionModelId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct KeyMappingId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct KeyMappingId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct ChangeLogEntryId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct ChangeLogEntryId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct ClientId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct ClientId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct ReplicationJobId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct ReplicationJobId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct FilterRuleId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct FilterRuleId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
-struct VersionId  {
-    string value;
 
-    this(string value) {
-        this.value = value;
-    }
+struct VersionId {
+  string value;
 
-    mixin DomainId;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
 }
 /// Category of master data object.
 enum MasterDataCategory {
@@ -184,16 +192,16 @@ enum FilterOperator {
   isNotNull,
 }
 /// Data model field type.
-enum FieldType {
-  string_,
-  integer_,
-  decimal_,
-  boolean_,
-  date,
-  timestamp,
-  reference,
-  array_,
-  object_,
+enum FieldType : string {
+  string_ = "string",
+  integer_ = "integer",
+  decimal_ = "decimal",
+  boolean_ = "boolean",
+  date = "date",
+  timestamp = "timestamp",
+  reference = "reference",
+  array_ = "array",
+  object_ = "object",
 }
 /// Key mapping source type.
 enum KeyMappingSourceType {

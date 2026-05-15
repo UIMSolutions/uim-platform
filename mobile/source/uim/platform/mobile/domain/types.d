@@ -157,8 +157,8 @@ enum NotificationStatus {
 }
 // Notification priority
 enum NotificationPriority {
-  low,
   normal,
+  low,
   high,
 }
 // Push registration status

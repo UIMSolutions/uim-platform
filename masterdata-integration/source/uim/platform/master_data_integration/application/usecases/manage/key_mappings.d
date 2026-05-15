@@ -91,7 +91,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
-    repo.removeById(mapping.id);
+    repo.remove(mapping);
     return CommandResult(true, mapping.id.value, "");
   }
 

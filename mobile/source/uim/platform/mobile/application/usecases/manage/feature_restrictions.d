@@ -42,8 +42,8 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    CommandResult updateFeatureRestriction(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
-        auto restriction = repo.findById(tenantId, id);
+    CommandResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r) {
+        auto restriction = repo.findById(r.tenantId, r.id);
         if (restriction.isNull)
             return CommandResult(false, "", "Feature restriction not found");
         if (r.description.length > 0) restriction.description = r.description;
@@ -60,31 +60,32 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    bool evaluateFeatureRestriction(FeatureRestrictionId featureId, UserId userId, string deviceId) {
-        auto restriction = repo.findById(featureId);
+    bool evaluateFeatureRestriction(TenantId tenantId, FeatureRestrictionId featureId, UserId userId, string deviceId) {
+        auto restriction = repo.findById(tenantId, featureId);
         if (restriction.isNull)
             return false;
         return FeatureEvaluationService.evaluate(restriction, userId, deviceId);
     }
 
-    FeatureRestriction getFeatureRestriction(FeatureRestrictionId id) {
+    FeatureRestriction getFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {
         return repo.findById(tenantId, id);
     }
 
-    FeatureRestriction[] listFeatureRestrictions(MobileAppId appId) {
-        return repo.findByApp(appId);
+    FeatureRestriction[] listFeatureRestrictions(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteFeatureRestriction(FeatureRestrictionId id) {
-        repo.removeById(id);
+    CommandResult deleteFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {
+        auto restriction = repo.findById(tenantId, id);
+        if (restriction.isNull)
+            return CommandResult(false, "", "Feature restriction not found");
+
+        repo.remove(restriction);
+        return CommandResult(true, restriction.id.value, "");
     }
 
-    size_t countFeatureRestrictions(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countFeatureRestrictions(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

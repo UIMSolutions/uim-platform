@@ -44,7 +44,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (existingDep !is null && existingDep.status == DeploymentStatus.active)
       return CommandResult(false, "", "An active deployment already exists for this training job");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ModelDeployment dep;
     dep.initEntity(req.tenantId, req.createdBy);
 
@@ -82,7 +82,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Deployment cannot be activated from current state");
 
     dep.status = DeploymentStatus.active;
-    dep.updatedAt = Clock.currStdTime();
+    dep.updatedAt = currentTimestamp();
     repo.update(dep);
     return CommandResult(true, dep.id.value, "");
   }
@@ -97,7 +97,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Only active deployments can be deactivated");
 
     dep.status = DeploymentStatus.inactive;
-    dep.updatedAt = Clock.currStdTime();
+    dep.updatedAt = currentTimestamp();
     repo.update(dep);
     return CommandResult(true, dep.id.value, "");
   }

@@ -37,7 +37,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ConsentRecord record;
     record.initEntity(req.tenantId);
     record.dataSubjectId = req.dataSubjectId;
@@ -83,7 +83,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Consent already revoked");
 
     record.status = ConsentStatus.revoked;
-    record.revokedAt = Clock.currStdTime();
+    record.revokedAt = currentTimestamp();
 
     repo.update(record);
     return CommandResult(true, record.id.value, "");

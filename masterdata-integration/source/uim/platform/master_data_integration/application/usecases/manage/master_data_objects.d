@@ -49,14 +49,14 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     obj.versionNumber = 1;
 
     repo.save(obj);
-    logChange(req.tenantId, id, req.dataModelId, obj.category,
+    logChange(req.tenantId, obj.id, req.dataModelId, obj.category,
         ChangeType.create_, obj.objectType, [], (string[string]).init,
         req.attributes, req.sourceSystem, req.sourceClient, req.createdBy, 0, 1);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
-  CommandResult updateMasterDataObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
-    auto obj = repo.findById(tenantId, id);
+  CommandResult updateMasterDataObject(UpdateMasterDataObjectRequest req) {
+    auto obj = repo.findById(req.tenantId, req.id);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
@@ -94,13 +94,13 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     obj.updatedBy = req.updatedBy;
 
     repo.update(obj);
-    logChange(obj.tenantId, id, obj.dataModelId, obj.category, ChangeType.update_,
+    logChange(obj.tenantId, obj.id, obj.dataModelId, obj.category, ChangeType.update_,
         obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
         obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
-  MasterDataObject getMasterDataObject(MasterDataObjectId id) {
+  MasterDataObject getMasterDataObject(TenantId tenantId, MasterDataObjectId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -120,17 +120,17 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     return repo.findByGlobalId(tenantId, globalId);
   }
 
-  CommandResult deleteMasterDataObject(MasterDataObjectId id) {
+  CommandResult deleteMasterDataObject(TenantId tenantId, MasterDataObjectId id) {
     auto obj = repo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
-    repo.removeById(id);
-    logChange(obj.tenantId, id, obj.dataModelId, obj.category,
+    repo.remove(obj);
+    logChange(obj.tenantId, obj.id, obj.dataModelId, obj.category,
         ChangeType.delete_, obj.objectType, [], (string[string]).init,
         (string[string]).init, obj.sourceSystem, obj.sourceClient, "",
         obj.versionNumber, obj.versionNumber);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
   private void logChange(TenantId tenantId, MasterDataObjectId objectId,

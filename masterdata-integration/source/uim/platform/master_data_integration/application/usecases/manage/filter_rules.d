@@ -81,7 +81,8 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");
-    repo.removeById(id);
+      
+    repo.remove^(id);
     return CommandResult(true, id.value, "");
   }
 

@@ -28,7 +28,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   GroupResponse createGroup(CreateGroupRequest req) {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto group = IdaGroup(randomUUID().toString(), req.tenantId, req.name,
         req.description, [], now, now);
         
@@ -57,7 +57,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     if (!group.memberUserIds.canFind(userId)) {
       group.memberUserIds ~= userId;
-      group.updatedAt = Clock.currStdTime();
+      group.updatedAt = currentTimestamp();
       groupRepo.update(group);
 
       // Also update user's groupIds
@@ -80,7 +80,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         updated ~= mid;
     }
     group.memberUserIds = updated;
-    group.updatedAt = Clock.currStdTime();
+    group.updatedAt = currentTimestamp();
     groupRepo.update(group);
     return CommandResult(true, group.id.value, "");
   }

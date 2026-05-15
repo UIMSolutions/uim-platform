@@ -87,7 +87,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
       updated.prerequisites = req.prerequisites;
     if (req.stepTemplates.length > 0)
       updated.stepTemplates = req.stepTemplates;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -98,7 +98,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

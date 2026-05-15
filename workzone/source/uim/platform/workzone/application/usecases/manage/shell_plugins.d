@@ -26,7 +26,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Plugin name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ShellPlugin p;
     p.initEntity(req.tenantId, req.requestedBy);
 
@@ -64,7 +64,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     if (req.scriptUrl.length > 0)
       p.scriptUrl = req.scriptUrl;
     // TODO: p.status = req.status;
-    p.updatedAt = Clock.currStdTime();
+    p.updatedAt = currentTimestamp();
 
     repo.update(p);
     return CommandResult(true, p.id.value, "");
@@ -75,7 +75,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     if (p.isNull)
       return CommandResult(false, "", "Plugin not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(p);
+    return CommandResult(true, p.id.value, "");
   }
 }

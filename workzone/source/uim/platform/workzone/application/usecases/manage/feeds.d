@@ -22,7 +22,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createEntry(CreateFeedEntryRequest req) {
+  CommandResult createFeedEntry(CreateFeedEntryRequest req) {
     FeedEntry entry;
     entry.initEntity(req.tenantId, req.actorId);
 
@@ -39,20 +39,20 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entry.id.value, "");
   }
 
-  FeedEntry getEntry(TenantId tenantId, FeedEntryId id) {
+  FeedEntry getFeedEntry(TenantId tenantId, FeedEntryId id) {
     return repo.findById(tenantId, id);
   }
 
-  FeedEntry[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+  FeedEntry[] listFeedEntries(TenantId tenantId, WorkspaceId workspaceId) {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult deleteEntry(TenantId tenantId, FeedEntryId id) {
+  CommandResult deleteFeedEntry(TenantId tenantId, FeedEntryId id) {
     auto entry = repo.findById(tenantId, id);
     if (entry.isNull)
       return CommandResult(false, "", "Feed entry not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(entry);
+    return CommandResult(true, entry.id.value, "");
   }
 }

@@ -62,17 +62,18 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
       contentEndpointUrl = req.contentEndpointUrl.length > 0 ? req.contentEndpointUrl : contentEndpointUrl;
       authToken = req.authToken.length > 0 ? req.authToken : authToken;
       active = req.active;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     providerRepo.update(provider);
     return CommandResult(true, provider.providerId.value, "Content provider updated successfully.");
   }
 
   CommandResult deleteProvider(ProviderId id) {
-    if (!providerRepo.existsById(id))
-      return CommandResult(false, "", "Content provider not found");
+    auto provider = providerRepo.findById(id);
+     if (provider.isNull)
+      return CommandResult(false, "", "Content provider not found");  
 
-    providerRepo.removeById(id);
-    return CommandResult(true, id.value, "Content provider deleted successfully.");
+    providerRepo.remove(provider);
+    return CommandResult(true, provider.id.value, "Content provider deleted successfully.");
   }
 }

@@ -27,7 +27,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Theme name is required");
 
     Theme t;
-    t.initEntity8(req.tenantId);
+    t.initEntity(req.tenantId);
 
     t.name = req.name;
     t.description = req.description;
@@ -63,7 +63,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (req.customCss.length > 0)
       t.customCss = req.customCss;
     t.isDefault = req.isDefault;
-    t.updatedAt = Clock.currStdTime();
+    t.updatedAt = currentTimestamp();
 
     repo.update(t);
     return CommandResult(true, t.id.value, "");
@@ -74,7 +74,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (t.isNull)
       return CommandResult(false, "", "Theme not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(t);
+    return CommandResult(true, t.id.value, "");
   }
 }

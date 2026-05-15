@@ -55,7 +55,7 @@ class DetectDuplicatesUseCase { // TODO: UIMUseCase {
     auto g = *group;
     g.survivorRecordId = req.survivorRecordId;
     g.resolved = true;
-    g.resolvedAt = Clock.currStdTime();
+    g.resolvedAt = currentTimestamp();
 
     // Mark the chosen survivor
     foreach (c; g.candidates)

@@ -58,7 +58,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (req.endpoints.length > 0)
       binding.endpoints = req.endpoints;
 
-    binding.updatedAt = Clock.currStdTime();
+    binding.updatedAt = currentTimestamp();
 
     repo.update(binding);
     return CommandResult(true, binding.id.value, "");

@@ -101,7 +101,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
   StorageObject getObject(TenantId tenantId, ObjectId id) {
@@ -161,7 +161,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     } else {
       // Hard delete
       versionRepo.removeByObject(tenantId, id);
-      objectRepo.removeById(tenantId, id);
+
+      objectRepo.remove(obj);
     }
 
     // Update bucket counters
@@ -172,7 +173,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       bucketRepo.update(bucket);
     }
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, obj.id.value, "");
   }
 
   CommandResult copyObject(CopyObjectRequest req) {
@@ -230,7 +231,3 @@ private string generateEtag(string id) {
   return toHexString(hash).idup;
 }
 
-private long currentTimestamp() {
-
-  return Clock.currStdTime();
-}

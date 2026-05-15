@@ -95,7 +95,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     }
 
   
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
 
     repo.update(user);
     return CommandResult(true, user.id.value, "");

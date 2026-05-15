@@ -26,7 +26,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Workspace name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Workspace ws;
     ws.initEntity(req.tenantId, req.createdBy);
 
@@ -54,7 +54,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Workspace[] listByMember(TenantId tenantId, UserId userId) {
+  Workspace[] listWorkspaces(TenantId tenantId, UserId userId) {
     return repo.findByMember(tenantId, userId);
   }
 
@@ -70,13 +70,13 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (req.imageUrl.length > 0)
       ws.imageUrl = req.imageUrl;
     ws.settings = req.settings;
-    ws.updatedAt = Clock.currStdTime();
+    ws.updatedAt = currentTimestamp();
 
     repo.update(ws);
     return CommandResult(true, ws.id.value, "");
   }
 
-  CommandResult addMember(AddMemberRequest req) {
+  CommandResult addWorkspaceMember(AddMemberRequest req) {
     auto workspace = repo.findById(req.tenantId, req.workspaceId);
     if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
@@ -87,7 +87,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "User is already a member");
 
     workspace.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
-    workspace.updatedAt = Clock.currStdTime();
+    workspace.updatedAt = currentTimestamp();
     repo.update(workspace);
     return CommandResult(true, workspace.id.value, "");
   }
@@ -108,7 +108,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Member not found");
 
     workspace.members = workspace.members.remove(idx);
-    workspace.updatedAt = Clock.currStdTime();
+    workspace.updatedAt = currentTimestamp();
     repo.update(workspace);
     return CommandResult(true, workspace.id.value, "");
   }
@@ -118,7 +118,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
     ws.status = WorkspaceStatus.archived;
-    ws.updatedAt = Clock.currStdTime();
+    ws.updatedAt = currentTimestamp();
     repo.update(ws);
     return CommandResult(true, ws.id.value, "");
   }
@@ -128,7 +128,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(workspace);
     return CommandResult(true, workspace.id.value, "");
   }
 }

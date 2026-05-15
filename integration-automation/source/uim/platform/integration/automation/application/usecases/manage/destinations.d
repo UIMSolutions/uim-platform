@@ -43,7 +43,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Linked system not found");
     }
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     Destination dest;
     dest.initEntity(req.tenantId, req.createdBy);
@@ -118,7 +118,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.scope_.length > 0)
       updated.scope_ = req.scope_;
     updated.isEnabled = req.isEnabled;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -129,7 +129,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Destination not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

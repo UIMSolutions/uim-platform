@@ -26,7 +26,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Survey title is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Survey s;
     s.initEntity(req.tenantId);
 
@@ -50,7 +50,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  Survey[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+  Survey[] listSurveys(TenantId tenantId, WorkspaceId workspaceId) {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
@@ -64,7 +64,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       s.description = req.description;
     // TODO: s.status = req.status;
-    s.updatedAt = Clock.currStdTime();
+    s.updatedAt = currentTimestamp();
 
     repo.update(s);
     return CommandResult(true, s.id.value, "");
@@ -75,7 +75,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     if (s.isNull)
       return CommandResult(false, "", "Survey not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(s);
+    return CommandResult(true, s.id.value, "");
   }
 }

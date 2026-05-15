@@ -37,7 +37,7 @@ class TotpMfaService : MfaService {
   }
 
   private string generateCurrentCode(string secret) {
-    auto timeWindow = Clock.currStdTime() / 300_000_000; // 30-second window
+    auto timeWindow = currentTimestamp() / 300_000_000; // 30-second window
     SHA256 hasher;
     hasher.start();
     hasher.put(cast(const(ubyte)[])(secret ~ timeWindow.to!string));

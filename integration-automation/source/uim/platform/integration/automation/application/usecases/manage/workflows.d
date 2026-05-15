@@ -53,7 +53,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     if (scenario.status != ScenarioStatus.active)
       return CommandResult(false, "", "Scenario is not active");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     Workflow wf;
     wf.initEntity(req.tenantId, req.createdBy);
@@ -121,7 +121,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workflow is not in planned state");
 
     wf.status = WorkflowStatus.inProgress;
-    wf.startedAt = Clock.currStdTime();
+    wf.startedAt = currentTimestamp();
     wf.updatedAt = wf.startedAt;
     workflowRepo.update(wf);
 
@@ -138,7 +138,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workflow is not in progress");
 
     wf.status = WorkflowStatus.suspended;
-    wf.updatedAt = Clock.currStdTime();
+    wf.updatedAt = currentTimestamp();
     workflowRepo.update(wf);
     return CommandResult(true, id.value, "");
   }
@@ -152,7 +152,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workflow is not suspended");
 
     wf.status = WorkflowStatus.inProgress;
-    wf.updatedAt = Clock.currStdTime();
+    wf.updatedAt = currentTimestamp();
     workflowRepo.update(wf);
 
     engine.advanceWorkflow(tenantId, id);
@@ -168,7 +168,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workflow is already finished");
 
     wf.status = WorkflowStatus.terminated;
-    wf.completedAt = Clock.currStdTime();
+    wf.completedAt = currentTimestamp();
     wf.updatedAt = wf.completedAt;
     workflowRepo.update(wf);
     return CommandResult(true, id.value, "");

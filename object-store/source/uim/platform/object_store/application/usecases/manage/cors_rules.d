@@ -60,7 +60,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
       rule.exposedHeaders = req.exposedHeaders;
     if (req.maxAgeSeconds > 0)
       rule.maxAgeSeconds = req.maxAgeSeconds;
-    rule.updatedAt = Clock.currStdTime();
+    rule.updatedAt = currentTimestamp();
 
     corsRules.update(rule);
     return CommandResult(true, rule.id.value, "");

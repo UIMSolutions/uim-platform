@@ -150,9 +150,4 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
       return -1;
   }
 
-  private static long currentTimestamp() {
-    import std.datetime.systime : Clock;
-
-    return Clock.currStdTime();
-  }
 }

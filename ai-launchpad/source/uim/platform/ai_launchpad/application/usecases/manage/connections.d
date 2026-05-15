@@ -75,7 +75,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
       c.description = r.description;
     if (r.defaultResourceGroupId.length > 0)
       c.defaultResourceGroupId = r.defaultResourceGroupId;
-    c.updatedAt = Clock.currStdTime();
+    c.updatedAt = currentTimestamp();
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");

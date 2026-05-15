@@ -89,7 +89,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     }
     if (r.description.length > 0)
       folder.description = r.description;
-    folder.updatedAt = Clock.currStdTime();
+    folder.updatedAt = currentTimestamp();
 
     folders.update(folder);
     return CommandResult(true, folder.id.value, "");
@@ -110,7 +110,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       folder.parentFolderId = "";
       folder.path = "/" ~ folder.name;
     }
-    folder.updatedAt = Clock.currStdTime();
+    folder.updatedAt = currentTimestamp();
 
     folders.update(folder);
     return CommandResult(true, folder.id.value, "");

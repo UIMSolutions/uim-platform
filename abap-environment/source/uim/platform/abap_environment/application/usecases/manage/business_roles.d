@@ -62,7 +62,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (req.assignedCatalogs.length > 0)
       role.assignedCatalogs = req.assignedCatalogs;
   
-    role.updatedAt = Clock.currStdTime();
+    role.updatedAt = currentTimestamp();
 
     repo.update(role);
     return CommandResult(true, role.id.value, "");

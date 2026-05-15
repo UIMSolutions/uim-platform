@@ -88,10 +88,3 @@ string idpTypeToString(IdpType t) @safe {
     case IdpType.oidc:  return "oidc";
   }
 }
-// ---------------------------------------------------------------------------
-// Shared timestamp helper
-// ---------------------------------------------------------------------------
-long currentTimestamp() @trusted {
-  import core.time : MonoTime;
-  return MonoTime.currTime.ticks;
-}

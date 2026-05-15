@@ -61,7 +61,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     task.objectList = req.objectList;
 
   
-    task.createdAt = Clock.currStdTime();
+    task.createdAt = currentTimestamp();
 
     tr.tasks ~= task;
     repo.update(tr);
@@ -87,7 +87,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
         task.status = TransportStatus.released;
 
       
-        task.releasedAt = Clock.currStdTime();
+        task.releasedAt = currentTimestamp();
 
         repo.update(transportRequest);
         return CommandResult(true, task.id.value, "");
@@ -114,7 +114,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.status = TransportStatus.released;
 
   
-    tr.releasedAt = Clock.currStdTime();
+    tr.releasedAt = currentTimestamp();
 
     repo.update(tr);
     return CommandResult(true, id.value, "");

@@ -51,7 +51,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.isRouteAvailable(req.tenantId, req.host, req.domainId))
       return CommandResult(false, "", "Route host is already taken for this domain");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto route = Route();
     route.initEntity(req.tenantId, req.createdBy);
     route.spaceId = req.spaceId;
@@ -123,7 +123,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (domains.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Domain with this name already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto d = CfDomain();
     d.initEntity(req.tenantId, req.createdBy);
     d.ownerOrgId = req.ownerOrgId;

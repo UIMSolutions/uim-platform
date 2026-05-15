@@ -66,9 +66,4 @@ KeyEntryType parseKeyEntryType(string s) @safe {
     default:                   return KeyEntryType.privateKey;
   }
 }
-// Shared timestamp helper
-long currentTimestamp() @trusted {
-  import core.time : MonoTime;
-  import std.datetime : Clock;
-  return Clock.currStdTime;
-}
+

@@ -83,7 +83,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     rule.removeDiacritics = req.removeDiacritics;
     rule.category = req.category;
     rule.priority = req.priority;
-    rule.updatedAt = Clock.currStdTime();
+    rule.updatedAt = currentTimestamp();
 
     repo.update(rule);
     return CommandResult(true, rule.id.value, "");

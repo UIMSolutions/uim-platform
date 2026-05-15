@@ -64,7 +64,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     with (role) {
       name = req.name.length > 0 ? req.name : name;
       description = req.description;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     roleRepo.update(role);
     return CommandResult(true, req.roleId.value, "");
@@ -88,7 +88,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
           if (!groupIds.canFind(gid))
             groupIds ~= gid;
         }
-        role.updatedAt = Clock.currStdTime();
+        role.updatedAt = currentTimestamp();
       }
     }
 
@@ -103,7 +103,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
 
     with (role) {
       userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array.toJson;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     roleRepo.update(role);
     return CommandResult(true, roleId.value, "");

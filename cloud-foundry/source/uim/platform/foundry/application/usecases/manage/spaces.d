@@ -46,7 +46,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Space with this name already exists in org");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Space space;
     space.initEntity(req.tenantId, req.createdBy);
     space.orgId = req.orgId;
@@ -85,7 +85,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       updated.name = req.name;
     updated.status = req.status;
     updated.allowSsh = req.allowSsh;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");

@@ -23,7 +23,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createWidget(CreateWidgetRequest req) {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Widget w;
     w.initEntity8(req.tenantId);
     
@@ -45,7 +45,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  Widget[] listByPage(TenantId tenantId, WorkpageId pageId) {
+  Widget[] listWidgets(TenantId tenantId, WorkpageId pageId) {
     return repo.findByPage(tenantId, pageId);
   }
 
@@ -62,7 +62,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     w.sortOrder = req.sortOrder;
     w.visible = req.visible;
     w.config = req.config;
-    w.updatedAt = Clock.currStdTime();
+    w.updatedAt = currentTimestamp();
 
     repo.update(w);
     return CommandResult(true, w.id.value, "");
@@ -73,7 +73,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     if (w.isNull)
       return CommandResult(false, "", "Widget not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(w);
+    return CommandResult(true, w.id.value, "");
   }
 }

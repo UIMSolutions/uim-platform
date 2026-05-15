@@ -56,7 +56,7 @@ class ModelTrainer {
       return null;
 
     auto config = configRepo.findById(configtenantId, id);
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Update config status to training
     config.status = ModelConfigStatus.training;
@@ -85,7 +85,7 @@ class ModelTrainer {
     if (job.isNull)
       return;
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     job.status = JobStatus.completed;
     job.epochsCompleted = job.totalEpochs;
     job.completedAt = now;
@@ -108,7 +108,7 @@ class ModelTrainer {
     if (job.isNull || job.status != JobStatus.running)
       return false;
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     job.status = JobStatus.cancelled;
     job.completedAt = now;
     jobRepo.update(job);

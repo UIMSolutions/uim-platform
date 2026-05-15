@@ -23,57 +23,57 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createUserSession(CreateUserSessionRequest r) {
-        UserSession session;
-        session.initEntity(r.tenantId);
+        UserSession ses;
+        ses.initEntity(r.tenantId);
 
-        session.appId = r.appId;
-        session.userId = r.userId;
-        session.deviceId = r.deviceId;
-        session.ipAddress = r.ipAddress;
-        session.userAgent = r.userAgent;
-        session.status = SessionStatus.active;
-        session.startedAt = currentTimestamp();
-        session.lastActivityAt = session.startedAt;
+        ses.appId = r.appId;
+        ses.userId = r.userId;
+        ses.deviceId = r.deviceId;
+        ses.ipAddress = r.ipAddress;
+        ses.userAgent = r.userAgent;
+        ses.status = SessionStatus.active;
+        ses.startedAt = ses.updatedAt;
+        ses.lastActivityAt = ses.startedAt;
 
-        repo.save(session);
-        return CommandResult(true, session.id.value, "");
+        repo.save(ses);
+        return CommandResult(true, ses.id.value, "");
     }
 
-    CommandResult terminateUserSession(UserSessionId id) {
-        auto session = repo.findById(tenantId, id);
-        if (session.isNull)
+    CommandResult terminateUserSession(TenantId tenantId, UserSessionId id) {
+        auto ses = repo.findById(tenantId, id);
+        if (ses.isNull)
             return CommandResult(false, "", "Session not found");
-        session.status = SessionStatus.terminated;
-        session.endedAt = currentTimestamp();
-        session.updatedAt = currentTimestamp();
-        
-        repo.update(session);
-        return CommandResult(true, session.id.value, "");
+        ses.status = SessionStatus.terminated;
+        ses.endedAt = currentTimestamp();
+        ses.updatedAt = currentTimestamp();
+
+        repo.update(ses);
+        return CommandResult(true, ses.id.value, "");
     }
 
-    UserSession getUserSession(UserSessionId id) {
+    UserSession getUserSession(TenantId tenantId, UserSessionId id) {
         return repo.findById(tenantId, id);
     }
 
-    UserSession[] listUserSessionsByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    UserSession[] listUserSessionsByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    UserSession[] listActiveUserSessions(MobileAppId appId) {
-        return repo.findActive(appId);
+    UserSession[] listActiveUserSessions(TenantId tenantId, MobileAppId appId) {
+        return repo.findActive(tenantId, appId);
     }
 
-    CommandResult deleteUserSession(UserSessionId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteUserSession(TenantId tenantId, UserSessionId id) {
+        auto ses = repo.findById(tenantId, id);
+        if (ses.isNull)
+            return CommandResult(false, "", "Session not found");
+
+        repo.remove(ses);
+        return CommandResult(true, ses.id.value, "");
     }
 
-    size_t countActive(MobileAppId appId) {
-        return repo.countActive(appId);
+    size_t countActive(TenantId tenantId, MobileAppId appId) {
+        return repo.countActive(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

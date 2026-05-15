@@ -34,7 +34,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     if (existing != User.init)
       return UserResponse("", "User with this email already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto user = User(randomUUID().toString(), req.tenantId, req.userName,
         req.email, req.firstName, req.lastName, passwordSvc.hashPassword(req.password),
         UserStatus.active, MfaType.none, "", [], req.phoneNumber, "", now, now,
@@ -68,7 +68,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     if (req.phoneNumber.length > 0)
       user.phoneNumber = req.phoneNumber;
 
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
     return CommandResult(true, user.id.value, "User updated successfully.");
   }
@@ -80,7 +80,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "User not found");
 
     user.status = UserStatus.inactive;
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
     return CommandResult(true, user.id.value, "User deactivated successfully.");
   }
@@ -95,7 +95,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Current password is incorrect");
 
     user.passwordHash = passwordSvc.hashPassword(newPassword);
-    user.updatedAt = Clock.currStdTime();
+    user.updatedAt = currentTimestamp();
     userRepo.update(user);
     return CommandResult(true, user.id.value, "Password changed successfully.");
   }

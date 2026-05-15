@@ -26,7 +26,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     UserProfile p;
     p.initEntity(req.tenantId, req.createdBy);
 
@@ -49,11 +49,11 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  UserProfile getUserProfileByUserId(TenantId tenantId, UserId id) {
+  UserProfile getUserProfile(TenantId tenantId, UserId id) {
     return repo.findByUserId(tenantId, id);
   }
 
-  UserProfile[] listProfiles(TenantId tenantId) {
+  UserProfile[] listUserProfiles(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
@@ -70,7 +70,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
       p.jobTitle = req.jobTitle;
     if (req.avatarUrl.length > 0)
       p.avatarUrl = req.avatarUrl;
-    p.updatedAt = Clock.currStdTime();
+    p.updatedAt = currentTimestamp();
 
     repo.update(p);
     return CommandResult(true, p.id.value, "");
@@ -81,7 +81,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     if (p.isNull)
       return CommandResult(false, "", "User profile not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(p);
+    return CommandResult(true, p.id.value, "");
   }
 }

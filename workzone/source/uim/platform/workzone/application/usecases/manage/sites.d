@@ -27,7 +27,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Site name is required");
 
     Site s;
-    s.initEntity8(req.tenantId, req.createdBy);
+    s.initEntity(req.tenantId, req.createdBy);
 
     s.name = req.name;
     s.description = req.description;
@@ -60,7 +60,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (req.themeId.length > 0)
       s.themeId = req.themeId;
     s.settings = req.settings;
-    s.updatedAt = Clock.currStdTime();
+    s.updatedAt = currentTimestamp();
 
     repo.update(s);
     return CommandResult(true, s.id.value, "");
@@ -71,7 +71,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (s.isNull)
       return CommandResult(false, "", "Site not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(s);
+    return CommandResult(true, s.id.value, "");
   }
 }

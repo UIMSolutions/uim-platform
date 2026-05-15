@@ -87,8 +87,4 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

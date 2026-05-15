@@ -55,7 +55,7 @@ class MemorySessionRepository : SessionRepository {
   }
 
   void removeExpired() {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     SessionId[] toRemove;
     foreach (id, s; store) {
       if (s.expiresAt < now)

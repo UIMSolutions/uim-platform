@@ -32,7 +32,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Target system with this name already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     TargetSystem sys;
     sys.initEntity(req.tenantId, req.createdBy);
 
@@ -72,7 +72,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       updated.description = req.description;
     if (req.connectionConfig.length > 0)
       updated.connectionConfig = req.connectionConfig;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -87,7 +87,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Connection configuration is required before activation");
 
     sys.status = SystemStatus.active;
-    sys.updatedAt = Clock.currStdTime();
+    sys.updatedAt = currentTimestamp();
     repo.update(sys);
     return CommandResult(true, id.value, "");
   }
@@ -98,7 +98,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Target system not found");
 
     sys.status = SystemStatus.inactive;
-    sys.updatedAt = Clock.currStdTime();
+    sys.updatedAt = currentTimestamp();
     repo.update(sys);
     return CommandResult(true, id.value, "");
   }

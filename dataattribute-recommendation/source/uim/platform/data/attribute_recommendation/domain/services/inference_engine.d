@@ -48,7 +48,7 @@ class InferenceEngine {
       return null;
     }
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Mark request as processing
     request.status = InferenceStatus.processing;

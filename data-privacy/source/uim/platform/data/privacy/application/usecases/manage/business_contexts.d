@@ -23,7 +23,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto ctx = BusinessContext();
     ctx.initTenant(req.tenantId);
 
@@ -64,7 +64,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     if (req.purposes.length > 0) ctx.purposes = req.purposes;
     if (req.dataCategoryAttributes.length > 0) ctx.dataCategoryAttributes = req.dataCategoryAttributes;
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
-    ctx.updatedAt = Clock.currStdTime();
+    ctx.updatedAt = currentTimestamp();
 
     businessContexts.update(ctx);
     return CommandResult(true, ctx.id.value, "");
@@ -78,7 +78,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Business context already active");
 
     ctx.status = BusinessContextStatus.active;
-    ctx.activatedAt = Clock.currStdTime();
+    ctx.activatedAt = currentTimestamp();
     ctx.updatedAt = ctx.activatedAt;
 
     businessContexts.update(ctx);

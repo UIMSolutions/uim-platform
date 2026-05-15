@@ -67,7 +67,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     if (req.version_.length > 0)
       cp.version_ = req.version_;
     cp.requiresExplicitConsent = req.requiresExplicitConsent;
-    cp.updatedAt = Clock.currStdTime();
+    cp.updatedAt = currentTimestamp();
 
     repo.update(cp);
     return CommandResult(true, cp.id.value, "");

@@ -65,7 +65,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
       policy.actions = req.actions;
     if (req.resources.length > 0)
       policy.resources = req.resources;
-    policy.updatedAt = Clock.currStdTime();
+    policy.updatedAt = currentTimestamp();
 
     policyRepo.update(policy);
     return CommandResult(true, policy.id.value, "");

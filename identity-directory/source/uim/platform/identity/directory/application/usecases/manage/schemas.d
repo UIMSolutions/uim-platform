@@ -33,7 +33,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     if (existing != Schema.init)
       return SchemaResponse("", "Schema with this name already exists");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto schemaUrn = "urn:sap:cloud:scim:schemas:extension:custom:2.0:" ~ req.name;
     auto schema = Schema(schemaUrn, req.tenantId, req.name, req.description,
         req.attributes, now, now,);
@@ -69,7 +69,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     if (req.attributes.length > 0)
       schema.attributes = req.attributes;
 
-    schema.updatedAt = Clock.currStdTime();
+    schema.updatedAt = currentTimestamp();
     schemaRepo.update(schema);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), schema.tenantId,

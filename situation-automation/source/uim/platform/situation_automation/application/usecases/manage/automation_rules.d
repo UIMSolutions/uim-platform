@@ -60,7 +60,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 
-        rule.updatedAt = Clock.currStdTime();
+        rule.updatedAt = currentTimestamp();
         rule.name = r.name;
         rule.description = r.description;
         rule.executionOrder = r.executionOrder;

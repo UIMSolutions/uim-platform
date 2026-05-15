@@ -38,7 +38,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (apps.existsByName(req.tenantId, req.spaceId, req.name))
       return CommandResult(false, "", "Application with this name already exists in space");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Application app;
     app.initEntity(req.tenantId, req.createdBy);
     app.spaceId = req.spaceId;
@@ -106,7 +106,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       updated.environmentVariables = req.environmentVariables;
     if (req.dockerImage.length > 0)
       updated.dockerImage = req.dockerImage;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     apps.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -169,7 +169,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
     auto app = apps.findById(tenantId, id);
     app.environmentVariables = envJson;
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
     apps.update(app);
    
     return CommandResult(true, app.id.value, "");

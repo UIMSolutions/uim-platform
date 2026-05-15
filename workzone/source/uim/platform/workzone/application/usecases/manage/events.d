@@ -70,7 +70,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     e.startTime = req.startTime;
     e.endTime = req.endTime;
     // TODO: e.status = req.status;
-    e.updatedAt = Clock.currStdTime();
+    e.updatedAt = currentTimestamp();
 
     repo.update(e);
     return CommandResult(true, e.id.value, "");
@@ -81,7 +81,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     if (e.isNull)
       return CommandResult(false, "", "Event not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(e);
+    return CommandResult(true, e.id.value, "");
   }
 }

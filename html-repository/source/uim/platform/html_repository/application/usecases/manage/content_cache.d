@@ -33,7 +33,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         entry.etag = ContentDeliveryService.generateEtag(r.content);
         entry.content = r.content;
         entry.ttlSeconds = r.ttlSeconds;
-        entry.cachedAt = Clock.currStdTime();
+        entry.cachedAt = currentTimestamp();
         entry.expiresAt = entry.cachedAt + r.ttlSeconds * 10_000_000L;
         entry.status = CacheStatus.active;
 

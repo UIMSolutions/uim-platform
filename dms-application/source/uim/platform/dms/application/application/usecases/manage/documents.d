@@ -43,7 +43,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Folder not found");
     }
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     auto doc = Document();
     doc.initEntity(r.tenantId, r.createdBy);
@@ -135,7 +135,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     }
 
     doc.folderId = request.newFolderId;
-    doc.updatedAt = Clock.currStdTime();
+    doc.updatedAt = currentTimestamp();
     docs.update(doc);
     return CommandResult(true, doc.id.value, "");
   }
@@ -146,7 +146,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Document not found");
 
     doc.status = DocumentStatus.archived;
-    doc.updatedAt = Clock.currStdTime();
+    doc.updatedAt = currentTimestamp();
     docs.update(doc);
     return CommandResult(true, doc.id.value, "");
   }

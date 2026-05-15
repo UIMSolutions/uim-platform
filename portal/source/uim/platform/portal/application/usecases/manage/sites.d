@@ -49,7 +49,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, site.id.value, "Site created successfully.");
   }
 
-  Site getSite(SiteId id) {
+  Site getSite(TenantId tenantId, SiteId id) {
     return siteRepo.findById(tenantId, id);
   }
 
@@ -57,12 +57,12 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     return siteRepo.findByTenant(tenantId, offset, limit);
   }
 
-  Site[] listSitesByStatus(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100) {
+  Site[] listSites(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100) {
     return siteRepo.findByStatus(tenantId, status, offset, limit);
   }
 
   CommandResult updateSite(UpdateSiteRequest req) {
-    auto site = siteRepo.findById(req.siteId);
+    auto site = siteRepo.findById(req.tenantId, req.siteId);
     if (site == Site.init)
       return CommandResult(false, "", "Site not found");
 
@@ -71,12 +71,12 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     site.alias_ = req.alias_.length > 0 ? req.alias_ : site.alias_;
     site.themeId = req.themeId.length > 0 ? req.themeId : site.themeId;
     site.settings = req.settings;
-    site.updatedAt = Clock.currStdTime();
+    site.updatedAt = currentTimestamp();
     siteRepo.update(site);
     return CommandResult(true, site.id.value, "Site updated successfully.");
   }
 
-  CommandResult publishSite(SiteId id) {
+  CommandResult publishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site == Site.init)
       return CommandResult(false, "", "Site not found");
@@ -89,39 +89,39 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     }
 
     site.status = SiteStatus.published;
-    site.updatedAt = Clock.currStdTime();
+    site.updatedAt = currentTimestamp();
     siteRepo.update(site);
     return CommandResult(true, site.id.value, "Site published successfully.");
   }
 
-  CommandResult unpublishSite(SiteId id) {
+  CommandResult unpublishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site == Site.init)
       return CommandResult(false, "", "Site not found");
 
     site.status = SiteStatus.unpublished;
-    site.updatedAt = Clock.currStdTime();
+    site.updatedAt = currentTimestamp();
     siteRepo.update(site);
     return CommandResult(true, site.id.value, "Site unpublished successfully.");
   }
 
-  CommandResult archiveSite(SiteId id) {
+  CommandResult archiveSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site == Site.init)
       return CommandResult(false, "", "Site not found");
 
     site.status = SiteStatus.archived;
-    site.updatedAt = Clock.currStdTime();
+    site.updatedAt = currentTimestamp();
     siteRepo.update(site);
     return CommandResult(true, site.id.value, "Site archived successfully.");
   }
 
-  CommandResult deleteSite(SiteId id) {
+  CommandResult deleteSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site == Site.init)
       return CommandResult(false, "", "Site not found");
 
-    siteRepo.removeById(id);
+    siteRepo.remove(site);
     return CommandResult(true, site.id.value, "Site deleted successfully.");
   }
 }

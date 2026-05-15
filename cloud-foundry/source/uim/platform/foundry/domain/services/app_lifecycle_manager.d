@@ -42,7 +42,7 @@ class AppLifecycleManager {
       return false;
 
     app.state = AppState.staging;
-    app.stagedAt = Clock.currStdTime();
+    app.stagedAt = currentTimestamp();
     app.updatedAt = app.stagedAt;
     apps.update(app);
     return true;
@@ -56,7 +56,7 @@ class AppLifecycleManager {
 
     app.state = AppState.started;
     app.runningInstances = app.instances;
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
     apps.update(app);
     return true;
   }
@@ -71,7 +71,7 @@ class AppLifecycleManager {
 
     app.state = AppState.stopped;
     app.runningInstances = 0;
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
     apps.update(app);
     return true;
   }
@@ -86,7 +86,7 @@ class AppLifecycleManager {
 
     app.state = AppState.started;
     app.runningInstances = app.instances;
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
     apps.update(app);
     return true;
   }
@@ -119,7 +119,7 @@ class AppLifecycleManager {
     if (app.state == AppState.started)
       app.runningInstances = app.instances;
 
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
     apps.update(app);
     return true;
   }

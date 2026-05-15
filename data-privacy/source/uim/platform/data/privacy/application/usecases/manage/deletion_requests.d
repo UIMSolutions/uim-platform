@@ -37,7 +37,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     // Deadline: 30 days from now (GDPR Art. 12(3))
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
@@ -81,7 +81,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     if (req.blockerReason.length > 0)
       request.blockerReason = req.blockerReason;
     if (req.status == DeletionStatus.completed)
-      request.completedAt = Clock.currStdTime();
+      request.completedAt = currentTimestamp();
 
     repo.update(request);
     return CommandResult(true, request.id.value, "");

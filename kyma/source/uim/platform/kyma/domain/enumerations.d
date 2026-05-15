@@ -30,26 +30,12 @@ enum NamespaceStatus {
 }
 /// Serverless function runtime language.
 enum FunctionRuntime {
-    nodejs18,
     nodejs20,
+    nodejs18,
     python39,
     python312,
 }
 
-FunctionRuntime toRuntime(string runtimeName) {
-    switch (runtimeName) {
-    case "nodejs18":
-        return FunctionRuntime.nodejs18;
-    case "nodejs20":
-        return FunctionRuntime.nodejs20;
-    case "python39":
-        return FunctionRuntime.python39;
-    case "python312":
-        return FunctionRuntime.python312;
-    default:
-        return FunctionRuntime.nodejs20;
-    }
-}
 /// Status of a serverless function.
 enum FunctionStatus {
     building,
@@ -77,14 +63,14 @@ enum ApiRuleStatus {
     notReady,
 }
 /// HTTP methods for API rules.
-enum ApiHttpMethod {
-    get_,
-    post_,
-    put_,
-    patch_,
-    delete_,
-    head_,
-    options_,
+enum ApiHttpMethod : string {
+    get_ = "GET",
+    post_ = "POST",
+    put_ = "PUT",
+    patch_ = "PATCH",
+    delete_ = "DELETE",
+    head_ = "HEAD",
+    options_ = "OPTIONS",
 }
 /// Status of a service instance.
 enum ServiceInstanceStatus {

@@ -31,7 +31,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.description.length == 0)
       return CommandResult(false, "", "Description is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     LegalGround ground;
     ground.initEntity(req.tenantId);
     ground.dataSubjectId = req.dataSubjectId;

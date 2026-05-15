@@ -92,9 +92,4 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         return repo.countByApp(appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-
-        return Clock.currStdTime();
-    }
 }

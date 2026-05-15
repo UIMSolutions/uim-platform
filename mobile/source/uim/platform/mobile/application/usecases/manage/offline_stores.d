@@ -44,7 +44,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateOfflineStore(UpdateOfflineStoreRequest r) {
-        auto store = repo.findById(tenantId, r.id);
+        auto store = repo.findById(r.tenantId, r.id);
         if (store.isNull)
             return CommandResult(false, "", "Offline store not found");
         if (r.description.length > 0) store.description = r.description;
@@ -62,25 +62,21 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    OfflineStore[] listOfflineStoresByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    OfflineStore[] listOfflineStoresByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteOfflineStore(OfflineStoreId id) {
+    CommandResult deleteOfflineStore(TenantId tenantId, OfflineStoreId id) {
         auto store = repo.findById(tenantId, id);
         if (store.isNull)
             return CommandResult(false, "", "Offline store not found");
             
-        repo.removeById(r.id);
+        repo.remove(store);
         return CommandResult(true, store.id.value, "");
     }
 
-    size_t countOfflineStoresByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countOfflineStoresByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

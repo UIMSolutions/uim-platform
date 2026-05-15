@@ -10,11 +10,15 @@ module uim.platform.master_data_integration.presentation.http.key_mapping;
 
 
 
-import uim.platform.master_data_integration.application.usecases.manage.key_mappings;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.key_mapping;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.application.usecases.manage.key_mappings;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.key_mapping;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 class KeyMappingController : PlatformController {
   private ManageKeyMappingsUseCase usecase;
 

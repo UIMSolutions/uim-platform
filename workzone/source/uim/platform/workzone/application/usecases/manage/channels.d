@@ -58,7 +58,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
       ch.description = req.description;
     ch.active = req.active;
     ch.config = req.config;
-    ch.updatedAt = Clock.currStdTime();
+    ch.updatedAt = currentTimestamp();
 
     repo.update(ch);
     return CommandResult(true, ch.id.value, "");
@@ -69,7 +69,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Channel not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

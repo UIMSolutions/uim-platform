@@ -56,7 +56,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     if (req.name.length > 0) rs.name = req.name;
     if (req.description.length > 0) rs.description = req.description;
     if (req.priority > 0) rs.priority = req.priority;
-    rs.updatedAt = Clock.currStdTime();
+    rs.updatedAt = currentTimestamp();
 
     repo.update(rs);
     return CommandResult(true, rs.id.value, "");
@@ -68,7 +68,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Rule set not found");
 
     rs.status = RuleSetStatus.active;
-    rs.activatedAt = Clock.currStdTime();
+    rs.activatedAt = currentTimestamp();
     rs.updatedAt = rs.activatedAt;
 
     repo.update(rs);

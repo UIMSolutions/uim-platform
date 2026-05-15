@@ -27,6 +27,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         auto provider = parseProvider(r.provider);
         if (!PushDeliveryService.validatePayloadSize(r.payload, provider))
             return CommandResult(false, "", "Payload exceeds maximum size for provider");
+        
         PushNotification notif;
         notif.initEntity(r.tenantId, r.createdBy);
 
@@ -46,57 +47,30 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, notif.id.value, "");
     }
 
-    PushNotification get_(PushNotificationId id) {
+    PushNotification getNotification(TenantId tenantId, PushNotificationId id) {
         return repo.findById(tenantId, id);
     }
 
-    PushNotification[] listByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    PushNotification[] listByStatus(MobileAppId appId, string status) {
-        return repo.findByStatus(appId, parseNotifStatus(status));
+    PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId, string status) {
+        return repo.findByStatus(tenantId, appId, parseNotifStatus(status));
     }
 
-    CommandResult delete(PushNotificationId id) {
-        repo.removeById(id);
+    CommandResult deleteNotification(TenantId tenantId, PushNotificationId id) {
+        auto notif = repo.findById(tenantId, id);
+        if (notif.isNull)
+            return CommandResult(false, "", "Notification not found");
+
+        repo.remove(notif);
+        return CommandResult(true, notif.id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static PushProvider parseProvider(string s) {
-        switch (s) {
-            case "apns": return PushProvider.apns;
-            case "fcm": return PushProvider.fcm;
-            case "wns": return PushProvider.wns;
-            case "webpush": return PushProvider.webpush;
-            default: return PushProvider.fcm;
-        }
-    }
 
-    private static NotificationPriority parsePriority(string s) {
-        switch (s) {
-            case "high": return NotificationPriority.high;
-            case "normal": return NotificationPriority.normal;
-            case "low": return NotificationPriority.low;
-            default: return NotificationPriority.normal;
-        }
-    }
-
-    private static NotificationStatus parseNotifStatus(string s) {
-        switch (s) {
-            case "pending": return NotificationStatus.pending;
-            case "sent": return NotificationStatus.sent;
-            case "delivered": return NotificationStatus.delivered;
-            case "failed": return NotificationStatus.failed;
-            default: return NotificationStatus.pending;
-        }
-    }
-
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

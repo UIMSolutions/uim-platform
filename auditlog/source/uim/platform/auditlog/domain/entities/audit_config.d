@@ -41,7 +41,7 @@ struct AuditConfig {
     minimumSeverity = req.minimumSeverity;
     rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond
       : rateLimitPerSecond;
-    updatedAt = Clock.currStdTime();
+    updatedAt = currentTimestamp();
 
   }
 

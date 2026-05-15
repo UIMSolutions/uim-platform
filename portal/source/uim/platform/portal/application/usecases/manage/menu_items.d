@@ -56,7 +56,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
     if (siteRepo.existsById(req.siteId)) {
       auto site = siteRepo.findById(req.siteId);
       site.menuItemIds ~= item.menuItemId;
-      site.updatedAt = Clock.currStdTime();
+      site.updatedAt = currentTimestamp();
       siteRepo.update(site);
     }
 
@@ -90,7 +90,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     menuRepo.update(item);
     return CommandResult(true, item.menuItemId.value, "Menu item updated successfully.");
@@ -105,7 +105,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
     if (siteRepo.existsById(siteId)) {
       auto site = siteRepo.findById(siteId);
       site.menuItemIds = site.menuItemIds.filter!(m => m != menuItemId).array.toJson;
-      site.updatedAt = Clock.currStdTime();
+      site.updatedAt = currentTimestamp();
       siteRepo.update(site);
     }
 

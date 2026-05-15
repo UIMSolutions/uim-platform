@@ -45,7 +45,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  ForumTopic[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+  ForumTopic[] listForumTopics(TenantId tenantId, WorkspaceId workspaceId) {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
@@ -61,7 +61,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     // TODO: t.status = req.status;
     t.pinned = req.pinned;
     t.locked = req.locked;
-    t.updatedAt = Clock.currStdTime();
+    t.updatedAt = currentTimestamp();
 
     repo.update(t);
     return CommandResult(true, t.id.value, "");
@@ -72,7 +72,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(t);
+    return CommandResult(true, t.id.value, "");
   }
 }

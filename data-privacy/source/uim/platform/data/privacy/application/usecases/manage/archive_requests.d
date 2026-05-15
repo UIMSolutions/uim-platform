@@ -29,7 +29,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto archiveRequest = ArchiveRequest();
     archiveRequest.createEntity(req.tenantId);
 
@@ -65,7 +65,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Archive request not found");
 
     archiveRequest.status = req.status;
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     if (req.status == ArchiveStatus.inProgress)
       archiveRequest.startedAt = now;
     if (req.status == ArchiveStatus.completed)

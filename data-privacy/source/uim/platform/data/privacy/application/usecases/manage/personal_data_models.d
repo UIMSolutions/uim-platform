@@ -30,7 +30,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     if (req.sourceSystem.length == 0)
       return CommandResult(false, "", "Source system is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     PersonalDataModel model;
     model.initEntity(req.tenantId);
     model.fieldName = req.fieldName;
@@ -81,7 +81,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     model.isSpecialCategory = req.isSpecialCategory;
     if (req.legalReference.length > 0)
       model.legalReference = req.legalReference;
-    model.updatedAt = Clock.currStdTime();
+    model.updatedAt = currentTimestamp();
 
     repo.update(model);
     return CommandResult(true, model.id.value, "");

@@ -55,7 +55,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       w.name = r.name;
     if (r.description.length > 0)
       w.description = r.description;
-    w.updatedAt = Clock.currStdTime();
+    w.updatedAt = currentTimestamp();
     
     workspaces.save(w);
     return CommandResult(true, w.id.value, "");

@@ -70,7 +70,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
       sortOrder = req.sortOrder;
       visible = req.visible;
       columns = req.columns > 0 ? req.columns : columns;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     sectionRepo.update(section);
     return CommandResult(true, req.sectionId.value, "");
@@ -85,7 +85,7 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     if (pageRepo.existsById(pageId)) {
       auto page = pageRepo.findById(pageId);
       page.sectionIds = page.sectionIds.filter!(s => s != sectionId).array.toJson;
-      page.updatedAt = Clock.currStdTime();
+      page.updatedAt = currentTimestamp();
       pageRepo.update(page);
     }
 

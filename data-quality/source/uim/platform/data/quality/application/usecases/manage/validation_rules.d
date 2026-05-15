@@ -81,7 +81,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     rule.crossFieldName = req.crossFieldName;
     rule.category = req.category;
     rule.priority = req.priority;
-    rule.updatedAt = Clock.currStdTime();
+    rule.updatedAt = currentTimestamp();
 
     repo.update(rule);
     return CommandResult(true, rule.id.value, "");

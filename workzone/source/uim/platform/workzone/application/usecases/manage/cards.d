@@ -69,7 +69,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     c.active = req.active;
     c.dataSource = req.dataSource;
     c.manifest = req.manifest;
-    c.updatedAt = Clock.currStdTime();
+    c.updatedAt = currentTimestamp();
 
     repo.update(c);
     return CommandResult(true, c.id.value, "");
@@ -80,7 +80,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Card not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

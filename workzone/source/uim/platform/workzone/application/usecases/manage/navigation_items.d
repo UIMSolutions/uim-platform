@@ -49,7 +49,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  NavigationItem[] listBySite(TenantId tenantId, SiteId siteId) {
+  NavigationItem[] listNavigationItems(TenantId tenantId, SiteId siteId) {
     return repo.findBySite(tenantId, siteId);
   }
 
@@ -65,7 +65,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     n.targetUrl = req.targetUrl;
     n.sortOrder = req.sortOrder;
     n.visible = req.visible;
-    n.updatedAt = Clock.currStdTime();
+    n.updatedAt = currentTimestamp();
 
     repo.update(n);
     return CommandResult(true, n.id.value, "");
@@ -76,7 +76,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     if (n.isNull)
       return CommandResult(false, "", "Navigation item not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(n);
+    return CommandResult(true, n.id.value, "");
   }
 }

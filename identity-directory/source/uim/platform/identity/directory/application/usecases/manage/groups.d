@@ -90,7 +90,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       group.description = req.description;
 
-    group.updatedAt = Clock.currStdTime();
+    group.updatedAt = currentTimestamp();
     groupRepo.update(group);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
@@ -111,7 +111,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Already a member");
 
     group.members ~= GroupMember(req.memberId, req.memberType, req.display);
-    group.updatedAt = Clock.currStdTime();
+    group.updatedAt = currentTimestamp();
     groupRepo.update(group);
 
     // Update user's groupIds
@@ -141,7 +141,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Member not found in group")    ;
 
     group.members = newMembers;
-    group.updatedAt = Clock.currStdTime();
+    group.updatedAt = currentTimestamp();
     groupRepo.update(group);
 
     // Update user's groupIds

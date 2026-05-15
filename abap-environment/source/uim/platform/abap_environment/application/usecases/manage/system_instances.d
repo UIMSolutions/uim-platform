@@ -86,7 +86,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     }
 
   
-    inst.updatedAt = Clock.currStdTime();
+    inst.updatedAt = currentTimestamp();
 
     repo.update(inst);
     return CommandResult(true, inst.id.value, "");

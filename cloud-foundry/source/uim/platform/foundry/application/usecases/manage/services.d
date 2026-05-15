@@ -45,7 +45,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (!instance.isNull)
       return CommandResult(false, "", "Service instance with this name already exists in space");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto srvInstance = ServiceInstance();
     srvInstance.initEntity(req.tenantId, req.createdBy);
 
@@ -91,7 +91,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       updated.parameters = req.parameters;
     if (req.tags.length > 0)
       updated.tags = req.tags;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     instances.update(updated);
     return CommandResult(true, updated.id.value, "");

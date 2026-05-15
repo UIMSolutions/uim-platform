@@ -22,7 +22,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPageTemplate(CreatePageTemplateRequest req) {
+  CommandResult createTemplate(CreatePageTemplateRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Page template name is required");
 
@@ -40,15 +40,15 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  PageTemplate getPageTemplate(TenantId tenantId, PageTemplateId id) {
+  PageTemplate getTemplate(TenantId tenantId, PageTemplateId id) {
     return repo.findById(tenantId, id);
   }
 
-  PageTemplate[] listPageTemplates(TenantId tenantId) {
+  PageTemplate[] listTemplates(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updatePageTemplate(UpdatePageTemplateRequest req) {
+  CommandResult updateTemplate(UpdatePageTemplateRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
       return CommandResult(false, "", "Page template not found");
@@ -60,18 +60,18 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     t.sections = req.sections;
     t.isDefault = req.isDefault;
     t.isPublic = req.isPublic;
-    t.updatedAt = Clock.currStdTime();
+    t.updatedAt = currentTimestamp();
 
     repo.update(t);
     return CommandResult(true, t.id.value, "");
   }
 
-  CommandResult deletePageTemplate(TenantId tenantId, PageTemplateId id) {
+  CommandResult deleteTemplate(TenantId tenantId, PageTemplateId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Page template not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(t);
+    return CommandResult(true, t.id.value, "");
   }
 }

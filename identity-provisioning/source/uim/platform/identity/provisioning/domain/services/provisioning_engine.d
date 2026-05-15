@@ -60,7 +60,7 @@ class ProvisioningEngine {
     if (job.isNull)
       return null;
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
 
     // Mark running
     job.status = JobStatus.running;
@@ -81,7 +81,7 @@ class ProvisioningEngine {
     job.processedEntities = 7;
     job.failedEntities = 0;
     job.status = JobStatus.completed;
-    job.completedAt = Clock.currStdTime();
+    job.completedAt = currentTimestamp();
     jobRepo.update(job);
 
     // Update system sync timestamps
@@ -106,14 +106,14 @@ class ProvisioningEngine {
       return false;
 
     job.status = JobStatus.cancelled;
-    job.completedAt = Clock.currStdTime();
+    job.completedAt = currentTimestamp();
     jobRepo.update(job);
     return true;
   }
 
   private void simulateEntities(TenantId tenantId, ProvisioningJob* job,
       string srcName, string tgtName, EntityType eType, int count) {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     foreach (i; 0 .. count) {
       // Create provisioned entity
       ProvisionedEntity entity;

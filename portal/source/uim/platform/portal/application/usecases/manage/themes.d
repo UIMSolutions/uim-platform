@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageThemesUseCase { // TODO: UIMUseCase {
-  private ThemeRepository themeRepo;
+  private ThemeRepository repo;
 
-  this(ThemeRepository themeRepo) {
-    this.themeRepo = themeRepo;
+  this(ThemeRepository repo) {
+    this.repo = repo;
   }
 
   ThemeResponse createTheme(CreateThemeRequest req) {
@@ -41,35 +41,35 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
 
     // If this is the default, unset previous default
     if (req.isDefault) {
-      auto currentDefault = themeRepo.findDefault(req.tenantId);
+      auto currentDefault = repo.findDefault(req.tenantId);
       if (currentDefault != Theme.init) {
         currentDefault.isDefault = false;
-        currentDefault.updatedAt = Clock.currStdTime();
-        themeRepo.update(currentDefault);
+        currentDefault.updatedAt = currentTimestamp();
+        repo.update(currentDefault);
       }
     }
 
-    themeRepo.save(theme);
+    repo.save(theme);
     return ThemeResponse(theme.id.value, "");
   }
 
-  Theme getTheme(ThemeId id) {
-    return themeRepo.findById(tenantId, id);
+  Theme getTheme(TenantId tenantId, ThemeId id) {
+    return repo.findById(tenantId, id);
   }
 
   Theme getDefaultTheme(TenantId tenantId) {
-    return themeRepo.findDefault(tenantId);
+    return repo.findDefault(tenantId);
   }
 
   Theme[] listThemes(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
-    return themeRepo.findByTenant(tenantId, offset, limit);
+    return repo.findByTenant(tenantId, offset, limit);
   }
 
   CommandResult updateTheme(UpdateThemeRequest req) {
-    if (!themeRepo.existsById(req.themeId))
+    if (!repo.existsById(req.tenantId, req.themeId))
       return CommandResult(false, "", "Theme not found");
 
-    auto theme = themeRepo.findById(req.themeId);
+    auto theme = repo.findById(req.tenantId, req.themeId);
     with (theme) {
       name = req.name.length > 0 ? req.name : theme.name;
       description = req.description;
@@ -79,28 +79,28 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
       customCss = req.customCss;
     }
     if (req.isDefault && !theme.isDefault) {
-      auto currentDefault = themeRepo.findDefault(theme.tenantId);
+      auto currentDefault = repo.findDefault(theme.tenantId);
       if (currentDefault != Theme.init && currentDefault.id != theme.id) {
         currentDefault.isDefault = false;
-        currentDefault.updatedAt = Clock.currStdTime();
-        themeRepo.update(currentDefault);
+        currentDefault.updatedAt = currentTimestamp();
+        repo.update(currentDefault);
       }
     }
     theme.isDefault = req.isDefault;
-    theme.updatedAt = Clock.currStdTime();
-    themeRepo.update(theme);
+    theme.updatedAt = currentTimestamp();
+    repo.update(theme);
     return CommandResult(true, theme.id.value, "Theme updated successfully.");
   }
 
-  CommandResult deleteTheme(ThemeId id) {
-    auto theme = themeRepo.findById(tenantId, id);
+  CommandResult deleteTheme(TenantId tenantId, ThemeId id) {
+    auto theme = repo.findById(tenantId, id);
     if (theme == Theme.init)
       return CommandResult(false, "", "Theme not found");
 
     if (theme.isDefault)
       return CommandResult(false, "", "Cannot delete the default theme");
 
-    themeRepo.removeById(id);
+    repo.remove(theme);
     return CommandResult(true, theme.id.value, "Theme deleted successfully.");
   }
 }

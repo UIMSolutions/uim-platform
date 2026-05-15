@@ -48,26 +48,26 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     return repo.findById(tenantId, id);
   }
 
-  Notification[] listByRecipient(TenantId tenantId, UserId recipientId) {
+  Notification[] listNotifications(TenantId tenantId, UserId recipientId) {
     return repo.findByRecipient(tenantId, recipientId);
   }
 
-  Notification[] listUnread(TenantId tenantId, UserId recipientId) {
+  Notification[] listUnreadNotifications(TenantId tenantId, UserId recipientId) {
     return repo.findUnread(tenantId, recipientId);
   }
 
-  CommandResult markAsRead(TenantId tenantId, NotificationId id) {
+  CommandResult markNotificationAsRead(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
       return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.read_;
-    n.readAt = Clock.currStdTime();
+    n.readAt = currentTimestamp();
     repo.update(n);
     return CommandResult(true, n.id.value, "");
   }
 
-  CommandResult dismiss(TenantId tenantId, NotificationId id) {
+  CommandResult dismissNotification(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
       return CommandResult(false, "", "Notification not found");
@@ -78,11 +78,11 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteNotification(TenantId tenantId, NotificationId id) {
-    auto entity = repo.findById(tenantId, id);
-    if (entity.isNull)
+    auto n = repo.findById(tenantId, id);
+    if (n.isNull)
       return CommandResult(false, "", "Notification not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(n);
+    return CommandResult(true, n.id.value, "");
   }
 }

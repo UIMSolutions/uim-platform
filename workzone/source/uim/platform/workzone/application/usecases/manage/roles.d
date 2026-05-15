@@ -26,9 +26,9 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Role name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Role r;
-    r.initEntity8(req.tenantId);
+    r.initEntity(req.tenantId);
 
     r.name = req.name;
     r.description = req.description;
@@ -57,7 +57,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       r.description = req.description;
     r.permissions = req.permissions;
-    r.updatedAt = Clock.currStdTime();
+    r.updatedAt = currentTimestamp();
 
     repo.update(r);
     return CommandResult(true, r.id.value, "");
@@ -68,7 +68,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
     if (r.isNull)
       return CommandResult(false, "", "Role not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(r);
+    return CommandResult(true, r.id.value, "");
   }
 }

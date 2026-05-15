@@ -43,7 +43,7 @@ class RetentionEnforcer {
       days = policy.retentionDays;
 
     // Convert days to hnsecs cutoff
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     long cutoff = now - (days * 24 * 60 * 60 * 10_000_000L);
 
     auditRepo.removeOlderThan(tenantId, cutoff);

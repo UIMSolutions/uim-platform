@@ -70,7 +70,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     if (t.isNull)
       return CommandResult(false, "", "Tag not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(t);
+    return CommandResult(true, t.id.value, "");
   }
 }

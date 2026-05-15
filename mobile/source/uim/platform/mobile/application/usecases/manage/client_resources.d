@@ -39,39 +39,45 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, resource.id.value, "");
     }
 
-    CommandResult updateClientResource(ClientResourceId id, UpdateClientResourceRequest r) {
-        auto resource = repo.findById(tenantId, id);
+    CommandResult updateClientResource(UpdateClientResourceRequest r) {
+        auto resource = repo.findById(r.tenantId, r.id);
         if (resource.isNull)
             return CommandResult(false, "", "Client resource not found");
-        if (r.description.length > 0) resource.description = r.description;
-        if (r.url.length > 0) resource.url = r.url;
-        if (r.checksum.length > 0) resource.checksum = r.checksum;
-        if (r.sizeBytes > 0) resource.sizeBytes = r.sizeBytes;
-        if (r.version_.length > 0) resource.version_ = r.version_;
+        if (r.description.length > 0)
+            resource.description = r.description;
+        if (r.url.length > 0)
+            resource.url = r.url;
+        if (r.checksum.length > 0)
+            resource.checksum = r.checksum;
+        if (r.sizeBytes > 0)
+            resource.sizeBytes = r.sizeBytes;
+        if (r.version_.length > 0)
+            resource.version_ = r.version_;
         resource.updatedAt = currentTimestamp();
         resource.updatedBy = r.updatedBy;
         repo.update(resource);
         return CommandResult(true, resource.id.value, "");
     }
 
-    ClientResource getClientResource(ClientResourceId id) {
+    ClientResource getClientResource(TenantId tenantId, ClientResourceId id) {
         return repo.findById(tenantId, id);
     }
 
-    ClientResource[] listClientResourcesByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    ClientResource[] listClientResourcesByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteClientResource(ClientResourceId id) {
-        repo.removeById(id);
+    CommandResult deleteClientResource(TenantId tenantId, ClientResourceId id) {
+        auto resource = repo.findById(tenantId, id);
+        if (resource.isNull)
+            return CommandResult(false, "", "Client resource not found");
+
+        repo.remove(resource);
+        return CommandResult(true, resource.id.value, "");
     }
 
-    size_t countClientResourcesByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countClientResourcesByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

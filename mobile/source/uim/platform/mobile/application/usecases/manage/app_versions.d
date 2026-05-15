@@ -42,42 +42,46 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    CommandResult updateAppVersion(AppVersionId id, UpdateAppVersionRequest r) {
-        auto ver = repo.findById(tenantId, id);
+    CommandResult updateAppVersion(UpdateAppVersionRequest r) {
+        auto ver = repo.findById(r.tenantId, r.id);
         if (ver.isNull)
             return CommandResult(false, "", "App version not found");
-        if (r.releaseNotes.length > 0) ver.releaseNotes = r.releaseNotes;
-        if (r.downloadUrl.length > 0) ver.downloadUrl = r.downloadUrl;
-        if (r.minOsVersion.length > 0) ver.minOsVersion = r.minOsVersion;
+        if (r.releaseNotes.length > 0)
+            ver.releaseNotes = r.releaseNotes;
+        if (r.downloadUrl.length > 0)
+            ver.downloadUrl = r.downloadUrl;
+        if (r.minOsVersion.length > 0)
+            ver.minOsVersion = r.minOsVersion;
         ver.mandatory = r.mandatory;
         ver.updatedAt = currentTimestamp();
         ver.updatedBy = r.updatedBy;
+
         repo.update(ver);
         return CommandResult(true, ver.id.value, "");
     }
 
-    AppVersion getAppVersion(AppVersionId id) {
-        return repo.findById(tenantId, id);
+    AppVersion getAppVersion(GetAppVersionRequest r) {
+        return repo.findById(r.tenantId, r.id);
     }
 
-    AppVersion getLatestAppVersion(MobileAppId appId) {
-        return repo.findLatest(appId);
+    AppVersion getLatestAppVersion(TenantId tenantId, MobileAppId appId) {
+        return repo.findLatest(tenantId, appId);
     }
 
-    AppVersion[] listAppVersions(MobileAppId appId) {
-        return repo.findByApp(appId);
+    AppVersion[] listAppVersions(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteAppVersion(AppVersionId id) {
-        repo.removeById(id);
+    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+        auto ver = repo.findById(tenantId, id);
+        if (ver.isNull)
+            return CommandResult(false, "", "App version not found");
+
+        repo.remove(ver);
+        return CommandResult(true, ver.id.value, "");
     }
 
-    size_t countAppVersions(MobileAppId appId) {
-        return repo.countByApp(appId);
-    }
-
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
+    size_t countAppVersions(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 }

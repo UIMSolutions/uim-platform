@@ -60,7 +60,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");
 
-        templ.updatedAt = Clock.currStdTime();
+        templ.updatedAt = currentTimestamp();
         templ.name = r.name;
         templ.description = r.description;
         templ.entityTypeId = r.entityTypeId;

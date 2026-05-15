@@ -64,7 +64,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
     if (req.purposes.length > 0) sp.purposes = req.purposes;
     if (req.dataCategories.length > 0) sp.dataCategories = req.dataCategories;
     if (req.owner.length > 0) sp.owner = req.owner;
-    sp.updatedAt = Clock.currStdTime();
+    sp.updatedAt = currentTimestamp();
 
     repo.update(sp);
     return CommandResult(true, sp.id.value, "");

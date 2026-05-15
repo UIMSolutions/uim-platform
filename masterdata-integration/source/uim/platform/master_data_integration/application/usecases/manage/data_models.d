@@ -34,7 +34,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     model.namespace = req.namespace;
     model.version_ = req.version_.length > 0 ? req.version_ : "1.0.0";
     model.description = req.description;
-    model.category = parseCategory(req.category);
+    model.category = req.category.to!MasterDataCategory;
     model.fields = toFieldDefs(req.fields);
     model.keyFields = req.keyFields;
     model.requiredFields = req.requiredFields;
@@ -85,7 +85,8 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
-    repo.removeById(id);
+
+    repo.remove(model);
     return CommandResult(true, model.id.value, "");
   }
 
@@ -95,7 +96,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
       FieldDefinition fd;
       fd.name = dto.name;
       fd.displayName = dto.displayName;
-      fd.type_ = parseFieldType(dto.type_);
+      fd.type_ = dto.type_.to!FieldType;
       fd.isRequired = dto.isRequired;
       fd.isKey = dto.isKey;
       fd.defaultValue = dto.defaultValue;
@@ -107,53 +108,6 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     return result;
   }
 
-  private FieldType parseFieldType(string s) {
-    switch (s) {
-    case "string":
-      return FieldType.string_;
-    case "integer":
-      return FieldType.integer_;
-    case "decimal":
-      return FieldType.decimal_;
-    case "boolean":
-      return FieldType.boolean_;
-    case "date":
-      return FieldType.date;
-    case "timestamp":
-      return FieldType.timestamp;
-    case "reference":
-      return FieldType.reference;
-    case "array":
-      return FieldType.array_;
-    case "object":
-      return FieldType.object_;
-    default:
-      return FieldType.string_;
-    }
-  }
-
-  private MasterDataCategory parseCategory(string s) {
-    switch (s) {
-    case "businessPartner":
-      return MasterDataCategory.businessPartner;
-    case "costCenter":
-      return MasterDataCategory.costCenter;
-    case "profitCenter":
-      return MasterDataCategory.profitCenter;
-    case "companyCode":
-      return MasterDataCategory.companyCode;
-    case "workforcePerson":
-      return MasterDataCategory.workforcePerson;
-    case "bankAccount":
-      return MasterDataCategory.bankAccount;
-    case "plant":
-      return MasterDataCategory.plant;
-    case "custom":
-      return MasterDataCategory.custom;
-    default:
-      return MasterDataCategory.businessPartner;
-    }
-  }
 }
 
 

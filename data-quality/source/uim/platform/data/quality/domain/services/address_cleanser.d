@@ -88,7 +88,7 @@ class AddressCleanser {
     record.quality = assessQuality(record);
     record.appliedActions = actions;
     record.changeLog = changes;
-    record.cleansedAt = Clock.currStdTime();
+    record.cleansedAt = currentTimestamp();
 
     return record;
   }

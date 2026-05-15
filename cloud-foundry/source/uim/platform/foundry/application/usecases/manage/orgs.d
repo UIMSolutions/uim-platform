@@ -82,7 +82,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     if (req.totalServices > 0)
       updated.totalServices = req.totalServices;
     updated.totalAppInstances = req.totalAppInstances;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     orgs.update(updated);
     return CommandResult(true, updated.id.value, "");
@@ -96,7 +96,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Organization is already suspended");
 
     org.status = OrgStatus.suspended;
-    org.updatedAt = Clock.currStdTime();
+    org.updatedAt = currentTimestamp();
     orgs.update(org);
     return CommandResult(true, id.value, "");
   }
@@ -110,7 +110,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Organization is already active");
 
     org.status = OrgStatus.active;
-    org.updatedAt = Clock.currStdTime();
+    org.updatedAt = currentTimestamp();
     orgs.update(org);
     return CommandResult(true, id.value, "");
   }

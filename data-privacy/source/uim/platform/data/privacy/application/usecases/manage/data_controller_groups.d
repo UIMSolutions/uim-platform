@@ -52,7 +52,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (req.name.length > 0) g.name = req.name;
     if (req.description.length > 0) g.description = req.description;
     if (req.controllerIds.length > 0) g.controllerIds = req.controllerIds;
-    g.updatedAt = Clock.currStdTime();
+    g.updatedAt = currentTimestamp();
 
     repo.update(g);
     return CommandResult(true, g.id.value, "");

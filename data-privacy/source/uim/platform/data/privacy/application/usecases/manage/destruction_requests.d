@@ -63,7 +63,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Destruction request not found");
 
     request.status = req.status;
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     if (req.status == DestructionStatus.inProgress)
       request.startedAt = now;
     if (req.status == DestructionStatus.completed)

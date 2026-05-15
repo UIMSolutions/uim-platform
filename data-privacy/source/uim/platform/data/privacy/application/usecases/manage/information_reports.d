@@ -66,7 +66,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     if (req.downloadUrl.length > 0) r.downloadUrl = req.downloadUrl;
     if (req.totalRecords > 0) r.totalRecords = req.totalRecords;
     if (req.status == InformationReportStatus.completed) {
-      r.generatedAt = Clock.currStdTime();
+      r.generatedAt = currentTimestamp();
       r.expiresAt = r.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
     }
 

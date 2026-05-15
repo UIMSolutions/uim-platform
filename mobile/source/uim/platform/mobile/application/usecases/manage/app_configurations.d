@@ -23,7 +23,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAppConfiguration(CreateAppConfigurationRequest r) {
-        auto existing = repo.findByKey(r.appId, r.key);
+        auto existing = repo.findByKey(r.tenantId, r.appId, r.key);
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
         AppConfiguration config;
@@ -41,40 +41,42 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppConfiguration(UpdateAppConfigurationRequest r) {
-        auto config = repo.findById(tenantId, r.id);
+        auto config = repo.findById(r.tenantId, r.id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
-        if (r.value.length > 0) config.value = r.value;
-        if (r.description.length > 0) config.description = r.description;
+        if (r.value.length > 0)
+            config.value = r.value;
+        if (r.description.length > 0)
+            config.description = r.description;
         config.updatedAt = currentTimestamp();
         config.updatedBy = r.updatedBy;
         repo.update(config);
         return CommandResult(true, config.id.value, "");
     }
 
-    AppConfiguration getAppConfiguration(AppConfigurationId id) {
+    AppConfiguration getAppConfiguration(TenantId tenantId, AppConfigurationId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppConfiguration getAppConfigurationByKey(MobileAppId appId, string key) {
-        return repo.findByKey(appId, key);
+    AppConfiguration getAppConfigurationByKey(TenantId tenantId, MobileAppId appId, string key) {
+        return repo.findByKey(tenantId, appId, key);
     }
 
-    AppConfiguration[] listAppConfigurationsByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    AppConfiguration[] listAppConfigurationsByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteAppConfiguration(AppConfigurationId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id) {
+        auto config = repo.findById(tenantId, id);
+        if (config.isNull)
+            return CommandResult(false, "", "Configuration not found");
+
+        repo.remove(config);
+        return CommandResult(true, config.id.value, "");
     }
 
-    size_t countAppConfigurationsByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countAppConfigurationsByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

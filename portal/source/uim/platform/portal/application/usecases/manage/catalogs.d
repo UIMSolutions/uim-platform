@@ -60,7 +60,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
       description = req.description;
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       active = req.active;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     catalogRepo.update(catalog);
     return CommandResult(true, catalog.catalogId.value, "Catalog updated successfully.");

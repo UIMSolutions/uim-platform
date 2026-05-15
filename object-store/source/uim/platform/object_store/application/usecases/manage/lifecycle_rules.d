@@ -71,7 +71,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
     if (req.abortIncompleteUploadDays > 0)
       rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
-    rule.updatedAt = Clock.currStdTime();
+    rule.updatedAt = currentTimestamp();
 
     ruleRepo.update(rule);
     return CommandResult(true, rule.id.value, "");

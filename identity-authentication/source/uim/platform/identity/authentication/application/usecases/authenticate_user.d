@@ -71,7 +71,7 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
     }
 
     // Create session
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     auto session = IdaSession(randomUUID().toString(), user.id, req.tenantId,
         req.applicationId, AuthMethod.form, requiredMfa, req.ipAddress,
         req.userAgent, riskLevel, now, now + dur!"hours"(8).total!"hnsecs", false);

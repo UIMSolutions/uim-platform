@@ -79,7 +79,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
       arr.outboundServices = req.outboundServices;
 
   
-    arr.updatedAt = Clock.currStdTime();
+    arr.updatedAt = currentTimestamp();
 
     repo.update(arr);
     return CommandResult(true, arr.id.value, "");

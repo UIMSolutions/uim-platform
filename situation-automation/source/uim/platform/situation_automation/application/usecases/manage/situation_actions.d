@@ -57,7 +57,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         if (action.isNull)
             return CommandResult(false, "", "Situation action not found");
 
-        action.updatedAt = Clock.currStdTime();
+        action.updatedAt = currentTimestamp();
         action.updatedBy = r.updatedBy;
         action.name = r.name;
         action.description = r.description;

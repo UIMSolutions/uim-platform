@@ -26,7 +26,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "WZGroup name is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     WZGroup g;
     g.initEntity(req.tenantId);
     
@@ -57,7 +57,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       g.description = req.description;
     g.active = req.active;
-    g.updatedAt = Clock.currStdTime();
+    g.updatedAt = currentTimestamp();
 
     repo.update(g);
     return CommandResult(true, g.id.value, "");
@@ -68,7 +68,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (g.isNull)
       return CommandResult(false, "", "WZGroup not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(g);
+    return CommandResult(true, g.id.value, "");
   }
 }

@@ -1,0 +1,396 @@
+     Warning 
+     Warning ## Warning for package abap-environment ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package ai-core ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package ai-launchpad ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package analytics ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package application-autoscaler ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package auditlog ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package authorization-trust ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package cloud-foundry ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package connectivity ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package content-agent ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package credential-store ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package data-privacy ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package data-quality ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package data-retention ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package dataattribute-recommendation ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package datasphere ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package destination ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package dms-application ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package document-ai ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package hana ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package html-repository ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package identity-authentication ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package identity-directory ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package identity-provisioning ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package integration-automation ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package job-scheduling ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package keystore ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package kyma ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package logging ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package malware-scanning ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package management ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package masterdata-integration ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package mobile ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package monitoring ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package portal ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 
+     Warning 
+     Warning ## Warning for package uim-platform ##
+     Warning 
+     Warning The following compiler flags have been specified in the package description
+     Warning file. They are handled by DUB and direct use in packages is discouraged.
+     Warning Alternatively, you can set the DFLAGS environment variable to pass custom flags
+     Warning to the compiler, or use one of the suggestions below:
+     Warning 
+     Warning debugInfo: Call DUB with --build=debug
+     Warning ignoreDeprecations: Use "buildRequirements" to control the deprecation warning level
+     Warning 

@@ -81,7 +81,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
     }
     if (req.conditions.length > 0)
       updated.conditions = req.conditions;
-    updated.updatedAt = Clock.currStdTime();
+    updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
     return CommandResult(true, updated.id.value, "");

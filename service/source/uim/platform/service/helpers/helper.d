@@ -254,18 +254,24 @@ T[] flat(T)(T[][] arrays) {
   return result;
 }
 
-  // private static long currentTimestamp() {
-  //   import core.time : Duration;
-  //   import std.datetime.systime : Clock;
+// private static long currentTimestamp() {
+//   import core.time : Duration;
+//   import std.datetime.systime : Clock;
 
-  //   return Clock.currStdTime();
-  // }
+//   return Clock.currStdTime();
+// }
 
-    /// Check if a path starts with the given prefix.
-  bool pathStartsWith(string path, string prefix) {
-    if (prefix.length == 0)
-      return true;
-    if (path.length < prefix.length)
-      return false;
-    return path[0 .. prefix.length] == prefix;
-  }
+/// Check if a path starts with the given prefix.
+bool pathStartsWith(string path, string prefix) {
+  if (prefix.length == 0)
+    return true;
+  if (path.length < prefix.length)
+    return false;
+  return path[0 .. prefix.length] == prefix;
+}
+
+long currentTimestamp() {
+  import std.datetime.systime : Clock;
+
+  return Clock.currStdTime();
+}

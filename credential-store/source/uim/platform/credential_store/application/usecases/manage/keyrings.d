@@ -143,9 +143,4 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, cred.id.value, "");
   }
 
-  private static long currentTimestamp() {
-    import std.datetime.systime : Clock;
-
-    return Clock.currStdTime();
-  }
 }

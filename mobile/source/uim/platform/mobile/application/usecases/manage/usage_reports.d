@@ -22,7 +22,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult report(ReportUsageRequest r) {
+    CommandResult createUsageReport(ReportUsageRequest r) {
         UsageReport usage;
         usage.initEntity(r.tenantId);
 
@@ -40,28 +40,29 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, usage.id.value, "");
     }
 
-    UsageReport get_(UsageReportId id) {
+    UsageReport getUsageReport(TenantId tenantId, UsageReportId id) {
         return repo.findById(tenantId, id);
     }
 
-    UsageReport[] listByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    UsageReport[] listUsageReports(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    UsageReport[] listByDevice(DeviceRegistrationId deviceId) {
-        return repo.findByDevice(deviceId);
+    UsageReport[] listUsageReports(TenantId tenantId, DeviceRegistrationId deviceId) {
+        return repo.findByDevice(tenantId, deviceId);
     }
 
-    CommandResult delete(UsageReportId id) {
-        repo.removeById(id);
+    CommandResult deleteUsageReport(TenantId tenantId, UsageReportId id) {
+        auto report = repo.findById(tenantId, id);
+        if (report.isNull)
+            return CommandResult(false, "", "Usage report not found");
+
+        repo.remove(report);
+        return CommandResult(true, report.id.value, "");
     }
 
-    size_t countByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

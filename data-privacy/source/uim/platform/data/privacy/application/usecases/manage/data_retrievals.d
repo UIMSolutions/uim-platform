@@ -39,7 +39,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     // Deadline: 30 days from now (GDPR Art. 12(3))
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
@@ -73,7 +73,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     }
     request.totalFields = fieldCount;
     request.status = RetrievalStatus.completed;
-    request.completedAt = Clock.currStdTime();
+    request.completedAt = currentTimestamp();
     request.downloadUrl = "/api/v1/data-retrievals/" ~ request.id.value ~ "/download";
 
     repo.save(request);
@@ -103,7 +103,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (req.totalFields > 0)
       request.totalFields = req.totalFields;
     if (req.status == RetrievalStatus.completed)
-      request.completedAt = Clock.currStdTime();
+      request.completedAt = currentTimestamp();
 
     repo.update(request);
     return CommandResult(true, request.id.value, "");

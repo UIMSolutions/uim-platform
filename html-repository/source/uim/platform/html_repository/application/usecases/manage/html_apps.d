@@ -55,7 +55,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
 
         if (r.description.length > 0) app.description = r.description;
         if (r.visibility.length > 0) app.visibility = parseVisibility(r.visibility);
-        app.updatedAt = Clock.currStdTime();
+        app.updatedAt = currentTimestamp();
         app.updatedBy = r.updatedBy;
 
         repo.update(app);

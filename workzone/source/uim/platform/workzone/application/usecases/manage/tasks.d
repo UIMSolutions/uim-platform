@@ -26,7 +26,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "WZTask title is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     WZTask t;
     t.initEntity(req.tenantId);
 
@@ -74,10 +74,10 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     t.priority = req.priority;
     if (req.dueDate > 0)
       t.dueDate = req.dueDate;
-    t.updatedAt = Clock.currStdTime();
+    t.updatedAt = currentTimestamp();
 
     if (t.status == TaskStatus.completed && t.completedAt == 0)
-      t.completedAt = Clock.currStdTime();
+      t.completedAt = currentTimestamp();
 
     repo.update(t);
     return CommandResult(true, t.id.value, "");
@@ -89,8 +89,8 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "WZTask not found");
 
     t.status = TaskStatus.completed;
-    t.completedAt = Clock.currStdTime();
-    t.updatedAt = Clock.currStdTime();
+    t.completedAt = currentTimestamp();
+    t.updatedAt = currentTimestamp();
     repo.update(t);
     return CommandResult(true, t.id.value, "");
   }
@@ -100,7 +100,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     if (t.isNull)
       return CommandResult(false, "", "WZTask not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(t);
+    return CommandResult(true, t.id.value, "");
   }
 }

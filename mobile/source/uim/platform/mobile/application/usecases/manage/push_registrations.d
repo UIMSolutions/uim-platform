@@ -23,11 +23,11 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult registerPushRegistration(CreatePushRegistrationRequest r) {
-        auto existing = repo.findByDeviceAndApp(r.deviceId, r.appId);
+        auto existing = repo.findByDeviceAndApp(r.tenantId, r.deviceId, r.appId);
         if (!existing.isNull) {
             existing.pushToken = r.pushToken;
             existing.topics = r.topics;
-            existing.updatedAt = Clock.currStdTime();
+            existing.updatedAt = currentTimestamp();
             repo.update(existing);
             return CommandResult(true, existing.id.value, "");
         }
@@ -40,31 +40,35 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         reg.pushToken = r.pushToken;
         reg.topics = r.topics;
         reg.status = PushRegStatus.active;
-        reg.registeredAt = Clock.currStdTime();
+        reg.registeredAt = currentTimestamp();
         reg.updatedAt = reg.registeredAt;
 
         repo.save(reg);
         return CommandResult(true, reg.id.value, "");
     }
 
-    PushRegistration getPushRegistration(PushRegistrationId id) {
+    PushRegistration getPushRegistration(TenantId tenantId, PushRegistrationId id) {
         return repo.findById(tenantId, id);
     }
 
-    PushRegistration[] listPushRegistrationsByApp(MobileAppId appId) {
-        return repo.findByApp(appId);
+    PushRegistration[] listPushRegistrationsByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    PushRegistration[] listPushRegistrationsByTopic(MobileAppId appId, string topic) {
-        return repo.findByTopic(appId, topic);
+    PushRegistration[] listPushRegistrationsByTopic(TenantId tenantId, MobileAppId appId, string topic) {
+        return repo.findByTopic(tenantId, appId, topic);
     }
 
-    CommandResult deletePushRegistration(PushRegistrationId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deletePushRegistration(TenantId tenantId, PushRegistrationId id) {
+        auto reg = repo.findById(tenantId, id);
+        if (reg.isNull)
+            return CommandResult(false, "", "Push registration not found");
+
+        repo.remove(reg);
+        return CommandResult(true, reg.id.value, "");
     }
 
-    size_t countPushRegistrationsByApp(MobileAppId appId) {
-        return repo.countByApp(appId);
+    size_t countPushRegistrationsByApp(TenantId tenantId, MobileAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 }

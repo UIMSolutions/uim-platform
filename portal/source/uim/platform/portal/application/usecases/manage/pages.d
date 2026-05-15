@@ -56,7 +56,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     if (siteRepo.existsById(req.siteId)) {
       auto site = siteRepo.findById(req.siteId);
       site.pageIds ~= page.id;
-      site.updatedAt = Clock.currStdTime();
+      site.updatedAt = currentTimestamp();
       siteRepo.update(site);
     }
 
@@ -84,7 +84,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     pageRepo.update(page);
     return CommandResult(true, page.id.value, "Page updated successfully.");
@@ -100,7 +100,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     if (siteRepo.existsById(siteId)) {
       auto site = siteRepo.findById(siteId);
       site.pageIds = site.pageIds.filter!(p => p != pageId).array.toJson;
-      site.updatedAt = Clock.currStdTime();
+      site.updatedAt = currentTimestamp();
       siteRepo.update(site);
     }
 

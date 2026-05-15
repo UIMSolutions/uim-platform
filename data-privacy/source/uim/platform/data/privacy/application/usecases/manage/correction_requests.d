@@ -31,7 +31,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     CorrectionRequest request;
     request.initEntity(req.tenantId);
     request.dataSubjectId = req.dataSubjectId;
@@ -68,7 +68,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
 
     correctionRequest.status = req.status;
     if (req.status == CorrectionStatus.completed)
-      correctionRequest.completedAt = Clock.currStdTime();
+      correctionRequest.completedAt = currentTimestamp();
 
     crRepo.update(correctionRequest);
     return CommandResult(true, correctionRequest.id.value, "");

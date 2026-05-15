@@ -26,7 +26,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Page title is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Workpage page;
     page.initEntity(req.tenantId, req.createdBy);
     
@@ -59,7 +59,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
       page.description = req.description;
     page.sortOrder = req.sortOrder;
     page.visible = req.visible;
-    page.updatedAt = Clock.currStdTime();
+    page.updatedAt = currentTimestamp();
 
     repo.update(page);
     return CommandResult(true, page.id.value, "");
@@ -70,7 +70,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Page not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

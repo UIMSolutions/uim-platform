@@ -64,7 +64,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
       entity.maxFileSize = r.maxFileSize;
     if (r.allowedFileTypes.length > 0)
       entity.allowedFileTypes = r.allowedFileTypes;
-    entity.updatedAt = Clock.currStdTime();
+    entity.updatedAt = currentTimestamp();
 
     repo.update(entity);
     return CommandResult(true, entity.id.value, "");
@@ -76,7 +76,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.archived;
-    entity.updatedAt = Clock.currStdTime();
+    entity.updatedAt = currentTimestamp();
 
     repo.update(entity);
     return CommandResult(true, entity.id.value, "");
@@ -88,7 +88,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.active;
-    entity.updatedAt = Clock.currStdTime();
+    entity.updatedAt = currentTimestamp();
     
     repo.update(entity);
     return CommandResult(true, entity.id.value, "");

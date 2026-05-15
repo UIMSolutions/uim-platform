@@ -25,7 +25,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   AppResponse createApplication(CreateAppRequest req) {
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     
     Application app;
     app.initEntity(req.tenantId);
@@ -64,7 +64,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     if (req.allowedScopes.length > 0)
       app.allowedScopes = req.allowedScopes;
 
-    app.updatedAt = Clock.currStdTime();
+    app.updatedAt = currentTimestamp();
 
     appRepo.update(app);
     return CommandResult(true, app.id.value, "");

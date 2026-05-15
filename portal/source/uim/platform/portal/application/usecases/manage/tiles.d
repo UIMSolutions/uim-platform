@@ -28,7 +28,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return TileResponse("", "Tile title is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     Tile tile;
     tile.initEntity(req.tenantId, req.requestedBy);
     with (tile) {
@@ -89,17 +89,18 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
       keywords = req.keywords;
       allowedRoleIds = req.allowedRoleIds;
       config = req.configuration;
-      updatedAt = Clock.currStdTime();
+      updatedAt = currentTimestamp();
     }
     tileRepo.update(tile);
     return CommandResult(true, tile.tileId.value, "Tile updated successfully.");
   }
 
   CommandResult deleteTile(TileId id) {
-    if (!tileRepo.existsById(id))
+    auto tile = tileRepo.findById(id);
+    if (tile.isNull)
       return CommandResult(false, "", "Tile not found");
 
-    tileRepo.removeById(id);
+    tileRepo.remove(tile);
     return CommandResult(true, id.value, "Tile deleted successfully.");
   }
 }

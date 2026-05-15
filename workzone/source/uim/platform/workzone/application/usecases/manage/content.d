@@ -27,7 +27,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Content title is required");
 
-    auto now = Clock.currStdTime();
+    auto now = currentTimestamp();
     ContentItem item;
     item.initEntity(req.tenantId, req.authorId);
 
@@ -74,10 +74,10 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     item.status = req.status;
     item.tags = req.tags;
     item.pinned = req.pinned;
-    item.updatedAt = Clock.currStdTime();
+    item.updatedAt = currentTimestamp();
 
     if (item.status == ContentStatus.published && item.publishedAt == 0)
-      item.publishedAt = Clock.currStdTime();
+      item.publishedAt = currentTimestamp();
 
     repo.update(item);
     return CommandResult(true, item.id.value, "");
@@ -89,8 +89,8 @@ class ManageContentUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Content not found");
 
     item.status = ContentStatus.published;
-    item.publishedAt = Clock.currStdTime();
-    item.updatedAt = Clock.currStdTime();
+    item.publishedAt = currentTimestamp();
+    item.updatedAt = currentTimestamp();
     repo.update(item);
     return CommandResult(true, item.id.value, "");
   }
@@ -100,7 +100,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     if (item.isNull)
       return CommandResult(false, "", "Content not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(item);
+    return CommandResult(true, item.id.value, "");
   }
 }

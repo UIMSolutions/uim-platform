@@ -110,7 +110,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     repo.update(instance);
 
     // Complete deletion
-    repo.removeById(tenantId, id);
+    repo.remove(instance);
     return CommandResult(true, id.value, "");
   }
 

@@ -56,7 +56,7 @@ class ValidationEngine {
       result.qualityScore = 100.0;
 
   
-    result.validatedAt = Clock.currStdTime();
+    result.validatedAt = currentTimestamp();
 
     return result;
   }

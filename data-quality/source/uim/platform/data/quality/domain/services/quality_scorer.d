@@ -91,7 +91,7 @@ class QualityScorer {
       RuleSeverityCount(RuleSeverity.critical, severityCounts[3]),
     ];
 
-    d.computedAt = Clock.currStdTime();
+    d.computedAt = currentTimestamp();
 
     return d;
   }
