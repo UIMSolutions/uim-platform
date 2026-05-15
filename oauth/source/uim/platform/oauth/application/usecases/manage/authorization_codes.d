@@ -18,11 +18,11 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    AuthorizationCode getCode(TenantId tenantId,AuthorizationCodeId id) {
+    AuthorizationCode getCode(TenantId tenantId, AuthorizationCodeId id) {
         return repo.findById(tenantId, id);
     }
 
-        AuthorizationCode[] listCodes(TenantId tenantId) {
+    AuthorizationCode[] listCodes(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
@@ -57,7 +57,7 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
 
     CommandResult deleteCode(TenantId tenantId, AuthorizationCodeId id) {
         auto code = repo.findById(tenantId, id);
-        if (code.isNull)            
+        if (code.isNull)
             return CommandResult(false, "", "Authorization code not found");
 
         repo.remove(code);

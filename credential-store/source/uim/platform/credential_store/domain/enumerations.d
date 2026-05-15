@@ -40,8 +40,8 @@ enum ResourceType {
 }
 
 enum PermissionLevel {
-  readOnly,
   readWrite,
+  readOnly,
   admin,
 }
 

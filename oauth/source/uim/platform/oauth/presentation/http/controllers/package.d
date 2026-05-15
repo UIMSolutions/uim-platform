@@ -6,10 +6,10 @@
 module uim.platform.oauth.presentation.http.controllers;
 
 public {
-    import uim.platform.oauth.presentation.http.controllers.oauth_client_controller;
-    import uim.platform.oauth.presentation.http.controllers.oauth_scope_controller;
-    import uim.platform.oauth.presentation.http.controllers.access_token_controller;
-    import uim.platform.oauth.presentation.http.controllers.refresh_token_controller;
-    import uim.platform.oauth.presentation.http.controllers.authorization_code_controller;
-    import uim.platform.oauth.presentation.http.controllers.branding_config_controller;
+    import uim.platform.oauth.presentation.http.controllers.oauth_client;
+    import uim.platform.oauth.presentation.http.controllers.oauth_scope;
+    import uim.platform.oauth.presentation.http.controllers.access_token;
+    import uim.platform.oauth.presentation.http.controllers.refresh_token;
+    import uim.platform.oauth.presentation.http.controllers.authorization_code;
+    import uim.platform.oauth.presentation.http.controllers.branding_config;
 }

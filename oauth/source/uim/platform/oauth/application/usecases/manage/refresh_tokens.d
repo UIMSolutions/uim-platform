@@ -18,16 +18,16 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
+    RefreshToken[] listTokens(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
     RefreshToken getToken(TenantId tenantId, RefreshTokenId id) {
         return repo.findById(tenantId, id);
     }
 
     RefreshToken getToken(TenantId tenantId, string tokenValue) {
         return repo.findByTokenValue(tenantId, tokenValue);
-    }
-
-    RefreshToken[] listTokens(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
     }
 
     CommandResult createToken(RefreshTokenDTO dto) {
@@ -48,7 +48,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
         return CommandResult(true, token.id.value, "");
     }
 
-    CommandResult revoke(TenantId tenantId, RefreshTokenId id) {
+    CommandResult revokeToken(TenantId tenantId, RefreshTokenId id) {
         if (!repo.existsById(tenantId, id))
             return CommandResult(false, "", "Refresh token not found");
         auto existing = repo.findById(tenantId, id);

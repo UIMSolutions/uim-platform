@@ -25,12 +25,12 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r) {
     ServiceBinding binding;
     binding.initEntity(r.tenantId);
-    
+
     binding.name = r.name;
     binding.description = r.description;
     binding.clientId = randomUUID().toString;
     binding.clientSecret = randomUUID().to!string ~ randomUUID().to!string;
-    binding.permission = parsePermission(r.permission);
+    binding.permission = r.permission.to!PermissionLevel;
     binding.status = BindingStatus.active;
     binding.allowedNamespaces = r.allowedNamespaces;
     binding.expiresAt = r.expiresAt;
@@ -43,7 +43,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     resp.name = binding.name;
     resp.clientId = binding.clientId;
     resp.clientSecret = binding.clientSecret; // only returned on creation
-    resp.permission = r.permission;
+    resp.permission = binding.permission.to!string;
     resp.status = "active";
     resp.allowedNamespaces = binding.allowedNamespaces;
     resp.createdAt = binding.createdAt;
@@ -59,7 +59,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (r.description.length > 0)
       binding.description = r.description;
     if (r.permission.length > 0)
-      binding.permission = parsePermission(r.permission);
+      binding.permission = r.permission.to!PermissionLevel;
     if (r.status == "revoked")
       binding.status = BindingStatus.revoked;
     if (r.allowedNamespaces.length > 0)
@@ -90,14 +90,4 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return bindings.countByTenant(tenantId);
   }
 
-  private static PermissionLevel parsePermission(string p) {
-    switch (p) {
-    case "readOnly":
-      return PermissionLevel.readOnly;
-    case "admin":
-      return PermissionLevel.admin;
-    default:
-      return PermissionLevel.readWrite;
-    }
-  }
-
+}

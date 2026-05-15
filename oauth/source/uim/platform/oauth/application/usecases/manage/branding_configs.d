@@ -18,7 +18,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    BrandingConfig getById(TenantId tenantId, BrandingConfigId id) {
+    BrandingConfig getConfig(TenantId tenantId, BrandingConfigId id) {
         return repo.findById(tenantId, id);
     }
 
