@@ -24,15 +24,6 @@ struct DirectoryId {
   mixin DomainId;
 }
 
-struct SubaccountId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct EntitlementId {
   string value;

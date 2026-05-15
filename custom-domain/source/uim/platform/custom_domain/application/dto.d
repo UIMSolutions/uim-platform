@@ -23,8 +23,8 @@ struct CreateCustomDomainRequest {
     UserId createdBy;
     
     string domainName;
-    string organizationId;
-    string spaceId;
+    OrganizationId organizationId;
+    SpaceId spaceId;
     string environment;
 }
 
@@ -115,8 +115,8 @@ struct CreateDomainMappingRequest {
     string customRoute;
     string mappingType;
     string applicationName;
-    string organizationId;
-    string spaceId;
+    OrganizationId organizationId;
+    SpaceId spaceId;
     UserId createdBy;
 }
 

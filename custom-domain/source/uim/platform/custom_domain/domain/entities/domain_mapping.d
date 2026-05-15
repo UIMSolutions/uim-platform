@@ -20,8 +20,8 @@ struct DomainMapping {
     MappingType mappingType;
     MappingStatus status;
     string applicationName;
-    string organizationId;
-    string spaceId;
+    OrganizationId organizationId;
+    SpaceId spaceId;
     
     Json toJson() const {
         auto j = entityToJson

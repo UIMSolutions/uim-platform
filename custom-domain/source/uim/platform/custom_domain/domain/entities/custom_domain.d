@@ -15,8 +15,8 @@ struct CustomDomain {
     mixin TenantEntity!(CustomDomainId);
 
     string domainName;
-    string organizationId;
-    string spaceId;
+    OrganizationId organizationId;
+    SpaceId spaceId;
     DomainStatus status;
     DomainEnvironment environment;
     string activeCertificateId;

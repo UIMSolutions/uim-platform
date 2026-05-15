@@ -91,18 +91,6 @@ struct ContentActivityId {
   mixin DomainId;
 }
 
-
-
-struct SubaccountId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
-
 /// Status of a content package.
 enum PackageStatus {
   draft,

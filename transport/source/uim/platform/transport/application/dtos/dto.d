@@ -22,7 +22,7 @@ struct TransportNodeDTO {
     string region;
     string globalAccount;
     string subaccountId;
-    string spaceId;
+    SpaceId spaceId;
     string serviceKey;
     bool isForwardEnabled;
     bool autoImport;

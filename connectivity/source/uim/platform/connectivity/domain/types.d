@@ -70,15 +70,6 @@ struct ConnectivityLogId {
   mixin DomainId;
 }
 
-struct SubaccountId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct SourceId {
   string value;

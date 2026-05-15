@@ -8,7 +8,7 @@ module uim.platform.html_repository.application.dto;
 // HtmlApp DTOs
 struct CreateHtmlAppRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string namespace_;
   string description;
@@ -112,7 +112,7 @@ struct UpdateAppFileRequest {
 // ServiceInstance DTOs
 struct CreateServiceInstanceRequest {
   TenantId tenantId;
-  string spaceId;
+  SpaceId spaceId;
   string name;
   string plan; // "appHost", "appRuntime"
   string description;

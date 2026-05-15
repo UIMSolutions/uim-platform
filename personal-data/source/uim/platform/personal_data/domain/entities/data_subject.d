@@ -23,7 +23,7 @@ struct DataSubject {
     string dateOfBirth;
     string nationality;
     string organizationName;
-    string organizationId;
+    OrganizationId organizationId;
     string externalId;
     string[] applicationIds;
 

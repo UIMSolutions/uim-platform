@@ -25,7 +25,7 @@ struct CreateDataSubjectRequest {
     string dateOfBirth;
     string nationality;
     string organizationName;
-    string organizationId;
+    OrganizationId organizationId;
     string externalId;
     UserId createdBy;
 }

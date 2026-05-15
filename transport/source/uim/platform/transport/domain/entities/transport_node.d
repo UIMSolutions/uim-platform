@@ -24,7 +24,7 @@ struct TransportNode {
     string region;
     string globalAccount;
     string subaccountId;
-    string spaceId;
+    SpaceId spaceId;
     string serviceKey;
     bool isForwardEnabled = true;
     bool autoImport = false;
