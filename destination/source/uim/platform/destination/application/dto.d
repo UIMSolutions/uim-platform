@@ -140,7 +140,7 @@ struct CreateFragmentRequest {
 
 struct UpdateFragmentRequest {
   TenantId tenantId;
-  FragmentId fragmentId;
+  DestinationFragmentId fragmentId;
 
   string description;
   string url;

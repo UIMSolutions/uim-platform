@@ -33,7 +33,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     r.legalBasis = req.legalBasis;
     r.residenceDays = req.residenceDays;
     r.retentionDays = req.retentionDays;
-    r.validFrom = req.validFrom > 0 ? req.validFrom : now;
+    r.validFrom = req.validFrom > 0 ? req.validFrom : currentTimestamp;
     r.validUntil = req.validUntil;
 
     repo.save(r);

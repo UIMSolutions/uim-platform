@@ -65,7 +65,7 @@ class ScopeController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = ScopeId(extractIdFromPath(req));
 
       auto s = usecase.getScope(tenantId, id);
       if (s.id.length == 0) {
@@ -81,7 +81,8 @@ class ScopeController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = ScopeId(extractIdFromPath(req));
+
       auto j = req.json;
       UpdateScopeRequest r;
       r.tenantId = tenantId;
@@ -101,7 +102,7 @@ class ScopeController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = ScopeId(extractIdFromPath(req));
 
       auto result = usecase.deleteScope(tenantId, id);
       if (result.success)

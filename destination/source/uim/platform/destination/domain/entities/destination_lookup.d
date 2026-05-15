@@ -15,6 +15,8 @@ mixin(ShowModule!());
 @safe:
 /// The result of a "find destination" lookup — includes destination config, resolved auth tokens, and certificates.
 struct DestinationLookup {
+   mixin TenantEntity!DestinationLookupId;
+   
   Destination destination;
   AuthToken[] authTokens;
   Certificate[] certificates;

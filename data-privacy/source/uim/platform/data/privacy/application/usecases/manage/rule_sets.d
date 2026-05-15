@@ -24,7 +24,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Name is required");
 
     auto rs = RuleSet();
-    rs.initEntity(req.tenantId, req.requestedBy);
+    rs.initEntity(req.tenantId);
 
     rs.businessContextId = req.businessContextId;
     rs.name = req.name;

@@ -22,7 +22,7 @@ class RuleSetController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/rule-sets", &handleCreate);
     router.get("/api/v1/rule-sets", &handleList);
     router.get("/api/v1/rule-sets/*", &handleGet);
@@ -32,7 +32,7 @@ class RuleSetController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateRuleSetRequest r;
@@ -40,13 +40,13 @@ class RuleSetController : PlatformController {
       r.businessContextId = j.getString("businessContextId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.priority = cast(int) jsonLong(j, "priority");
+      r.priority = cast(int)jsonLong(j, "priority");
 
       auto result = usecase.createRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Rule set created successfully");
+          .set("id", result.id)
+          .set("message", "Rule set created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -63,9 +63,9 @@ class RuleSetController : PlatformController {
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Rule sets retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Rule sets retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -73,10 +73,10 @@ class RuleSetController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = RuleSetId(extractIdFromPath(req.requestURI));
+
       auto entry = usecase.getRuleSet(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Rule set not found");
@@ -88,7 +88,7 @@ class RuleSetController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRuleSetRequest r;
@@ -96,13 +96,13 @@ class RuleSetController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.priority = cast(int) jsonLong(j, "priority");
+      r.priority = cast(int)jsonLong(j, "priority");
 
       auto result = usecase.updateRuleSet(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Rule set updated successfully");
+          .set("id", result.id)
+          .set("message", "Rule set updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -112,16 +112,15 @@ class RuleSetController : PlatformController {
   }
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = RuleSetId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Rule set activated successfully");
+          .set("id", result.id)
+          .set("message", "Rule set activated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -131,27 +130,14 @@ class RuleSetController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = RuleSetId(extractIdFromPath(req.requestURI));
+
       usecase.deleteRuleSet(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(const RuleSet e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("businessContextId", e.businessContextId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("status", e.status.to!string)
-      .set("priority", e.priority)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("activatedAt", e.activatedAt);
-  }
 }

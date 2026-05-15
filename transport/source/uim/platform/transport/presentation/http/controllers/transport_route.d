@@ -63,7 +63,7 @@ class TransportRouteController : PlatformController {
             dto.destinationNodeId = j.getString("destinationNodeId");
             dto.status = j.getString("status");
             dto.isSequential = getBoolean(j, "isSequential");
-            dto.sequence = cast(int) getLong(j, "sequence");
+            dto.sequence = cast(int) j.getLong("sequence");
             dto.createdBy = UserId(j.getString("createdBy"));
             auto result = usecase.createRoute(dto);
             if (result.success)
@@ -99,7 +99,7 @@ class TransportRouteController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.isSequential = getBoolean(j, "isSequential");
-            dto.sequence = cast(int) getLong(j, "sequence");
+            dto.sequence = cast(int) j.getLong("sequence");
             dto.updatedBy = UserId(j.getString("updatedBy"));
             auto result = usecase.updateRoute(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route updated"), 200);

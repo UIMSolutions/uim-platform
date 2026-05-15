@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A business context — defines the context for processing personal data with versioning.
 struct BusinessContext {
-  mixin TenantEntity!(BusinessContextId);
+  mixin TenantEntity!BusinessContextId;
 
   string name;
   string description;

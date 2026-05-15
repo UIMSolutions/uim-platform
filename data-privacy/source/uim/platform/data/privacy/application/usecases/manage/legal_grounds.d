@@ -57,15 +57,15 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     return legalGrounds.findByTenant(tenantId);
   }
 
-  LegalGround[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+  LegalGround[] listGrounds(TenantId tenantId, DataSubjectId subjectId) {
     return legalGrounds.findByDataSubject(tenantId, subjectId);
   }
 
-  LegalGround[] listByBasis(TenantId tenantId, LegalBasis basis) {
+  LegalGround[] listGrounds(TenantId tenantId, LegalBasis basis) {
     return legalGrounds.findByBasis(tenantId, basis);
   }
 
-  LegalGround[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+  LegalGround[] listGrounds(TenantId tenantId, ProcessingPurpose purpose) {
     return legalGrounds.findByPurpose(tenantId, purpose);
   }
 

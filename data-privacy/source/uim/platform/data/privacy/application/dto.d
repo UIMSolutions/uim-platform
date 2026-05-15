@@ -277,6 +277,7 @@ struct UpdateBusinessProcessRequest {
 struct CreateBusinessSubprocessRequest {
   TenantId tenantId;
   BusinessProcessId parentProcessId;
+  
   string name;
   string description;
   ProcessingPurpose[] purposes;

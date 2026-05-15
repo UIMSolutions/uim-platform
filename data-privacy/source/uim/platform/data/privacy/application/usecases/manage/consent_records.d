@@ -63,11 +63,11 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  ConsentRecord[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+  ConsentRecord[] listConsents(TenantId tenantId, DataSubjectId subjectId) {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  ConsentRecord[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+  ConsentRecord[] listConsents(TenantId tenantId, ProcessingPurpose purpose) {
     return repo.findByPurpose(tenantId, purpose);
   }
 

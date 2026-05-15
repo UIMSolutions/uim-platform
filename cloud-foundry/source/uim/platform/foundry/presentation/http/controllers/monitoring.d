@@ -34,7 +34,7 @@ class MonitoringController : PlatformController {
         auto tenantId = req.getTenantId;
       auto items = useCase.listAppHealth(tenantId);
 
-      auto arr = items.map!(h => h)).array.toJson;
+      auto arr = items.map!(h => h.toJson()).array.toJson;
 
       auto resp = Json.emptyObject
         .set("message", "Application health summaries retrieved successfully")
@@ -51,14 +51,15 @@ class MonitoringController : PlatformController {
   protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = MonitoringId(extractIdFromPath(req.requestURI));
+
       auto tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(tenantId, id);
       if (h.appId.isEmpty) {
         writeError(res, 404, "Application not found");
         return;
       }
-      res.writeJsonBody(h.toJson, 200);
+      res.writeJsonBody(h.toJson(), 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -67,7 +68,7 @@ class MonitoringController : PlatformController {
 
   protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = extractIdFromPath(req.requestURI);
+      auto spaceId = SpaceId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto u = useCase.getSpaceUsage(tenantId, spaceId);
 
@@ -81,6 +82,7 @@ class MonitoringController : PlatformController {
         .set("totalDiskUsedMb", u.totalDiskUsedMb)
         .set("totalServiceInstances", u.totalServiceInstances)
         .set("totalRoutes", u.totalRoutes);
+        
       res.writeJsonBody(j, 200);
     }
     catch (Exception e) {

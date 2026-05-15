@@ -11,9 +11,10 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface DatasetRepository {
-  Dataset findById(EntityId id);
-  Dataset[] findAll();
-  void save(Dataset dataset);
-  void remove(EntityId id);
+interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
+  
+  size_t countByDataSource(TenantId tenantId, DataSourceId dataSourceId);
+  Dataset[] findByDataSource(TenantId tenantId, DataSourceId dataSourceId);
+  void removeByDataSource(TenantId tenantId, DataSourceId dataSourceId);
+  
 }

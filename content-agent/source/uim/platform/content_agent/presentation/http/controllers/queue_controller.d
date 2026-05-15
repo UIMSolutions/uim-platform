@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.queue_controller;
 
-
-
-
 // import uim.platform.content_agent.application.usecases.manage.transport_queues;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.transport_queue;
@@ -26,7 +23,7 @@ class QueueController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/queues", &handleCreate);
     router.get("/api/v1/queues", &handleList);
     router.get("/api/v1/queues/*", &handleGet);
@@ -35,7 +32,7 @@ class QueueController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateQueueRequest();
@@ -55,13 +52,10 @@ class QueueController : PlatformController {
           .set("message", "Queue created successfully");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -77,34 +71,32 @@ class QueueController : PlatformController {
         .set("items", arr)
         .set("totalCount", Json(queues.length))
         .set("message", "Queues retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = QueueId(extractIdFromPath(req.requestURI));
       auto queue = usecase.getQueue(id);
       if (queue.isNull) {
         writeError(res, 404, "Queue not found");
         return;
       }
       res.writeJsonBody(queue.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = QueueId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdateQueueRequest();
       r.description = j.getString("description");
@@ -119,21 +111,18 @@ class QueueController : PlatformController {
           .set("message", "Queue updated successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Queue not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = QueueId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteQueue(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -141,28 +130,25 @@ class QueueController : PlatformController {
           .set("message", "Queue deleted successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeQueue(const TransportQueue q) {
     return Json.emptyObject
-    .set("id", q.id)
-    .set("tenantId", q.tenantId)
-    .set("name", q.name)
-    .set("description", q.description)
-    .set("queueType", q.queueType.to!string)
-    .set("endpoint", q.endpoint)
-    .set("isDefault", q.isDefault)
-    .set("createdBy", q.createdBy)
-    .set("createdAt", q.createdAt)
-    .set("updatedAt", q.updatedAt);
+      .set("id", q.id)
+      .set("tenantId", q.tenantId)
+      .set("name", q.name)
+      .set("description", q.description)
+      .set("queueType", q.queueType.to!string)
+      .set("endpoint", q.endpoint)
+      .set("isDefault", q.isDefault)
+      .set("createdBy", q.createdBy)
+      .set("createdAt", q.createdAt)
+      .set("updatedAt", q.updatedAt);
   }
 }

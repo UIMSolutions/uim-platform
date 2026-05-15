@@ -25,7 +25,7 @@ class WidgetHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "widgets");
+    auto id = WidgetId(extractIdFromPath(req.requestURI, "widgets"));
     if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
@@ -52,7 +52,7 @@ class WidgetHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "widgets");
+    auto id = WidgetId(extractIdFromPath(req.requestURI, "widgets"));
     useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }

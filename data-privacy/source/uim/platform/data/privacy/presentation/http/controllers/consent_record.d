@@ -65,14 +65,14 @@ class ConsentController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto subjectParam = req.headers.get("X-Subject-Filter", "");
+      auto subjectParam = DataSubjectId(req.headers.get("X-Subject-Filter", ""));
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       ConsentRecord[] items;
       if (subjectParam.length > 0)
-        items = usecase.listByDataSubject(tenantId, subjectParam);
+        items = usecase.listConsents(tenantId, subjectParam);
       else if (purposeParam.length > 0)
-        items = usecase.listByPurpose(tenantId, parsePurpose(purposeParam));
+        items = usecase.listConsents(tenantId, purposeParam.to!ProcessingPurpose);
       else
         items = usecase.listConsents(tenantId);
 
@@ -115,7 +115,7 @@ class ConsentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getConsent(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent record not found");
@@ -154,7 +154,7 @@ class ConsentController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

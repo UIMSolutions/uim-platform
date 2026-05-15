@@ -86,8 +86,8 @@ class RetentionRuleController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = RetentionRuleId(extractIdFromPath(req.requestURI));
+
       auto entry = usecase.getRule(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Retention rule not found");
@@ -103,7 +103,7 @@ class RetentionRuleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRetentionRuleRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = RetentionRuleId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -127,8 +127,8 @@ class RetentionRuleController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = RetentionRuleId(extractIdFromPath(req.requestURI));
+
       usecase.deleteRule(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -114,6 +114,7 @@ enum ProviderStatus {
 }
 /// Content category provided by a content provider.
 enum ContentCategory {
+  custom,
   integrationFlow,
   destination,
   apiProxy,
@@ -132,7 +133,6 @@ enum ContentCategory {
   certificateToUserMapping,
   accessPolicy,
   functionLibrary,
-  custom,
 }
 /// Status of a transport request.
 enum TransportStatus {

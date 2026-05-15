@@ -22,7 +22,7 @@ class DataControllerController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/data-controllers", &handleCreate);
     router.get("/api/v1/data-controllers", &handleList);
     router.get("/api/v1/data-controllers/*", &handleGet);
@@ -31,7 +31,7 @@ class DataControllerController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataControllerRequest r;
@@ -49,8 +49,8 @@ class DataControllerController : PlatformController {
       auto result = usecase.createController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data controller created successfully");
+          .set("id", result.id)
+          .set("message", "Data controller created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -67,8 +67,8 @@ class DataControllerController : PlatformController {
       auto arr = items.map!(controller => controller.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", items.length);
+        .set("items", arr)
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -76,10 +76,10 @@ class DataControllerController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getController(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data controller not found");
@@ -91,9 +91,10 @@ class DataControllerController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       UpdateDataControllerRequest r;
       r.id = DataControllerId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
@@ -110,8 +111,8 @@ class DataControllerController : PlatformController {
       auto result = usecase.updateController(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data controller updated successfully");
+          .set("id", result.id)
+          .set("message", "Data controller updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -121,10 +122,10 @@ class DataControllerController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteController(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
@@ -133,19 +134,19 @@ class DataControllerController : PlatformController {
 
   private static Json serialize(const DataController e) {
     return Json.emptyObject
-    .set("id", e.id)
-    .set("tenantId", e.tenantId)
-    .set("name", e.name)
-    .set("description", e.description)
-    .set("legalEntityName", e.legalEntityName)
-    .set("contactEmail", e.contactEmail)
-    .set("contactPhone", e.contactPhone)
-    .set("address", e.address)
-    .set("country", e.country)
-    .set("dpoName", e.dpoName)
-    .set("dpoEmail", e.dpoEmail)
-    .set("isActive", e.isActive)
-    .set("createdAt", e.createdAt)
-    .set("updatedAt", e.updatedAt);
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("legalEntityName", e.legalEntityName)
+      .set("contactEmail", e.contactEmail)
+      .set("contactPhone", e.contactPhone)
+      .set("address", e.address)
+      .set("country", e.country)
+      .set("dpoName", e.dpoName)
+      .set("dpoEmail", e.dpoEmail)
+      .set("isActive", e.isActive)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt);
   }
 }

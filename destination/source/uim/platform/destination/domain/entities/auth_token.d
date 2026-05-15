@@ -12,6 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// A resolved authentication token for a destination.
 struct AuthToken {
+   mixin TenantEntity!AuthTokenId;
+   
   string type_; // "Bearer", "Basic", "SAML", etc.
   string value_; // the actual token or encoded credentials
   long expiresAt;

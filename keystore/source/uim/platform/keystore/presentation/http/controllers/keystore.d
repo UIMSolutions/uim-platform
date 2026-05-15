@@ -104,7 +104,7 @@ class KeystoreController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = KeystoreId(extractIdFromPath(req));
       auto ks = usecase.getById(tenantId, id);
       if (ks.id.length == 0) {
         writeError(res, 404, "Keystore not found");

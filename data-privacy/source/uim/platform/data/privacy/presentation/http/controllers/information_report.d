@@ -40,7 +40,7 @@ class InformationReportController : PlatformController {
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.format = j.getString("format");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array.toJson;
+      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array;
       r.reason = j.getString("reason");
 
       auto result = usecase.createReport(r);
@@ -77,7 +77,7 @@ class InformationReportController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getReport(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Information report not found");
@@ -118,7 +118,7 @@ class InformationReportController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       usecase.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -36,7 +36,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubject subject;
-    subject.initEntity(req.tenantId, req.requestedBy);
+    subject.initEntity(req.tenantId);
     
     subject.subjectType = req.subjectType;
     subject.externalId = req.externalId;

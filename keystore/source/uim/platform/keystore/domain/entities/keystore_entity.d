@@ -12,8 +12,9 @@ mixin(ShowModule!());
 @safe:
 /// A named keystore file containing cryptographic keys and/or certificates.
 /// Corresponds to JKS, JCEKS, P12 or PEM file uploaded to SAP BTP Keystore Service.
-struct KeystoreEntity {
-  KeystoreId    id;
+struct Keystore {
+  mixin TenanatEntity!KeystoreId;
+  TenantId       tenantId;
   string        name;           // unique per (accountId, applicationId, level)
   string        description;
   KeystoreFormat format;        // jks | jceks | p12 | pem
@@ -26,4 +27,6 @@ struct KeystoreEntity {
   UserId        updatedBy;
   long          createdAt;
   long          updatedAt;
+
+
 }

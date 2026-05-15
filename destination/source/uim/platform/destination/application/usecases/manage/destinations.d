@@ -75,7 +75,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     d.properties = req.properties;
     foreach (s; req.fragmentIds)
-      d.fragmentIds ~= FragmentId(s);
+      d.fragmentIds ~= DestinationFragmentId(s);
 
     repo.save(d);
     return CommandResult(true, d.id.value, "");
@@ -129,7 +129,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.fragmentIds.length > 0) {
       d.fragmentIds = null;
       foreach (s; req.fragmentIds)
-        d.fragmentIds ~= FragmentId(s);
+        d.fragmentIds ~= DestinationFragmentId(s);
     }
     d.updatedAt = clockSeconds();
 

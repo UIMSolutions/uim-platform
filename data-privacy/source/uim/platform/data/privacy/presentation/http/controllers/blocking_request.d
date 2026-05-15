@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.blocking_request;
 
-
-
-
 // import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;
@@ -35,7 +32,7 @@ class BlockingController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateBlockingRequest r;
@@ -48,8 +45,8 @@ class BlockingController : PlatformController {
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Blocking request created successfully");
+          .set("id", result.id)
+          .set("message", "Blocking request created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -63,16 +60,16 @@ class BlockingController : PlatformController {
       auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
-      BlockingRequest[] items = statusParam.length > 0 
-        ? usecase.listByStatus(tenantId, parseBlockingStatus(statusParam)) 
-        : usecase.listRequests(tenantId);
+      BlockingRequest[] items = statusParam.length > 0
+        ? usecase.listByStatus(tenantId, parseBlockingStatus(statusParam)) : usecase.listRequests(
+          tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Blocking requests retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Blocking requests retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -80,10 +77,10 @@ class BlockingController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Blocking request not found");
@@ -95,9 +92,10 @@ class BlockingController : PlatformController {
   }
 
   protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
@@ -106,9 +104,9 @@ class BlockingController : PlatformController {
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Blocking request status updated successfully");
-            
+          .set("id", result.id)
+          .set("message", "Blocking request status updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.error);
@@ -117,10 +115,10 @@ class BlockingController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

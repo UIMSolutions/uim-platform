@@ -91,7 +91,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, fragment.id.value, "");
   }
 
-  DestinationFragment getFragment(TenantId tenantId, FragmentId id) {
+  DestinationFragment getFragment(TenantId tenantId, DestinationFragmentId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -99,7 +99,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  CommandResult deleteFragment(TenantId tenantId, FragmentId id) {
+  CommandResult deleteFragment(TenantId tenantId, DestinationFragmentId id) {
     auto fragment = repo.findById(tenantId, id);
     if (fragment.isNull)
       return CommandResult(false, "", "Fragment not found");

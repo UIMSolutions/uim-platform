@@ -12,74 +12,79 @@ mixin(ShowModule!());
 @safe:
 /// A Dataset (data model) defines the structure for analytical consumption.
 /// Combines dimensions and measures — similar to SAC "Models".
-class Dataset {
-  EntityId id;
+struct Dataset {
+  mixin TenantEntity!(DatasetId);
+  DataSourceId dataSourceId;
   
   string name;
   string description;
-  EntityId dataSourceId;
   Column[] columns;
   AuditInfo audit;
   ArtifactStatus status;
 
-  this() {
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("dataSourceId", dataSourceId.value)
+      .set("columns", toJsonArray(columns))
+      .set("audit", audit.toJson())
+      .set("status", status.toString());
   }
 
-  static Dataset create(string name, string description, string dataSourceId, UserId userId) {
-    auto dataset = new Dataset();
-    dataset.id = EntityId.generate();
-    dataset.name = name;
-    dataset.description = description;
-    dataset.dataSourceId = EntityId(dataSourceId);
-    dataset.columns = [];
-    dataset.status = ArtifactStatus.Draft;
-    dataset.audit = AuditInfo.create(userId);
-    return dataset;
-  }
+  // this() {
+  // }
 
-  void addDimension(string colName, ColumnDataType dataType) {
-    columns ~= Column(colName, ColumnRole.Dimension, dataType, AggregationType.Count);
-  }
+  // static Dataset create(string name, string description, string dataSourceId, UserId userId) {
+  //   auto dataset = new Dataset();
+  //   dataset.id = EntityId.generate();
+  //   dataset.name = name;
+  //   dataset.description = description;
+  //   dataset.dataSourceId = DataSourceId(dataSourceId);
+  //   dataset.columns = [];
+  //   dataset.status = ArtifactStatus.Draft;
+  //   dataset.audit = AuditInfo.create(userId);
+  //   return dataset;
+  // }
 
-  void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg) {
-    columns ~= Column(colName, ColumnRole.Measure, dataType, defaultAgg);
-  }
+  // void addDimension(string colName, ColumnDataType dataType) {
+  //   columns ~= Column(colName, ColumnRole.Dimension, dataType, AggregationType.Count);
+  // }
 
-  Column[] dimensions() {
-    Column[] result;
-    foreach (c; columns)
-      if (c.role == ColumnRole.Dimension)
-        result ~= c;
-    return result;
-  }
+  // void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg) {
+  //   columns ~= Column(colName, ColumnRole.Measure, dataType, defaultAgg);
+  // }
 
-  Column[] measures() {
-    Column[] result;
-    foreach (c; columns)
-      if (c.role == ColumnRole.Measure)
-        result ~= c;
-    return result;
-  }
+  // Column[] dimensions() {
+  //   Column[] result;
+  //   foreach (c; columns)
+  //     if (c.role == ColumnRole.Dimension)
+  //       result ~= c;
+  //   return result;
+  // }
+
+  // Column[] measures() {
+  //   Column[] result;
+  //   foreach (c; columns)
+  //     if (c.role == ColumnRole.Measure)
+  //       result ~= c;
+  //   return result;
+  // }
 }
 
-enum ColumnRole {
-  Dimension,
-  Measure,
-  Attribute,
-}
 
-enum ColumnDataType {
-  String,
-  Integer,
-  Decimal,
-  Date,
-  DateTime,
-  Boolean,
-}
 
 struct Column {
   string name;
   ColumnRole role;
   ColumnDataType dataType;
   AggregationType defaultAggregation;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("name", name)
+      .set("role", role.toString())
+      .set("dataType", dataType.toString())
+      .set("defaultAggregation", defaultAggregation.toString());
+  }
 }

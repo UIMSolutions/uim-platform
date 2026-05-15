@@ -35,7 +35,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     r.dataSubjectId = req.dataSubjectId;
     r.subjectRole = subject.subjectType;
     r.status = InformationReportStatus.requested;
-    r.format = req.format.to!parseExportFormat;
+    r.format = req.format.to!ExportFormat;
     r.targetSystems = req.targetSystems;
     r.categories = req.categories;
     r.reason = req.reason;

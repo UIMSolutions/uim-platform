@@ -86,13 +86,13 @@ class PackageController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = PackageId(extractIdFromPath(req.requestURI));
       auto pkg = usecase.getPackage(id);
       if (pkg.isNull) {
         writeError(res, 404, "Package not found");
         return;
       }
-      auto resp = pkg.toJson
+      auto resp = pkg.toJson()
         .set("message", "Package retrieved successfully");
 
       res.writeJsonBody(resp, 200);
@@ -104,7 +104,7 @@ class PackageController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = PackageId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       auto r = UpdatePackageRequest();
       r.description = j.getString("description");
@@ -130,7 +130,7 @@ class PackageController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = PackageId(extractIdFromPath(req.requestURI));
       auto result = usecase.deletePackage(id);
       if (result.success) {
         auto resp = Json.emptyObject
@@ -173,12 +173,9 @@ class PackageController : PlatformController {
 
   private static ContentItem[] parseContentItems(Json j) {
     ContentItem[] items;
-    auto v = "items" in j;
-    if (v.isNull|| (v).type != Json.Type.array.toJson)
-      return items;
 
-    foreach (itemJson; *v) {
-      if (itemJson.type != Json.Type.object)
+    foreach (itemJson; j.getArray("items")) {
+      if (!itemJson.isObject)
         continue;
       ContentItem item;
       item.id = itemJson.getString("id");
@@ -187,55 +184,11 @@ class PackageController : PlatformController {
       item.version_ = itemJson.getString("version");
       item.description = itemJson.getString("description");
       item.dependencies = getStrings(itemJson, "dependencies");
-
-      auto catStr = itemJson.getString("category");
-      item.category = parseContentCategory(catStr);
+      item.category = itemJson.getString("category").to!ContentCategory;
       items ~= item;
     }
+    
     return items;
-  }
-
-  private static ContentCategory parseContentCategory(string s) {
-    switch (s) {
-    case "integrationFlow":
-      return ContentCategory.integrationFlow;
-    case "destination":
-      return ContentCategory.destination;
-    case "apiProxy":
-      return ContentCategory.apiProxy;
-    case "valueMapping":
-      return ContentCategory.valueMapping;
-    case "securityArtifact":
-      return ContentCategory.securityArtifact;
-    case "messageMapping":
-      return ContentCategory.messageMapping;
-    case "scriptCollection":
-      return ContentCategory.scriptCollection;
-    case "dataType":
-      return ContentCategory.dataType;
-    case "messageType":
-      return ContentCategory.messageType;
-    case "numberRange":
-      return ContentCategory.numberRange;
-    case "customForm":
-      return ContentCategory.customForm;
-    case "workflow":
-      return ContentCategory.workflow;
-    case "businessRule":
-      return ContentCategory.businessRule;
-    case "keyValueMap":
-      return ContentCategory.keyValueMap;
-    case "oauthCredential":
-      return ContentCategory.oauthCredential;
-    case "certificateToUserMapping":
-      return ContentCategory.certificateToUserMapping;
-    case "accessPolicy":
-      return ContentCategory.accessPolicy;
-    case "functionLibrary":
-      return ContentCategory.functionLibrary;
-    default:
-      return ContentCategory.custom;
-    }
   }
 
   private static Json serializePackage(const ContentPackage p) {

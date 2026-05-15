@@ -23,9 +23,8 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = currentTimestamp();
     auto ctx = BusinessContext();
-    ctx.initTenant(req.tenantId);
+    ctx.initEntity(req.tenantId);
 
     ctx.name = req.name;
     ctx.description = req.description;

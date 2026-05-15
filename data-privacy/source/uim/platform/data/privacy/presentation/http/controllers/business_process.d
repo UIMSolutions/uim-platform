@@ -31,7 +31,7 @@ class BusinessProcessController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateBusinessProcessRequest r;
@@ -39,15 +39,15 @@ class BusinessProcessController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
-      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array.toJson;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
       auto result = usecase.createProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Business process created successfully");
+          .set("id", result.id)
+          .set("message", "Business process created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -59,25 +59,25 @@ class BusinessProcessController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      
+
       auto items = usecase.listProcesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Business processes retrieved successfully");
-          
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Business processes retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getProcess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business process not found");
@@ -89,7 +89,7 @@ class BusinessProcessController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateBusinessProcessRequest r;
@@ -97,15 +97,15 @@ class BusinessProcessController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
-      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array.toJson;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.legalBases = getStrings(j, "legalBases").map!(b => b.to!LegalBasis).array;
       r.owner = j.getString("owner");
 
       auto result = usecase.updateProcess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Business process updated successfully");
+          .set("id", result.id)
+          .set("message", "Business process updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -115,14 +115,14 @@ class BusinessProcessController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteProcess(tenantId, id);
 
       auto resp = Json.emptyObject
-          .set("message", "Business process deleted successfully");
+        .set("message", "Business process deleted successfully");
 
       res.writeJsonBody(resp, 204);
     } catch (Exception e)

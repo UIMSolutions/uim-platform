@@ -70,7 +70,7 @@ class RoleController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleId(extractIdFromPath(req));
       auto role = usecase.getRole(tenantId, id);
       if (role.id.length == 0) {
         writeError(res, 404, "Role not found");
@@ -85,7 +85,7 @@ class RoleController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleId(extractIdFromPath(req));
       auto j = req.json;
       UpdateRoleRequest r;
       r.tenantId = tenantId;
@@ -110,7 +110,7 @@ class RoleController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleId(extractIdFromPath(req));
       
       auto result = usecase.deleteRole(tenantId, id);
       if (result.success)
@@ -121,5 +121,4 @@ class RoleController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }

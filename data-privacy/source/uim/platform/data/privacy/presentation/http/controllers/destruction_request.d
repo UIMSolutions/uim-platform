@@ -77,7 +77,7 @@ class DestructionRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Destruction request not found");
@@ -114,7 +114,7 @@ class DestructionRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

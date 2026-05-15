@@ -39,7 +39,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     r.archiveRequestId = req.archiveRequestId;
     r.blockingRequestId = req.blockingRequestId;
     r.reason = req.reason;
-    r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
+    r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : currentTimestamp();
 
     repo.save(r);
     return CommandResult(true, r.id.value, "");

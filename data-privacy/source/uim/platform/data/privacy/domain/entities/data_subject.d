@@ -21,15 +21,15 @@ struct DataSubject {
   string sourceSystem; // e.g. "SAP HCM", "SAP CRM", "S/4HANA"
   string country; // ISO 3166-1 alpha-2
   bool isActive = true;
-  
+
   Json toJson() const {
-      return entityToJson
-          .set("subjectType", subjectType.to!string)
-          .set("externalId", externalId)
-          .set("displayName", displayName)
-          .set("email", email)
-          .set("sourceSystem", sourceSystem)
-          .set("country", country)
-          .set("isActive", isActive);
+    return entityToJson
+      .set("subjectType", subjectType.to!string)
+      .set("externalId", externalId)
+      .set("displayName", displayName)
+      .set("email", email)
+      .set("sourceSystem", sourceSystem)
+      .set("country", country)
+      .set("isActive", isActive);
   }
 }

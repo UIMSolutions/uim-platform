@@ -20,6 +20,7 @@ class ScalingHistoryController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/apps/*/scaling-history", &handleListByApp);
     router.get("/api/v1/scaling-history/*",      &handleGet);
   }
@@ -27,7 +28,8 @@ class ScalingHistoryController : PlatformController {
   // GET /api/v1/apps/{appId}/scaling-history
   protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = extractIdFromPath(req);
+      auto tenantId = req.getTenantId;
+      auto appId = AppId(extractIdFromPath(req));
       long since = 0;
       foreach (kv; req.query.byKeyValue()) {
         if (kv.key == "since") {
@@ -50,8 +52,10 @@ class ScalingHistoryController : PlatformController {
   // GET /api/v1/scaling-history/{id}
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
-      auto evt = usecase.getEvent(id);
+      auto tenantId = req.getTenantId;
+      auto id = ScalingHistoryId(extractIdFromPath(req));
+
+      auto evt = usecase.getEvent(tenantId, id);
       if (evt.id.length == 0) {
         writeError(res, 404, "Scaling event not found");
         return;

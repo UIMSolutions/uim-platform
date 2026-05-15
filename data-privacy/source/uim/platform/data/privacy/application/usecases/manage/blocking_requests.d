@@ -37,7 +37,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject not found");
 
     BlockingRequest request;
-    request.initEntity(req.tenantId, req.requestedBy);
+    request.initEntity(req.tenantId);
 
     request.dataSubjectId = req.dataSubjectId;
     request.requestedBy = req.requestedBy;
@@ -45,7 +45,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     request.targetSystems = req.targetSystems;
     request.categories = req.categories;
     request.reason = req.reason;
-    request.requestedAt = now;
+    request.requestedAt = currentTimestamp();
 
     blockingRequests.save(request);
     return CommandResult(true, request.id.value, "");

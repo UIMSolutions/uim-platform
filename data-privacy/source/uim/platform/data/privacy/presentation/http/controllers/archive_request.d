@@ -34,16 +34,17 @@ class ArchiveRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateArchiveRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories").map!(c => c.to!PersonalDataCategory).array.toJson;
+      r.targetSystems = j.getStrings("targetSystems");
+      r.categories = j.getStrings("categories").map!(c => c.to!PersonalDataCategory).array;
       r.archiveLocation = j.getString("archiveLocation");
       r.reason = j.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);
-      r.scheduledAt = jsonLong(j, "scheduledAt");
+      r.scheduledAt = j.getLong("scheduledAt");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
@@ -79,7 +80,7 @@ class ArchiveRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Archive request not found");
@@ -116,7 +117,7 @@ class ArchiveRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -24,7 +24,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Name is required");
 
     AnonymizationConfig c;
-    c.initEntity(req.tenantId, req.createdBy);
+    c.initEntity(req.tenantId);
 
     c.name = req.name;
     c.description = req.description;

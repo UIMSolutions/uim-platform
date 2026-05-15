@@ -26,12 +26,13 @@ class DatasetHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI, "datasets");
+    auto id = DatasetId(extractIdFromPath(req.requestURI, "datasets"));
+
     if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
-    auto item = useCases.getById(id);
+    auto item = useCases.getById(tenantId, id);
     if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
@@ -53,8 +54,10 @@ class DatasetHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "datasets");
-    useCases.removeById(id);
+    auto tenantId = req.getTenantId;
+    auto id = DatasetId(extractIdFromPath(req.requestURI, "datasets"));
+    
+    useCases.removeById(tenantId, id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }

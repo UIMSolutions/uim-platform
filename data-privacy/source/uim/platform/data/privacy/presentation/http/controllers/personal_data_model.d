@@ -43,11 +43,11 @@ class PersonalDataModelController : PlatformController {
       r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
-      r.category = parseCategory(j.getString("category"));
-      r.sensitivity = parseSensitivity(j.getString("sensitivity"));
+      r.category = j.getString("category").to!PersonalDataCategory;
+      r.sensitivity = j.getString("sensitivity").to!DataSensitivity;
       r.sourceSystem = j.getString("sourceSystem");
       r.sourceEntity = j.getString("sourceEntity");
-      r.subjectType = parseSubjectType(j.getString("subjectType"));
+      r.subjectType = j.getString("subjectType").to!DataSubjectType;
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
       r.legalReference = j.getString("legalReference");
 
@@ -72,7 +72,7 @@ class PersonalDataModelController : PlatformController {
       auto catParam = req.headers.get("X-Category-Filter", "");
 
       PersonalDataModel[] items = catParam.length > 0
-        ? usecase.listByCategory(tenantId, parseCategory(catParam))
+        ? usecase.listModels(tenantId, catParam.to!PersonalDataCategory)
         : usecase.listModels(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -91,8 +91,8 @@ class PersonalDataModelController : PlatformController {
   protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto items = usecase.listSpecialCategories(tenantId);
 
+      auto items = usecase.listSpecialCategories(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -132,8 +132,8 @@ class PersonalDataModelController : PlatformController {
       r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
-      r.category = parseCategory(j.getString("category"));
-      r.sensitivity = parseSensitivity(j.getString("sensitivity"));
+      r.category = j.getString("category").to!PersonalDataCategory;
+      r.sensitivity = j.getString("sensitivity").to!DataSensitivity;
       r.sourceSystem = j.getString("sourceSystem");
       r.sourceEntity = j.getString("sourceEntity");
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");

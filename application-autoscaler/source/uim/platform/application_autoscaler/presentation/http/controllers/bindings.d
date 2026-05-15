@@ -59,9 +59,11 @@ class AppBindingController : PlatformController {
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
-      auto b = usecase.getBinding(id);
-      if (b.id.length == 0) {
+      auto tenantId = req.getTenantId;
+      auto id = AppBindingId(extractIdFromPath(req));
+
+      auto b = usecase.getBinding(tenantId, id);
+      if (b.isNull) {
         writeError(res, 404, "Binding not found");
         return;
       }
@@ -73,8 +75,9 @@ class AppBindingController : PlatformController {
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
-      auto result = usecase.deleteBinding(id);
+      auto tenantId = req.getTenantId;
+      auto id = AppBindingId(extractIdFromPath(req));
+      auto result = usecase.deleteBinding(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Binding deleted"), 200);
       else
@@ -86,10 +89,11 @@ class AppBindingController : PlatformController {
 
   protected void handleAttachPolicy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto bindingId = extractIdFromPath(req);
+      auto tenantId = req.getTenantId;
+      auto bindingId = AppBindingId(extractIdFromPath(req));
       auto j = req.json;
       auto policyId = j.getString("policy_id");
-      auto result = usecase.attachPolicy(bindingId, policyId);
+      auto result = usecase.attachPolicy(tenantId, bindingId, policyId);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Policy attached"), 200);
       else

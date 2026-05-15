@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A reusable destination fragment — partial configuration that can be merged into destinations.
 struct DestinationFragment {
-  mixin TenantEntity!FragmentId;
+  mixin TenantEntity!DestinationFragmentId;
   
   SubaccountId subaccountId;
   string name;

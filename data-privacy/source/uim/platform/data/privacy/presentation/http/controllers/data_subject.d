@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.data_subject;
 
-
-
-
 // import uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;
@@ -26,7 +23,7 @@ class DataSubjectController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/data-subjects", &handleCreate);
     router.get("/api/v1/data-subjects", &handleList);
     router.get("/api/v1/data-subjects/*", &handleGet);
@@ -35,7 +32,7 @@ class DataSubjectController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataSubjectRequest r;
@@ -50,15 +47,13 @@ class DataSubjectController : PlatformController {
       auto result = usecase.createSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data subject created successfully");
+          .set("id", result.id)
+          .set("message", "Data subject created successfully");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -68,40 +63,38 @@ class DataSubjectController : PlatformController {
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
       DataSubject[] items = typeParam.length > 0
-        ? usecase.listByType(tenantId, parseSubjectType(typeParam))
-        : usecase.listSubjects(tenantId);
+        ? usecase.listByType(tenantId, parseSubjectType(typeParam)) : usecase.listSubjects(
+          tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", items.length)
-            .set("message", "Data subjects retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Data subjects retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getSubject(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data subject not found");
         return;
       }
       res.writeJsonBody(entry.toJson, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateDataSubjectRequest r;
@@ -117,27 +110,24 @@ class DataSubjectController : PlatformController {
       auto result = usecase.updateSubject(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data subject updated successfully");
+          .set("id", result.id)
+          .set("message", "Data subject updated successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataSubjectId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 

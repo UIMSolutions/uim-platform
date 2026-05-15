@@ -94,7 +94,7 @@ class FragmentController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FragmentId(extractIdFromPath(req.requestURI));
+      auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));
       auto f = usecase.getFragment(tenantId, id);
       if (f.isNull) {
         writeError(res, 404, "Fragment not found");
@@ -109,7 +109,7 @@ class FragmentController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FragmentId(extractIdFromPath(req.requestURI));
+      auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateFragmentRequest r;
       r.tenantId = tenantId;
@@ -146,7 +146,7 @@ class FragmentController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FragmentId(extractIdFromPath(req.requestURI));
+      auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteFragment(tenantId, id);
       if (result.success) {

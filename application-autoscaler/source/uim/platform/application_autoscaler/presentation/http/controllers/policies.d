@@ -117,9 +117,10 @@ class ScalingPolicyController : PlatformController {
   // GET /api/v1/policies/{id}
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
-      auto p = usecase.getPolicy(id);
-      if (p.id.length == 0) {
+      auto tenantId = req.getTenantId;
+      auto id = ScalingPolicyId(extractIdFromPath(req));
+      auto p = usecase.getPolicy(tenantId, id);
+      if (p.isNull) {
         writeError(res, 404, "Policy not found");
         return;
       }
@@ -132,10 +133,12 @@ class ScalingPolicyController : PlatformController {
   // PUT /api/v1/policies/{id}
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
+      auto tenantId = req.getTenantId;
+      auto id = ScalingPolicyId(extractIdFromPath(req));
       auto j = req.json;
+
       UpdateScalingPolicyRequest r;
-      r.id               = id;
+      r.scalingPolicyId    = id;
       r.instanceMinCount = j.getInt("instance_min_count");
       r.instanceMaxCount = j.getInt("instance_max_count");
       r.timezone         = j.getString("timezone");
@@ -168,8 +171,9 @@ class ScalingPolicyController : PlatformController {
   // DELETE /api/v1/policies/{id}
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req);
-      auto result = usecase.deletePolicy(id);
+      auto tenantId = req.getTenantId;
+      auto id = ScalingPolicyId(extractIdFromPath(req));
+      auto result = usecase.deletePolicy(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Policy deleted"), 200);
       else

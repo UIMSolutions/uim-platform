@@ -10,8 +10,8 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 /// Represents an external data connection (database, file, API, live connection).
-class DataSource {
-  EntityId id;
+struct DataSource {
+  mixin TenantEntity!DataSourceId;
   string name;
   DataSourceType sourceType;
   ConnectionInfo connection;
@@ -19,50 +19,39 @@ class DataSource {
   DataSourceStatus connStatus;
   AuditInfo audit;
 
-  this() {
-  }
+  // static DataSource create(string name, DataSourceType sourceType,
+  //     ConnectionInfo conn, UserId userId) {
+  //   auto ds = new DataSource();
+  //   ds.id = EntityId.generate();
+  //   ds.name = name;
+  //   ds.sourceType = sourceType;
+  //   ds.connection = conn;
+  //   ds.schedule = ImportSchedule.init;
+  //   ds.connStatus = DataSourceStatus.Disconnected;
+  //   ds.audit = AuditInfo.create(userId);
+  //   return ds;
+  // }
 
-  static DataSource create(string name, DataSourceType sourceType,
-      ConnectionInfo conn, UserId userId) {
-    auto ds = new DataSource();
-    ds.id = EntityId.generate();
-    ds.name = name;
-    ds.sourceType = sourceType;
-    ds.connection = conn;
-    ds.schedule = ImportSchedule.init;
-    ds.connStatus = DataSourceStatus.Disconnected;
-    ds.audit = AuditInfo.create(userId);
-    return ds;
-  }
+  // void markConnected() {
+  //   connStatus = DataSourceStatus.Connected;
+  // }
 
-  void markConnected() {
-    connStatus = DataSourceStatus.Connected;
-  }
+  // void markError(string msg) {
+  //   connStatus = DataSourceStatus.Error;
+  //   connection.lastError = msg;
+  // }
 
-  void markError(string msg) {
-    connStatus = DataSourceStatus.Error;
-    connection.lastError = msg;
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("sourceType", sourceType.to!string)
+      .set("connection", connection.toJson())
+      .set("schedule", schedule.toJson())
+      .set("connStatus", connStatus.to!string);
   }
 }
 
-enum DataSourceType {
-  Database,
-  CSV,
-  Excel,
-  OData,
-  RestAPI,
-  HANA,
-  S3,
-  GoogleSheets,
-  LiveConnection,
-}
 
-enum DataSourceStatus {
-  Connected,
-  Disconnected,
-  Error,
-  Importing,
-}
 
 struct ConnectionInfo {
   string host;
@@ -71,10 +60,26 @@ struct ConnectionInfo {
   string username;
   /// Not persisted — only used during connection setup
   string lastError;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("host", host)
+      .set("port", port)
+      .set("databaseName", databaseName)
+      .set("username", username)
+      .set("lastError", lastError);
+  }
 }
 
 struct ImportSchedule {
   bool enabled = false;
   string cronExpression = "";
   string timezone = "UTC";
+
+  Jaon toJson() const {
+    return Json.emptyObject
+      .set("enabled", enabled)
+      .set("cronExpression", cronExpression)
+      .set("timezone", timezone);
+  }
 }

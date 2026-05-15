@@ -38,14 +38,14 @@ class PurposeRecordController : PlatformController {
       
       CreatePurposeRecordRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.businessContextId = j.getString("businessContextId");
-      r.purpose = j.getString("purpose");
-      r.legalBasis = j.getString("legalBasis");
-      r.residenceDays = cast(int)jsonLong(j, "residenceDays");
-      r.retentionDays = cast(int)jsonLong(j, "retentionDays");
-      r.validFrom = jsonLong(j, "validFrom");
-      r.validUntil = jsonLong(j, "validUntil");
+      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.businessContextId = BusinessContextId(j.getString("businessContextId"));
+      r.purpose = j.getString("purpose").to!ProcessingPurpose;
+      r.legalBasis = j.getString("legalBasis").to!LegalBasis;
+      r.residenceDays = j.getInteger("residenceDays");
+      r.retentionDays = j.getInteger("retentionDays");
+      r.validFrom = j.getLong("validFrom");
+      r.validUntil = j.getLong("validUntil");
 
       auto result = usecase.createRecord(r);
       if (result.isSuccess()) {
@@ -82,7 +82,6 @@ class PurposeRecordController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
 
-      auto tenantId = req.getTenantId;
       auto record = usecase.getRecord(tenantId, id);
       if (record.isNull) {
         writeError(res, 404, "Purpose record not found");
@@ -115,8 +114,8 @@ class PurposeRecordController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      auto id = PurposeRecordId(extractIdFromPath(req.requestURI));
+
       usecase.deleteRecord(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
@@ -129,7 +128,7 @@ class PurposeRecordController : PlatformController {
       .set("tenantId", e.tenantId)
       .set("dataSubjectId", e.dataSubjectId)
       .set("businessContextId", e.businessContextId)
-      .set("purpose", e.purpose)
+      .set("purpose", e.purpose.to!string)
       .set("status", e.status.to!string)
       .set("legalBasis", e.legalBasis)
       .set("residenceDays", e.residenceDays)

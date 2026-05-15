@@ -33,6 +33,7 @@ class OAuthClientController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateOAuthClientRequest r;
       r.tenantId = tenantId;
       r.clientId = j.getString("clientId");
@@ -74,7 +75,7 @@ class OAuthClientController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto appId = req.params.get("appId", "");
+      auto appId = AppId(req.params.get("appId", ""));
       auto clients = appId.length > 0
         ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
           tenantId);
@@ -95,7 +96,8 @@ class OAuthClientController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = OAuthClientId(extractIdFromPath(req));
+
       auto c = usecase.getOAuthClient(tenantId, id);
       if (c.id.length == 0) {
         writeError(res, 404, "OAuth client not found");
@@ -115,7 +117,7 @@ class OAuthClientController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = OAuthClientId(extractIdFromPath(req));
 
       auto j = req.json;
       UpdateOAuthClientRequest r;
@@ -156,7 +158,8 @@ class OAuthClientController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = OAuthClientId(extractIdFromPath(req));
+
       auto result = usecase.deleteOAuthClient(tenantId, id);
       if (result.success)
         res.writeJsonBody(

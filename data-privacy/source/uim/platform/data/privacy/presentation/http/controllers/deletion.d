@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.deletion;
 
-
-
-
 // import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;
@@ -35,7 +32,7 @@ class DeletionController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDeletionRequest r;
@@ -48,9 +45,9 @@ class DeletionController : PlatformController {
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Deletion request created successfully");
-            
+          .set("id", result.id)
+          .set("message", "Deletion request created successfully");
+
         res.writeJsonBody(resp, 201);
       } else
         writeError(res, 400, result.error);
@@ -75,9 +72,9 @@ class DeletionController : PlatformController {
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Deletion requests retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Deletion requests retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -85,10 +82,10 @@ class DeletionController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Deletion request not found");
@@ -100,7 +97,7 @@ class DeletionController : PlatformController {
   }
 
   protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateDeletionStatusRequest r;
@@ -112,8 +109,8 @@ class DeletionController : PlatformController {
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Deletion request status updated successfully");
+          .set("id", result.id)
+          .set("message", "Deletion request status updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -123,10 +120,10 @@ class DeletionController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DeletionRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

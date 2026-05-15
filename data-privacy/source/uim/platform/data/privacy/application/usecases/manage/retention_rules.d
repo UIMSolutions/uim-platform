@@ -31,7 +31,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Retention days must be positive");
 
     RetentionRule rule;
-    rule.initEntity(req.tenantId, req.startedBy);
+    rule.initEntity(req.tenantId);
 
     rule.name = req.name;
     rule.description = req.description;

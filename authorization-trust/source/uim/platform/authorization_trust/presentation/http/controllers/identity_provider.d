@@ -79,7 +79,7 @@ class IdentityProviderController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = IdentityProviderId(extractIdFromPath(req));
 
       auto idp = usecase.getIdentityProvider(tenantId, id);
       if (idp.id.length == 0) {
@@ -95,8 +95,9 @@ class IdentityProviderController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = IdentityProviderId(extractIdFromPath(req));
       auto j = req.json;
+
       UpdateIdentityProviderRequest r;
       r.tenantId = tenantId;
       r.identityProviderId = id;
@@ -123,7 +124,7 @@ class IdentityProviderController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = IdentityProviderId(extractIdFromPath(req));
 
       auto result = usecase.deleteIdentityProvider(tenantId, id);
       if (result.success)

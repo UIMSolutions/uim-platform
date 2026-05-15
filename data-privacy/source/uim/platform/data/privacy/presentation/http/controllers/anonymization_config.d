@@ -76,7 +76,7 @@ class AnonymizationConfigController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getConfig(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Anonymization config not found");
@@ -97,7 +97,7 @@ class AnonymizationConfigController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array.toJson;
+      r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
 
       auto result = usecase.updateConfig(r);
       if (result.isSuccess()) {
@@ -115,7 +115,6 @@ class AnonymizationConfigController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
 
       auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess()) {
@@ -133,7 +132,7 @@ class AnonymizationConfigController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

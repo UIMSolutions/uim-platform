@@ -40,7 +40,7 @@ class ConsentPurposeController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purpose = j.getString("purpose").to!ProcessingPurpose;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
       r.consentFormTemplate = j.getString("consentFormTemplate");
       r.version_ = j.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
@@ -81,7 +81,7 @@ class ConsentPurposeController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getPurpose(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Consent purpose not found");
@@ -121,7 +121,7 @@ class ConsentPurposeController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deletePurpose(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

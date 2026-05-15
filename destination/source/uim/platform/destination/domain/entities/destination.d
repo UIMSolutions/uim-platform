@@ -57,7 +57,7 @@ struct Destination {
   string[string] properties;
 
   // Fragment references
-  FragmentId[] fragmentIds;
+  DestinationFragmentId[] fragmentIds;
 
   Json toJson() const {
     auto fragArr = fragmentIds.map!(fid => fid.toJson).array.toJson;

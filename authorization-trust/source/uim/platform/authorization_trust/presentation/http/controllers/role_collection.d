@@ -72,7 +72,7 @@ class RoleCollectionController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleCollectionId(extractIdFromPath(req));
       auto rc = usecase.getRoleCollection(tenantId, id);
       if (rc.id.length == 0) {
         writeError(res, 404, "Role collection not found");
@@ -91,7 +91,7 @@ class RoleCollectionController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleCollectionId(extractIdFromPath(req));
       auto j = req.json;
 
       UpdateRoleCollectionRequest r;
@@ -122,7 +122,7 @@ class RoleCollectionController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req);
+      auto id = RoleCollectionId(extractIdFromPath(req));
 
       auto result = usecase.deleteRoleCollection(tenantId, id);
       if (result.success) {
@@ -138,5 +138,4 @@ class RoleCollectionController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }

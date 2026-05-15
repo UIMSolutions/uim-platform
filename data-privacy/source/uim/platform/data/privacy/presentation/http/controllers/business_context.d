@@ -40,9 +40,9 @@ class BusinessContextController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
-      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array.toJson;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.createContext(r);
@@ -79,7 +79,7 @@ class BusinessContextController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getContext(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business context not found");
@@ -99,9 +99,9 @@ class BusinessContextController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array.toJson;
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
-      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array.toJson;
+      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategoryAttributes = getStrings(j, "dataCategoryAttributes").map!(a => a.to!string).array;
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.updateContext(r);
@@ -119,12 +119,14 @@ class BusinessContextController : PlatformController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
+
       ActivateBusinessContextRequest r;
       r.id = BusinessContextId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
 
       auto result = usecase.activateContext(r);
-      if (result.isSuccess()) {
+      if (result.isSuccess()) { 
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Business context activated");
@@ -140,7 +142,7 @@ class BusinessContextController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = BusinessContextId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteContext(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

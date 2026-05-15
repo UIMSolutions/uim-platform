@@ -19,8 +19,8 @@ struct RuleCondition {
 /// A rule set — evaluates master data to determine applicable business purposes.
 struct RuleSet {
   mixin TenantEntity!(RuleSetId);
-
   BusinessContextId businessContextId;
+
   string name;
   string description;
   RuleSetStatus status = RuleSetStatus.draft;

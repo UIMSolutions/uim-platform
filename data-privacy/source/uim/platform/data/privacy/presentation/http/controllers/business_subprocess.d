@@ -31,23 +31,25 @@ class BusinessSubprocessController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateBusinessSubprocessRequest r;
       r.tenantId = tenantId;
       r.parentProcessId = BusinessProcessId(j.getString("parentProcessId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array.toJson;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!DataCategoryId).array.toJson;
-      r.owner = UserId(j.getString("owner"));
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategories = j.getStrings("dataCategories")
+        .map!(c => c.to!PersonalDataCategory).array;
+      r.owner = j.getString("owner");
 
       auto result = usecase.createSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Business subprocess created");
+          .set("id", result.id)
+          .set("message", "Business subprocess created");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -64,9 +66,9 @@ class BusinessSubprocessController : PlatformController {
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Business subprocesses retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Business subprocesses retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -74,10 +76,10 @@ class BusinessSubprocessController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getSubprocess(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Business subprocess not found");
@@ -89,7 +91,7 @@ class BusinessSubprocessController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateBusinessSubprocessRequest r;
@@ -97,15 +99,15 @@ class BusinessSubprocessController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = getStrings(j, "purposes").map!(p => PurposeId(p)).array.toJson;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => DataCategoryId(c)).array.toJson;
-      r.owner = UserId(j.getString("owner"));
+      r.purposes = getStrings(j, "purposes").map!(p => p.to!ProcessingPurpose).array;
+      r.dataCategories = j.getStrings("dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.owner = j.getString("owner");
 
       auto result = usecase.updateSubprocess(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Business subprocess updated successfully");
+          .set("id", result.id)
+          .set("message", "Business subprocess updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -115,10 +117,10 @@ class BusinessSubprocessController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
@@ -126,9 +128,9 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private static Json serialize(const BusinessSubprocess e) {
-    auto purps = e.purposes.map!(p => p.toJson).array.toJson;
+    auto purps = e.purposes.map!(p => p.to!string).array.toJson;
 
-    auto cats = e.dataCategories.map!(c => c.toJson).array.toJson;
+    auto cats = e.dataCategories.map!(c => c.to!string).array.toJson;
 
     return Json.emptyObject
       .set("id", e.id)

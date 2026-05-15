@@ -23,12 +23,13 @@ class PredictionHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
     auto id = extractIdFromPath(req.requestURI, "predictions");
     if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
-    auto item = useCases.getById(id);
+    auto item = useCases.getById(tenantId, id);
     if (item.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
@@ -51,8 +52,9 @@ class PredictionHandler {
   }
 
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
     auto id = extractIdFromPath(req.requestURI, "predictions");
-    auto result = useCases.train(id);
+    auto result = useCases.train(tenantId, id);
     if (result.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
@@ -61,6 +63,7 @@ class PredictionHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
     auto id = extractIdFromPath(req.requestURI, "predictions");
     useCases.removeById(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

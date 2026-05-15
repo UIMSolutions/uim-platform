@@ -24,7 +24,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Name is required");
 
     BusinessProcess p;
-    p.initEntity(req.tenantId, req.createdBy);
+    p.initEntity(req.tenantId);
 
     p.name = req.name;
     p.description = req.description;
@@ -33,7 +33,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.legalBases = req.legalBases;
     p.owner = req.owner;
     p.isActive = true;
-    
+
     repo.save(p);
     return CommandResult(true, p.id.value, "");
   }

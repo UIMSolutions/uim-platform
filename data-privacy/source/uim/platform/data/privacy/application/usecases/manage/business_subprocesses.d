@@ -28,7 +28,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Name is required");
 
     BusinessSubprocess sp;
-    sp.initEntity(req.tenantId, req.createdBy);
+    sp.initEntity(req.tenantId);
 
     sp.parentProcessId = req.parentProcessId;
     sp.name = req.name;

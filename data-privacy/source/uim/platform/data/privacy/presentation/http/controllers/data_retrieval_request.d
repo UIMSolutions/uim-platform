@@ -83,7 +83,7 @@ class DataRetrievalController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
         writeError(res, 404, "Data retrieval request not found");
@@ -122,7 +122,7 @@ class DataRetrievalController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

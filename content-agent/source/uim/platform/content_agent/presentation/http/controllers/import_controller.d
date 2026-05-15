@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.import_controller;
 
-
-
-
 // import uim.platform.content_agent.application.usecases.import_content;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.import_job;
@@ -33,13 +30,13 @@ class ImportController : PlatformController {
   }
 
   protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = StartImportRequest();
       r.tenantId = tenantId;
-      r.packageId = j.getString("packageId");
-      r.transportRequestId = j.getString("transportRequestId");
+      r.packageId = ContentPackageId(j.getString("packageId"));
+      r.transportRequestId = TransportRequestId(j.getString("transportRequestId"));
       r.sourceFilePath = j.getString("sourceFilePath");
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -70,7 +67,7 @@ class ImportController : PlatformController {
         .set("items", arr)
         .set("totalCount", Json(jobs.length))
         .set("message", "Import jobs retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -78,10 +75,10 @@ class ImportController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto job = usecase.getImportJob(id);
+      auto id = ImportJobId(extractIdFromPath(req.requestURI));
+      auto job = usecase.getImportJob(tenantId, id);
       if (job.isNull) {
         writeError(res, 404, "Import job not found");
         return;
@@ -90,21 +87,5 @@ class ImportController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeImportJob(const ImportJob imp) {
-    return Json.emptyObject
-      .set("id", imp.id)
-      .set("tenantId", imp.tenantId)
-      .set("packageId", imp.packageId)
-      .set("transportRequestId", imp.transportRequestId)
-      .set("sourceFilePath", imp.sourceFilePath)
-      .set("status", imp.status.to!string)
-      .set("importedSizeBytes", imp.importedSizeBytes)
-      .set("createdBy", imp.createdBy)
-      .set("startedAt", imp.startedAt)
-      .set("completedAt", imp.completedAt)
-      .set("errorMessage", imp.errorMessage)
-      .set("deployedItems", imp.deployedItems);
   }
 }
