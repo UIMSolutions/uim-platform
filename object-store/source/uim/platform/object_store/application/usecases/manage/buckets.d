@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.object_store.application.usecases.manage.buckets;
-
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.bucket;
 // import uim.platform.object_store.domain.ports.repositories.bucket;
@@ -15,7 +14,6 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-
 /// Application service for bucket CRUD operations.
 class ManageBucketsUseCase { // TODO: UIMUseCase {
   private BucketRepository repo;

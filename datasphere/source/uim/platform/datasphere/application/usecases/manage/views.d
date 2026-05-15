@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.views;
-
 // import uim.platform.datasphere.domain.types;
 // import uim.platform.datasphere.domain.entities.view_;
 // import uim.platform.datasphere.domain.ports.repositories.views;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.manage.content_providers;
-
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_provider;
 // import uim.platform.content_agent.domain.entities.content_activity;

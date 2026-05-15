@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.application.usecases.manage.groups;
-
 // import uim.platform.identity.directory.domain.entities.group;
 // import uim.platform.identity.directory.domain.entities.user;
 // import uim.platform.identity.directory.domain.entities.audit_event;
@@ -13,7 +12,6 @@ module uim.platform.identity.directory.application.usecases.manage.groups;
 // import uim.platform.identity.directory.domain.ports.repositories.users;
 // import uim.platform.identity.directory.domain.ports.repositories.audits;
 // import uim.platform.identity.directory.application.dto;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
 // import std.algorithm : filter, canFind;
@@ -23,7 +21,6 @@ import uim.platform.identity.directory;
 mixin(ShowModule!());
 
 @safe:
-
 /// Application use case: SCIM 2.0 group management.
 class ManageGroupsUseCase { // TODO: UIMUseCase {
   private GroupRepository groupRepo;

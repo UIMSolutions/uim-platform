@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.schemas;
-
 // import uim.platform.hana.domain.types;
 // import uim.platform.hana.domain.entities.schema;
 // import uim.platform.hana.domain.ports.repositories.schemas;

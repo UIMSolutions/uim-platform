@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.manage.audit_config;
-
 // // import std.uuid;
 // // import std.datetime.systime : Clock;
 // 

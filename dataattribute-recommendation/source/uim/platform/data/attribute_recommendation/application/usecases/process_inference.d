@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.application.usecases.process_inference;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
 

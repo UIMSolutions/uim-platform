@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.entities.key_mapping;
 
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// A key mapping entry — maps IDs across different systems.
 struct KeyMapping {
   mixin TenantEntity!(KeyMappingId);
@@ -27,7 +30,6 @@ struct KeyMapping {
       .set("entries", entries.map!(e => e.toJson()).array.toJson);
   }
 }
-
 /// A single system-to-key mapping entry.
 struct KeyMappingEntry {
   ClientId clientId;

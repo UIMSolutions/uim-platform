@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.functions;
-
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.serverless_function;
 // import uim.platform.kyma.domain.ports.repositories.functions;

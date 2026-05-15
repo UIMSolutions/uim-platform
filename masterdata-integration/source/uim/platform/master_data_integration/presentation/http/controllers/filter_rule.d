@@ -5,16 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.presentation.http.filter_rule;
 
+// import uim.platform.master_data_integration.application.usecases.manage.filter_rules;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.filter_rule;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
 
-
-
-
-import uim.platform.master_data_integration.application.usecases.manage.filter_rules;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.filter_rule;
-import uim.platform.master_data_integration.domain.types;
-
+@safe:
 class FilterRuleController : PlatformController {
   private ManageFilterRulesUseCase usecase;
 

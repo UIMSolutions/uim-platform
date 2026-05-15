@@ -4,13 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.connections;
-
 // import uim.platform.ai_launchpad.domain.ports.repositories.connections;
 // import uim.platform.ai_launchpad.domain.entities.connection : Connection;
 // import uim.platform.ai_launchpad.domain.services.connection_validator;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
-
 // import std.uuid : randomUUID;
 
 import uim.platform.ai_launchpad;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.device_registrations;
-
 // import uim.platform.mobile.domain.ports.repositories.device_registrations;
 // import uim.platform.mobile.domain.entities.device_registration;
 // import uim.platform.mobile.domain.types;

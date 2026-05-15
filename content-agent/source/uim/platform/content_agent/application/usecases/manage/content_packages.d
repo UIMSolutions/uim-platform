@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.manage.content_packages;
-
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_package;
 // import uim.platform.content_agent.domain.entities.content_provider;
@@ -19,8 +18,6 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-
-
 /// Application service for content package CRUD and assembly.
 class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   private ContentPackageRepository packages;

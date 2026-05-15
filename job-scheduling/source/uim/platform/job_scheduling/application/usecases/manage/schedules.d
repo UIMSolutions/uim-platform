@@ -4,14 +4,11 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.usecases.manage.schedules;
-
 // import uim.platform.job_scheduling.domain.types;
 // import uim.platform.job_scheduling.domain.entities.schedule;
 // import uim.platform.job_scheduling.domain.ports.repositories.schedules;
 // import uim.platform.job_scheduling.domain.services.schedule_validator;
 // import uim.platform.job_scheduling.application.dto;
-
-
 
 
 // alias Schedule = uim.platform.job_scheduling.domain.entities.schedule.Schedule;

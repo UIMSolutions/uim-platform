@@ -5,16 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.presentation.http.controllers.change_log;
 
+// import uim.platform.master_data_integration.application.usecases.query_change_log;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.change_log_entry;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
 
-
-
-
-import uim.platform.master_data_integration.application.usecases.query_change_log;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.change_log_entry;
-import uim.platform.master_data_integration.domain.types;
-
+@safe:
 class ChangeLogController : PlatformController {
   private QueryChangeLogUseCase changeLogs;
 

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.app.usecases.stories;
-
 // import uim.platform.analytics.domain.entities.story;
 // import uim.platform.analytics.domain.repositories.story;
 // import uim.platform.analytics.domain.values.common;

@@ -4,10 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.services.key_mapping_resolver;
+// import uim.platform.master_data_integration.domain.entities.key_mapping;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.domain.entities.key_mapping;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Domain service: resolves cross-system key mappings.
 class KeyMappingResolver {
   /// Find the local key for a specific client within a key mapping.

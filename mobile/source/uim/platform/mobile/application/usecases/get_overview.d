@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.get_overview;
-
 // import uim.platform.mobile.domain.ports.repositories.mobile_apps;
 // import uim.platform.mobile.domain.ports.repositories.device_registrations;
 // import uim.platform.mobile.domain.ports.repositories.push_notifications;

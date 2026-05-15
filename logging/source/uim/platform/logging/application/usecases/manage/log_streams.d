@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.log_streams;
-
 // import uim.platform.logging.domain.entities.log_stream;
 // import uim.platform.logging.domain.ports.repositories.log_streams;
 // import uim.platform.logging.domain.types;

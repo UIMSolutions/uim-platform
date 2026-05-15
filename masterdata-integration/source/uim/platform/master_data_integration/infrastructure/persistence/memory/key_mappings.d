@@ -4,13 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory.key_mapping;
+// import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.key_mapping;
+// import uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 
-import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.domain.entities.key_mapping;
-import uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 
+ import uim.platform.master_data_integration;
 
- 
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), KeyMappingRepository {
 

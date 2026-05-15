@@ -4,13 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory.data_model;
+// import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.data_model;
+// import uim.platform.master_data_integration.domain.ports.repositories.data_models;
 
-import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.domain.entities.data_model;
-import uim.platform.master_data_integration.domain.ports.repositories.data_models;
 
+ import uim.platform.master_data_integration;
 
- 
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 

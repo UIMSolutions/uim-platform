@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.application.usecases.issue_token;
-
 // import uim.platform.identity.authentication.domain.entities.user;
 // import uim.platform.identity.authentication.domain.entities.application;
 // import uim.platform.identity.authentication.domain.entities.token;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.event_subscriptions;
-
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.event_subscription;
 // import uim.platform.kyma.domain.ports.repositories.event_subscriptions;

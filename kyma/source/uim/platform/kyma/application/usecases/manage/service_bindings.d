@@ -48,8 +48,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  CommandResult updateServiceBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
-    auto binding = repo.findById(tenantId, id);
+  CommandResult updateServiceBinding(UpdateServiceBindingRequest req) {
+    auto binding = repo.findById(req.tenantId, req.id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
@@ -64,31 +64,31 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.updatedAt = clockSeconds();
 
     repo.update(binding);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
-  bool hasServiceBinding(ServiceBindingId id) {
-    return repo.existsById(id);
+  bool hasServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  ServiceBinding getServiceBinding(ServiceBindingId id) {
+  ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
     return repo.findById(tenantId, id);
   }
 
-  ServiceBinding[] listServiceBindingsByNamespace(NamespaceId nsId) {
-    return repo.findByNamespace(nsId);
+  ServiceBinding[] listServiceBindingsByNamespace(TenantId tenantId, NamespaceId nsId) {
+    return repo.findByNamespace(tenantId, nsId);
   }
 
-  ServiceBinding[] listServiceBindingsByServiceInstance(ServiceInstanceId instId) {
-    return repo.findByServiceInstance(instId);
+  ServiceBinding[] listServiceBindingsByServiceInstance(TenantId tenantId, ServiceInstanceId instId) {
+    return repo.findByServiceInstance(tenantId, instId);
   }
 
-  CommandResult deleteServiceBinding(ServiceBindingId id) {
+  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = repo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(binding);
+    return CommandResult(true, binding.id.value, "");
   }
 }

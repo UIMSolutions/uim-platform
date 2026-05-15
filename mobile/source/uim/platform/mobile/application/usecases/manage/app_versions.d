@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.app_versions;
-
 // import uim.platform.mobile.domain.ports.repositories.app_versions;
 // import uim.platform.mobile.domain.entities.app_version;
 // import uim.platform.mobile.domain.types;

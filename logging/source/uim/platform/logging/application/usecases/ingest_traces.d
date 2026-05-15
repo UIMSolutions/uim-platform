@@ -4,13 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.ingest_traces;
-
 // import uim.platform.logging.domain.entities.span;
 // import uim.platform.logging.domain.ports.repositories.spans;
 // import uim.platform.logging.domain.types;
 // import uim.platform.logging.application.dto;
-
-
 // import std.format : format;
 import uim.platform.logging;
 

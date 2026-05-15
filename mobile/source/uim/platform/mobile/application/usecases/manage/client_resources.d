@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.client_resources;
-
 // import uim.platform.mobile.domain.ports.repositories.client_resources;
 // import uim.platform.mobile.domain.entities.client_resource;
 // import uim.platform.mobile.domain.types;

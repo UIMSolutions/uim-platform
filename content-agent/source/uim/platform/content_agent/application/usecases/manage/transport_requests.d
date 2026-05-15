@@ -16,7 +16,6 @@ import uim.platform.content_agent.domain.ports.repositories.transport_queues;
 import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 import uim.platform.content_agent.domain.services.transport_validator;
 import uim.platform.content_agent.domain.types;
-
 /// Application service for transport request lifecycle management.
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private TransportRequestRepository requestRepo;

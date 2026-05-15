@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.data_subjects;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.data_subject;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;

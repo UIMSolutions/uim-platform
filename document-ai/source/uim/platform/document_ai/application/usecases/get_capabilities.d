@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.get_capabilities;
-
 // import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai;
 

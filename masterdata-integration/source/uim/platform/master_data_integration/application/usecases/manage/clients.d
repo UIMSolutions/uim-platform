@@ -4,12 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.clients;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.client;
+// import uim.platform.master_data_integration.domain.ports.repositories.clients;
+// import uim.platform.master_data_integration.domain.types;
 
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.client;
-import uim.platform.master_data_integration.domain.ports.repositories.clients;
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for connected client system management.
 class ManageClientsUseCase { // TODO: UIMUseCase {
   private ClientRepository repo;

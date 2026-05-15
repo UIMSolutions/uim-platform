@@ -4,12 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.query_change_log;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.change_log_entry;
+// import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.change_log_entry;
-import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Application service for querying the change log (delta tracking).
 class QueryChangeLogUseCase { // TODO: UIMUseCase {
   private ChangeLogRepository repo;

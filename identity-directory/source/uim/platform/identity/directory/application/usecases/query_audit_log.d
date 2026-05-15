@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.application.usecases.query_audit_log;
-
 // import uim.platform.identity.directory.domain.entities.audit_event;
 // import uim.platform.identity.directory.domain.types;
 // import uim.platform.identity.directory.domain.ports.repositories.audits;

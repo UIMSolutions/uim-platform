@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.usecases.validate_data;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.validation_rule;
 // import uim.platform.data.quality.domain.entities.validation_result;

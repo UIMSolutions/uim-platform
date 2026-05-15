@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.data_flows;
-
 // import uim.platform.datasphere.domain.types;
 // import uim.platform.datasphere.domain.entities.data_flow;
 // import uim.platform.datasphere.domain.ports.repositories.data_flows;

@@ -4,14 +4,17 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.master_data_objects;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.master_data_object;
+// import uim.platform.master_data_integration.domain.entities.change_log_entry;
+// import uim.platform.master_data_integration.domain.ports.repositories.master_data_objects;
+// import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.master_data_object;
-import uim.platform.master_data_integration.domain.entities.change_log_entry;
-import uim.platform.master_data_integration.domain.ports.repositories.master_data_objects;
-import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Application service for master data object CRUD and lifecycle.
 class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   private MasterDataObjectRepository repo;

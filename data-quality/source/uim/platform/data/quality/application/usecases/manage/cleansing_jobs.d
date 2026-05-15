@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.cleansing_job;
 // import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;

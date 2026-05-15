@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.sections;
-
 // import uim.platform.portal.domain.entities.section;
 // import uim.platform.portal.domain.entities.page;
 // import uim.platform.portal.domain.types;

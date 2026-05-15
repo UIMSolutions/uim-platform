@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.get_overview;
-
 // import uim.platform.logging.domain.ports.repositories.log_entrys;
 // import uim.platform.logging.domain.ports.repositories.spans;
 // import uim.platform.logging.domain.ports.repositories.log_streams;

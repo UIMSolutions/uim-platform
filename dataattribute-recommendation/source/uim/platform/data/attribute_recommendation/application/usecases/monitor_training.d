@@ -13,7 +13,6 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.trai
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
-
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
 struct TrainingJobSummary {
   TrainingJobId jobId;

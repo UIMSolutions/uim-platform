@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// Unique identifier type aliases for type safety.
 struct MasterDataObjectId  {
     string value;
@@ -87,7 +91,6 @@ struct VersionId  {
 
     mixin DomainId;
 }
-
 /// Category of master data object.
 enum MasterDataCategory {
   businessPartner,
@@ -103,7 +106,6 @@ enum MasterDataCategory {
   supplierMaterial,
   custom,
 }
-
 /// Status of a master data record.
 enum RecordStatus {
   active,
@@ -111,7 +113,6 @@ enum RecordStatus {
   blocked,
   markedForDeletion,
 }
-
 /// Type of change in a change log.
 enum ChangeType {
   create_,
@@ -121,21 +122,18 @@ enum ChangeType {
   activate,
   deactivate,
 }
-
 /// Status of a distribution model.
 enum DistributionModelStatus {
   active,
   inactive,
   draft,
 }
-
 /// Direction of data flow in distribution.
 enum DistributionDirection {
   outbound,
   inbound,
   bidirectional,
 }
-
 /// Status of a connected client system.
 enum ClientStatus {
   connected,
@@ -143,7 +141,6 @@ enum ClientStatus {
   error,
   suspended,
 }
-
 /// Type of the connected client.
 enum ClientType {
   sapS4Hana,
@@ -155,7 +152,6 @@ enum ClientType {
   thirdParty,
   custom,
 }
-
 /// Status of a replication job.
 enum ReplicationJobStatus {
   pending,
@@ -165,7 +161,6 @@ enum ReplicationJobStatus {
   cancelled,
   paused,
 }
-
 /// Trigger mode for replication.
 enum ReplicationTrigger {
   manual,
@@ -173,7 +168,6 @@ enum ReplicationTrigger {
   eventDriven,
   onChange,
 }
-
 /// Filter operator for filtering rules.
 enum FilterOperator {
   equals,
@@ -189,7 +183,6 @@ enum FilterOperator {
   isNull,
   isNotNull,
 }
-
 /// Data model field type.
 enum FieldType {
   string_,
@@ -202,7 +195,6 @@ enum FieldType {
   array_,
   object_,
 }
-
 /// Key mapping source type.
 enum KeyMappingSourceType {
   local,

@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.manage.templates;
-
 // import uim.platform.document_ai.domain.types;
 // import uim.platform.document_ai.domain.entities.template_;
 // import uim.platform.document_ai.domain.ports.repositories.templates;
 // import uim.platform.document_ai.application.dto;
-
 // import std.uuid : randomUUID;
 import uim.platform.document_ai;
 

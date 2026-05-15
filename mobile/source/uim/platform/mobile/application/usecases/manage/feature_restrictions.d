@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.feature_restrictions;
-
 // import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
 // import uim.platform.mobile.domain.entities.feature_restriction;
 // import uim.platform.mobile.domain.types;

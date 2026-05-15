@@ -4,14 +4,17 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.app_routes;
+// import uim.platform.html_repository.domain.ports.repositories.app_routes;
+// import uim.platform.html_repository.domain.entities.app_route;
+// import uim.platform.html_repository.domain.services.deployment_validator;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.html_repository.domain.ports.repositories.app_routes;
-import uim.platform.html_repository.domain.entities.app_route;
-import uim.platform.html_repository.domain.services.deployment_validator;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
-import std.uuid : randomUUID;
+mixin(ShowModule!());
+
+@safe:
 
 
 class ManageAppRoutesUseCase { // TODO: UIMUseCase {

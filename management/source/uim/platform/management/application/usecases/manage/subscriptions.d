@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.subscriptions;
-
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.subscription;
 // import uim.platform.management.domain.entities.platform_event;

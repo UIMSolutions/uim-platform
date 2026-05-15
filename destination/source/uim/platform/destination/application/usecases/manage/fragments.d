@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.application.usecases.manage.fragments;
-
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.ports.repositories.fragments;
 // import uim.platform.destination.domain.types;
-
 // 
 import uim.platform.destination;
 

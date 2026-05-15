@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 // HtmlApp DTOs
 struct CreateHtmlAppRequest {
   TenantId tenantId;
@@ -44,7 +48,6 @@ struct UpdateHtmlAppRequest {
       .set("updatedBy", updatedBy);
   }
 }
-
 // AppVersion DTOs
 struct CreateAppVersionRequest {
   TenantId tenantId;
@@ -73,7 +76,6 @@ struct UpdateAppVersionRequest {
       .set("description", description);
   }
 }
-
 // AppFile DTOs
 struct UploadAppFileRequest {
   TenantId tenantId;
@@ -108,7 +110,6 @@ struct UpdateAppFileRequest {
       .set("encoding", encoding);
   }
 }
-
 // ServiceInstance DTOs
 struct CreateServiceInstanceRequest {
   TenantId tenantId;
@@ -143,7 +144,6 @@ struct UpdateServiceInstanceRequest {
       .set("sizeQuotaMb", sizeQuotaMb);
   }
 }
-
 // DeploymentRecord DTOs
 struct CreateDeploymentRequest {
   TenantId tenantId;
@@ -163,7 +163,6 @@ struct CreateDeploymentRequest {
       .set("deployedBy", deployedBy);
   }
 }
-
 // AppRoute DTOs
 struct CreateAppRouteRequest {
   TenantId tenantId;
@@ -198,7 +197,6 @@ struct UpdateAppRouteRequest {
       .set("status", status);
   }
 }
-
 // ContentCache DTOs
 struct CacheContentRequest {
   TenantId tenantId;
@@ -218,7 +216,6 @@ struct CacheContentRequest {
       .set("ttlSeconds", ttlSeconds);
   }
 }
-
 // Overview
 struct OverviewSummary {
   long totalApps;

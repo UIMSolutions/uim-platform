@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.application.usecases.manage.channels;
-
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.service_channel;
 // import uim.platform.connectivity.domain.entities.connectivity_log;

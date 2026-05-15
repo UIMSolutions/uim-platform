@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation.application.usecases.monitor_executions;
-
 // import uim.platform.integration.automation.domain.types;
 // import uim.platform.integration.automation.domain.entities.execution_log;
 // import uim.platform.integration.automation.domain.entities.workflow;
 // import uim.platform.integration.automation.domain.entities.workflow_step;
-
 // // import uim.platform.integration.automation.domain.ports.repositories.execution_logs;
 // // import uim.platform.integration.automation.domain.ports.repositories.workflows;
 // // import uim.platform.integration.automation.domain.ports.repositories.steps;
@@ -87,7 +85,6 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
         inProg, pending, failed, skipped, logs.length);
   }
 }
-
 /// Summary of workflow progress for monitoring.
 struct WorkflowSummary {
   WorkflowId workflowId;

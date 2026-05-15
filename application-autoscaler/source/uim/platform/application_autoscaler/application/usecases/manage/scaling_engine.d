@@ -10,7 +10,6 @@ import uim.platform.application_autoscaler;
 mixin(ShowModule!());
 
 @safe:
-
 /// Orchestrates the autoscaling decision: evaluate policy rules against
 /// the submitted metric and record a scaling history event.
 class ScalingEngineUseCase {

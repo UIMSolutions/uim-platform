@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.application.usecases.find_destination;
-
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination;
 // import uim.platform.destination.domain.entities.destination_fragment;

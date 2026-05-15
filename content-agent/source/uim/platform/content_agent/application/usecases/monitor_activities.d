@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.monitor_activities;
-
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_activity;
 // import uim.platform.content_agent.domain.ports.repositories.content_activitys;
@@ -15,7 +14,6 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-
 /// Application service for viewing content operation activities.
 class MonitorActivitiesUseCase { // TODO: UIMUseCase {
   private ContentActivityRepository activityRepo;

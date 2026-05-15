@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.entities.data_model;
 
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// Defines the schema/structure of a master data entity type.
 struct DataModel {
   mixin TenantEntity!(DataModelId);
@@ -36,7 +39,6 @@ struct DataModel {
       .set("isActive", isActive);
   }
 }
-
 /// A field definition within a data model.
 struct FieldDefinition {
   string name;

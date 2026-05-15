@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.application.usecases.authenticate_user;
-
 // import uim.platform.identity.authentication.domain.entities.user;
 // import uim.platform.identity.authentication.domain.entities.session;
 // import uim.platform.identity.authentication.domain.entities.risk_rule;

@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.usecases.cleanse_addresses;
-
 // import std.uuid;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.address_record;
 // import uim.platform.data.quality.domain.ports.repositories.addresses;

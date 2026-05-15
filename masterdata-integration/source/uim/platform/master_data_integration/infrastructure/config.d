@@ -5,13 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.config;
 
+import std.process : environment;
+
+import uim.platform.master_data_integration;
+
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8096;
   string serviceName = "Master Data Integration Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

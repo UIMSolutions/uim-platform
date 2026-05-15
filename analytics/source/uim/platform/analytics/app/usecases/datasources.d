@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.app.usecases.datasources;
-
 // import uim.platform.analytics.domain.entities.datasource;
 // import uim.platform.analytics.domain.repositories.datasource;
 // import uim.platform.analytics.domain.values.common;

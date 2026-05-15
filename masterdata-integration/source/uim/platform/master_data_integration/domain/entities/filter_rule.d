@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.entities.filter_rule;
 
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// A filter rule for selective master data distribution.
 struct FilterRule {
   mixin TenantEntity!FilterRuleId;
@@ -37,7 +40,6 @@ struct FilterRule {
       .set("isActive", isActive);
   }
 }
-
 /// A single filter condition.
 struct FilterCondition {
   string fieldName;

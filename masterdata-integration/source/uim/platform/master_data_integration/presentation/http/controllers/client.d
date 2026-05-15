@@ -5,16 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.presentation.http.client;
 
+// import uim.platform.master_data_integration.application.usecases.manage.clients;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.client;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
 
-
-
-
-import uim.platform.master_data_integration.application.usecases.manage.clients;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.client;
-import uim.platform.master_data_integration.domain.types;
-
+@safe:
 class ClientController : PlatformController {
   private ManageClientsUseCase usecase;
 

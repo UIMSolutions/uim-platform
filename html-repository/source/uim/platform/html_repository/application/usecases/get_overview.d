@@ -4,17 +4,20 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.get_overview;
+// import uim.platform.html_repository.domain.ports.repositories.html_apps;
+// import uim.platform.html_repository.domain.ports.repositories.app_versions;
+// import uim.platform.html_repository.domain.ports.repositories.app_files;
+// import uim.platform.html_repository.domain.ports.repositories.service_instances;
+// import uim.platform.html_repository.domain.ports.repositories.deployment_records;
+// import uim.platform.html_repository.domain.ports.repositories.app_routes;
+// import uim.platform.html_repository.domain.ports.repositories.content_caches;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
-import uim.platform.html_repository.domain.ports.repositories.html_apps;
-import uim.platform.html_repository.domain.ports.repositories.app_versions;
-import uim.platform.html_repository.domain.ports.repositories.app_files;
-import uim.platform.html_repository.domain.ports.repositories.service_instances;
-import uim.platform.html_repository.domain.ports.repositories.deployment_records;
-import uim.platform.html_repository.domain.ports.repositories.app_routes;
-import uim.platform.html_repository.domain.ports.repositories.content_caches;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+mixin(ShowModule!());
 
+@safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
     private HtmlAppRepository appRepo;
     private AppVersionRepository versionRepo;

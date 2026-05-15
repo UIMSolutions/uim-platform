@@ -4,15 +4,18 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.app_files;
+// import uim.platform.html_repository.domain.ports.repositories.app_files;
+// import uim.platform.html_repository.domain.entities.app_file;
+// import uim.platform.html_repository.domain.services.content_delivery_service;
+// import uim.platform.html_repository.domain.services.deployment_validator;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.html_repository.domain.ports.repositories.app_files;
-import uim.platform.html_repository.domain.entities.app_file;
-import uim.platform.html_repository.domain.services.content_delivery_service;
-import uim.platform.html_repository.domain.services.deployment_validator;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
-import std.uuid : randomUUID;
+mixin(ShowModule!());
+
+@safe:
 
 class ManageAppFilesUseCase { // TODO: UIMUseCase {
     private AppFileRepository repo;

@@ -4,12 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.filter_rules;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.filter_rule;
+// import uim.platform.master_data_integration.domain.ports.repositories.filter_rules;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.filter_rule;
-import uim.platform.master_data_integration.domain.ports.repositories.filter_rules;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Application service for filter rule management.
 class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   private FilterRuleRepository repo;

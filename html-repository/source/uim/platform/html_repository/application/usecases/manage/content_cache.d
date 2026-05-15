@@ -21,7 +21,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult cache(CacheContentRequest r) {
+    CommandResult cacheContent(CacheContentRequest r) {
         ContentCache entry;
         entry.initEntity(r.tenantId);
 
@@ -33,7 +33,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         entry.etag = ContentDeliveryService.generateEtag(r.content);
         entry.content = r.content;
         entry.ttlSeconds = r.ttlSeconds;
-        entry.cachedAt = currentTimestamp();
+        entry.cachedAt = Clock.currStdTime();
         entry.expiresAt = entry.cachedAt + r.ttlSeconds * 10_000_000L;
         entry.status = CacheStatus.active;
 
@@ -41,7 +41,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    ContentCache getById(ContentCacheId id) {
+    ContentCache getContent(ContentCacheId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -57,20 +57,16 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         }
     }
 
-    void purgeExpired() {
-        repo.purgeExpired(currentTimestamp());
+    void purgeExpiredContent() {
+        repo.purgeExpired(Clock.currStdTime()());
     }
 
-    ContentCache[] listByTenant(TenantId tenantId) {
+    ContentCache[] listContent(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    size_t countByTenant(TenantId tenantId) {
+    size_t countContent(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }

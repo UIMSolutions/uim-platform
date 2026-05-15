@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.application.usecases.manage.api_clients;
-
 // import uim.platform.identity.directory.domain.entities.api_client;
 // import uim.platform.identity.directory.domain.entities.audit_event;
 // import uim.platform.identity.directory.domain.types;
@@ -17,10 +16,8 @@ import uim.platform.identity.directory;
 mixin(ShowModule!());
 
 @safe:
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
-
 /// Application use case: API client / technical user management.
 class ManageApiClientsUseCase { // TODO: UIMUseCase {
   private ApiClientRepository clientRepo;

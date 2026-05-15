@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.pipelines;
-
 // import uim.platform.logging.domain.entities.pipeline;
 // import uim.platform.logging.domain.ports.repositories.pipelines;
 // import uim.platform.logging.domain.types;

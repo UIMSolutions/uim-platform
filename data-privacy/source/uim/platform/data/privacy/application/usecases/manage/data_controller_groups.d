@@ -63,7 +63,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

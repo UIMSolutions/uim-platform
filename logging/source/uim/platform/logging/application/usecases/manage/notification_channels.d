@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.notification_channels;
-
 // import uim.platform.logging.domain.entities.notification_channel;
 // import uim.platform.logging.domain.ports.repositories.notification_channels;
 // import uim.platform.logging.domain.types;

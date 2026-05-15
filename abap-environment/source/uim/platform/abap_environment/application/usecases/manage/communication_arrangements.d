@@ -4,13 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application.usecases.manage.communication_arrangements;
-
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.communication_arrangement;
 // import uim.platform.abap_environment.domain.ports.repositories.communication_arrangements;
 // import uim.platform.abap_environment.domain.types;
-
-
 // import std.uuid : randomUUID;
 import uim.platform.abap_environment;
 

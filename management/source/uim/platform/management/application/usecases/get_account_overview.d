@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.get_account_overview;
-
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.ports.repositories.global_accounts;
 // import uim.platform.management.domain.ports.repositories.subaccounts;

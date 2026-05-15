@@ -4,12 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.services.distribution_evaluator;
+// import uim.platform.master_data_integration.domain.entities.distribution_model;
+// import uim.platform.master_data_integration.domain.entities.filter_rule;
+// import uim.platform.master_data_integration.domain.entities.master_data_object;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.domain.entities.distribution_model;
-import uim.platform.master_data_integration.domain.entities.filter_rule;
-import uim.platform.master_data_integration.domain.entities.master_data_object;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Domain service: evaluates whether a master data object matches distribution
 /// model criteria and filter rules.
 class DistributionEvaluator {

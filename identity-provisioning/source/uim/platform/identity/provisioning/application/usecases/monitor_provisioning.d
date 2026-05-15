@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
-
 // import uim.platform.identity.provisioning.domain.types;
 // import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 // import uim.platform.identity.provisioning.domain.entities.provisioning_log;
@@ -32,7 +31,6 @@ struct JobSummary {
   long startedAt;
   long completedAt;
 }
-
 /// Overall provisioning pipeline health.
 struct ProvisioningSummary {
   int totalSourceSystems;

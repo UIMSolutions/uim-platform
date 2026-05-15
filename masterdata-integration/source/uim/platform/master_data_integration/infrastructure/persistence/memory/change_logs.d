@@ -4,12 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory.change_logs;
+// import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.change_log_entry;
+// import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
 
-import uim.platform.master_data_integration.domain.types;
-import uim.platform.master_data_integration.domain.entities.change_log_entry;
-import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
+import uim.platform.master_data_integration;
 
-// import std.algorithm : filter, sort;
+mixin(ShowModule!());
+
+@safe:
  
 
 class MemoryChangeLogRepository : ChangeLogRepository {

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.application.usecases.manage.access_rules;
-
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.access_rule;
 // import uim.platform.connectivity.domain.ports.repositories.access_rules;

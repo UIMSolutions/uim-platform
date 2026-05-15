@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.application.usecases.manage.shares;
-
 // // import std.datetime.systime : Clock;
 //
 // 

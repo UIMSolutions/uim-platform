@@ -5,16 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.presentation.http.distribution;
 
+// import uim.platform.master_data_integration.application.usecases.manage.distribution_models;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.distribution_model;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
 
-
-
-
-import uim.platform.master_data_integration.application.usecases.manage.distribution_models;
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.distribution_model;
-import uim.platform.master_data_integration.domain.types;
-
+@safe:
 class DistributionController : PlatformController {
   private ManageDistributionModelsUseCase usecase;
 

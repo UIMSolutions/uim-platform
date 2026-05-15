@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.labels;
-
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.label;
 // import uim.platform.management.domain.ports.repositories.labels;

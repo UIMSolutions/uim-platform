@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.application.usecases.manage.connectors;
-
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.entities.connectivity_log;

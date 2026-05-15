@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.get_metrics;
-
 // import uim.platform.ai_core.domain.types;
 // import uim.platform.ai_core.domain.entities.metric;
 // import uim.platform.ai_core.domain.ports.repositories.metric;
 // import uim.platform.ai_core.application.dto;
-
 // import std.uuid : randomUUID;
 
 import uim.platform.ai_core;

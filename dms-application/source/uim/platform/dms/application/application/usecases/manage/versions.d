@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.application.usecases.manage.versions;
-
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.document_version;
 // import uim.platform.dms.application.domain.services.versioning_service;

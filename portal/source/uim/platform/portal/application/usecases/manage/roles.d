@@ -4,14 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.roles;
-
 // import uim.platform.portal.domain.entities.role;
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.domain.ports.repositories.roles;
 // import uim.platform.portal.application.dto;
-
-
-
 // import std.algorithm : canFind, filter;
  
 // import uim.platform.portal.domain.types;

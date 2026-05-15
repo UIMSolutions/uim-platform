@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.directories;
-
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.directory;
 // import uim.platform.management.domain.ports.repositories.directorys;
@@ -15,7 +14,6 @@ import uim.platform.management;
 mixin(ShowModule!());
 
 @safe:
-
 /// Use case: manage directory hierarchy within global accounts.
 class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   private DirectoryRepository directories;

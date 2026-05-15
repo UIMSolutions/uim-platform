@@ -4,12 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
+// import uim.platform.master_data_integration.application.dto;
+// import uim.platform.master_data_integration.domain.entities.replication_job;
+// import uim.platform.master_data_integration.domain.ports.repositories.replication_jobs;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
-import uim.platform.master_data_integration.application.dto;
-import uim.platform.master_data_integration.domain.entities.replication_job;
-import uim.platform.master_data_integration.domain.ports.repositories.replication_jobs;
-import uim.platform.master_data_integration.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// Application service for replication job lifecycle management.
 class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   private ReplicationJobRepository repo;
@@ -31,8 +34,8 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.name = req.name.length > 0 ? req.name : "Replication-" ~ id[0 .. 8];
     job.description = req.description;
     job.status = ReplicationJobStatus.pending;
-    job.trigger = parseTrigger(req.trigger);
-    job.categories = parseCategories(req.categories);
+    job.trigger = req.trigger.to!ReplicationTrigger;
+    job.categories = req.categories.map!(c => c.to!MasterDataCategory).array;
     job.sourceClientId = req.sourceClientId;
     job.targetClientIds = req.targetClientIds;
     job.isInitialLoad = req.isInitialLoad;
@@ -41,7 +44,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult startReplicationJob(ReplicationJobId id) {
+  CommandResult startReplicationJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
@@ -54,7 +57,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult completeReplicationJob(ReplicationJobId id, long successRecords,
+  CommandResult completeReplicationJob(TenantId tenantId, ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
@@ -69,11 +72,12 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     job.errorMessages = errorMessages;
     job.lastDeltaToken = deltaToken;
     job.completedAt = clockSeconds();
+
     repo.update(job);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult cancelReplicationJob(ReplicationJobId id) {
+  CommandResult cancelReplicationJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
@@ -83,7 +87,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult pauseReplicationJob(ReplicationJobId id) {
+  CommandResult pauseReplicationJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
@@ -94,7 +98,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  ReplicationJob getReplicationJob(ReplicationJobId id) {
+  ReplicationJob getReplicationJob(TenantId tenantId, ReplicationJobId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -103,83 +107,22 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationJob[] listReplicationJobsByStatus(TenantId tenantId, string status) {
-    return repo.findByStatus(tenantId, parseJobStatus(status));
+    return repo.findByStatus(tenantId, status.to!ReplicationJobStatus);
   }
 
   ReplicationJob[] listReplicationJobsByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
     return repo.findByDistributionModel(tenantId, modelId);
   }
 
-  CommandResult deleteReplicationJob(ReplicationJobId id) {
+  CommandResult deleteReplicationJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
-    repo.removeById(id);
+
+    repo.remove(job);
     return CommandResult(true, job.id.value, "");
   }
 
-  private ReplicationTrigger parseTrigger(string s) {
-    switch (s) {
-    case "manual":
-      return ReplicationTrigger.manual;
-    case "scheduled":
-      return ReplicationTrigger.scheduled;
-    case "eventDriven":
-      return ReplicationTrigger.eventDriven;
-    case "onChange":
-      return ReplicationTrigger.onChange;
-    default:
-      return ReplicationTrigger.manual;
-    }
-  }
-
-  private ReplicationJobStatus parseJobStatus(string s) {
-    switch (s) {
-    case "pending":
-      return ReplicationJobStatus.pending;
-    case "running":
-      return ReplicationJobStatus.running;
-    case "completed":
-      return ReplicationJobStatus.completed;
-    case "failed":
-      return ReplicationJobStatus.failed;
-    case "cancelled":
-      return ReplicationJobStatus.cancelled;
-    case "paused":
-      return ReplicationJobStatus.paused;
-    default:
-      return ReplicationJobStatus.pending;
-    }
-  }
-
-  private MasterDataCategory[] parseCategories(string[] cats) {
-    MasterDataCategory[] result;
-    foreach (s; cats) {
-      switch (s) {
-      case "businessPartner":
-        result ~= MasterDataCategory.businessPartner;
-        break;
-      case "costCenter":
-        result ~= MasterDataCategory.costCenter;
-        break;
-      case "profitCenter":
-        result ~= MasterDataCategory.profitCenter;
-        break;
-      case "companyCode":
-        result ~= MasterDataCategory.companyCode;
-        break;
-      case "workforcePerson":
-        result ~= MasterDataCategory.workforcePerson;
-        break;
-      case "custom":
-        result ~= MasterDataCategory.custom;
-        break;
-      default:
-        break;
-      }
-    }
-    return result;
-  }
 }
 
 

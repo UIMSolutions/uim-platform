@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.application.usecases.get_dashboard;
-
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.alert;
 // import uim.platform.monitoring.domain.entities.health_check_result;

@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.entities.replication_job;
 
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
+
+@safe:
 /// A replication job — executes data synchronization between systems.
 struct ReplicationJob {
   mixin TenantEntity!(ReplicationJobId);

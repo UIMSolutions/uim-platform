@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.import_content;
-
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.import_job;
 // import uim.platform.content_agent.domain.entities.content_package;
@@ -19,7 +18,6 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-
 /// Application service for importing content packages.
 class ImportContentUseCase { // TODO: UIMUseCase {
   private ImportJobRepository importRepo;

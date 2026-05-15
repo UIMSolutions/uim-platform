@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.manage.retention;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.retention_policy;
 // import uim.platform.auditlog.domain.ports.repositories.retention_policys;

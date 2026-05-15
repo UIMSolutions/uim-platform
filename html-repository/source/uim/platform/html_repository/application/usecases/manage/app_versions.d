@@ -4,16 +4,17 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.app_versions;
+// import uim.platform.html_repository.domain.ports.repositories.app_versions;
+// import uim.platform.html_repository.domain.entities.app_version;
+// import uim.platform.html_repository.domain.services.deployment_validator;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.html_repository.domain.ports.repositories.app_versions;
-import uim.platform.html_repository.domain.entities.app_version;
-import uim.platform.html_repository.domain.services.deployment_validator;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
-import std.uuid : randomUUID;
+mixin(ShowModule!());
 
-
+@safe:
 class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     private AppVersionRepository repo;
 
@@ -38,7 +39,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    CommandResult updateAppVersion(AppVersionId id, UpdateAppVersionRequest r) {
+    CommandResult updateAppVersion(TenantId tenantId, AppVersionId id, UpdateAppVersionRequest r) {
         auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
             return CommandResult(false, "", "Version not found");
@@ -52,21 +53,25 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    AppVersion getAppVersionById(AppVersionId id) {
+    AppVersion getAppVersionById(TenantId tenantId, AppVersionId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppVersion getLatestAppVersion(HtmlAppId appId) {
-        return repo.findLatestByApp(appId);
+    AppVersion getLatestAppVersion(TenantId tenantId, HtmlAppId appId) {
+        return repo.findLatestByApp(tenantId, appId);
     }
 
-    AppVersion[] listAppVersions(HtmlAppId appId) {
-        return repo.findByApp(appId);
+    AppVersion[] listAppVersions(TenantId tenantId, HtmlAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteAppVersion(AppVersionId id) {
-        repo.removeById(id);
-        return CommandResult(true, id.value, "");
+    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
+            return CommandResult(false, "", "Version not found");
+
+        repo.remove(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
     size_t countByApp(HtmlAppId appId) {

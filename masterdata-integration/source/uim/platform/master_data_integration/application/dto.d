@@ -5,10 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.dto;
 
-import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+mixin(ShowModule!());
 
-
+@safe:
 /// --- Master Data Object DTOs ---
 
 struct CreateMasterDataObjectRequest {
@@ -33,7 +34,6 @@ struct UpdateMasterDataObjectRequest {
   string[string] attributes;
   UserId updatedBy;
 }
-
 /// --- Data Model DTOs ---
 
 struct CreateDataModelRequest {
@@ -68,7 +68,6 @@ struct FieldDefinitionDto {
   string referenceModel;
   string description;
 }
-
 /// --- Distribution Model DTOs ---
 
 struct CreateDistributionModelRequest {
@@ -97,7 +96,6 @@ struct UpdateDistributionModelRequest {
   bool autoReplicate;
   string cronSchedule;
 }
-
 /// --- Key Mapping DTOs ---
 
 struct CreateKeyMappingRequest {
@@ -126,7 +124,6 @@ struct LookupKeyRequest {
   string sourceLocalKey;
   ClientId targetClientId;
 }
-
 /// --- Client DTOs ---
 
 struct CreateClientRequest {
@@ -159,7 +156,6 @@ struct UpdateClientRequest {
   string clientIdRef;
   string certificateRef;
 }
-
 /// --- Replication Job DTOs ---
 
 struct CreateReplicationJobRequest {
@@ -174,7 +170,6 @@ struct CreateReplicationJobRequest {
   bool isInitialLoad;
   UserId createdBy;
 }
-
 /// --- Filter Rule DTOs ---
 
 struct CreateFilterRuleRequest {
@@ -205,7 +200,6 @@ struct FilterConditionDto {
   string lowerBound;
   string upperBound;
 }
-
 /// --- Change Log DTOs ---
 
 struct ChangeLogQueryRequest {

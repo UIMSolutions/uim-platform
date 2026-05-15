@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.object_store.application.usecases.manage.cors_rules;
-
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.cors_rule;
 // import uim.platform.object_store.domain.ports.repositories.cors_rule;

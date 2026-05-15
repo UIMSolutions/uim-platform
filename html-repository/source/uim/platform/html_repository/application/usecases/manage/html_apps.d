@@ -4,14 +4,17 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.html_apps;
+// import uim.platform.html_repository.domain.ports.repositories.html_apps;
+// import uim.platform.html_repository.domain.entities.html_app;
+// import uim.platform.html_repository.domain.services.deployment_validator;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.html_repository.domain.ports.repositories.html_apps;
-import uim.platform.html_repository.domain.entities.html_app;
-import uim.platform.html_repository.domain.services.deployment_validator;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+import uim.platform.html_repository;
 
-import std.uuid : randomUUID;
+mixin(ShowModule!());
+
+@safe:
 
 
 class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
@@ -45,21 +48,21 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    CommandResult updateHtmlApp(HtmlAppId id, UpdateHtmlAppRequest r) {
-        auto app = repo.findById(tenantId, id);
+    CommandResult updateHtmlApp(UpdateHtmlAppRequest r) {
+        auto app = repo.findById(r.tenantId, r.id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 
         if (r.description.length > 0) app.description = r.description;
         if (r.visibility.length > 0) app.visibility = parseVisibility(r.visibility);
-        app.updatedAt = currentTimestamp();
+        app.updatedAt = Clock.currStdTime();
         app.updatedBy = r.updatedBy;
 
         repo.update(app);
         return CommandResult(true, app.id.value, "");
     }
 
-    HtmlApp getHtmlAppById(HtmlAppId id) {
+    HtmlApp getHtmlAppById(TenantId tenantId, HtmlAppId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -71,8 +74,13 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         return repo.findPublic(tenantId);
     }
 
-    CommandResult deleteHtmlApp(HtmlAppId id) {
-        repo.removeById(id);
+    CommandResult deleteHtmlApp(TenantId tenantId, HtmlAppId id) {
+        auto entity = repo.findById(tenantId, id);
+        if (entity.isNull)
+            return CommandResult(false, "", "App not found");
+            
+        repo.remove(entity);
+        return CommandResult(true, id.value, "");
     }
 
     size_t countHtmlAppsByTenant(TenantId tenantId) {
@@ -88,8 +96,4 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static long currentTimestamp() {
-        import std.datetime.systime : Clock;
-        return Clock.currStdTime();
-    }
 }
