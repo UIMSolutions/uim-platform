@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 interface CustomDomainRepository : ITenantRepository!(CustomDomain, CustomDomainId) {
     
-    size_t countByDomainName(TenantId tenantId, string domainName);
+    bool existsByDomainName(TenantId tenantId, string domainName);
     CustomDomain findByDomainName(TenantId tenantId, string domainName);
     void removeByDomainName(TenantId tenantId, string domainName);
 

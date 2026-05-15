@@ -19,19 +19,19 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCertificate(CreateCertificateRequest r) {
-        if (r.isNull)
+        if (r.certificateId.isNull)
             return CommandResult(false, "", "ID is required");
         if (r.keyId.isEmpty)
             return CommandResult(false, "", "Key ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
         if (!existing.isNull)
             return CommandResult(false, "", "Certificate already exists");
 
         Certificate c;
-        c.id = r.id;
+        c.id = r.certificateId;
         c.tenantId = r.tenantId;
-        c.keyId = r.keyId;
+        c.privateKeyId = r.privateKeyId;
         c.status = CertificateStatus.pending;
         c.createdBy = r.createdBy;
 
@@ -43,7 +43,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult uploadCertificateChain(UploadCertificateChainRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
         if (r.certificatePem.length == 0)
@@ -69,8 +69,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deactivateCertificate(DeactivateCertificateRequest r) {
-        auto existing = repo.findById(r.id);
+    CommandResult deactivateCertificate(TenantId tenantId, CertificateId id) {
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 
@@ -95,8 +95,8 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return repo.findExpiring(tenantId, beforeTimestamp);
     }
 
-    CommandResult deleteCertificate(DeleteCertificateRequest r) {
-        auto entity = repo.findById(r.tenantId, r.certificateId);
+    CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Certificate not found");
 

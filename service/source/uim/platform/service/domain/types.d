@@ -45,3 +45,23 @@ struct ConnectionId {
 
   mixin DomainId;
 }
+
+struct OrganizationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SpaceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}

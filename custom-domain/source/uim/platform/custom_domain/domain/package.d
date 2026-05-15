@@ -5,4 +5,5 @@ public {
     import uim.platform.custom_domain.domain.entities;
     import uim.platform.custom_domain.domain.ports;
     import uim.platform.custom_domain.domain.services;
+    import uim.platform.custom_domain.domain.enumerations;
 }

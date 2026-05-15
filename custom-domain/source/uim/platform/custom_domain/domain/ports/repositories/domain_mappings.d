@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface DomainMappingRepository {
 
-    bool findByCustomRoute(TenantId tenantId, string customRoute);
+    bool existsByCustomRoute(TenantId tenantId, string customRoute);
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute);
     void removeByCustomRoute(TenantId tenantId, string customRoute);
 
-    size_t countByDomain(CustomDomainId domainId);
-    DomainMapping[] findByDomain(CustomDomainId domainId);
-    void removeByDomain(CustomDomainId domainId);
+    size_t countByDomain(TenantId tenantId, CustomDomainId domainId);
+    DomainMapping[] findByDomain(TenantId tenantId, CustomDomainId domainId);
+    void removeByDomain(TenantId tenantId, CustomDomainId domainId);
         
 }

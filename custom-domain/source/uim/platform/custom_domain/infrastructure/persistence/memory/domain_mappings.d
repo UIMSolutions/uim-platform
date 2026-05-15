@@ -13,6 +13,31 @@ mixin(ShowModule!());
 
 class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMappingId), DomainMappingRepository {
 
+    // #region ByCustomRoute
+    DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
+        foreach (m; findByTenant(tenantId)) {
+            if (m.customRoute == customRoute)
+                return m;
+        }
+        return DomainMapping.init;
+    }
+    bool existsByCustomRoute(TenantId tenantId, string customRoute) {
+        foreach (m; findByTenant(tenantId)) {
+            if (m.customRoute == customRoute)
+                return true;
+        }
+        return false;
+    }
+    void removeByCustomRoute(TenantId tenantId, string customRoute) {
+        foreach (m; findByTenant(tenantId)) {
+            if (m.customRoute == customRoute) {
+                remove(m);
+                return;
+            }
+        }
+    }
+    // #endregion ByCustomRoute
+
     // #region ByDomain
     size_t countByDomain(TenantId tenantId, CustomDomainId domainId) {
         return findByDomain(domainId).length;
@@ -22,21 +47,14 @@ class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMap
         return mappings.filter!(m => m.customDomainId == domainId).array;
     }
 
-    DomainMapping[] findByDomain(CustomDomainId domainId) {
-        return filterByDomain(findAll(), domainId);
+    DomainMapping[] findByDomain(TenantId tenantId, CustomDomainId domainId) {
+        return filterByDomain(findByTenant(tenantId), domainId);
     }
 
-    void removeByDomain(CustomDomainId domainId) {
-        findByDomain(domainId).each!(m => remove(m));
+    void removeByDomain(TenantId tenantId, CustomDomainId domainId) {
+        findByDomain(tenantId, domainId).each!(m => remove(m));
     }
     // #endregion ByDomain
 
-    // #region ByCustomRoute
-    DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; findByTenant(tenantId)) {
-            if (m.customRoute == customRoute)
-                return m;
-        }
-        return DomainMapping.init;
-    }
+
 }

@@ -19,31 +19,33 @@ mixin(ShowModule!());
 
 struct CreateCustomDomainRequest {
     TenantId tenantId;
-    string id;
+    CertificateId certificateId;
+    UserId createdBy;
+    
     string domainName;
     string organizationId;
     string spaceId;
     string environment;
-    UserId createdBy;
 }
 
 struct UpdateCustomDomainRequest {
     TenantId tenantId;
-    string id;
+    CertificateId certificateId;
+    UserId updatedBy;
+
     string status;
     string activeCertificateId;
     string tlsConfigurationId;
     bool isShared;
     string sharedWithOrgs;
     bool clientAuthEnabled;
-    UserId updatedBy;
 }
 
 // --- Private Key ---
 
 struct CreatePrivateKeyRequest {
     TenantId tenantId;
-    string id;
+    PrivateKeyId privateKeyId;
     string subject;
     string[] domains;
     string algorithm;
@@ -55,21 +57,21 @@ struct CreatePrivateKeyRequest {
 
 struct CreateCertificateRequest {
     TenantId tenantId;
-    string id;
-    string keyId;
+    CertificateId certificateId;
+    PrivateKeyId keyId;
     string certificateType;
     UserId createdBy;
 }
 
 struct UploadCertificateChainRequest {
     TenantId tenantId;
-    string id;
+    CertificateId certificateId;
     string certificatePem;
 }
 
 struct ActivateCertificateRequest {
     TenantId tenantId;
-    string id;
+    CertificateId certificateId;
     string[] domains;
 }
 
@@ -77,7 +79,7 @@ struct ActivateCertificateRequest {
 
 struct CreateTlsConfigurationRequest {
     TenantId tenantId;
-    string id;
+    TlsConfigurationId tlsConfigurationId   ;
     string name;
     string description;
     string minProtocolVersion;
@@ -91,7 +93,7 @@ struct CreateTlsConfigurationRequest {
 
 struct UpdateTlsConfigurationRequest {
     TenantId tenantId;
-    string id;
+    TlsConfigurationId tlsConfigurationId;
     string name;
     string description;
     string minProtocolVersion;
@@ -107,8 +109,8 @@ struct UpdateTlsConfigurationRequest {
 
 struct CreateDomainMappingRequest {
     TenantId tenantId;
-    string id;
-    string customDomainId;
+    DomainMappingId domainMappingId;
+    CustomDomainId customDomainId;
     string standardRoute;
     string customRoute;
     string mappingType;
@@ -122,8 +124,8 @@ struct CreateDomainMappingRequest {
 
 struct CreateTrustedCertificateRequest {
     TenantId tenantId;
-    string id;
-    string customDomainId;
+    TrustedCertificateId trustedCertificateId;
+    CustomDomainId customDomainId;
     string certificatePem;
     string authMode;
     UserId createdBy;
@@ -133,8 +135,8 @@ struct CreateTrustedCertificateRequest {
 
 struct CreateDnsRecordRequest {
     TenantId tenantId;
-    string id;
-    string customDomainId;
+    DnsRecordId dnsRecordId;
+    CustomDomainId customDomainId;
     string recordType;
     string hostname;
     string value;
@@ -144,7 +146,7 @@ struct CreateDnsRecordRequest {
 
 struct UpdateDnsRecordRequest {
     TenantId tenantId;
-    string id;
+    DnsRecordId dnsRecordId;
     string value;
     int ttl;
     string validationStatus;
