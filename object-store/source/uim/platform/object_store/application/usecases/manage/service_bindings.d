@@ -37,14 +37,12 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (bucket.isNull || bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-   
-
     auto accessKeyId = randomUUID();
     auto secretKey = randomUUID();
 
-    auto binding = new ServiceBinding();
-    binding.id = randomUUID();
-    binding.tenantId = req.tenantId;
+    ServiceBinding binding;
+    binding.initEntity(req.tenantId, req.createdBy);
+
     binding.name = req.name;
     binding.bucketId = req.bucketId;
     binding.accessKeyId = accessKeyId;
@@ -52,8 +50,6 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.permission = parsePermission(req.permission);
     binding.status = BindingStatus.active;
     binding.expiresAt = req.expiresAt;
-    binding.createdBy = req.createdBy;
-    binding.createdAt = currentTimestamp();
 
     bindingRepo.save(binding);
     return CommandResult(true, binding.id.value, "");

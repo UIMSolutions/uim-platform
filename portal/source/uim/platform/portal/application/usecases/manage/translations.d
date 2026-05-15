@@ -30,10 +30,15 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0 || req.language.length == 0)
       return TranslationResponse("", "Field name and language are required");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto translation = Translation(id, req.tenantId, req.resourceType,
-      req.resourceId, req.fieldName, req.language, req.value, now, now,);
+    Translation translation;
+    translation.initEntity(req.tenantId);
+    
+    translation.resourceType = req.resourceType;
+    translation.resourceId = req.resourceId;
+    translation.fieldName = req.fieldName;
+    translation.language = req.language;
+    translation.value = req.value;
+    
     translationRepo.save(translation);
     return TranslationResponse(id.value, "");
   }

@@ -29,8 +29,8 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Display name is required");
 
     MasterDataObject obj;
-    obj.id = randomUUID();
-    obj.tenantId = req.tenantId;
+    obj.initEntity(req.tenantId, req.createdBy);
+
     obj.dataModelId = req.dataModelId;
     obj.category = parseCategory(req.category);
     obj.objectType = req.objectType;
@@ -38,16 +38,12 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     obj.description = req.description;
     obj.status = RecordStatus.active;
     obj.localId = req.localId;
-    obj.globalId = req.globalId.length > 0 ? req.globalId : id;
+    obj.globalId = req.globalId.length > 0 ? req.globalId : obj.id.value;
     obj.attributes = req.attributes;
     obj.sourceSystem = req.sourceSystem;
     obj.sourceClient = req.sourceClient;
     obj.currentVersion = randomUUID();
     obj.versionNumber = 1;
-    obj.createdBy = req.createdBy;
-    obj.createdAt = clockSeconds();
-    obj.updatedAt = obj.createdAt;
-    obj.updatedBy = req.createdBy;
 
     repo.save(obj);
     logChange(req.tenantId, id, req.dataModelId, obj.category,
@@ -140,8 +136,8 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
       string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
    
     ChangeLogEntry entry;
-    entry.id = randomUUID();
-    entry.tenantId = tenantId;
+    entry.initEntity(tenantId);
+
     entry.objectId = objectId;
     entry.dataModelId = dataModelId;
     entry.category = category;
@@ -156,7 +152,8 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     entry.fromVersion = fromVersion;
     entry.toVersion = toVersion;
     entry.deltaToken = entry.id;
-    entry.timestamp = clockSeconds();
+    entry.timestamp = entry.createdAt;
+
     changeLogRepo.save(entry);
   }
 

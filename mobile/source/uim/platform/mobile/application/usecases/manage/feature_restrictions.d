@@ -26,8 +26,8 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
 
     CommandResult createFeatureRestriction(CreateFeatureRestrictionRequest r) {
         FeatureRestriction restriction;
-        restriction.id = randomUUID();
-        restriction.tenantId = r.tenantId;
+        restriction.initEntity8(r.tenantId, r.createdBy);
+
         restriction.appId = r.appId;
         restriction.featureName = r.featureName;
         restriction.description = r.description;
@@ -38,9 +38,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         restriction.maxAppVersion = r.maxAppVersion;
         restriction.startDate = r.startDate;
         restriction.endDate = r.endDate;
-        restriction.createdAt = currentTimestamp();
-        restriction.updatedAt = restriction.createdAt;
-        restriction.createdBy = r.createdBy;
+
         repo.save(restriction);
         return CommandResult(true, restriction.id.value, "");
     }

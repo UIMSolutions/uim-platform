@@ -31,9 +31,8 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
       return ProviderResponse(ProviderResponseId(""), "Provider name is required");
 
     ContentProvider provider;
+    provider.initEntity(req.tenantId, req.createdBy);
     with (provider) {
-      providerId = randomUUID();
-      tenantId = req.tenantId;
       name = req.name;
       description = req.description;
       providerType = req.providerType;
@@ -41,8 +40,6 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
       authToken = req.authToken;
       active = true; // new providers are active by default
       catalogIds = null; // initially not associated with any catalogs
-      createdAt = Clock.currStdTime();
-      updatedAt = createdAt;
     }
     providerRepo.save(provider);
     return ProviderResponse(provider.providerId, "");

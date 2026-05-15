@@ -28,10 +28,9 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Theme name is required");
 
-    auto now = Clock.currStdTime();
-    auto t = Theme();
-    t.id = randomUUID();
-    t.tenantId = req.tenantId;
+    Theme t;
+    t.initEntity8(req.tenantId);
+
     t.name = req.name;
     t.description = req.description;
     t.baseTheme = req.baseTheme;
@@ -40,8 +39,6 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     t.faviconUrl = req.faviconUrl;
     t.customCss = req.customCss;
     t.isDefault = req.isDefault;
-    t.createdAt = now;
-    t.updatedAt = now;
 
     repo.save(t);
     return CommandResult(true, t.id.value, "");

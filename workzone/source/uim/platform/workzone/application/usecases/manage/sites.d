@@ -28,19 +28,15 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Site name is required");
 
-    auto now = Clock.currStdTime();
-    auto s = Site();
-    s.id = randomUUID();
-    s.tenantId = req.tenantId;
+    Site s;
+    s.initEntity8(req.tenantId, req.createdBy);
+
     s.name = req.name;
     s.description = req.description;
     s.alias_ = req.alias_;
     s.status = SiteStatus.draft;
     s.themeId = req.themeId;
     s.settings = req.settings;
-    s.createdAt = now;
-    s.updatedAt = now;
-    s.createdBy = req.createdBy;
 
     repo.save(s);
     return CommandResult(true, s.id.value, "");

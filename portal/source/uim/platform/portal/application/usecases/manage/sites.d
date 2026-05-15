@@ -37,14 +37,16 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
         return SiteResponse("", "Site alias already exists");
     }
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto site = Site(id, req.tenantId, req.name, req.description, req.alias_,
-        SiteStatus.draft, req.themeId, [], // pageIds
-        [], // menuItemIds
-        [], // allowedRoleIds
-        req.settings, now, now, "", // createdBy
-        );
+    Site site;
+    site.initEntity(req.tenantId, req.createdBy);
+
+    site.name = req.name;
+    site.description = req.description;
+    site.alias_ = req.alias_;
+    site.status = SiteStatus.draft;
+    site.themeId = req.themeId;
+    site.settings = req.settings;
+
     siteRepo.save(site);
     return SiteResponse(id.value, "");
   }
@@ -84,7 +86,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     auto result = validateForPublish(site);
     if (!result.valid) {
       // import std.algorithm : joiner;
-      
+
       return result.errors.joiner("; ").to!string;
     }
 

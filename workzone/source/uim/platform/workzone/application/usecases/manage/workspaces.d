@@ -29,18 +29,15 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Workspace name is required");
 
     auto now = Clock.currStdTime();
-    auto ws = Workspace();
-    ws.id = randomUUID();
-    ws.tenantId = req.tenantId;
+    Workspace ws;
+    ws.initEntity(req.tenantId, req.createdBy);
+
     ws.name = req.name;
     ws.description = req.description;
     ws.alias_ = req.alias_;
     ws.type = req.type;
     ws.status = WorkspaceStatus.active;
     ws.settings = req.settings;
-    ws.createdAt = now;
-    ws.updatedAt = now;
-    ws.createdBy = req.createdBy;
 
     // Creator becomes owner
     if (!req.createdBy.isEmpty) {

@@ -118,9 +118,9 @@ class ProvisioningEngine {
     auto now = Clock.currStdTime();
     foreach (i; 0 .. count) {
       // Create provisioned entity
-      auto entity = ProvisionedEntity();
-      entity.id = randomUUID();
-      entity.tenantId = tenantId;
+      ProvisionedEntity entity;
+      entity.initEntity(tenantId); 
+
       entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
         .toString()[0 .. 8] : "group-" ~ randomUUID().toString()[0 .. 8];
       entity.entityType = eType;
@@ -130,9 +130,8 @@ class ProvisioningEngine {
         ? `{"userName":"simulated","email":"sim@example.com","active":true}`
         : `{"displayName":"simulated-group","members":[]}`;
       entity.status = EntityStatus.active;
-      entity.lastSyncAt = now;
-      entity.createdAt = now;
-      entity.updatedAt = now;
+      entity.lastSyncAt = entity.createdAt;
+
       entityRepo.save(entity);
 
       // Create log entry

@@ -38,8 +38,8 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
     MetricDefinition definition;
-    definition.id = randomUUID();
-    definition.tenantId = req.tenantId;
+    definition.initEntity(req.tenantId, req.createdBy);
+
     definition.name = req.name;
     definition.displayName = req.displayName.length > 0 ? req.displayName : req.name;
     definition.description = req.description;
@@ -48,8 +48,6 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     definition.aggregation = parseAggregation(req.aggregation);
     definition.isCustom = true;
     definition.isEnabled = true;
-    definition.createdBy = req.createdBy;
-    definition.createdAt = clockSeconds();
 
     definitions.save(definition);
     return CommandResult(true, definition.id.value, "");
@@ -98,15 +96,15 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource ID is required");
 
     Metric m;
-    m.id = randomUUID();
-    m.tenantId = req.tenantId;
+    m.initEntity(req.tenantId);
+
     m.resourceId = req.resourceId;
     m.name = req.name;
     m.value_ = req.value_;
     m.unit = parseUnit(req.unit);
     m.category = parseCategory(req.category);
     m.labels = req.labels;
-    m.timestamp = clockSeconds();
+    m.timestamp = m.createdAt; // use server time for consistency
 
     metricRepo.save(m);
     return CommandResult(true, m.id.value, "");
@@ -115,10 +113,9 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
     foreach (r; req.metrics) {
-     
       Metric m;
-      m.id = randomUUID();
-      m.tenantId = req.tenantId;
+      m.initEntity(req.tenantId);
+
       m.resourceId = r.resourceId;
       m.name = r.name;
       m.value_ = r.value_;

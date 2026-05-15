@@ -40,10 +40,9 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       return PageResponse(PageResponseId(""), "Site not found");
 
     Page page;
+    page.initEntity(req.tenantId);
     with (page) {
-      id = randomUUID();
       siteId = req.siteId;
-      tenantId = req.tenantId;
       title = req.title;
       description = req.description;
       alias_ = req.alias_;
@@ -51,8 +50,6 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       allowedRoleIds = req.allowedRoleIds.map!(r => RoleId(r)).array.toJson;
       sortOrder = req.sortOrder;
       visible = req.visible;
-      createdAt = Clock.currStdTime();
-      updatedAt = createdAt;
     }
 
     pageRepo.save(page);

@@ -55,21 +55,25 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
       }
     }
 
-    auto now = Clock.currStdTime();
-    auto userId = randomUUID();
     User user;
     user.initEntity(req.tenantId, req.createdBy);
 
-    // auto user = User(userId, req.externalId, req.userName,
-    //     req.name, req.displayName, "", // nickName
-    //     "", // profileUrl
-    //     req.userType, "", // title
-    //     req.preferredLanguage, req.locale, req.timezone, true, // active
-    //     UserStatus.active,
-    //     req.password.length > 0 ? passwordSvc.hashPassword(req.password) : "",
-    //     req.emails, req.phoneNumbers, req.addresses, [], // groupIds
-    //     req.extendedAttributes,
-    //     req.schemas);
+    user.externalId = req.externalId;
+    user.userName = req.userName;
+    user.name = req.name;
+    user.displayName = req.displayName;
+    user.userType = req.userType;
+    user.preferredLanguage = req.preferredLanguage;
+    user.locale = req.locale;
+    user.timezone = req.timezone;
+    user.active = true;
+    user.status = UserStatus.active;
+    user.passwordHash = req.password.length > 0 ? passwordSvc.hashPassword(req.password) : "";
+    user.emails = req.emails;
+    user.phoneNumbers = req.phoneNumbers;
+    user.addresses = req.addresses;
+    user.extendedAttributes = req.extendedAttributes;
+    user.schemas = req.schemas;
 
     userRepo.save(user);
 

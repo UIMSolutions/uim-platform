@@ -26,10 +26,10 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
 
   CommandResult createWidget(CreateWidgetRequest req) {
     auto now = Clock.currStdTime();
-    auto w = Widget();
-    w.id = randomUUID();
+    Widget w;
+    w.initEntity8(req.tenantId);
+    
     w.pageId = req.pageId;
-    w.tenantId = req.tenantId;
     w.title = req.title;
     w.cardId = req.cardId;
     w.appId = req.appId;
@@ -38,8 +38,6 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
     w.col = req.col;
     w.sortOrder = req.sortOrder;
     w.config = req.config;
-    w.createdAt = now;
-    w.updatedAt = now;
 
     repo.save(w);
     return CommandResult(true, w.id.value, "");

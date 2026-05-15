@@ -35,8 +35,6 @@ class ManageSectionsUseCase { // TODO: UIMUseCase {
     if (pageRepo.existsById(req.pageId))
       return SectionResponse("", "Page not found");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
     PortalSection section;
     section.initEntity(req.tenantId);
     with (section) {

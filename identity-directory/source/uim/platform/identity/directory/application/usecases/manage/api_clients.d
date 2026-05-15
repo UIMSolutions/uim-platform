@@ -38,13 +38,21 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
     auto clientId = randomUUID();
     auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
 
-    auto client = ApiClient(id, req.tenantId, req.name, req.description,
-        clientId, clientSecret, req.scopes, true, now, req.expiresAt, 0, // lastUsedAt
-        );
-    clientRepo.save(client);
+    ApiClient client;
+    client.initEntity(req.tenantId);
 
+    client.name = req.name;
+    client.description = req.description;
+    client.scopes = req.scopes;
+    client.clientId = clientId;
+    client.clientSecret = clientSecret;
+    client.active = true;
+    client.expiresAt = req.expiresAt;
+    client.lastUsedAt = null;
+
+    clientRepo.save(client);
     auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId, AuditEventType.apiClientCreated,
-        "system", "System", id, "ApiClient",
+        "system", "System", client.id, "ApiClient",
         "API client created: " ~ req.name, "", "", null, now,));
 
     return ApiClientResponse(clientId, clientSecret, "");

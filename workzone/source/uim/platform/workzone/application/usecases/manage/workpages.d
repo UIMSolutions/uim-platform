@@ -29,16 +29,14 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Page title is required");
 
     auto now = Clock.currStdTime();
-    auto page = Workpage();
-    page.id = randomUUID();
+    Workpage page;
+    page.initEntity(req.tenantId, req.createdBy);
+    
     page.workspaceId = req.workspaceId;
-    page.tenantId = req.tenantId;
     page.title = req.title;
     page.description = req.description;
     page.sortOrder = req.sortOrder;
     page.isDefault = req.isDefault;
-    page.createdAt = now;
-    page.updatedAt = now;
 
     repo.save(page);
     return CommandResult(true, page.id.value, "");

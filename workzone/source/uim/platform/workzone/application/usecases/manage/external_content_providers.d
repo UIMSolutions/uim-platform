@@ -29,9 +29,9 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Provider name is required");
 
     auto now = Clock.currStdTime();
-    auto p = ExternalContentProvider();
-    p.id = randomUUID();
-    p.tenantId = req.tenantId;
+    ExternalContentProvider p;
+    p.initEntity8(req.tenantId);
+
     p.name = req.name;
     p.description = req.description;
     // TODO: p.providerType = req.providerType;
@@ -41,8 +41,6 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     p.authConfig = req.authConfig;
     // TODO: p.contentTypes = req.contentTypes;
     p.refreshIntervalSec = req.refreshIntervalSec;
-    p.createdAt = now;
-    p.updatedAt = now;
 
     repo.save(p);
     return CommandResult(true, p.id.value, "");

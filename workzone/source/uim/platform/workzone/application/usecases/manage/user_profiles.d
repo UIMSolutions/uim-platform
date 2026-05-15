@@ -29,10 +29,10 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Display name is required");
 
     auto now = Clock.currStdTime();
-    auto p = UserProfile();
-    p.id = randomUUID();
+    UserProfile p;
+    p.initEntity(req.tenantId, req.createdBy);
+
     p.userId = req.userId;
-    p.tenantId = req.tenantId;
     p.displayName = req.displayName;
     p.email = req.email;
     p.firstName = req.firstName;
@@ -42,8 +42,6 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     p.timezone = req.timezone;
     p.language = req.language;
     p.active = true;
-    p.createdAt = now;
-    p.updatedAt = now;
 
     repo.save(p);
     return CommandResult(true, p.id.value, "");

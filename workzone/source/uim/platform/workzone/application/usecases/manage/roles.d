@@ -29,16 +29,14 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Role name is required");
 
     auto now = Clock.currStdTime();
-    auto r = Role();
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
+    Role r;
+    r.initEntity8(req.tenantId);
+
     r.name = req.name;
     r.description = req.description;
     r.permissions = req.permissions;
     r.isDefault = req.isDefault;
-    r.createdAt = now;
-    r.updatedAt = now;
-
+    
     repo.save(r);
     return CommandResult(true, r.id.value, "");
   }

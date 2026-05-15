@@ -30,23 +30,29 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return ThemeResponse("", "Theme name is required");
 
-    auto now = Clock.currStdTime();
-    auto id = randomUUID();
-    auto theme = Theme(id, req.tenantId, req.name, req.description, req.mode,
-      req.baseTheme, req.colors, req.fonts, req.customCss, req.isDefault, now, now,);
+    Theme theme;
+    theme.initEntity(req.tenantId, req.createdBy);
+
+    theme.name = req.name;
+    theme.description = req.description;
+    theme.baseTheme = req.baseTheme;
+    theme.colors = req.colors;
+    theme.fonts = req.fonts;
+    theme.customCss = req.customCss;
+    theme.isDefault = req.isDefault;  
 
     // If this is the default, unset previous default
     if (req.isDefault) {
       auto currentDefault = themeRepo.findDefault(req.tenantId);
       if (currentDefault != Theme.init) {
         currentDefault.isDefault = false;
-        currentDefault.updatedAt = now;
+        currentDefault.updatedAt = Clock.currStdTime();
         themeRepo.update(currentDefault);
       }
     }
 
     themeRepo.save(theme);
-    return ThemeResponse(id.value, "");
+    return ThemeResponse(theme.id.value, "");
   }
 
   Theme getTheme(ThemeId id) {

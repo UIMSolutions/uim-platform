@@ -33,17 +33,14 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Queue name is required");
 
     TransportQueue queue;
-    queue.id = randomUUID();
-    queue.tenantId = req.tenantId;
+    queue.initEntity(req.tenantId, req.createdBy);
+
     queue.name = req.name;
     queue.description = req.description;
     queue.queueType = parseQueueType(req.queueType);
     queue.endpoint = req.endpoint;
     queue.authToken = req.authToken;
     queue.isDefault = req.isDefault;
-    queue.createdBy = req.createdBy;
-    queue.createdAt = clockSeconds();
-    queue.updatedAt = queue.createdAt;
 
     queueRepo.save(queue);
     recordActivity(req.tenantId, ActivityType.queueConfigured, id, req.name,
@@ -95,8 +92,8 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
       string entityId, string entityName, string desc, string by) {
    
     ContentActivity activity;
-    activity.id = randomUUID();
-    activity.tenantId = tenantId;
+    activity.initEntity(tenantId);
+
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
@@ -104,6 +101,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     activity.description = desc;
     activity.performedBy = by;
     activity.timestamp = clockSeconds();
+    
     activityRepo.save(activity);
   }
 

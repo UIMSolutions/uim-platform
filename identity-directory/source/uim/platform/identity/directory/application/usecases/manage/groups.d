@@ -42,14 +42,14 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (existing != Group.init)
       return GroupResponse("", "Group with this displayName already exists");
 
-    auto now = Clock.currStdTime();
-    auto groupId = randomUUID();
     Group group;
     group.initEntity(req.tenantId, req.createdBy);
 
-    // auto group = Group(groupId, req.externalId, req.displayName, req.description,
-    //     GroupType.standard, req.members,
-    //     ["urn:ietf:params:scim:schemas:core:2.0:Group"]);
+    group.externalId = req.externalId;
+    group.displayName = req.displayName;
+    group.description = req.description;
+    group.members = req.members;
+    group.schemas = ["urn:ietf:params:scim:schemas:core:2.0:Group"];
 
     groupRepo.save(group);
 
