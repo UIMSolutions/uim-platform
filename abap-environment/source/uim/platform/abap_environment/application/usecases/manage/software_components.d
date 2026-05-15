@@ -28,7 +28,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     this.systemRepo = systemRepo;
   }
 
-  CommandResult createComponent(CreateSoftwareComponentRequest req) {
+  CommandResult createSoftwareComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Component name is required");
     if (req.systemInstanceId.isEmpty)
@@ -61,8 +61,8 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  CommandResult cloneComponent(CloneSoftwareComponentRequest req) {
-    auto comp = repo.findById(req.tenantId, req.id);
+  CommandResult cloneSoftwareComponent(CloneSoftwareComponentRequest req) {
+    auto comp = repo.findById(req.tenantId, req.softwareComponentId);
     if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
@@ -92,8 +92,8 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  CommandResult pullComponent(PullSoftwareComponentRequest req) {
-    auto comp = repo.findById(req.tenantId, req.id);
+  CommandResult pullSoftwareComponent(PullSoftwareComponentRequest req) {
+    auto comp = repo.findById(req.tenantId, req.softwareComponentId);
     if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
@@ -122,21 +122,21 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, comp.id.value, "");
   }
 
-  SoftwareComponent getComponent(TenantId tenantId, SoftwareComponentId id) {
+  SoftwareComponent getSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
     return repo.findById(tenantId, id);
   }
 
-  SoftwareComponent[] listComponents(TenantId tenantId, SystemInstanceId systemId) {
+  SoftwareComponent[] listSoftwareComponents(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteComponent(TenantId tenantId, SoftwareComponentId id) {
+  CommandResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
     auto comp = repo.findById(tenantId, id);
     if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+    repo.remove(comp);
+    return CommandResult(true, comp.id.value, "");
   }
 }
 

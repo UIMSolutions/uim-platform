@@ -44,6 +44,9 @@ struct CreateCommunicationArrangementRequest {
 }
 
 struct UpdateCommunicationArrangementRequest {
+  TenantId tenantId;
+  CommunicationArrangementId communicationArrangementId;
+  
   string description;
   string status; // "active", "inactive"
   string authMethod;

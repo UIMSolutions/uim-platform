@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
-  private PersonalDataModelRepository dataModels;
+  private PersonalDataModelRepository repo;
 
-  this(PersonalDataModelRepository dataModels) {
-    this.dataModels = dataModels;
+  this(PersonalDataModelRepository repo) {
+    this.repo = repo;
   }
 
   CommandResult createModel(CreatePersonalDataModelRequest req) {
@@ -45,28 +45,28 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     model.isSpecialCategory = req.isSpecialCategory;
     model.legalReference = req.legalReference;
 
-    dataModels.save(model);
+    repo.save(model);
     return CommandResult(true, model.id.value, "");
   }
 
   PersonalDataModel getModel(TenantId tenantId, PersonalDataModelId id) {
-    return dataModels.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId) {
-    return dataModels.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId, PersonalDataCategory category) {
-    return dataModels.findByCategory(tenantId, category);
+    return repo.findByCategory(tenantId, category);
   }
 
   PersonalDataModel[] listSpecialCategories(TenantId tenantId) {
-    return dataModels.findSpecialCategories(tenantId);
+    return repo.findSpecialCategories(tenantId);
   }
 
   CommandResult updateModel(UpdatePersonalDataModelRequest req) {
-    auto model = dataModels.findById(req.tenantId, req.id);
+    auto model = repo.findById(req.tenantId, req.id);
     if (model.isNull)
       return CommandResult(false, "", "Personal data model not found");
 
@@ -85,16 +85,16 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
       model.legalReference = req.legalReference;
     model.updatedAt = Clock.currStdTime();
 
-    dataModels.update(model);
+    repo.update(model);
     return CommandResult(true, model.id.value, "");
   }
 
   CommandResult deleteModel(TenantId tenantId, PersonalDataModelId id) {
-    auto existing = dataModels.findById(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Personal data model not found");
 
-    dataModels.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

@@ -26,9 +26,9 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     this.translationRepo = translationRepo;
   }
 
-  TranslationResponse createTranslation(CreateTranslationRequest req) {
+  CommandResult createTranslation(CreateTranslationRequest req) {
     if (req.fieldName.length == 0 || req.language.length == 0)
-      return TranslationResponse("", "Field name and language are required");
+      return CommandResult(false, "", "Field name and language are required");
 
     Translation translation;
     translation.initEntity(req.tenantId);
@@ -40,7 +40,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     translation.value = req.value;
     
     translationRepo.save(translation);
-    return TranslationResponse(id.value, "");
+    return CommandResult(true, translation.id.value, "Translation created successfully.");
   }
 
   Translation getTranslation(TranslationId id) {
@@ -57,27 +57,27 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
     return translationRepo.findByLanguage(tenantId, language, offset, limit);
   }
 
-  string updateTranslation(UpdateTranslationRequest req) {
+  CommandResult updateTranslation(UpdateTranslationRequest req) {
     if (!translationRepo.existsById(req.translationId))
-      return "Translation not found";
+      return CommandResult(false, "", "Translation not found");
 
     auto translation = translationRepo.findById(req.translationId) ;
     translation.value = req.value;
     translation.updatedAt = Clock.currStdTime();
     translationRepo.update(translation);
-    return "";
+    return CommandResult(true, translation.id.value, "Translation updated successfully.");
   }
 
   CommandResult deleteTranslation(TranslationId id) {
     if (!translationRepo.existsById(id))
-      return "Translation not found";
+      return CommandResult(false, "", "Translation not found");
 
     translationRepo.removeById(id);
-    return "";
+    return CommandResult(true, id.value, "Translation deleted successfully.");
   }
 
   CommandResult deleteTranslationsForResource(string resourceType, string resourceId) {
     translationRepo.removeByResource(resourceType, resourceId);
-    return "";
+    return CommandResult(true, "", "Translations deleted successfully.");
   }
 }

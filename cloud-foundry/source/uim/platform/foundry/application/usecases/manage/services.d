@@ -107,10 +107,10 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
 
     // Remove all bindings for this instance
     auto instanceBindings = bindings.findByServiceInstance(tenantId, serviceInstanceId);
-    instanceBindings.each!(b => bindings.removeById(b));
+    instanceBindings.each!(b => bindings.remove(b));
 
     instances.remove(instance);
-    return CommandResult(true, serviceInstanceid.value, "");
+    return CommandResult(true, instance.id.value, "");
   }
 
   // --- Service Bindings ---

@@ -76,7 +76,7 @@ class CommunicationArrangementController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto arrangements = usecase.listArrangements(tenantId, systemId);
+      auto arrangements = usecase.listCommunicationArrangements(tenantId, systemId);
       auto arr = arrangements.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -95,7 +95,7 @@ class CommunicationArrangementController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
 
-      auto arrangement = usecase.getArrangement(tenantId, id);
+      auto arrangement = usecase.getCommunicationArrangement(tenantId, id);
       if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
         return;

@@ -53,9 +53,9 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
     return providerRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateProvider(UpdateProviderRequest req) {
+  CommandResult updateProvider(UpdateProviderRequest req) {
     if (!providerRepo.existsById(req.providerId))
-      return "Content provider not found";
+      return CommandResult(false, "", "Content provider not found");
 
     ContentProvider provider = providerRepo.findById(req.providerId);
     with (provider) {
@@ -67,14 +67,14 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     providerRepo.update(provider);
-    return "";
+    return CommandResult(true, provider.providerId.value, "Content provider updated successfully.");
   }
 
   CommandResult deleteProvider(ProviderId id) {
     if (!providerRepo.existsById(id))
-      return "Content provider not found";
+      return CommandResult(false, "", "Content provider not found");
 
     providerRepo.removeById(id);
-    return "";
+    return CommandResult(true, id.value, "Content provider deleted successfully.");
   }
 }

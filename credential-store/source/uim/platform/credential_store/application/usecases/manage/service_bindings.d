@@ -27,6 +27,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r) {
     ServiceBinding binding;
     binding.initEntity(r.tenantId);
+    
     binding.name = r.name;
     binding.description = r.description;
     binding.clientId = randomUUID().toString;
@@ -83,7 +84,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 
-    bindings.removeById(tenantId, serviceBindingId);
+    bindings.remove(binding);
     return CommandResult(true, binding.id.value, "");
   }
 

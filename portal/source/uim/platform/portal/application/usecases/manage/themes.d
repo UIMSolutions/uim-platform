@@ -67,9 +67,9 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     return themeRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateTheme(UpdateThemeRequest req) {
+  CommandResult updateTheme(UpdateThemeRequest req) {
     if (!themeRepo.existsById(req.themeId))
-      return "Theme not found";
+      return CommandResult(false, "", "Theme not found");
 
     auto theme = themeRepo.findById(req.themeId);
     with (theme) {
@@ -91,18 +91,18 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     theme.isDefault = req.isDefault;
     theme.updatedAt = Clock.currStdTime();
     themeRepo.update(theme);
-    return "";
+    return CommandResult(true, theme.id.value, "Theme updated successfully.");
   }
 
   CommandResult deleteTheme(ThemeId id) {
     auto theme = themeRepo.findById(tenantId, id);
     if (theme == Theme.init)
-      return "Theme not found";
+      return CommandResult(false, "", "Theme not found");
 
     if (theme.isDefault)
-      return "Cannot delete the default theme";
+      return CommandResult(false, "", "Cannot delete the default theme");
 
     themeRepo.removeById(id);
-    return "";
+    return CommandResult(true, theme.id.value, "Theme deleted successfully.");
   }
 }

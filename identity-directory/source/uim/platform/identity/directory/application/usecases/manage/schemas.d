@@ -59,10 +59,10 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   /// Update a schema.
-  string updateSchema(UpdateSchemaRequest req) {
+  CommandResult updateSchema(UpdateSchemaRequest req) {
     auto schema = schemaRepo.findById(req.schemaId);
     if (schema == Schema.init)
-      return "Schema not found";
+      return CommandResult(false, "", "Schema not found");
 
     if (req.name.length > 0)
       schema.name = req.name;
@@ -78,21 +78,21 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
         AuditEventType.schemaUpdated, "system", "System", req.schemaId,
         "Schema", "Schema updated", "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, schema.id.value, "");
   }
 
   /// Delete a schema.
   CommandResult deleteSchema(SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
     if (schema == Schema.init)
-      return "Schema not found";
+      return CommandResult(false, "", "Schema not found");
 
-    schemaRepo.removeById(id);
+    schemaRepo.remove(schema);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), schema.tenantId,
-        AuditEventType.schemaDeleted, "system", "System", id, "Schema",
+        AuditEventType.schemaDeleted, "system", "System", schema.id, "Schema",
         "Schema deleted: " ~ schema.name, "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, schema.id.value, "");
   }
 }

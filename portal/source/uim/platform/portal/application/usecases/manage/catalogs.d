@@ -44,7 +44,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     return CatalogResponse(catalog.catalogId, "");
   }
 
-  Catalog getCatalog(CatalogId id) {
+  Catalog getCatalog(TenantId tenantId, CatalogId id) {
     return catalogRepo.findById(tenantId, id);
   }
 
@@ -52,11 +52,11 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     return catalogRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateCatalog(UpdateCatalogRequest req) {
-    if (!catalogRepo.existsById(req.catalogId))
-      return "Catalog not found";
+  CommandResult updateCatalog(UpdateCatalogRequest req) {
+    if (!catalogRepo.existsById(req.tenantId, req.catalogId))
+      return CommandResult(false, "", "Catalog not found");
 
-    Catalog catalog = catalogRepo.findById(req.catalogId);
+    Catalog catalog = catalogRepo.findById(req.tenantId, req.catalogId);
     with (catalog) {
       title = req.title.length > 0 ? req.title : catalog.title;
       description = req.description;
@@ -65,14 +65,15 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     catalogRepo.update(catalog);
-    return "";
+    return CommandResult(true, catalog.catalogId.value, "Catalog updated successfully.");
   }
 
-  CommandResult deleteCatalog(CatalogId id) {
-    if (!catalogRepo.existsById(id))
-      return "Catalog not found";
+  CommandResult deleteCatalog(TenantId tenantId, CatalogId id) {
+    auto catalog = catalogRepo.findById(tenantId, id);
+    if (catalog.isNull)
+      return CommandResult(false, "", "Catalog not found");
 
-    catalogRepo.removeById(id);
-    return "";
+    catalogRepo.remove(catalog);
+    return CommandResult(true, id.value, "Catalog deleted successfully.");
   }
 }

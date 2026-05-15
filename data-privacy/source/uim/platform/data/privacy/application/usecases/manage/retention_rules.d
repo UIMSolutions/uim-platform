@@ -87,7 +87,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     if (entity.isNull)
       return CommandResult(false, "", "Retention rule not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

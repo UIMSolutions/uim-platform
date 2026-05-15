@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
-  private ConsentPurposeRepository contentPurposes;
+  private ConsentPurposeRepository repo;
 
-  this(ConsentPurposeRepository contentPurposes) {
-    this.contentPurposes = contentPurposes;
+  this(ConsentPurposeRepository repo) {
+    this.repo = repo;
   }
 
   CommandResult createPurpose(CreateConsentPurposeRequest req) {
@@ -37,24 +37,24 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.validFrom = req.validFrom;
     cp.validUntil = req.validUntil;
 
-    contentPurposes.save(cp);
+    repo.save(cp);
     return CommandResult(true, cp.id.value, "");
   }
 
   ConsentPurpose getPurpose(TenantId tenantId, ConsentPurposeId id) {
-    return contentPurposes.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ConsentPurpose[] listPurposes(TenantId tenantId) {
-    return contentPurposes.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   ConsentPurpose[] listByController(TenantId tenantId, DataControllerId controllerId) {
-    return contentPurposes.findByController(tenantId, controllerId);
+    return repo.findByController(tenantId, controllerId);
   }
 
   CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
-    auto cp = contentPurposes.findById(req.tenantId, req.id);
+    auto cp = repo.findById(req.tenantId, req.id);
     if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 
@@ -69,16 +69,16 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.requiresExplicitConsent = req.requiresExplicitConsent;
     cp.updatedAt = Clock.currStdTime();
 
-    contentPurposes.update(cp);
+    repo.update(cp);
     return CommandResult(true, cp.id.value, "");
   }
 
   CommandResult deletePurpose(TenantId tenantId, ConsentPurposeId id) {
-    auto cp = contentPurposes.findById(tenantId, id);
+    auto cp = repo.findById(tenantId, id);
     if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 
-    contentPurposes.removeById(tenantId, id);
+    repo.remove(cp);
     return CommandResult(true, cp.id.value, "");
   }
 }

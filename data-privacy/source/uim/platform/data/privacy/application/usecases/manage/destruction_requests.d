@@ -78,7 +78,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
     if (request.isNull)
       return CommandResult(false, "", "Destruction request not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(request);
     return CommandResult(true, request.id.value, "");
   }
 }

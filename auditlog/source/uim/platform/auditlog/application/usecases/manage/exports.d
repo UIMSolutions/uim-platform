@@ -74,7 +74,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
     if (job.isNull)
       return CommandResult(false, "", "Export job not found");
 
-    jobs.removeById(tenantId, id);
+    jobs.remove(job);
     return CommandResult(true, job.id.value, "");
   }
 }

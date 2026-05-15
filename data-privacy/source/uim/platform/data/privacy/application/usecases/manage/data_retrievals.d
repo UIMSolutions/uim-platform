@@ -116,7 +116,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 
-    repo.removeById(tenantId, id);
+    repo.remove(request);
     return CommandResult(true, request.id.value, ""); 
   }
 }

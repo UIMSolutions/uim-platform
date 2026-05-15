@@ -73,9 +73,9 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     return pageRepo.findBySite(siteId, offset, limit);
   }
 
-  string updatePage(UpdatePageRequest req) {
+  CommandResult updatePage(UpdatePageRequest req) {
     if (!pageRepo.existsById(req.pageId))
-      return "Page not found";
+      return CommandResult(false, "", "Page not found");
 
     auto page = pageRepo.findById(req.pageId);
     with (page) {
@@ -89,12 +89,12 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     pageRepo.update(page);
-    return "";
+    return CommandResult(true, page.id.value, "Page updated successfully.");
   }
 
   CommandResult deletePage(PageId pageId, SiteId siteId) {
     if (!pageRepo.existsById(pageId))
-      return "Page not found";
+      return CommandResult(false, "", "Page not found");
 
     pageRepo.remove(pageId);
 
@@ -106,6 +106,6 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
       siteRepo.update(site);
     }
 
-    return "";
+    return CommandResult(true, pageId.value, "Page deleted successfully.");
   }
 }

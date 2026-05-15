@@ -86,7 +86,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     dep.status = DeploymentStatus.active;
     dep.updatedAt = Clock.currStdTime();
     repo.update(dep);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, dep.id.value, "");
   }
 
   /// Deactivate an active deployment.
@@ -101,7 +101,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     dep.status = DeploymentStatus.inactive;
     dep.updatedAt = Clock.currStdTime();
     repo.update(dep);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, dep.id.value, "");
   }
 
   CommandResult deleteDeployment(TenantId tenantId, DeploymentId id) {
@@ -109,7 +109,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Deployment not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

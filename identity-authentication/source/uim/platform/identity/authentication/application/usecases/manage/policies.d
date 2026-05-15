@@ -27,7 +27,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
   PolicyResponse createPolicy(CreatePolicyRequest req) {
     auto now = Clock.currStdTime();
     auto policy = AuthorizationPolicy(randomUUID().toString(), req.tenantId,
-        req.name, req.description, req.rules, req.applicationIds, true, now, now);
+      req.name, req.description, req.rules, req.applicationIds, true, now, now);
     policyRepo.save(policy);
     return PolicyResponse(policy.id.value, "");
   }
@@ -42,10 +42,10 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
 
   CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
     auto policy = policyRepo.findById(tenantId, id);
-    if (policy.id.value == "") {
+    if (policy.isNull)
       return CommandResult(false, "", "Policy not found.");
-    }
-    policyRepo.removeById(tenantId, id);
+
+    policyRepo.remove(policy);
     return CommandResult(true, policy.id.value, "Policy deleted successfully.");
   }
 }

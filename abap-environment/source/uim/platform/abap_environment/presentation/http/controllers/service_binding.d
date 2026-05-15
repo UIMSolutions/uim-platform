@@ -38,7 +38,7 @@ class ServiceBindingController : ManageController {
     auto tenantId = req.getTenantId;
     auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-    auto bindings = usecase.listBindings(tenantId, systemId);
+    auto bindings = usecase.listServiceBindings(tenantId, systemId);
     auto arr = bindings.map!(b => b.toJson).array.toJson;
 
     return Json.emptyObject

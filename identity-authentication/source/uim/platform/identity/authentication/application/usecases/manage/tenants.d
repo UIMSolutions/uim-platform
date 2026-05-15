@@ -44,10 +44,10 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
     return tenantRepo.findAll(offset, limit);
   }
 
-  string updateTenant(UpdateTenantRequest req) {
+  CommandResult updateTenant(UpdateTenantRequest req) {
     auto tenant = tenantRepo.findById(req.tenantId);
     if (tenant == Tenant.init)
-      return "Tenant not found";
+      return CommandResult(false, "", "Tenant not found");
 
     if (req.name.length > 0)
       tenant.name = req.name;
@@ -56,6 +56,6 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
 
     tenant.updatedAt = Clock.currStdTime();
     tenantRepo.update(tenant);
-    return "";
+    return CommnandResult(true, tenant.id.value, "");
   }
 }

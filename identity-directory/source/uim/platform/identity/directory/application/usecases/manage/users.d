@@ -140,10 +140,10 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Deactivate (soft-delete) a user.
-  string deactivateUser(UserId id) {
+  CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
     user.active = false;
     user.status = UserStatus.inactive;
@@ -154,22 +154,22 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
         AuditEventType.userDeactivated, "system", "System", id, "User",
         "User deactivated", "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, id.value, "");
   }
 
   /// Delete a user permanently.
   CommandResult deleteUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
-    userRepo.removeById(id);
+    userRepo.remove(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userDeleted, "system", "System", id, "User",
+        AuditEventType.userDeleted, "system", "System", user.id, "User",
         "User deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, user.id.value, "");
   }
 
   /// Change user password.
@@ -200,6 +200,6 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
         AuditEventType.passwordChanged, id, "User", id, "User",
         "Password changed", "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, id.value, "");
   }
 }

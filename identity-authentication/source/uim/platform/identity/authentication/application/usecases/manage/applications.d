@@ -53,10 +53,10 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return appRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateApplication(UpdateAppRequest req) {
+  CommandResult updateApplication(UpdateAppRequest req) {
     auto app = appRepo.findById(req.tenantId, req.applicationId);
     if (app.isNull)
-      return "Application not found";
+      return CommandResult(false, "", "Application not found");
 
     if (req.name.length > 0)
       app.name = req.name;
@@ -66,8 +66,9 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       app.allowedScopes = req.allowedScopes;
 
     app.updatedAt = Clock.currStdTime();
+
     appRepo.update(app);
-    return "";
+    return CommandResult(true, app.id.value, "");
   }
 
   CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {

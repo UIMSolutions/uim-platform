@@ -26,7 +26,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRole(CreateBusinessRoleRequest req) {
+  CommandResult createBusinessRole(CreateBusinessRoleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Role name is required");
 
@@ -51,7 +51,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, role.id.value, "");
   }
 
-  CommandResult updateRole(UpdateBusinessRoleRequest req) {
+  CommandResult updateBusinessRole(UpdateBusinessRoleRequest req) {
     auto role = repo.findById(req.tenantId, req.businessRoleId);
     if (role.isNull)
       return CommandResult(false, "", "Business role not found");
@@ -71,15 +71,15 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, role.id.value, "");
   }
 
-  bool existsRole(TenantId tenantId, BusinessRoleId id) {
+  bool existsBusinessRole(TenantId tenantId, BusinessRoleId id) {
     return repo.existsById(tenantId, id);
   }
 
-  BusinessRole getRole(TenantId tenantId, BusinessRoleId id) {
+  BusinessRole getBusinessRole(TenantId tenantId, BusinessRoleId id) {
     return repo.findById(tenantId, id);
   }
 
-  BusinessRole[] listRoles(TenantId tenantId, SystemInstanceId systemId) {
+  BusinessRole[] listBusinessRoles(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 

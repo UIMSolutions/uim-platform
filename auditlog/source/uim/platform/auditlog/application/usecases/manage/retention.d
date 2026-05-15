@@ -20,10 +20,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRetentionUseCase { // TODO: UIMUseCase {
-  private RetentionPolicyRepository policyRepo;
+  private RetentionPolicyRepository repo;
 
-  this(RetentionPolicyRepository policyRepo) {
-    this.policyRepo = policyRepo;
+  this(RetentionPolicyRepository repo) {
+    this.repo = repo;
   }
 
   CommandResult createPolicy(CreateRetentionPolicyRequest req) {
@@ -46,24 +46,24 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
       status = RetentionStatus.active;
     }
 
-    policyRepo.save(policy);
+    repo.save(policy);
     return CommandResult(true, policy.id.value, "");
   }
 
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
-    return policyRepo.existsById(tenantId, policyId);
+    return repo.existsById(tenantId, policyId);
   }
 
   RetentionPolicy getPolicy(TenantId tenantId, RetentionPolicyId policyId) {
-    return policyRepo.findById(tenantId, policyId);
+    return repo.findById(tenantId, policyId);
   }
 
   RetentionPolicy[] listPolicies(TenantId tenantId) {
-    return policyRepo.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
-    auto policy = policyRepo.findById(req.tenantId, req.retentionPolicyId);
+    auto policy = repo.findById(req.tenantId, req.retentionPolicyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
 
@@ -78,16 +78,16 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     policy.status = req.status;
     policy.updatedAt = Clock.currStdTime();
 
-    policyRepo.update(policy);
+    repo.update(policy);
     return CommandResult(true, policy.id.value, "");
   }
 
   CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
-    auto policy = policyRepo.findById(tenantId, policyId);
+    auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
       return CommandResult(false, "", "Retention policy not found");
 
-    policyRepo.removeById(tenantId, policyId);
+    repo.remove(policy);
     return CommandResult(true, policy.id.value, "");
   }
 }

@@ -127,7 +127,8 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
 
     // Cascade delete records
     recordRepo.removeByDataset(tenantId, id);
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

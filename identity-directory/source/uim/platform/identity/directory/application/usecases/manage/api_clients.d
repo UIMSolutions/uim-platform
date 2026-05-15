@@ -69,10 +69,10 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
   }
 
   /// Revoke an API client.
-  string revokeClient(ApiClientId id) {
+  CommandResult revokeClient(ApiClientId id) {
     auto client = clientRepo.findById(tenantId, id);
     if (client == ApiClient.init)
-      return "API client not found";
+      return CommandResult(false, "", "API client not found");
 
     client.active = false;
     clientRepo.update(client);
@@ -81,6 +81,6 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
         "system", "System", id, "ApiClient", "API client revoked: " ~ client.name,
         "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, client.id.value, "API client revoked successfully.");
   }
 }

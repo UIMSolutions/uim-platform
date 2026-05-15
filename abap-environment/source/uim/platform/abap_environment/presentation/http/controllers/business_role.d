@@ -57,7 +57,7 @@ class BusinessRoleController : PlatformController {
       r.roleType = j.getString("roleType");
       r.restrictionTypes = getStrings(j, "restrictionTypes");
 
-      auto result = usecase.createRole(r);
+      auto result = usecase.createBusinessRole(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -77,7 +77,7 @@ class BusinessRoleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto roles = usecase.listRoles(tenantId, systemId);
+      auto roles = usecase.listBusinessRoles(tenantId, systemId);
       auto arr = roles.map!(r => r.toJson).array.toJson;
 
       auto response = Json.emptyObject
@@ -96,7 +96,7 @@ class BusinessRoleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
 
-      auto role = usecase.getRole(tenantId, id);
+      auto role = usecase.getBusinessRole(tenantId, id);
       if (role.isNull) {
         writeError(res, 404, "Business role not found");
         return;
@@ -124,7 +124,7 @@ class BusinessRoleController : PlatformController {
       r.roleType = j.getString("roleType");
       r.restrictionTypes = getStrings(j, "restrictionTypes");
 
-      auto result = usecase.updateRole(r);
+      auto result = usecase.updateBusinessRole(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -144,7 +144,7 @@ class BusinessRoleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.deleteRole(tenantId, id);
+      auto result = usecase.deleteBusinessRole(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

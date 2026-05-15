@@ -5,12 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.transport_request;
 
-
-
-
-
-
-// import uim.platform.abap_environment.application.usecases.manage.transport_requests;
+  // import uim.platform.abap_environment.application.usecases.manage.transport_requests;
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.transport_request;
 // import uim.platform.abap_environment.domain.types;
@@ -51,7 +46,7 @@ class TransportRequestController : PlatformController {
       r.owner = j.getString("owner");
       r.transportType = j.getString("transportType");
 
-      auto result = usecase.createRequest(r);
+      auto result = usecase.createTransportRequest(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -70,7 +65,7 @@ class TransportRequestController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto requests = usecase.listRequests(tenantId, systemId);
+      auto requests = usecase.listTransportRequests(tenantId, systemId);
       auto arr = requests.map!(tr => tr.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -88,7 +83,7 @@ class TransportRequestController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
-      auto tr = usecase.getRequest(tenantId, id);
+      auto tr = usecase.getTransportRequest(tenantId, id);
       if (tr.isNull) {
         writeError(res, 404, "Transport request not found");
         return;
@@ -110,7 +105,7 @@ class TransportRequestController : PlatformController {
       r.description = j.getString("description");
       r.objectList = getStrings(j, "objectList");
 
-      auto result = usecase.addTask(requestId, r);
+      auto result = usecase.addTransportTask(requestId, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("taskId", result.id)
@@ -130,7 +125,7 @@ class TransportRequestController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.releaseRequest(tenantId, id);
+      auto result = usecase.releaseTransportRequest(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")
@@ -172,7 +167,7 @@ class TransportRequestController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = TransportRequestId(extractIdFromPath(req.requestURI));
       
-      auto result = usecase.deleteRequest(tenantId, id);
+      auto result = usecase.deleteTransportRequest(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

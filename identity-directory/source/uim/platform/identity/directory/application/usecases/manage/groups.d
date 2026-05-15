@@ -83,10 +83,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   /// Update group metadata.
-  string updateGroup(UpdateGroupRequest req) {
+  CommandResult updateGroup(UpdateGroupRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
-      return "Group not found";
+      return CommandResult(false, "", "Group not found");
 
     if (req.displayName.length > 0)
       group.displayName = req.displayName;
@@ -100,18 +100,18 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         AuditEventType.groupUpdated, "system", "System", req.groupId, "Group",
         "Group updated", "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, req.groupId.value, "");
   }
 
   /// Add a member to a group.
-  string addMember(AddMemberRequest req) {
+  CommandResult addMember(AddMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
-      return "Group not found";
+      return CommandResult(false, "", "Group not found");
 
     // Check if already a member
     if (group.hasMember(req.memberId))
-      return "Already a member";
+      return CommandResult(false, "", "Already a member");
 
     group.members ~= GroupMember(req.memberId, req.memberType, req.display);
     group.updatedAt = Clock.currStdTime();
@@ -130,18 +130,18 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         AuditEventType.memberAdded, "system", "System", req.groupId, "Group",
         "Member added: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, req.groupId.value, "Member added successfully.");
   }
 
   /// Remove a member from a group.
-  string removeMember(RemoveMemberRequest req) {
+  CommandResult removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
-      return "Group not found";
+      return CommandResult(false, "", "Group not found");
 
     auto newMembers = group.members.filter!(m => m.value != req.memberId).array.toJson;
     if (newMembers.length == group.members.length)
-      return "Member not found in group";
+      return CommandResult(false, "", "Member not found in group")    ;
 
     group.members = newMembers;
     group.updatedAt = Clock.currStdTime();
@@ -158,14 +158,14 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         AuditEventType.memberRemoved, "system", "System", req.groupId, "Group",
         "Member removed: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, req.groupId.value, "Member removed successfully.");
   }
 
   /// Delete a group.
   CommandResult deleteGroup(GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group == Group.init)
-      return "Group not found";
+      return CommandResult(false, "", "Group not found");
 
     // Remove group from all member users
     foreach (m; group.members) {
@@ -179,12 +179,12 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    groupRepo.removeById(id);
+    groupRepo.remove(group);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
         AuditEventType.groupDeleted, "system", "System", id, "Group",
         "Group deleted: " ~ group.displayName, "", "", null, Clock.currStdTime(),));
 
-    return "";
+    return CommandResult(true, id.value, "Group deleted successfully.");
   }
 }

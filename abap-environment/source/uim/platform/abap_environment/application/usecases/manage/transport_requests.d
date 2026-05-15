@@ -26,7 +26,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRequest(CreateTransportRequestRequest req) {
+  CommandResult createTransportRequest(CreateTransportRequestRequest req) {
     if (req.description.length == 0)
       return CommandResult(false, "", "Transport request description is required");
     if (req.owner.length == 0)
@@ -47,7 +47,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tr.id.value, "");
   }
 
-  CommandResult addTask(TenantId tenantId, TransportRequestId requestId, AddTransportTaskRequest req) {
+  CommandResult addTransportTask(TenantId tenantId, TransportRequestId requestId, AddTransportTaskRequest req) {
     auto tr = repo.findById(tenantId, requestId);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
@@ -71,7 +71,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, task.id.value, "");
   }
 
-  CommandResult releaseTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
+  CommandResult releaseTransportTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
     auto transportRequest = repo.findById(tenantId, requestId);
     if (transportRequest.isNull)
       return CommandResult(false, "", "Transport request not found");
@@ -99,7 +99,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(false, "", "Task not found");
   }
 
-  CommandResult releaseRequest(TenantId tenantId, TransportRequestId id) {
+  CommandResult releaseTransportRequest(TenantId tenantId, TransportRequestId id) {
     auto tr = repo.findById(tenantId, id);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
@@ -123,19 +123,19 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  TransportRequest getRequest(TenantId tenantId, TransportRequestId id) {
+  TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id) {
     return repo.findById(tenantId, id);
   }
 
-  TransportRequest[] listRequests(TenantId tenantId, SystemInstanceId systemId) {
+  TransportRequest[] listTransportRequests(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  TransportRequest[] listByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
+  TransportRequest[] listTransportRequests(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
     return repo.findByStatus(tenantId, systemId, status);
   }
 
-  CommandResult deleteRequest(TenantId tenantId, TransportRequestId id) {
+  CommandResult deleteTransportRequest(TenantId tenantId, TransportRequestId id) {
     auto request = repo.findById(tenantId, id);
     if (request.isNull)
       return CommandResult(false, "", "Transport request not found");

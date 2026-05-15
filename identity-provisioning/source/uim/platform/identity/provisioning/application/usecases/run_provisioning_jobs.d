@@ -117,7 +117,8 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
 
     // Cascade delete logs
     logRepo.removeByJob(tenantId, id);
-    repo.removeById(tenantId, id);
+    
+    repo.remove(existing);
     return CommandResult(true, id.value, "");
   }
 }

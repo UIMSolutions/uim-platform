@@ -49,7 +49,7 @@ class ApplicationJobController : PlatformController {
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.cronExpression = j.getString("cronExpression");
 
-      auto result = usecase.createJob(r);
+      auto result = usecase.createApplicationJob(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,7 +69,7 @@ class ApplicationJobController : PlatformController {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto jobs = usecase.listJobs(tenantId, systemId);
+      auto jobs = usecase.listApplicationJobs(tenantId, systemId);
       auto arr = jobs.map!(job => job.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -88,7 +88,7 @@ class ApplicationJobController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
-      auto job = usecase.getJob(tenantId, id);
+      auto job = usecase.getApplicationJob(tenantId, id);
       if (job.isNull) {
         writeError(res, 404, "Application job not found");
         return;
@@ -119,7 +119,7 @@ class ApplicationJobController : PlatformController {
       r.cronExpression = j.getString("cronExpression");
       r.active = j.getBoolean("active", true);
 
-      auto result = usecase.updateJob(r);
+      auto result = usecase.updateApplicationJob(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -139,7 +139,7 @@ class ApplicationJobController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
       
-      auto result = usecase.cancelJob(tenantId, id);
+      auto result = usecase.cancelApplicationJob(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "canceled")
@@ -159,7 +159,7 @@ class ApplicationJobController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.deleteJob(tenantId, id);
+      auto result = usecase.deleteApplicationJob(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

@@ -51,7 +51,7 @@ class BusinessUserController : PlatformController {
       r.email = j.getString("email");
       r.roleIds = getStrings(j, "roleIds");
 
-      auto result = usecase.createUser(r);
+      auto result = usecase.createBusinessUser(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
         .set("id", result.id)
@@ -71,7 +71,7 @@ class BusinessUserController : PlatformController {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
       
-      auto users = usecase.listUsers(tenantId, systemId);
+      auto users = usecase.listBusinessUsers(tenantId, systemId);
       auto arr = users.map!(user => user.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -90,7 +90,7 @@ class BusinessUserController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
 
-      auto user = usecase.getUser(tenantId, id);
+      auto user = usecase.getBusinessUser(tenantId, id);
       if (user.isNull) {
         writeError(res, 404, "Business user not found");
         return;
@@ -121,7 +121,7 @@ class BusinessUserController : PlatformController {
       r.status = j.getString("status");
       r.roleIds = getStrings(j, "roleIds");
 
-      auto result = usecase.updateUser(r);
+      auto result = usecase.updateBusinessUser(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -141,7 +141,7 @@ class BusinessUserController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.deleteUser(tenantId, id);
+      auto result = usecase.deleteBusinessUser(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleted")

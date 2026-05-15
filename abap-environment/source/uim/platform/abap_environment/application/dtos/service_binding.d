@@ -29,12 +29,17 @@ struct CreateServiceBindingRequest {
 }
 
 struct UpdateServiceBindingRequest {
+  TenantId tenantId;
+  ServiceBindingId serviceBindingId;
+  
   string description;
   string status; // "active", "inactive", "deprecated_"
   ExposedEndpoint[] endpoints;
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("serviceBindingId", serviceBindingId.value)
       .set("description", description)
       .set("status", status)
       .set("endpoints", endpoints.map!(e => e.toJson()).array.toJson);

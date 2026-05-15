@@ -79,16 +79,8 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     if (report.isNull)
       return CommandResult(false, "", "Information report not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(report);
+    return CommandResult(true, report.id.value, "");
   }
 
-  private ExportFormat parseExportFormat(string s) {
-    switch (s) {
-      case "json": return ExportFormat.json;
-      case "xml": return ExportFormat.xml;
-      case "csv": return ExportFormat.csv;
-      default: return ExportFormat.pdf;
-    }
-  }
 }

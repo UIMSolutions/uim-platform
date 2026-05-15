@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataControllersUseCase { // TODO: UIMUseCase {
-  private DataControllerRepository dataControllers;
+  private DataControllerRepository repo;
 
-  this(DataControllerRepository dataControllers) {
-    this.dataControllers = dataControllers;
+  this(DataControllerRepository repo) {
+    this.repo = repo;
   }
 
   CommandResult createController(CreateDataControllerRequest req) {
@@ -37,20 +37,20 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     c.dpoEmail = req.dpoEmail;
     c.isActive = true;
 
-    dataControllers.save(c);
+    repo.save(c);
     return CommandResult(true, c.id.value, "");
   }
 
   DataController getController(TenantId tenantId, DataControllerId id) {
-    return dataControllers.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DataController[] listControllers(TenantId tenantId) {
-    return dataControllers.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateController(UpdateDataControllerRequest req) {
-    auto c = dataControllers.findById(req.tenantId, req.id);
+    auto c = repo.findById(req.tenantId, req.id);
     if (c.isNull)
       return CommandResult(false, "", "Data controller not found");
 
@@ -65,16 +65,16 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
     if (req.dpoEmail.length > 0) c.dpoEmail = req.dpoEmail;
     c.updatedAt = Clock.currStdTime();
 
-    dataControllers.update(c);
+    repo.update(c);
     return CommandResult(true, c.id.value, "");
   }
 
   CommandResult deleteController(TenantId tenantId, DataControllerId id) {
-    auto existing = dataControllers.findById(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Data controller not found");
 
-    dataControllers.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

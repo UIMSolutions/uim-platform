@@ -53,7 +53,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0) c.description = req.description;
     c.isReversible = req.isReversible;
     if (req.targetSystems.length > 0) c.targetSystems = req.targetSystems;
-    c.updatedAt = c.createdAt;
+    c.updatedAt = Clock.currStdTime();
 
     repo.update(c);
     return CommandResult(true, c.id.value, "");
@@ -76,7 +76,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     if (c.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(c);
+    return CommandResult(true, c.id.value, "");
   }
 }

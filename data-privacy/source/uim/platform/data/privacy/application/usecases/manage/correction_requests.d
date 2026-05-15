@@ -11,12 +11,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
-  private CorrectionRequestRepository correctionRequests;
-  private DataSubjectRepository dataSubjects;
+  private CorrectionRequestRepository crRepo;
+  private DataSubjectRepository dsRepo;
 
-  this(CorrectionRequestRepository correctionRequests, DataSubjectRepository dataSubjects) {
-    this.correctionRequests = correctionRequests;
-    this.dataSubjects = dataSubjects;
+  this(CorrectionRequestRepository crRepo, DataSubjectRepository dsRepo) {
+    this.crRepo = crRepo;
+    this.dsRepo = dsRepo;
   }
 
   CommandResult createRequest(CreateCorrectionRequest req) {
@@ -27,7 +27,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
+    auto subject = dsRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -45,24 +45,24 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     request.requestedAt = now;
     request.deadline = now + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
 
-    correctionRequests.save(request);
+    crRepo.save(request);
     return CommandResult(true,request.id.value, "");
   }
 
   CorrectionRequest getRequest(TenantId tenantId, CorrectionRequestId id) {
-    return correctionRequests.findById(tenantId, id);
+    return crRepo.findById(tenantId, id);
   }
 
   CorrectionRequest[] listRequests(TenantId tenantId) {
-    return correctionRequests.findByTenant(tenantId);
+    return crRepo.findByTenant(tenantId);
   }
 
   CorrectionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return correctionRequests.findByDataSubject(tenantId, subjectId);
+    return crRepo.findByDataSubject(tenantId, subjectId);
   }
 
   CommandResult updateStatus(UpdateCorrectionStatusRequest req) {
-    auto correctionRequest = correctionRequests.findById(req.tenantId, req.id);
+    auto correctionRequest = crRepo.findById(req.tenantId, req.id);
     if (correctionRequest.isNull)
       return CommandResult(false, "", "Correction request not found");
 
@@ -70,16 +70,16 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (req.status == CorrectionStatus.completed)
       correctionRequest.completedAt = Clock.currStdTime();
 
-    correctionRequests.update(correctionRequest);
+    crRepo.update(correctionRequest);
     return CommandResult(true, correctionRequest.id.value, "");
   }
 
   CommandResult deleteRequest(TenantId tenantId, CorrectionRequestId id) {
-    auto entity = correctionRequests.findById(tenantId, id);
+    auto entity = crRepo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Correction request not found");
 
-    correctionRequests.removeById(tenantId, id);
+    crRepo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
 }

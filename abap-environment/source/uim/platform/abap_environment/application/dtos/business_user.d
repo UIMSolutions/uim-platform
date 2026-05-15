@@ -29,6 +29,9 @@ struct CreateBusinessUserRequest {
 }
 
 struct UpdateBusinessUserRequest {
+  TenantId tenantId;
+  BusinessUserId businessUserId;
+  
   string firstName;
   string lastName;
   string email;

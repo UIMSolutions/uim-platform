@@ -66,7 +66,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateInstance(UpdateSystemInstanceRequest req) {
-    auto inst = repo.findById(req.tenantId, req.id);
+    auto inst = repo.findById(req.tenantId, req.systemInstanceId);
     if (inst.isNull)
       return CommandResult(false, "", "System instance not found");
 

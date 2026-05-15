@@ -110,28 +110,11 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     auto env = repo.findById(tenantId, id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");
-    repo.removeById(id);
-    return CommandResult(true, id.value, "");
+
+    repo.remove(env);
+    return CommandResult(true, env.id.value, "");
   }
 
-  private KymaPlan parsePlan(string s) {
-    switch (s) {
-    case "azure":
-      return KymaPlan.azure;
-    case "aws":
-      return KymaPlan.aws;
-    case "gcp":
-      return KymaPlan.gcp;
-    case "sapConvergedCloud":
-      return KymaPlan.sapConvergedCloud;
-    case "free":
-      return KymaPlan.free_;
-    case "trial":
-      return KymaPlan.trial;
-    default:
-      return KymaPlan.azure;
-    }
-  }
 }
 
 

@@ -85,7 +85,7 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 
-    repository.removeById(tenantId, id);
+    repository.remove(alert);
     return CommandResult(true, alert.id.value, "");
   }
 

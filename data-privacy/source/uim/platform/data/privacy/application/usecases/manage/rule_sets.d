@@ -80,7 +80,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(rs);
+    return CommandResult(true, rs.id.value, "");
   }
 }

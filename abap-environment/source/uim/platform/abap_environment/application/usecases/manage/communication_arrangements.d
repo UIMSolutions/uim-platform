@@ -25,7 +25,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
+  CommandResult createCommunicationArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Arrangement name is required");
     if (req.scenarioId.isEmpty)
@@ -55,7 +55,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommandResult updateArrangement(UpdateCommunicationArrangementRequest req) {
+  CommandResult updateCommunicationArrangement(UpdateCommunicationArrangementRequest req) {
     auto arr = repo.findById(req.tenantId, req.id);
     if (arr.isNull)
       return CommandResult(false, "", "Communication arrangement not found");
@@ -88,12 +88,12 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id) {
+  CommunicationArrangement getCommunicationArrangement(TenantId tenantId, CommunicationArrangementId id) {
     return repo.findById(tenantId, id);
   }
 
-  CommunicationArrangement[] listArrangements(SystemInstanceId systemId) {
-    return repo.findBySystem(systemId);
+  CommunicationArrangement[] listCommunicationArrangements(TenantId tenantId, SystemInstanceId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
   CommandResult deleteCommunicationArrangement(TenantId tenantId, CommunicationArrangementId id) {

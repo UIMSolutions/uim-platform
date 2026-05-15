@@ -31,7 +31,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     mapping.initEntity(req.tenantId);
 
     mapping.masterDataObjectId = req.masterDataObjectId;
-    mapping.category = parseCategory(req.category);
+    mapping.category = req.category.to!MasterDataCategory;
     mapping.objectType = req.objectType;
     mapping.entries = toEntries(req.entries);
 
@@ -63,7 +63,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   string lookupKey(LookupKeyRequest req) {
     auto mapping = repo.findByClientKey(req.tenantId, req.sourceClientId, req.sourceLocalKey);
     if (mapping.isNull)
-      return "";
+      return ;
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
 
@@ -80,7 +80,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   KeyMapping[] listKeyMappings(TenantId tenantId, string category) {
-    return repo.findByCategory(tenantId, parseCategory(category));
+    return repo.findByCategory(tenantId, category.to!MasterDataCategory);
   }
 
   CommandResult deleteKeyMapping(KeyMappingId id) {
@@ -99,44 +99,13 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
       e.clientId = dto.clientId;
       e.systemId = dto.systemId;
       e.localKey = dto.localKey;
-      e.sourceType = parseSourceType(dto.sourceType);
+      e.sourceType = dto.sourceType.to!KeyMappingSourceType;
       e.isPrimary = dto.isPrimary;
       result ~= e;
     }
     return result;
   }
 
-  private KeyMappingSourceType parseSourceType(string s) {
-    switch (s) {
-    case "local":
-      return KeyMappingSourceType.local;
-    case "remote":
-      return KeyMappingSourceType.remote;
-    case "universal":
-      return KeyMappingSourceType.universal;
-    default:
-      return KeyMappingSourceType.local;
-    }
-  }
-
-  private MasterDataCategory parseCategory(string s) {
-    switch (s) {
-    case "businessPartner":
-      return MasterDataCategory.businessPartner;
-    case "costCenter":
-      return MasterDataCategory.costCenter;
-    case "profitCenter":
-      return MasterDataCategory.profitCenter;
-    case "companyCode":
-      return MasterDataCategory.companyCode;
-    case "workforcePerson":
-      return MasterDataCategory.workforcePerson;
-    case "custom":
-      return MasterDataCategory.custom;
-    default:
-      return MasterDataCategory.businessPartner;
-    }
-  }
 }
 
 

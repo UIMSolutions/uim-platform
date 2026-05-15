@@ -67,7 +67,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
     record.status = RecordStatus.validated;
     repo.update(record);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, record.id.value, "");
   }
 
   CommandResult rejectDataRecord(TenantId tenantId, DataRecordId id) {
@@ -77,7 +77,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
 
     record.status = RecordStatus.rejected;
     repo.update(record);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, record.id.value, "");
   }
 
   CommandResult deleteDataRecord(TenantId tenantId, DataRecordId id) {
@@ -85,7 +85,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Record not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 }

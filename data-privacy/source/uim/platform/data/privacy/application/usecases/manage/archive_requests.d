@@ -80,7 +80,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     if (archiveRequest.isNull)
       return CommandResult(false, "", "Archive request not found");
 
-    repo.removeById(tenantId, requestId);
+    repo.remove(archiveRequest);
     return CommandResult(true, archiveRequest.id.value, "");
   }
 }

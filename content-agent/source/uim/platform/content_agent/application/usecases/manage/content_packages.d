@@ -56,7 +56,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.status = PackageStatus.draft;
 
     packages.save(pkg);
-    recordActivity(req.tenantId, ActivityType.packageCreated, id, req.name,
+    recordActivity(req.tenantId, ActivityType.packageCreated, pkg.id.value, req.name,
         "Package created", req.createdBy);
 
     return CommandResult(true, pkg.id.value, "");
@@ -111,10 +111,10 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.packageSizeBytes = result.estimatedSizeBytes;
 
     packages.update(pkg);
-    recordActivity(req.tenantId, ActivityType.packageAssembled, req.packageId,
+    recordActivity(req.tenantId, ActivityType.packageAssembled, pkg.id.value,
         pkg.name, "Package assembled", req.assembledBy);
 
-    return CommandResult(true, req.packageId, "");
+    return CommandResult(true, pkg.id.value, "");
   }
 
   ContentPackage getPackage(ContentPackageId id) {
@@ -135,10 +135,10 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
-    packages.removeById(id);
+    packages.remove(pkg);
     recordActivity(pkg.tenantId, ActivityType.packageDeleted, id, pkg.name, "Package deleted", "");
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, pkg.id.value, "");
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,

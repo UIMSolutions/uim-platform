@@ -32,6 +32,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     auto now = Clock.currStdTime();
     auto group = IdaGroup(randomUUID().toString(), req.tenantId, req.name,
         req.description, [], now, now);
+        
     groupRepo.save(group);
     return GroupResponse(group.id.value, "");
   }
@@ -44,16 +45,16 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string addMember(TenantId tenantId, GroupId groupId, UserId userId) {
+  CommandResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
     import uim.platform.identity.authentication.domain.entities.user : User;
 
     auto group = groupRepo.findById(tenantId, groupId);
     if (group == IdaGroup.init)
-      return "IdaGroup not found";
+      return CommandResult(false, "", "IdaGroup not found");
 
     auto user = userRepo.findById(userId);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
     if (!group.memberUserIds.canFind(userId)) {
       group.memberUserIds ~= userId;
@@ -66,13 +67,13 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
         userRepo.update(user);
       }
     }
-    return "";
+    return CommandResult(true, group.id.value, "");
   }
 
-  string removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
+  CommandResult removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
     auto group = groupRepo.findById(tenantId, groupId);
     if (group == IdaGroup.init)
-      return "IdaGroup not found";
+      return CommandResult(false, "", "IdaGroup not found");
 
     string[] updated;
     foreach (mid; group.memberUserIds) {
@@ -82,15 +83,15 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     group.memberUserIds = updated;
     group.updatedAt = Clock.currStdTime();
     groupRepo.update(group);
-    return "";
+    return CommandResult(true, group.id.value, "");
   }
 
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group == IdaGroup.init)
-      return CommandResult("IdaGroup not found");  
+      return CommandResult(false, "", "IdaGroup not found");  
 
-    groupRepo.removeById(tenantId, id);
-    return CommandResult("");
+    groupRepo.remove(group);
+    return CommandResult(true, group.id.value, "");
   }
 }

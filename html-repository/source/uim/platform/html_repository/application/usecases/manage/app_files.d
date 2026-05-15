@@ -14,7 +14,6 @@ import uim.platform.html_repository.application.dto;
 
 import std.uuid : randomUUID;
 
-
 class ManageAppFilesUseCase { // TODO: UIMUseCase {
     private AppFileRepository repo;
 
@@ -53,7 +52,8 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
             file.sizeBytes = r.sizeBytes;
             file.etag = ContentDeliveryService.generateEtag(r.content);
         }
-        if (r.contentType.length > 0) file.contentType = r.contentType;
+        if (r.contentType.length > 0)
+            file.contentType = r.contentType;
         file.updatedAt = currentTimestamp();
         file.updatedBy = r.updatedBy;
 
@@ -74,7 +74,12 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult delete(AppFileId id) {
-        repo.removeById(id);
+        auto file = repo.findById(tenantId, id);
+        if (file.isNull)
+            return CommandResult(false, "", "File not found");
+
+        repo.remove(file);
+        return CommandResult(true, file.id.value, "");
     }
 
     size_t countByVersion(AppVersionId versionId) {
@@ -87,13 +92,15 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
 
     private static FileCategory categorizeFile(string filePath) {
         import std.algorithm : endsWith;
+
         if (filePath.endsWith(".html") || filePath.endsWith(".htm"))
             return FileCategory.html;
         if (filePath.endsWith(".js"))
             return FileCategory.javascript;
         if (filePath.endsWith(".css"))
             return FileCategory.stylesheet;
-        if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(".svg"))
+        if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(
+                ".svg"))
             return FileCategory.image;
         if (filePath.endsWith(".json"))
             return FileCategory.configuration;
@@ -102,6 +109,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
 
     private static long currentTimestamp() {
         import std.datetime.systime : Clock;
+
         return Clock.currStdTime();
     }
 }

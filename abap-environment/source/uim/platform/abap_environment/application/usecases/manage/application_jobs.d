@@ -25,7 +25,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     this.jobs = jobs;
   }
 
-  CommandResult createJob(CreateApplicationJobRequest request) {
+  CommandResult createApplicationJob(CreateApplicationJobRequest request) {
     if (request.name.length == 0)
       return CommandResult(false, "", "Job name is required");
     if (request.jobTemplateName.length == 0)
@@ -75,7 +75,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult cancelJob(TenantId tenantId, ApplicationJobId id) {
+  CommandResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");
@@ -93,15 +93,15 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  ApplicationJob getJob(TenantId tenantId, ApplicationJobId id) {
+  ApplicationJob getApplicationJob(TenantId tenantId, ApplicationJobId id) {
     return jobs.findById(tenantId, id);
   }
 
-  ApplicationJob[] listJobs(TenantId tenantId, SystemInstanceId systemId) {
+  ApplicationJob[] listApplicationJobs(TenantId tenantId, SystemInstanceId systemId) {
     return jobs.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteJob(TenantId tenantId, ApplicationJobId id) {
+  CommandResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");

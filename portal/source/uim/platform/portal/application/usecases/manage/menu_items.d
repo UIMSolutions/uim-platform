@@ -77,9 +77,9 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
     return menuRepo.findChildren(parentId);
   }
 
-  string updateMenuItem(UpdateMenuItemRequest req) {
+  CommandResult updateMenuItem(UpdateMenuItemRequest req) {
     if (!menuRepo.existsById(req.menuItemId))
-      return "Menu item not found";
+      return CommandResult(false, "", "Menu item not found");
 
     auto item = menuRepo.findById(req.menuItemId);
     with (item) {
@@ -95,12 +95,12 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     menuRepo.update(item);
-    return "";
+    return CommandResult(true, item.menuItemId.value, "Menu item updated successfully.");
   }
 
   CommandResult deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
     if (!menuRepo.existsById(menuItemId))
-      return "Menu item not found";
+      return CommandResult(false, "", "Menu item not found");
 
     menuRepo.remove(menuItemId);
 
@@ -111,6 +111,6 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
       siteRepo.update(site);
     }
 
-    return "";
+    return CommandResult(true, menuItemId.value, "Menu item deleted successfully.");
   }
 }

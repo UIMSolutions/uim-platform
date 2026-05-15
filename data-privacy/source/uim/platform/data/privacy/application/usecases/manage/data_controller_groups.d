@@ -13,38 +13,39 @@ mixin(ShowModule!());
 class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
   private DataControllerGroupRepository w;
 
-  this(DataControllerGroupRepository dataControllerGroups) {
-    this.dataControllerGroups = dataControllerGroups;
+  this(DataControllerGroupRepository repo) {
+    this.repo = repo;
   }
 
   CommandResult createGroup(CreateDataControllerGroupRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = Clock.currStdTime();
-    auto g = DataControllerGroup();
+    DataControllerGroup g;
     g.initEntity(req.tenantId);
+
     g.name = req.name;
     g.description = req.description;
     g.controllerIds = req.controllerIds;
     g.isActive = true;
 
-    dataControllerGroups.save(g);
+    repo.save(g);
     return CommandResult(true, g.id.value, "");
   }
 
   DataControllerGroup getGroup(TenantId tenantId, DataControllerGroupId id) {
-    return dataControllerGroups.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DataControllerGroup[] listGroups(TenantId tenantId) {
-    return dataControllerGroups.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateGroup(UpdateDataControllerGroupRequest req) {
-    auto g = dataControllerGroups.findById(req.tenantId, req.id);
+    auto g = repo.findById(req.tenantId, req.id);
     if (g.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
@@ -53,16 +54,16 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (req.controllerIds.length > 0) g.controllerIds = req.controllerIds;
     g.updatedAt = Clock.currStdTime();
 
-    dataControllerGroups.update(g);
+    repo.update(g);
     return CommandResult(true, g.id.value, "");
   }
 
   CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId id) {
-    auto entity = dataControllerGroups.findById(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
-    dataControllerGroups.removeById(tenantId, id);
+    repo.removeById(tenantId, id);
     return CommandResult(true, entity.id.value, "");
   }
 }

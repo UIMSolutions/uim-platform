@@ -54,7 +54,7 @@ class SystemInstanceController : PlatformController {
       request.softwareVersion = j.getString("softwareVersion");
       request.stackVersion = j.getString("stackVersion");
 
-      auto result = usecase.createInstance(request);
+      auto result = usecase.createSystemInstance(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -72,7 +72,7 @@ class SystemInstanceController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto instances = usecase.listInstances(tenantId);
+      auto instances = usecase.listSystemInstances(tenantId);
       auto arr = instances.map!(inst => inst.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -90,7 +90,7 @@ class SystemInstanceController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto inst = usecase.getInstance(id);
+      auto inst = usecase.getSystemInstance(id);
       if (inst.isNull) {
         writeError(res, 404, "System instance not found");
         return;
@@ -113,7 +113,7 @@ class SystemInstanceController : PlatformController {
       r.hanaMemorySize = getUshort(j, "hanaMemorySize");
       r.softwareVersion = j.getString("softwareVersion");
 
-      auto result = usecase.updateInstance(id, r);
+      auto result = usecase.updateSystemInstance(id, r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -132,7 +132,8 @@ class SystemInstanceController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteInstance(id);
+      
+      auto result = usecase.deleteSystemInstance(id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleting")

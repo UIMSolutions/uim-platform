@@ -25,7 +25,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBinding(CreateServiceBindingRequest req) {
+  CommandResult createServiceBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Service binding name is required");
     if (req.systemInstanceId.isEmpty)
@@ -49,7 +49,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  CommandResult updateBinding(UpdateServiceBindingRequest req) {
+  CommandResult updateServiceBinding(UpdateServiceBindingRequest req) {
     auto binding = repo.findById(req.tenantId, req.id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
@@ -67,15 +67,15 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
+  ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
     return repo.findById(tenantId, id);
   }
 
-  ServiceBinding[] listBindings(TenantId tenantId, SystemInstanceId systemId) {
+  ServiceBinding[] listServiceBindings(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
+  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = repo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");

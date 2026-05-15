@@ -28,7 +28,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     this.roleRepo = roleRepo;
   }
 
-  CommandResult createUser(CreateBusinessUserRequest req) {
+  CommandResult createBusinessUser(CreateBusinessUserRequest req) {
     if (req.username.length == 0)
       return CommandResult(false, "", "Username is required");
     if (req.email.length == 0)
@@ -68,7 +68,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, user.id.value, "");
   }
 
-  CommandResult updateUser(UpdateBusinessUserRequest req) {
+  CommandResult updateBusinessUser(UpdateBusinessUserRequest req) {
     auto user = repo.findById(req.tenantId, req.id);
     if (user.isNull)
       return CommandResult(false, "", "Business user not found");
@@ -104,11 +104,11 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, user.id.value, "");
   }
 
-  BusinessUser getUser(TenantId tenantId, BusinessUserId id) {
+  BusinessUser getBusinessUser(TenantId tenantId, BusinessUserId id) {
     return repo.findById(tenantId, id);
   }
 
-  BusinessUser[] listUsers(TenantId tenantId, SystemInstanceId systemId) {
+  BusinessUser[] listBusinessUsers(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 

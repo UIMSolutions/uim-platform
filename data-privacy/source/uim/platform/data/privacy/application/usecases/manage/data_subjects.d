@@ -90,7 +90,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, ""); // TODO: Consider using a soft delete approach instead of hard delete
+    repo.remove(subject);
+    return CommandResult(true, subject.id.value, ""); // TODO: Consider using a soft delete approach instead of hard delete
   }
 }

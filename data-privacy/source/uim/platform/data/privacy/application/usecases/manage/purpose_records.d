@@ -76,7 +76,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     if (r.isNull)
       return CommandResult(false, "", "Purpose record not found");
 
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "");
+    repo.remove(r);
+    return CommandResult(true, r.id.value, "");
   }
 }

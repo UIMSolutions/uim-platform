@@ -57,10 +57,10 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Update user profile.
-  string updateUser(UpdateUserRequest req) {
+  CommandResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.userId);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
@@ -71,33 +71,33 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     user.updatedAt = Clock.currStdTime();
     userRepo.update(user);
-    return "";
+    return CommandResult(true, user.id.value, "User updated successfully.");
   }
 
   /// Deactivate (soft-delete) a user.
-  string deactivateUser(UserId id) {
+  CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
     user.status = UserStatus.inactive;
     user.updatedAt = Clock.currStdTime();
     userRepo.update(user);
-    return "";
+    return CommandResult(true, user.id.value, "User deactivated successfully.");
   }
 
   /// Change password.
-  string changePassword(UserId id, string oldPassword, string newPassword) {
+  CommandResult changePassword(UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user == User.init)
-      return "User not found";
+      return CommandResult(false, "", "User not found");
 
     if (!passwordSvc.verifyPassword(oldPassword, user.passwordHash))
-      return "Current password is incorrect";
+      return CommandResult(false, "", "Current password is incorrect");
 
     user.passwordHash = passwordSvc.hashPassword(newPassword);
     user.updatedAt = Clock.currStdTime();
     userRepo.update(user);
-    return "";
+    return CommandResult(true, user.id.value, "Password changed successfully.");
   }
 }

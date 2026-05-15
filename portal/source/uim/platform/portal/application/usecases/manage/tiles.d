@@ -72,9 +72,9 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     return tileRepo.search(tenantId, query, offset, limit);
   }
 
-  string updateTile(UpdateTileRequest req) {
+  CommandResult updateTile(UpdateTileRequest req) {
     if (!tileRepo.existsById(req.tileId))
-      return "Tile not found";
+      return CommandResult(false, "", "Tile not found") ;
 
     auto tile = tileRepo.findById(req.tileId);
     with (tile) {
@@ -94,14 +94,14 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
       updatedAt = Clock.currStdTime();
     }
     tileRepo.update(tile);
-    return "";
+    return CommandResult(true, tile.tileId.value, "Tile updated successfully.");
   }
 
   CommandResult deleteTile(TileId id) {
     if (!tileRepo.existsById(id))
-      return "Tile not found";
+      return CommandResult(false, "", "Tile not found");
 
     tileRepo.removeById(id);
-    return "";
+    return CommandResult(true, id.value, "Tile deleted successfully.");
   }
 }

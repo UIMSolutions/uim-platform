@@ -178,13 +178,14 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult deleteWorkflow(WorkflowId tenantId, id tenantId) {
+  CommandResult deleteWorkflow(TenantId tenantId, WorkflowId id) {
     auto existing = workflowRepo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Workflow not found");
 
     stepRepo.removeByWorkflow(tenantId, id);
-    workflowRepo.removeById(tenantId, id);
+
+    workflowRepo.remove(existing);
     return CommandResult(true, id.value, "");
   }
 }
