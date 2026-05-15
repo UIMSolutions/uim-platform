@@ -10,7 +10,6 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long defaultValue = 0) {
   if (!j.isObject)
@@ -22,15 +21,12 @@ long jsonLong(Json j, string key, long defaultValue = 0) {
   auto v = j[key];
   return v.isInteger ? v.get!long : defaultValue;
 }
-
 // double getDouble(Json j, string key) {
 //   if (!j.hasKey(key))
 //     return 0.0;
-
 //   auto v = j[key];
 //   if (v.isFloat)
 //     return v.get!double;
-
 //   if (v.isInteger)
 //     return cast(double)v.get!long;
 //   return 0.0;
@@ -88,7 +84,6 @@ string[][] jsonMessageArray(Json j, string key) {
   }
   return result[];
 }
-
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {
   auto error = Json.emptyObject;
@@ -105,7 +100,6 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   j["error"]["code"] = Json(status);
   res.writeJsonBody(j, status);
 } */
-
 ///
 unittest {
   assert(extractIdFromPath("/v1/tenants/abc123") == "abc123");
@@ -121,7 +115,6 @@ unittest {
     ]);
   assert(getStrings(parseJsonString(`{}`), "tags").isNull);
 }
-
 /// Read a string array from JSON.
 string[] getStrings(Json j, string key, string[] defaultArray = null) {
   if (!j.isObject)
@@ -182,7 +175,6 @@ string extractId(string uri) {
   return "";
 }
 */
-
 /// Extract a query parameter from the URI.
 string queryParam(scope HTTPServerRequest req, string key) {
   auto val = req.headers.get("X-Query-" ~ key, "");
@@ -218,7 +210,6 @@ string[] splitBy(string s, char delim) {
     result ~= s[start .. $];
   return result;
 }
-
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
@@ -255,13 +246,11 @@ Json toJsonValue(T)(T val) {
   }
   return j;
 }
-
 /// Read a size_t field from JSON.
 size_t jsonUint(Json j, string key, size_t default_ = 0) {
   return cast(size_t)jsonLong(j, key, default_);
 }
 /// Read an int field from JSON.
-
 /// Parse an enum from a JSON string field.
 T jsonEnum(T)(Json j, string key, T default_ = T.init) {
   auto str = j.getString(key);
@@ -273,7 +262,6 @@ T jsonEnum(T)(Json j, string key, T default_ = T.init) {
   catch (Exception)
     return default_;
 }
-
 /// Write a standard JSON error response.
 void writeApiError(scope HTTPServerResponse res, int status, string detail) {
   auto response = Json.emptyObject;
@@ -281,7 +269,6 @@ void writeApiError(scope HTTPServerResponse res, int status, string detail) {
   response["status"] = Json(status);
   res.writeJsonBody(response, status);
 }
-
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
@@ -318,7 +305,6 @@ Json toJsonValue(T)(T val) {
   }
   return j;
 }
-
 /// Parse array of [key, value] pairs from JSON array of objects with "key"/"value" fields
 string[][] jsonKeyValuePairs(Json j, string key) {
   if (!j.isObject)
@@ -346,26 +332,22 @@ string[][] jsonKeyValuePairs(Json j, string key) {
 Json toJsonArray(string[] arr) {
   return arr.map!(s => Json(s)).array.toJson;
 }
-
 /// Serialize a struct to a Json value.
 Json toJsonValue(T)(T obj) if (is(T == struct)) {
   return serializeToJson(obj);
 }
-
 /// Helper: standard JSON error response body.
 Json errorJson(string message, int code = 400) {
   return Json.emptyObject
     .set("error", message)
     .set("code", code);
 }
-
 /// Helper: envelope a result with metadata.
 Json envelopeJson(string key, Json data) {
   auto j = Json.emptyObject;
   j[key] = data;
   return j;
 }
-
 /// Extract a string[][] (array of string arrays) from a Json object.
 string[][] getStringsArray(Json j, string key) {
   if (!j.isObject)
@@ -401,9 +383,7 @@ long lastIndexOfChar(string s, char c) {
 Json stringsToJsonArray(string[] arr) {
   return arr.map!(s => Json(s)).array.toJson;
 }
-
 /// Convert a string array to a Json array.
-
 /// Convert a string[string] map to a Json object.
 // Json toJsonObject(const(string[string]) map) {
 //   auto jobj = Json.emptyObject;
@@ -465,7 +445,6 @@ string[][] jsonRegionArray(Json j, string key) {
   }
   return result;
 }
-
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
@@ -493,7 +472,6 @@ Json toJsonValue(T)(T val) {
   }
   return j;
 }
-
 // /// Serialize a string array to Json array.
 // Json serializeStrArray(string[] arr) {
 //   auto result = Json.emptyArray;
@@ -501,7 +479,6 @@ Json toJsonValue(T)(T val) {
 //     result ~= Json(s);
 //   return result;
 // }
-
 // /// Serialize a string[string] map to Json object.
 // Json serializeStrMap(string[string] map) {
 //   auto result = Json.emptyObject;
@@ -510,9 +487,7 @@ Json toJsonValue(T)(T val) {
 //   return result;
 // }
 /// Extract a string[string] map from a Json object.
-
 /// Convert a string array to a Json array.
-
 /// Convert a string[string] map to a Json object.
 Json toJsonObject(const(string[string]) map) {
   auto jobj = Json.emptyObject;
@@ -520,7 +495,6 @@ Json toJsonObject(const(string[string]) map) {
     jobj[k] = Json(v);
   return jobj;
 }
-
 // /// Serialize a string-to-string map to Json.
 // Json serializeStrMap(string[string] map) {
 //   auto j = Json.emptyObject;
@@ -528,7 +502,6 @@ Json toJsonObject(const(string[string]) map) {
 //     j[k] = Json(v);
 //   return j;
 // }
-
 // /// Serialize a string array to Json.
 // Json serializeStrArray(string[] arr) {
 //   auto j = Json.emptyArray;
@@ -540,7 +513,6 @@ Json toJsonObject(const(string[string]) map) {
 ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort)jsonLong(j, key, default_);
 }
-
 //// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
   // Strip query string
@@ -558,7 +530,6 @@ string extractIdFromPath(string uri) {
     return path[spos + 1 .. $];
   return path;
 }
-
 // --- Enum parsers ---
 
 /*
@@ -596,7 +567,6 @@ long jsonLong(Json j, string key, long default_ = 0) {
     return default_;
 }
 */
-
 // long jsonLong(Json j, string key, long default_ = 0) {
 //     if (!j.isObject)
 //         return default_;
@@ -606,7 +576,6 @@ long jsonLong(Json j, string key, long default_ = 0) {
 //     if ((v).isInteger)
 //         return (v).get!long;
 //     return default_;
-
 // string extractSegmentFromPath(string path, int segmentIndex) {
 //     import std.string : split;
 //     auto parts = path.split("/");
@@ -620,7 +589,6 @@ long jsonLong(Json j, string key, long default_ = 0) {
 //         return segments[segmentIndex];
 //     return "";
 // }
-
 /// Serialize a string array to Json array.
 Json serializeStrArray(string[] arr) {
   auto result = Json.emptyArray;
@@ -628,7 +596,6 @@ Json serializeStrArray(string[] arr) {
     result ~= Json(s);
   return result;
 }
-
 /// Serialize a string[string] map to Json object.
 Json serializeStrMap(string[string] map) {
   auto result = Json.emptyObject;
@@ -636,7 +603,6 @@ Json serializeStrMap(string[string] map) {
     result[k] = Json(v);
   return result;
 }
-
 /// Extract a Json array of objects (generic).
 Json[] jsonObjArray(Json j, string key) {
   if (!j.isObject)

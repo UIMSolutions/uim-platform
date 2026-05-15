@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.instances;
-
 // import uim.platform.hana.domain.types;
 // import uim.platform.hana.domain.entities.instance;
 // import uim.platform.hana.domain.ports.repositories.instances;

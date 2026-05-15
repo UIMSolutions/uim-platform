@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.spans;
-
 // import uim.platform.logging.domain.entities.span;
 // import uim.platform.logging.domain.ports.repositories.spans;
 // import uim.platform.logging.domain.types;

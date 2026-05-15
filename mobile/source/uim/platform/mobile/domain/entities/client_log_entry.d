@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.domain.entities.client_log_entry;
-
 // import uim.platform.mobile.domain.types;
 import uim.platform.mobile;
 

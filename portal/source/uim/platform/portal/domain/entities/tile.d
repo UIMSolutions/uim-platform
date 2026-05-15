@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.tile;
-
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
@@ -54,7 +53,6 @@ struct Tile {
     return j;
   }
 }
-
 /// Additional tile configuration.
 struct TileConfiguration {
   string serviceUrl; // OData service URL for dynamic tiles

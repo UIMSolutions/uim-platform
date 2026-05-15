@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
-
 // import uim.platform.credential_store.domain.entities.namespace;
 // import uim.platform.credential_store.domain.ports.repositories.namespaces;
 // import uim.platform.credential_store.domain.types;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.services.deployment_validator;
-
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.audit_log_entry;
-
 // import uim.platform.auditlog.domain.types;
 
 import uim.platform.auditlog;
@@ -83,7 +82,6 @@ struct AuditLogEntry {
   }
 
 }
-
 /// Key/value pair describing a changed or accessed attribute.
 @safe:
 struct AuditAttribute {

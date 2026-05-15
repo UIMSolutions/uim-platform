@@ -9,7 +9,6 @@ module uim.platform.data.quality.presentation.http.controllers.profile;
 
 
 
-
 // import uim.platform.data.quality.application.usecases.profile_data;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;

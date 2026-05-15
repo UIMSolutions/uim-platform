@@ -7,7 +7,6 @@ module uim.platform.identity.directory.domain.ports.repositories.users;
 
 import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
-
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
 interface UserRepository : ITenantRepository!(User, UserId) {
 

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.application.dto;
-
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.domain.entities.site : SiteSettings;
 // import uim.platform.portal.domain.entities.tile : TileConfiguration;
@@ -70,7 +69,6 @@ struct SiteResponse {
       .set("isSuccess", isSuccess());
   }
 }
-
 /// --- Page DTOs ---
 
 struct CreatePageRequest {
@@ -137,7 +135,6 @@ struct PageResponse {
       .set("isSuccess", isSuccess());
   }
 }
-
 /// --- Section DTOs ---
 
 struct CreateSectionRequest {
@@ -190,7 +187,6 @@ struct SectionResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Tile DTOs ---
 
 struct CreateTileRequest {
@@ -283,7 +279,6 @@ struct TileResponse {
     }
 
 }
-
 /// --- Catalog DTOs ---
 
 struct CreateCatalogRequest {
@@ -337,7 +332,6 @@ struct CatalogResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Content Provider DTOs ---
 
 struct CreateProviderRequest {
@@ -383,7 +377,6 @@ struct ProviderResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Role DTOs ---
 
 struct CreateRoleRequest {
@@ -443,7 +436,6 @@ struct RoleResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Theme DTOs ---
 
 struct CreateThemeRequest {
@@ -509,7 +501,6 @@ struct ThemeResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Menu Item DTOs ---
 
 struct CreateMenuItemRequest {
@@ -583,7 +574,6 @@ struct MenuItemResponse {
       .set("isSuccess", isSuccess());
     }
 }
-
 /// --- Translation DTOs ---
 
 struct CreateTranslationRequest {
@@ -632,7 +622,6 @@ struct TranslationResponse {
     }
 
 }
-
 /// --- Paged list ---
 
 struct PagedListResponse {

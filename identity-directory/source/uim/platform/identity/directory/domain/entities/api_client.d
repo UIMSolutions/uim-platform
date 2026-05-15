@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.api_client;
-
 // import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory;
 

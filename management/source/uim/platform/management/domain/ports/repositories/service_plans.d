@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.service_plans;
-
 // import uim.platform.management.domain.entities.service_plan;
 // import uim.platform.management.domain.types;
 import uim.platform.management;

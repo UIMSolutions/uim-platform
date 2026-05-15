@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.ports.repositories.health_checks;
-
 // import uim.platform.monitoring.domain.entities.health_check;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;

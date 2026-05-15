@@ -58,7 +58,6 @@ bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
   // Auth is valid
   return true;
 }
-
 // private void validateAuth(HTTPServerRequest req) {
 //   if (!_service.config.requireAuthToken)
 //     return;

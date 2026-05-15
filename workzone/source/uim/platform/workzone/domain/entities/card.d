@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.card;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -37,7 +36,6 @@ struct Card {
       .set("active", active);
   }
 }
-
 /// Data source configuration for a card.
 struct CardDataSource {
   string url; // OData or REST endpoint
@@ -57,7 +55,6 @@ struct CardDataSource {
       .set("authToken", authToken);
   }
 }
-
 /// Card manifest (simplified descriptor).
 struct CardManifest {
   string type; // "sap.card", "custom.card", etc.

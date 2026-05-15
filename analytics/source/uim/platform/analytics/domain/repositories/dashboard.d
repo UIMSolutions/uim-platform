@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.repositories.dashboard;
-
 // import uim.platform.analytics.domain.entities.dashboard;
 // import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-
 /// Port: outgoing repository interface for Dashboard persistence.
 interface DashboardRepository {
   Dashboard findById(EntityId id);

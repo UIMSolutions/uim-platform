@@ -6,8 +6,6 @@
 module uim.platform.portal.presentation.http.controllers.role;
 
 
-
-
 // import uim.platform.portal.application.usecases.manage.roles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.role;

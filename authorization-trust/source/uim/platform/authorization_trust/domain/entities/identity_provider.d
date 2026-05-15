@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// A trusted identity provider (SAML 2.0 or OIDC).
 /// Mirrors the SAP BTP trust configuration for external IdPs.
 struct IdentityProviderEntity {

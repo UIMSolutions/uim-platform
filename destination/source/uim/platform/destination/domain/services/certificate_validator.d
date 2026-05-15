@@ -11,7 +11,6 @@ import std.format : format;
 mixin(ShowModule!());
 
 @safe:
-
 /// Result of certificate validation.
 struct ValidationResult {
   bool isValid;
@@ -19,7 +18,6 @@ struct ValidationResult {
   string message;
   long daysUntilExpiry;
 }
-
 /// Domain service: validates certificates and checks expiry.
 struct CertificateValidator {
   enum SECONDS_PER_DAY = 86_400;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collections;
-
 // import uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
 // import uim.platform.ai_launchpad.domain.entities.prompt_collection : PromptCollection;
 // import uim.platform.ai_launchpad.domain.types;

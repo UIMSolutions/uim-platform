@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.apps;
-
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone;

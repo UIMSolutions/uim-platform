@@ -1,5 +1,4 @@
 module uim.platform.dms.application.domain.enumerations;
-
 // --- Enumerations ---
 
 enum RepositoryStatus {

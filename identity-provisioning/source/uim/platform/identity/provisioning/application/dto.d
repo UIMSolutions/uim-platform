@@ -27,7 +27,6 @@ struct UpdateSourceSystemRequest {
   string description;
   string connectionConfig;
 }
-
 // --- Target System ---
 
 struct CreateTargetSystemRequest {
@@ -46,7 +45,6 @@ struct UpdateTargetSystemRequest {
   string description;
   string connectionConfig;
 }
-
 // --- Proxy System ---
 
 struct CreateProxySystemRequest {
@@ -67,7 +65,6 @@ struct UpdateProxySystemRequest {
   string description;
   string connectionConfig;
 }
-
 // --- Transformation ---
 
 struct CreateTransformationRequest {
@@ -87,7 +84,6 @@ struct UpdateTransformationRequest {
   string mappingRules;
   string conditions;
 }
-
 // --- Provisioning Job ---
 
 struct CreateProvisioningJobRequest {

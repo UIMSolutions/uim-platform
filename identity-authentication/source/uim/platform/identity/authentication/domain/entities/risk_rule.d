@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.entities.risk_rule;
-
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
@@ -29,7 +28,6 @@ struct RiskRule {
       .set("active", active);
   }
 }
-
 /// Condition that triggers a risk evaluation.
 struct RiskCondition {
   string conditionType; // "ip_range", "group", "user_type", "auth_method", "geo"

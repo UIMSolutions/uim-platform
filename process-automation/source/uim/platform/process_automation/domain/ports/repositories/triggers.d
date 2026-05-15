@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.domain.ports.repositories.triggers;
-
 // import uim.platform.process_automation.domain.types;
 // import uim.platform.process_automation.domain.entities.trigger;
 import uim.platform.process_automation;

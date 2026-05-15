@@ -11,8 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
-
 // --- Process (Workflow Definition) ---
 
 struct CreateProcessRequest {
@@ -41,7 +39,6 @@ struct DeployProcessRequest {
     ProcessId processId;
     string action;
 }
-
 // --- Process Instance ---
 
 struct StartProcessInstanceRequest {
@@ -66,7 +63,6 @@ struct ProcessInstanceActionRequest {
     ProcessInstanceId processInstanceId;
     string action;
 }
-
 // --- PATask ---
 
 struct CreateTaskRequest {
@@ -107,7 +103,6 @@ struct ClaimTaskRequest {
     TaskId taskId;
     UserId userId;
 }
-
 // --- Decision ---
 
 struct CreateDecisionRequest {
@@ -131,7 +126,6 @@ struct UpdateDecisionRequest {
     string version_;
     UserId updatedBy;
 }
-
 // --- Form ---
 
 struct CreateFormRequest {
@@ -152,7 +146,6 @@ struct UpdateFormRequest {
     string version_;
     UserId updatedBy;
 }
-
 // --- Automation (RPA Bot) ---
 
 struct CreateAutomationRequest {
@@ -184,7 +177,6 @@ struct RunAutomationRequest {
     UserId triggeredBy;
     string inputData;
 }
-
 // --- Trigger ---
 
 struct CreateTriggerRequest {
@@ -210,7 +202,6 @@ struct UpdateTriggerRequest {
     string eventType;
     string filterExpression;
 }
-
 // --- Action (Integration) ---
 
 struct CreateActionRequest {
@@ -241,7 +232,6 @@ struct UpdateActionRequest {
     string version_;
     UserId updatedBy;
 }
-
 // --- Visibility (Process Monitoring) ---
 
 struct CreateVisibilityRequest {
@@ -263,7 +253,6 @@ struct UpdateVisibilityRequest {
     string refreshIntervalSeconds;
     UserId updatedBy;
 }
-
 // --- Artifact Store ---
 
 struct CreateArtifactRequest {

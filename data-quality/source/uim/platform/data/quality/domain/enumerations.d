@@ -1,5 +1,4 @@
 module uim.platform.data.quality.domain.enumerations;
-
 /// Data quality validation rule type.
 enum RuleType {
   required, // field must not be empty
@@ -11,7 +10,6 @@ enum RuleType {
   custom, // user-defined expression
   referenceData, // lookup against reference table
 }
-
 /// Severity of a rule violation.
 enum RuleSeverity {
   info,
@@ -19,14 +17,12 @@ enum RuleSeverity {
   error,
   critical,
 }
-
 /// Status of a validation rule.
 enum RuleStatus {
   active,
   inactive,
   draft,
 }
-
 /// Overall quality score rating.
 enum QualityRating {
   excellent, // >= 95%
@@ -35,7 +31,6 @@ enum QualityRating {
   poor, // >= 40%
   critical, // < 40%
 }
-
 /// Status of a cleansing job.
 enum JobStatus {
   pending,
@@ -44,7 +39,6 @@ enum JobStatus {
   failed,
   cancelled,
 }
-
 /// Address type for cleansing.
 enum AddressType {
   residential,
@@ -53,7 +47,6 @@ enum AddressType {
   military,
   unknown,
 }
-
 /// Address quality level after cleansing.
 enum AddressQuality {
   verified, // fully verified against postal DB
@@ -62,7 +55,6 @@ enum AddressQuality {
   unverifiable, // could not verify
   invalid, // known invalid
 }
-
 /// Match confidence level for duplicate detection.
 enum MatchConfidence {
   exact, // 100% match
@@ -71,7 +63,6 @@ enum MatchConfidence {
   low, // >= 50%
   noMatch, // < 50%
 }
-
 /// Match strategy for duplicate detection.
 enum MatchStrategy {
   exact, // exact field comparison
@@ -79,7 +70,6 @@ enum MatchStrategy {
   phonetic, // Soundex / Metaphone
   composite, // weighted multi-field
 }
-
 /// Data profiling column type detected.
 enum ProfiledDataType {
   string_,
@@ -92,7 +82,6 @@ enum ProfiledDataType {
   postalCode,
   unknown,
 }
-
 /// Cleansing action applied to a field.
 enum CleansingAction {
   none,
@@ -104,7 +93,6 @@ enum CleansingAction {
   removed,
   defaulted,
 }
-
 /// Geocoding precision level.
 enum GeocodePrecision {
   rooftop, // exact building

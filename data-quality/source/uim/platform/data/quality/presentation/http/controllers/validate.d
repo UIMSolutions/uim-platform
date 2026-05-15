@@ -9,7 +9,6 @@ module uim.platform.data.quality.presentation.http.controllers.validate;
 
 
 
-
 // import uim.platform.data.quality.application.usecases.validate_data;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;

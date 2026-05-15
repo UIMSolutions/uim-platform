@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.workspace;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -40,7 +39,6 @@ struct Workspace {
       .set("settings", settings.toJson());
   }
 }
-
 /// Membership record within a workspace.
 struct WorkspaceMember {
   UserId userId;
@@ -56,7 +54,6 @@ struct WorkspaceMember {
       .set("joinedAt", joinedAt);
   }
 }
-
 /// Workspace-level settings.
 struct WorkspaceSettings {
   bool allowExternalMembers;

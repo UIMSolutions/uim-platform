@@ -7,8 +7,6 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers
   .inference_controller;
 
 
-
-
 // 
 // 
 // import uim.platform.data.attribute_recommendation.application.usecases.process_inference;

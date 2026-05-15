@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module app;
-
 // import uim.platform.hana.infrastructure.config;
 // import uim.platform.hana.infrastructure.container;
-
 // import std.stdio : writefln;
 // import vibe.http.router : URLRouter;
 // import vibe.http.server : HTTPServerSettings;

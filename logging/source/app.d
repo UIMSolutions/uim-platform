@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module app;
-
 // import uim.platform.logging.infrastructure.config;
 // import uim.platform.logging.infrastructure.container;
 

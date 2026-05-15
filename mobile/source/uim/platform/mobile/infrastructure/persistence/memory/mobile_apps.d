@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.mobile_app;
-
 // import uim.platform.mobile.domain.entities.mobile_app;
 // import uim.platform.mobile.domain.ports.repositories.mobile_apps;
 // import uim.platform.mobile.domain.types;

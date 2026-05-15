@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.values.aggregation;
-
 /// Aggregation functions available for measures.
 enum AggregationType {
   Sum,

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.domain.entities.entitlement;
-
 // import uim.platform.management.domain.types;
 import uim.platform.management;
 

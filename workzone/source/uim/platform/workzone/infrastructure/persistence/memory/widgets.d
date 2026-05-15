@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.widgets;
-
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.widget;
 // import uim.platform.workzone.domain.ports.repositories.widgets;

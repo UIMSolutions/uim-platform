@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.search;
-
 // import uim.platform.logging.application.usecases.search_logs;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.log_entry;

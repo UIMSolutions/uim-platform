@@ -7,7 +7,6 @@ module uim.platform.identity.authentication.presentation.http.controllers.applic
 
 
 
-
 // import uim.platform.identity.authentication.application.usecases.manage.applications;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.application;

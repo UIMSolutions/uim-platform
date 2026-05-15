@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.user_session;
-
 // import uim.platform.mobile.domain.entities.user_session;
 // import uim.platform.mobile.domain.ports.repositories.user_sessions;
 // import uim.platform.mobile.domain.types;

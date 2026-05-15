@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.services.validators.system_lifecycle;
-
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
@@ -16,7 +15,6 @@ struct LifecycleValidation {
   bool valid;
   string error;
 }
-
 /// Domain service: validates system instance state transitions.
 struct SystemLifecycleValidator {
   /// Check whether a status transition is permitted.

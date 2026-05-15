@@ -6,11 +6,9 @@
 module uim.platform.ai_launchpad.infrastructure.container;
 
 import uim.platform.ai_launchpad.infrastructure.config;
-
 // // Domain services
 // import uim.platform.ai_launchpad.domain.services.connection_validator;
 // import uim.platform.ai_launchpad.domain.services.prompt_enricher;
-
 // // Repositories
 // import uim.platform.ai_launchpad.infrastructure.persistence.memory.connections;
 // import uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
@@ -24,7 +22,6 @@ import uim.platform.ai_launchpad.infrastructure.config;
 // import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collections;
 // import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_groups;
 // import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistics;
-
 // // Use Cases
 // import uim.platform.ai_launchpad.application.usecases.manage.connections;
 // import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
@@ -39,7 +36,6 @@ import uim.platform.ai_launchpad.infrastructure.config;
 // import uim.platform.ai_launchpad.application.usecases.manage.resource_groups;
 // import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
 // import uim.platform.ai_launchpad.application.usecases.get_capabilities;
-
 // // Controllers
 // import uim.platform.ai_launchpad.presentation.http.controllers.connection;
 // import uim.platform.ai_launchpad.presentation.http.controllers.workspace;

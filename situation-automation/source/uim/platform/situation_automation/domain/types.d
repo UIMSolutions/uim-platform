@@ -77,8 +77,6 @@ struct DashboardId  {
 
     mixin DomainId;
 }
-
-
 // --- Situation Template ---
 
 enum SituationSeverity {
@@ -107,7 +105,6 @@ enum TemplateStatus {
     inactive,
     deprecated_,
 }
-
 // --- Situation Instance ---
 
 enum InstanceStatus {
@@ -127,7 +124,6 @@ enum ResolutionType {
     expired,
     dismissed,
 }
-
 // --- Situation Action ---
 
 enum ActionType {
@@ -156,7 +152,6 @@ enum HttpMethod {
     patch_,
     delete_,
 }
-
 // --- Automation Rule ---
 
 enum RuleStatus {
@@ -196,7 +191,6 @@ enum RulePriority {
     high,
     critical,
 }
-
 // --- Entity Type ---
 
 enum EntityCategory {
@@ -206,7 +200,6 @@ enum EntityCategory {
     configuration,
     custom,
 }
-
 // --- Notification ---
 
 enum NotificationStatus {
@@ -231,7 +224,6 @@ enum NotificationPriority {
     high,
     urgent,
 }
-
 // --- Dashboard ---
 
 enum DashboardType {

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.metric;
-
 // import uim.platform.ai_core.application.usecases.get_metrics;
 // import uim.platform.ai_core.application.dto;
 

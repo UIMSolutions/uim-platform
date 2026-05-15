@@ -101,7 +101,6 @@ struct DatabaseConnectionId  {
   mixin DomainId;
 }
 // TenantId is provided by uim.platform.service
-
 // Database instance type
 enum InstanceType {
   hana,
@@ -110,7 +109,6 @@ enum InstanceType {
   trial,
   free,
 }
-
 // Instance status
 enum InstanceStatus {
   creating,
@@ -123,7 +121,6 @@ enum InstanceStatus {
   error,
   suspended,
 }
-
 // Instance size class
 enum InstanceSize {
   xs,
@@ -134,14 +131,12 @@ enum InstanceSize {
   xxl,
   custom,
 }
-
 // Data lake storage tier
 enum StorageTier {
   hot,
   warm,
   cold,
 }
-
 // Data lake status
 enum DataLakeStatus {
   creating,
@@ -150,7 +145,6 @@ enum DataLakeStatus {
   error,
   deleting,
 }
-
 // Data lake file format
 enum FileFormat {
   parquet,
@@ -159,7 +153,6 @@ enum FileFormat {
   json,
   avro,
 }
-
 // Schema type
 enum SchemaType {
   standard,
@@ -168,7 +161,6 @@ enum SchemaType {
   system,
   temporary,
 }
-
 // Database user authentication type
 enum AuthType {
   password,
@@ -178,7 +170,6 @@ enum AuthType {
   jwt,
   ldap,
 }
-
 // Database user status
 enum UserStatus {
   active,
@@ -186,7 +177,6 @@ enum UserStatus {
   locked,
   expired,
 }
-
 // Privilege type
 enum PrivilegeType {
   system,
@@ -196,7 +186,6 @@ enum PrivilegeType {
   application,
   role,
 }
-
 // Backup type
 enum BackupType {
   full,
@@ -205,7 +194,6 @@ enum BackupType {
   log,
   snapshot,
 }
-
 // Backup status
 enum BackupStatus {
   scheduled,
@@ -214,7 +202,6 @@ enum BackupStatus {
   failed,
   cancelled,
 }
-
 // Alert severity
 enum AlertSeverity {
   info,
@@ -222,7 +209,6 @@ enum AlertSeverity {
   error,
   critical,
 }
-
 // Alert status
 enum AlertStatus {
   active,
@@ -230,7 +216,6 @@ enum AlertStatus {
   resolved,
   suppressed,
 }
-
 // Alert category
 enum AlertCategory {
   performance,
@@ -243,7 +228,6 @@ enum AlertCategory {
   security,
   configuration,
 }
-
 // HDI container status
 enum HDIContainerStatus {
   creating,
@@ -252,7 +236,6 @@ enum HDIContainerStatus {
   error,
   deleting,
 }
-
 // Replication mode
 enum ReplicationMode {
   none,
@@ -261,7 +244,6 @@ enum ReplicationMode {
   snapshot,
   logBased,
 }
-
 // Replication task status
 enum ReplicationTaskStatus {
   active,
@@ -271,7 +253,6 @@ enum ReplicationTaskStatus {
   failed,
   paused,
 }
-
 // Configuration scope
 enum ConfigScope {
   system,
@@ -279,7 +260,6 @@ enum ConfigScope {
   tenant,
   session,
 }
-
 // Configuration data type
 enum ConfigDataType {
   string_,
@@ -288,7 +268,6 @@ enum ConfigDataType {
   decimal,
   duration,
 }
-
 // Connection type
 enum ConnectionType {
   jdbc,
@@ -300,7 +279,6 @@ enum ConnectionType {
   go,
   dotnet,
 }
-
 // Connection status
 enum ConnectionStatus {
   active,

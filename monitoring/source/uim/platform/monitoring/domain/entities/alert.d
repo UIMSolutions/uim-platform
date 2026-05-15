@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.entities.alert;
-
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 

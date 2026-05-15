@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.audit_config;
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.audit_config;

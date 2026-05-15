@@ -12,7 +12,6 @@ enum GlobalAccountStatus {
   terminated,
   migrating,
 }
-
 /// License type for a global account.
 enum LicenseType {
   enterprise,
@@ -20,21 +19,18 @@ enum LicenseType {
   partner,
   internal,
 }
-
 /// Status of a directory entity.
 enum DirectoryStatus {
   active,
   inactive,
   deleting,
 }
-
 /// Features enabled on a directory.
 enum DirectoryFeature {
   default_,
   entitlements,
   authorizations,
 }
-
 /// Status of a subaccount.
 enum SubaccountStatus {
   active,
@@ -45,7 +41,6 @@ enum SubaccountStatus {
   moveInProgress,
   moveFailed,
 }
-
 /// Usage type of a subaccount.
 enum SubaccountUsage {
   unset,
@@ -55,7 +50,6 @@ enum SubaccountUsage {
   staging,
   demo,
 }
-
 /// Status of an entitlement assignment.
 enum EntitlementStatus {
   active,
@@ -63,7 +57,6 @@ enum EntitlementStatus {
   revoked,
   expired,
 }
-
 /// Category of a service plan.
 enum ServicePlanCategory {
   service,
@@ -71,7 +64,6 @@ enum ServicePlanCategory {
   environment,
   elasticService,
 }
-
 /// Pricing model for a service plan.
 enum PricingModel {
   free,
@@ -79,7 +71,6 @@ enum PricingModel {
   consumption,
   byol, // bring your own license
 }
-
 /// Status of an environment instance.
 enum EnvironmentStatus {
   creating,
@@ -89,7 +80,6 @@ enum EnvironmentStatus {
   error,
   suspended,
 }
-
 /// Type of environment.
 enum EnvironmentType {
   cloudFoundry,
@@ -97,7 +87,6 @@ enum EnvironmentType {
   abap,
   neo,
 }
-
 /// Status of a SaaS subscription.
 enum SubscriptionStatus {
   subscribed,
@@ -107,7 +96,6 @@ enum SubscriptionStatus {
   error,
   suspended,
 }
-
 /// Category of a platform event.
 enum PlatformEventCategory {
   subaccountLifecycle,
@@ -119,7 +107,6 @@ enum PlatformEventCategory {
   quotaChange,
   securityEvent,
 }
-
 /// Severity of a platform event.
 enum PlatformEventSeverity {
   info,
@@ -127,7 +114,6 @@ enum PlatformEventSeverity {
   error,
   critical,
 }
-
 /// Type of labeled resource.
 enum LabeledResourceType {
   subaccount,

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_configs;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.anonymization_config;
 // import uim.platform.data.privacy.domain.ports.anonymization_config_repository;

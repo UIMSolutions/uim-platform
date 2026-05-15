@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.group;
-
 // import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory;
 
@@ -24,7 +23,6 @@ struct GroupMember {
       .set("display", display);
   }
 }
-
 /// SCIM 2.0 group entity.
 struct Group {
   mixin TenantEntity!GroupId;

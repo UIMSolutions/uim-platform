@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_package;
-
 // import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent;
 
@@ -32,7 +31,6 @@ struct ContentItem {
       .set("dependencies", dependencies);
   }
 }
-
 /// A package containing bundled content for transport across landscapes.
 struct ContentPackage {
   mixin TenantEntity!(ContentPackageId);

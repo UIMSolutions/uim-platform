@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.custom_domain.application.dto;
-
 // import uim.platform.custom_domain.domain.types;
 
 import uim.platform.custom_domain;
@@ -12,8 +11,6 @@ import uim.platform.custom_domain;
 mixin(ShowModule!());
 
 @safe:
-
-
 
 // --- Custom Domain ---
 
@@ -40,7 +37,6 @@ struct UpdateCustomDomainRequest {
     string sharedWithOrgs;
     bool clientAuthEnabled;
 }
-
 // --- Private Key ---
 
 struct CreatePrivateKeyRequest {
@@ -52,7 +48,6 @@ struct CreatePrivateKeyRequest {
     int keySize;
     UserId createdBy;
 }
-
 // --- Certificate ---
 
 struct CreateCertificateRequest {
@@ -74,7 +69,6 @@ struct ActivateCertificateRequest {
     CertificateId certificateId;
     string[] domains;
 }
-
 // --- TLS Configuration ---
 
 struct CreateTlsConfigurationRequest {
@@ -104,7 +98,6 @@ struct UpdateTlsConfigurationRequest {
     bool hstsIncludeSubDomains;
     UserId updatedBy;
 }
-
 // --- Domain Mapping ---
 
 struct CreateDomainMappingRequest {
@@ -119,7 +112,6 @@ struct CreateDomainMappingRequest {
     SpaceId spaceId;
     UserId createdBy;
 }
-
 // --- Trusted Certificate ---
 
 struct CreateTrustedCertificateRequest {
@@ -130,7 +122,6 @@ struct CreateTrustedCertificateRequest {
     string authMode;
     UserId createdBy;
 }
-
 // --- DNS Record ---
 
 struct CreateDnsRecordRequest {
@@ -151,7 +142,6 @@ struct UpdateDnsRecordRequest {
     int ttl;
     string validationStatus;
 }
-
 // --- Dashboard ---
 
 struct RefreshDashboardRequest {

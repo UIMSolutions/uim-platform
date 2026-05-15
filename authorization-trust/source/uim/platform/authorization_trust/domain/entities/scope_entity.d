@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// A fine-grained authorization scope.
 /// Scopes are referenced by roles and requested by OAuth 2.0 clients.
 struct ScopeEntity {

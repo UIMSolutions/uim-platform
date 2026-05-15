@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.memory.data_access;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.data_access_log;
 // import uim.platform.auditlog.domain.ports.repositories.data_access_logs;

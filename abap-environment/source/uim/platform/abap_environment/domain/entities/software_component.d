@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.software_component;
-
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
@@ -26,7 +25,6 @@ struct ComponentCommit {
       .set("timestamp", timestamp);
   }
 }
-
 /// ABAP software component (git-managed development object container).
 struct SoftwareComponent {
   mixin TenantEntity!(SoftwareComponentId);

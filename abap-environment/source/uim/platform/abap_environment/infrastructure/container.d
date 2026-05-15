@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.infrastructure.container;
-
 // import uim.platform.abap_environment.infrastructure.config;
-
 // // Repositories
 // import uim.platform.abap_environment.infrastructure.persistence.memory.system_instances;
 // import uim.platform.abap_environment.infrastructure.persistence.memory.software_components;
@@ -16,7 +14,6 @@ module uim.platform.abap_environment.infrastructure.container;
 // import uim.platform.abap_environment.infrastructure.persistence.memory.business_roles;
 // import uim.platform.abap_environment.infrastructure.persistence.memory.transport_requests;
 // import uim.platform.abap_environment.infrastructure.persistence.memory.application_jobs;
-
 // // Use Cases
 // import uim.platform.abap_environment.application.usecases.manage.system_instances;
 // import uim.platform.abap_environment.application.usecases.manage.software_components;
@@ -26,7 +23,6 @@ module uim.platform.abap_environment.infrastructure.container;
 // import uim.platform.abap_environment.application.usecases.manage.business_roles;
 // import uim.platform.abap_environment.application.usecases.manage.transport_requests;
 // import uim.platform.abap_environment.application.usecases.manage.application_jobs;
-
 // // Controllers
 // import uim.platform.abap_environment.presentation.http.system_instance;
 // import uim.platform.abap_environment.presentation.http.software_component;
@@ -76,7 +72,6 @@ struct Container {
   ApplicationJobController applicationJobController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

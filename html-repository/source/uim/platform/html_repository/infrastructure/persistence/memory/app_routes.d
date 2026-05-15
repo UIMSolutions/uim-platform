@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.memory.app_routes;
-
 // import uim.platform.html_repository.domain.ports.repositories.app_routes;
 // import uim.platform.html_repository.domain.entities.app_route;
 // import uim.platform.html_repository.domain.types;

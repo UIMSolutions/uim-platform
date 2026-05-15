@@ -1,5 +1,4 @@
 module uim.platform.monitoring.domain.enumerations;
-
 /// Type of monitored resource.
 enum ResourceType {
   javaApplication,
@@ -10,7 +9,6 @@ enum ResourceType {
   customApplication,
   service,
 }
-
 /// Current state of a monitored resource.
 enum ResourceState {
   unknown,
@@ -18,7 +16,6 @@ enum ResourceState {
   stopped,
   error,
 }
-
 /// Category of a metric.
 enum MetricCategory {
   cpu,
@@ -33,7 +30,6 @@ enum MetricCategory {
   certificate,
   custom,
 }
-
 /// Unit of a metric value.
 enum MetricUnit {
   percent,
@@ -48,7 +44,6 @@ enum MetricUnit {
   boolean_,
   none,
 }
-
 /// Aggregation method for metric time-series.
 enum AggregationMethod {
   average,
@@ -58,7 +53,6 @@ enum AggregationMethod {
   last,
   count,
 }
-
 /// Type of health check.
 enum CheckType {
   availability,
@@ -68,7 +62,6 @@ enum CheckType {
   database,
   certificate,
 }
-
 /// Result status of a health check execution.
 enum CheckStatus {
   unknown,
@@ -77,7 +70,6 @@ enum CheckStatus {
   critical,
   disabled,
 }
-
 /// Severity level for alerts.
 enum AlertSeverity {
   info,
@@ -85,7 +77,6 @@ enum AlertSeverity {
   critical,
   fatal,
 }
-
 /// Current state of an alert.
 enum AlertState {
   open,
@@ -93,7 +84,6 @@ enum AlertState {
   resolved,
   expired,
 }
-
 /// Type of comparison for alert rule thresholds.
 enum ThresholdOperator {
   greaterThan,
@@ -103,14 +93,12 @@ enum ThresholdOperator {
   equal,
   notEqual,
 }
-
 /// Type of notification channel.
 enum NotificationChannelType {
   email,
   webhook,
   onPremise,
 }
-
 /// State of a notification channel.
 enum ChannelState {
   active, // default - active and can be used for notifications

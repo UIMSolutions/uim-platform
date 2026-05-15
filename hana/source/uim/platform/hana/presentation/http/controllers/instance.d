@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.instance;
-
 // import uim.platform.hana.application.usecases.manage.instances;
 // import uim.platform.hana.application.dto;
 

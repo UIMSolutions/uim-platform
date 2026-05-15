@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.ports.repositories.connectors;
-
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;

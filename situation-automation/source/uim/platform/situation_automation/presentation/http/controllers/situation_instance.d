@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.situation_instance;
-
 // import uim.platform.situation_automation.application.usecases.manage.situation_instances;
 // import uim.platform.situation_automation.application.dto;
 

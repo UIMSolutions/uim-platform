@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.anonymization_config;
-
 // import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy;
 
@@ -24,7 +23,6 @@ struct AnonymizationRule {
       .set("parameters", parameters);
   }
 }
-
 /// Configuration for data anonymization/pseudonymization.
 struct AnonymizationConfig {
   mixin TenantEntity!(AnonymizationConfigId);

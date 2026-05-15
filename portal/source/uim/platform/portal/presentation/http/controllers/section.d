@@ -6,8 +6,6 @@
 module uim.platform.portal.presentation.http.controllers.section;
 
 
-
-
 // import uim.platform.portal.application.usecases.manage.sections;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.section;

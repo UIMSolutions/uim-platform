@@ -23,7 +23,6 @@ struct UpdateNamespaceRequest {
   TenantId tenantId;
   string description;
 }
-
 // Credential DTOs
 struct CreateCredentialRequest {
   TenantId tenantId;
@@ -63,7 +62,6 @@ struct CredentialResponse {
   long createdAt;
   long updatedAt;
 }
-
 // Keyring DTOs
 struct CreateKeyringRequest {
   TenantId tenantId;
@@ -79,7 +77,6 @@ struct RotateKeyringRequest {
   CredentialId keyringId;
   TenantId tenantId;
 }
-
 // DEK Encryption DTOs
 struct GenerateDekRequest {
   TenantId tenantId;
@@ -124,7 +121,6 @@ struct DecryptDekResponse {
   string dek;           // decrypted DEK
   string error;
 }
-
 // Service Binding DTOs
 struct CreateServiceBindingRequest {
   TenantId tenantId;
@@ -157,7 +153,6 @@ struct ServiceBindingResponse {
   long createdAt;
   long expiresAt;
 }
-
 // Audit DTOs
 struct AuditLogFilter {
   TenantId tenantId;
@@ -166,7 +161,6 @@ struct AuditLogFilter {
   long startTime;
   long endTime;
 }
-
 // Overview
 struct OverviewSummary {
   long totalNamespaces;

@@ -11,7 +11,6 @@ import std.base64 : Base64;
 mixin(ShowModule!());
 
 @safe:
-
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.
 struct DestinationResolver {
   /// Merge fragment properties into a destination configuration.

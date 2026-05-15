@@ -1,5 +1,4 @@
 module uim.platform.field_service.domain.enumerations;
-
 // --- Enumerations ---
 
 enum ServiceCallStatus {

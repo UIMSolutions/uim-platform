@@ -13,7 +13,6 @@ import std.conv : to;
 mixin(ShowModule!());
 
 @safe:
-
 /// Simplified JWT token service for the Authorization and Trust Management Service.
 /// Issues opaque bearer tokens representing granted scopes.
 /// In a production deployment this would produce signed RS256 JWT tokens.

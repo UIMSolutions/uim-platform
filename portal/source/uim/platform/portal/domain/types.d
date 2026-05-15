@@ -119,7 +119,6 @@ struct TranslationId {
 
   mixin DomainId;
 }
-
 /// Site status.
 enum SiteStatus {
   draft,
@@ -127,7 +126,6 @@ enum SiteStatus {
   unpublished,
   archived,
 }
-
 /// Page layout type.
 enum PageLayout {
   freeform,
@@ -136,7 +134,6 @@ enum PageLayout {
   threeColumn,
   dashboard,
 }
-
 /// Tile type (app launcher type).
 enum TileType {
   static_, // simple link tile
@@ -145,7 +142,6 @@ enum TileType {
   news, // news/feed tile
   kpi, // KPI indicator tile
 }
-
 /// App type for tiles.
 enum AppType {
   sapui5,
@@ -155,14 +151,12 @@ enum AppType {
   webComponent,
   native_,
 }
-
 /// Content provider type.
 enum ProviderType {
   local,
   remote,
   federated,
 }
-
 /// Theme mode.
 enum ThemeMode {
   light,
@@ -170,14 +164,12 @@ enum ThemeMode {
   highContrast,
   highContrastDark,
 }
-
 /// Navigation target type.
 enum NavigationTarget {
   inPlace,
   newWindow,
   embedded,
 }
-
 /// Transport status.
 enum TransportStatus {
   pending,
@@ -185,7 +177,6 @@ enum TransportStatus {
   completed,
   failed,
 }
-
 /// Role assignment scope.
 enum RoleScope {
   site,

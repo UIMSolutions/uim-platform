@@ -6,7 +6,6 @@
 module uim.platform.identity.provisioning.domain.entities.transformation;
 
 import uim.platform.identity.provisioning.domain.types;
-
 /// An attribute-mapping transformation that defines how identity
 /// attributes from a source system are mapped to a target system.
 struct Transformation {

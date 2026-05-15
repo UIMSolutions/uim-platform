@@ -16,7 +16,6 @@ struct SrvConfig {
   ushort port = 8083;
   string serviceName = "Cloud Portal Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

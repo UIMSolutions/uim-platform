@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.theme;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -36,7 +35,6 @@ struct Theme {
       .set("isDefault", isDefault);
   }
 }
-
 /// Color palette for a theme.
 struct ThemeColors {
   string primaryColor;

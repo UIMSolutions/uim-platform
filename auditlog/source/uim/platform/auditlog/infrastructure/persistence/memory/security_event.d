@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.memory.security_event;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.security_event;
 // import uim.platform.auditlog.domain.ports.repositories.security_events;
-
 // 
 //  
 

@@ -6,7 +6,6 @@
 module uim.platform.monitoring.infrastructure.container;
 
 import uim.platform.monitoring.infrastructure.config;
-
 // Repositories
 import uim.platform.monitoring.infrastructure.persistence.memory.monitored_resources;
 import uim.platform.monitoring.infrastructure.persistence.memory.metric_definitions;
@@ -16,7 +15,6 @@ import uim.platform.monitoring.infrastructure.persistence.memory.health_check_re
 import uim.platform.monitoring.infrastructure.persistence.memory.alert_rules;
 import uim.platform.monitoring.infrastructure.persistence.memory.alerts;
 import uim.platform.monitoring.infrastructure.persistence.memory.notification_channels;
-
 // Use Cases
 import uim.platform.monitoring.application.usecases.manage.monitored_resources;
 import uim.platform.monitoring.application.usecases.manage.metrics;
@@ -26,7 +24,6 @@ import uim.platform.monitoring.application.usecases.manage.alerts;
 import uim.platform.monitoring.application.usecases.manage.notification_channels;
 import uim.platform.monitoring.application.usecases.evaluate_metrics;
 import uim.platform.monitoring.application.usecases.get_dashboard;
-
 // Controllers
 import uim.platform.monitoring.presentation.http.controllers.resource;
 import uim.platform.monitoring.presentation.http.controllers.metric;
@@ -74,7 +71,6 @@ struct Container {
   DashboardController dashboardController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

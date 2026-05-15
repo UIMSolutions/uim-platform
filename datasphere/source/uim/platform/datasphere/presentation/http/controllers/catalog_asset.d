@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.catalog_asset;
-
 // import uim.platform.datasphere.application.usecases.manage.catalog_assets;
 // import uim.platform.datasphere.application.dto;
 

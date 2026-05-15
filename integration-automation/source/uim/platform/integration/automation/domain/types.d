@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.types;
-
 /// Unique identifier type aliases for type safety.
 struct ScenarioId {
   string value;
@@ -75,8 +74,6 @@ struct ExecutionLogId {
 
   mixin DomainId;
 }
-
-
 /// Integration scenario lifecycle status.
 enum ScenarioStatus {
   draft,
@@ -84,7 +81,6 @@ enum ScenarioStatus {
   deprecated_,
   archived,
 }
-
 /// Workflow instance execution status.
 enum WorkflowStatus {
   planned,
@@ -94,7 +90,6 @@ enum WorkflowStatus {
   failed,
   suspended,
 }
-
 /// Type of workflow step / task.
 enum StepType {
   manual,
@@ -102,7 +97,6 @@ enum StepType {
   approval,
   notification,
 }
-
 /// Status of an individual workflow step.
 enum StepStatus {
   pending,
@@ -112,7 +106,6 @@ enum StepStatus {
   failed,
   blocked,
 }
-
 /// Priority level for tasks.
 enum StepPriority {
   low,
@@ -120,7 +113,6 @@ enum StepPriority {
   high,
   critical,
 }
-
 /// SAP system types supported in the landscape.
 enum SystemType {
   sapS4Hana,
@@ -135,7 +127,6 @@ enum SystemType {
   onPremise,
   thirdParty,
 }
-
 /// Connection status of a system in the landscape.
 enum ConnectionStatus {
   active,
@@ -143,7 +134,6 @@ enum ConnectionStatus {
   error,
   testing,
 }
-
 /// Destination / API protocol type.
 enum DestinationType {
   http,
@@ -152,7 +142,6 @@ enum DestinationType {
   soap,
   restApi,
 }
-
 /// Authentication method for destinations.
 enum AuthenticationType {
   basic,
@@ -163,14 +152,12 @@ enum AuthenticationType {
   principalPropagation,
   noAuthentication,
 }
-
 /// Proxy type for destination routing.
 enum ProxyType {
   internet,
   onPremise,
   privateLink,
 }
-
 /// Outcome of executing a step or automation.
 enum ExecutionOutcome {
   success,
@@ -179,7 +166,6 @@ enum ExecutionOutcome {
   timeout,
   error,
 }
-
 /// Category of an integration scenario.
 enum ScenarioCategory {
   leadToCash,

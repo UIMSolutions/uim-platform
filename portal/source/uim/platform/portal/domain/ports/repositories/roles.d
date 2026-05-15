@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.domain.ports.repositories.roles;
-
 // import uim.platform.portal.domain.entities.role;
 // import uim.platform.portal.domain.types;
 

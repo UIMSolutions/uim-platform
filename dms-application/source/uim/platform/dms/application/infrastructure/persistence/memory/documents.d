@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence.memory.documents;
-
 // import uim.platform.dms.application.domain.entities.document;
 // import uim.platform.dms.application.domain.ports.repositories.documents;
 // import uim.platform.dms.application.domain.types;

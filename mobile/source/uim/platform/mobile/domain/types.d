@@ -119,7 +119,6 @@ struct ClientLogEntryId  {
     mixin DomainId;
 }
 
-
 // Mobile app platform
 enum AppPlatform {
   ios,
@@ -127,7 +126,6 @@ enum AppPlatform {
   windows,
   web,
 }
-
 // App status
 enum AppStatus {
   active,
@@ -135,7 +133,6 @@ enum AppStatus {
   suspended,
   deleted_,
 }
-
 // Device status
 enum DeviceStatus {
   registered,
@@ -143,7 +140,6 @@ enum DeviceStatus {
   wiped,
   blocked,
 }
-
 // Push notification provider
 enum PushProvider {
   fcm,    // Firebase Cloud Messaging
@@ -151,7 +147,6 @@ enum PushProvider {
   wns,    // Windows Notification Service
   w3c,    // W3C Web Push
 }
-
 // Notification status
 enum NotificationStatus {
   pending,
@@ -160,28 +155,24 @@ enum NotificationStatus {
   failed,
   expired,
 }
-
 // Notification priority
 enum NotificationPriority {
   low,
   normal,
   high,
 }
-
 // Push registration status
 enum PushRegStatus {
   active,
   expired,
   revoked,
 }
-
 // Feature restriction type
 enum RestrictionType {
   boolean_,   // on/off toggle
   percentage, // gradual rollout
   whitelist,  // specific users/devices
 }
-
 // Resource type
 enum ClientResourceType {
   bundle,
@@ -189,7 +180,6 @@ enum ClientResourceType {
   certificate,
   translation,
 }
-
 // Version status
 enum VersionStatus {
   draft,
@@ -198,13 +188,11 @@ enum VersionStatus {
   deprecated_,
   archived,
 }
-
 // Store type
 enum OfflineStoreType {
   odata,
   custom,
 }
-
 // Store sync status
 enum SyncStatus {
   idle,
@@ -212,14 +200,12 @@ enum SyncStatus {
   error,
   completed,
 }
-
 // Session status
 enum SessionStatus {
   active,
   expired,
   terminated,
 }
-
 // Log level
 enum LogLevel {
   debug_,
@@ -228,7 +214,6 @@ enum LogLevel {
   error,
   fatal,
 }
-
 // Log source
 enum LogSource {
   client,
@@ -236,7 +221,6 @@ enum LogSource {
   push,
   sync,
 }
-
 // Usage metric type
 enum MetricType {
   appLaunch,

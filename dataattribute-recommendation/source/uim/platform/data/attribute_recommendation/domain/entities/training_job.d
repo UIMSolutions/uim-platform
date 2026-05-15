@@ -6,7 +6,6 @@
 module uim.platform.data.attribute_recommendation.domain.entities.training_job;
 
 import uim.platform.data.attribute_recommendation.domain.types;
-
 /// Represents a single training run of a model configuration, tracking
 /// progress, metrics, and completion status.
 struct TrainingJob {

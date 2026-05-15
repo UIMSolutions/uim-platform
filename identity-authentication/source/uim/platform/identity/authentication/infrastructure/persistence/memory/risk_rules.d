@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rules;
-
 // import uim.platform.identity.authentication.domain.entities.risk_rule;
 // import uim.platform.identity.authentication.domain.types;
 // import uim.platform.identity.authentication.domain.ports.repositories.risk_rule;

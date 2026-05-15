@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.theme;
-
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
@@ -36,7 +35,6 @@ struct Theme {
       .set("isDefault", isDefault);
   }
 }
-
 /// Theme color palette.
 struct ThemeColors {
   string primaryColor;
@@ -64,7 +62,6 @@ struct ThemeColors {
       .set("tileBackgroundColor", tileBackgroundColor);
   }
 }
-
 /// Theme font configuration.
 struct ThemeFonts {
   string fontFamily;

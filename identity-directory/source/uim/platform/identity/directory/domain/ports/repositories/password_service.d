@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.ports.repositories.password_service;
-
 /// Port: outgoing — password hashing and validation.
 interface PasswordService {
   string hashPassword(string plaintext);

@@ -4,13 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.services.duplicate_detector;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.match_group;
-
 // import std.math : abs;
 // import std.uni : toLower;
-
 // import std.datetime.systime : Clock;
 // import std.uuid;
 import uim.platform.data.quality;
@@ -260,7 +257,6 @@ class DuplicateDetector {
     return cast(string) result;
   }
 }
-
 /// Input record for duplicate detection.
 struct RecordEntry {
   RecordId recordId;

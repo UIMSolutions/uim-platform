@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure.container;
-
 // import uim.platform.content_agent.infrastructure.config;
-
 // // Repositories
 // import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
 // import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
@@ -15,7 +13,6 @@ module uim.platform.content_agent.infrastructure.container;
 // import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
 // import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
 // import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
-
 // // Use Cases
 // import uim.platform.content_agent.application.usecases.manage.content_packages;
 // import uim.platform.content_agent.application.usecases.manage.content_providers;
@@ -24,7 +21,6 @@ module uim.platform.content_agent.infrastructure.container;
 // import uim.platform.content_agent.application.usecases.import_content;
 // import uim.platform.content_agent.application.usecases.manage.transport_queues;
 // import uim.platform.content_agent.application.usecases.monitor_activities;
-
 // // Controllers
 // import uim.platform.content_agent.presentation.http.package;
 // import uim.platform.content_agent.presentation.http.provider;
@@ -40,7 +36,6 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
@@ -72,7 +67,6 @@ struct Container {
   ActivityController activityController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.site;
-
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
@@ -44,7 +43,6 @@ struct Site {
     return j;
   }
 }
-
 /// Site-level settings.
 struct SiteSettings {
   string logoUrl;

@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.infrastructure.persistence.memory.entitlements;
-
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.entitlement;
 // import uim.platform.management.domain.ports.repositories.entitlements;
-
 // 
 //  
 

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.services.legal_basis_evaluator;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.legal_ground;
 // import uim.platform.data.privacy.domain.entities.consent_record;
@@ -21,7 +20,6 @@ struct LegalBasisEvaluation {
   string[] activeBases; // descriptions of valid legal grounds
   string[] issues; // reasons if no valid basis found
 }
-
 /// Domain service — evaluates whether processing has a valid legal basis.
 class LegalBasisEvaluator {
   private LegalGroundRepository groundRepo;

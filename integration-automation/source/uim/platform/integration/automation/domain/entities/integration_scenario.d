@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.integration_scenario;
-
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
@@ -39,7 +38,6 @@ struct IntegrationScenario {
           .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array.toJson);
   }
 }
-
 /// Template for a step within a scenario — used to instantiate WorkflowSteps.
 struct ScenarioStepTemplate {
   string name;

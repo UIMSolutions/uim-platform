@@ -11,7 +11,6 @@ enum DestinationType {
   mail,
   ldap,
 }
-
 /// Authentication method for destinations.
 enum AuthenticationType {
   noAuthentication,
@@ -26,14 +25,12 @@ enum AuthenticationType {
   principalPropagation,
   samlAssertion,
 }
-
 /// Proxy type for destination routing.
 enum ProxyType {
   internet,
   onPremise,
   privateLink,
 }
-
 /// Cloud Connector connection status.
 enum ConnectorStatus {
   connected,
@@ -41,27 +38,23 @@ enum ConnectorStatus {
   error,
   maintenance,
 }
-
 /// Service channel protocol type.
 enum ChannelType {
   http,
   rfc,
   tcp,
 }
-
 /// Service channel status.
 enum ChannelStatus {
   open,
   closed,
   error,
 }
-
 /// Access rule policy.
 enum AccessPolicy {
   allow,
   deny,
 }
-
 /// Protocol for access rules.
 enum AccessProtocol {
   http,
@@ -70,7 +63,6 @@ enum AccessProtocol {
   tcp,
   ldap,
 }
-
 /// Certificate format type.
 enum CertificateType {
   x509,
@@ -78,14 +70,12 @@ enum CertificateType {
   pem,
   jks,
 }
-
 /// Certificate usage purpose.
 enum CertificateUsage {
   authentication,
   signing,
   encryption,
 }
-
 /// Connectivity log event severity.
 enum LogSeverity {
   info,
@@ -93,7 +83,6 @@ enum LogSeverity {
   error,
   critical,
 }
-
 /// Connectivity log event type.
 enum ConnectivityEventType {
   connectionEstablished,

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.platform_events;
-
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.types;
 import uim.platform.management;

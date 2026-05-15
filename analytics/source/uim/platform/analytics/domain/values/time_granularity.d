@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.values.time_granularity;
-
 /// Time granularity for planning and time-series analytics.
 enum TimeGranularity {
   Yearly,

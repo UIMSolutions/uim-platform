@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.domain_mapping;
-
 // import uim.platform.custom_domain.domain.types;
 import uim.platform.custom_domain;
 

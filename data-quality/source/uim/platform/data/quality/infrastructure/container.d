@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.container;
-
 // import uim.platform.data.quality.infrastructure.config;
-
 // // Repositories
 // import uim.platform.data.quality.infrastructure.persistence.memory.validation_rule;
 // import uim.platform.data.quality.infrastructure.persistence.memory.validation_result;
@@ -15,13 +13,11 @@ module uim.platform.data.quality.infrastructure.container;
 // import uim.platform.data.quality.infrastructure.persistence.memory.data_profile;
 // import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rule;
 // import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_job;
-
 // // Domain services
 // import uim.platform.data.quality.domain.services.validation_engine;
 // import uim.platform.data.quality.domain.services.address_cleanser;
 // import uim.platform.data.quality.domain.services.duplicate_detector;
 // import uim.platform.data.quality.domain.services.quality_scorer;
-
 // // Use cases
 // import uim.platform.data.quality.application.usecases.manage.validation_rules;
 // import uim.platform.data.quality.application.usecases.validate_data;
@@ -31,7 +27,6 @@ module uim.platform.data.quality.infrastructure.container;
 // import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
 // import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 // import uim.platform.data.quality.application.usecases.compute_dashboard;
-
 // // Controllers
 // import uim.platform.data.quality.presentation.http.validation_rule;
 // import uim.platform.data.quality.presentation.http.validate;
@@ -85,7 +80,6 @@ struct Container {
   DashboardController dashboardController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

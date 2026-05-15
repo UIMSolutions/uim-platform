@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.services.document_validator;
-
 // import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai;
 

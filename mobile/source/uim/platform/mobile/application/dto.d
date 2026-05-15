@@ -10,7 +10,6 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-
 // MobileApp DTOs
 struct CreateMobileAppRequest {
   TenantId tenantId;
@@ -36,7 +35,6 @@ struct UpdateMobileAppRequest {
   string iconUrl;
   UserId updatedBy;
 }
-
 // DeviceRegistration DTOs
 struct RegisterDeviceRequest {
   TenantId tenantId;
@@ -55,7 +53,6 @@ struct UpdateDeviceRequest {
   string status;
   string deviceToken;
 }
-
 // PushNotification DTOs
 struct SendPushNotificationRequest {
   TenantId tenantId;
@@ -71,7 +68,6 @@ struct SendPushNotificationRequest {
   long expiresAt;
   UserId createdBy;
 }
-
 // PushRegistration DTOs
 struct CreatePushRegistrationRequest {
   TenantId tenantId;
@@ -87,7 +83,6 @@ struct UpdatePushRegistrationRequest {
   string[] topics;
   string status;
 }
-
 // AppConfiguration DTOs
 struct CreateAppConfigRequest {
   TenantId tenantId;
@@ -105,7 +100,6 @@ struct UpdateAppConfigRequest {
   string description;
   UserId updatedBy;
 }
-
 // FeatureRestriction DTOs
 struct CreateFeatureRestrictionRequest {
   TenantId tenantId;
@@ -128,7 +122,6 @@ struct UpdateFeatureRestrictionRequest {
   string metadata;
   UserId updatedBy;
 }
-
 // ClientResource DTOs
 struct CreateClientResourceRequest {
   TenantId tenantId;
@@ -146,7 +139,6 @@ struct UpdateClientResourceRequest {
   string data;
   string contentType;
 }
-
 // AppVersion DTOs
 struct CreateAppVersionRequest {
   TenantId tenantId;
@@ -165,7 +157,6 @@ struct UpdateAppVersionRequest {
   string releaseNotes;
   string downloadUrl;
 }
-
 // UsageReport DTOs
 struct ReportUsageRequest {
   TenantId tenantId;
@@ -180,7 +171,6 @@ struct ReportUsageRequest {
   string appVersion;
   long timestamp;
 }
-
 // OfflineStore DTOs
 struct CreateOfflineStoreRequest {
   TenantId tenantId;
@@ -197,7 +187,6 @@ struct UpdateOfflineStoreRequest {
   string definingRequests;
   string syncStatus;
 }
-
 // UserSession DTOs
 struct CreateUserSessionRequest {
   TenantId tenantId;
@@ -209,7 +198,6 @@ struct CreateUserSessionRequest {
   string platform;
   string appVersion;
 }
-
 // ClientLog DTOs
 struct UploadClientLogRequest {
   TenantId tenantId;
@@ -225,7 +213,6 @@ struct UploadClientLogRequest {
   string appVersion;
   long timestamp;
 }
-
 // Overview
 struct OverviewSummary {
   long totalApps;

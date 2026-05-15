@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.entities.dashboard;
-
 // import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
@@ -65,7 +64,6 @@ class Dashboard {
         tags);
   }
 }
-
 /// A page / tab within a dashboard.
 struct Page {
   EntityId id;

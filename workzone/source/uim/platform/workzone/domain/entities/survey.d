@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.survey;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -44,7 +43,6 @@ struct Survey {
       .set("endsAt", endsAt);
   }
 }
-
 /// A single question within a survey.
 struct SurveyQuestion {
   string questionId;

@@ -11,7 +11,6 @@ import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent;
 mixin(ShowModule!());
 @safe:
-
 /// Port: outgoing - export job persistence.
 interface ExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
 

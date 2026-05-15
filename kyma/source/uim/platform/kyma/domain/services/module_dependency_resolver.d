@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.services.module_dependency_resolver;
-
 // import uim.platform.kyma.domain.entities.kyma_module;
 // import uim.platform.kyma.domain.types;
 import uim.platform.kyma;

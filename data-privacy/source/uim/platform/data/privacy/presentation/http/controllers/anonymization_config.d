@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.anonymization_config;
-
 // import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;

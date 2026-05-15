@@ -5,10 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-
-
 // import vibe.core.core : runApplication;
-
 // import uim.platform.content_agent.infrastructure.config;
 // import uim.platform.content_agent.infrastructure.container;
 import uim.platform.content_agent;

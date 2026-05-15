@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.directories;
-
 // import uim.platform.management.domain.entities.directory;
 // import uim.platform.management.domain.types;
 import uim.platform.management;

@@ -8,14 +8,12 @@ module uim.platform.identity.authentication.domain.services.policy_evaluator;
 import uim.platform.identity.authentication.domain.entities.policy;
 import uim.platform.identity.authentication.domain.entities.user;
 import uim.platform.identity.authentication.domain.types;
-
 /// Domain service: evaluates authorization policies against a user.
 struct PolicyEvaluationContext {
   string ipAddress;
   AuthMethod authMethod;
   string[] userGroupIds;
 }
-
 /// Returns true if the user satisfies all rules in the policy.
 bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationContext ctx) {
   if (!policy.active)
@@ -27,7 +25,6 @@ bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationConte
   }
   return true;
 }
-
 /// Returns the list of policies that deny access.
 AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
     User user, PolicyEvaluationContext ctx) {

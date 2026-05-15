@@ -7,8 +7,6 @@ module uim.platform.kyma.presentation.http.controllers.service_instance;
 
 
 
-
-
 // import uim.platform.kyma.application.usecases.manage.service_instances;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.service_instance;

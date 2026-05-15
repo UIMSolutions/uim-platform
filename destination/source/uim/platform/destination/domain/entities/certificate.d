@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.domain.entities.certificate;
-
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
 

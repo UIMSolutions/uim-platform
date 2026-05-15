@@ -15,7 +15,6 @@ struct SrvConfig {
   ushort port = 10000;
   string serviceName = "ABAP Environment Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

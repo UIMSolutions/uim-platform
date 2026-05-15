@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence.memory.favorites;
-
 // import uim.platform.dms.application.domain.entities.favorite;
 // import uim.platform.dms.application.domain.ports.repositories.favorites;
 // import uim.platform.dms.application.domain.types;

@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// A site — the top-level portal / launchpad that users access.
 struct Site {
   mixin TenantEntity!(SiteId);
@@ -38,7 +37,6 @@ struct Site {
       .set("settings", settings.toJson());
   }
 }
-
 /// Site-level settings.
 struct SiteSettings {
   string logoUrl;

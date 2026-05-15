@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.validation_rules;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.validation_rule;
 
@@ -13,7 +12,6 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-
 /// Port for persisting validation rules.
 interface ValidationRuleRepository : ITenantRepository!(ValidationRule, ValidationRule) {
   

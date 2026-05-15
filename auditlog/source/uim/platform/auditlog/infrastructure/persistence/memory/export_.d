@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.memory.export_;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.export_job;
 // import uim.platform.auditlog.domain.ports.repositories.export_jobs;

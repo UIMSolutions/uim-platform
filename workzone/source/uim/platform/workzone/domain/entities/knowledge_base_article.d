@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// A knowledge base article — structured documentation within a workspace.
 struct KnowledgeBaseArticle {
   mixin TenantEntity!(KBArticleId);

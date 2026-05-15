@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.config_change_log;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 

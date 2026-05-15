@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.services.threshold_evaluator;
-
 // import uim.platform.monitoring.domain.entities.alert_rule;
 // import uim.platform.monitoring.domain.entities.metric;
 // import uim.platform.monitoring.domain.types;
@@ -21,7 +20,6 @@ struct EvaluationResult {
   double currentValue;
   double thresholdValue;
 }
-
 /// Domain service: evaluates metric values against alert rule thresholds.
 struct ThresholdEvaluator {
   /// Evaluate a single metric value against an alert rule.

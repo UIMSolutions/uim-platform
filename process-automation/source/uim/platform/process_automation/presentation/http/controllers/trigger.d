@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.trigger;
-
 // import uim.platform.process_automation.application.triggerss.manage.triggers;
 // import uim.platform.process_automation.application.dto;
 

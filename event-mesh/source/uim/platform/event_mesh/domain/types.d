@@ -5,7 +5,6 @@ import uim.platform.event_mesh;
 mixin(ShowModule!());
 
 @safe:
-
 // --- ID Aliases ---
 struct BrokerServiceId {
     string value;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.channel;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -34,7 +33,6 @@ struct Channel {
       .set("config", config.toJson());
   }
 }
-
 /// Channel-specific configuration.
 struct ChannelConfig {
   string sourceUrl; // external feed URL

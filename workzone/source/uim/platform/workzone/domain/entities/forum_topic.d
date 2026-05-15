@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// A forum topic / discussion thread within a workspace.
 struct ForumTopic {
   mixin TenantEntity!(ForumTopicId);

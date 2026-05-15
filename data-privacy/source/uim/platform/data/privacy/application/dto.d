@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.dto;
-
 // import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy;
 
@@ -33,7 +32,6 @@ struct UpdateDataSubjectRequest {
   string country;
   bool isActive;
 }
-
 // ──────────────── Personal Data Model DTOs ────────────────
 
 struct CreatePersonalDataModelRequest {
@@ -61,7 +59,6 @@ struct UpdatePersonalDataModelRequest {
   bool isSpecialCategory;
   string legalReference;
 }
-
 // ──────────────── Deletion Request DTOs ────────────────
 
 struct CreateDeletionRequest {
@@ -79,7 +76,6 @@ struct UpdateDeletionStatusRequest {
   DeletionStatus status;
   string blockerReason;
 }
-
 // ──────────────── Blocking Request DTOs ────────────────
 
 struct CreateBlockingRequest {
@@ -96,7 +92,6 @@ struct UpdateBlockingStatusRequest {
   TenantId tenantId;
   BlockingStatus status;
 }
-
 // ──────────────── Legal Ground DTOs ────────────────
 
 struct CreateLegalGroundRequest {
@@ -120,7 +115,6 @@ struct UpdateLegalGroundRequest {
   bool isActive;
   long validUntil;
 }
-
 // ──────────────── Retention Rule DTOs ────────────────
 
 struct CreateRetentionRuleRequest {
@@ -144,7 +138,6 @@ struct UpdateRetentionRuleRequest {
   string legalReference;
   RetentionRuleStatus status;
 }
-
 // ──────────────── Consent Record DTOs ────────────────
 
 struct CreateConsentRecordRequest {
@@ -163,7 +156,6 @@ struct RevokeConsentRequest {
   ConsentRecordId id;
   TenantId tenantId;
 }
-
 // ──────────────── Data Retrieval Request DTOs ────────────────
 
 struct CreateDataRetrievalRequest {
@@ -182,10 +174,7 @@ struct UpdateRetrievalStatusRequest {
   string downloadUrl;
   long totalFields;
 }
-
 // ──────────────── Generic result ────────────────
-
-
 
 // ──────────────── Data Controller DTOs ────────────────
 
@@ -216,7 +205,6 @@ struct UpdateDataControllerRequest {
   string dpoEmail;
   bool isActive;
 }
-
 // ──────────────── Data Controller Group DTOs ────────────────
 
 struct CreateDataControllerGroupRequest {
@@ -234,7 +222,6 @@ struct UpdateDataControllerGroupRequest {
   DataControllerId[] controllerIds;
   bool isActive;
 }
-
 // ──────────────── Business Context DTOs ────────────────
 
 struct CreateBusinessContextRequest {
@@ -263,7 +250,6 @@ struct ActivateBusinessContextRequest {
   BusinessContextId id;
   TenantId tenantId;
 }
-
 // ──────────────── Business Process DTOs ────────────────
 
 struct CreateBusinessProcessRequest {
@@ -286,7 +272,6 @@ struct UpdateBusinessProcessRequest {
   string owner;
   bool isActive;
 }
-
 // ──────────────── Business Subprocess DTOs ────────────────
 
 struct CreateBusinessSubprocessRequest {
@@ -309,7 +294,6 @@ struct UpdateBusinessSubprocessRequest {
   string owner;
   bool isActive;
 }
-
 // ──────────────── Correction Request DTOs ────────────────
 
 struct CreateCorrectionRequest {
@@ -328,7 +312,6 @@ struct UpdateCorrectionStatusRequest {
   TenantId tenantId;
   CorrectionStatus status;
 }
-
 // ──────────────── Archive Request DTOs ────────────────
 
 struct CreateArchiveRequest {
@@ -348,7 +331,6 @@ struct UpdateArchiveStatusRequest {
   TenantId tenantId;
   ArchiveStatus status;
 }
-
 // ──────────────── Destruction Request DTOs ────────────────
 
 struct CreateDestructionRequest {
@@ -367,7 +349,6 @@ struct UpdateDestructionStatusRequest {
   TenantId tenantId;
   DestructionStatus status;
 }
-
 // ──────────────── Purpose Record DTOs ────────────────
 
 struct CreatePurposeRecordRequest {
@@ -386,7 +367,6 @@ struct DeactivatePurposeRecordRequest {
   PurposeRecordId id;
   TenantId tenantId;
 }
-
 // ──────────────── Consent Purpose DTOs ────────────────
 
 struct CreateConsentPurposeRequest {
@@ -413,7 +393,6 @@ struct UpdateConsentPurposeRequest {
   bool requiresExplicitConsent;
   ConsentPurposeStatus status;
 }
-
 // ──────────────── Rule Set DTOs ────────────────
 
 struct CreateRuleSetRequest {
@@ -436,7 +415,6 @@ struct UpdateRuleSetRequest {
   int priority;
   RuleSetStatus status;
 }
-
 // ──────────────── Information Report DTOs ────────────────
 
 struct CreateInformationReportRequest {
@@ -456,7 +434,6 @@ struct UpdateInformationReportStatusRequest {
   string downloadUrl;
   long totalRecords;
 }
-
 // ──────────────── Anonymization Config DTOs ────────────────
 
 struct CreateAnonymizationConfigRequest {

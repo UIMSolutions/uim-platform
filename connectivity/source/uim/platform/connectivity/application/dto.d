@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.application.dto;
-
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.destination : DestinationProperty;
 
@@ -58,7 +57,6 @@ struct UpdateDestinationRequest {
   DestinationProperty[] properties;
   DestinationProperty[] additionalHeaders;
 }
-
 /// --- Cloud Connector DTOs ---
 
 struct RegisterConnectorRequest {
@@ -78,7 +76,6 @@ struct HeartbeatRequest {
 
   string connectorVersion;
 }
-
 /// --- Service Channel DTOs ---
 
 struct CreateChannelRequest {
@@ -92,7 +89,6 @@ struct CreateChannelRequest {
   string backendHost;
   ushort backendPort;
 }
-
 /// --- Access Rule DTOs ---
 
 struct CreateAccessRuleRequest {
@@ -121,7 +117,6 @@ struct UpdateAccessRuleRequest {
   ushort virtualPort;
   bool principalPropagation;
 }
-
 /// --- Certificate DTOs ---
 
 struct CreateCertificateRequest {

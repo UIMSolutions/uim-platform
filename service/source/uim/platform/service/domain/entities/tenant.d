@@ -10,7 +10,6 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-
 /// Represents a tenant in the system, which is an organizational unit that can have multiple users and resources.
 struct Tenant {
   TenantId id;

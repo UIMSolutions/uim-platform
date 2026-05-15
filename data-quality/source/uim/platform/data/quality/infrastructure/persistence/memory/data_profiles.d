@@ -8,7 +8,6 @@ module uim.platform.data.quality.infrastructure.persistence.memory.data_profiles
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.data_profile;
 import uim.platform.data.quality.domain.ports.repositories.data_profiles;
-
 // import std.algorithm : filter, sort;
  
 

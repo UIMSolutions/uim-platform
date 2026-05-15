@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.services.risk_evaluator;
-
 // import uim.platform.identity.authentication.domain.entities.risk_rule;
 // import uim.platform.identity.authentication.domain.entities.user;
 // import uim.platform.identity.authentication.domain.types;
@@ -20,7 +19,6 @@ struct RiskEvaluationContext {
   string[] userGroupIds;
   string userType;
 }
-
 /// Pure domain logic for risk evaluation.
 RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   RiskLevel highest = RiskLevel.low;
@@ -37,7 +35,6 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
 
   return highest;
 }
-
 /// Check which MFA is required given the evaluated risk.
 MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   MfaType required = MfaType.none;

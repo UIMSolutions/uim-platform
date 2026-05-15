@@ -4,20 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.container;
-
 // import uim.platform.destination.infrastructure.config;
-
 // // Repositories
 // import uim.platform.destination.infrastructure.persistence.memory.destination;
 // import uim.platform.destination.infrastructure.persistence.memory.certificate;
 // import uim.platform.destination.infrastructure.persistence.memory.fragment;
-
 // // Use Cases
 // import uim.platform.destination.application.usecases.manage.destinations;
 // import uim.platform.destination.application.usecases.manage.certificates;
 // import uim.platform.destination.application.usecases.manage.fragments;
 // import uim.platform.destination.application.usecases.find_destination;
-
 // // Controllers
 // import uim.platform.destination.presentation.http.destination;
 // import uim.platform.destination.presentation.http.certificate;
@@ -30,7 +26,6 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
@@ -51,7 +46,6 @@ struct Container {
   FindController findController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

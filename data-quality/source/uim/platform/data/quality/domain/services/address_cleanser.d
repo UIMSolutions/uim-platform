@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.services.address_cleanser;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.address_record;
-
 // import std.uni : toUpper, toLower, isAlpha, isWhite;
 // import std.string : strip, toUpper, toLower;
 // import std.array : replace;

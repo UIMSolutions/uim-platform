@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.container;
-
 // import uim.platform.workzone.infrastructure.config;
-
 // // Repositories
 // import uim.platform.workzone.infrastructure.persistence.memory.workspace;
 // import uim.platform.workzone.infrastructure.persistence.memory.workpage;
@@ -18,7 +16,6 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.infrastructure.persistence.memory.channel;
 // import uim.platform.workzone.infrastructure.persistence.memory.app;
 // import uim.platform.workzone.infrastructure.persistence.memory.widget;
-
 // // Use Cases
 // import uim.platform.workzone.application.usecases.manage.workspaces;
 // import uim.platform.workzone.application.usecases.manage.workpages;
@@ -30,7 +27,6 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.application.usecases.manage.channels;
 // import uim.platform.workzone.application.usecases.manage.apps;
 // import uim.platform.workzone.application.usecases.manage.widgets;
-
 // // Controllers
 // import uim.platform.identity.authentication.presentation.http.workspace;
 // import uim.platform.identity.authentication.presentation.http.workpage;
@@ -87,7 +83,6 @@ struct Container {
   WidgetController widgetController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

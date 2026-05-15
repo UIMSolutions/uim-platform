@@ -91,7 +91,6 @@ class BaseRepository(TEntity) : IBaseRepository!(TEntity) {
   }
 
 }
-
 ///
 
 struct TestEntityId {

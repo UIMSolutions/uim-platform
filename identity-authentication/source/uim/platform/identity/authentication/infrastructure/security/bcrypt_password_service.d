@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.infrastructure.security.bcrypt_password_service;
-
 // import uim.platform.identity.authentication.domain.ports.repositories.services.password;
 // 
 // // import std.digest.sha : SHA256, toHexString;

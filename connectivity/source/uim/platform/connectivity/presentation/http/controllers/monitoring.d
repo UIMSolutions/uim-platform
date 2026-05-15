@@ -6,8 +6,6 @@
 module uim.platform.connectivity.presentation.http.controllers.monitoring;
 
 
-
-
 // 
 // 
 // import uim.platform.connectivity.application.usecases.monitor_connectivity;

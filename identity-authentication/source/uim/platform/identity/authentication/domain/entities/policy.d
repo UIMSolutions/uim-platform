@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.entities.policy;
-
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
@@ -29,7 +28,6 @@ struct AuthorizationPolicy {
       .set("active", active);
   }
 }
-
 /// A single rule within a policy.
 struct PolicyRule {
   string attribute; // e.g., "group", "ip_range", "user_type", "auth_method"

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.types;
-
 /// Unique identifier type alias for type safety.
 
 
@@ -61,7 +60,6 @@ struct TokenId {
 }
 
 
-
 /// Multi-factor authentication type.
 enum MfaType {
   none,
@@ -71,7 +69,6 @@ enum MfaType {
 }
 
 
-
 /// User status in the identity directory.
 enum UserStatus {
   active,
@@ -79,7 +76,6 @@ enum UserStatus {
   locked,
   pendingVerification,
 }
-
 /// Risk level determined by risk-based authentication.
 enum RiskLevel {
   low,
@@ -87,7 +83,6 @@ enum RiskLevel {
   high,
   critical,
 }
-
 /// Token type.
 enum TokenType {
   access,
@@ -95,7 +90,6 @@ enum TokenType {
   idToken,
   samlAssertion,
 }
-
 /// Provisioning job status.
 enum JobStatus {
   pending,
@@ -103,7 +97,6 @@ enum JobStatus {
   completed,
   failed,
 }
-
 /// Identity provider type for delegation.
 enum IdpType {
   local,

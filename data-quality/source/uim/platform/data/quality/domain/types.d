@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.types;
 import uim.platform.data.quality;
-
 /// Unique identifier type aliases for type safety.
 struct RecordId {
   string value;

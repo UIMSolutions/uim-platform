@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.dto;
-
 // import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai;
 
@@ -32,7 +31,6 @@ struct ConfirmDocumentRequest {
   string documentId;
   string[][] correctedFields;
 }
-
 // --- Schema ---
 
 struct CreateSchemaRequest {
@@ -56,7 +54,6 @@ struct UpdateSchemaRequest {
   string[][] headerFields;
   string[][] lineItemFields;
 }
-
 // --- Template ---
 
 struct CreateTemplateRequest {
@@ -78,7 +75,6 @@ struct UpdateTemplateRequest {
   string status;
   string[][] regions;
 }
-
 // --- Document Type ---
 
 struct CreateDocumentTypeRequest {
@@ -100,7 +96,6 @@ struct UpdateDocumentTypeRequest {
   string category;
   string defaultSchemaId;
 }
-
 // --- Enrichment Data ---
 
 struct CreateEnrichmentDataRequest {
@@ -121,7 +116,6 @@ struct UpdateEnrichmentDataRequest {
   string description;
   string[][] fields;
 }
-
 // --- Training Job ---
 
 struct CreateTrainingJobRequest {
@@ -139,7 +133,6 @@ struct PatchTrainingJobRequest {
   string trainingJobId;
   string targetStatus;
 }
-
 // --- Client ---
 
 struct CreateClientRequest {
@@ -160,7 +153,6 @@ struct PatchClientRequest {
   bool dataFeedbackEnabled;
   string[][] labels;
 }
-
 // --- Capabilities ---
 
 struct CapabilitiesResponse {

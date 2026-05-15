@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence.memory.legal_grounds;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.legal_ground;
 // import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;

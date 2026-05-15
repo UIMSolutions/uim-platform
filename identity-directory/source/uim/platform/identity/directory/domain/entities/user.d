@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.user;
-
 // import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory;
 
@@ -30,7 +29,6 @@ struct UserName {
       .set("honorificSuffix", honorificSuffix);
   }
 }
-
 /// SCIM 2.0 email entry.
 struct Email {
   string value;
@@ -44,7 +42,6 @@ struct Email {
       .set("primary", primary);
   }
 }
-
 /// SCIM 2.0 phone number entry.
 struct PhoneNumber {
   string value;
@@ -58,7 +55,6 @@ struct PhoneNumber {
       .set("primary", primary);
   }
 }
-
 /// SCIM 2.0 address entry.
 struct Address {
   string formatted;
@@ -82,7 +78,6 @@ struct Address {
       .set("primary", primary);
   }
 }
-
 /// Extended attributes stored as key-value pairs (custom schema extensions).
 struct ExtendedAttribute {
   string schemaId;
@@ -96,7 +91,6 @@ struct ExtendedAttribute {
       .set("value", value);
   }
 }
-
 /// Core user entity — SCIM 2.0 compliant.
 struct User {
   mixin TenantEntity!UserId;

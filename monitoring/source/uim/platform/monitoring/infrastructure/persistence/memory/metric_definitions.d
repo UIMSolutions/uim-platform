@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.infrastructure.persistence.memory.metric_definitions;
-
 // import uim.platform.monitoring.domain.types;
 // import uim.platform.monitoring.domain.entities.metric_definition;
 // import uim.platform.monitoring.domain.ports.repositories.metric_definitions;

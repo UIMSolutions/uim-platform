@@ -236,7 +236,6 @@ struct MemberId  {
 
     mixin DomainId;
 }
-
 /// Workspace type.
 enum WorkspaceType {
   project,
@@ -245,14 +244,12 @@ enum WorkspaceType {
   public_,
   external,
 }
-
 /// Workspace status.
 enum WorkspaceStatus {
   active,
   archived,
   suspended,
 }
-
 /// Card type (integration card manifest type).
 enum CardType {
   adaptive,
@@ -264,7 +261,6 @@ enum CardType {
   component,
   calendar,
 }
-
 /// Content type within a workspace.
 enum ContentType {
   blogPost,
@@ -274,7 +270,6 @@ enum ContentType {
   announcement,
   document,
 }
-
 /// Content status / lifecycle.
 enum ContentStatus {
   draft,
@@ -282,7 +277,6 @@ enum ContentStatus {
   archived,
   deleted,
 }
-
 /// Notification priority.
 enum NotificationPriority {
   low,
@@ -290,7 +284,6 @@ enum NotificationPriority {
   high,
   critical,
 }
-
 /// Notification status.
 enum NotificationStatus {
   unread,
@@ -298,7 +291,6 @@ enum NotificationStatus {
   dismissed,
   actionRequired,
 }
-
 /// WZTask status.
 enum TaskStatus {
   open,
@@ -307,7 +299,6 @@ enum TaskStatus {
   cancelled,
   overdue,
 }
-
 /// WZTask priority.
 enum TaskPriority {
   low,
@@ -315,7 +306,6 @@ enum TaskPriority {
   high,
   veryHigh,
 }
-
 /// Channel type (content feed source).
 enum ChannelType {
   activity,
@@ -323,14 +313,12 @@ enum ChannelType {
   custom,
   external,
 }
-
 /// Application status (registered app lifecycle).
 enum AppStatus {
   active,
   inactive,
   deprecated_,
 }
-
 /// Widget size on a workspace page.
 enum WidgetSize {
   small,
@@ -338,7 +326,6 @@ enum WidgetSize {
   large,
   fullWidth,
 }
-
 /// Member role within a workspace.
 enum MemberRole {
   viewer,
@@ -346,7 +333,6 @@ enum MemberRole {
   admin,
   owner,
 }
-
 /// Site status.
 enum SiteStatus {
   draft,
@@ -354,7 +340,6 @@ enum SiteStatus {
   maintenance,
   archived,
 }
-
 /// Event status.
 enum EventStatus {
   scheduled,
@@ -362,7 +347,6 @@ enum EventStatus {
   completed,
   cancelled,
 }
-
 /// Survey status.
 enum SurveyStatus {
   draft,
@@ -370,7 +354,6 @@ enum SurveyStatus {
   closed,
   archived,
 }
-
 /// Survey question type.
 enum QuestionType {
   singleChoice,
@@ -379,7 +362,6 @@ enum QuestionType {
   rating,
   scale,
 }
-
 /// Forum topic status.
 enum ForumTopicStatus {
   open,
@@ -387,7 +369,6 @@ enum ForumTopicStatus {
   pinned,
   archived,
 }
-
 /// KB article status.
 enum KBArticleStatus {
   draft,
@@ -395,14 +376,12 @@ enum KBArticleStatus {
   review,
   archived,
 }
-
 /// WZGroup type.
 enum GroupType {
   security,
   distribution,
   dynamic,
 }
-
 /// Navigation item type.
 enum NavigationItemType {
   link,
@@ -411,21 +390,18 @@ enum NavigationItemType {
   app,
   externalLink,
 }
-
 /// Plugin status.
 enum PluginStatus {
   active,
   inactive,
   error,
 }
-
 /// External content provider status.
 enum ProviderStatus {
   connected,
   disconnected,
   error,
 }
-
 /// External content provider type.
 enum ProviderType {
   odata,

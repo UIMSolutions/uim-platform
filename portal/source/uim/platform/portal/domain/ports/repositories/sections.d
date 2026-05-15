@@ -7,7 +7,6 @@ module uim.platform.portal.domain.ports.repositories.sections;
 
 import uim.platform.portal.domain.entities.section;
 import uim.platform.portal.domain.types;
-
 /// Port: outgoing — section persistence.
 interface SectionRepository {
   bool existsById(SectionId id);

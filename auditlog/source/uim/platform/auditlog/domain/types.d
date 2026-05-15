@@ -9,7 +9,6 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-
 /// Unique identifier type aliases for type safety.
 struct AuditLogId {
   string value;

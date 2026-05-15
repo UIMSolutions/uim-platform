@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.business_role;
-
 // import uim.platform.abap_environment.application.usecases.manage.business_roles;
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.business_role;

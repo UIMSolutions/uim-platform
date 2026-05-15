@@ -5,13 +5,9 @@
 *****************************************************************************************************************/
 module app;
 
-
-
 // import vibe.core.core : runApplication;
-
 // import uim.platform.data.privacy.infrastructure.config;
 // import uim.platform.data.privacy.infrastructure.container;
-
 // import std.stdio : writefln;
 import uim.platform.data.privacy;
 

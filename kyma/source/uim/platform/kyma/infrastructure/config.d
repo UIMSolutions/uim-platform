@@ -17,7 +17,6 @@ struct SrvConfig {
   ushort port = 8095;
   string serviceName = "Kyma Runtime Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

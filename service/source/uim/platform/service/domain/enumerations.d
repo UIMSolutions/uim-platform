@@ -10,7 +10,6 @@ enum SsoProtocol {
   saml,
   oidc,
 }
-
 /// Authentication method supported by the platform.
 enum AuthMethod {
   form,

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.dashboards;
-
 // import uim.platform.logging.domain.entities.dashboard;
 // import uim.platform.logging.domain.ports.repositories.dashboards;
 // import uim.platform.logging.domain.types;

@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.container;
-
 // import uim.platform.hana.infrastructure.config;
-
 // // Repositories
 // import uim.platform.hana.infrastructure.persistence.memory.instances;
 // import uim.platform.hana.infrastructure.persistence.memory.data_lakes;
@@ -18,7 +16,6 @@ module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
 // import uim.platform.hana.infrastructure.persistence.memory.configurations;
 // import uim.platform.hana.infrastructure.persistence.memory.database_connections;
-
 // // Use Cases
 // import uim.platform.hana.application.usecases.manage.instances;
 // import uim.platform.hana.application.usecases.manage.data_lakes;
@@ -30,7 +27,6 @@ module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.application.usecases.manage.replication_tasks;
 // import uim.platform.hana.application.usecases.manage.configurations;
 // import uim.platform.hana.application.usecases.manage.database_connections;
-
 // // Controllers
 // import uim.platform.hana.presentation.http.controllers.instance;
 // import uim.platform.hana.presentation.http.controllers.data_lake;

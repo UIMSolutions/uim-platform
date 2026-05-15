@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.container;
-
 // import uim.platform.dms.application.infrastructure.config;
 // 
 // // Repositories
@@ -78,7 +77,6 @@ struct Container {
   BrowseController browseController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

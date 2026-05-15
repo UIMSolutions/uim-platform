@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.dto;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.validation_result : RuleViolation;
 // import uim.platform.data.quality.domain.entities.match_group : MatchCandidate, FieldMatch;
@@ -61,7 +60,6 @@ struct UpdateValidationRuleRequest {
   string category;
   int priority;
 }
-
 // ──────────────── Validation Execution DTOs ────────────────
 
 struct ValidateRecordRequest {
@@ -81,7 +79,6 @@ struct RecordFieldValues {
   RecordId recordId;
   string[string] fieldValues;
 }
-
 // ──────────────── Address Cleansing DTOs ────────────────
 
 struct CleanseAddressRequest {
@@ -99,7 +96,6 @@ struct CleanseBatchAddressRequest {
   TenantId tenantId;
   CleanseAddressRequest[] addresses;
 }
-
 // ──────────────── Duplicate Detection DTOs ────────────────
 
 struct DetectDuplicatesRequest {
@@ -121,7 +117,6 @@ struct ResolveDuplicateRequest {
   MatchGroupId groupId;
   RecordId survivorRecordId; // chosen golden record
 }
-
 // ──────────────── Data Profiling DTOs ────────────────
 
 struct ProfileDatasetRequest {
@@ -135,7 +130,6 @@ struct ProfileRecordInput {
   RecordId recordId;
   string[string] fieldValues;
 }
-
 // ──────────────── Cleansing Rule DTOs ────────────────
 
 struct CreateCleansingRuleRequest {
@@ -183,7 +177,6 @@ struct UpdateCleansingRuleRequest {
   string category;
   int priority;
 }
-
 // ──────────────── Cleansing Job DTOs ────────────────
 
 struct CreateCleansingJobRequest {
@@ -192,7 +185,6 @@ struct CreateCleansingJobRequest {
   UserId requestedBy;
   CleansingRuleId[] ruleIds;
 }
-
 // ──────────────── Quality Dashboard DTOs ────────────────
 
 struct ComputeDashboardRequest {

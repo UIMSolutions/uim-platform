@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.functions;
-
 // import uim.platform.kyma.domain.types;
 // import uim.platform.kyma.domain.entities.serverless_function;
 // import uim.platform.kyma.domain.ports.repositories.functions;

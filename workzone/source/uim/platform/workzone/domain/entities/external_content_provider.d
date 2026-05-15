@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// An external content provider — integration connector for third-party content sources.
 struct ExternalContentProvider {
   mixin TenantEntity!(ExternalContentProviderId);

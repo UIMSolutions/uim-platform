@@ -4,8 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.web.middleware;
-
-
 // import vibe.core.log;
 import uim.platform.analytics;
 
@@ -17,7 +15,6 @@ void corsMiddleware(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
   res.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Request-Id";
 }
-
 /// Request logging middleware.
 void requestLogger(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   

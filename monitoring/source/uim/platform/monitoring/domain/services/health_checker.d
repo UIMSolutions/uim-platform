@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.services.health_checker;
-
 // import uim.platform.monitoring.domain.entities.health_check;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
@@ -17,7 +16,6 @@ struct ValidationResult {
   bool valid;
   string[] errors;
 }
-
 /// Domain service: validates health check configurations.
 struct HealthChecker {
   /// Validate a health check configuration for correctness.

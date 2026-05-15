@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.service_bindings;
-
 // import uim.platform.kyma.domain.entities.service_binding;
 // import uim.platform.kyma.domain.types;
 import uim.platform.kyma;

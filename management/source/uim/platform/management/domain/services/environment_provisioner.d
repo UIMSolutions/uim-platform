@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.domain.services.environment_provisioner;
-
 // import uim.platform.management.domain.entities.environment_instance;
 // import uim.platform.management.domain.entities.subaccount;
 // import uim.platform.management.domain.types;
@@ -56,7 +55,6 @@ class EnvironmentProvisioner {
       || inst.status == EnvironmentStatus.error || inst.status == EnvironmentStatus.suspended;
   }
 }
-
 /// Result of provisioning validation.
 struct ProvisionValidation {
   bool valid;

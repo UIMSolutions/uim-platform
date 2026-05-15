@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.infrastructure.persistence.memory.idp_config;
-
 // import uim.platform.identity.authentication.domain.entities.idp_config;
 // import uim.platform.identity.authentication.domain.types;
 // import uim.platform.identity.authentication.domain.ports.repositories.idp_config;
-
 // // import std.algorithm : canFind;
 
 import uim.platform.identity.authentication;

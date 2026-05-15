@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.container;
-
 // import uim.platform.logging.infrastructure.config;
-
 // // Repositories
 // import uim.platform.logging.infrastructure.persistence.memory.log_entry;
 // import uim.platform.logging.infrastructure.persistence.memory.log_stream;
@@ -18,7 +16,6 @@ module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.infrastructure.persistence.memory.notification_channel;
 // import uim.platform.logging.infrastructure.persistence.memory.pipeline;
 // import uim.platform.logging.infrastructure.persistence.memory.ingestion_token;
-
 // // Use Cases
 // import uim.platform.logging.application.usecases.ingest_logs;
 // import uim.platform.logging.application.usecases.ingest_traces;
@@ -31,7 +28,6 @@ module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.application.usecases.manage.notification_channels;
 // import uim.platform.logging.application.usecases.manage.pipelines;
 // import uim.platform.logging.application.usecases.get_overview;
-
 // // Controllers
 // import uim.platform.logging.presentation.http.controllers.log;
 // import uim.platform.logging.presentation.http.controllers.trace;

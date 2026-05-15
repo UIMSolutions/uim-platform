@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.persistence.memory.surveys;
-
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.survey;
 // import uim.platform.workzone.domain.ports.repositories.surveys;

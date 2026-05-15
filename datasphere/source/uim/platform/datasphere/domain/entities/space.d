@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.entities.space;
-
 // import uim.platform.datasphere.domain.types;
 import uim.platform.datasphere;
 

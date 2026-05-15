@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.connection;
-
 // import uim.platform.datasphere.application.usecases.manage.connections;
 // import uim.platform.datasphere.application.dto;
 

@@ -6,8 +6,6 @@
 module uim.platform.destination.application.dto;
 
 import uim.platform.destination;
-
-
 /// --- Destination DTOs ---
 
 struct CreateDestinationRequest {
@@ -86,7 +84,6 @@ struct UpdateDestinationRequest {
   string[string] properties;
   string[] fragmentIds;
 }
-
 /// --- Certificate DTOs ---
 
 struct UploadCertificateRequest {
@@ -117,7 +114,6 @@ struct UpdateCertificateRequest {
   long validFrom;
   long validTo;
 }
-
 /// --- Destination Fragment DTOs ---
 
 struct CreateFragmentRequest {
@@ -160,7 +156,6 @@ struct UpdateFragmentRequest {
   string truststoreId;
   string[string] properties;
 }
-
 /// --- Find Destination DTO ---
 
 struct FindDestinationRequest {
@@ -169,7 +164,6 @@ struct FindDestinationRequest {
   string name;
   string headerProvider; // "subscriber", "provider"
 }
-
 /// --- Destination Lookup Result DTO ---
 
 struct DestinationLookupResponse {

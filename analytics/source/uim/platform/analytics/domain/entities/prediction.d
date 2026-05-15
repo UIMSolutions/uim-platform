@@ -4,13 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.entities.prediction;
-
 // import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-
 /// A Prediction encapsulates a predictive/ML model run (SAC Smart Predict).
 class Prediction {
   EntityId id;

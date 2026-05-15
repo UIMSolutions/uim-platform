@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.ports.repositories.events;
-
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.event;
 import uim.platform.workzone;

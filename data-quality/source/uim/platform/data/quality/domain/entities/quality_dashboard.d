@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.quality_dashboard;
-
 // import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality;
 
@@ -70,7 +69,6 @@ struct QualityDashboard {
       .set("computedAt", computedAt);
   }
 }
-
 /// Count of violations per severity level.
 struct RuleSeverityCount {
   RuleSeverity severity;
@@ -82,7 +80,6 @@ struct RuleSeverityCount {
       .set("count", count);
   }
 }
-
 /// A historical quality score data point.
 struct QualityTrendPoint {
   long timestamp;

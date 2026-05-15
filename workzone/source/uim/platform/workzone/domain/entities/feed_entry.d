@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// An activity feed entry — records actions and events in a workspace.
 struct FeedEntry {
   mixin TenantEntity!(FeedEntryId);

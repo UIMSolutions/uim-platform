@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence.memory.business_contexts;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.business_context;
 // import uim.platform.data.privacy.domain.ports.business_context_repository;

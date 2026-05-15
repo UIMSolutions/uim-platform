@@ -9,7 +9,6 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-
 /// Business role for authorization in the ABAP environment.
 struct BusinessRole {
   mixin TenantEntity!(BusinessRoleId);

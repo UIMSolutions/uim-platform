@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.infrastructure.container;
-
 // import uim.platform.management.infrastructure.config;
-
 // // Repositories
 // import uim.platform.management.infrastructure.persistence.memory.global_account;
 // import uim.platform.management.infrastructure.persistence.memory.directory;
@@ -17,11 +15,9 @@ module uim.platform.management.infrastructure.container;
 // import uim.platform.management.infrastructure.persistence.memory.service_plan;
 // import uim.platform.management.infrastructure.persistence.memory.platform_event;
 // import uim.platform.management.infrastructure.persistence.memory.label;
-
 // // Domain Services
 // import uim.platform.management.domain.services.entitlement_evaluator;
 // import uim.platform.management.domain.services.environment_provisioner;
-
 // // Use Cases
 // import uim.platform.management.application.usecases.manage.global_accounts;
 // import uim.platform.management.application.usecases.manage.directories;
@@ -33,7 +29,6 @@ module uim.platform.management.infrastructure.container;
 // import uim.platform.management.application.usecases.manage.labels;
 // import uim.platform.management.application.usecases.query_platform_events;
 // import uim.platform.management.application.usecases.get_account_overview;
-
 // // Controllers
 // import uim.platform.management.presentation.http.global_account;
 // import uim.platform.management.presentation.http.directory;
@@ -51,7 +46,6 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
@@ -94,7 +88,6 @@ struct Container {
   OverviewController overviewController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

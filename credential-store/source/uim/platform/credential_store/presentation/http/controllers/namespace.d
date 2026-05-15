@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.namespace;
-
 // import uim.platform.credential_store.application.usecases.manage.usecase;
 // import uim.platform.credential_store.application.dto;
 

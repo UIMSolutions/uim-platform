@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.deployment;
-
 // import uim.platform.html_repository.application.usecases.deploy_application;
 // import uim.platform.html_repository.application.usecases.get_deployment_history;
 // import uim.platform.html_repository.application.dto;
-
 // import uim.platform.htmls;
 
 import uim.platform.html_repository;

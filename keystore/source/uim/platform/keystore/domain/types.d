@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.types;
-
 // ID types
 alias KeystoreId = string;
 alias KeyEntryId  = string;
 alias KeyPasswordId = string;
-
 // Keystore format
 enum KeystoreFormat {
   jks,
@@ -17,14 +15,12 @@ enum KeystoreFormat {
   p12,
   pem,
 }
-
 // Keystore scope level (search order: subscription > application > account)
 enum KeystoreLevel {
   account,
   application,
   subscription,
 }
-
 // Type of entry within a keystore
 enum KeyEntryType {
   privateKey,
@@ -32,7 +28,6 @@ enum KeyEntryType {
   secretKey,
   trustedCertificate,
 }
-
 // Helper: parse KeystoreFormat from string
 KeystoreFormat parseKeystoreFormat(string s) @safe {
   import std.uni : toLower;
@@ -43,7 +38,6 @@ KeystoreFormat parseKeystoreFormat(string s) @safe {
     default:      return KeystoreFormat.jks;
   }
 }
-
 // Helper: format KeystoreFormat to string
 string keystoreFormatToString(KeystoreFormat f) @safe {
   final switch (f) {
@@ -53,7 +47,6 @@ string keystoreFormatToString(KeystoreFormat f) @safe {
     case KeystoreFormat.pem:   return "pem";
   }
 }
-
 // Helper: parse KeystoreLevel from string
 KeystoreLevel parseKeystoreLevel(string s) @safe {
   import std.uni : toLower;
@@ -63,7 +56,6 @@ KeystoreLevel parseKeystoreLevel(string s) @safe {
     default:             return KeystoreLevel.account;
   }
 }
-
 // Helper: parse KeyEntryType from string
 KeyEntryType parseKeyEntryType(string s) @safe {
   import std.uni : toLower;
@@ -74,7 +66,6 @@ KeyEntryType parseKeyEntryType(string s) @safe {
     default:                   return KeyEntryType.privateKey;
   }
 }
-
 // Shared timestamp helper
 long currentTimestamp() @trusted {
   import core.time : MonoTime;

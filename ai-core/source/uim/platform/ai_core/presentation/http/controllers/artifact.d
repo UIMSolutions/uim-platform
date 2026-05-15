@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.artifact;
-
 // import uim.platform.ai_core.application.usecases.manage.artifacts;
 // import uim.platform.ai_core.application.dto;
-
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 

@@ -9,13 +9,11 @@ import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
-
 /// Result of transport validation.
 struct TransportValidationResult {
   bool valid;
   string[] errors;
 }
-
 /// Domain service: validates transport requests.
 struct TransportValidator {
   /// Validate a transport request against its packages and target queue.

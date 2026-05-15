@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.service_binding;
-
 // import uim.platform.abap_environment.domain.types;
 
 import uim.platform.abap_environment;
@@ -26,7 +25,6 @@ struct ExposedEndpoint {
       .set("requiresAuth", requiresAuth);
   }
 }
-
 /// Service binding that exposes CDS/RAP services via OData/REST/SOAP.
 struct ServiceBinding {
   mixin TenantEntity!(ServiceBindingId);

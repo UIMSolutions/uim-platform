@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.presentation.http.controllers.check;
-
 // import uim.platform.monitoring.application.usecases.manage.health_checks;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.health_check;

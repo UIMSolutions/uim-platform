@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.entities.destination;
-
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
@@ -22,7 +21,6 @@ struct DestinationProperty {
         .set("value", value);
   }
 }
-
 /// Named connectivity endpoint for reaching remote services.
 struct Destination {
   mixin TenantEntity!(DestinationId);

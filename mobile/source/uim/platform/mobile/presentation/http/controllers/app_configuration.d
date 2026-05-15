@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.app_configuration;
-
 // import uim.platform.mobile.application.usecases.manage.app_configurations;
 // import uim.platform.mobile.application.dto;
-
 // import uim.platform.mobile;
 
 import uim.platform.mobile;

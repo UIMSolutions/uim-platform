@@ -38,7 +38,6 @@ private static string categoryToString(AuditCategory c) {
     return "audit.data-modification";
   }
 }
-
 /// Severity / log level of an audit event.
 enum AuditSeverity {
   info,
@@ -46,7 +45,6 @@ enum AuditSeverity {
   error,
   critical,
 }
-
 /// Concrete action that triggered the audit entry.
 enum AuditAction {
   create,
@@ -69,7 +67,6 @@ enum AuditAction {
   mfaEnroll,
   mfaVerify,
 }
-
 /// Outcome of the audited operation.
 enum AuditOutcome {
   success,
@@ -77,14 +74,12 @@ enum AuditOutcome {
   denied,
   error,
 }
-
 /// Retention policy status.
 enum RetentionStatus {
   active,
   inactive,
   expired,
 }
-
 /// Export job status.
 enum ExportStatus {
   pending,
@@ -92,13 +87,11 @@ enum ExportStatus {
   completed,
   failed,
 }
-
 /// Export output format.
 enum ExportFormat {
   json,
   csv,
 }
-
 /// Audit log configuration status.
 enum ConfigStatus {
   enabled,

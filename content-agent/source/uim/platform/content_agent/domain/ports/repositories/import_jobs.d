@@ -7,7 +7,6 @@ module uim.platform.content_agent.domain.ports.repositories.import_jobs;
 
 import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
-
 /// Port: outgoing - import job persistence.
 interface ImportJobRepository : ITenantRepository!(ImportJob, ImportJobId) {
   size_t countByPackage(ContentPackageId packageId);

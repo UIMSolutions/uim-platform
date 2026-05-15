@@ -6,7 +6,6 @@
 module uim.platform.data.attribute_recommendation.application.dto;
 
 import uim.platform.data.attribute_recommendation.domain.types;
-
 // --- Dataset ---
 
 struct CreateDatasetRequest {
@@ -25,7 +24,6 @@ struct UpdateDatasetRequest {
   string description;
   string columnDefinitions;
 }
-
 // --- Data Record ---
 
 struct CreateDataRecordRequest {
@@ -42,7 +40,6 @@ struct CreateBulkRecordsRequest {
   string records; // JSON array of {attributes, labels}
   UserId createdBy;
 }
-
 // --- Model Configuration ---
 
 struct CreateModelConfigRequest {
@@ -67,7 +64,6 @@ struct UpdateModelConfigRequest {
   string featureColumns;
   string hyperparameters;
 }
-
 // --- Training Job ---
 
 struct StartTrainingRequest {
@@ -75,7 +71,6 @@ struct StartTrainingRequest {
   TenantId tenantId;
   UserId createdBy;
 }
-
 // --- Model Deployment ---
 
 struct CreateDeploymentRequest {
@@ -85,7 +80,6 @@ struct CreateDeploymentRequest {
   int replicas;
   UserId createdBy;
 }
-
 // --- Inference ---
 
 struct SubmitInferenceRequest {
@@ -93,7 +87,6 @@ struct SubmitInferenceRequest {
   DeploymentId deploymentId;
   string inputData; // JSON
 }
-
 // --- Command Result ---
 
 

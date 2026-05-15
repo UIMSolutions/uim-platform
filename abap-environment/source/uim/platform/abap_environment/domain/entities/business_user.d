@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.business_user;
-
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
@@ -23,7 +22,6 @@ struct RoleAssignment {
       .set("assignedAt", assignedAt);
   }
 }
-
 /// Business user in the ABAP environment.
 struct BusinessUser {
   mixin TenantEntity!(BusinessUserId);

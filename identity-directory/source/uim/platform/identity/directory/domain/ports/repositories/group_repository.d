@@ -7,7 +7,6 @@ module uim.platform.identity.directory.domain.ports.repositories.groups;
 
 import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory.domain.types;
-
 /// Port: outgoing — group persistence.
 interface GroupRepository : ITenantRepository!(Group, GroupId) {
   

@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.container;
-
 // import uim.platform.document_ai.infrastructure.config;
-
 // // Repositories
 // import uim.platform.document_ai.infrastructure.persistence.memory.document;
 // import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
@@ -16,7 +14,6 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
 // import uim.platform.document_ai.infrastructure.persistence.memory.training_job;
 // import uim.platform.document_ai.infrastructure.persistence.memory.client;
-
 // // Use Cases
 // import uim.platform.document_ai.application.usecases.process_documents;
 // import uim.platform.document_ai.application.usecases.manage.schemas;
@@ -26,7 +23,6 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.application.usecases.manage.training_jobs;
 // import uim.platform.document_ai.application.usecases.manage.clients;
 // import uim.platform.document_ai.application.usecases.get_capabilities;
-
 // // Controllers
 // import uim.platform.document_ai.presentation.http.controllers.document;
 // import uim.platform.document_ai.presentation.http.controllers.schema;

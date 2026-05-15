@@ -5,7 +5,6 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 
 @safe:
-
 /// Catalog assignment attached to a role.
 struct CatalogAssignment {
     string id;

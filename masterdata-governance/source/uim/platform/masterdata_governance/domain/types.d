@@ -10,7 +10,6 @@ import uim.platform.masterdata_governance;
 mixin(ShowModule!());
 
 @safe:
-
 // --- ID Aliases ---
 struct BusinessPartnerId {
     string value;

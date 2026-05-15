@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.app_registration;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -50,7 +49,6 @@ struct AppRegistration {
       .set("appConfig", cfg);
   }
 }
-
 /// App-specific configuration.
 struct AppConfig {
   string authType; // "saml", "oauth2", "basic", "none"

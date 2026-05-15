@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.automation_rules;
-
 // import uim.platform.situation_automation.domain.types;
 // import uim.platform.situation_automation.domain.entities.automation_rule;
 

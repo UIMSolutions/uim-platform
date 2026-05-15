@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.application;
-
 // import uim.platform.kyma.domain.types;
 import uim.platform.kyma;
 
@@ -54,7 +53,6 @@ struct Application {
     return j;
   }
 }
-
 /// An API entry registered by an external application.
 struct AppApiEntry {
   string name;
@@ -72,7 +70,6 @@ struct AppApiEntry {
       .set("authType", authType);
   }
 }
-
 /// An event type registered by an external application.
 struct AppEventEntry {
   string name;

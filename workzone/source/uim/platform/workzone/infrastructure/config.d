@@ -17,7 +17,6 @@ struct SrvConfig {
   ushort port = 8084;
   string serviceName = "Workzone Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

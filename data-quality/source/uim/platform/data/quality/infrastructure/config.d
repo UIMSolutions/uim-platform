@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.config;
-
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8086;
   string serviceName = "Data Quality Management Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.repositories.widget;
-
 // import uim.platform.analytics.domain.entities.widget;
 // import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;

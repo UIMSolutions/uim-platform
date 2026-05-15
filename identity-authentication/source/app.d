@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import std.conv;
 // import uim.platform.identity.authentication;
 // import uim.platform.identity.authentication.infrastructure.config;

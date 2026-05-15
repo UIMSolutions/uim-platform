@@ -4,8 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.application_job;
-
-
 // import uim.platform.abap_environment.application.usecases.manage.application_jobs;
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.application_job;

@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.config;
-
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8092;
   string serviceName = "Data Attribute Recommendation Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.container;
-
 // import uim.platform.portal.infrastructure.config;
 // 
 // // Repositories
@@ -91,7 +90,6 @@ struct Container {
   TranslationController translationController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

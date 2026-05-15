@@ -10,7 +10,6 @@ import uim.platform.custom_domain;
 mixin(ShowModule!());
 
 @safe:
-
 /// Repository interface for managing TLS certificates associated with custom domains.
 interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 

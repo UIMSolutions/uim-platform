@@ -89,7 +89,6 @@ size_t readSize(string value, size_t fallback) {
     return fallback;
   }
 }
-
 /// Cosine-similarity between two attribute maps (simple text-match version).
 /// Returns a value between 0.0 and 1.0.
 double attributeSimilarity(const string[string] a, const string[string] b) {
@@ -114,7 +113,6 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
     return 0.0;
   return cast(double)matches / cast(double)total;
 }
-
 /// Simple text-relevance score (case-insensitive substring match).
 double textRelevance(string text, string query) {
   // import std.uni : toLower;
@@ -181,7 +179,6 @@ Json optionalObject(Json request, string key) {
   }
   return Json.emptyObject;
 }
-
 // Composite key generation for tenantId and destinationName.
 string compositeKey(UUID a, UUID b) {
   return compositeKey(a.toString(), b.toString());
@@ -198,7 +195,6 @@ string compositeKey(string a, UUID b) {
 string compositeKey(string a, string b) {
   return a ~ ":" ~ b;
 }
-
 // Extracts the last segment of a path, e.g. "foo/bar/baz" -> "baz".
 string lastSegment(string path) {
   auto parts = path.split("/");
@@ -229,15 +225,12 @@ long clockSeconds() {
 
   return MonoTime.currTime.ticks / 10_000_000;
 }
-
 // private static long clockSeconds() {
 // import std.datetime.systime : Clock;
 // return Clock.currTime().toUnixTime();
 // }
-
 // private static long clockSeconds() {
 // // import core.time : MonoTime;
-
 // return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
 // }
 

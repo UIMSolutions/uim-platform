@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.presentation.http.controllers.decision;
-
 // import uim.platform.process_automation.application.usecases.manage.decisions;
 // import uim.platform.process_automation.application.dto;
 

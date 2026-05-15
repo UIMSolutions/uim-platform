@@ -4,13 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.entities.story;
-
 // import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-
 /// A Story is a narrative-driven analytical report (SAC "Story" mode).
 /// Contains sections with embedded visualizations, text, and images.
 class Story {
@@ -53,7 +51,6 @@ class Story {
     status = ArtifactStatus.Archived;
   }
 }
-
 /// A section within a story, mixing text and widget references.
 struct Section {
   EntityId id;

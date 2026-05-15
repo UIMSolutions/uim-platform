@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.transport_request;
-
 // import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent;
 

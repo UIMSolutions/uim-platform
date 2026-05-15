@@ -47,7 +47,6 @@ struct ServiceInstanceId {
 
   mixin DomainId;
 }
-
 /// Type of destination connection.
 enum DestinationType {
   http,
@@ -55,7 +54,6 @@ enum DestinationType {
   mail,
   ldap,
 }
-
 /// Authentication method for the destination.
 enum AuthenticationType {
   noAuthentication,
@@ -72,26 +70,22 @@ enum AuthenticationType {
   principalPropagation,
   oauth2MtlsClientCredentials,
 }
-
 /// Proxy type for network routing.
 enum ProxyType {
   internet,
   onPremise,
   privateLink,
 }
-
 /// Level at which the destination is defined.
 enum DestinationLevel {
   subaccount,
   serviceInstance,
 }
-
 /// Certificate type for keystore/truststore management.
 enum CertificateType {
   keystore,
   truststore,
 }
-
 /// Certificate format.
 enum CertificateFormat {
   p12,
@@ -99,7 +93,6 @@ enum CertificateFormat {
   pem,
   pfx,
 }
-
 /// Status of a certificate.
 enum CertificateStatus {
   valid,
@@ -107,21 +100,18 @@ enum CertificateStatus {
   expired,
   invalid_,
 }
-
 /// Status of a destination configuration.
 enum DestinationStatus {
   active,
   inactive,
   error,
 }
-
 /// Status of an auth-token resolution.
 enum TokenStatus {
   valid,
   expired,
   error,
 }
-
 /// HTTP method used during destination health checks or probing.
 enum HttpMethod {
   get_,

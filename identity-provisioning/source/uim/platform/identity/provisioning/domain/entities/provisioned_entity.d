@@ -6,7 +6,6 @@
 module uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
 import uim.platform.identity.provisioning.domain.types;
-
 /// A tracked identity entity (user or group) that has been
 /// provisioned from a source to a target system.
 struct ProvisionedEntity {

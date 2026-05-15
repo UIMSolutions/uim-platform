@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// A navigation item / menu entry — defines site navigation structure.
 struct NavigationItem {
   mixin TenantEntity!(NavigationItemId);

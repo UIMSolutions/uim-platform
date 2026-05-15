@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.types;
-
 // --- Type aliases ---
 struct DatasetId {
   string value;
@@ -75,8 +74,6 @@ struct InferenceResultId {
 
   mixin DomainId;
 }
-
-
 // --- Enums ---
 
 enum DatasetStatus {

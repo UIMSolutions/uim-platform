@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.services.inference_engine;
-
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
@@ -15,7 +14,6 @@ import uim.platform.data.attribute_recommendation.domain.entities.inference_resu
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
-
 /// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.
 class InferenceEngine {

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.services.retention_evaluator;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.retention_rule;
 // import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
@@ -20,7 +19,6 @@ struct RetentionEvaluation {
   string applicableRule;
   string[] warnings;
 }
-
 /// Domain service — evaluates whether data retention has exceeded its allowed period.
 class RetentionEvaluator {
   private RetentionRuleRepository ruleRepo;

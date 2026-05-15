@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// A role template that bundles one or more scopes into a named authorization unit.
 /// Administrators assign roles to role collections; role collections are assigned to users.
 struct RoleEntity {

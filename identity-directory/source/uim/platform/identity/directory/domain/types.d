@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.types;
-
 /// Unique identifier type aliases for type safety.
 import uim.platform.identity.directory;
 
@@ -51,7 +50,6 @@ struct ApiClientId {
 
   mixin DomainId;
 }
-
 /// SCIM 2.0 user status.
 enum UserStatus {
   active,
@@ -59,13 +57,11 @@ enum UserStatus {
   locked,
   staged,
 }
-
 /// SCIM 2.0 group type.
 enum GroupType {
   standard,
   dynamic,
 }
-
 /// Attribute data types for custom schemas.
 enum AttributeType {
   stringType,
@@ -76,7 +72,6 @@ enum AttributeType {
   complexType,
   binaryType,
 }
-
 /// Attribute mutability (SCIM 2.0).
 enum Mutability {
   readWrite,
@@ -84,7 +79,6 @@ enum Mutability {
   writeOnly,
   immutable_,
 }
-
 /// Attribute returned behavior (SCIM 2.0).
 enum Returned {
   always,
@@ -92,14 +86,12 @@ enum Returned {
   default_,
   request,
 }
-
 /// Attribute uniqueness (SCIM 2.0).
 enum Uniqueness {
   none,
   server,
   global,
 }
-
 /// Password policy strength level.
 enum PasswordStrength {
   weak,
@@ -107,7 +99,6 @@ enum PasswordStrength {
   strong,
   enterprise,
 }
-
 /// Audit event type.
 enum AuditEventType {
   userCreated,
@@ -132,7 +123,6 @@ enum AuditEventType {
   loginSuccess,
   loginFailure,
 }
-
 /// Sort order.
 enum SortOrder {
   ascending,

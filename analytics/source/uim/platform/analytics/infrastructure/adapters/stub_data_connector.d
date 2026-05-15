@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.adapters.stub_data_connector;
-
 // import uim.platform.analytics.app.ports.dataconnector;
 import uim.platform.analytics;
 

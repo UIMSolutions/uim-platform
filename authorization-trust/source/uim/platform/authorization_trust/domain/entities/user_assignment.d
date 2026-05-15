@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// Assignment of a role collection to a specific user (or user group).
 /// Mirrors the SAP BTP user-role-collection assignment.
 struct UserAssignmentEntity {

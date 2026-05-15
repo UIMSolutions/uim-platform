@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.push_notification;
-
 // import uim.platform.mobile.domain.entities.push_notification;
 // import uim.platform.mobile.domain.ports.repositories.push_notifications;
 // import uim.platform.mobile.domain.types;

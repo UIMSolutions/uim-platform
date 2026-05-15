@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.database_connection;
-
 // import uim.platform.hana.application.usecases.manage.database_connections;
 // import uim.platform.hana.application.dto;
 import uim.platform.hana;

@@ -9,14 +9,12 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8092;
   string serviceName = "Content Agent Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

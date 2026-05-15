@@ -6,8 +6,6 @@
 module uim.platform.identity.authentication.presentation.http.password_policy;
 
 
-
-
 // import uim.platform.identity.directory.application.usecases.manage.password_policies;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.password_policy;

@@ -10,7 +10,6 @@ import uim.platform.field_service;
 mixin(ShowModule!());
 
 @safe:
-
 // --- ID Aliases ---
 struct ServiceCallId {
   string value;

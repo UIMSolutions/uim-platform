@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.offline_store;
-
 // import uim.platform.mobile.domain.entities.offline_store;
 // import uim.platform.mobile.domain.ports.repositories.offline_stores;
 // import uim.platform.mobile.domain.types;

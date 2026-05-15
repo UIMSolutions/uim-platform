@@ -129,20 +129,16 @@ struct IngestionTokenId {
 }
 // struct  {
 //     string value;
-
 //     this(string value) {
 //         this.value = value;
 //     }
-
 //     mixin DomainId;
 // }
 // struct  {
 //     string value;
-
 //     this(string value) {
 //         this.value = value;
 //     }
-
 //     mixin DomainId;
 // }
 

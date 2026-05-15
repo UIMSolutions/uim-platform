@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.container;
-
 // import uim.platform.kyma.infrastructure.config;
-
 // // Repositories
 // import uim.platform.kyma.infrastructure.persistence.memory.environment;
 // import uim.platform.kyma.infrastructure.persistence.memory.namespace;
@@ -17,11 +15,9 @@ module uim.platform.kyma.infrastructure.container;
 // import uim.platform.kyma.infrastructure.persistence.memory.event_subscription;
 // import uim.platform.kyma.infrastructure.persistence.memory.module;
 // import uim.platform.kyma.infrastructure.persistence.memory.application;
-
 // // Domain services
 // import uim.platform.kyma.domain.services.module_dependency_resolver;
 // import uim.platform.kyma.domain.services.function_validator;
-
 // // Use Cases
 // import uim.platform.kyma.application.usecases.manage.environments;
 // import uim.platform.kyma.application.usecases.manage.namespaces;
@@ -32,7 +28,6 @@ module uim.platform.kyma.infrastructure.container;
 // import uim.platform.kyma.application.usecases.manage.event_subscriptions;
 // import uim.platform.kyma.application.usecases.manage.modules;
 // import uim.platform.kyma.application.usecases.manage.applications;
-
 // // Controllers
 // import uim.platform.kyma.presentation.http.environment;
 // import uim.platform.kyma.presentation.http.namespace;
@@ -50,7 +45,6 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-
 /// Dependency injection container — wires all layers together.
 struct Container {
 
@@ -95,7 +89,6 @@ struct Container {
   ApplicationController applicationController;
   HealthController healthController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

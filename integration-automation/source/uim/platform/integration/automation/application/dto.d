@@ -8,7 +8,6 @@ module uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario : ScenarioStepTemplate;
 import uim.platform.integration.automation.domain.entities.workflow_step : WorkflowStep;
-
 // ──────────────── Integration Scenario DTOs ────────────────
 
 struct CreateScenarioRequest {
@@ -37,7 +36,6 @@ struct UpdateScenarioRequest {
   string[] prerequisites;
   ScenarioStepTemplate[] stepTemplates;
 }
-
 // ──────────────── Workflow DTOs ────────────────
 
 struct CreateWorkflowRequest {
@@ -55,7 +53,6 @@ struct UpdateWorkflowStatusRequest {
   TenantId tenantId;
   WorkflowStatus status;
 }
-
 // ──────────────── Workflow Step DTOs ────────────────
 
 struct CreateStepRequest {
@@ -104,7 +101,6 @@ struct AssignStepRequest {
   UserId assignedTo;
   string assignedRole;
 }
-
 // ──────────────── System Connection DTOs ────────────────
 
 struct CreateSystemRequest {
@@ -139,7 +135,6 @@ struct UpdateSystemRequest {
   string systemId;
   string tenant;
 }
-
 // ──────────────── Destination DTOs ────────────────
 
 struct CreateDestinationRequest {
@@ -178,7 +173,6 @@ struct UpdateDestinationRequest {
   string scope_;
   bool isEnabled;
 }
-
 // ──────────────── Generic result ────────────────
 
 

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.data_profile;
-
 // import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality;
 
@@ -39,7 +38,6 @@ struct DataProfile {
       .set("duration", duration);
   }
 }
-
 /// Profiling statistics for a single column / field.
 struct ColumnProfile {
   string fieldName;

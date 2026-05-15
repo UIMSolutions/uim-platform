@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.match_group;
-
 // import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality;
 
@@ -34,7 +33,6 @@ struct MatchGroup {
       .set("candidates", candidates.map!(c => c.toJson()).array.toJson);
   }
 }
-
 /// A candidate record within a match group.
 struct MatchCandidate {
   RecordId recordId;
@@ -52,7 +50,6 @@ struct MatchCandidate {
       .set("fieldMatches", fieldMatches.map!(fm => fm.toJson()).array.toJson);
   }
 }
-
 /// Per-field match detail for duplicate detection.
 struct FieldMatch {
   string fieldName;

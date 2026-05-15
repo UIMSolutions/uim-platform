@@ -8,8 +8,6 @@ module uim.platform.monitoring.presentation.http.controllers.alert_rule;
 
 
 
-
-
 // import uim.platform.monitoring.application.usecases.manage.alert_rules;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.alert_rule;

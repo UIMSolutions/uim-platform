@@ -10,7 +10,6 @@ import uim.platform.task_center;
 mixin(ShowModule!());
 
 @safe:
-
 // --- ID Aliases ---
 
 struct TaskId  {
@@ -85,6 +84,5 @@ struct UserTaskFilterId  {
 
     mixin DomainId;
 }
-
 // --- Enums ---
 

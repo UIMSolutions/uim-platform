@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.service_binding;
-
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.service_bindings;

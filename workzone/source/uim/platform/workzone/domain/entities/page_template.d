@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.domain.entities.page_template;
-
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
@@ -32,7 +31,6 @@ struct PageTemplate {
       .set("isPublic", isPublic);
   }
 }
-
 /// A section within a page template.
 struct TemplateSection {
   string sectionId;

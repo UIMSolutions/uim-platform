@@ -8,7 +8,6 @@ module uim.platform.content_agent.domain.services.package_assembler;
 import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
-
 /// Result of a package assembly operation.
 struct AssemblyResult {
   bool valid;
@@ -16,7 +15,6 @@ struct AssemblyResult {
   string[] resolvedDependencies;
   long estimatedSizeBytes;
 }
-
 /// Domain service: validates and assembles content items into a package.
 struct PackageAssembler {
   /// Validate that all items in the package are consistent and have their dependencies met.

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.application.dto;
-
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.workspace : WorkspaceMember, WorkspaceSettings;
 // import uim.platform.workzone.domain.entities.card : CardDataSource, CardManifest;
@@ -48,7 +47,6 @@ struct AddMemberRequest {
   string displayName;
   MemberRole role;
 }
-
 // ──────────────── Workpage DTOs ────────────────
 
 struct CreateWorkpageRequest {
@@ -68,7 +66,6 @@ struct UpdateWorkpageRequest {
   int sortOrder;
   bool visible;
 }
-
 // ──────────────── Card DTOs ────────────────
 
 struct CreateCardRequest {
@@ -93,7 +90,6 @@ struct UpdateCardRequest {
   CardDataSource dataSource;
   CardManifest manifest;
 }
-
 // ──────────────── Content DTOs ────────────────
 
 struct CreateContentRequest {
@@ -119,7 +115,6 @@ struct UpdateContentRequest {
   string[] tags;
   bool pinned;
 }
-
 // ──────────────── Feed DTOs ────────────────
 
 struct CreateFeedEntryRequest {
@@ -133,7 +128,6 @@ struct CreateFeedEntryRequest {
   string objectTitle;
   string message;
 }
-
 // ──────────────── Notification DTOs ────────────────
 
 struct CreateNotificationRequest {
@@ -148,7 +142,6 @@ struct CreateNotificationRequest {
   NotificationPriority priority;
   long expiresAt;
 }
-
 // ──────────────── WZTask DTOs ────────────────
 
 struct CreateTaskRequest {
@@ -177,7 +170,6 @@ struct UpdateTaskRequest {
   string description;
   long dueDate;
 }
-
 // ──────────────── Channel DTOs ────────────────
 
 struct CreateChannelRequest {
@@ -197,7 +189,6 @@ struct UpdateChannelRequest {
   bool active;
   ChannelConfig config;
 }
-
 // ──────────────── App Registration DTOs ────────────────
 
 struct CreateAppRequest {
@@ -223,7 +214,6 @@ struct UpdateAppRequest {
   AppStatus status;
   AppConfig appConfig;
 }
-
 // ──────────────── Widget DTOs ────────────────
 
 struct CreateWidgetRequest {
@@ -250,9 +240,7 @@ struct UpdateWidgetRequest {
   bool visible;
   WidgetConfig config;
 }
-
 // ──────────────── Generic result ────────────────
-
 
 
 // ──────────────── Site DTOs ────────────────
@@ -275,7 +263,6 @@ struct UpdateSiteRequest {
   string themeId;
   SiteSettings settings;
 }
-
 // ──────────────── Role DTOs ────────────────
 
 struct CreateRoleRequest {
@@ -293,7 +280,6 @@ struct UpdateRoleRequest {
   string description;
   string[] permissions;
 }
-
 // ──────────────── Event DTOs ────────────────
 
 struct CreateEventRequest {
@@ -322,7 +308,6 @@ struct UpdateEventRequest {
   long startTime;
   long endTime;
 }
-
 // ──────────────── Survey DTOs ────────────────
 
 struct CreateSurveyRequest {
@@ -345,7 +330,6 @@ struct UpdateSurveyRequest {
   string title;
   string description;
 }
-
 // ──────────────── Forum Topic DTOs ────────────────
 
 struct CreateForumTopicRequest {
@@ -366,7 +350,6 @@ struct UpdateForumTopicRequest {
   bool pinned;
   bool locked;
 }
-
 // ──────────────── Knowledge Base Article DTOs ────────────────
 
 struct CreateKBArticleRequest {
@@ -391,7 +374,6 @@ struct UpdateKBArticleRequest {
   string category;
   string[] tags;
 }
-
 // ──────────────── User Profile DTOs ────────────────
 
 struct CreateUserProfileRequest {
@@ -415,7 +397,6 @@ struct UpdateUserProfileRequest {
   string jobTitle;
   string avatarUrl;
 }
-
 // ──────────────── WZGroup DTOs ────────────────
 
 struct CreateGroupRequest {
@@ -432,7 +413,6 @@ struct UpdateGroupRequest {
   string description;
   bool active;
 }
-
 // ──────────────── Tag DTOs ────────────────
 
 struct CreateTagRequest {
@@ -450,7 +430,6 @@ struct UpdateTagRequest {
   string description;
   string color;
 }
-
 // ──────────────── Theme DTOs ────────────────
 
 struct CreateThemeRequest {
@@ -474,7 +453,6 @@ struct UpdateThemeRequest {
   bool isDefault;
   ThemeColors colors;
 }
-
 // ──────────────── Navigation Item DTOs ────────────────
 
 struct CreateNavigationItemRequest {
@@ -500,7 +478,6 @@ struct UpdateNavigationItemRequest {
   int sortOrder;
   bool visible;
 }
-
 // ──────────────── Page Template DTOs ────────────────
 
 struct CreatePageTemplateRequest {
@@ -522,7 +499,6 @@ struct UpdatePageTemplateRequest {
   bool isPublic;
   TemplateSection[] sections;
 }
-
 // ──────────────── External Content Provider DTOs ────────────────
 
 struct CreateExternalContentProviderRequest {
@@ -543,7 +519,6 @@ struct UpdateExternalContentProviderRequest {
   string description;
   string endpointUrl;
 }
-
 // ──────────────── Shell Plugin DTOs ────────────────
 
 struct CreateShellPluginRequest {

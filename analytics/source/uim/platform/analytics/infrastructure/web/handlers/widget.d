@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.web.handlers.widget;
 
-
-
 // import uim.platform.analytics.app.usecases.widgets;
 // import uim.platform.analytics.app.dto.widget;
 

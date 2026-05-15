@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// A registered OAuth 2.0 client application.
 /// Corresponds to an SAP BTP XSUAA service instance binding.
 struct OAuthClientEntity {

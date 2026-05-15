@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.values.chart_type;
-
 /// Supported visualization / chart types (mirrors SAC widget library).
 enum ChartType {
   Bar,

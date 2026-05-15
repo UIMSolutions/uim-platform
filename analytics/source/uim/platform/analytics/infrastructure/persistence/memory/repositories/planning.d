@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.planning;
-
 // import uim.platform.analytics.domain.entities.planning;
 // import uim.platform.analytics.domain.repositories.planning;
 import uim.platform.analytics.domain.values.common;

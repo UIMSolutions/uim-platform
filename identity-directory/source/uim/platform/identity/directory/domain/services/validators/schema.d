@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.services.schema_validator;
-
 // import uim.platform.identity.directory.domain.entities.schema;
 // import uim.platform.identity.directory.domain.entities.user : ExtendedAttribute;
 // import uim.platform.identity.directory.domain.types;
@@ -14,13 +13,11 @@ import uim.platform.identity.directory;
 mixin(ShowModule!());
 
 @safe:
-
 /// Domain service: validates extended attributes against custom schema definitions.
 struct SchemaValidationResult {
   bool valid;
   string[] errors;
 }
-
 /// Validate extended attributes against a schema.
 SchemaValidationResult validateExtendedAttributes(ExtendedAttribute[] attrs, Schema schema) {
   string[] errors;

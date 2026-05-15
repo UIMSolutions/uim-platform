@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.dto;
-
 // import uim.platform.management.domain.types;
 
 import uim.platform.management;
@@ -12,7 +11,6 @@ import uim.platform.management;
 mixin(ShowModule!());
 
 @safe:
-
 /// --- Global Account DTOs ---
 
 struct CreateGlobalAccountRequest {
@@ -42,7 +40,6 @@ struct UpdateGlobalAccountRequest {
   string contactEmail;
   string[string] customProperties;
 }
-
 /// --- Directory DTOs ---
 struct CreateDirectoryRequest {
   TenantId tenantId;
@@ -68,7 +65,6 @@ struct UpdateDirectoryRequest {
   string[string] labels;
   string[string] customProperties;
 }
-
 /// --- Subaccount DTOs ---
 
 struct CreateSubaccountRequest {
@@ -106,7 +102,6 @@ struct MoveSubaccountRequest {
   SubaccountId subaccountId;
   DirectoryId targetDirectoryId; // empty = move to global account root
 }
-
 /// --- Entitlement DTOs ---
 
 struct AssignEntitlementRequest {
@@ -131,7 +126,6 @@ struct UpdateEntitlementQuotaRequest {
   int quotaAssigned;
   bool unlimited;
 }
-
 /// --- Environment Instance DTOs ---
 
 struct CreateEnvironmentInstanceRequest {
@@ -163,7 +157,6 @@ struct UpdateEnvironmentInstanceRequest {
   string[string] parameters;
   string[string] labels;
 }
-
 /// --- Subscription DTOs ---
 
 struct CreateSubscriptionRequest {
@@ -185,7 +178,6 @@ struct UpdateSubscriptionRequest {
   string planName;
   string[string] parameters;
 }
-
 /// --- Service Plan DTOs ---
 
 struct CreateServicePlanRequest {
@@ -220,7 +212,6 @@ struct UpdateServicePlanRequest {
   bool provisionable;
   string[string] metadata;
 }
-
 /// --- Label DTOs ---
 
 struct CreateLabelRequest {
@@ -239,7 +230,6 @@ struct UpdateLabelRequest {
 
   string[] values;
 }
-
 /// --- Platform Event DTOs ---
 
 struct QueryEventsRequest {
@@ -250,7 +240,6 @@ struct QueryEventsRequest {
   string severity;
   long sinceTimestamp;
 }
-
 /// --- Dashboard/overview DTOs ---
 
 struct AccountOverview {

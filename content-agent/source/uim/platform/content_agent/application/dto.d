@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.dto;
-
 // import uim.platform.content_agent.domain.types;
 // import uim.platform.content_agent.domain.entities.content_package : ContentItem;
 import uim.platform.content_agent;
@@ -38,7 +37,6 @@ struct AssemblePackageRequest {
   TenantId tenantId;
   UserId assembledBy;
 }
-
 /// --- Content Provider DTOs ---
 
 struct RegisterProviderRequest {
@@ -55,7 +53,6 @@ struct UpdateProviderRequest {
   string endpoint;
   string authToken;
 }
-
 /// --- Transport Request DTOs ---
 
 struct CreateTransportRequest {
@@ -74,7 +71,6 @@ struct ReleaseTransportRequest {
   TenantId tenantId;
   UserId releasedBy;
 }
-
 /// --- Export Job DTOs ---
 
 struct StartExportRequest {
@@ -84,7 +80,6 @@ struct StartExportRequest {
   TransportQueueId queueId;
   UserId startedBy;
 }
-
 /// --- Import Job DTOs ---
 
 struct StartImportRequest {
@@ -94,7 +89,6 @@ struct StartImportRequest {
   string sourceFilePath;
   UserId startedBy;
 }
-
 /// --- Transport Queue DTOs ---
 
 struct CreateQueueRequest {
@@ -114,7 +108,6 @@ struct UpdateQueueRequest {
   string authToken;
   bool isDefault;
 }
-
 /// --- Activity query ---
 
 struct ActivityQuery {

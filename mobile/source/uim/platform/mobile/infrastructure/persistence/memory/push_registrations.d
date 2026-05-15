@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.infrastructure.persistence.memory.push_registration;
-
 // import uim.platform.mobile.domain.entities.push_registration;
 // import uim.platform.mobile.domain.ports.repositories.push_registrations;
 // import uim.platform.mobile.domain.types;
-
 // import std.algorithm : canFind, filter;
 import uim.platform.mobile;
 

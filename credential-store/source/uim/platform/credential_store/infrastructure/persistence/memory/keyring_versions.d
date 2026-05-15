@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence.memory.keyring_versions;
-
 // import uim.platform.credential_store.domain.entities.keyring_version;
 // import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
 // import uim.platform.credential_store.domain.types;

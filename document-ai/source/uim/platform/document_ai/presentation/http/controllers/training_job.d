@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.training_job;
-
 // import uim.platform.document_ai.application.usecases.manage.training_jobs;
 // import uim.platform.document_ai.application.dto;
 // import uim.platform.document_ai.domain.types;

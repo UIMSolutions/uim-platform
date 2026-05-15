@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.infrastructure.persistence.memory.connectivity_logs;
-
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.connectivity_log;
 // import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;

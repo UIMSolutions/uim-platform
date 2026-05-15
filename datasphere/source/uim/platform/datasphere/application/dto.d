@@ -8,7 +8,6 @@ module uim.platform.datasphere.application.dto;
 import uim.platform.datasphere;
 mixin(ShowModule!());
 @safe:
-
 // --- Space ---
 
 struct CreateSpaceRequest {
@@ -30,7 +29,6 @@ struct UpdateSpaceRequest {
   string businessName;
   int priority;
 }
-
 // --- Connection ---
 
 struct CreateConnectionRequest {
@@ -59,7 +57,6 @@ struct UpdateConnectionRequest {
   string user;
   string password;
 }
-
 // --- Remote Table ---
 
 struct CreateRemoteTableRequest {
@@ -81,7 +78,6 @@ struct UpdateRemoteTableRequest {
   string replicationMode;
   string replicationSchedule;
 }
-
 // --- Data Flow ---
 
 struct CreateDataFlowRequest {
@@ -99,7 +95,6 @@ struct PatchDataFlowRequest {
   DataFlowId dataFlowId;
   string targetStatus;
 }
-
 // --- View ---
 
 struct CreateViewRequest {
@@ -124,7 +119,6 @@ struct UpdateViewRequest {
   bool isExposed;
   bool isPersisted;
 }
-
 // --- DSTask ---
 
 struct CreateTaskRequest {
@@ -145,7 +139,6 @@ struct PatchTaskRequest {
   TaskId taskId;
   string targetStatus;
 }
-
 // --- Task Chain ---
 
 struct CreateTaskChainRequest {
@@ -164,7 +157,6 @@ struct PatchTaskChainRequest {
   TaskChainId taskChainId;
   string targetStatus;
 }
-
 // --- Data Access Control ---
 
 struct CreateDataAccessControlRequest {
@@ -187,7 +179,6 @@ struct UpdateDataAccessControlRequest {
   UserId[] assignedUserIds;
   bool isEnabled;
 }
-
 // --- Catalog Asset ---
 
 struct CreateCatalogAssetRequest {

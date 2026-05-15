@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.ingestion_tokens;
-
 // import uim.platform.logging.domain.entities.ingestion_token;
 // import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 // import uim.platform.logging.domain.types;

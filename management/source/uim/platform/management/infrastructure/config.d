@@ -16,7 +16,6 @@ struct SrvConfig {
   ushort port = 8098;
   string serviceName = "Cloud Management Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

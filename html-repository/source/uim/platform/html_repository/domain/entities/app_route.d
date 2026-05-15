@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.entities.app_route;
-
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 

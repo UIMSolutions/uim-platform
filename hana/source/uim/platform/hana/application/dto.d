@@ -6,7 +6,6 @@
 module uim.platform.hana.application.dto;
 
 import uim.platform.hana;
-
 // --- Database Instance ---
 
 struct CreateInstanceRequest {
@@ -94,7 +93,6 @@ struct InstanceActionRequest {
       .set("action", action);
   }
 }
-
 // --- Data Lake ---
 
 struct CreateDataLakeRequest {
@@ -135,7 +133,6 @@ struct UpdateDataLakeRequest {
   }
 
 }
-
 // --- Schema ---
 
 struct CreateSchemaRequest {
@@ -169,7 +166,6 @@ struct UpdateSchemaRequest {
       .set("owner", owner);
   }
 }
-
 // --- Database User ---
 
 struct CreateDatabaseUserRequest {
@@ -219,7 +215,6 @@ struct UpdateDatabaseUserRequest {
       .set("roles", roles);
   }
 }
-
 // --- Backup ---
 
 struct CreateBackupRequest {
@@ -265,7 +260,6 @@ struct UpdateBackupRequest {
       .set("retentionDays", retentionDays);
   }
 }
-
 // --- Alert ---
 
 struct CreateAlertRequest {
@@ -330,7 +324,6 @@ struct AcknowledgeAlertRequest {
       .set("acknowledgedBy", acknowledgedBy);
   }
 }
-
 // --- HDI Container ---
 
 struct CreateHDIContainerRequest {
@@ -370,7 +363,6 @@ struct UpdateHDIContainerRequest {
       .set("grantedSchemas", grantedSchemas);
   }
 }
-
 // --- Replication Task ---
 
 struct CreateReplicationTaskRequest {
@@ -418,7 +410,6 @@ struct UpdateReplicationTaskRequest {
       .set("scheduleExpression", scheduleExpression);
   }
 }
-
 // --- Configuration ---
 
 struct CreateConfigurationRequest {
@@ -458,7 +449,6 @@ struct UpdateConfigurationRequest {
       .set("value", value);
   }
 }
-
 // --- Database Connection ---
 
 struct CreateDatabaseConnectionRequest {

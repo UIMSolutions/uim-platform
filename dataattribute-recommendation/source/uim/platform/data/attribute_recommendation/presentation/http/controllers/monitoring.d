@@ -7,8 +7,6 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers
   .monitoring_controller;
 
 
-
-
 // 
 // 
 // import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.infrastructure.container;
-
 // import uim.platform.identity.authentication.infrastructure.config;
 // 
 // // Repositories
@@ -45,7 +44,6 @@ import uim.platform.identity.authentication;
 
 mixin(ShowModule!());
 @safe:
-
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
@@ -82,7 +80,6 @@ struct Container {
   TenantController tenantController;
   PolicyController policyController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

@@ -18,7 +18,6 @@ enum DomainEnvironment {
     kyma,
     neo,
 }
-
 // --- Private Key ---
 
 enum KeyAlgorithm {
@@ -33,7 +32,6 @@ enum KeyStatus {
     inactive,
     deleted,
 }
-
 // --- Certificate ---
 
 enum CertificateStatus {
@@ -49,7 +47,6 @@ enum CertificateType {
     wildcard,
     multiDomain,
 }
-
 // --- TLS Configuration ---
 
 enum TlsProtocolVersion {
@@ -64,7 +61,6 @@ enum CipherSuiteStrength {
     medium,
     weak,
 }
-
 // --- Domain Mapping ---
 
 enum MappingStatus {
@@ -79,7 +75,6 @@ enum MappingType {
     saasRoute,
     staticRoute,
 }
-
 // --- Trusted Certificate ---
 
 enum TrustedCertificateStatus {
@@ -93,7 +88,6 @@ enum ClientAuthMode {
     optional,
     disabled,
 }
-
 // --- DNS Record ---
 
 enum DnsRecordType {
@@ -110,7 +104,6 @@ enum DnsValidationStatus {
     failed,
     expired,
 }
-
 // --- Dashboard ---
 
 enum DashboardMetricType {

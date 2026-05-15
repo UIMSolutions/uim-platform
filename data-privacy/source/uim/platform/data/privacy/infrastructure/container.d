@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.container;
-
 // import uim.platform.data.privacy.infrastructure.config;
-
 // // Repositories
 // import uim.platform.data.privacy.infrastructure.persistence.memory.data_subject;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.personal_data_model;
@@ -29,7 +27,6 @@ module uim.platform.data.privacy.infrastructure.container;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.rule_set;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.information_report;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_config;
-
 // // Use Cases
 // import uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
@@ -52,7 +49,6 @@ module uim.platform.data.privacy.infrastructure.container;
 // import uim.platform.data.privacy.application.usecases.manage.rule_sets;
 // import uim.platform.data.privacy.application.usecases.manage.information_reports;
 // import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
-
 // // Controllers
 // import uim.platform.data.privacy.presentation.http.data_subject;
 // import uim.platform.data.privacy.presentation.http.personal_data_model;
@@ -154,7 +150,6 @@ struct Container {
   InformationReportController informationReportController;
   AnonymizationConfigController anonymizationConfigController;
 }
-
 /// Build the full dependency graph.
 Container buildContainer(SrvConfig config) {
   Container c;

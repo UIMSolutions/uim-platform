@@ -6,8 +6,6 @@
 module uim.platform.management.presentation.http.controllers.global_account;
 
 
-
-
 // 
 // import uim.platform.management.application.usecases.manage.global_accounts;
 // import uim.platform.management.application.dto;

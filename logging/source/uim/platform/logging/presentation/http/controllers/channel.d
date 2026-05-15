@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.channel;
-
 // import uim.platform.logging.application.usecases.manage.notification_channels;
 // import uim.platform.logging.application.dto;
 // 

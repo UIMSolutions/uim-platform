@@ -5,10 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-
-
 // import vibe.core.core : runApplication;
-
 // import uim.platform.kyma.infrastructure.config;
 // import uim.platform.kyma.infrastructure.container;
 import uim.platform.kyma;

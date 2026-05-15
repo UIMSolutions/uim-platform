@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_provider;
-
 // import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent;
 
@@ -28,7 +27,6 @@ struct ProvidedContentType {
           .set("version", version_);
   }
 }
-
 /// A registered content provider from which content can be discovered and assembled.
 struct ContentProvider {
   mixin TenantEntity!(ContentProviderId);

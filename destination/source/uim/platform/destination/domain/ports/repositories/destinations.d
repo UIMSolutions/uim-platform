@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.domain.ports.repositories.destinations;
-
 // import uim.platform.destination.domain.entities.destination;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;

@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.persistence.memory.data_access_control;
-
 // import uim.platform.datasphere.domain.types;
 // import uim.platform.datasphere.domain.entities.data_access_control;
 // import uim.platform.datasphere.domain.ports.repositories.data_access_controls;
-
 // import std.algorithm : filter, canFind;
  
 import uim.platform.datasphere;

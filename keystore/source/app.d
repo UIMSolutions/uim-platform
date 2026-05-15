@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module app;
-
 // import uim.platform.keystore;
 // import uim.platform.keystore.infrastructure.config;
 // import uim.platform.keystore.infrastructure.container;

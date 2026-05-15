@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.application.dto;
-
 // import uim.platform.monitoring.domain.types;
 
 import uim.platform.monitoring;
@@ -12,7 +11,6 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-
 /// --- Monitored Resource DTOs ---
 
 struct RegisterResourceRequest {
@@ -39,7 +37,6 @@ struct UpdateResourceRequest {
   int instanceCount;
   string[] tags;
 }
-
 /// --- Metric Definition DTOs ---
 
 struct CreateMetricDefinitionRequest {
@@ -62,7 +59,6 @@ struct UpdateMetricDefinitionRequest {
   string aggregation;
   bool isEnabled;
 }
-
 /// --- Metric DTOs ---
 
 struct PushMetricRequest {
@@ -87,7 +83,6 @@ struct QueryMetricsRequest {
   long startTime;
   long endTime;
 }
-
 /// --- Health Check DTOs ---
 
 struct CreateHealthCheckRequest {
@@ -133,7 +128,6 @@ struct RecordCheckResultRequest {
   int responseTimeMs;
   int httpStatusCode;
 }
-
 /// --- Alert Rule DTOs ---
 
 struct CreateAlertRuleRequest {
@@ -167,7 +161,6 @@ struct UpdateAlertRuleRequest {
   bool isEnabled;
   NotificationChannelId[] channelIds;
 }
-
 /// --- Alert DTOs ---
 
 struct AcknowledgeAlertRequest {
@@ -182,13 +175,11 @@ struct ResolveAlertRequest {
   UserId acknowledgedBy;
   UserId resolvedBy;
 }
-
 // struct ResolveAlertRequest {
 //   AlertId alertId;
 //   TenantId tenantId;
 //   UserId resolvedBy;
 // }
-
 /// --- Notification Channel DTOs ---
 
 struct CreateNotificationChannelRequest {
@@ -227,7 +218,6 @@ struct UpdateNotificationChannelRequest {
   string onPremiseProtocol;
   int onPremisePort;
 }
-
 /// --- Dashboard DTOs ---
 
 struct DashboardSummary {

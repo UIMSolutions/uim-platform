@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.push_notification;
-
 // import uim.platform.mobile.application.usecases.manage.push_notifications;
 // import uim.platform.mobile.application.dto;
-
 // import uim.platform.mobile;
 
 

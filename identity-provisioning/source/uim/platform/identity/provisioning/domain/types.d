@@ -79,10 +79,7 @@ struct ProvisionedEntityId {
 
   mixin DomainId;
 }
-
-
 // --- Enums ---
-
 /// Type of connected system.
 enum SystemType {
   ias,
@@ -121,7 +118,6 @@ enum SystemStatus {
   error,
   configuring
 }
-
 /// Role of a system in the provisioning pipeline.
 enum SystemRole {
   source,
@@ -141,7 +137,6 @@ SystemRole parseSystemRole(string s) {
     return SystemRole.source;
   }
 }
-
 /// Type of provisioning job.
 enum JobType {
   full,
@@ -161,7 +156,6 @@ JobType parseJobType(string s) {
     return JobType.full;
   }
 }
-
 /// Status of a provisioning job.
 enum JobStatus {
   scheduled,
@@ -170,7 +164,6 @@ enum JobStatus {
   failed,
   cancelled
 }
-
 /// Type of provisioning operation on a single entity.
 enum OperationType {
   create,
@@ -178,20 +171,17 @@ enum OperationType {
   delete_,
   skip
 }
-
 /// Outcome of a single provisioning operation.
 enum LogStatus {
   success,
   failed,
   skipped
 }
-
 /// Kind of identity entity being provisioned.
 enum EntityType {
   user,
   group
 }
-
 /// Status of a provisioned entity in a target system.
 enum EntityStatus {
   active,

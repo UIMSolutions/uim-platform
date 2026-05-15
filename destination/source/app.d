@@ -5,13 +5,9 @@
 *****************************************************************************************************************/
 module app;
 
-
-
 // import vibe.core.core : runApplication;
-
 // import uim.platform.destination.infrastructure.config;
 // import uim.platform.destination.infrastructure.container;
-
 // import std.stdio : writefln;
 import uim.platform.destination;
 

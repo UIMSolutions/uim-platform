@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.entities.scenario;
-
 // import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core;
 

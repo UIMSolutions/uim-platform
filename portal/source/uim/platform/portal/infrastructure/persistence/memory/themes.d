@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.persistence.memory.themes;
-
 // import uim.platform.portal.domain.entities.theme;
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.domain.ports.repositories.themes;

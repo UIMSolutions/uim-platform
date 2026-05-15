@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.adapters.console_notification;
-
 // import uim.platform.analytics.app.ports.notification_port;
-
 // import vibe.core.log;
 import uim.platform.analytics;
 

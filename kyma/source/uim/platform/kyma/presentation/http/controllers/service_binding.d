@@ -8,8 +8,6 @@ module uim.platform.kyma.presentation.http.controllers.service_binding;
 
 
 
-
-
 // import uim.platform.kyma.application.usecases.manage.service_bindings;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.service_binding;

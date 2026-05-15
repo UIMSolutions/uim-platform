@@ -90,8 +90,6 @@ struct CatalogAssetId {
   mixin DomainId;
 }
 
-
-
 // Connection types
 enum ConnectionType {
   hana,
@@ -106,13 +104,11 @@ enum ConnectionType {
   abap,
   other,
 }
-
 // Space storage allocation
 enum StorageType {
   inMemory,
   disk,
 }
-
 // Data flow status
 enum FlowStatus {
   active,
@@ -122,7 +118,6 @@ enum FlowStatus {
   failed,
   pending,
 }
-
 // Remote table replication mode
 enum ReplicationMode {
   none,
@@ -130,7 +125,6 @@ enum ReplicationMode {
   scheduled,
   snapshot,
 }
-
 // View semantic type
 enum ViewSemantic {
   fact,
@@ -140,7 +134,6 @@ enum ViewSemantic {
   analytical,
   relational,
 }
-
 // Task type
 enum TaskType {
   dataFlow,
@@ -149,7 +142,6 @@ enum TaskType {
   deletion,
   persistence,
 }
-
 // DSTask execution status
 enum TaskStatus {
   scheduled,
@@ -159,7 +151,6 @@ enum TaskStatus {
   cancelled,
   pending,
 }
-
 // Schedule frequency
 enum ScheduleFrequency {
   once,
@@ -169,7 +160,6 @@ enum ScheduleFrequency {
   monthly,
   cron,
 }
-
 // Data access control criteria type
 enum CriteriaType {
   singleValues,
@@ -177,7 +167,6 @@ enum CriteriaType {
   hierarchy,
   responsibility,
 }
-
 // Catalog asset type
 enum AssetType {
   table,
@@ -188,7 +177,6 @@ enum AssetType {
   localTable,
   other,
 }
-
 // Catalog asset quality status
 enum QualityStatus {
   excellent,

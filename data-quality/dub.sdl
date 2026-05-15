@@ -10,14 +10,11 @@ targetName "uim-data-quality-platform-service"
 targetPath "build"
 sourcePaths "source"
 importPaths "source"
-
 // Dependency on the core framework
 dependency "uim-platform:service" path=".."
-
 // Build settings
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"
-
 // Configurations 
 configuration "defaultRun" {
 	targetType "executable"

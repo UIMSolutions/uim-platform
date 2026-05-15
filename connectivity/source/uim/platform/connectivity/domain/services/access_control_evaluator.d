@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.services.access_control_evaluator;
-
 // import uim.platform.connectivity.domain.entities.access_rule;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
@@ -18,7 +17,6 @@ struct AccessEvaluation {
   string matchedRuleId; // empty if no rule matched
   string reason;
 }
-
 /// Domain service: evaluates access control rules for on-premise backend requests.
 struct AccessControlEvaluator {
   /// Evaluate whether a request to a virtual host/path is allowed.

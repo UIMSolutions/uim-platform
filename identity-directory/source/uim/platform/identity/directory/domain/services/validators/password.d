@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.services.validators.password;
-
 // import uim.platform.identity.directory.domain.entities.password_policy;
 
 import uim.platform.identity.directory;
@@ -17,7 +16,6 @@ struct PasswordValidationResult {
   bool valid;
   string[] violations;
 }
-
 /// Validate a password against a password policy.
 PasswordValidationResult validatePassword(string password, PasswordPolicy policy) {
   string[] violations;

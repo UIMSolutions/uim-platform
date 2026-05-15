@@ -10,7 +10,6 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-
 /// A widget instance placed on a workspace page.
 struct Widget {
   mixin TenantEntity!(WidgetId);
@@ -40,7 +39,6 @@ struct Widget {
       .set("config", config.toJson());
   }
 }
-
 /// Per-instance widget configuration.
 struct WidgetConfig {
   string customTitle;

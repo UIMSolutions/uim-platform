@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.data_controller_group;
-
 // import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;

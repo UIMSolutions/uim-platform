@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.application.dto;
-
 // import uim.platform.dms.application.domain.types;
-
 // --- Repository DTOs ---
 import uim.platform.dms.application;
 
@@ -30,7 +28,6 @@ struct UpdateRepositoryRequest {
   long maxFileSize;
   string allowedFileTypes;
 }
-
 // --- Folder DTOs ---
 
 struct CreateFolderRequest {
@@ -54,7 +51,6 @@ struct MoveFolderRequest {
   TenantId tenantId;
   FolderId newParentFolderId;
 }
-
 // --- Document DTOs ---
 
 struct CreateDocumentRequest {
@@ -90,7 +86,6 @@ struct MoveDocumentRequest {
   FolderId newFolderId;
 
 }
-
 // --- Version DTOs ---
 
 struct CheckInRequest {
@@ -104,7 +99,6 @@ struct CheckInRequest {
   long fileSize;
   string checksum;
 }
-
 // --- Share DTOs ---
 
 struct CreateShareRequest {
@@ -116,7 +110,6 @@ struct CreateShareRequest {
   long expiresAt;
   UserId createdBy;
 }
-
 // --- Permission DTOs ---
 
 struct CreatePermissionRequest {
@@ -133,7 +126,6 @@ struct UpdatePermissionRequest {
   TenantId tenantId;
   PermissionLevel level;
 }
-
 // --- Favorite DTOs ---
 
 struct CreateFavoriteRequest {

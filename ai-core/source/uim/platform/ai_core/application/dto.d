@@ -10,7 +10,6 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-
 // --- Scenario ---
 
 struct CreateScenarioRequest {
@@ -31,7 +30,6 @@ struct CreateScenarioRequest {
       .set("labels", labels.toJson());
   }
 }
-
 // --- Executable ---
 
 struct CreateExecutableRequest {
@@ -58,7 +56,6 @@ struct CreateExecutableRequest {
       .set("deployable", deployable);
   }
 }
-
 // --- Configuration ---
 
 struct CreateConfigurationRequest {
@@ -81,7 +78,6 @@ struct CreateConfigurationRequest {
       .set("inputArtifacts", inputArtifacts.toJson());
   }
 }
-
 // --- Execution ---
 
 struct CreateExecutionRequest {
@@ -126,7 +122,6 @@ struct BulkPatchExecutionRequest {
       .set("targetStatus", targetStatus);
   }
 }
-
 // --- Deployment ---
 
 struct CreateDeploymentRequest {
@@ -177,7 +172,6 @@ struct BulkPatchDeploymentRequest {
       .set("targetStatus", targetStatus);
   }
 }
-
 // --- Artifact ---
 
 struct CreateArtifactRequest {
@@ -202,7 +196,6 @@ struct CreateArtifactRequest {
       .set("labels", labels.toJson());
   }
 }
-
 // --- Resource Group ---
 
 struct CreateResourceGroupRequest {
@@ -230,7 +223,6 @@ struct PatchResourceGroupRequest {
       .set("labels", labels.toJson());
   }
 }
-
 // --- Docker Registry Secret ---
 
 struct CreateDockerRegistrySecretRequest {
@@ -251,7 +243,6 @@ struct CreateDockerRegistrySecretRequest {
       .set("password", password);
   }
 }
-
 // --- Object Store Secret ---
 
 struct CreateObjectStoreSecretRequest {
@@ -280,7 +271,6 @@ struct CreateObjectStoreSecretRequest {
       .set("secretKey", secretKey);
   }
 }
-
 // --- Metrics ---
 
 struct PatchMetricsRequest {
@@ -303,7 +293,6 @@ struct PatchMetricsRequest {
       .set("labels", labels.toJson());
   }
 }
-
 // --- Execution Schedule ---
 
 struct CreateExecutionScheduleRequest {
@@ -347,7 +336,6 @@ struct PatchExecutionScheduleRequest {
       .set("end", end);
   }
 }
-
 // --- Meta / Capabilities ---
 
 struct CapabilitiesResponse {

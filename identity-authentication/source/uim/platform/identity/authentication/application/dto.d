@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.application.dto;
-
 // import uim.platform.identity.authentication.domain.types;
 // import uim.platform.identity.authentication.domain.entities.policy : PolicyRule;
-
 /// --- Authentication DTOs ---
 import uim.platform.identity.authentication;
 
@@ -31,7 +29,6 @@ struct AuthResult {
   string sessionId;
   UserId userId;
 }
-
 /// --- User DTOs ---
 
 struct CreateUserRequest {
@@ -60,7 +57,6 @@ struct UserResponse {
     return error.length == 0;
   }
 }
-
 /// --- IdaGroup DTOs ---
 
 struct CreateGroupRequest {
@@ -78,7 +74,6 @@ struct GroupResponse {
     return error.length == 0;
   }
 }
-
 /// --- Application DTOs ---
 
 struct CreateAppRequest {
@@ -110,7 +105,6 @@ struct AppResponse {
     return error.length == 0;
   }
 }
-
 /// --- Tenant DTOs ---
 
 struct CreateTenantRequest {
@@ -136,7 +130,6 @@ struct TenantResponse {
     return error.length == 0;
   }
 }
-
 /// --- Policy DTOs ---
 
 struct CreatePolicyRequest {

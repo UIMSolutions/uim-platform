@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.process_automation.infrastructure.container;
-
 // import uim.platform.process_automation.infrastructure.config;
-
 // // Repositories
 // import uim.platform.process_automation.infrastructure.persistence.memory.processes;
 // import uim.platform.process_automation.infrastructure.persistence.memory.process_instances;
@@ -18,7 +16,6 @@ module uim.platform.process_automation.infrastructure.container;
 // import uim.platform.process_automation.infrastructure.persistence.memory.actions;
 // import uim.platform.process_automation.infrastructure.persistence.memory.visibilities;
 // import uim.platform.process_automation.infrastructure.persistence.memory.artifacts;
-
 // // Use Cases
 // import uim.platform.process_automation.application.usecases.manage.processes;
 // import uim.platform.process_automation.application.usecases.manage.process_instances;
@@ -30,7 +27,6 @@ module uim.platform.process_automation.infrastructure.container;
 // import uim.platform.process_automation.application.usecases.manage.actions;
 // import uim.platform.process_automation.application.usecases.manage.visibilities;
 // import uim.platform.process_automation.application.usecases.manage.artifacts;
-
 // // Controllers
 // import uim.platform.process_automation.presentation.http.controllers.process;
 // import uim.platform.process_automation.presentation.http.controllers.process_instance;

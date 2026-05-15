@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.services.keyring_manager;
-
 // import uim.platform.credential_store.domain.types;
 
 

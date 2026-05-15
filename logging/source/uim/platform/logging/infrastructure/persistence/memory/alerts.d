@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.alerts;
-
 // import uim.platform.logging.domain.entities.alert;
 // import uim.platform.logging.domain.ports.repositories.alerts;
 // import uim.platform.logging.domain.types;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.services.validators.transport_release;
-
 // import uim.platform.abap_environment.domain.entities.transport_request;
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
@@ -21,7 +20,6 @@ struct TransportValidation {
     return Json.emptyObject.set("valid", valid).set("errors", errors.toJson);
   }
 }
-
 /// Domain service: validates transport request release preconditions.
 struct TransportReleaseValidator {
   /// Validate that a transport request can be released.

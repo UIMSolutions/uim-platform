@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.adapters.csv_export;
-
 // import uim.platform.analytics.app.ports.export_port;
-
 /// Adapter: simple CSV export implementation.
 import uim.platform.analytics;
 

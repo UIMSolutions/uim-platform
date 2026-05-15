@@ -8,8 +8,6 @@ module uim.platform.data.privacy.presentation.http.controllers.data_retrieval_re
 
 
 
-
-
 // import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;

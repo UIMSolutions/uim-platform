@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.business_subprocess;
-
 // import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;

@@ -35,7 +35,6 @@ struct EntityId {
 Json toJson(EntityId id) {
   return serializeToJson(id);
 }
-
 /// Audit metadata attached to every domain entity.
 struct AuditInfo {
   SysTime createdAt;
@@ -58,7 +57,6 @@ struct AuditInfo {
       .set("updatedBy", updatedBy);
   }
 }
-
 /// Sharing / visibility scope.
 enum Visibility {
   Private,
@@ -66,7 +64,6 @@ enum Visibility {
   Organization,
   Public,
 }
-
 /// Status of an analytical artifact.
 enum ArtifactStatus {
   Draft,

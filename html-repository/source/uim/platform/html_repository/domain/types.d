@@ -91,27 +91,23 @@ struct SpaceId {
 
   mixin DomainId;
 }
-
 // Application visibility
 enum AppVisibility {
   private_,   // accessible only within same space
   public_,    // shared across spaces
 }
-
 // Application status
 enum AppStatus {
   active,
   inactive,
   deleted_,
 }
-
 // Version status
 enum VersionStatus {
   active,
   superseded,
   archived,
 }
-
 // Deployment status
 enum DeploymentStatus {
   pending,
@@ -120,34 +116,29 @@ enum DeploymentStatus {
   failed,
   rolledBack,
 }
-
 // Deployment operation type
 enum DeploymentOperation {
   deploy,
   undeploy,
   redeploy,
 }
-
 // Service plan type
 enum ServicePlan {
   appHost,     // for deploying HTML5 apps
   appRuntime,  // for accessing HTML5 apps at runtime
 }
-
 // Service instance status
 enum InstanceStatus {
   active,
   suspended,
   deleted_,
 }
-
 // Cache status
 enum CacheStatus {
   valid,
   stale,
   expired,
 }
-
 // Content type category (for file classification)
 enum FileCategory {
   html,
@@ -159,7 +150,6 @@ enum FileCategory {
   xml,
   other,
 }
-
 // Route status
 enum RouteStatus {
   active,

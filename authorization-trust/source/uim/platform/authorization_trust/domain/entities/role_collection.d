@@ -10,7 +10,6 @@ import uim.platform.authorization_trust;
 mixin(ShowModule!());
 
 @safe:
-
 /// A business-level grouping of roles, assigned as a whole to users.
 /// Mirrors the SAP BTP concept of Role Collections in XSUAA.
 struct RoleCollectionEntity {

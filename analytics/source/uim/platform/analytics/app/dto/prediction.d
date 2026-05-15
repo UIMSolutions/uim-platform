@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.app.dto.prediction;
-
 // 
 // import uim.platform.analytics.domain.entities.prediction;
 import uim.platform.analytics;

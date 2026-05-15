@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.retention_policies;
-
 //import uim.platform.logging.domain.entities.retention_policy;
 //import uim.platform.logging.domain.ports.repositories.retention_policys;
 //import uim.platform.logging.domain.types;

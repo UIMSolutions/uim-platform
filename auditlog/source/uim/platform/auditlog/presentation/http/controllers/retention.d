@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.retention;
-
 // 
 // 
 // import uim.platform.auditlog.application.usecases.manage.retention;

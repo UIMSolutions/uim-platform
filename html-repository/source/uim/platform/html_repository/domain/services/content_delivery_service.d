@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.services.content_delivery_service;
-
 // import uim.platform.html_repository.domain.types;
-
 
 // import std.digest.md : md5Of, toHexString;
 import uim.platform.html_repository;

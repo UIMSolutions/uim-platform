@@ -99,7 +99,6 @@ struct ResourceGroupId {
 
   mixin DomainId;
 }
-
 // Document processing status
 enum DocumentStatus {
   pending,
@@ -108,7 +107,6 @@ enum DocumentStatus {
   failed,
   confirmed,
 }
-
 // Training job lifecycle
 enum TrainingJobStatus {
   pending,
@@ -117,7 +115,6 @@ enum TrainingJobStatus {
   failed,
   cancelled,
 }
-
 // Extraction method used
 enum ExtractionMethod {
   ml_model,
@@ -125,7 +122,6 @@ enum ExtractionMethod {
   template_based,
   hybrid,
 }
-
 // Document categories
 enum DocumentCategory {
   invoice,
@@ -142,7 +138,6 @@ enum DocumentCategory {
   general,
   custom,
 }
-
 // Field value types in schemas
 enum FieldValueType {
   string_,
@@ -153,21 +148,18 @@ enum FieldValueType {
   address,
   line_items,
 }
-
 // Confidence levels
 enum ConfidenceLevel {
   high,
   medium,
   low,
 }
-
 // Enrichment match status
 enum EnrichmentMatchStatus {
   matched,
   unmatched,
   ambiguous,
 }
-
 // File types supported
 enum FileType {
   pdf,
@@ -177,14 +169,12 @@ enum FileType {
   xlsx,
   docx,
 }
-
 // Schema status
 enum SchemaStatus {
   active,
   inactive,
   draft,
 }
-
 // Template status
 enum TemplateStatus {
   active,

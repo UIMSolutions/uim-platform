@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.schema;
-
 // import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory;
 
@@ -40,7 +39,6 @@ struct SchemaAttribute {
       .set("referenceTypes", referenceTypes);
   }
 }
-
 /// Custom schema definition (SCIM 2.0 schema extension).
 struct Schema {
 mixin TenantEntity!SchemaId; // URN, e.g., "urn:sap:cloud:scim:schemas:extension:custom:2.0:MySchema"

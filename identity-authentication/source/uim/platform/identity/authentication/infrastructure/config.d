@@ -17,7 +17,6 @@ struct SrvConfig {
   int sessionTimeoutHours = 8;
   int tokenExpiryHours = 1;
 }
-
 /// Load configuration (extend to read from env vars or config files).
 SrvConfig loadConfig() {
   // import std.process : environment;

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.view_;
-
 // import uim.platform.datasphere.application.usecases.manage.views;
 // import uim.platform.datasphere.application.dto;
 

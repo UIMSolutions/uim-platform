@@ -15,7 +15,6 @@ struct SrvConfig {
   ushort port = 8082;
   string serviceName = "Identity Directory Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

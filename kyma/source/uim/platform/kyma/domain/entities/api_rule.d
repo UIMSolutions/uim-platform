@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.api_rule;
-
 // import uim.platform.kyma.domain.types;
 import uim.platform.kyma;
 
@@ -72,7 +71,6 @@ struct ApiRule {
   }
 
 }
-
 /// A single rule entry within an API rule.
 struct ApiRuleEntry {
   string path;

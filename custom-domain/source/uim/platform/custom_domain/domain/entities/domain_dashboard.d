@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.custom_domain.domain.entities.domain_dashboard;
-
 // import uim.platform.custom_domain.domain.types;
 import uim.platform.custom_domain;
 
 mixin(ShowModule!());
 
 @safe:
-
 /// Dashboard metric representing a specific aspect of the domain management system, such as total domains, active certificates, etc.
 struct DashboardMetric {
     string name;
@@ -29,7 +27,6 @@ struct DashboardMetric {
             .set("measuredAt", measuredAt);
     }
 }
-
 /// Warning about an upcoming certificate expiration, including severity level based on how soon the expiration is.
 struct CertificateExpirationWarning {
     string certificateId;
@@ -47,7 +44,6 @@ struct CertificateExpirationWarning {
             .set("severity", severity.to!string);
     }
 }
-
 /// The DomainDashboard entity aggregates key metrics and health information about the custom domain management system for a tenant, providing insights into the current state and potential issues.
 struct DomainDashboard {
     mixin TenantEntity!(DomainDashboardId);

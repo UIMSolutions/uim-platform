@@ -10,7 +10,6 @@ import uim.platform.identity.directory.domain.entities.user : UserName, Email,
   PhoneNumber, Address, ExtendedAttribute;
 import uim.platform.identity.directory.domain.entities.group : GroupMember;
 import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
-
 /// --- User DTOs ---
 
 struct CreateUserRequest {
@@ -55,7 +54,6 @@ struct UserResponse {
     return error.length == 0;
   }
 }
-
 /// --- Group DTOs ---
 
 struct CreateGroupRequest {
@@ -93,7 +91,6 @@ struct GroupResponse {
     return error.length == 0;
   }
 }
-
 /// --- Schema DTOs ---
 
 struct CreateSchemaRequest {
@@ -119,7 +116,6 @@ struct SchemaResponse {
     return error.length == 0;
   }
 }
-
 /// --- Password Policy DTOs ---
 
 struct CreatePasswordPolicyRequest {
@@ -149,7 +145,6 @@ struct PasswordPolicyResponse {
     return error.length == 0;
   }
 }
-
 /// --- API Client DTOs ---
 
 struct CreateApiClientRequest {
@@ -170,7 +165,6 @@ struct ApiClientResponse {
     return error.length == 0;
   }
 }
-
 /// --- SCIM List Response ---
 
 struct ScimListResponse(T) {

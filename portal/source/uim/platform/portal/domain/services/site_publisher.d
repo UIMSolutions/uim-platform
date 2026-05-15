@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.portal.domain.services.site_publisher;
-
 // import uim.platform.portal.domain.entities.site;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;

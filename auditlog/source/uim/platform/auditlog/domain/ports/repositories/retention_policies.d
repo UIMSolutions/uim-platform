@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.ports.repositories.retention_policies;
-
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.retention_policy;
 
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
-
 /// Port for persisting retention policies.
 @safe:
 interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {

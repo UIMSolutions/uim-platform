@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence.memory.consent_purposes;
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.consent_purpose;
 // import uim.platform.data.privacy.domain.ports.consent_purpose_repository;

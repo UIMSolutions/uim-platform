@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.infrastructure.persistence.memory.monitored_resources;
-
 // import uim.platform.monitoring.domain.types;
 // import uim.platform.monitoring.domain.entities.monitored_resource;
 // import uim.platform.monitoring.domain.ports.repositories.monitored_resources;

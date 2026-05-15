@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.ports.repositories.metrics;
-
 // import uim.platform.monitoring.domain.entities.metric;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;

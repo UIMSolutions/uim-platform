@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.communication_arrangement;
-
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
@@ -26,7 +25,6 @@ struct CommunicationEndpoint {
       .set("active", active);
   }
 }
-
 /// Communication arrangement linking scenario, system, and credentials.
 struct CommunicationArrangement {
   mixin TenantEntity!(CommunicationArrangementId);

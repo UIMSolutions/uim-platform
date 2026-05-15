@@ -8,7 +8,6 @@ module uim.platform.data.quality.presentation.http.controllers.cleansing_rule;
 
 
 
-
 // import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;

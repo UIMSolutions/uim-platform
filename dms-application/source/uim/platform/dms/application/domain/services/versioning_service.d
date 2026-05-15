@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.services.versioning_service;
-
 //
 //// import std.datetime.systime : Clock;
 //// import std.uuid : randomUUID;

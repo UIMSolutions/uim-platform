@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.rule_set;
-
 // import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy;
 
@@ -17,7 +16,6 @@ struct RuleCondition {
   RuleOperator operator = RuleOperator.equals;
   string value; // comparison value
 }
-
 /// A rule set — evaluates master data to determine applicable business purposes.
 struct RuleSet {
   mixin TenantEntity!(RuleSetId);

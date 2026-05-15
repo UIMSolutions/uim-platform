@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.workflow_step;
-
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 

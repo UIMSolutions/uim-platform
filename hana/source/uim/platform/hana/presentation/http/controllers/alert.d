@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.alert;
-
 // import uim.platform.hana.application.usecases.manage.alerts;
 // import uim.platform.hana.application.dto;
 

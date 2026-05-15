@@ -6,8 +6,6 @@
 module uim.platform.abap_environment.presentation.http.controllers.communication_arrangement;
 
 
-
-
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.communication_arrangements;

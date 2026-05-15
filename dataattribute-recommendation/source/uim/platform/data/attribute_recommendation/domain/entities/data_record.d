@@ -6,7 +6,6 @@
 module uim.platform.data.attribute_recommendation.domain.entities.data_record;
 
 import uim.platform.data.attribute_recommendation.domain.types;
-
 /// An individual record within a dataset, holding attribute key-value pairs
 /// and optional ground-truth labels for supervised training.
 struct DataRecord {

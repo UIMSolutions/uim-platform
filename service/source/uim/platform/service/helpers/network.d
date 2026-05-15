@@ -46,7 +46,6 @@ string[] normalizedSegments(string subPath) {
   }
   return clean.split("/");
 }
-
 // private static string[] normalizedSegments(string path) {
 //   auto parts = path.split("/");
 //   string[] segs;

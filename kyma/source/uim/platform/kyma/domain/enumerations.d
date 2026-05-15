@@ -14,7 +14,6 @@ enum EnvironmentStatus {
     deprovisioning,
     error,
 }
-
 /// Kyma plan / machine type.
 enum KymaPlan {
     azure,
@@ -24,13 +23,11 @@ enum KymaPlan {
     free_,
     trial,
 }
-
 /// Status of a Kubernetes namespace.
 enum NamespaceStatus {
     active,
     terminating,
 }
-
 /// Serverless function runtime language.
 enum FunctionRuntime {
     nodejs18,
@@ -53,7 +50,6 @@ FunctionRuntime toRuntime(string runtimeName) {
         return FunctionRuntime.nodejs20;
     }
 }
-
 /// Status of a serverless function.
 enum FunctionStatus {
     building,
@@ -62,13 +58,11 @@ enum FunctionStatus {
     error,
     inactive,
 }
-
 /// Scaling type for serverless functions.
 enum ScalingType {
     fixed,
     auto_,
 }
-
 /// API rule access strategy.
 enum AccessStrategy {
     noAuth,
@@ -76,14 +70,12 @@ enum AccessStrategy {
     jwt,
     allowAll,
 }
-
 /// API rule status.
 enum ApiRuleStatus {
     ok,
     error,
     notReady,
 }
-
 /// HTTP methods for API rules.
 enum ApiHttpMethod {
     get_,
@@ -94,7 +86,6 @@ enum ApiHttpMethod {
     head_,
     options_,
 }
-
 /// Status of a service instance.
 enum ServiceInstanceStatus {
     creating,
@@ -103,7 +94,6 @@ enum ServiceInstanceStatus {
     deleting,
     updating,
 }
-
 /// Status of a service binding.
 enum ServiceBindingStatus {
     creating,
@@ -111,13 +101,11 @@ enum ServiceBindingStatus {
     failed,
     deleting,
 }
-
 /// Event type encoding.
 enum EventTypeEncoding {
     exact,
     prefix,
 }
-
 /// Status of an event subscription.
 enum SubscriptionStatus {
     active,
@@ -125,7 +113,6 @@ enum SubscriptionStatus {
     error,
     paused,
 }
-
 /// Kyma module status.
 enum ModuleStatus {
     enabled,
@@ -135,7 +122,6 @@ enum ModuleStatus {
     error,
     warning_,
 }
-
 /// Known Kyma module types.
 enum ModuleType : string {
     istio = "istio",
@@ -149,7 +135,6 @@ enum ModuleType : string {
     connectivityProxy = "connectivity-proxy",
     custom = "custom",
 }
-
 /// Application connectivity status.
 enum AppConnectivityStatus {
     connected,
@@ -157,14 +142,12 @@ enum AppConnectivityStatus {
     pairing,
     error,
 }
-
 /// Application registration type.
 enum AppRegistrationType {
     api,
     events,
     apiAndEvents,
 }
-
 /// Resource quota enforcement level.
 enum QuotaEnforcement {
     enforce,

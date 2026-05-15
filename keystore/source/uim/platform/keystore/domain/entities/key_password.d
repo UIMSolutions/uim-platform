@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.entities.key_password;
-
 // import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
@@ -12,8 +11,6 @@ import uim.platform.keystore;
 mixin(ShowModule!());
 
 @safe:
-
-
 /// A stored password or key phrase that protects a keystore or key entry.
 /// Passwords are encrypted at rest and scoped per application/subscription.
 struct KeyPassword {

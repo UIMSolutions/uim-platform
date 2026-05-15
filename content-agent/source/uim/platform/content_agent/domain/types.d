@@ -90,7 +90,6 @@ struct ContentActivityId {
 
   mixin DomainId;
 }
-
 /// Status of a content package.
 enum PackageStatus {
   draft,
@@ -100,14 +99,12 @@ enum PackageStatus {
   delivered,
   error,
 }
-
 /// Content format for package assembly.
 enum ContentFormat {
   mtar,
   zip,
   json,
 }
-
 /// Status of a content provider.
 enum ProviderStatus {
   active,
@@ -115,7 +112,6 @@ enum ProviderStatus {
   error,
   deregistered,
 }
-
 /// Content category provided by a content provider.
 enum ContentCategory {
   integrationFlow,
@@ -138,7 +134,6 @@ enum ContentCategory {
   functionLibrary,
   custom,
 }
-
 /// Status of a transport request.
 enum TransportStatus {
   created,
@@ -152,7 +147,6 @@ enum TransportStatus {
   failed,
   cancelled,
 }
-
 /// Status of an export job.
 enum ExportStatus {
   pending,
@@ -163,7 +157,6 @@ enum ExportStatus {
   failed,
   cancelled,
 }
-
 /// Status of an import job.
 enum ImportStatus {
   pending,
@@ -174,7 +167,6 @@ enum ImportStatus {
   failed,
   cancelled,
 }
-
 /// Transport mode.
 enum TransportMode {
   cloudTransportManagement,
@@ -182,14 +174,12 @@ enum TransportMode {
   directExport,
   fileDownload,
 }
-
 /// Type of transport queue.
 enum QueueType {
   cloudTMS,
   ctsPlus,
   local,
 }
-
 /// Type of recorded activity.
 enum ActivityType {
   packageCreated,
@@ -210,7 +200,6 @@ enum ActivityType {
   importFailed,
   queueConfigured,
 }
-
 /// Severity level for activities.
 enum ActivitySeverity {
   info,

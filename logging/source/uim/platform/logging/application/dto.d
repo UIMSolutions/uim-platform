@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.application.dto;
-
 // import uim.platform.logging.domain.types;
 
 import uim.platform.logging;
@@ -39,7 +38,6 @@ struct IngestLogBatchRequest {
 
   IngestLogRequest[] entries;
 }
-
 // --- Log Stream ---
 
 struct CreateLogStreamRequest {
@@ -60,7 +58,6 @@ struct UpdateLogStreamRequest {
   string retentionPolicyId;
   bool isActive;
 }
-
 // --- Trace / Span Ingestion ---
 struct SpanEventDTO {
   string name;
@@ -88,7 +85,6 @@ struct IngestSpanBatchRequest {
   TenantId tenantId;
   IngestSpanRequest[] spans;
 }
-
 // --- Search ---
 
 struct SearchLogsRequest {
@@ -108,7 +104,6 @@ struct SearchLogsRequest {
 struct SearchLogsResponse {
   long totalCount;
 }
-
 // --- Dashboard ---
 
 struct PanelDTO {
@@ -143,7 +138,6 @@ struct UpdateDashboardRequest {
   bool isDefault;
   PanelDTO[] panels;
 }
-
 // --- Retention Policy ---
 
 struct CreateRetentionPolicyRequest {
@@ -168,7 +162,6 @@ struct UpdateRetentionPolicyRequest {
   bool isDefault;
   bool isActive;
 }
-
 // --- Alert Rule ---
 
 struct CreateAlertRuleRequest {
@@ -203,7 +196,6 @@ struct UpdateAlertRuleRequest {
   bool isEnabled;
   NotificationChannelId[] channelIds;
 }
-
 // --- Alert ---
 
 struct AcknowledgeAlertRequest {
@@ -217,7 +209,6 @@ struct ResolveAlertRequest {
   TenantId tenantId;
   UserId resolvedBy;
 }
-
 // --- Notification Channel ---
 
 struct CreateNotificationChannelRequest {
@@ -249,7 +240,6 @@ struct UpdateNotificationChannelRequest {
   string slackWebhookUrl;
   string slackChannel;
 }
-
 // --- Pipeline ---
 
 struct ProcessorDTO {
@@ -279,7 +269,6 @@ struct UpdatePipelineRequest {
   LogStreamId targetStreamId;
   bool isActive;
 }
-
 // --- Overview ---
 
 struct OverviewSummary {

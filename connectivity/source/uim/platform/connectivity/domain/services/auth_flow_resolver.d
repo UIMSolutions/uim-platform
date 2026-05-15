@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.services.auth_flow_resolver;
-
 // import uim.platform.connectivity.domain.entities.destination;
 // import uim.platform.connectivity.domain.entities.certificate;
 // import uim.platform.connectivity.domain.types;
@@ -19,7 +18,6 @@ struct AuthFlowResult {
   string[] errors;
   string resolvedAuthHeader; // e.g., "Bearer <token>" or "Basic <b64>"
 }
-
 /// Domain service: validates and resolves authentication configuration for destinations.
 struct AuthFlowResolver {
   /// Validate that the destination has the required fields for its auth type.

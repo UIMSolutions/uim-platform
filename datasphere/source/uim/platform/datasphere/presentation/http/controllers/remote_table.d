@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.remote_table;
-
 // import uim.platform.datasphere.application.usecases.manage.remote_tables;
 // import uim.platform.datasphere.application.dto;
 

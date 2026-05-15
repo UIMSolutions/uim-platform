@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.ports.repositories.app_versions;
-
 // import uim.platform.html_repository.domain.entities.app_version;
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;

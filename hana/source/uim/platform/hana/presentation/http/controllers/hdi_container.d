@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.hdi_container;
-
 // import uim.platform.hana.application.usecases.manage.hdi_containers;
 // import uim.platform.hana.application.dto;
 import uim.platform.hana;

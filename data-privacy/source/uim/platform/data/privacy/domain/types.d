@@ -209,7 +209,6 @@ struct AnonymizationConfigId  {
 
   mixin DomainId;
 }
-
 /// Type of data subject whose personal data is processed.
 enum DataSubjectType {
   naturalPerson,
@@ -219,7 +218,6 @@ enum DataSubjectType {
   partner,
   applicant,
 }
-
 /// Categories of personal data (GDPR Art. 9 special categories marked).
 enum PersonalDataCategory {
   identification, // name, ID number, date of birth
@@ -236,7 +234,6 @@ enum PersonalDataCategory {
   location, // GPS, IP-based geolocation
   behavioral, // browsing, purchase history
 }
-
 /// Legal basis for processing personal data (GDPR Art. 6).
 enum LegalBasis {
   consent, // Art. 6(1)(a)
@@ -246,7 +243,6 @@ enum LegalBasis {
   publicTask, // Art. 6(1)(e)
   legitimateInterest, // Art. 6(1)(f)
 }
-
 /// Purpose for which personal data is processed.
 enum ProcessingPurpose {
   serviceDelivery,
@@ -259,7 +255,6 @@ enum ProcessingPurpose {
   security,
   research,
 }
-
 /// Status of a consent record.
 enum ConsentStatus {
   pending,
@@ -267,7 +262,6 @@ enum ConsentStatus {
   revoked,
   expired,
 }
-
 /// Status of a data deletion request (GDPR Art. 17).
 enum DeletionStatus {
   requested,
@@ -276,14 +270,12 @@ enum DeletionStatus {
   failed,
   blocked,
 }
-
 /// Status of a data blocking / restriction request (GDPR Art. 18).
 enum BlockingStatus {
   requested,
   active,
   released,
 }
-
 /// Status of a data retrieval / access request (GDPR Art. 15).
 enum RetrievalStatus {
   requested,
@@ -291,14 +283,12 @@ enum RetrievalStatus {
   completed,
   failed,
 }
-
 /// Sensitivity classification for personal data fields.
 enum DataSensitivity {
   standard,
   sensitive, // GDPR Art. 9 special categories
   highlyConfidential,
 }
-
 /// Type of data subject rights request.
 enum RequestType {
   access, // Art. 15
@@ -308,14 +298,12 @@ enum RequestType {
   restriction, // Art. 18
   objection, // Art. 21
 }
-
 /// Retention rule status.
 enum RetentionRuleStatus {
   active,
   inactive,
   expired,
 }
-
 /// Status of a correction request (GDPR Art. 16).
 enum CorrectionStatus {
   requested,
@@ -323,7 +311,6 @@ enum CorrectionStatus {
   completed,
   rejected,
 }
-
 /// Status of an archive request.
 enum ArchiveStatus {
   scheduled,
@@ -331,7 +318,6 @@ enum ArchiveStatus {
   completed,
   failed,
 }
-
 /// Status of a destruction request.
 enum DestructionStatus {
   scheduled,
@@ -339,7 +325,6 @@ enum DestructionStatus {
   completed,
   failed,
 }
-
 /// Status of a purpose record.
 enum PurposeRecordStatus {
   active,
@@ -347,7 +332,6 @@ enum PurposeRecordStatus {
   expired,
   deactivated,
 }
-
 /// Status of a consent purpose configuration.
 enum ConsentPurposeStatus {
   draft,
@@ -355,14 +339,12 @@ enum ConsentPurposeStatus {
   inactive,
   deprecated_,
 }
-
 /// Status of a rule set.
 enum RuleSetStatus {
   draft,
   active,
   inactive,
 }
-
 /// Status of an information report.
 enum InformationReportStatus {
   requested,
@@ -370,7 +352,6 @@ enum InformationReportStatus {
   completed,
   failed,
 }
-
 /// Export format for information reports.
 enum ExportFormat {
   pdf,
@@ -378,14 +359,12 @@ enum ExportFormat {
   xml,
   csv,
 }
-
 /// Status of a business context version.
 enum BusinessContextStatus {
   draft,
   active,
   inactive,
 }
-
 /// Anonymization method.
 enum AnonymizationMethod {
   masking,
@@ -395,14 +374,12 @@ enum AnonymizationMethod {
   tokenization,
   noise,
 }
-
 /// Status of an anonymization config.
 enum AnonymizationConfigStatus {
   draft,
   active,
   inactive,
 }
-
 /// Rule operator for rule set conditions.
 enum RuleOperator {
   equals,

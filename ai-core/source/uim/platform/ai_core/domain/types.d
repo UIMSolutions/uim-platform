@@ -122,7 +122,6 @@ enum ExecutableType {
   workflow,
   serving,
 }
-
 // Execution lifecycle states
 enum ExecutionStatus {
   pending,
@@ -133,7 +132,6 @@ enum ExecutionStatus {
   dead,
   unknown,
 }
-
 // Deployment lifecycle states
 enum DeploymentStatus {
   pending,
@@ -142,7 +140,6 @@ enum DeploymentStatus {
   dead,
   unknown,
 }
-
 // Artifact categories
 enum ArtifactKind {
   model,
@@ -150,7 +147,6 @@ enum ArtifactKind {
   resultset,
   other,
 }
-
 // Target state for PATCH operations
 enum TargetStatus {
   running,
@@ -158,21 +154,18 @@ enum TargetStatus {
   deleted_,
   completed,
 }
-
 // Metric value types
 enum MetricValueType {
   float_,
   int_,
   string_,
 }
-
 // Log severity levels
 enum LogSeverity {
   info,
   warn,
   error,
 }
-
 // Schedule status
 enum ScheduleStatus {
   active,

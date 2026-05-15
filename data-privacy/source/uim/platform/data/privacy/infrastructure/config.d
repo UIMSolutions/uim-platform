@@ -16,7 +16,6 @@ struct SrvConfig {
   ushort port = 8089;
   string serviceName = "Data Privacy Integration Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

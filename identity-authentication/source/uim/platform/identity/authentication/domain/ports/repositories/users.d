@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.ports.repositories.users;
-
 // import uim.platform.identity.authentication.domain.entities.user;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;

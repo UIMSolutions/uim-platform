@@ -207,7 +207,6 @@ struct VersionId  {
 
     mixin DomainId;
 }
-
 // --- Process (Workflow Definition) ---
 
 enum ProcessStatus {
@@ -247,7 +246,6 @@ enum StepType {
     errorEvent,
     condition,
 }
-
 // --- Process Instance ---
 
 enum InstanceStatus {
@@ -266,7 +264,6 @@ enum InstancePriority {
     high,
     critical,
 }
-
 // --- PATask ---
 
 enum TaskStatus {
@@ -294,7 +291,6 @@ enum TaskType {
     notification,
     custom,
 }
-
 // --- Decision (Business Rules) ---
 
 enum DecisionStatus {
@@ -335,7 +331,6 @@ enum ConditionType {
     in_,
     notIn,
 }
-
 // --- Form ---
 
 enum FormStatus {
@@ -362,7 +357,6 @@ enum FieldType {
     link,
     image,
 }
-
 // --- Automation (RPA Bot) ---
 
 enum AutomationStatus {
@@ -387,7 +381,6 @@ enum AutomationRunStatus {
     cancelled,
     timedOut,
 }
-
 // --- Trigger ---
 
 enum TriggerType {
@@ -416,7 +409,6 @@ enum ScheduleFrequency {
     yearly,
     cron,
 }
-
 // --- Action (Integration) ---
 
 enum ActionStatus {
@@ -444,7 +436,6 @@ enum HttpMethod {
     head_,
     options_,
 }
-
 // --- Visibility (Process Monitoring) ---
 
 enum VisibilityStatus {
@@ -472,7 +463,6 @@ enum MetricType {
     percentage,
     duration,
 }
-
 // --- Artifact Store ---
 
 enum ArtifactType {

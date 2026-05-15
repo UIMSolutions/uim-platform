@@ -1,5 +1,4 @@
 module uim.platform.masterdata_governance.domain.enumerations;
-
 // --- Enumerations ---
 
 enum BPCategory {

@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.transport_request;
-
 // import uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
@@ -32,7 +31,6 @@ struct TransportTask {
       .set("releasedAt", releasedAt);
   }
 }
-
 /// Transport request for managing changes between systems (CTS-like).
 struct TransportRequest {
   mixin TenantEntity!(TransportRequestId);

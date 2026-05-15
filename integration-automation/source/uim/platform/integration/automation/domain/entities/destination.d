@@ -4,14 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.destination;
-
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
 mixin(ShowModule!());
 
 @safe:
-
 /// A destination configuration — defines how to connect to a target system
 /// for automated step execution. Mirrors SAP BTP destination service concepts.
 struct Destination {

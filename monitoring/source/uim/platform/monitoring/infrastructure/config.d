@@ -16,7 +16,6 @@ struct SrvConfig {
   ushort port = 8093;
   string serviceName = "Monitoring Service";
 }
-
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {
   // import std.process : environment;

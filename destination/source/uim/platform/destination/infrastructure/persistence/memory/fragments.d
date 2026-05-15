@@ -4,11 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.persistence.memory.fragments;
-
 // import uim.platform.destination.domain.types;
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.ports.repositories.fragments;
-
 // 
 //  
 import uim.platform.destination;
