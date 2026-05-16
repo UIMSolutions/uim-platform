@@ -5,15 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.app.dto.datasource;
 
-
-import uim.platform.analytics.domain.entities.datasource;
+//import uim.platform.analytics.domain.entities.datasource;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
 struct CreateDataSourceRequest {
   string name;
-  string sourceType;
+  DataSourceType sourceType;
   string host;
   int port;
   string databaseName;
@@ -22,20 +21,20 @@ struct CreateDataSourceRequest {
 }
 
 struct DataSourceResponse {
-  string id;
+  DataSourceId id;
   string name;
-  string sourceType;
+  DataSourceType sourceType;
   string host;
   int port;
   string databaseName;
   string status;
 
-  static DataSourceResponse fromEntity(DataSource ds) {
-    if (ds.isNull)
-      return DataSourceResponse.init;
+  // static DataSourceResponse fromEntity(DataSource ds) {
+  //   if (ds.isNull)
+  //     return DataSourceResponse.init;
 
-    return DataSourceResponse(ds.id.value, ds.name, ds.sourceType.to!string,
-        ds.connection.host, ds.connection.port, ds.connection.databaseName,
-        ds.connStatus.to!string,);
-  }
+  //   return DataSourceResponse(ds.id, ds.name, ds.sourceType,
+  //       ds.connection.host, ds.connection.port, ds.connection.databaseName,
+  //       ds.connStatus.to!string);
+  // }
 }

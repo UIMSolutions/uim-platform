@@ -25,7 +25,7 @@ class DeploymentController : PlatformController {
     router.post("/api/v2/lm/deployments", &handleCreate);
     router.get("/api/v2/lm/deployments", &handleList);
     router.get("/api/v2/lm/deployments/*", &handleGet);
-    router.patch_("/api/v2/lm/deployments/*", &handlePatch);
+    router.patch("/api/v2/lm/deployments/*", &handlePatch);
     router.delete_("/api/v2/lm/deployments/*", &handleDelete);
   }
 

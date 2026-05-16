@@ -48,8 +48,8 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    Executable getExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId executableId) {
-        return repo.findById(tenantId, resourceGroupId, executableId);
+    Executable getExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
+        return repo.findById(tenantId, resourceGroupId, id);
     }
 
     Executable[] listExecutables(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
@@ -60,8 +60,8 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return repo.findByResourceGroup(tenantId, resourceGroupId);
     }
 
-    CommandResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId executableId) {
-        auto entity = repo.findById(tenantId, resourceGroupId, executableId);
+    CommandResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
+        auto entity = repo.findById(tenantId, resourceGroupId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Executable not found");
 

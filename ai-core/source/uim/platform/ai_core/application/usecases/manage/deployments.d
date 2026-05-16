@@ -32,12 +32,13 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto conf = configurations.findById(r.configurationId, r.resourceGroupId);
+    auto conf = configurations.findById(r.tenantId, r.resourceGroupId, r.configurationId);
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
     Deployment d;
     d.initEntity(r.tenantId);
+    
     d.resourceGroupId = r.resourceGroupId;
     d.configurationId = r.configurationId;
     d.scenarioId = conf.scenarioId;
@@ -51,7 +52,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchDeployment(PatchDeploymentRequest request) {
-    auto d = deployments.findById(request.deploymentId, request.resourceGroupId);
+    auto d = deployments.findById(request.tenantId, request.resourceGroupId, request.deploymentId);
     if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
 
@@ -79,7 +80,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     }
 
     // Support configuration update for running deployments
-    if (request.configurationId.length > 0)
+    if (!request.configurationId.isEmpty)
       d.configurationId = request.configurationId;
 
     if (request.ttl > 0)

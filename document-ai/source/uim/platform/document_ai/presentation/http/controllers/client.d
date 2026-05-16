@@ -27,7 +27,7 @@ class ClientController : PlatformController {
     router.post("/api/v1/admin/clients", &handleCreate);
     router.get("/api/v1/admin/clients", &handleList);
     router.get("/api/v1/admin/clients/*", &handleGet);
-    router.patch_("/api/v1/admin/clients/*", &handlePatch);
+    router.patch("/api/v1/admin/clients/*", &handlePatch);
     router.delete_("/api/v1/admin/clients/*", &handleDelete);
   }
 

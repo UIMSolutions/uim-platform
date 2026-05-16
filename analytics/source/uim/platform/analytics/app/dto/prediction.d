@@ -11,9 +11,12 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 struct CreatePredictionRequest {
+    TenantId tenantId;
+    ResourceGroupId resourceGroupId;
+
   string name;
   string description;
-  string datasetId;
+  DatasetId datasetId;
   string predictionType;
   string targetColumn;
   string[] featureColumns;
@@ -25,10 +28,13 @@ Json toJson(CreatePredictionRequest request) {
 }
 
 struct PredictionResponse {
+  TenantId tenantId;
+  ResourceGroupId resourceGroupId;
+
   string id;
   string name;
   string description;
-  string datasetId;
+  DatasetId datasetId;
   string predictionType;
   string status;
   double accuracy;
@@ -39,8 +45,8 @@ struct PredictionResponse {
     if (p.isNull)
       return PredictionResponse.init;
 
-    return PredictionResponse(p.id.value, p.name, p.description,
-        p.datasetId.value, p.predictionType.to!string,
+    return PredictionResponse(p.tenantId, p.resourceGroupId, p.id, p.name, p.description,
+        p.datasetId, p.predictionType.to!string,
         p.predStatus.to!string, p.lastResult.accuracy, p.lastResult.rmse,
         p.lastResult.modelSummary,);
   }

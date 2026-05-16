@@ -28,7 +28,7 @@ class TrainingJobController : PlatformController {
     router.post("/api/v1/training/jobs", &handleCreate);
     router.get("/api/v1/training/jobs", &handleList);
     router.get("/api/v1/training/jobs/*", &handleGet);
-    router.patch_("/api/v1/training/jobs/*", &handlePatch);
+    router.patch("/api/v1/training/jobs/*", &handlePatch);
     router.delete_("/api/v1/training/jobs/*", &handleDelete);
   }
 

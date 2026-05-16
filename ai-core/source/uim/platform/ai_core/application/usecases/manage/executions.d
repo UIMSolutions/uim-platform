@@ -88,7 +88,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return execRepo.findByResourceGroup(tenantId, resourceGroupId);
   }
 
-  Execution[] listExecutionsB(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
+  Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
     return execRepo.findByScenario(tenantId, resourceGroupId, scenarioId);
   }
 
@@ -99,7 +99,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   size_t countExecutions(TenantId tenantId, ResourceGroupId resourceGroupId) {
     return execRepo.countByResourceGroup(tenantId, resourceGroupId);
   }
-
+  
   CommandResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
     auto execution = execRepo.findById(tenantId, resourceGroupId, executionId);
     if (execution.isNull)

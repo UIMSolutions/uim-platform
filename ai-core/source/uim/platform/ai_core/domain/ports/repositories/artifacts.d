@@ -21,16 +21,16 @@ interface ArtifactRepository : ITenantRepository!(Artifact, ArtifactId) {
   Artifact[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
 
-  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
-  Artifact[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
-  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  Artifact[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
 
-  size_t countByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
-  Artifact[] findByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
-  void removeByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
+  size_t countByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
+  Artifact[] findByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
+  void removeByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
 
-  size_t countByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
-  Artifact[] findByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
-  void removeByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
+  size_t countByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind);
+  Artifact[] findByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind);
+  void removeByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind);
 
 }

@@ -10,34 +10,36 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 /// A Prediction encapsulates a predictive/ML model run (SAC Smart Predict).
-class Prediction {
-  EntityId id;
+struct Prediction {
+  mixin TenantEntity!(PredictionId);
+  ResourceGroupId resourceGroupId;
+
   string name;
   string description;
-  EntityId datasetId;
+  DatasetId datasetId;
   PredictionType predictionType;
   PredictionConfig config;
   PredictionResult lastResult;
   PredictionStatus predStatus;
   AuditInfo audit;
 
-  this() {
-  }
+  // this() {
+  // }
 
-  static Prediction create(string name, string description, string datasetId,
-      PredictionType ptype, PredictionConfig cfg, UserId userId) {
-    auto p = new Prediction();
-    p.id = EntityId.generate();
-    p.name = name;
-    p.description = description;
-    p.datasetId = EntityId(datasetId);
-    p.predictionType = ptype;
-    p.config = cfg;
-    p.lastResult = PredictionResult.init;
-    p.predStatus = PredictionStatus.Created;
-    p.audit = AuditInfo.create(userId);
-    return p;
-  }
+  // static Prediction create(string name, string description, string datasetId,
+  //     PredictionType ptype, PredictionConfig cfg, UserId userId) {
+  //   auto p = new Prediction();
+  //   p.id = EntityId.generate();
+  //   p.name = name;
+  //   p.description = description;
+  //   p.datasetId = EntityId(datasetId);
+  //   p.predictionType = ptype;
+  //   p.config = cfg;
+  //   p.lastResult = PredictionResult.init;
+  //   p.predStatus = PredictionStatus.Created;
+  //   p.audit = AuditInfo.create(userId);
+  //   return p;
+  // }
 
   void markTraining() {
     predStatus = PredictionStatus.Training;
@@ -54,33 +56,3 @@ class Prediction {
   }
 }
 
-enum PredictionType {
-  Classification,
-  Regression,
-  TimeSeries,
-  Clustering,
-  AnomalyDetection,
-}
-
-enum PredictionStatus {
-  Created,
-  Training,
-  Ready,
-  Failed,
-  Archived,
-}
-
-struct PredictionConfig {
-  string targetColumn;
-  string[] featureColumns;
-  int horizonPeriods = 12;
-  double trainTestSplit = 0.8;
-}
-
-struct PredictionResult {
-  double accuracy = 0.0;
-  double rmse = 0.0;
-  double confidenceLevel = 0.0;
-  string errorMessage;
-  string modelSummary;
-}

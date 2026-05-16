@@ -30,6 +30,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
 
     Metric metric;
     metric.initEntity(r.tenantId) ;
+
     metric.resourceGroupId = r.resourceGroupId;
     metric.executionId = r.executionId;
 
@@ -74,11 +75,11 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     return CommandResult(true,  metric.id.value, "");
   }
 
-  Metric[] listByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+  Metric[] listMetrics(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
     return repo.findByExecution(tenantId, rgId, execId);
   }
 
-  Metric getById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+  Metric getMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
     return repo.findById(tenantId, rgId, id);
   }
 

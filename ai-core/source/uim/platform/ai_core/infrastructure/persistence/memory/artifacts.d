@@ -43,52 +43,52 @@ class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), Artifa
     findByResourceGroup(tenantId, rgId).each!(a => remove(a));
   }
 
-  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
-    return findByScenario(tenantId, scenarioId, rgId).length;
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, rgId, scenarioId).length;
   }
 
   Artifact[] filterByScenario(Artifact[] artifacts, ScenarioId scenarioId) {
     return artifacts.filter!(a => a.scenarioId == scenarioId).array;
   }
 
-  Artifact[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+  Artifact[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
     return filterByScenario(findByResourceGroup(tenantId, rgId), scenarioId);
   }
 
-  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
-    findByScenario(tenantId, scenarioId, rgId).each!(a => remove(a));
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    findByScenario(tenantId, rgId, scenarioId).each!(a => remove(a));
   }
 
-  size_t countByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
-    return findByExecution(tenantId, execId, rgId).length;
+  size_t countByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
+    return findByExecution(tenantId, rgId, execId).length;
   }
 
   Artifact[] filterByExecution(Artifact[] artifacts, ExecutionId execId) {
     return artifacts.filter!(a => a.executionId == execId).array;
   }
 
-  Artifact[] findByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+  Artifact[] findByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
     return filterByExecution(findByResourceGroup(tenantId, rgId), execId);
   }
 
-  void removeByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
-    findByExecution(tenantId, execId, rgId).each!(a => remove(a));
+  void removeByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
+    findByExecution(tenantId, rgId, execId).each!(a => remove(a));
   }
 
-  size_t countByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
-    return findByKind(tenantId, kind, rgId).length;
+  size_t countByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind) {
+    return findByKind(tenantId, rgId, kind).length;
   }
 
   Artifact[] filterByKind(Artifact[] artifacts, ArtifactKind kind) {
     return artifacts.filter!(a => a.kind == kind).array;
   }
   
-  Artifact[] findByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
+  Artifact[] findByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind) {
     return filterByKind(findByResourceGroup(tenantId, rgId), kind);
   }
 
-  void removeByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
-    findByKind(tenantId, kind, rgId).each!(a => remove(a));
+  void removeByKind(TenantId tenantId, ResourceGroupId rgId, ArtifactKind kind) {
+    findByKind(tenantId, rgId, kind).each!(a => remove(a));
   }
 
 }

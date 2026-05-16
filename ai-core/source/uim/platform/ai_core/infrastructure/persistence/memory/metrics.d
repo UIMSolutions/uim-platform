@@ -30,7 +30,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     return Metric.init;
   }
   void removeById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
-    findById(tenantId, rgId, id).each!(m => remove(m));
+    remove(findById(tenantId, rgId, id));
   }
 
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {

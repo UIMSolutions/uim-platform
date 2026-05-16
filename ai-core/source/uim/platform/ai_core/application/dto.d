@@ -16,6 +16,7 @@ struct CreateScenarioRequest {
   TenantId tenantId;
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
+
   string name;
   string description;
   string[] labels;
@@ -24,7 +25,7 @@ struct CreateScenarioRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("id", id.value)
+      .set("scenarioId", scenarioId.value)
       .set("name", name)
       .set("description", description)
       .set("labels", labels.toJson());

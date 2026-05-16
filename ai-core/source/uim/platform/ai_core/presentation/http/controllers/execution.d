@@ -26,7 +26,7 @@ class ExecutionController : PlatformController {
     router.post("/api/v2/lm/executions", &handleCreate);
     router.get("/api/v2/lm/executions", &handleList);
     router.get("/api/v2/lm/executions/*", &handleGet);
-    router.patch_("/api/v2/lm/executions/*", &handlePatch);
+    router.patch("/api/v2/lm/executions/*", &handlePatch);
     router.delete_("/api/v2/lm/executions/*", &handleDelete);
   }
 
@@ -39,7 +39,7 @@ class ExecutionController : PlatformController {
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.configurationId = j.getString("configurationId");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createExecution(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -57,10 +57,11 @@ class ExecutionController : PlatformController {
 
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto executions = usecase.list(rgId);
+      auto executions = usecase.listExecutions(tenantId, rgId);
 
-      auto jarr = executions.map!(ex => executionToJson(ex)).array.toJson;
+      auto jarr = executions.map!(ex => ex.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("count", executions.length)
@@ -85,7 +86,7 @@ class ExecutionController : PlatformController {
         return;
       }
 
-      res.writeJsonBody(executionToJson(ex), 200);
+      res.writeJsonBody(ex.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -102,7 +103,7 @@ class ExecutionController : PlatformController {
       r.tenantId = tenantId;
       r.resourceGroupId = rgId;
       r.executionId = id;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = TargetStatus(j.getString("targetStatus"));
 
       auto result = usecase.patch(r);
       if (result.success) {

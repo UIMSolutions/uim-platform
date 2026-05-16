@@ -31,20 +31,20 @@ class ExecutableController : PlatformController {
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-
       auto j = req.json;
+
       CreateExecutableRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = j.getString("scenarioId");
-      r.id = j.getString("id");
+      r.scenarioId = ScenarioId(j.getString("scenarioId"));
+      r.executableId = ExecutableId(j.getString("id"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");
       r.versionId = j.getString("versionId");
       r.deployable = j.getString("deployable");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createExecutable(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,10 +63,10 @@ class ExecutableController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarioId = req.params.get("scenarioId", "");
+      auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
       auto executables = scenarioId.isEmpty
-        ? usecase.listExecutables(tenantId, rgId) : usecase.listExecutables(tenantId, scenarioId, rgId);
+        ? usecase.listExecutables(tenantId, rgId) : usecase.listExecutables(tenantId, rgId, scenarioId);
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
@@ -99,7 +99,7 @@ class ExecutableController : PlatformController {
       auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto e = usecase.getExecutable(tenantId, id, rgId);
+      auto e = usecase.getExecutable(tenantId, rgId, id);
       if (e.isNull) {
         writeError(res, 404, "Executable not found");
         return;

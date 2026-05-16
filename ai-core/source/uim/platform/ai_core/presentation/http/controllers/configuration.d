@@ -31,7 +31,7 @@ class ConfigurationController : ManageController {
   protected override Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto tenantId = req.getTenantId;
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-    auto scenarioId = req.params.get("scenarioId", "");
+    auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
     auto configs = scenarioId.isEmpty
       ? usecase.list(tenantId, rgId) : usecase.listByScenario(tenantId, scenarioId, rgId);
@@ -64,7 +64,7 @@ class ConfigurationController : ManageController {
     CreateConfigurationRequest r;
     r.tenantId = req.getTenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-    r.scenarioId = req.params.get("scenarioId", "");
+    r.scenarioId = ScenarioId(req.params.get("scenarioId", ""));
     r.executableId = req.params.get("executableId", "");
     r.name = req.params.get("name", "");
     r.parameterValues = jsonKeyValuePairs(req, "parameterBindings");
@@ -93,11 +93,8 @@ class ConfigurationController : ManageController {
     if (c.isNull) {
       return Json.emptyObject
         .set("error", "Configuration not found")
-        .set("message", "No configuration found with the given ID");
-
-      
-
-      .set("statusCode", 404);
+        .set("message", "No configuration found with the given ID")
+        .set("statusCode", 404);
     }
 
     return Json.emptyObject
@@ -121,7 +118,7 @@ class ConfigurationController : ManageController {
         .set("message", "Failed to delete configuration")
         .set("statusCode", 404);
     }
-    
+
     return Json.emptyObject
       .set("message", "Configuration deleted")
       .set("statusCode", 200);

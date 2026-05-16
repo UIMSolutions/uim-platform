@@ -6,7 +6,7 @@
 module uim.platform.analytics.app.dto.dataset;
 
 
-import uim.platform.analytics.domain.entities.dataset;
+//import uim.platform.analytics.domain.entities.dataset;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
@@ -17,7 +17,7 @@ struct CreateDatasetRequest {
   ResourceGroupId resourceGroupId;
   string name;
   string description;
-  string dataSourceId;
+  DataSourceId dataSourceId;
   UserId userId;
 }
 
@@ -27,7 +27,7 @@ struct DatasetResponse {
   DatasetId datasetId;
   string name;
   string description;
-  string dataSourceId;
+  DataSourceId dataSourceId;
   string status;
   ColumnResponse[] columns;
 
@@ -38,8 +38,8 @@ struct DatasetResponse {
     ColumnResponse[] cols = d.columns.map!(col => ColumnResponse(col.name,
         col.role.to!string, col.dataType.to!string)).array.toJson;
 
-    return DatasetResponse(d.id.value, d.name, d.description,
-        d.dataSourceId.value, d.status.to!string, cols,);
+    return DatasetResponse(d.tenantId, d.resourceGroupId, d.id, d.name, d.description,
+        d.dataSourceId, d.status.to!string, cols);
   }
 }
 

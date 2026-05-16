@@ -33,12 +33,12 @@ class ScenarioController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-
       auto j = req.json;
+
       CreateScenarioRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = rgId;
-      r.id = j.getString("id");
+      r.scenarioId = ScenarioId(j.getString("id"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.labels = getStrings(j, "labels");
@@ -70,7 +70,7 @@ class ScenarioController : PlatformController {
           .set("id", s.id)
           .set("name", s.name)
           .set("description", s.description)
-          .set("labels", s.labels)
+          .set("labels", s.labels.map!(label => label.toJson).array.toJson)
           .set("createdAt", s.createdAt)
           .set("updatedAt", s.updatedAt);
       }
@@ -101,7 +101,7 @@ class ScenarioController : PlatformController {
         .set("id", s.id)
         .set("name", s.name)
         .set("description", s.description)
-        .set("labels", toJsonArray(s.labels))
+        .set("labels", s.labels.map!(label => label.toJson).array.toJson)
         .set("createdAt", s.createdAt)
         .set("updatedAt", s.updatedAt);
 

@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 struct PerformTaskActionRequest {
     TenantId tenantId;
-    string id;
+    TaskActionId taskActionId;
     string taskId;
     string actionType;
     UserId performedBy;

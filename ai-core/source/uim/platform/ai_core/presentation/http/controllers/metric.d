@@ -23,7 +23,7 @@ class MetricController : PlatformController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
     
-    router.patch_("/api/v2/lm/metrics", &handlePatch);
+    router.patch("/api/v2/lm/metrics", &handlePatch);
     router.get("/api/v2/lm/metrics", &handleGet);
   }
 
@@ -34,12 +34,12 @@ class MetricController : PlatformController {
       PatchMetricsRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.executionId = j.getString("executionId");
+      r.executionId = ExecutionId(j.getString("executionId"));
       r.metrics = jsonKeyValuePairs(j, "metrics");
       r.tags = jsonKeyValuePairs(j, "tags");
       r.customInfo = jsonKeyValuePairs(j, "customInfo");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchMetric(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -56,15 +56,16 @@ class MetricController : PlatformController {
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto execId = req.params.get("executionId", "");
+      auto execId = ExecutionId(req.params.get("executionId", ""));
 
       if (execId.isEmpty) {
         writeError(res, 400, "executionId query parameter is required");
         return;
       }
 
-      auto metrics = usecase.listByExecution(execId, rgId);
+      auto metrics = usecase.listMetrics(tenantId, rgId, execId);
 
       auto jarr = Json.emptyArray;
       foreach (m; metrics) {
