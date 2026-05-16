@@ -19,6 +19,10 @@ class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), 
     return findByWorkspace(tenantId, workspaceId).length;
   }
 
+  Connection[] filterByWorkspace(Connection[] connections, WorkspaceId workspaceId) {
+    return connections.filter!(c => c.workspaceId == workspaceId).array;
+  }
+  
   Connection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return filterByWorkspace(findByTenant(tenantId), workspaceId);
   }

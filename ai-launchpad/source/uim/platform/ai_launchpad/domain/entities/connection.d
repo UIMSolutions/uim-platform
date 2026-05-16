@@ -29,16 +29,16 @@ struct Connection {
 
   Json toJson() {
     return entityToJson
-      .set("name", c.name)
-      .set("type", c.type.to!string)
-      .set("url", c.url)
-      .set("authUrl", c.authUrl)
-      .set("clientId", c.clientId)
-      .set("clientSecretMasked", c.clientSecretMasked)
-      .set("status", c.status.to!string)
-      .set("statusMessage", c.statusMessage)
-      .set("workspaceId", c.workspaceId)
-      .set("defaultResourceGroupId", c.defaultResourceGroupId)
-      .set("description", c.description);
+      .set("name", name)
+      .set("type", type.to!string)
+      .set("url", url)
+      .set("authUrl", authUrl)
+      .set("clientId", clientId)
+      .set("clientSecretMasked", clientSecretMasked)
+      .set("status", status.to!string)
+      .set("statusMessage", statusMessage)
+      .set("workspaceId", workspaceId)
+      .set("defaultResourceGroupId", defaultResourceGroupId)
+      .set("description", description);
   }
 }

@@ -34,6 +34,9 @@ class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepos
     return findByCollection(tenantId, collectionId).length;
   }
 
+  Prompt[] filterByCollection(Prompt[] prompts, PromptCollectionId collectionId) {
+    return prompts.filter!(p => p.collectionId == collectionId).array;
+  }
   Prompt[] findByCollection(TenantId tenantId, PromptCollectionId collectionId) {
     return filterByCollection(findByTenant(tenantId), collectionId);
   }
@@ -44,6 +47,10 @@ class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepos
 
   size_t countByStatus(TenantId tenantId, PromptStatus status) {
     return findByStatus(tenantId, status).length;
+  }
+
+  Prompt[] filterByStatus(Prompt[] prompts, PromptStatus status) {
+    return prompts.filter!(p => p.status == status).array;
   }
 
   Prompt[] findByStatus(TenantId tenantId, PromptStatus status) {

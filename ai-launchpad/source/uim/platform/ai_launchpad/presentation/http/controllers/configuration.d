@@ -41,7 +41,7 @@ class ConfigurationController : PlatformController {
       r.scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 
-      auto result = configurations.createConfiguration(tenantId, r);
+      auto result = configurations.createConfiguration(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -63,8 +63,8 @@ class ConfigurationController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto configs = scenarioId.isEmpty
-        ? configurations.listConfigurations(tenantId, ScenarioId(scenarioId)) : configurations.listConfigurations(
-          tenantId, connectionId);
+        ? configurations.listConfigurations(tenantId, scenarioId) 
+        : configurations.listConfigurations(tenantId, connectionId);
 
       auto jarr = configs.map!(c => c.toJson).array.toJson;
 

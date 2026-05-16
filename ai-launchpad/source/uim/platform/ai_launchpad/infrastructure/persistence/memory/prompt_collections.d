@@ -30,6 +30,9 @@ class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, Pro
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;
   }
+  PromptCollection[] filterByWorkspace(PromptCollection[] collections, WorkspaceId workspaceId) {
+    return collections.filter!(pc => pc.workspaceId == workspaceId).array;
+  }
   PromptCollection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return filterByWorkspace(findByTenant(tenantId), workspaceId);
   }

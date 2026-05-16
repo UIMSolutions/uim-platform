@@ -33,6 +33,8 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
 
     Prompt p;
     p.initEntity(r.tenantId, r.createdBy);
+    p.tenantId = r.tenantId;
+    p.connectionId = r.connectionId;
     p.collectionId = r.collectionId;
     p.name = r.name;
     p.modelName = r.modelName;

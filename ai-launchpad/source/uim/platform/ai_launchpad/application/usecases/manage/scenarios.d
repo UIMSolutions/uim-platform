@@ -20,32 +20,34 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     this.scenarios = scenarios;
   }
 
-  CommandResult sync(SyncScenarioRequest r) {
+  CommandResult sync(TenantId tenantId, SyncScenarioRequest r) {
     Scenario s;
-    s.initEntity();
+    s.initEntity(tenantId);
+
     s.id = r.scenarioId;
     s.connectionId = r.connectionId;
     s.name = r.name;
     s.description = r.description;
     s.labels = r.labels;
+    
     scenarios.save(s);
     return CommandResult(true, s.id.value, "");
   }
 
-  Scenario getById(ConnectionId connectionId, ScenarioId id) {
-    return scenarios.findById(connectionId, id);
+  Scenario getById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+    return scenarios.findById(tenantId, connectionId, id);
   }
 
-  Scenario[] listByConnection(ConnectionId connectionId) {
-    return scenarios.findByConnection(connectionId);
+  Scenario[] listByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return scenarios.findByConnection(tenantId, connectionId);
   }
 
   Scenario[] listAll() {
     return scenarios.findAll();
   }
 
-  CommandResult deleteScenario(ConnectionId connectionId, ScenarioId id) {
-    auto scenario = scenarios.findById(connectionId, id);
+  CommandResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+    auto scenario = scenarios.findById(tenantId, connectionId, id);
     if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
 

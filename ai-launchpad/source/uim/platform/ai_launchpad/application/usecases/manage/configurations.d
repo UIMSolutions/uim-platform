@@ -30,9 +30,10 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
 
     Configuration c;
     c.initEntity(r.tenantId);
+
     c.connectionId = r.connectionId;
     c.scenarioId = r.scenarioId;
-    c.executableId = r.executableId;
+    // c.executableId = r.executableId;
     c.name = r.name;
 
     foreach (pv; r.parameterValues) {
@@ -50,20 +51,20 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Configuration getConfiguration(ConnectionId connectionId, ConfigurationId id) {
-    return repo.findById(connectionId, id);
+  Configuration getConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+    return repo.findById(tenantId, connectionId, id);
   }
 
-  Configuration[] listConfigurations(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+  Configuration[] listConfigurations(TenantId tenantId, ConnectionId connectionId) {
+    return repo.findByConnection(tenantId, connectionId);
   }
 
-  Configuration[] listConfigurations(ConnectionId connectionId, ScenarioId scenarioId) {
-    return repo.findByScenario(connectionId, scenarioId);
+  Configuration[] listConfigurations(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult deleteConfiguration(ConnectionId connectionId, ConfigurationId id) {
-    auto config = repo.findById(connectionId, id);
+  CommandResult deleteConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+    auto config = repo.findById(tenantId, connectionId, id);
     if (config.isNull)
       return CommandResult(false, "", "Configuration not found");
 

@@ -33,7 +33,7 @@ struct ResourceGroup {
   Json toJson() const {
     return entityToJson
       .set("connection_id", connectionId)
-      .set("labels", labels.map!(l => l.toJson()))
+      .set("labels", labels.map!(l => l.toJson()).array.toJson)
       .set("status", status);
   }
 }

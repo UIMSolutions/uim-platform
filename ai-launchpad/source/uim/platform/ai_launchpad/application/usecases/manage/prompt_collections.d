@@ -48,14 +48,14 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   PromptCollection[] listCollections(TenantId tenantId) {
-    return collections.findAll(tenantId);
+    return collections.findByTenant(tenantId);
   }
 
   CommandResult patchCollection(PatchPromptCollectionRequest r) {
     if (!collections.existsById(r.collectionId))
       return CommandResult(false, "", "Prompt collection not found");
       
-    auto pc = collections.findById(r.collectionId);
+    auto pc = collections.findById(r.tenantId, r.collectionId);
     if (r.name.length > 0)
       pc.name = r.name;
     if (r.description.length > 0)

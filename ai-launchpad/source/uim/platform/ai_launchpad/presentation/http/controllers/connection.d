@@ -41,7 +41,7 @@ class ConnectionController : PlatformController {
       r.description = j.getString("description");
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createConnection(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

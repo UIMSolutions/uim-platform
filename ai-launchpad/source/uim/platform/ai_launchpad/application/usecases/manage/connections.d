@@ -10,7 +10,6 @@ module uim.platform.ai_launchpad.application.usecases.manage.connections;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
 
-
 import uim.platform.ai_launchpad;
 
 mixin(ShowModule!());
@@ -54,20 +53,20 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Connection getConnection(ConnectionId id) {
+  Connection getConnection(TenantId tenantId, ConnectionId id) {
     return repo.findById(tenantId, id);
   }
 
-  Connection[] listConnections(WorkspaceId workspaceId) {
-    return repo.findByWorkspace(workspaceId);
+  Connection[] listConnections(TenantId tenantId, WorkspaceId workspaceId) {
+    return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  Connection[] listConnections() {
-    return repo.findAll();
+  Connection[] listConnections(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchConnection(PatchConnectionRequest r) {
-    auto c = repo.findById(r.connectionId);
+    auto c = repo.findById(r.tenantId, r.connectionId);
     if (c.isNull)
       return CommandResult(false, "", "Connection not found");
     if (r.name.length > 0)
@@ -82,7 +81,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  CommandResult deleteConnection(ConnectionId id) {
+  CommandResult deleteConnection(TenantId tenantId, ConnectionId id) {
     auto connection = repo.findById(tenantId, id);
     if (connection.isNull)
       return CommandResult(false, "", "Connection not found");

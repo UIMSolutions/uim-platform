@@ -42,6 +42,9 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), IDatasetR
   size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return findByScenario(tenantId, connectionId, scenarioId).length;
   }
+  Dataset[] filterByScenario(Dataset[] datasets, ScenarioId scenarioId) {
+    return datasets.filter!(d => d.scenarioId == scenarioId).array;
+  }
   Dataset[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
   }

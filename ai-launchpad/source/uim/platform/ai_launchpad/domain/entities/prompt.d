@@ -59,9 +59,9 @@ struct Prompt {
       .set("name", name)
       .set("model_name", modelName)
       .set("model_version", modelVersion)
-      .set("messages", messages.map!(m => m.toJson)())
+      .set("messages", messages.map!(m => m.toJson).array.toJson)
       .set("parameters", parameters.toJson)
-      .set("input_params", inputParams)
+      .set("input_params", inputParams.map!(p => p.toJson).array.toJson)
       .set("last_output", lastOutput)
       .set("status", status);
   }

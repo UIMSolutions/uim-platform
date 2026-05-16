@@ -39,11 +39,12 @@ class ExecutionController : PlatformController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateExecutionRequest r;
+      r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.configurationId = j.getString("configurationId");
       r.resourceGroupId = j.getString("resourceGroupId");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createExecution(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

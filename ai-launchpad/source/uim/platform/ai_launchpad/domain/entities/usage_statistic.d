@@ -29,7 +29,7 @@ struct UsageStatistic {
     return entityToJson
       .set("scenario_id", scenarioId)
       .set("connection_id", connectionId)
-      .set("period", period)
+      .set("period", period.to!string)
       .set("execution_count", executionCount)
       .set("deployment_count", deploymentCount)
       .set("total_training_hours", totalTrainingHours)

@@ -25,7 +25,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     return Configuration.init;
   }
   void removeById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
-    remove(tenantId, connectionId, id);
+    remove(findById(tenantId, connectionId, id));
   }
 
   size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
@@ -42,7 +42,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     return findByScenario(tenantId, connectionId, scenarioId).length;
   }
   Configuration[] filterByScenario(Configuration[] configs, ScenarioId scenarioId) {
-    return configs.filter!(c => c.scenarioId == scenarioId);
+    return configs.filter!(c => c.scenarioId == scenarioId).array;
   }
   Configuration[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);

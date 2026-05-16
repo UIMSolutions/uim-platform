@@ -36,10 +36,12 @@ struct InputArtifactBinding {
 }
 
 struct Configuration {
-  ConfigurationId id;
+  mixin TenantEntity!ConfigurationId;
+
   ConnectionId connectionId;
   ScenarioId scenarioId;
   string executableId;
+  
   string name;
   ParameterBinding[] parameters;
   InputArtifactBinding[] inputArtifacts;

@@ -8,7 +8,7 @@ module uim.platform.ai_launchpad.application.usecases.get_capabilities;
 import uim.platform.ai_launchpad.application.dto;
 
 class GetCapabilitiesUseCase { // TODO: UIMUseCase {
-  CapabilitiesResponse getById() {
+  CapabilitiesResponse getCapabilities() {
     CapabilitiesResponse r;
     r.serviceName = "AI Launchpad Service";
     r.serviceVersion = "1.0.0";

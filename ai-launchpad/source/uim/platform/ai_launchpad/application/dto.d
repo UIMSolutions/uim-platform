@@ -41,7 +41,8 @@ struct CreateConnectionRequest {
 struct PatchConnectionRequest {
   TenantId tenantId;
   WorkspaceId workspaceId;
-  string connectionId;
+  ConnectionId connectionId;
+  
   string name;
   string description;
   string defaultResourceGroupId;
@@ -106,6 +107,7 @@ struct SyncScenarioRequest {
 
 // --- Configuration ---
 struct CreateConfigurationRequest {
+  TenantId tenantId;
   ConnectionId connectionId;
   ScenarioId scenarioId;
   // ExecutableId executableId;
@@ -117,7 +119,7 @@ struct CreateConfigurationRequest {
     return Json.emptyObject
       .set("connectionId", connectionId)
       .set("scenarioId", scenarioId)
-      .set("executableId", executableId)
+      // .set("executableId", executableId)
       .set("name", name)
       .set("parameterValues", parameterValues.array.toJson)
       .set("inputArtifacts", inputArtifacts.array.toJson);
@@ -165,7 +167,7 @@ struct BulkPatchExecutionRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("connectionId", connectionId.value)
-      .set("executionIds", executionIds.array.map!(e => e.value).toJson)
+      .set("executionIds", executionIds.array.map!(e => e.value).array.toJson)
       .set("targetStatus", targetStatus);
   }
 }
@@ -217,7 +219,7 @@ struct BulkPatchDeploymentRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("connectionId", connectionId.value)
-      .set("deploymentIds", deploymentIds.array.map!(e => e.value).toJson)
+      .set("deploymentIds", deploymentIds.array.map!(e => e.value).array.toJson)
       .set("targetStatus", targetStatus);
   }
 
@@ -369,6 +371,7 @@ struct PatchPromptRequest {
 struct CreatePromptCollectionRequest {
   TenantId tenantId;
   ConnectionId connectionId;
+
   string name;
   string description;
   ScenarioId scenarioId;
@@ -376,6 +379,8 @@ struct CreatePromptCollectionRequest {
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
       .set("name", name)
       .set("description", description)
       .set("scenarioId", scenarioId.value)

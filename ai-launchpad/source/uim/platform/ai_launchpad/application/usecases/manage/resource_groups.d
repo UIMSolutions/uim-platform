@@ -25,7 +25,8 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     ResourceGroup rg;
-    rg.initEntity();
+    rg.initEntity(r.tenantId);
+    
     rg.id = r.resourceGroupId;
     rg.connectionId = r.connectionId;
     rg.status = "active";
@@ -40,12 +41,12 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  ResourceGroup getResourceGroup(ConnectionId connectionId, ResourceGroupId id) {
-    return repo.findById(connectionId, id);
+  ResourceGroup getResourceGroup(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+    return repo.findById(tenantId, connectionId, id);
   }
 
-  ResourceGroup[] listResourceGroups(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+  ResourceGroup[] listResourceGroups(TenantId tenantId, ConnectionId connectionId) {
+    return repo.findByConnection(tenantId, connectionId);
   }
 
   ResourceGroup[] listResourceGroups() {
@@ -53,7 +54,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
-    auto rg = repo.findById(r.connectionId, r.resourceGroupId);
+    auto rg = repo.findById(r.tenantId, r.connectionId, r.resourceGroupId);
     if (rg.isNull)
       return CommandResult(false, "", "Resource group not found");
 
@@ -71,8 +72,8 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  CommandResult deleteResourceGroup(ConnectionId connectionId, ResourceGroupId id) {
-    auto entity = repo.findById(connectionId, id);
+  CommandResult deleteResourceGroup(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+    auto entity = repo.findById(tenantId, connectionId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Resource group not found");
 

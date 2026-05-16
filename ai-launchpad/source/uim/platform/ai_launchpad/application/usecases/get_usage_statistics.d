@@ -33,6 +33,7 @@ class GetUsageStatisticsUseCase { // TODO: UIMUseCase {
   }
 
   UsageStatistic[] listStatistics(TenantId tenantId) {
-    return repo.findAll(tenantId);
+    return repo.findByTenant(tenantId);
   }
+  
 }
