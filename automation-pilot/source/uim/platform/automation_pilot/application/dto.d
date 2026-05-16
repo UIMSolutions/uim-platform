@@ -109,7 +109,7 @@ struct ServiceAccountDTO {
     string status;
     string clientId;
     string permissions;
-    string expiresAt;
+    long expiresAt;
     UserId createdBy;
     UserId updatedBy;
 }

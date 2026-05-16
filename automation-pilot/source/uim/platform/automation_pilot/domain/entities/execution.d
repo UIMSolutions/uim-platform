@@ -21,7 +21,7 @@ struct Execution {
     string outputValues;
     string logs;
     long startedAt;
-    string completedAt;
+    long completedAt;
     string duration;
     string errorMessage;
     UserId triggeredBy;

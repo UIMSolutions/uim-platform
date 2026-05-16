@@ -91,7 +91,7 @@ classDiagram
         +string consentVersion
         +string givenAt
         +string withdrawnAt
-        +string expiresAt
+        +long expiresAt
         +string ipAddress
         +string userAgent
         +string source

@@ -24,7 +24,7 @@ struct Permission {
     bool isDirect = true;
     string grantedAt;
     UserId grantedBy;
-    string expiresAt;
+    long expiresAt;
     string description;
 
     Json toJson() const {

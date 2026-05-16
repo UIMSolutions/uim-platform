@@ -71,7 +71,7 @@ classDiagram
         +string errorLog
         +string triggeredBy
         +string startedAt
-        +string completedAt
+        +long completedAt
         +string durationMs
         +string createdAt
         +string updatedAt
@@ -129,7 +129,7 @@ classDiagram
         +ServiceAccountStatus status
         +string clientId
         +string permissions
-        +string expiresAt
+        +long expiresAt
         +string lastUsedAt
         +string createdAt
         +string updatedAt

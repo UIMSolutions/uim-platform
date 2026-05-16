@@ -22,7 +22,7 @@ struct ImportQueueEntry {
     int queuePosition = 0;
     string queuedAt;
     string startedAt;
-    string completedAt;
+    long completedAt;
     string errorMessage;
     string importLog;
     bool isSelected = true;

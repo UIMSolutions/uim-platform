@@ -110,7 +110,7 @@ struct PermissionDTO {
     string permissionType;
     bool isInherited;
     bool isDirect;
-    string expiresAt;
+    long expiresAt;
     string description;
     UserId grantedBy;
 }

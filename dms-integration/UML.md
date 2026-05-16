@@ -99,7 +99,7 @@ classDiagram
         +bool isDirect
         +string grantedAt
         +string grantedBy
-        +string expiresAt
+        +long expiresAt
         +toJson() Json
     }
 

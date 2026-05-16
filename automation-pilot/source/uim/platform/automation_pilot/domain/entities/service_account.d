@@ -20,7 +20,7 @@ struct ServiceAccount {
     string clientId;
     string permissions;
     string lastUsedAt;
-    string expiresAt;
+    long expiresAt;
 
     Json toJson() const {
         return entityToJson

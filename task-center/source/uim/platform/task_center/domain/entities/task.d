@@ -36,7 +36,7 @@ struct Task {
     string claimedBy;
 
     string dueDate;
-    string completedAt;
+    long completedAt;
 
     Json toJson() const {
         return entityToJson

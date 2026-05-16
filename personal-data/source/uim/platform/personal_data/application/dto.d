@@ -146,7 +146,7 @@ struct CreateConsentRecordRequest {
     string purposeId;
     string consentText;
     string consentVersion;
-    string expiresAt;
+    long expiresAt;
     string ipAddress;
     string userAgent;
     string source;

@@ -23,7 +23,7 @@ classDiagram
         +bool isClaimed
         +string claimedBy
         +string dueDate
-        +string completedAt
+        +long completedAt
     }
 
     class TaskDefinition {

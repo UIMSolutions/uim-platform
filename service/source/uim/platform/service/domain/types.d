@@ -74,3 +74,13 @@ struct SpaceId {
 
   mixin DomainId;
 }
+
+struct OrgId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}

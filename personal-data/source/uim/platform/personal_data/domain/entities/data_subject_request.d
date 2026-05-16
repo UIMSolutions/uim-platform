@@ -37,7 +37,7 @@ struct DataSubjectRequest {
     ProcessingComment[] comments;
     string assignedTo;
     string dueDate;
-    string completedAt;
+    long completedAt;
     string rejectionReason;
 
     Json toJson() const {

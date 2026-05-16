@@ -22,7 +22,7 @@ struct Replication {
     UserId triggeredBy;
     string scheduledAt;
     string startedAt;
-    string completedAt;
+    long completedAt;
     string errorMessage;
     string replicatedFields;
     int retryCount;
