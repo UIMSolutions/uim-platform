@@ -13,8 +13,12 @@ mixin(ShowModule!());
 @safe:
 interface ScenarioRepository : ITenantRepository!(Scenario, ScenarioId) {
 
-  size_t countByResourceGroup(ResourceGroupId rgId);
-  Scenario[] findByResourceGroup(ResourceGroupId rgId);
-  void removeByResourceGroup(ResourceGroupId rgId);
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
+  Scenario findById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Scenario[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
 
 }

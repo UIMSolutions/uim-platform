@@ -36,17 +36,12 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Scenario already exists");
 
     Scenario s;
+    s.initEntity(r.tenantId);
     s.id = r.scenarioId;
-    s.tenantId = r.tenantId;
     s.resourceGroupId = r.resourceGroupId;
     s.name = r.name;
     s.description = r.description;
     s.labels = r.labels;
-
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    s.createdAt = now;
-    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id.value, "");

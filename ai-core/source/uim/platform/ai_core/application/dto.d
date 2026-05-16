@@ -15,7 +15,7 @@ mixin(ShowModule!());
 struct CreateScenarioRequest {
   TenantId tenantId;
   ResourceGroupId resourceGroupId;
-  string id;
+  ScenarioId scenarioId;
   string name;
   string description;
   string[] labels;
@@ -24,7 +24,7 @@ struct CreateScenarioRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
-      .set("id", id)
+      .set("id", id.value)
       .set("name", name)
       .set("description", description)
       .set("labels", labels.toJson());
@@ -48,7 +48,7 @@ struct CreateExecutableRequest {
       .set("tenantId", tenantId.value)
       .set("resourceGroupId", resourceGroupId.value)
       .set("scenarioId", scenarioId.value)
-      .set("id", id)
+      .set("executableId", executableId.value)
       .set("name", name)
       .set("description", description)
       .set("type", type)
@@ -63,6 +63,7 @@ struct CreateConfigurationRequest {
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
   ExecutableId executableId;
+  
   string name;
   string[][] parameterValues;
   string[][] inputArtifacts;

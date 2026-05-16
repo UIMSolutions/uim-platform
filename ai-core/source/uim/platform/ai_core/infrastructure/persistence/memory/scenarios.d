@@ -17,20 +17,34 @@ mixin(ShowModule!());
 @safe:
 class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), ScenarioRepository {
 
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+    return findByResourceGroup(tenantId, rgId).any!(s => s.id == id);
+  }
+  Scenario findById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+    auto scenarios = findByResourceGroup(tenantId, rgId);
+    foreach (s; scenarios) {
+      if (s.id == id) {
+        return s;
+      }
+    }
+    return Scenario.init;
+  }
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+    auto scenario = findById(tenantId, rgId, id);
+    remove(scenario);
+  }
+
   // TODO: Implement methods for finding and removing scenarios by tenant, if needed. 
-  size_t countByResourceGroup(ResourceGroupId rgId) {
-    return findByResourceGroup(rgId).length;
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return findByResourceGroup(tenantId, rgId).length;
   }
 
-  Scenario[] findByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return *rg;
-    return null;
+  Scenario[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return filterByResourceGroup(findByTenant(tenantId), rgId);
   }
 
-  void removeByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      (rg).each!(e => remove(e));
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    findByResourceGroup(tenantId, rgId).each!(s => remove(s));
   }
 
 }

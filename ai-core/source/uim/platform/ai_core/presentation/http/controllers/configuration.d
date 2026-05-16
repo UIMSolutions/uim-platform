@@ -28,15 +28,47 @@ class ConfigurationController : ManageController {
     router.delete_("/api/v2/lm/configurations/*", &handleDelete);
   }
 
-  override Json createHandler(Json data) {
+  protected override Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    auto scenarioId = req.params.get("scenarioId", "");
+
+    auto configs = scenarioId.isEmpty
+      ? usecase.list(tenantId, rgId) : usecase.listByScenario(tenantId, scenarioId, rgId);
+
+    auto jarr = Json.emptyArray;
+    foreach (c; configs) {
+      // Parameter bindings
+      auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv
+          .value)).array.toJson;
+      auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia
+          .artifactId)).array.toJson;
+
+      jarr ~= Json.emptyObject
+        .set("id", c.id)
+        .set("scenarioId", c.scenarioId)
+        .set("executableId", c.executableId)
+        .set("name", c.name)
+        .set("createdAt", c.createdAt)
+        .set("parameterBindings", pbArr)
+        .set("inputArtifactBindings", iaArr);
+    }
+
+    return Json.emptyObject
+      .set("count", configs.length)
+      .set("resources", jarr)
+      .set("message", "Configurations retrieved");
+  }
+
+  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     CreateConfigurationRequest r;
-    r.tenantId = data.getTenantId;
-    r.resourceGroupId = ResourceGroupId(data.get("AI-Resource-Group", ""));
-    r.scenarioId = data.getString("scenarioId");
-    r.executableId = data.getString("executableId");
-    r.name = data.getString("name");
-    r.parameterValues = jsonKeyValuePairs(data, "parameterBindings");
-    r.inputArtifacts = jsonKeyValuePairs(data, "inputArtifactBindings");
+    r.tenantId = req.getTenantId;
+    r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    r.scenarioId = req.params.get("scenarioId", "");
+    r.executableId = req.params.get("executableId", "");
+    r.name = req.params.get("name", "");
+    r.parameterValues = jsonKeyValuePairs(req, "parameterBindings");
+    r.inputArtifacts = jsonKeyValuePairs(req, "inputArtifactBindings");
 
     auto result = usecase.create(r);
     if (result.success) {
@@ -52,82 +84,46 @@ class ConfigurationController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarioId = req.params.get("scenarioId", "");
+  protected override Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto configs = scenarioId.isEmpty
-        ? usecase.list(tenantId, rgId) : usecase.listByScenario(tenantId, scenarioId, rgId);
+    auto c = usecase.getConfiguration(tenantId, rgId, id);
+    if (c.isNull) {
+      return Json.emptyObject
+        .set("error", "Configuration not found")
+        .set("message", "No configuration found with the given ID");
 
-      auto jarr = Json.emptyArray;
-      foreach (c; configs) {
-        // Parameter bindings
-        auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv
-            .value)).array.toJson;
-        auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia
-            .artifactId)).array.toJson;
+      
 
-        jarr ~= Json.emptyObject
-          .set("id", c.id)
-          .set("scenarioId", c.scenarioId)
-          .set("executableId", c.executableId)
-          .set("name", c.name)
-          .set("createdAt", c.createdAt)
-          .set("parameterBindings", pbArr)
-          .set("inputArtifactBindings", iaArr);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", configs.length)
-        .set("resources", jarr);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      .set("statusCode", 404);
     }
+
+    return Json.emptyObject
+      .set("id", c.id)
+      .set("scenarioId", c.scenarioId)
+      .set("executableId", c.executableId)
+      .set("name", c.name)
+      .set("createdAt", c.createdAt)
+      .set("statusCode", 200);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+  protected override Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
+    auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto c = usecase.getConfiguration(tenantId, rgId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Configuration not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
-        .set("id", c.id)
-        .set("scenarioId", c.scenarioId)
-        .set("executableId", c.executableId)
-        .set("name", c.name)
-        .set("createdAt", c.createdAt);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteConfiguration(tenantId, rgId, id);
+    if (result.isFailure) {
+      return Json.emptyObject
+        .set("error", result.error)
+        .set("message", "Failed to delete configuration")
+        .set("statusCode", 404);
     }
-  }
-
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-
-      auto result = usecase.deleteConfiguration(tenantId, rgId, id);
-      if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    
+    return Json.emptyObject
+      .set("message", "Configuration deleted")
+      .set("statusCode", 200);
   }
 }

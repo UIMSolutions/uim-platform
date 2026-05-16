@@ -15,6 +15,17 @@ mixin(ShowModule!());
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
 
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id) {
+    return findByResourceGroup(tenantId, rgId).any!(c => c.id == id);
+  }
+
+  Configuration findById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id) {
+    return findByResourceGroup(tenantId, rgId).find!(c => c.id == id);
+  }
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id) {
+    remove(findById(tenantId, rgId, id));
+  }
+
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
     return findByResourceGroup(tenantId, rgId).length;
   }

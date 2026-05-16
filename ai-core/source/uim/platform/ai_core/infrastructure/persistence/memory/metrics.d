@@ -15,8 +15,24 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class MemoryMetricRepository : TenanatRepository!(Metric, MetricId), MetricRepository {
+class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
   
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+    return findByResourceGroup(tenantId, rgId).any!(m => m.id == id);
+  }
+  Metric findById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+    auto metrics = findByResourceGroup(tenantId, rgId);
+    foreach (m; metrics) {
+      if (m.id == id) {
+        return m;
+      }
+    }
+    return Metric.init;
+  }
+  void removeById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+    findById(tenantId, rgId, id).each!(m => remove(m));
+  }
+
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
     return findByResourceGroup(tenantId, rgId).length;
   }

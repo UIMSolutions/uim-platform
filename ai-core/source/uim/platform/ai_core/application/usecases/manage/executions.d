@@ -32,7 +32,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);
+    auto conf = confRepo.findById(r.tenantId, r.resourceGroupId, r.configurationId);
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
@@ -45,17 +45,12 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     e.status = ExecutionStatus.pending;
     e.statusMessage = "Execution created and pending";
 
-    import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
-    e.createdAt = now;
-    e.updatedAt = now;
-
     execRepo.save(e);
     return CommandResult(true, e.id.value, "");
   }
 
   CommandResult patchExecution(PatchExecutionRequest r) {
-    auto e = execRepo.findById(r.executionId, r.resourceGroupId);
+    auto e = execRepo.findById(r.tenantId, r.resourceGroupId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
 

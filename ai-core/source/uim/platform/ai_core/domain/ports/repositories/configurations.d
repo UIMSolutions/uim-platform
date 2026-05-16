@@ -13,6 +13,10 @@ mixin(ShowModule!());
 @safe:
 interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id);
+  Configuration findById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id);
+
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   Configuration[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);

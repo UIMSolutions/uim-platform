@@ -8,15 +8,21 @@ module uim.platform.ai_core.domain.ports.repositories.executables;
 // import uim.platform.ai_core.domain.entities.executable;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
-interface ExecutableRepository {
-  Executable findById(ExecutableId id, ResourceGroupId rgId);
-  Executable[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
-  Executable[] findByResourceGroup(ResourceGroupId rgId);
-  void save(Executable e);
-  void update(Executable e);
-  void remove(ExecutableId id, ResourceGroupId rgId);
-  size_t countByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
+interface ExecutableRepository : ITenantRepository!(Executable, ExecutableId) {
+
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id);
+  Executable findById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id);
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Executable[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  Executable[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+
 }

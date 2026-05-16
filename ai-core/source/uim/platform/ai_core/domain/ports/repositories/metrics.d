@@ -13,6 +13,10 @@ mixin(ShowModule!());
 @safe:
 interface MetricRepository : ITenantRepository!(Metric, MetricId) {
 
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, MetricId id);
+  Metric findById(TenantId tenantId, ResourceGroupId rgId, MetricId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, MetricId id);
+
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   Metric[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);

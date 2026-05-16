@@ -28,12 +28,13 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         if (r.resourceGroupId.isEmpty)
             return CommandResult(false, "", "Resource group ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.resourceGroupId, r.id);
+        auto existing = repo.findById(r.tenantId, r.resourceGroupId, r.executableId);
         if (!existing.isNull)
             return CommandResult(false, "", "Executable already exists");
 
         Executable e;
-        e.id = r.id;
+        e.initEntity(r.tenantId);
+        e.id = r.executableId;
         e.tenantId = r.tenantId;
         e.resourceGroupId = r.resourceGroupId;
         e.scenarioId = r.scenarioId;
@@ -41,17 +42,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         e.description = r.description;
         e.versionId = r.versionId;
         e.deployable = r.deployable;
-
-        if (r.type == "serving")
-            e.type = ExecutableType.serving;
-        else
-            e.type = ExecutableType.workflow;
-
-        import core.time : MonoTime;
-
-        auto now = MonoTime.currTime.ticks;
-        e.createdAt = now;
-        e.updatedAt = now;
+        e.type = r.type == "serving" ? ExecutableType.serving : ExecutableType.workflow;
 
         repo.save(e);
         return CommandResult(true, e.id.value, "");

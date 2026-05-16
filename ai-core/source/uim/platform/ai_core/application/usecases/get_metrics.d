@@ -22,16 +22,16 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult patch(PatchMetricsRequest r) {
+  CommandResult patchMetric(PatchMetricsRequest r) {
     if (r.executionId.isEmpty)
       return CommandResult(false, "", "Execution ID is required");
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    Metric m;
-    m.initEntity(r.tenantId) ;
-    m.resourceGroupId = r.resourceGroupId;
-    m.executionId = r.executionId;
+    Metric metric;
+    metric.initEntity(r.tenantId) ;
+    metric.resourceGroupId = r.resourceGroupId;
+    metric.executionId = r.executionId;
 
     // Parse metric values
     MetricValue[] vals;
@@ -44,7 +44,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
         vals ~= mv;
       }
     }
-    m.metrics = vals;
+    metric.metrics = vals;
 
     // Parse tags
     MetricTag[] tags;
@@ -56,7 +56,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
         tags ~= mt;
       }
     }
-    m.tags = tags;
+    metric.tags = tags;
 
     // Parse custom info
     CustomInfo[] info;
@@ -68,26 +68,26 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
         info ~= ci;
       }
     }
-    m.customInfo = info;
+    metric.customInfo = info;
 
-    repo.save(m);
-    return CommandResult(true,  m.id.value, "");
+    repo.save(metric);
+    return CommandResult(true,  metric.id.value, "");
   }
 
-  Metric[] listByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return repo.findByExecution(execId, rgId);
+  Metric[] listByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+    return repo.findByExecution(tenantId, rgId, execId);
   }
 
-  Metric getById(MetricId id, ResourceGroupId rgId) {
-    return repo.findById(id, rgId);
+  Metric getById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+    return repo.findById(tenantId, rgId, id);
   }
 
-  CommandResult deleteMetric(MetricId id, ResourceGroupId rgId) {
-    auto entity = repo.findById(id, rgId);
-    if (entity.isNull)
+  CommandResult deleteMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+    auto metric = repo.findById(tenantId, rgId, id);
+    if (metric.isNull)
       return CommandResult(false, "", "Metric not found");
 
-    repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    repo.remove(metric);
+    return CommandResult(true, metric.id.value, "");
   }
 }
