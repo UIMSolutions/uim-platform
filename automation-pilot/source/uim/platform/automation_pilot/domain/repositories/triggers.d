@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
     
-    size_t countByStatus(TriggerStatus status);
-    Trigger[] findByStatus(TriggerStatus status);
-    void removeByStatus(TriggerStatus status);
+    size_t countByStatus(TenantId tenantId, TriggerStatus status);
+    Trigger[] findByStatus(TenantId tenantId, TriggerStatus status);
+    void removeByStatus(TenantId tenantId, TriggerStatus status);
 
-    size_t countByCommand(CommandId commandId);
-    Trigger[] findByCommand(CommandId commandId);
-    void removeByCommand(CommandId commandId);
+    size_t countByCommand(TenantId tenantId, CommandId commandId);
+    Trigger[] findByCommand(TenantId tenantId, CommandId commandId);
+    void removeByCommand(TenantId tenantId, CommandId commandId);
 
 }

@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ScheduledExecutionRepository : ITenantRepository!(ScheduledExecution, ScheduledExecutionId) {
     
-    size_t countByCommand(CommandId commandId);
-    ScheduledExecution[] findByCommand(CommandId commandId);
-    void removeByCommand(CommandId commandId);
+    size_t countByCommand(TenantId tenantId, CommandId commandId);
+    ScheduledExecution[] findByCommand(TenantId tenantId, CommandId commandId);
+    void removeByCommand(TenantId tenantId, CommandId commandId);
 
-    size_t countByStatus(ScheduleStatus status);
-    ScheduledExecution[] findByStatus(ScheduleStatus status);
-    void removeByStatus(ScheduleStatus status);
+    size_t countByStatus(TenantId tenantId, ScheduleStatus status);
+    ScheduledExecution[] findByStatus(TenantId tenantId, ScheduleStatus status);
+    void removeByStatus(TenantId tenantId, ScheduleStatus status);
 
 }

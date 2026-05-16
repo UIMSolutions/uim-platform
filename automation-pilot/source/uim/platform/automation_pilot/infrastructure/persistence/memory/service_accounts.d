@@ -17,8 +17,12 @@ class MemoryServiceAccountRepository : TenantRepository!(ServiceAccount, Service
         return findByStatus(tenantId, status).length;
     }
 
+    ServiceAccount[] filterByStatus(ServiceAccount[] accounts, ServiceAccountStatus status) {
+        return accounts.filter!(a => a.status == status).array;
+    }
+
     ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceAccountStatus status) {

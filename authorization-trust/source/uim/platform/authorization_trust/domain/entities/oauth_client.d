@@ -13,8 +13,8 @@ mixin(ShowModule!());
 /// A registered OAuth 2.0 client application.
 /// Corresponds to an SAP BTP XSUAA service instance binding.
 struct OAuthClientEntity {
-  mixin IdEntity!OAuthClientId;
-  TenantId tenantId; // owning tenant (XSUAA service instance?)
+  mixin TenantEntity!OAuthClientId;
+  
   string clientId; // OAuth 2.0 client_id (unique per application)
   string clientSecret; // hashed secret (confidential clients only)
   string name; // display name
@@ -24,22 +24,15 @@ struct OAuthClientEntity {
   string[] redirectUris; // allowed redirect URIs (authorization_code flow)
   ClientType clientType; // confidential | public
   string appId; // owning application / tenant
-  long createdAt;
-  long updatedAt;
 
   Json toJson() const {
-    auto gtArr = Json.c.grantTypes.map!(gt => gt.to!string).array.toJson
+    auto gtArr = grantTypes.map!(gt => gt.to!string).array.toJson;
 
-    auto scArr = Json.emptyArray;
-    foreach (s; c.scopes)
-      scArr ~= Json(s);
+    auto scArr = Json.c.scopes.map!(s => Json(s)).array.toJson;
 
-    auto ruArr = Json.emptyArray;
-    foreach (u; c.redirectUris)
-      ruArr ~= Json(u);
+    auto ruArr = Json.c.redirectUris.map!(u => Json(u)).array.toJson;
 
     return entityToJson
-      .set("id", id)
       .set("clientId", clientId)
       .set("clientSecret", clientSecret)
       .set("tenantId", tenantId)
@@ -49,8 +42,6 @@ struct OAuthClientEntity {
       .set("appId", appId)
       .set("grantTypes", gtArr)
       .set("scopes", scArr)
-      .set("redirectUris", ruArr)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("redirectUris", ruArr);
   }
 }

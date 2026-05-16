@@ -11,30 +11,38 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScheduledExecutionRepository : IdRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
+class MemoryScheduledExecutionRepository : TenantRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
 
-    size_t countByCommand(CommandId commandId) {
-        return findByCommand(commandId).length;
+    size_t countByCommand(TenantId tenantId, CommandId commandId) {
+        return findByCommand(tenantId, commandId).length;
     }
 
-    ScheduledExecution[] findByCommand(CommandId commandId) {
-        return findAll().filter!(e => e.commandId == commandId).array;
+    ScheduledExecution[] filterByCommand(ScheduledExecution[] executions, CommandId commandId) {
+        return executions.filter!(e => e.commandId == commandId).array;
     }
 
-    void removeByCommand(CommandId commandId) {
-        findByCommand(commandId).each!(e => remove(e));
+    ScheduledExecution[] findByCommand(TenantId tenantId, CommandId commandId) {
+        return filterByCommand(findByTenant(tenantId), commandId);
     }
 
-    size_t countByStatus(ScheduleStatus status) {
-        return findByStatus(status).length;
+    void removeByCommand(TenantId tenantId, CommandId commandId) {
+        findByCommand(tenantId, commandId).each!(e => remove(e));
     }
 
-    ScheduledExecution[] findByStatus(ScheduleStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    size_t countByStatus(TenantId tenantId, ScheduleStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    void removeByStatus(ScheduleStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    ScheduledExecution[] filterByStatus(ScheduledExecution[] executions, ScheduleStatus status) {
+        return executions.filter!(e => e.status == status).array;
+    }
+
+    ScheduledExecution[] findByStatus(TenantId tenantId, ScheduleStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ScheduleStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

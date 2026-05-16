@@ -13,27 +13,35 @@ mixin(ShowModule!());
 
 class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
-    size_t countByCommand(CommandId commandId) {
-        return findByCommand(commandId).length;
+    size_t countByCommand(TenantId tenantId, CommandId commandId) {
+        return findByCommand(tenantId, commandId).length;
     }
 
-    Trigger[] findByCommand(CommandId commandId) {
-        return findAll.filter!(e => e.commandId == commandId).array;
+    Trigger[] filterByCommand(Trigger[] triggers, CommandId commandId) {
+        return triggers.filter!(e => e.commandId == commandId).array;
     }
 
-    void removeByCommand(CommandId commandId) {
-        findByCommand(commandId).each!(e => remove(e));
+    Trigger[] findByCommand(TenantId tenantId, CommandId commandId) {
+        return filterByCommand(findByTenant(tenantId), commandId);
     }
 
-    size_t countByStatus(TriggerStatus status) {
-        return findByStatus(status).length;
+    void removeByCommand(TenantId tenantId, CommandId commandId) {
+        findByCommand(tenantId, commandId).each!(e => remove(e));
     }
 
-    Trigger[] findByStatus(TriggerStatus status) {
-        return findAll.filter!(e => e.status == status).array;
+    size_t countByStatus(TenantId tenantId, TriggerStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    void removeByStatus(TriggerStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    Trigger[] filterByStatus(Trigger[] triggers, TriggerStatus status) {
+        return triggers.filter!(e => e.status == status).array;
+    }
+
+    Trigger[] findByStatus(TenantId tenantId, TriggerStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, TriggerStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 }

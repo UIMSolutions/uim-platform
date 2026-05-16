@@ -13,28 +13,36 @@ mixin(ShowModule!());
 
 class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, ContentConnectorId), ContentConnectorRepository {
 
-    size_t countByType(ConnectorType connectorType) {
-        return findByType(connectorType).length;
+    size_t countByType(TenantId tenantId, ConnectorType connectorType) {
+        return findByType(tenantId, connectorType).length;
     }
 
-    ContentConnector[] findByType(ConnectorType connectorType) {
-        return findAll.filter!(e => e.connectorType == connectorType).array;
+    ContentConnector[] filterByType(ContentConnector[] connectors, ConnectorType connectorType) {
+        return connectors.filter!(c => c.type == connectorType).array;
     }
 
-    void removeByType(ConnectorType connectorType) {
-        findByType(connectorType).each!(e => remove(e));
+    ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType) {
+        return filterByType(findByTenant(tenantId), connectorType);
     }
 
-    size_t countByStatus(ConnectorStatus status) {
-        return findByStatus(status).length;
+    void removeByType(TenantId tenantId, ConnectorType connectorType) {
+        findByType(tenantId, connectorType).each!(e => remove(e));
     }
 
-    ContentConnector[] findByStatus(ConnectorStatus status) {
-        return findAll.filter!(e => e.status == status).array;
+    size_t countByStatus(TenantId tenantId, ConnectorStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    void removeByStatus(ConnectorStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    ContentConnector[] filterByStatus(ContentConnector[] connectors, ConnectorStatus status) {
+        return connectors.filter!(c => c.status == status).array;
+    }
+
+    ContentConnector[] findByStatus(TenantId tenantId, ConnectorStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ConnectorStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

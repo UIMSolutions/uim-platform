@@ -13,27 +13,35 @@ mixin(ShowModule!());
 
 class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRepository {
 
-    size_t countByStatus(CatalogStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, CatalogStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    Catalog[] findByStatus(CatalogStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    Catalog[] findByStatus(TenantId tenantId, CatalogStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
-    void removeByStatus(CatalogStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    Catalog[] filterByStatus(Catalog[] catalogs, CatalogStatus status) {
+        return catalogs.filter!(e => e.status == status).array;
     }
 
-    size_t countByType(CatalogType catalogType) {
-        return findByType(catalogType).length;
+    void removeByStatus(TenantId tenantId, CatalogStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
-    Catalog[] findByType(CatalogType catalogType) {
-        return findAll().filter!(e => e.catalogType == catalogType).array;
+    size_t countByType(TenantId tenantId, CatalogType catalogType) {
+        return findByType(tenantId, catalogType).length;
     }
 
-    void removeByType(CatalogType catalogType) {
-        findByType(catalogType).each!(e => remove(e));
+    Catalog[] findByType(TenantId tenantId, CatalogType catalogType) {
+        return filterByType(findByTenant(tenantId), catalogType);
+    }
+
+    Catalog[] filterByType(Catalog[] catalogs, CatalogType catalogType) {
+        return catalogs.filter!(e => e.catalogType == catalogType).array;
+    }
+
+    void removeByType(TenantId tenantId, CatalogType catalogType) {
+        findByType(tenantId, catalogType).each!(e => remove(e));
     }
 }

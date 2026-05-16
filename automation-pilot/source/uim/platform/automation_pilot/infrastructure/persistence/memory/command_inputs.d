@@ -13,16 +13,20 @@ mixin(ShowModule!());
 
 class MemoryCommandInputRepository : TenantRepository!(CommandInput, CommandInputId), CommandInputRepository {
 
-    size_t countByType(InputType inputType) {
-        return findByType(inputType).length;
+    size_t countByType(TenantId tenantId, InputType inputType) {
+        return findByType(tenantId, inputType).length;
     }
 
-    CommandInput[] findByType(InputType inputType) {
-        return findAll().filter!(e => e.inputType == inputType).array;
+    CommandInput[] findByType(TenantId tenantId, InputType inputType) {
+        return filterByType(findByTenant(tenantId), inputType);
     }
 
-    void removeByType(InputType inputType) {
-        return findByType(inputType).each!(e => remove(e));
+    CommandInput[] filterByType(CommandInput[] inputs, InputType inputType) {
+        return inputs.filter!(e => e.inputType == inputType).array;
+    }
+
+    void removeByType(TenantId tenantId, InputType inputType) {
+        findByType(tenantId, inputType).each!(e => remove(e));
     }
 
 }

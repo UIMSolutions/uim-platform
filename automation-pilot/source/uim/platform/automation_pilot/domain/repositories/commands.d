@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface CommandRepository : ITenantRepository!(Command, CommandId) {
 
-    size_t countByCatalog(CatalogId catalogId);
-    Command[] findByCatalog(CatalogId catalogId);
-    void removeByCatalog(CatalogId catalogId);
+    size_t countByCatalog(TenantId tenantId, CatalogId catalogId);
+    Command[] findByCatalog(TenantId tenantId, CatalogId catalogId);
+    void removeByCatalog(TenantId tenantId, CatalogId catalogId);
 
-    size_t countByStatus(CommandStatus status);
-    Command[] findByStatus(CommandStatus status);
-    void removeByStatus(CommandStatus status);
+    size_t countByStatus(TenantId tenantId, CommandStatus status);
+    Command[] findByStatus(TenantId tenantId, CommandStatus status);
+    void removeByStatus(TenantId tenantId, CommandStatus status);
 
 }

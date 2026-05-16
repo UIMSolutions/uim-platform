@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ContentConnectorRepository : ITenantRepository!(ContentConnector, ContentConnectorId) {
 
-    size_t countByType(ConnectorType connectorType);
-    ContentConnector[] findByType(ConnectorType connectorType);
-    void removeByType(ConnectorType connectorType);
+    size_t countByType(TenantId tenantId, ConnectorType connectorType);
+    ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType);
+    void removeByType(TenantId tenantId, ConnectorType connectorType);
 
-    size_t countByStatus(ConnectorStatus status);
-    ContentConnector[] findByStatus(ConnectorStatus status);
+    size_t countByStatus(TenantId tenantId, ConnectorStatus status);
+    ContentConnector[] findByStatus(TenantId tenantId, ConnectorStatus status);
     void removeByStatus(ConnectorStatus status);
 
 }

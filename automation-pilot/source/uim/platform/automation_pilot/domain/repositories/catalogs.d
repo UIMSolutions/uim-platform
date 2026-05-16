@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface CatalogRepository : ITenantRepository!(Catalog, CatalogId) {
 
-    size_t countByStatus(CatalogStatus status);
-    Catalog[] findByStatus(CatalogStatus status);
-    void removeByStatus(CatalogStatus status);
+    size_t countByStatus(TenantId tenantId, CatalogStatus status);
+    Catalog[] findByStatus(TenantId tenantId, CatalogStatus status);
+    void removeByStatus(TenantId tenantId, CatalogStatus status);
 
-    size_t countByType(CatalogType catalogType);
-    Catalog[] findByType(CatalogType catalogType);
+    size_t countByType(TenantId tenantId, CatalogType catalogType);
+    Catalog[] findByType(TenantId tenantId, CatalogType catalogType);
     void removeByType(CatalogType catalogType);
 
 }

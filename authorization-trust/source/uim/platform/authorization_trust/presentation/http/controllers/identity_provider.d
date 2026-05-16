@@ -86,7 +86,7 @@ class IdentityProviderController : PlatformController {
         writeError(res, 404, "Identity provider not found");
         return;
       }
-      res.writeJsonBody(idpToJson(idp.toJson, 200);
+      res.writeJsonBody(idp.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

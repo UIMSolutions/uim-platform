@@ -11,33 +11,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId),  ExecutionRepository {
+class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), ExecutionRepository {
 
     // #region ByCommand
-    size_t countByCommand(CommandId commandId) {
-        return findByCommand(commandId).length;
+    size_t countByCommand(TenantId tenantId, CommandId commandId) {
+        return findByCommand(tenantId, commandId).length;
     }
 
-    Execution[] findByCommand(CommandId commandId) {
-        return findAll().filter!(e => e.commandId == commandId).array;
+    Execution[] filterByCommand(Execution[] executions, CommandId commandId) {
+        return executions.filter!(e => e.commandId == commandId).array;
     }
 
-    void removeByCommand(CommandId commandId) {
-        return findByCommand(commandId).each!(e => remove(e));
+    Execution[] findByCommand(TenantId tenantId, CommandId commandId) {
+        return filterByCommand(findByTenant(tenantId), commandId);
+    }
+
+    void removeByCommand(TenantId tenantId, CommandId commandId) {
+        findByCommand(tenantId, commandId).each!(e => remove(e));
     }
     // #endregion ByCommand
 
     // #region ByStatus
-    size_t countByStatus(ExecutionStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, ExecutionStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    Execution[] findByStatus(ExecutionStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    Execution[] filterByStatus(Execution[] executions, ExecutionStatus status) {
+        return executions.filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(ExecutionStatus status) {
-        return findByStatus(status).each!(e => remove(e));
+    Execution[] findByStatus(TenantId tenantId, ExecutionStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ExecutionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
     // #endregion ByStatus
 

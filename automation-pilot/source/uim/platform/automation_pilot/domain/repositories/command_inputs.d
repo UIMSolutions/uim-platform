@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface CommandInputRepository : ITenantRepository!(CommandInput, CommandInputId) {
 
-    size_t countByType(InputType inputType);    
-    CommandInput[] findByType(InputType inputType);
-    void removeByType(InputType inputType);
+    size_t countByType(TenantId tenantId, InputType inputType);    
+    CommandInput[] findByType(TenantId tenantId, InputType inputType);
+    void removeByType(TenantId tenantId, InputType inputType);
 
 }

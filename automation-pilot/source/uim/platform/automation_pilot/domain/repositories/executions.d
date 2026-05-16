@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
 
-    size_t countByCommand(CommandId commandId);
-    Execution[] findByCommand(CommandId commandId);
-    void removeByCommand(CommandId commandId);
+    size_t countByCommand(TenantId tenantId, CommandId commandId);
+    Execution[] findByCommand(TenantId tenantId, CommandId commandId);
+    void removeByCommand(TenantId tenantId, CommandId commandId);
 
-    size_t countByStatus(ExecutionStatus status);
-    Execution[] findByStatus(ExecutionStatus status);
+    size_t countByStatus(TenantId tenantId, ExecutionStatus status);
+    Execution[] findByStatus(TenantId tenantId, ExecutionStatus status);
     void removeByStatus(ExecutionStatus status);
 
 }

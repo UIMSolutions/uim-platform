@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface ServiceAccountRepository : ITenantRepository!(ServiceAccount, ServiceAccountId) {
 
-    size_t countByStatus(ServiceAccountStatus status);
-    ServiceAccount[] findByStatus(ServiceAccountStatus status);
-    void removeByStatus(ServiceAccountStatus status);
+    size_t countByStatus(TenantId tenantId, ServiceAccountStatus status);
+    ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status);
+    void removeByStatus(TenantId tenantId, ServiceAccountStatus status);
 
 }
