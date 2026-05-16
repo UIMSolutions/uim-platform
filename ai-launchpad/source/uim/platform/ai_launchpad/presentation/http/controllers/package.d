@@ -11,7 +11,6 @@ public import uim.platform.ai_launchpad.presentation.http.controllers.connection
 public import uim.platform.ai_launchpad.presentation.http.controllers.dataset;
 public import uim.platform.ai_launchpad.presentation.http.controllers.deployment;
 public import uim.platform.ai_launchpad.presentation.http.controllers.execution;
-public import uim.platform.ai_launchpad.presentation.http.controllers.health;
 public import uim.platform.ai_launchpad.presentation.http.controllers.model;
 public import uim.platform.ai_launchpad.presentation.http.controllers.prompt;
 public import uim.platform.ai_launchpad.presentation.http.controllers.prompt_collection;

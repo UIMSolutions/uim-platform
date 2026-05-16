@@ -13,51 +13,45 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryModelRepository : IModelRepository {
-  private Model[] store;
-
-  void save(Model m) {
-    foreach (existing; findAll) {
-      if (existing.id == m.id && existing.connectionId == m.connectionId) {
-        existing = m;
-        return;
-      }
-    }
-    store ~= m;
+class MemoryModelRepository : TenantRepository!(Model, ModelId), IModelRepository {
+  
+    bool existsById(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+    return findByConnection(tenantId, connectionId).any!(m => m.id == id);
   }
 
-  Model findById(ModelId id, ConnectionId connectionId) {
-    foreach (m; findAll) {
-      if (m.id == id && m.connectionId == connectionId) return m;
+  Model findById(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+    foreach (m; findByConnection(tenantId, connectionId)) {
+      if (m.id == id) return m;
     }
     return Model.init;
   }
-
-  Model[] findByConnection(ConnectionId connectionId) {
-    Model[] result;
-    foreach (m; findAll) {
-      if (m.connectionId == connectionId) result ~= m;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+    auto model = findById(tenantId, connectionId, id);
+    remove(model);
   }
 
-  Model[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    Model[] result;
-    foreach (m; findAll) {
-      if (m.scenarioId == scenarioId && m.connectionId == connectionId) result ~= m;
-    }
-    return result;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  Model[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(m => remove(m));
   }
 
-  Model[] findAll() {
-    return store.dup;
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+  Model[] filterByScenario(Model[] models, ScenarioId scenarioId) {
+    return models.filter!(m => m.scenarioId == scenarioId).array;
+  } 
+  Model[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    findByScenario(tenantId, connectionId, scenarioId).each!(m => remove(m));
   }
 
-  void remove(ModelId id, ConnectionId connectionId) {
-    Model[] filtered;
-    foreach (m; findAll) {
-      if (!(m.id == id && m.connectionId == connectionId)) filtered ~= m;
-    }
-    store = filtered;
-  }
+
 }

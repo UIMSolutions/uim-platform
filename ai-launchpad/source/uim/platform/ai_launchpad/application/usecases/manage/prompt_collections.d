@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
-  private IPromptcollections collections;
+  private IPromptCollectionRepository collections;
 
-  this(IPromptcollections repo) {
+  this(IPromptCollectionRepository repo) {
     this.collections = repo;
   }
 
@@ -60,7 +60,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
       pc.name = r.name;
     if (r.description.length > 0)
       pc.description = r.description;
-    pc.updatedAt = "now";
+    pc.updatedAt = currentTimestamp();
     
     collections.save(pc);
     return CommandResult(true, pc.id.value, "");

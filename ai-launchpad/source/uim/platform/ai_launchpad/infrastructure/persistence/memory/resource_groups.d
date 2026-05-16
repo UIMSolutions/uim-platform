@@ -5,47 +5,43 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_groups;
 
-import uim.platform.ai_launchpad.domain.ports.repositories.resource_groups;
-import uim.platform.ai_launchpad.domain.entities.resource_group : ResourceGroup;
-import uim.platform.ai_launchpad.domain.types;
+// import uim.platform.ai_launchpad.domain.ports.repositories.resource_groups;
+// import uim.platform.ai_launchpad.domain.entities.resource_group : ResourceGroup;
+// import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
 
-class MemoryResourceGroupRepository : IResourceGroupRepository {
-  private ResourceGroup[] store;
+mixin(ShowModule!());
 
-  void save(ResourceGroup rg) {
-    foreach (existing; findAll) {
-      if (existing.id == rg.id && existing.connectionId == rg.connectionId) {
-        existing = rg;
-        return;
-      }
-    }
-    store ~= rg;
+@safe:
+class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceGroupId), IResourceGroupRepository {
+
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+    return findByConnection(tenantId, connectionId).any!(rg => rg.id == id);
   }
 
-  ResourceGroup findById(ResourceGroupId id, ConnectionId connectionId) {
-    foreach (rg; findAll) {
-      if (rg.id == id && rg.connectionId == connectionId) return rg;
+  ResourceGroup findById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+    foreach (rg; findByConnection(tenantId, connectionId)) {
+      if (rg.id == id)
+        return rg;
     }
     return ResourceGroup.init;
   }
 
-  ResourceGroup[] findByConnection(ConnectionId connectionId) {
-    ResourceGroup[] result;
-    foreach (rg; findAll) {
-      if (rg.connectionId == connectionId) result ~= rg;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+    auto rg = findById(tenantId, connectionId, id);
+    remove(rg);
   }
 
-  ResourceGroup[] findAll() {
-    return store.dup;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
   }
 
-  void remove(ResourceGroupId id, ConnectionId connectionId) {
-    ResourceGroup[] filtered;
-    foreach (rg; findAll) {
-      if (!(rg.id == id && rg.connectionId == connectionId)) filtered ~= rg;
-    }
-    store = filtered;
+  ResourceGroup[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
+
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(rg => remove(rg));
+  }
+
 }

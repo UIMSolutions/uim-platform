@@ -12,7 +12,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
+class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWorkspaceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(w => w.name == name);

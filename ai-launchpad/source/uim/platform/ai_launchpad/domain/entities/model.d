@@ -13,14 +13,15 @@ mixin(ShowModule!());
 @safe:
 
 struct Model {
- mixin IdEntity!ModelId;
+  mixin TenantEntity!ModelId;
 
   ConnectionId connectionId;
+  ScenarioId scenarioId;
+  ExecutionId executionId;
+
   string name;
   string version_;
   string description;
-  ScenarioId scenarioId;
-  ExecutionId executionId;
   string url;
   long size;
   ModelStatus status;
@@ -39,6 +40,6 @@ struct Model {
       .set("url", url)
       .set("size", size)
       .set("status", status.to!string)
-      .set("labels", labels);
+      .set("labels", labels.map!(l => l.toJson()).arry.toJson);
   }
 }

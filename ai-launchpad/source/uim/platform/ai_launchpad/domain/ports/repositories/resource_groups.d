@@ -13,10 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IResourceGroupRepository {
-  void save(ResourceGroup rg);
-  ResourceGroup findById(ResourceGroupId id, ConnectionId connectionId);
-  ResourceGroup[] findByConnection(ConnectionId connectionId);
-  ResourceGroup[] findAll();
-  void remove(ResourceGroupId id, ConnectionId connectionId);
+interface IResourceGroupRepository : ITenantRepository!(ResourceGroup, ResourceGroupId) {
+
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id);
+  ResourceGroup findById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id);
+
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  ResourceGroup[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
 }

@@ -24,7 +24,7 @@ struct LabelPair {
 }
 
 struct ResourceGroup {
-  mixin IdEntity!ResourceGroupId;
+  mixin TenantEntity!ResourceGroupId;
 
   ConnectionId connectionId;
   LabelPair[] labels;

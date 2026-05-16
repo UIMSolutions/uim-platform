@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 struct UsageStatistic {
-  mixin IdEntity!StatisticsId;
+  mixin TenantEntity!UsageStatisticId;
   
   ScenarioId scenarioId;
   ConnectionId connectionId;
@@ -23,7 +23,7 @@ struct UsageStatistic {
   double totalTrainingHours;
   long totalInferenceRequests;
   double estimatedCost;
-  string computedAt;
+  long computedAt;
 
   Json toJson() const {
     return entityToJson

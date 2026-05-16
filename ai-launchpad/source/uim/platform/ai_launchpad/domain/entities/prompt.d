@@ -41,7 +41,7 @@ struct PromptParameters {
 }
 
 struct Prompt {
-  mixin IdEntity!PromptId;
+  mixin TenantEntity!PromptId;
 
   PromptCollectionId collectionId;
   string name;

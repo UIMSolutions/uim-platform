@@ -13,10 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IPromptCollectionRepository {
-  void save(PromptCollection pc);
-  PromptCollection findById(PromptCollectionId id);
-  PromptCollection[] findByWorkspace(WorkspaceId workspaceId);
-  PromptCollection[] findAll();
-  void remove(PromptCollectionId id);
+interface IPromptCollectionRepository : ITenantRepository!(PromptCollection, PromptCollectionId) {
+
+  // bool existsById(TenantId tenantId, PromptCollectionId id);
+  // PromptCollection findById(TenantId tenantId, PromptCollectionId id);
+  // void removeById(TenantId tenantId, PromptCollectionId id);
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  PromptCollection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+
 }

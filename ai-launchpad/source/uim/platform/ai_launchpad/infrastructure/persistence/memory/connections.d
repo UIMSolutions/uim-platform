@@ -14,30 +14,19 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryConnectionRepository : IConnectionRepository {
-  private Connection[ConnectionId] store;
 
-  Connection findById(ConnectionId id) {
-    if (auto p = id in store) return *p;
-    return Connection.init;
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
   }
 
-  Connection[] findByWorkspace(WorkspaceId workspaceId) {
-    Connection[] result;
-    foreach (c; findAll) {
-      if (c.workspaceId == workspaceId) result ~= c;
+  Connection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return filterByWorkspace(findByTenant(tenantId), workspaceId);
+  }
+
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    foreach (c; findByWorkspace(tenantId, workspaceId)) {
+      remove(c);
     }
-    return result;
   }
 
-  Connection[] findAll() {
-    return store.values;
-  }
-
-  void save(Connection connection) {
-    store[connection.id] = connection;
-  }
-
-  void remove(ConnectionId id) {
-    store.remove(id);
-  }
 }

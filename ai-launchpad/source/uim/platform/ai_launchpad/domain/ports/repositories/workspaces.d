@@ -15,4 +15,12 @@ mixin(ShowModule!());
 
 interface IWorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
 
+  bool existsByName(TenantId tenantId, string name);
+  Workspace findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
+  size_t countByStatus(TenantId tenantId, WorkspaceStatus status);
+  Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status);
+  void removeByStatus(TenantId tenantId, WorkspaceStatus status);
+
 }

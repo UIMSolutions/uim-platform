@@ -4,10 +4,15 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.dto;
+import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 // --- Connection ---
 struct CreateConnectionRequest {
-  string workspaceId;
+  TenantId tenantId;
+  WorkspaceId workspaceId;
   string name;
   string type;
   string url;
@@ -19,7 +24,8 @@ struct CreateConnectionRequest {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("workspaceId", workspaceId)
+      .set("tenantId", tenantId.value)
+      .set("workspaceId", workspaceId.value)
       .set("name", name)
       .set("type", type)
       .set("url", url)
@@ -32,6 +38,8 @@ struct CreateConnectionRequest {
 }
 
 struct PatchConnectionRequest {
+  TenantId tenantId;
+  WorkspaceId workspaceId;
   string connectionId;
   string name;
   string description;
@@ -39,6 +47,8 @@ struct PatchConnectionRequest {
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("workspaceId", workspaceId.value)
       .set("connectionId", connectionId)
       .set("name", name)
       .set("description", description)

@@ -14,42 +14,30 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryScenarioRepository : IScenarioRepository {
-  private Scenario[] store;
-
-  void save(Scenario s) {
-    foreach (existing; findAll) {
-      if (existing.id == s.id && existing.connectionId == s.connectionId) {
-        existing = s;
-        return;
-      }
-    }
-    store ~= s;
+  
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+    return findByConnection(tenantId, connectionId).any!(s => s.id == id);
   }
-
-  Scenario findById(ScenarioId id, ConnectionId connectionId) {
-    foreach (s; findAll) {
-      if (s.id == id && s.connectionId == connectionId) return s;
+  Scenario findById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+    foreach (s; findByConnection(tenantId, connectionId)) {
+      if (s.id == id)
+        return s;
     }
     return Scenario.init;
   }
-
-  Scenario[] findByConnection(ConnectionId connectionId) {
-    Scenario[] result;
-    foreach (s; findAll) {
-      if (s.connectionId == connectionId) result ~= s;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+    auto s = findById(tenantId, connectionId, id);
+    remove(s);
   }
 
-  Scenario[] findAll() {
-    return store.dup;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  Scenario[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(s => remove(s));
   }
 
-  void remove(ScenarioId id, ConnectionId connectionId) {
-    Scenario[] filtered;
-    foreach (s; findAll) {
-      if (!(s.id == id && s.connectionId == connectionId)) filtered ~= s;
-    }
-    store = filtered;
-  }
 }

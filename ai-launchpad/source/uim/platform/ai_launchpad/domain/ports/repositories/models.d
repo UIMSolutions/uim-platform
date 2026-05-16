@@ -13,14 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IModelRepository {
-  bool existsById(ConnectionId connectionId, ModelId id);
-  Model findById(ConnectionId connectionId, ModelId id);
-  
-  Model[] findByConnection(ConnectionId connectionId);
-  Model[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId);
-  Model[] findAll();
+interface IModelRepository : ITenantRepository!(Model, ModelId) {
 
-  void save(Model m);
-  void remove(ConnectionId connectionId, ModelId id);
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ModelId id);
+  Model findById(TenantId tenantId, ConnectionId connectionId, ModelId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, ModelId id);
+
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);  
+  Model[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  Model[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+
 }

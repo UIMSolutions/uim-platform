@@ -13,10 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IUsageStatisticRepository {
-  void save(UsageStatistic s);
-  UsageStatistic[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
-  UsageStatistic[] findByConnection(ConnectionId connectionId);
-  UsageStatistic[] findByPeriod(StatisticsPeriod period);
-  UsageStatistic[] findAll();
+interface IUsageStatisticRepository : ITenantRepository!(UsageStatistic, UsageStatisticId) {
+
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  UsageStatistic[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  UsageStatistic[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
+  size_t countByPeriod(TenantId tenantId, StatisticsPeriod period);
+  UsageStatistic[] findByPeriod(TenantId tenantId, StatisticsPeriod period);
+  void removeByPeriod(TenantId tenantId, StatisticsPeriod period);
+
 }

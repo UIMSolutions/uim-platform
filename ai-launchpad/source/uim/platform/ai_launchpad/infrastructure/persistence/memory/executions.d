@@ -12,59 +12,56 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryExecutionRepository : IExecutionRepository {
-  private Execution[] store;
+class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), IExecutionRepository {
 
-  void save(Execution e) {
-    foreach (existing; findAll) {
-      if (existing.id == e.id && existing.connectionId == e.connectionId) {
-        existing = e;
-        return;
-      }
-    }
-    store ~= e;
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+    return findByConnection(tenantId, connectionId).any!(e => e.id == id);
   }
-
-  Execution findById(ExecutionId id, ConnectionId connectionId) {
-    foreach (e; findAll) {
-      if (e.id == id && e.connectionId == connectionId) return e;
+  Execution findById(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+    foreach (e; findByConnection(tenantId, connectionId)) {
+      if (e.id == id) return e;
     }
     return Execution.init;
   }
-
-  Execution[] findByConnection(ConnectionId connectionId) {
-    Execution[] result;
-    foreach (e; findAll) {
-      if (e.connectionId == connectionId) result ~= e;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+    auto execution = findById(tenantId, connectionId, id);
+    remove(execution);
   }
 
-  Execution[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    Execution[] result;
-    foreach (e; findAll) {
-      if (e.scenarioId == scenarioId && e.connectionId == connectionId) result ~= e;
-    }
-    return result;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  Execution[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(e => remove(e));
+  }
+  
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+  Execution[] filterByScenario(Execution[] executions, ScenarioId scenarioId) {
+    return executions.filter!(e => e.scenarioId == scenarioId).array;
+  }
+  Execution[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    findByScenario(tenantId, connectionId, scenarioId).each!(e => remove(e));
   }
 
-  Execution[] findByStatus(ExecutionStatus status, ConnectionId connectionId) {
-    Execution[] result;
-    foreach (e; findAll) {
-      if (e.status == status && e.connectionId == connectionId) result ~= e;
-    }
-    return result;
+  size_t countByStatus(TenantId tenantId, ConnectionId connectionId, ExecutionStatus status) {
+    return findByStatus(tenantId, connectionId, status).length;
+  }
+  Execution[] filterByStatus(Execution[] executions, ExecutionStatus status) {
+    return executions.filter!(e => e.status == status).array;
+  }
+  Execution[] findByStatus(TenantId tenantId, ConnectionId connectionId, ExecutionStatus status) {
+    return filterByStatus(findByConnection(tenantId, connectionId), status);
+  }
+  void removeByStatus(TenantId tenantId, ConnectionId connectionId, ExecutionStatus status) {
+    findByStatus(tenantId, connectionId, status).each!(e => remove(e));
   }
 
-  Execution[] findAll() {
-    return store.dup;
-  }
-
-  void remove(ExecutionId id, ConnectionId connectionId) {
-    Execution[] filtered;
-    foreach (e; findAll) {
-      if (!(e.id == id && e.connectionId == connectionId)) filtered ~= e;
-    }
-    store = filtered;
-  }
 }

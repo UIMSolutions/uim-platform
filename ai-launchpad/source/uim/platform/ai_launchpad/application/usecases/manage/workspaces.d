@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.workspaces;
-// import uim.platform.ai_launchpad.domain.ports.workspacessitories.workspaces;
+// import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
 // import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageWorkspacesUseCase { // TODO: UIMUseCase {
-  private IWorkspaceworkspacessitory workspaces;
+  private IWorkspaceRepository workspaces;
 
-  this(IWorkspaceworkspacessitory workspaces) {
+  this(IWorkspaceRepository workspaces) {
     this.workspaces = workspaces;
   }
 

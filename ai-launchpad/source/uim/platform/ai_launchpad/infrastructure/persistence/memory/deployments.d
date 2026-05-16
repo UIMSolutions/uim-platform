@@ -12,59 +12,69 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDeploymentRepository : IDeploymentRepository {
-  private Deployment[] store;
-
-  void save(Deployment d) {
-    foreach (existing; findAll) {
-      if (existing.id == d.id && existing.connectionId == d.connectionId) {
-        existing = d;
-        return;
-      }
-    }
-    store ~= d;
+class MemoryDeploymentRepository : ITenantRepository!(Deployment, DeploymentId), IDeploymentRepository {
+  bool existsById(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+    return findByConnection(tenantId, connectionId).any!(d => d.id == id);
   }
 
-  Deployment findById(DeploymentId id, ConnectionId connectionId) {
-    foreach (d; findAll) {
-      if (d.id == id && d.connectionId == connectionId) return d;
+  Deployment findById(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+    foreach(d; findByConnection(tenantId, connectionId)) {
+      if (d.id == id) return d;
     }
     return Deployment.init;
   }
 
-  Deployment[] findByConnection(ConnectionId connectionId) {
-    Deployment[] result;
-    foreach (d; findAll) {
-      if (d.connectionId == connectionId) result ~= d;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+    remove(findById(tenantId, connectionId, id));
   }
 
-  Deployment[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    Deployment[] result;
-    foreach (d; findAll) {
-      if (d.scenarioId == scenarioId && d.connectionId == connectionId) result ~= d;
-    }
-    return result;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
   }
 
-  Deployment[] findByStatus(DeploymentStatus status, ConnectionId connectionId) {
-    Deployment[] result;
-    foreach (d; findAll) {
-      if (d.status == status && d.connectionId == connectionId) result ~= d;
-    }
-    return result;
+  Deployment[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
 
-  Deployment[] findAll() {
-    return store.dup;
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    foreach (d; findByConnection(tenantId, connectionId)) {
+      remove(d);
+    }
   }
 
-  void remove(DeploymentId id, ConnectionId connectionId) {
-    Deployment[] filtered;
-    foreach (d; findAll) {
-      if (!(d.id == id && d.connectionId == connectionId)) filtered ~= d;
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+
+  Deployment[] filterByScenario(Deployment[] deployments, ScenarioId scenarioId) {
+    return deployments.filter!(d => d.scenarioId == scenarioId).array;
+  }
+
+  Deployment[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    foreach (d; findByScenario(tenantId, connectionId, scenarioId)) {
+      remove(d);
     }
-    store = filtered;
+  }
+
+  size_t countByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status) {
+    return findByStatus(tenantId, connectionId, status).length;
+  }
+
+  Deployment[] filterByStatus(Deployment[] deployments, DeploymentStatus status) {
+    return deployments.filter!(d => d.status == status).array;
+  }
+
+  Deployment[] findByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status) {
+    return filterByStatus(findByConnection(tenantId, connectionId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status) {
+    foreach (d; findByStatus(tenantId, connectionId, status)) {
+      remove(d);
+    }
   }
 }

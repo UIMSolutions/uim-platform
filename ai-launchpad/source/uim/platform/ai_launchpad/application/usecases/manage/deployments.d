@@ -61,7 +61,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       d.configurationId = r.configurationId;
     if (r.ttl > 0)
       d.ttl = r.ttl;
-    d.updatedAt = "now";
+    d.updatedAt = currentTimestamp();
     repo.save(d);
     return CommandResult(true, d.id.value, "");
   }

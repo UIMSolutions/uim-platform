@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 struct PromptCollection {
-  mixin IdEntity!PromptCollectionId;
+  mixin TenantEntity!PromptCollectionId;
 
   string name;
   string description;

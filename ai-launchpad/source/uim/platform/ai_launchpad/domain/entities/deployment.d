@@ -5,40 +5,45 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.entities.deployment;
 
-import uim.platform.ai_launchpad.domain.types;
+import uim.platform.ai_launchpad;
+
+mixin(ShowModule!());
+
+@safe:
 
 struct ScalingConfig {
   int minReplicas;
   int maxReplicas;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("minReplicas", minReplicas)
+      .set("maxReplicas", maxReplicas);
+  }
 }
 
 struct Deployment {
-  DeploymentId id;
+  mixin TenantEntity!DeploymentId;
+
   ConnectionId connectionId;
   ConfigurationId configurationId;
   ScenarioId scenarioId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
   DeploymentStatus status;
   string targetStatus;
   string deploymentUrl;
   ScalingConfig scaling;
   int ttl;
   long startedAt;
-  string stoppedAt;
+  long stoppedAt;
   string statusMessage;
-  long createdAt;
-  long updatedAt;
 
-  Json toJson() {
-    
-    import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
-
+  Json toJson() const {    
     auto sj = Json.emptyObject
       .set("minReplicas", scaling.minReplicas)
       .set("maxReplicas", scaling.maxReplicas);
 
-    return Json.emptyObject
-      .set("id", id)
+    return entityToJson()
       .set("connectionId", connectionId)
       .set("configurationId", configurationId)
       .set("scenarioId", scenarioId)
@@ -50,8 +55,6 @@ struct Deployment {
       .set("ttl", ttl)
       .set("startedAt", startedAt)
       .set("stoppedAt", stoppedAt)
-      .set("statusMessage", statusMessage)
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("statusMessage", statusMessage);
   }
 }

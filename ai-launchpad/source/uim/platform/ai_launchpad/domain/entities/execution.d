@@ -26,7 +26,7 @@ struct OutputArtifact {
 }
 
 struct Execution {
-  mixin IdEntity!ExecutionId;
+  mixin TenantEntity!ExecutionId;
 
   ConnectionId connectionId;
   ConfigurationId configurationId;
@@ -36,16 +36,15 @@ struct Execution {
   string targetStatus;
   OutputArtifact[] outputArtifacts;
   long startedAt;
-  string completedAt;
-  string duration;
+  long completedAt;
+  long duration;
   string logsUrl;
   string statusMessage;
 
   Json toJson() const {
     auto artifacts = outputArtifacts.map!(a => a.toJson).array.toJson;
 
-    return Json.emptyObject
-      .set("id", id)
+    return entityToJson
       .set("connectionId", connectionId)
       .set("configurationId", configurationId)
       .set("scenarioId", scenarioId)

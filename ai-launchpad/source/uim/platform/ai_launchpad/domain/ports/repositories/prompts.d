@@ -13,11 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IPromptRepository {
-  void save(Prompt p);
-  Prompt findById(PromptId id);
-  Prompt[] findByCollection(PromptCollectionId collectionId);
-  Prompt[] findByStatus(PromptStatus status);
-  Prompt[] findAll();
-  void remove(PromptId id);
+interface IPromptRepository : ITenantRepository!(Prompt, PromptId) {
+
+  bool existsById(TenantId tenantId, PromptId id);
+  Prompt findById(TenantId tenantId, PromptId id);
+  void removeById(TenantId tenantId, PromptId id);
+
+  size_t countByCollection(TenantId tenantId, PromptCollectionId collectionId);
+  Prompt[] findByCollection(TenantId tenantId, PromptCollectionId collectionId);
+  void removeByCollection(TenantId tenantId, PromptCollectionId collectionId);
+
+  size_t countByStatus(TenantId tenantId, PromptStatus status);
+  Prompt[] findByStatus(TenantId tenantId, PromptStatus status);
+  void removeByStatus(TenantId tenantId, PromptStatus status);
+
 }

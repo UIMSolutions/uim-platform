@@ -13,14 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDatasetRepository {
-  bool existsById(DatasetId id, ConnectionId connectionId);
-  Dataset findById(DatasetId id, ConnectionId connectionId);
-  
-  Dataset[] findByConnection(ConnectionId connectionId);
-  Dataset[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
-  Dataset[] findAll();
+interface IDatasetRepository : ITenantRepository!(Dataset, DatasetId) {
 
-  void save(Dataset d);
-  void remove(DatasetId id, ConnectionId connectionId);
+  bool existsById(TenantId tenantId, ConnectionId connectionId, DatasetId id);
+  Dataset findById(TenantId tenantId, ConnectionId connectionId, DatasetId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, DatasetId id);
+  
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  Dataset[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  Dataset[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+
 }

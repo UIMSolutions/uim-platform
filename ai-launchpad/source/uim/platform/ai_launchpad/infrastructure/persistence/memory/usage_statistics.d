@@ -13,38 +13,42 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryUsageStatisticRepository : IUsageStatisticRepository {
-  private UsageStatistic[] store;
+class MemoryUsageStatisticRepository : TenantRepository!(UsageStatistic, UsageStatisticId), IUsageStatisticRepository {
 
-  void save(UsageStatistic s) {
-    store ~= s;
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+  UsageStatistic[] filterByScenario(UsageStatistic[] stats, ScenarioId scenarioId) {
+    return stats.filter!(s => s.scenarioId == scenarioId).array;
+  }
+  UsageStatistic[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    findByScenario(tenantId, connectionId, scenarioId).each!(s => remove(s));
   }
 
-  UsageStatistic[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    UsageStatistic[] result;
-    foreach (s; findAll) {
-      if (s.scenarioId == scenarioId && s.connectionId == connectionId) result ~= s;
-    }
-    return result;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  UsageStatistic[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(s => remove(s));
   }
 
-  UsageStatistic[] findByConnection(ConnectionId connectionId) {
-    UsageStatistic[] result;
-    foreach (s; findAll) {
-      if (s.connectionId == connectionId) result ~= s;
-    }
-    return result;
+  size_t countByPeriod(TenantId tenantId, StatisticsPeriod period) {
+    return findByPeriod(tenantId, period).length;
+  }
+  UsageStatistic[] filterByPeriod(UsageStatistic[] stats, StatisticsPeriod period) {
+    return stats.filter!(s => s.period == period).array;
+  }
+  UsageStatistic[] findByPeriod(TenantId tenantId, StatisticsPeriod period) {
+    return filterByPeriod(findByTenant(tenantId), period);
+  }
+  void removeByPeriod(TenantId tenantId, StatisticsPeriod period) {
+    findByPeriod(tenantId, period).each!(s => remove(s));
   }
 
-  UsageStatistic[] findByPeriod(StatisticsPeriod period) {
-    UsageStatistic[] result;
-    foreach (s; findAll) {
-      if (s.period == period) result ~= s;
-    }
-    return result;
-  }
-
-  UsageStatistic[] findAll() {
-    return store.dup;
-  }
 }

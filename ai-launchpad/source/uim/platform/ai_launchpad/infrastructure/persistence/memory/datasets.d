@@ -12,51 +12,43 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDatasetRepository : IDatasetRepository {
-  private Dataset[] store;
-
-  void save(Dataset d) {
-    foreach (existing; findAll) {
-      if (existing.id == d.id && existing.connectionId == d.connectionId) {
-        existing = d;
-        return;
-      }
-    }
-    store ~= d;
+class MemoryDatasetRepository : ITenantRepository!(Dataset, DatasetId), IDatasetRepository {
+  
+  bool existsById(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+    return findByConnection(tenantId, connectionId).any!(d => d.id == id);
   }
-
-  Dataset findById(DatasetId id, ConnectionId connectionId) {
-    foreach (d; findAll) {
-      if (d.id == id && d.connectionId == connectionId) return d;
+  Dataset findById(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+    foreach(d; findByConnection(tenantId, connectionId)) {
+      if (d.id == id) return d;
     }
     return Dataset.init;
   }
-
-  Dataset[] findByConnection(ConnectionId connectionId) {
-    Dataset[] result;
-    foreach (d; findAll) {
-      if (d.connectionId == connectionId) result ~= d;
+  void removeById(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+    remove(findById(tenantId, connectionId, id));
+  }
+  
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  Dataset[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    foreach(d; findByConnection(tenantId, connectionId)) {
+      remove(d);
     }
-    return result;
   }
 
-  Dataset[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
-    Dataset[] result;
-    foreach (d; findAll) {
-      if (d.scenarioId == scenarioId && d.connectionId == connectionId) result ~= d;
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+  Dataset[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    foreach(d; findByScenario(tenantId, connectionId, scenarioId)) {
+      remove(d);
     }
-    return result;
   }
 
-  Dataset[] findAll() {
-    return store.dup;
-  }
-
-  void remove(DatasetId id, ConnectionId connectionId) {
-    Dataset[] filtered;
-    foreach (d; findAll) {
-      if (!(d.id == id && d.connectionId == connectionId)) filtered ~= d;
-    }
-    store = filtered;
-  }
 }

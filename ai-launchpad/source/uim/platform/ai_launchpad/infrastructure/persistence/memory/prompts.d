@@ -12,39 +12,46 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPromptRepository : IPromptRepository {
-  private Prompt[string] store;
+class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepository {
 
-  void save(Prompt p) {
-    store[p.id] = p;
+  bool existsById(TenantId tenantId, PromptId id) {
+    return findByTenant(tenantId).any!(p => p.id == id);
   }
 
-  Prompt findById(PromptId id) {
-    if (auto p = id in store) return *p;
+  Prompt findById(TenantId tenantId, PromptId id) {
+    foreach (p; findByTenant(tenantId)) {
+      if (p.id == id)
+        return p;
+    }
     return Prompt.init;
   }
 
-  Prompt[] findByCollection(PromptCollectionId collectionId) {
-    Prompt[] result;
-    foreach (p; findAll) {
-      if (p.collectionId == collectionId) result ~= p;
-    }
-    return result;
+  void removeById(TenantId tenantId, PromptId id) {
+    remove(findById(tenantId, id));
   }
 
-  Prompt[] findByStatus(PromptStatus status) {
-    Prompt[] result;
-    foreach (p; findAll) {
-      if (p.status == status) result ~= p;
-    }
-    return result;
+  size_t countByCollection(TenantId tenantId, PromptCollectionId collectionId) {
+    return findByCollection(tenantId, collectionId).length;
   }
 
-  Prompt[] findAll() {
-    return store.values;
+  Prompt[] findByCollection(TenantId tenantId, PromptCollectionId collectionId) {
+    return filterByCollection(findByTenant(tenantId), collectionId);
   }
 
-  void remove(PromptId id) {
-    removeById(id);
+  void removeByCollection(TenantId tenantId, PromptCollectionId collectionId) {
+    findByCollection(tenantId, collectionId).each!(p => remove(p));
   }
+
+  size_t countByStatus(TenantId tenantId, PromptStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  Prompt[] findByStatus(TenantId tenantId, PromptStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, PromptStatus status) {
+    findByStatus(tenantId, status).each!(p => remove(p));
+  }
+
 }

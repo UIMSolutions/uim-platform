@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 struct Workspace {
-  mixin TenantEntity!(WorkspaceId);
+  mixin TenantEntity!WorkspaceId;
 
   string name;
   string description;

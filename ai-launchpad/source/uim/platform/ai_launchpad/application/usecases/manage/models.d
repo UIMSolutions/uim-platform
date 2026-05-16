@@ -16,13 +16,13 @@ mixin(ShowModule!());
 
 @safe:
 class ManageModelsUseCase { // TODO: UIMUseCase {
-  private IModelmodelssitory models;
+  private IModelRepository models;
 
-  this(IModelmodelssitory models) {
+  this(IModelRepository models) {
     this.models = models;
   }
 
-  CommandResult register(RegisterModelRequest r) {
+  CommandResult registerModel(RegisterModelRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Model name is required");
 
@@ -44,19 +44,19 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, m.id.value, "");
   }
 
-  Model getById(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+  Model getModel(TenantId tenantId, ConnectionId connectionId, ModelId id) {
     return models.findById(tenantId, connectionId, id);
   }
 
-  Model[] listByConnection(TenantId tenantId, ConnectionId connectionId) {
+  Model[] listModels(TenantId tenantId, ConnectionId connectionId) {
     return models.findByConnection(tenantId, connectionId);
   }
 
-  Model[] listByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+  Model[] listModels(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return models.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patch(PatchModelRequest r) {
+  CommandResult patchModel(PatchModelRequest r) {
     auto m = models.findById(r.tenantId, r.connectionId, r.modelId);
 
     if (m.isNull)

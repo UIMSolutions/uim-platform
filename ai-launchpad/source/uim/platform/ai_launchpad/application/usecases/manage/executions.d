@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageExecutionsUseCase { // TODO: UIMUseCase {
-  private IExecutionexecutionssitory executions;
+  private IExecutionRepository executions;
 
-  this(IExecutionexecutionssitory executions) {
+  this(IExecutionRepository executions) {
     this.executions = executions;
   }
 
@@ -56,7 +56,8 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
       e.status = ExecutionStatus.stopped;
     else if (r.targetStatus == "deleted")
       e.status = ExecutionStatus.dead;
-    e.updatedAt = "now";
+    e.updatedAt = currentTimestamp();
+
     executions.save(e);
     return CommandResult(true, e.id.value, "");
   }
@@ -68,7 +69,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
       pr.connectionId = r.connectionId;
       pr.executionId = eid;
       pr.targetStatus = r.targetStatus;
-      results ~= patch(pr);
+      results ~= patchExecution(pr);
     }
     return results;
   }

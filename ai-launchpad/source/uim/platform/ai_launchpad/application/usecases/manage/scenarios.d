@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageScenariosUseCase { // TODO: UIMUseCase {
-  private IScenarioscenariossitory scenarios;
+  private IScenarioRepository scenarios;
 
-  this(IScenarioscenariossitory scenarios) {
+  this(IScenarioRepository scenarios) {
     this.scenarios = scenarios;
   }
 

@@ -12,31 +12,29 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPromptCollectionRepository : IPromptCollectionRepository {
-  private PromptCollection[string] store;
+class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, PromptCollectionId), IPromptCollectionRepository {
 
-  void save(PromptCollection pc) {
-    store[pc.id] = pc;
+  // bool existsById(TenantId tenantId, PromptCollectionId id) {
+  //   return findByTenant(tenantId).any!(pc => pc.id == id);
+  // }
+  // PromptCollection findById(TenantId tenantId, PromptCollectionId id) {
+  //   foreach(pc; findByTenant(tenantId)) {
+  //     if (pc.id == id) return pc;
+  //   }
+  //   return PromptCollection.init;
+  // }
+  // void removeById(TenantId tenantId, PromptCollectionId id) {
+  //   remove(findById(tenantId, id));
+  // }
+
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return findByWorkspace(tenantId, workspaceId).length;
+  }
+  PromptCollection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    return filterByWorkspace(findByTenant(tenantId), workspaceId);
+  }
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
+    findByWorkspace(tenantId, workspaceId).each!(pc => remove(pc));
   }
 
-  PromptCollection findById(PromptCollectionId id) {
-    if (auto p = id in store) return *p;
-    return PromptCollection.init;
-  }
-
-  PromptCollection[] findByWorkspace(WorkspaceId workspaceId) {
-    PromptCollection[] result;
-    foreach (pc; findAll) {
-      if (pc.workspaceId == workspaceId) result ~= pc;
-    }
-    return result;
-  }
-
-  PromptCollection[] findAll() {
-    return store.values;
-  }
-
-  void remove(PromptCollectionId id) {
-    removeById(id);
-  }
 }

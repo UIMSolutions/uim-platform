@@ -13,10 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IScenarioRepository {
-  void save(Scenario s);
-  Scenario findById(ScenarioId id, ConnectionId connectionId);
-  Scenario[] findByConnection(ConnectionId connectionId);
-  Scenario[] findAll();
-  void remove(ScenarioId id, ConnectionId connectionId);
+interface IScenarioRepository : ITenantRepository!(Scenario, ScenarioId) {
+
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
+  Scenario findById(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
+
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  Scenario[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
 }

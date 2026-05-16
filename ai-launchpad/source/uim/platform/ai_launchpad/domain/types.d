@@ -14,7 +14,7 @@ mixin(ShowModule!());
 // ID aliases
 
 struct WorkspaceId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -22,8 +22,9 @@ struct WorkspaceId {
 
   mixin DomainId;
 }
+
 struct ScenarioId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -31,8 +32,9 @@ struct ScenarioId {
 
   mixin DomainId;
 }
+
 struct ConfigurationId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -40,8 +42,9 @@ struct ConfigurationId {
 
   mixin DomainId;
 }
+
 struct ExecutionId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -49,8 +52,9 @@ struct ExecutionId {
 
   mixin DomainId;
 }
+
 struct DeploymentId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -58,8 +62,9 @@ struct DeploymentId {
 
   mixin DomainId;
 }
+
 struct ModelId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -67,8 +72,9 @@ struct ModelId {
 
   mixin DomainId;
 }
+
 struct DatasetId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -76,8 +82,9 @@ struct DatasetId {
 
   mixin DomainId;
 }
+
 struct PromptId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -85,8 +92,9 @@ struct PromptId {
 
   mixin DomainId;
 }
+
 struct PromptCollectionId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -94,8 +102,9 @@ struct PromptCollectionId {
 
   mixin DomainId;
 }
+
 struct ResourceGroupId {
-      string value;
+  string value;
 
   this(string value) {
     this.value = value;
@@ -103,8 +112,9 @@ struct ResourceGroupId {
 
   mixin DomainId;
 }
-struct StatisticsId {
-      string value;
+
+struct UsageStatisticId {
+  string value;
 
   this(string value) {
     this.value = value;
@@ -114,33 +124,91 @@ struct StatisticsId {
 }
 
 // Connection to an AI runtime instance
-enum ConnectionStatus { active, inactive, error, pending }
-enum ConnectionType { ai_core, custom }
+enum ConnectionStatus {
+  active,
+  inactive,
+  error,
+  pending
+}
+
+enum ConnectionType {
+  ai_core,
+  custom
+}
 
 // Execution lifecycle
-enum ExecutionStatus { pending, running, completed, failed, stopped, dead, unknown }
+enum ExecutionStatus {
+  pending,
+  running,
+  completed,
+  failed,
+  stopped,
+  dead,
+  unknown
+}
 
 // Deployment lifecycle
-enum DeploymentStatus { pending, running, stopped, dead, unknown }
+enum DeploymentStatus {
+  pending,
+  running,
+  stopped,
+  dead,
+  unknown
+}
 
 // Model tracking
-enum ModelStatus { available, archived, deprecated_ }
+enum ModelStatus {
+  available,
+  archived,
+  deprecated_
+}
 
 // Dataset tracking
-enum DatasetStatus { available, processing, error, archived }
+enum DatasetStatus {
+  available,
+  processing,
+  error,
+  archived
+}
 
 // Workspace
-enum WorkspaceStatus { active, inactive }
+enum WorkspaceStatus {
+  active,
+  inactive
+}
 
 // GenAI Hub prompt management
-enum PromptRole { system, user, assistant }
-enum PromptStatus { draft, active, archived }
+enum PromptRole {
+  system,
+  user,
+  assistant
+}
+
+enum PromptStatus {
+  draft,
+  active,
+  archived
+}
 
 // Artifact classification
-enum ArtifactKind { model, dataset, resultset, other }
+enum ArtifactKind {
+  model,
+  dataset,
+  resultset,
+  other
+}
 
 // Target status for lifecycle operations
-enum TargetStatus { running, stopped, deleted_, completed }
+enum TargetStatus {
+  running,
+  stopped,
+  deleted_,
+  completed
+}
 
 // Usage statistics
-enum StatisticsPeriod { daily, weekly, monthly }
+enum StatisticsPeriod {
+  daily,
+  weekly,
+  monthly
+}

@@ -13,13 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IConnectionRepository {
-  bool existsById(ConnectionId id);
-  Connection findById(ConnectionId id);
+interface IConnectionRepository : ITenantRepository!(Connection, ConnectionId) {
   
-  Connection[] findByWorkspace(WorkspaceId workspaceId);
-  Connection[] findAll();
+  size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  Connection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
+  void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
 
-  void save(Connection c);
-  void remove(ConnectionId id);
 }

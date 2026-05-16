@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 struct Scenario {
-  mixin IdEntity!ScenarioId;
+  mixin TenantEntity!ScenarioId;
 
   ConnectionId connectionId;
   string name;

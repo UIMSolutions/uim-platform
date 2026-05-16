@@ -13,15 +13,22 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDeploymentRepository {
-  bool existsById(ConnectionId connectionId, DeploymentId id);
-  Deployment findById(ConnectionId connectionId, DeploymentId id);
+interface IDeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
   
-  Deployment[] findByConnection(ConnectionId connectionId);
-  Deployment[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId);
-  Deployment[] findByStatus(ConnectionId connectionId, DeploymentStatus status);
-  Deployment[] findAll();
+  bool existsById(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
+  Deployment findById(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
+  
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  Deployment[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
 
-  void save(Deployment d);
-  void remove(ConnectionId connectionId, DeploymentId id);
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  Deployment[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+
+  size_t countByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status);
+  Deployment[] findByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status);
+  void removeByStatus(TenantId tenantId, ConnectionId connectionId, DeploymentStatus status);
+
 }
