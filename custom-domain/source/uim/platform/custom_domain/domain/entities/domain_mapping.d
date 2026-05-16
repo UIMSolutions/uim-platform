@@ -13,7 +13,7 @@ mixin(ShowModule!());
 struct DomainMapping {
     mixin TenantEntity!(DomainMappingId);
 
-    string customDomainId;
+    CustomDomainId customDomainId;
     string standardRoute;
     string customRoute;
     MappingType mappingType;
@@ -23,7 +23,7 @@ struct DomainMapping {
     SpaceId spaceId;
     
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("customDomainId", customDomainId)
             .set("standardRoute", standardRoute)
             .set("customRoute", customRoute)
@@ -32,7 +32,5 @@ struct DomainMapping {
             .set("applicationName", applicationName)
             .set("organizationId", organizationId)
             .set("spaceId", spaceId);
-
-        return j;
     }
 }

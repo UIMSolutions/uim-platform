@@ -73,7 +73,8 @@ struct ActivateCertificateRequest {
 
 struct CreateTlsConfigurationRequest {
     TenantId tenantId;
-    TlsConfigurationId tlsConfigurationId   ;
+    TlsConfigurationId tlsConfigurationId;
+    
     string name;
     string description;
     string minProtocolVersion;
@@ -88,6 +89,7 @@ struct CreateTlsConfigurationRequest {
 struct UpdateTlsConfigurationRequest {
     TenantId tenantId;
     TlsConfigurationId tlsConfigurationId;
+
     string name;
     string description;
     string minProtocolVersion;
@@ -129,7 +131,7 @@ struct CreateDnsRecordRequest {
     TenantId tenantId;
     DnsRecordId dnsRecordId;
     CustomDomainId customDomainId;
-    
+
     string recordType;
     string hostname;
     string value;

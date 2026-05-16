@@ -13,20 +13,20 @@ mixin(ShowModule!());
 
 class MemoryTrustedCertificateRepository : TenantRepository!(TrustedCertificate, TrustedCertificateId), TrustedCertificateRepository {
 
-    size_t countByDomain(CustomDomainId domainId) {
-        return findByDomain(domainId).length;
+    size_t countByCustomDomain(CustomDomainId domainId) {
+        return findByCustomDomain(domainId).length;
     }
 
-    TrustedCertificate[] filterByDomain(TrustedCertificate[] certs, CustomDomainId domainId) {
+    TrustedCertificate[] filterByCustomDomain(TrustedCertificate[] certs, CustomDomainId domainId) {
         return certs.filter!(c => c.customDomainId == domainId).array;
     }
 
-    TrustedCertificate[] findByDomain(CustomDomainId domainId) {
-        return filterByDomain(findAll(), domainId);
+    TrustedCertificate[] findByCustomDomain(CustomDomainId domainId) {
+        return filterByCustomDomain(findAll(), domainId);
     }
 
-    void removeByDomain(CustomDomainId domainId) {
-        findByDomain(domainId).each!(c => remove(c));
+    void removeByCustomDomain(CustomDomainId domainId) {
+        findByCustomDomain(domainId).each!(c => remove(c));
     }
 
 }

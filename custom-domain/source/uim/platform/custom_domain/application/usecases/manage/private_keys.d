@@ -19,20 +19,21 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createPrivateKey(CreatePrivateKeyRequest r) {
-        if (r.isNull)
+        if (r.privateKeyId.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.subject.length == 0)
             return CommandResult(false, "", "Subject is required");
         if (r.domains.length == 0)
             return CommandResult(false, "", "At least one domain is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.privateKeyId);
         if (!existing.isNull)
             return CommandResult(false, "", "Key already exists");
 
         PrivateKey k;
         k.initEntity(r.tenantId, r.createdBy);
-        k.id = r.id;
+
+        k.id = r.privateKeyId;
         k.subject = r.subject;
         k.domains = r.domains;
         k.keySize = r.keySize > 0 ? r.keySize : 2048;

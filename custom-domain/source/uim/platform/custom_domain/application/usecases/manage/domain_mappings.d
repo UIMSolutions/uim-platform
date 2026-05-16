@@ -36,7 +36,8 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
 
         DomainMapping m;
         m.initEntity(r.tenantId, r.createdBy);
-        m.id = r.id;
+
+        m.id = r.customDomainId;
         m.customDomainId = r.customDomainId;
         m.standardRoute = r.standardRoute;
         m.customRoute = r.customRoute;
@@ -49,7 +50,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, m.id.value, "");
     }
 
-    DomainMapping getDomainMappingById(TenantId tenantId, DomainMappingId id) {
+    DomainMapping getDomainMapping(TenantId tenantId, DomainMappingId id) {
         return repo.findById(tenantId, id);
     }
 

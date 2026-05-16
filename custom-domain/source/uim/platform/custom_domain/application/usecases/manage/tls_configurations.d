@@ -23,25 +23,20 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.tlsConfigurationId);
         if (!existing.isNull)
             return CommandResult(false, "", "TLS configuration already exists");
 
         TlsConfiguration c;
-        c.id = r.id;
-        c.tenantId = r.tenantId;
+        c.initEntity(r.tenantId, r.createdBy);
+
+        c.id = r.tlsConfigurationId;
         c.name = r.name;
         c.description = r.description;
         c.http2Enabled = r.http2Enabled;
         c.hstsEnabled = r.hstsEnabled;
         c.hstsMaxAge = r.hstsMaxAge;
         c.hstsIncludeSubDomains = r.hstsIncludeSubDomains;
-        c.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        c.createdAt = now;
-        c.updatedAt = now;
 
         repo.save(c);
         return CommandResult(true, c.id.value, "");
@@ -56,7 +51,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTlsConfiguration(TenantId tenantId, UpdateTlsConfigurationRequest r) {
-        auto existing = repo.findById(tenantId, r.id);
+        auto existing = repo.findById(tenantId, r.tlsConfigurationId);
         if (existing.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 

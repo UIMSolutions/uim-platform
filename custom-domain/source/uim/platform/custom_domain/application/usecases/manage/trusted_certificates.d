@@ -19,28 +19,25 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTrustedCertificate(CreateTrustedCertificateRequest r) {
-        if (r.isNull)
+        if (r.trustedCertificateId.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.certificatePem.length == 0)
             return CommandResult(false, "", "Certificate PEM is required");
         if (r.customDomainId.isEmpty)
             return CommandResult(false, "", "Custom domain ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.trustedCertificateId);
         if (!existing.isNull)
             return CommandResult(false, "", "Trusted certificate already exists");
 
         TrustedCertificate c;
-        c.id = r.id;
-        c.tenantId = r.tenantId;
+        c.initEntity(r.tenantId, r.createdBy);
+
+        c.id = r.trustedCertificateId;
         c.customDomainId = r.customDomainId;
         c.certificatePem = r.certificatePem;
         c.status = TrustedCertificateStatus.active;
-        c.createdBy = r.createdBy;
 
-        import core.time : MonoTime;
-        c.createdAt = currentTimestamp;
-        c.updatedAt = currentTimestamp;
         repo.save(c);
         return CommandResult(true, c.id.value, "");
     }
