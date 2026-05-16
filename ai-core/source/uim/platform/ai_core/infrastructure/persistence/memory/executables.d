@@ -15,55 +15,26 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class MemoryExecutableRepository : ExecutableRepository {
-  private Executable[][string] store;
+class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {
 
-  Executable findById(ExecutableId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      foreach (e; *rg) {
-        if (e.id == id)
-          return e;
-      }
-    }
-    return Executable.init;
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return findByResourceGroup(tenantId, rgId).length;
+  }
+  Executable[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return filterByResourceGroup(filterByTenant(tenantId), rgId);
+  }
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    findByResourceGroup(tenantId, rgId).each!(e => remove(e));
   }
 
-  Executable[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(e => e.scenarioId == scenarioId).array;
-    return null;
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, rgId, scenarioId).length;
+  }
+  Executable[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    return filterByScenario(tenantId, rgId, scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    findByScenario(tenantId, rgId, scenarioId).each!(e => remove(e));
   }
 
-  Executable[] findByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return *rg;
-    return null;
-  }
-
-  void save(Executable e) {
-    store[e.resourceGroupId] ~= e;
-  }
-
-  void update(Executable e) {
-    if (auto rg = e.resourceGroupId in store) {
-      foreach (existing; *rg) {
-        if (existing.id == e.id) {
-          existing = e;
-          return;
-        }
-      }
-    }
-  }
-
-  void remove(ExecutableId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      *rg = (rg).filter!(e => e.id != id).array;
-    }
-  }
-
-  size_t countByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(e => e.scenarioId == scenarioId).array.length;
-    return 0;
-  }
 }

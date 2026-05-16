@@ -9,4 +9,5 @@ public {
   import uim.platform.ai_core.infrastructure.config;
   import uim.platform.ai_core.infrastructure.container;
   import uim.platform.ai_core.infrastructure.persistence;
+  import uim.platform.ai_core.infrastructure.helpers;
 }

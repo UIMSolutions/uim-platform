@@ -15,7 +15,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class MemoryExecutionRepository : ExecutionRepository {
+class MemoryExecutionRepository :  ExecutionRepository {
   private Execution[][string] store;
 
   Execution findById(ExecutionId id, ResourceGroupId rgId) {

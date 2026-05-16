@@ -11,11 +11,14 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-interface MetricRepository {
-  Metric findById(MetricId id, ResourceGroupId rgId);
-  Metric[] findByExecution(ExecutionId execId, ResourceGroupId rgId);
-  Metric[] findByResourceGroup(ResourceGroupId rgId);
-  void save(Metric m);
-  void remove(MetricId id, ResourceGroupId rgId);
-  size_t countByExecution(ExecutionId execId, ResourceGroupId rgId);
+interface MetricRepository : ITenantRepository!(Metric, MetricId) {
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Metric[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  
+  size_t countByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
+  Metric[] findByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
+  void removeByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
+
 }

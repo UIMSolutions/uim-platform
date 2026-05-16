@@ -11,14 +11,26 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-interface ArtifactRepository {
-  Artifact findById(ArtifactId id, ResourceGroupId rgId);
-  Artifact[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
-  Artifact[] findByExecution(ExecutionId execId, ResourceGroupId rgId);
-  Artifact[] findByKind(ArtifactKind kind, ResourceGroupId rgId);
-  Artifact[] findByResourceGroup(ResourceGroupId rgId);
-  void save(Artifact a);
-  void update(Artifact a);
-  void remove(ArtifactId id, ResourceGroupId rgId);
-  size_t countByResourceGroup(ResourceGroupId rgId);
+interface ArtifactRepository : ITenantRepository!(Artifact, ArtifactId) {
+
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id);
+  Artifact findById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id);
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Artifact[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  Artifact[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+
+  size_t countByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
+  Artifact[] findByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
+  void removeByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId);
+
+  size_t countByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
+  Artifact[] findByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
+  void removeByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId);
+
 }

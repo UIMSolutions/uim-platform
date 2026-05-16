@@ -8,60 +8,87 @@ module uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
 // import uim.platform.ai_core.domain.entities.artifact;
 // import uim.platform.ai_core.domain.ports.repositories.artifacts;
 
-
- 
 import uim.platform.ai_core;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryArtifactRepository : ArtifactRepository {
-  private Artifact[][string] store;
+class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), ArtifactRepository {
 
-  Artifact findById(ResourceGroupId rgId, ArtifactId id) {
-    foreach (a; findByResourceGroup(rgId)) {
-      if (a.id == id)
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id) {
+    return findByResourceGroup(tenantId, rgId).any!(a => a.id == id);
+  }
+  Artifact findById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id) {
+    auto artifacts = findByResourceGroup(tenantId, rgId);
+    foreach (a; artifacts) {
+      if (a.id == id) {
         return a;
+      }
     }
     return Artifact.init;
   }
-
-  Artifact[] findByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
-    return findByResourceGroup(rgId).filter!(a => a.scenarioId == scenarioId).array;
+  void removeById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id) {
+    remove(findById(tenantId, rgId, id));
   }
 
-  Artifact[] findByExecution(ResourceGroupId rgId, ExecutionId execId) {
-    return findByResourceGroup(rgId).filter!(a => a.executionId == execId).array;
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return findByResourceGroup(tenantId, rgId).length;
   }
 
-  Artifact[] findByKind(ResourceGroupId rgId, ArtifactKind kind) {
-    return findByResourceGroup(rgId).filter!(a => a.kind == kind).array;
+  Artifact[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return filterByResourceGroup(findByTenant(tenantId), rgId);
   }
 
-  Artifact[] findByResourceGroup(ResourceGroupId rgId) {
-    return rgId in store ? store[rgId] : null;
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    findByResourceGroup(tenantId, rgId).each!(a => remove(a));
   }
 
-  void save(Artifact a) {
-    store[a.resourceGroupId] ~= a;
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+    return findByScenario(tenantId, scenarioId, rgId).length;
   }
 
-  void update(Artifact a) {
-    foreach (existing; findByResourceGroup(a.resourceGroupId)) {
-      if (existing.id == a.id) {
-        existing = a;
-        return;
-      }
-    }
+  Artifact[] filterByScenario(Artifact[] artifacts, ScenarioId scenarioId) {
+    return artifacts.filter!(a => a.scenarioId == scenarioId).array;
   }
 
-  void remove(ArtifactId id, ResourceGroupId rgId) {
-    if (rgId in store) {
-      store[rgId] = (store[rgId]).filter!(a => a.id != id).array;
-    }
+  Artifact[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+    return filterByScenario(findByResourceGroup(tenantId, rgId), scenarioId);
   }
 
-  size_t countByResourceGroup(ResourceGroupId rgId) {
-    return findByResourceGroup(rgId).length;
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+    findByScenario(tenantId, scenarioId, rgId).each!(a => remove(a));
   }
+
+  size_t countByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+    return findByExecution(tenantId, execId, rgId).length;
+  }
+
+  Artifact[] filterByExecution(Artifact[] artifacts, ExecutionId execId) {
+    return artifacts.filter!(a => a.executionId == execId).array;
+  }
+
+  Artifact[] findByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+    return filterByExecution(findByResourceGroup(tenantId, rgId), execId);
+  }
+
+  void removeByExecution(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+    findByExecution(tenantId, execId, rgId).each!(a => remove(a));
+  }
+
+  size_t countByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
+    return findByKind(tenantId, kind, rgId).length;
+  }
+
+  Artifact[] filterByKind(Artifact[] artifacts, ArtifactKind kind) {
+    return artifacts.filter!(a => a.kind == kind).array;
+  }
+  
+  Artifact[] findByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
+    return filterByKind(findByResourceGroup(tenantId, rgId), kind);
+  }
+
+  void removeByKind(TenantId tenantId, ArtifactKind kind, ResourceGroupId rgId) {
+    findByKind(tenantId, kind, rgId).each!(a => remove(a));
+  }
+
 }

@@ -8,15 +8,21 @@ module uim.platform.ai_core.domain.ports.repositories.configurations;
 // import uim.platform.ai_core.domain.entities.configuration;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository {
-  Configuration findById(ConfigurationId id, ResourceGroupId rgId);
-  Configuration[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
-  Configuration[] findByExecutable(ExecutableId execId, ResourceGroupId rgId);
-  Configuration[] findByResourceGroup(ResourceGroupId rgId);
-  void save(Configuration c);
-  void remove(ConfigurationId id, ResourceGroupId rgId);
-  size_t countByResourceGroup(ResourceGroupId rgId);
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Configuration[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  Configuration[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+
+  size_t countByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
+  Configuration[] findByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
+  void removeByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
+
 }

@@ -8,57 +8,48 @@ module uim.platform.ai_core.infrastructure.persistence.memory.configurations;
 // import uim.platform.ai_core.domain.entities.configuration;
 // import uim.platform.ai_core.domain.ports.repositories.configurations;
 
-
- 
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : ConfigurationRepository {
-  private Configuration[][string] store;
+class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
 
-  Configuration findById(ResourceGroupId rgId, ConfigurationId id) {
-    if (auto rg = rgId in store) {
-      foreach (c; *rg) {
-        if (c.id == id)
-          return c;
-      }
-    }
-    return Configuration.init;
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return findByResourceGroup(tenantId, rgId).length;
+  }
+  Configuration[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return filterByResourceGroup(findByTenant(tenantId), rgId);
+  }
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    findByResourceGroup(tenantId, rgId).each!(c => remove(c));
   }
 
-  Configuration[] findByScenario(ResourceGroupId rgId, ScenarioId scenarioId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(c => c.scenarioId == scenarioId).array;
-    return null;
+  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+    return findByScenario(tenantId, scenarioId, rgId).length;
+  }
+  Configuration[] filterByScenario(Configuration[] configs, ScenarioId scenarioId) {
+    return configs.filter!(c => c.scenarioId == scenarioId).array;
+  }
+  Configuration[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId){
+    return filterByScenario(findByResourceGroup(tenantId, rgId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
+    findByScenario(tenantId, scenarioId, rgId).each!(c => remove(c));
   }
 
-  Configuration[] findByExecutable(ResourceGroupId rgId, ExecutableId execId) {
-    if (auto rg = rgId in store)
-      return (rg).filter!(c => c.executableId == execId).array;
-    return null;
+  size_t countByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId) {
+    return findByExecutable(tenantId, execId, rgId).length;
   }
+  Configuration[] filterByExecutable(Configuration[] configs, ExecutableId execId) {
+    return configs.filter!(c => c.executableId == execId).array;
+  }
+  Configuration[] findByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId){
+    return filterByExecutable(findByResourceGroup(tenantId, rgId), execId);
+  }
+  void removeByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId) {
+    findByExecutable(tenantId, execId, rgId).each!(c => remove(c));
+  } 
 
-  Configuration[] findByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return *rg;
-    return null;
-  }
 
-  void save(Configuration c) {
-    store[c.resourceGroupId] ~= c;
-  }
-
-  void remove(ConfigurationId id, ResourceGroupId rgId) {
-    if (auto rg = rgId in store) {
-      *rg = (rg).filter!(c => c.id != id).array;
-    }
-  }
-
-  size_t countByResourceGroup(ResourceGroupId rgId) {
-    if (auto rg = rgId in store)
-      return (rg).length;
-    return 0;
-  }
 }

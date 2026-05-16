@@ -15,34 +15,33 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class MemoryMetricRepository : MetricRepository {
-  private Metric[] store;
-
-  Metric findById(MetricId id, ResourceGroupId rgId) {
-    foreach (m; findAll) {
-      if (m.id == id && m.resourceGroupId == rgId)
-        return m;
-    }
-    return Metric.init;
+class MemoryMetricRepository : TenanatRepository!(Metric, MetricId), MetricRepository {
+  
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return findByResourceGroup(tenantId, rgId).length;
   }
 
-  Metric[] findByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return findAll().filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array;
+  Metric[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    return filterByResourceGroup(findByTenant(tenantId), rgId);
   }
 
-  Metric[] findByResourceGroup(ResourceGroupId rgId) {
-    return findAll().filter!(m => m.resourceGroupId == rgId).array;
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
+    findByResourceGroup(tenantId, rgId).each!(m => remove(m));
   }
 
-  void save(Metric m) {
-    store ~= m;
+  // #region ByExecution
+  size_t countByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
+    return findByExecution(tenantId, rgId, execId).length;
+  } 
+  Metric[] filterByExecution(Metric[] metrics, ExecutionId execId) {
+    return metrics.filter!(m => m.executionId == execId).array;
   }
+  Metric[] findByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
+    return filterByExecution(findByResourceGroup(tenantId, rgId), execId);
+  }
+  void removeByExecution(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
+    findByExecution(tenantId, rgId, execId).each!(m => remove(m));
+  }
+  // #endregion ByExecution
 
-  void remove(MetricId id, ResourceGroupId rgId) {
-    store = findAll().filter!(m => !(m.id == id && m.resourceGroupId == rgId)).array;
-  }
-
-  size_t countByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return findAll().filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
-  }
 }

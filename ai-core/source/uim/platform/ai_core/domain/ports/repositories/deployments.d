@@ -11,15 +11,26 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-interface DeploymentRepository {
-  Deployment findById(DeploymentId id, ResourceGroupId rgId);
-  Deployment[] findByConfiguration(ConfigurationId confId, ResourceGroupId rgId);
-  Deployment[] findByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
-  Deployment[] findByStatus(DeploymentStatus status, ResourceGroupId rgId);
-  Deployment[] findByResourceGroup(ResourceGroupId rgId);
-  void save(Deployment d);
-  void update(Deployment d);
-  void remove(DeploymentId id, ResourceGroupId rgId);
-  size_t countByResourceGroup(ResourceGroupId rgId);
-  size_t countByStatus(DeploymentStatus status, ResourceGroupId rgId);
+interface DeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
+  
+  bool existsById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id);
+  Deployment findById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id);
+  void removeById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id);
+
+  size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  Deployment[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+  void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
+
+  size_t countByConfiguration(TenantId tenantId, ResourceGroupId rgId, ConfigurationId confId);
+  Deployment[] findByConfiguration(TenantId tenantId, ResourceGroupId rgId, ConfigurationId confId);
+  void removeByConfiguration(TenantId tenantId, ResourceGroupId rgId, ConfigurationId confId);
+
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  Deployment[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+
+  size_t countByStatus(TenantId tenantId, ResourceGroupId rgId, DeploymentStatus status);
+  Deployment[] findByStatus(TenantId tenantId, ResourceGroupId rgId, DeploymentStatus status);
+  void removeByStatus(TenantId tenantId, ResourceGroupId rgId, DeploymentStatus status);
+
 }

@@ -12,4 +12,9 @@ mixin(ShowModule!());
 
 @safe:
 interface ResourceGroupRepository : ITenantRepository!(ResourceGroup, ResourceGroupId) {
+
+    size_t countByStatus(TenantId tenantId, string status);
+    ResourceGroup[] findByStatus(TenantId tenantId, string status);
+    void removeByStatus(TenantId tenantId, string status);
+    
 }
