@@ -22,7 +22,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCommunicationArrangement(CreateCommunicationArrangementRequest req) {
+  CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Arrangement name is required");
     if (req.scenarioId.isEmpty)
@@ -52,8 +52,8 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommandResult updateCommunicationArrangement(UpdateCommunicationArrangementRequest req) {
-    auto arr = repo.findById(req.tenantId, req.id);
+  CommandResult updateArrangement(UpdateCommunicationArrangementRequest req) {
+    auto arr = repo.findById(req.tenantId, req.communicationArrangementId);
     if (arr.isNull)
       return CommandResult(false, "", "Communication arrangement not found");
 
@@ -77,23 +77,21 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
       arr.inboundServices = req.inboundServices;
     if (req.outboundServices.length > 0)
       arr.outboundServices = req.outboundServices;
-
-  
     arr.updatedAt = currentTimestamp();
 
     repo.update(arr);
     return CommandResult(true, arr.id.value, "");
   }
 
-  CommunicationArrangement getCommunicationArrangement(TenantId tenantId, CommunicationArrangementId id) {
+  CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id) {
     return repo.findById(tenantId, id);
   }
 
-  CommunicationArrangement[] listCommunicationArrangements(TenantId tenantId, SystemInstanceId systemId) {
+  CommunicationArrangement[] listArrangements(TenantId tenantId, SystemInstanceId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteCommunicationArrangement(TenantId tenantId, CommunicationArrangementId id) {
+  CommandResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id) {
     auto arrangement = repo.findById(tenantId, id);
     if (arrangement.isNull)      
       return CommandResult(false, "", "Communication arrangement not found");

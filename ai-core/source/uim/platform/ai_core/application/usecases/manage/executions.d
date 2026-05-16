@@ -84,28 +84,28 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getExecution(GetExecutionRequest r) {
-    return execRepo.findById(r.resourceGroupId, r.executionId);
+  Execution getExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
+    return execRepo.findById(tenantId, resourceGroupId, executionId);
   }
 
-  Execution[] listExecutions(ListExecutionsRequest r) {
-    return execRepo.findByResourceGroup(r.resourceGroupId);
+  Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    return execRepo.findByResourceGroup(tenantId, resourceGroupId);
   }
 
-  Execution[] listExecutionsByScenario(ListExecutionsByScenarioRequest r) {
-    return execRepo.findByScenario(r.resourceGroupId, r.scenarioId);
+  Execution[] listExecutionsByScenario(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
+    return execRepo.findByScenario(tenantId, resourceGroupId, scenarioId);
   }
 
-  Execution[] listExecutionsByStatus(ListExecutionsByStatusRequest r) {
-    return execRepo.findByStatus(r.resourceGroupId, r.status, r.resourceGroupId);
+  Execution[] listExecutionsByStatus(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionStatus status) {
+    return execRepo.findByStatus(tenantId, resourceGroupId, status);
   }
 
-  size_t count(CountExecutionsRequest r) {
-    return execRepo.countByResourceGroup(r.resourceGroupId);
+  size_t count(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    return execRepo.countByResourceGroup(tenantId, resourceGroupId);
   }
 
-  CommandResult deleteExecution(DeleteExecutionRequest r) {
-    auto execution = execRepo.findById(r.resourceGroupId, r.executionId);
+  CommandResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
+    auto execution = execRepo.findById(tenantId, resourceGroupId, executionId);
     if (execution.isNull)
       return CommandResult(false, "", "Execution not found");
 

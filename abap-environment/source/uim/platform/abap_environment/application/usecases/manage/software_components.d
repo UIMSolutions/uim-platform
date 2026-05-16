@@ -28,17 +28,18 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   CommandResult createSoftwareComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Component name is required");
+    
     if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    if (!systemRepo.existsById(req.systemInstanceId))
+    auto system = systemRepo.findById(req.tenantId, req.systemInstanceId);
+    if (system.isNull)
       return CommandResult(false, "", "System instance not found");
  
-    auto system = systemRepo.findById(req.systemInstanceId);
     if (system.status != SystemStatus.active)
       return CommandResult(false, "", "System instance must be active");
 
-    if (repo.existsByName(req.systemInstanceId, req.name))
+    if (repo.existsByName(req.tenantId, req.systemInstanceId, req.name))
       return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
     SoftwareComponent comp;

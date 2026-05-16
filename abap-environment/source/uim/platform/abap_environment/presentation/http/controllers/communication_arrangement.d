@@ -42,7 +42,7 @@ class CommunicationArrangementController : PlatformController {
       auto j = req.json;
       CreateCommunicationArrangementRequest r;
       r.tenantId = tenantId;
-      r.systemInstanceId = j.getString("systemInstanceId");
+      r.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -74,7 +74,7 @@ class CommunicationArrangementController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      auto arrangements = usecase.listCommunicationArrangements(tenantId, systemId);
+      auto arrangements = usecase.listArrangements(tenantId, systemId);
       auto arr = arrangements.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -93,7 +93,7 @@ class CommunicationArrangementController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
 
-      auto arrangement = usecase.getCommunicationArrangement(tenantId, id);
+      auto arrangement = usecase.getArrangement(tenantId, id);
       if (arrangement.isNull) {
         writeError(res, 404, "Communication arrangement not found");
         return;

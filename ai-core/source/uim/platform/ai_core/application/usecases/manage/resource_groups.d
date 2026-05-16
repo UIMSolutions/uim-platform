@@ -75,20 +75,20 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rg.id.value, "");
   }
 
-  ResourceGroup getResourceGroup(GetResourceGroupRequest r) {
-    return repo.findById(r.tenantId, r.resourceGroupId);
+  ResourceGroup getResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    return repo.findById(tenantId, resourceGroupId);
   }
 
-  ResourceGroup[] listResourceGroups(ListResourceGroupsRequest r) {
-    return repo.findByTenant(r.tenantId);
+  ResourceGroup[] listResourceGroups(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 
-  size_t count(CountResourceGroupsRequest r) {
-    return repo.countByTenant(r.tenantId);
+  size_t count(TenantId tenantId) {
+    return repo.countByTenant(tenantId);
   }
 
-  CommandResult deleteResourceGroup(DeleteResourceGroupRequest r) {
-    auto group = repo.findById(r.tenantId, r.resourceGroupId);
+  CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    auto group = repo.findById(tenantId, resourceGroupId);
     if (group.isNull)
       return CommandResult(false, "", "Resource group not found");
 

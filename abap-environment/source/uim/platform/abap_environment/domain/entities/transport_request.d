@@ -12,12 +12,11 @@ mixin(ShowModule!());
 @safe:
 /// Individual task within a transport request.
 struct TransportTask {
-  TransportTaskId id;
+  mixin IdEntity!TransportTaskId;
   string owner;
   TransportStatus status = TransportStatus.modifiable;
   string description;
   string[] objectList;
-  long createdAt;
   long releasedAt;
 
   Json toJson() const {

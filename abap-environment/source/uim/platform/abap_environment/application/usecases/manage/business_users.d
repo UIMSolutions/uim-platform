@@ -66,7 +66,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBusinessUser(UpdateBusinessUserRequest req) {
-    auto user = repo.findById(req.tenantId, req.id);
+    auto user = repo.findById(req.tenantId, req.businessUserId);
     if (user.isNull)
       return CommandResult(false, "", "Business user not found");
 

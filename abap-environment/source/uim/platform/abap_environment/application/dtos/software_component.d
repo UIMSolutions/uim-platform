@@ -34,12 +34,15 @@ struct CreateSoftwareComponentRequest {
 
 struct CloneSoftwareComponentRequest {
   TenantId tenantId;
+  SoftwareComponentId softwareComponentId;
+
   string branch;
   string commitId;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
+      .set("softwareComponentId", softwareComponentId.value)
       .set("branch", branch)
       .set("commitId", commitId);
   }
@@ -47,11 +50,13 @@ struct CloneSoftwareComponentRequest {
 
 struct PullSoftwareComponentRequest {
   TenantId tenantId;
+  SoftwareComponentId softwareComponentId;
   string commitId;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
+      .set("softwareComponentId", softwareComponentId.value)
       .set("commitId", commitId);
   }
 }

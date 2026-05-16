@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.system_instance;
 
-
 // ^
 // 
 // import uim.platform.abap_environment.application.usecases.manage.system_instances;
@@ -35,11 +34,11 @@ class SystemInstanceController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateSystemInstanceRequest request;
-      request.tenantId = req.getTenantId;
+      request.tenantId = tenantId;
       request.subaccountId = j.getString("subaccountId");
       request.name = j.getString("name");
       request.description = j.getString("description");
@@ -52,11 +51,11 @@ class SystemInstanceController : PlatformController {
       request.softwareVersion = j.getString("softwareVersion");
       request.stackVersion = j.getString("stackVersion");
 
-      auto result = usecase.createSystemInstance(request);
+      auto result = usecase.createInstance(request);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("message", "System instance creation initiated");  
+          .set("message", "System instance creation initiated");
 
         res.writeJsonBody(resp, 201);
       } else {
@@ -70,7 +69,7 @@ class SystemInstanceController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto instances = usecase.listSystemInstances(tenantId);
+      auto instances = usecase.listInstances(tenantId);
       auto arr = instances.map!(inst => inst.toJson).array.toJson;
 
       auto resp = Json.emptyObject
@@ -85,10 +84,10 @@ class SystemInstanceController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto inst = usecase.getSystemInstance(id);
+      auto inst = usecase.getInstance(tenantId, id);
       if (inst.isNull) {
         writeError(res, 404, "System instance not found");
         return;
@@ -100,18 +99,21 @@ class SystemInstanceController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateSystemInstanceRequest r;
+      r.tenantId = tenantId;
+      r.systemInstanceId = id;
       r.description = j.getString("description");
       r.status = j.getString("status");
       r.abapRuntimeSize = getUshort(j, "abapRuntimeSize");
       r.hanaMemorySize = getUshort(j, "hanaMemorySize");
       r.softwareVersion = j.getString("softwareVersion");
 
-      auto result = usecase.updateSystemInstance(id, r);
+      auto result = usecase.updateInstance(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated")
@@ -127,11 +129,11 @@ class SystemInstanceController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      
-      auto result = usecase.deleteSystemInstance(id);
+
+      auto result = usecase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "deleting")

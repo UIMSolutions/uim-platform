@@ -37,6 +37,9 @@ struct CreateSystemInstanceRequest {
 }
 
 struct UpdateSystemInstanceRequest {
+  TenantId tenantId;
+  SystemInstanceId systemInstanceId;
+  
   string description;
   string status; // lifecycle transition target
   ushort abapRuntimeSize;

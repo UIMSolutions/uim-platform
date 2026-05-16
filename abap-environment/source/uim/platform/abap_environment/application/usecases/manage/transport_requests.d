@@ -44,8 +44,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tr.id.value, "");
   }
 
-  CommandResult addTransportTask(TenantId tenantId, TransportRequestId requestId, AddTransportTaskRequest req) {
-    auto tr = repo.findById(tenantId, requestId);
+  CommandResult addTransportTask(AddTransportTaskRequest req) {
+    auto tr = repo.findById(req.tenantId, req.transportRequestId);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
@@ -54,7 +54,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
     auto taskId = randomUUID().toString()[0 .. 8];
     TransportTask task;
-    task.initEntity(taskId);
+    task.initEntity();
+    task.id = taskId;
     task.owner = req.owner;
     task.status = TransportStatus.modifiable;
     task.description = req.description;

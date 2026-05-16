@@ -77,28 +77,28 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, a.id.value, "");
   }
 
-  Artifact getArtifact(GetArtifactRequest r) {
-    return repo.findById(r.resourceGroupId, r.artifactId);
+  Artifact getArtifact(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactId artifactId) {
+    return repo.findById(tenantId, resourceGroupId, artifactId);
   }
 
-  Artifact[] listArtifacts(ListArtifactsRequest r) {
-    return repo.findByResourceGroup(r.resourceGroupId);
+  Artifact[] listArtifacts(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    return repo.findByResourceGroup(tenantId, resourceGroupId);
   }
 
-  Artifact[] listArtifacts(ListArtifactsByScenarioRequest r) {
-    return repo.findByScenario(r.resourceGroupId, r.scenarioId);
+  Artifact[] listArtifacts(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
+    return repo.findByScenario(tenantId, resourceGroupId, scenarioId);
   }
 
-  Artifact[] listArtifacts(ListArtifactsByKindRequest r) {
-    return repo.findByKind(r.resourceGroupId, r.kind);
+  Artifact[] listArtifacts(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactKind kind) {
+    return repo.findByKind(tenantId, resourceGroupId, kind);
   }
 
-  Artifact[] listArtifacts(ListArtifactsByExecutionRequest r) {
-    return repo.findByExecution(r.resourceGroupId, r.executionId);
+  Artifact[] listArtifacts(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
+    return repo.findByExecution(tenantId, resourceGroupId, executionId);
   }
 
-  CommandResult deleteArtifact(ResourceGroupId resourceGroupId, ArtifactId artifactId) {
-    auto artifact = repo.findById(resourceGroupId, artifactId);
+  CommandResult deleteArtifact(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactId artifactId) {
+    auto artifact = repo.findById(tenantId, resourceGroupId, artifactId);
     if (artifact.isNull)
       return CommandResult(false, "", "Artifact not found");
 
@@ -106,7 +106,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, artifact.id.value, "");
   }
 
-  size_t count(CountArtifactsRequest r) {
-    return repo.countByResourceGroup(r.resourceGroupId);
+  size_t count(TenantId tenantId, ResourceGroupId resourceGroupId) {
+    return repo.countByResourceGroup(tenantId, resourceGroupId);
   }
 }

@@ -100,12 +100,13 @@ class TransportRequestController : PlatformController {
       auto requestId = TransportRequestId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       AddTransportTaskRequest r;
+      r.transportRequestId = requestId;
       r.tenantId = tenantId;
       r.owner = j.getString("owner");
       r.description = j.getString("description");
       r.objectList = getStrings(j, "objectList");
 
-      auto result = usecase.addTransportTask(requestId, r);
+      auto result = usecase.addTransportTask(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("taskId", result.id)
@@ -147,7 +148,7 @@ class TransportRequestController : PlatformController {
       auto requestId = TransportRequestId(j.getString("requestId"));
       auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
 
-      auto result = usecase.releaseTask(tenantId, requestId, taskId);
+      auto result = usecase.releaseTransportTask(tenantId, requestId, taskId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "released")

@@ -9,13 +9,17 @@ mixin(ShowModule!());
 struct CreateTransportRequestRequest {
   TenantId tenantId;
   SystemInstanceId sourceSystemId;
-  string targetSystemId;
+  SystemInstanceId targetSystemId;
+
   string description;
   string owner;
   string transportType; // "workbench", "customizing", "transportOfCopies"
 }
 
 struct AddTransportTaskRequest {
+  TransportRequestId transportRequestId;
+  TenantId tenantId;
+  
   string owner;
   string description;
   string[] objectList;

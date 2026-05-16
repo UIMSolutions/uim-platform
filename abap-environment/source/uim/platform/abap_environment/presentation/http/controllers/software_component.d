@@ -34,11 +34,12 @@ class SoftwareComponentController : ManageController {
   }
 
   override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto tenantId = req.getTenantId;
     auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
     if (systemId.isEmpty)
       systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-    auto items = usecase.listComponents(systemId);
+    auto items = usecase.listSoftwareComponents(tenantId, systemId);
     auto arr = items.map!(comp => comp.toJson).array.toJson;
 
     return Json.emptyObject
@@ -55,7 +56,7 @@ class SoftwareComponentController : ManageController {
 
     CreateSoftwareComponentRequest request;
     request.tenantId = tenantId;
-    request.systemInstanceId = j.getString("systemInstanceId");
+    request.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
     request.name = j.getString("name");
     request.description = j.getString("description");
     request.componentType = j.getString("componentType");
@@ -108,10 +109,11 @@ class SoftwareComponentController : ManageController {
       
       CloneSoftwareComponentRequest r;
       r.tenantId = tenantId;
+      r.softwareComponentId = id;
       r.branch = j.getString("branch");
       r.commitId = j.getString("commitId");
 
-      auto result = usecase.cloneSoftwareComponent(id, r);
+      auto result = usecase.cloneSoftwareComponent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", 200)
@@ -135,9 +137,10 @@ class SoftwareComponentController : ManageController {
 
       PullSoftwareComponentRequest r;
       r.tenantId = tenantId;
+      r.softwareComponentId = id;
       r.commitId = j.getString("commitId");
 
-      auto result = usecase.pullSoftwareComponent(id, r);
+      auto result = usecase.pullSoftwareComponent(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", 200)
