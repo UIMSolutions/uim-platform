@@ -121,7 +121,7 @@ struct ReplicationDTO {
     string targetSystem;
     string targetSystemType;
     string replicationType;
-    string scheduledAt;
+    long scheduledAt;
     string replicatedFields;
     int maxRetries;
     string correlationId;

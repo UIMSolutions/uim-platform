@@ -12,8 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 struct ApplicationDTO {
-    string id;
     TenantId tenantId;
+    ApplicationId applicationId;
+
     string name;
     string description;
     string appType;

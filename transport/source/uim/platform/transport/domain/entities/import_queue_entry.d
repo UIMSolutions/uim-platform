@@ -26,7 +26,7 @@ struct ImportQueueEntry {
     string errorMessage;
     string importLog;
     bool isSelected = true;
-    string scheduledAt;
+    long scheduledAt;
 
     Json toJson() const {
         return entityToJson

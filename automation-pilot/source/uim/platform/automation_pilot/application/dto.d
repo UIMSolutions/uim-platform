@@ -65,7 +65,7 @@ struct ExecutionDTO {
     string status;
     string priority;
     string inputValues;
-    string triggeredBy;
+    UserId triggeredBy;
     UserId createdBy;
 }
 
@@ -76,7 +76,7 @@ struct ScheduledExecutionDTO {
     string scheduleType;
     string status;
     string cronExpression;
-    string scheduledAt;
+    long scheduledAt;
     string inputValues;
     string description;
     string maxRetries;

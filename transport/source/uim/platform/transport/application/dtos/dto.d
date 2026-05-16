@@ -71,7 +71,7 @@ struct ImportQueueEntryDTO {
     string status;
     int queuePosition;
     bool isSelected;
-    string scheduledAt;
+    long scheduledAt;
     UserId createdBy;
 }
 

@@ -125,7 +125,7 @@ classDiagram
         +ReplicationType replicationType
         +ReplicationStatus status
         +UserId triggeredBy
-        +string scheduledAt
+        +long scheduledAt
         +string startedAt
         +long completedAt
         +string errorMessage

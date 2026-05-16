@@ -18,7 +18,7 @@ struct ScheduledExecution {
     ScheduleType scheduleType = ScheduleType.oneTime;
     ScheduleStatus status = ScheduleStatus.active;
     string cronExpression;
-    string scheduledAt;
+    long scheduledAt;
     string lastRunAt;
     string nextRunAt;
     string inputValues;

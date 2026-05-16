@@ -69,7 +69,7 @@ classDiagram
         +string inputValues
         +string outputValues
         +string errorLog
-        +string triggeredBy
+        +UserId triggeredBy
         +string startedAt
         +long completedAt
         +string durationMs
@@ -87,7 +87,7 @@ classDiagram
         +ScheduleType scheduleType
         +ScheduleStatus status
         +string cronExpression
-        +string scheduledAt
+        +long scheduledAt
         +string lastRunAt
         +string nextRunAt
         +string inputValues

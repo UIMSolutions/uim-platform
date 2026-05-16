@@ -20,7 +20,7 @@ struct Replication {
     ReplicationType replicationType = ReplicationType.delta;
     ReplicationStatus status = ReplicationStatus.pending;
     UserId triggeredBy;
-    string scheduledAt;
+    long scheduledAt;
     string startedAt;
     long completedAt;
     string errorMessage;

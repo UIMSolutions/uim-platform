@@ -69,7 +69,7 @@ classDiagram
         +string payload
         +string contentType
         +EventMessageStatus status
-        +string publishedAt
+        +long publishedAt
         +string acknowledgedAt
         +toJson() Json
     }
