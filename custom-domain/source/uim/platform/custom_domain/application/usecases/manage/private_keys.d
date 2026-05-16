@@ -31,18 +31,12 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Key already exists");
 
         PrivateKey k;
+        k.initEntity(r.tenantId, r.createdBy);
         k.id = r.id;
-        k.tenantId = r.tenantId;
         k.subject = r.subject;
         k.domains = r.domains;
         k.keySize = r.keySize > 0 ? r.keySize : 2048;
         k.status = KeyStatus.active;
-        k.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        k.createdAt = now;
-        k.updatedAt = now;
 
         repo.save(k);
         return CommandResult(true, k.id.value, "");

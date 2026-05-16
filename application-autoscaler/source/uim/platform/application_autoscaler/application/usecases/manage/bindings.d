@@ -24,21 +24,19 @@ class ManageAppBindingsUseCase {
     import std.random : uniform;
 
     auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
-    auto now = currentTimestamp;
 
     AppBindingEntity binding;
+    binding.initEntity(r.tenantId);
     binding.id                = id;
-    binding.tenantId          = r.tenantId;
     binding.appGuid           = r.appGuid;
     binding.appName           = r.appName;
     binding.serviceInstanceId = r.serviceInstanceId;
     binding.policyId          = "";
     binding.currentInstances  = 1;
-    binding.boundAt           = now;
-    binding.updatedAt         = now;
+    binding.boundAt           = binding.createdAt;
 
     repo.save(binding);
-    return CommandResult(true, id, "");
+    return CommandResult(true, binding.id.value, "");
   }
 
   CommandResult updateBinding(UpdateAppBindingRequest r) {
@@ -50,17 +48,19 @@ class ManageAppBindingsUseCase {
     existing.currentInstances = r.currentInstances;
     existing.updatedAt        = currentTimestamp;
     repo.update(existing);
-    return CommandResult(true, r.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteBinding(AppBindingId id) {
+  CommandResult deleteBinding(TenantId tenantId, AppBindingId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Binding not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+    auto existing = repo.findById(id);
+
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult attachPolicy(AppBindingId bindingId, PolicyId policyId) {
+  CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, PolicyId policyId) {
     if (!repo.existsById(bindingId))
       return CommandResult(false, "", "Binding not found");
 
@@ -68,11 +68,12 @@ class ManageAppBindingsUseCase {
     auto existing = repo.findById(bindingId);
     existing.policyId   = policyId;
     existing.updatedAt  = currentTimestamp;
+
     repo.update(existing);
-    return CommandResult(true, bindingId, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
-  AppBindingEntity getBinding(AppBindingId id) {
+  AppBindingEntity getBinding(TenantId tenantId, AppBindingId id) {
     return repo.findById(id);
   }
 

@@ -31,8 +31,8 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Database connection already exists");
 
     DatabaseConnection c;
+    c.initEntity(r.tenantId);
     c.id = r.id;
-    c.tenantId = r.tenantId;
     c.instanceId = r.instanceId;
     c.name = r.name;
     c.description = r.description;
@@ -46,11 +46,6 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
 
     c.poolConfig.minConnections = r.minConnections;
     c.poolConfig.maxConnections = r.maxConnections;
-
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    c.createdAt = now;
-    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");

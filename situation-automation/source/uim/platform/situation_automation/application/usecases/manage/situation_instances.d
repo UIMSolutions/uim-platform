@@ -29,6 +29,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
 
         SituationInstance i;
         i.initEntity(r.tenantId, r.situationInstanceId);
+
         i.situationTemplateId = r.situationTemplateId;
         i.description = r.description;
         i.status = InstanceStatus.open;
@@ -80,7 +81,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
-
+        
         existing.status = InstanceStatus.resolved;
         existing.resolution.resolvedBy = r.resolvedBy;
         existing.resolution.actionId = r.actionId;

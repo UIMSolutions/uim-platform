@@ -34,17 +34,13 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space already exists");
 
     Space s;
+    s.initEntity(r.tenantId);
+
     s.id = r.spaceId;
-    s.tenantId = r.tenantId;
     s.name = r.name;
     s.description = r.description;
     s.businessName = r.businessName;
     s.priority = r.priority;
-
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    s.createdAt = now;
-    s.updatedAt = now;
 
     repo.save(s);
     return CommandResult(true, s.id.value, "");

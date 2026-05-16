@@ -43,14 +43,12 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateConfiguration(UpdateConfigurationRequest request) {
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-
     auto existing = repo.get(request.tenantId);
     if (!repo.existsByTenant(request.tenantId)) {
       // Create new configuration
       Configuration c;
       c.initEntity(request.tenantId);
+
       c.defaultRetries = request.defaultRetries;
       c.defaultRetryDelayMs = request.defaultRetryDelayMs;
       c.maxRunDurationMs = request.maxRunDurationMs;
@@ -72,3 +70,4 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+  

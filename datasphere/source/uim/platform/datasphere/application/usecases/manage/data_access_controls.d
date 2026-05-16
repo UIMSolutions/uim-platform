@@ -30,19 +30,14 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     DataAccessControl dac;
+    dac.initEntity(r.tenantId);
     dac.id = r.controlId;
-    dac.tenantId = r.tenantId;
     dac.spaceId = r.spaceId;
     dac.name = r.name;
     dac.description = r.description;
     dac.targetViewIds = r.targetViewIds;
     dac.assignedUserIds = r.assignedUserIds;
     dac.isEnabled = true;
-
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    dac.createdAt = now;
-    dac.updatedAt = now;
 
     repo.save(dac);
     return CommandResult(true, dac.id.value, "");

@@ -35,6 +35,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
 
     Artifact a;
     a.initEntity(r.tenantId);
+
     a.resourceGroupId = r.resourceGroupId;
     a.scenarioId = r.scenarioId;
     a.name = r.name;
@@ -67,11 +68,6 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
       }
     }
     a.labels = labels;
-
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    a.createdAt = now;
-    a.updatedAt = now;
 
     repo.save(a);
     return CommandResult(true, a.id.value, "");

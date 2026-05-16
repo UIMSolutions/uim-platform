@@ -28,6 +28,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
 
         Action a;
         a.initEntity(r.tenantId, r.createdBy);
+
         a.id = r.actionId;
         a.projectId = r.projectId;
         a.name = r.name;
@@ -38,11 +39,6 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         a.authType = r.authType;
         a.destinationName = r.destinationName;
         a.version_ = r.version_;
-
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        a.createdAt = now;
-        a.updatedAt = now;
 
         repo.save(a);
         return CommandResult(true, a.id.value, "");

@@ -28,20 +28,14 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Automation already exists");
 
         Automation a;
+        a.initEntity(r.tenantId, r.createdBy);
         a.id = r.automationId;
-        a.tenantId = r.tenantId;
         a.projectId = r.projectId;
         a.name = r.name;
         a.description = r.description;
         a.status = AutomationStatus.draft;
         a.targetApplication = r.targetApplication;
         a.version_ = r.version_;
-        a.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        a.createdAt = now;
-        a.updatedAt = now;
 
         repo.save(a);
         return CommandResult(true, a.id.value, "");

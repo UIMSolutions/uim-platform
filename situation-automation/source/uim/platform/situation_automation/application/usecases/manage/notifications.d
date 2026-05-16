@@ -29,6 +29,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
 
         Notification n;
         n.initEntity(r.tenantId, r.notificationId);
+
         n.situationInstanceId = r.situationInstanceId;
         n.recipientId = r.recipientId.value;
         n.title = r.title;

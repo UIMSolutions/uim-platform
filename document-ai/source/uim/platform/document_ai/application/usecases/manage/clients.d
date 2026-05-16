@@ -26,8 +26,8 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
 
     Client c;
+    c.initEntity(r.tenantId);
     c.id = r.clientId.length > 0 ? r.clientId : randomUUID().to!string;
-    c.tenantId = r.tenantId;
     c.name = r.name;
     c.description = r.description;
     c.documentQuota = r.documentQuota > 0 ? r.documentQuota : 1000;
@@ -44,11 +44,6 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       }
     }
     c.labels = labels;
-
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    c.createdAt = now;
-    c.updatedAt = now;
 
     repo.save(c);
     return CommandResult(true, c.id.value, "");

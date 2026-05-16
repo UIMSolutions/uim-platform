@@ -66,11 +66,6 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     }
     s.lineItemFields = lFields;
 
-    import core.time : MonoTime;
-    auto now = currentTimestamp;
-    s.createdAt = now;
-    s.updatedAt = now;
-
     repo.save(s);
     return CommandResult(true, s.id.value, "");
   }

@@ -31,12 +31,12 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Domain mapping already exists");
 
         auto byRoute = repo.findByCustomRoute(r.tenantId, r.customRoute);
-        if (byRoute.id.length > 0)
+        if (!byRoute.isNull)
             return CommandResult(false, "", "Custom route already mapped");
 
         DomainMapping m;
+        m.initEntity(r.tenantId, r.createdBy);
         m.id = r.id;
-        m.tenantId = r.tenantId;
         m.customDomainId = r.customDomainId;
         m.standardRoute = r.standardRoute;
         m.customRoute = r.customRoute;
@@ -44,12 +44,6 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         m.applicationName = r.applicationName;
         m.organizationId = r.organizationId;
         m.spaceId = r.spaceId;
-        m.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        m.createdAt = now;
-        m.updatedAt = now;
 
         repo.save(m);
         return CommandResult(true, m.id.value, "");

@@ -26,13 +26,13 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         if (r.value.length == 0)
             return CommandResult(false, "", "Value is required");
 
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.dnsRecordId);
         if (!existing.isNull)
             return CommandResult(false, "", "DNS record already exists");
 
         DnsRecord rec;
-        rec.id = r.id;
-        rec.tenantId = r.tenantId;
+        rec.initEntity(r.tenantId, r.createdBy);
+        rec.id = r.dnsRecordId;
         rec.customDomainId = r.customDomainId;
         rec.hostname = r.hostname;
         rec.value = r.value;
@@ -40,10 +40,6 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         rec.validationStatus = DnsValidationStatus.pending;
         rec.createdBy = r.createdBy;
 
-        import core.time : MonoTime;
-        auto now = currentTimestamp;
-        rec.createdAt = now;
-        rec.updatedAt = now;
 
         repo.save(rec);
         return CommandResult(true, rec.id.value, "");

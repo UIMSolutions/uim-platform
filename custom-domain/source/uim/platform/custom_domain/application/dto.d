@@ -104,13 +104,13 @@ struct CreateDomainMappingRequest {
     TenantId tenantId;
     DomainMappingId domainMappingId;
     CustomDomainId customDomainId;
-    
+    OrganizationId organizationId;
+    SpaceId spaceId;
+
     string standardRoute;
     string customRoute;
     string mappingType;
     string applicationName;
-    OrganizationId organizationId;
-    SpaceId spaceId;
     UserId createdBy;
 }
 // --- Trusted Certificate ---
@@ -129,6 +129,7 @@ struct CreateDnsRecordRequest {
     TenantId tenantId;
     DnsRecordId dnsRecordId;
     CustomDomainId customDomainId;
+    
     string recordType;
     string hostname;
     string value;

@@ -24,9 +24,10 @@ class ManageScalingPoliciesUseCase {
     auto now = currentTimestamp;
 
     ScalingPolicyEntity policy;
+    policy.initEntity(r.tenantId, r.createdBy);
+
     policy.id               = id;
     policy.appId            = r.appId;
-    policy.tenantId         = r.tenantId;
     policy.instanceMinCount = r.instanceMinCount > 0 ? r.instanceMinCount : 1;
     policy.instanceMaxCount = r.instanceMaxCount > policy.instanceMinCount
       ? r.instanceMaxCount : policy.instanceMinCount + 1;
@@ -34,8 +35,6 @@ class ManageScalingPoliciesUseCase {
     policy.timezone         = r.timezone.length > 0 ? r.timezone : "UTC";
     policy.customMetricAllowFrom = r.customMetricAllowFrom == "bound_app"
       ? MetricAllowFrom.boundApp : MetricAllowFrom.sameApp;
-    policy.createdAt = now;
-    policy.updatedAt = now;
 
     foreach (rr; r.scalingRules) {
       ScalingRuleEntity rule;
