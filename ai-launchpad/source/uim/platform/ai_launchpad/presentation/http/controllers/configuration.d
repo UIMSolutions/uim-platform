@@ -63,8 +63,8 @@ class ConfigurationController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto configs = scenarioId.isEmpty
-        ? configurations.listConfigurations(tenantId, scenarioId) 
-        : configurations.listConfigurations(tenantId, connectionId);
+        ? configurations.listConfigurations(tenantId, connectionId) 
+        : configurations.listConfigurations(tenantId, connectionId, scenarioId);
 
       auto jarr = configs.map!(c => c.toJson).array.toJson;
 

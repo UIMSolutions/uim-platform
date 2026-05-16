@@ -18,7 +18,7 @@ struct PromptMessage {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("role", role)
+      .set("role", role.to!string)
       .set("content", content);
   }
 }
@@ -63,6 +63,6 @@ struct Prompt {
       .set("parameters", parameters.toJson)
       .set("input_params", inputParams.map!(p => p.toJson).array.toJson)
       .set("last_output", lastOutput)
-      .set("status", status);
+      .set("status", status.to!string);
   }
 }

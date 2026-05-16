@@ -141,10 +141,10 @@ class ExecutionController : PlatformController {
       BulkPatchExecutionRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.executionIds = getStrings(j, "executionIds");
+      r.executionIds = getStrings(j, "executionIds").map!(s => ExecutionId(s)).array;
       r.targetStatus = j.getString("targetStatus");
 
-      auto results = usecase.bulkExecutionPatch(r);
+      auto results = usecase.bulkPatchExecution(r);
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject

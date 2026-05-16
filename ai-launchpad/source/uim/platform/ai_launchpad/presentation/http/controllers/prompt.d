@@ -49,7 +49,7 @@ r.tenantId = tenantId;
       r.inputParams = getStrings(j, "inputParams");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.create(r);
+      auto result = usecase.createPrompt(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -67,10 +67,10 @@ r.tenantId = tenantId;
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto collectionId = CollectionId(req.headers.get("X-Collection-Id", ""));
+      auto collectionId = PromptCollectionId(req.headers.get("X-Collection-Id", ""));
 
       auto prompts = collectionId.isEmpty
-        ? usecase.listAll(tenantId) : usecase.listByCollection(tenantId, collectionId);
+        ? usecase.listPrompts(tenantId) : usecase.listPrompts(tenantId, collectionId);
 
       auto jarr = prompts.map!(p => p.toJson).array.toJson;
 
@@ -109,6 +109,7 @@ r.tenantId = tenantId;
       auto j = req.json;
 
       PatchPromptRequest r;
+      r.tenantId = tenantId;
       r.promptId = id;
       r.name = j.getString("name");
       r.status = j.getString("status");
@@ -116,7 +117,7 @@ r.tenantId = tenantId;
       r.temperature = getDouble(j, "temperature");
       r.maxTokens = j.getInteger("maxTokens");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchPrompt(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", id)

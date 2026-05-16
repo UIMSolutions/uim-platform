@@ -49,8 +49,8 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     return repo.findByConnection(tenantId, connectionId);
   }
 
-  ResourceGroup[] listResourceGroups() {
-    return repo.findAll();
+  ResourceGroup[] listResourceGroups(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
@@ -67,7 +67,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    rg.updatedAt = "now";
+    rg.updatedAt = currentTimestamp();
     repo.save(rg);
     return CommandResult(true, rg.id.value, "");
   }

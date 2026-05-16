@@ -27,7 +27,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Collection name is required");
 
     PromptCollection pc;
-    pc.initEntity(r.tenantId, r.createdBy);
+    pc.initEntity(r.tenantId);
 
     pc.name = r.name;
     pc.description = r.description;
@@ -52,7 +52,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchCollection(PatchPromptCollectionRequest r) {
-    if (!collections.existsById(r.collectionId))
+    if (!collections.existsById(r.tenantId, r.collectionId))
       return CommandResult(false, "", "Prompt collection not found");
       
     auto pc = collections.findById(r.tenantId, r.collectionId);

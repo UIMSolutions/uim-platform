@@ -47,7 +47,7 @@ class ModelController : PlatformController {
       r.size = jsonLong(j, "size");
       r.labels = getStrings(j, "labels");
 
-      auto result = usecase.register(r);
+      auto result = usecase.registerModel(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -69,8 +69,8 @@ class ModelController : PlatformController {
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
       auto models = scenarioId.isEmpty
-        ? usecase.listByConnection(tenantId, connectionId)
-        : usecase.listByScenario(tenantId, connectionId, scenarioId);
+        ? usecase.listModels(tenantId, connectionId)
+        : usecase.listModels(tenantId, connectionId, scenarioId);
 
       auto jarr = models.map!(m => m.toJson).array.toJson;
 

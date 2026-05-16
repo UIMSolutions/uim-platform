@@ -20,7 +20,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     this.scenarios = scenarios;
   }
 
-  CommandResult sync(TenantId tenantId, SyncScenarioRequest r) {
+  CommandResult syncScenario(TenantId tenantId, SyncScenarioRequest r) {
     Scenario s;
     s.initEntity(tenantId);
 
@@ -34,16 +34,16 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Scenario getById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+  Scenario getScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
     return scenarios.findById(tenantId, connectionId, id);
   }
 
-  Scenario[] listByConnection(TenantId tenantId, ConnectionId connectionId) {
+  Scenario[] listScenarios(TenantId tenantId, ConnectionId connectionId) {
     return scenarios.findByConnection(tenantId, connectionId);
   }
 
-  Scenario[] listAll() {
-    return scenarios.findAll();
+  Scenario[] listScenarios(TenantId tenantId) {
+    return scenarios.findByTenant(tenantId);
   }
 
   CommandResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {

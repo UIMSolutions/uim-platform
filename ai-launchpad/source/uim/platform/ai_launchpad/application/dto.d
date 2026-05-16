@@ -42,7 +42,7 @@ struct PatchConnectionRequest {
   TenantId tenantId;
   WorkspaceId workspaceId;
   ConnectionId connectionId;
-  
+
   string name;
   string description;
   string defaultResourceGroupId;
@@ -89,6 +89,7 @@ struct PatchWorkspaceRequest {
 
 // --- Scenario ---
 struct SyncScenarioRequest {
+  TenantId tenantId;
   ConnectionId connectionId;
   ScenarioId scenarioId;
   string name;
@@ -349,7 +350,7 @@ struct CreatePromptRequest {
 struct PatchPromptRequest {
   TenantId tenantId;
   ConnectionId connectionId;
-  string promptId;
+  PromptId promptId;
   string name;
   string status;
   string[][] messages;

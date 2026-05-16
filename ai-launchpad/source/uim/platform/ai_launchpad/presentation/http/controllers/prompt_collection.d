@@ -63,8 +63,8 @@ class PromptCollectionController : PlatformController {
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto collections = workspaceId.isEmpty
-        ? usecase.listPromptCollections(tenantId) 
-        : usecase.listPromptCollections(tenantId, workspaceId);
+        ? usecase.listCollections(tenantId) 
+        : usecase.listCollections(tenantId, workspaceId);
 
       auto jarr = collections.map!(c => c.toJson).array.toJson;
 
@@ -108,7 +108,7 @@ class PromptCollectionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchCollection(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -128,7 +128,7 @@ class PromptCollectionController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto result = usecase.deletePromptCollection(tenantId, id);
+      auto result = usecase.deleteCollection(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

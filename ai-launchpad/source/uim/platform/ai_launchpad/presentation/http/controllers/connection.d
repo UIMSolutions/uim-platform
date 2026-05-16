@@ -108,7 +108,7 @@ class ConnectionController : PlatformController {
       r.description = j.getString("description");
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchConnection(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("message", "Connection updated");

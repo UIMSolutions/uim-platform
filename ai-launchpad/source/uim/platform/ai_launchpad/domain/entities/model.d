@@ -40,6 +40,6 @@ struct Model {
       .set("url", url)
       .set("size", size)
       .set("status", status.to!string)
-      .set("labels", labels.map!(l => l.toJson()).arry.toJson);
+      .set("labels", labels.map!(l => l.toJson()).array.toJson);
   }
 }

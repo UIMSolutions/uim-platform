@@ -33,9 +33,10 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
 
     Prompt p;
     p.initEntity(r.tenantId, r.createdBy);
+
     p.tenantId = r.tenantId;
-    p.connectionId = r.connectionId;
-    p.collectionId = r.collectionId;
+    // p.connectionId = r.connectionId;
+    // TODO: p.collectionId = r.collectionId;
     p.name = r.name;
     p.modelName = r.modelName;
     p.modelVersion = r.modelVersion;
@@ -68,7 +69,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  Prompt getById(TenantId tenantId, PromptId id) {
+  Prompt getPrompt(TenantId tenantId, PromptId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -77,7 +78,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   Prompt[] listPrompts(TenantId tenantId) {
-    return repo.findAll(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchPrompt(PatchPromptRequest r) {
@@ -109,7 +110,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    p.updatedAt = "now";
+    p.updatedAt = currentTimestamp();
     repo.save(p);
     return CommandResult(true, p.id.value, "");
   }

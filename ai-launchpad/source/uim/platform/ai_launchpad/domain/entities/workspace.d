@@ -24,7 +24,7 @@ struct Workspace {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("status", status)
+      .set("status", status.to!string)
       .set("connectionCount", connectionCount);
   }
 }
