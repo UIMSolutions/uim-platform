@@ -42,7 +42,7 @@ class PromptCollectionController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.workspaceId = j.getString("workspaceId");
 
-      auto result = usecase.create(r);
+      auto result = usecase.createCollection(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -84,7 +84,7 @@ class PromptCollectionController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
-      auto c = usecase.getPromptCollection(tenantId, id);
+      auto c = usecase.getCollection(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Prompt collection not found");
         return;

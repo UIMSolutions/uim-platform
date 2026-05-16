@@ -20,7 +20,7 @@ class GetUsageStatisticsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  UsageStatistic[] listStatistics(TenantId tenantId, ScenarioId scenarioId, ConnectionId connectionId) {
+  UsageStatistic[] listStatistics(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 

@@ -16,6 +16,16 @@ struct CustomDomainId {
     mixin DomainId;
 }
 
+struct OrgId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
 struct PrivateKeyId {
     string value;
 

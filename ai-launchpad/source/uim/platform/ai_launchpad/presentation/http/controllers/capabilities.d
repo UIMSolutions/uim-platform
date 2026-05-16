@@ -31,18 +31,19 @@ class CapabilitiesController : PlatformController {
       auto tenantId = req.getTenantId;
       auto cap = usecase.getCapabilities();
 
-      auto resp = Json.emptyObject
-      .set("serviceName", cap.serviceName)
-      .set("serviceVersion", cap.serviceVersion)
-      .set("supportedRuntimes", cap.supportedRuntimes)
-      .set("features", cap.features)
-      .set("multiTenant", cap.multiTenant)
-      .set("genAiHub", cap.genAiHub)
-      .set("promptManagement", cap.promptManagement)
-      .set("usageStatistics", cap.usageStatistics)
-      .set("bulkOperations", cap.bulkOperations)
-      .set("maxConnections", cap.maxConnections);
+      // auto resp = Json.emptyObject
+      // .set("serviceName", cap.serviceName)
+      // .set("serviceVersion", cap.serviceVersion)
+      // .set("supportedRuntimes", cap.supportedRuntimes)
+      // .set("features", cap.features)
+      // .set("multiTenant", cap.multiTenant)
+      // .set("genAiHub", cap.genAiHub)
+      // .set("promptManagement", cap.promptManagement)
+      // .set("usageStatistics", cap.usageStatistics)
+      // .set("bulkOperations", cap.bulkOperations)
+      // .set("maxConnections", cap.maxConnections);
 
+      auto resp = cap.toJson;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

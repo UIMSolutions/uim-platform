@@ -11,8 +11,11 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface PlanningRepository : ITenantRepository!(PlanningModel, PlanningId) {
+interface PlanningRepository : ITenantRepository!(PlanningModel, PlanningModelId) {
 
-  size_t
+  size_t countByStatus(TenantId tenantId, PlanningStatus status);
+  PlanningModel[] filterByStatus(PlanningModel[] models, PlanningStatus status);
+  PlanningModel[] findByStatus(TenantId tenantId, PlanningStatus status);
+  void removeByStatus(TenantId tenantId, PlanningStatus status);
 
 }

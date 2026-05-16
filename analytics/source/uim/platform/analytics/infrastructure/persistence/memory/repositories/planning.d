@@ -8,24 +8,22 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.pla
 // import uim.platform.analytics.domain.repositories.planning;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryPlanningRepository : PlanningRepository {
-  private PlanningModel[string] store;
-
-  PlanningModel findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
-    return null;
+class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelId), PlanningRepository {
+ 
+  size_t countByStatus(TenantId tenantId, PlanningStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  PlanningModel[] filterByStatus(PlanningModel[] models, PlanningStatus status) {
+    return models.filter!(m => m.status == status).array;
+  }
+  PlanningModel[] findByStatus(TenantId tenantId, PlanningStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);  
   }
 
-  PlanningModel[] findAll() {
-    return store.values;
+  void removeByStatus(TenantId tenantId, PlanningStatus status) {
+    foreach(m; findByStatus(tenantId, status)) {
+      remove(m);
+    }
   }
 
-  void save(PlanningModel model) {
-    store[model.id.value] = model;
-  }
-
-  void remove(EntityId id) {
-    store.remove(id.value);
-  }
 }

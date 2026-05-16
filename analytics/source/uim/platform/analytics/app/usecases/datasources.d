@@ -10,7 +10,6 @@ module uim.platform.analytics.app.usecases.datasources;
 // import uim.platform.analytics.app.dto.datasource;
 // import uim.platform.analytics.app.ports.dataconnector;
 
-
 import uim.platform.analytics;
 
 mixin(ShowModule!());
@@ -28,8 +27,7 @@ class DataSourceUseCases {
     DataSourceType st;
     try {
       st = req.sourceType.to!DataSourceType;
-    }
-    catch (Exception) {
+    } catch (Exception) {
       st = DataSourceType.Database;
     }
     auto conn = ConnectionInfo(req.host, req.port, req.databaseName, req.username, "");
@@ -38,36 +36,38 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  DataSourceResponse getSource(GetDataSourceRequest r) {
-    return DataSourceResponse.fromEntity(repo.findById(EntityId(r.id)));
+  DataSourceResponse getSource(TenantId tenantId, DataSourceId id) {
+    return DataSourceResponse.fromEntity(repo.findById(tenantId, id));
   }
 
-  DataSourceResponse[] listSources(ListDataSourcesRequest r) {
+  DataSourceResponse[] listSources(TenantId tenantId) {
     DataSourceResponse[] result;
-    foreach (ds; repo.findAll())
+    foreach (ds; repo.findAll(tenantId))
       result ~= DataSourceResponse.fromEntity(ds);
     return result;
   }
 
-  DataSourceResponse testConnection(TestDataSourceConnectionRequest r) {
-    auto ds = repo.findById(EntityId(r.id));
+  DataSourceResponse testConnection(TenantId tenantId, DataSourceId id) {
+    auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
       return DataSourceResponse.init;
 
     auto connStr = ds.connection.host ~ ":" ~ ds.connection.port.to!string;
     if (connector !is null && connector.testConnection(connStr)) {
       ds.markConnected();
-    }
-    else
-    {
+    } else {
       ds.markError("Connection test failed or connector unavailable");
     }
     repo.save(ds);
     return DataSourceResponse.fromEntity(ds);
   }
 
-  CommandResult deleteSource(RemoveDataSourceRequest r) {
-    repo.remove(EntityId(r.id));
-    return CommandResult(true, r.id, "");
+  CommandResult deleteSource(TenantId tenantId, DataSourceId id) {
+    auto ds = repo.findById(tenantId, id);
+    if (ds.isNull)
+      return CommandResult(false, "", "Data source not found");
+
+    repo.remove(ds);
+    return CommandResult(true, id.value, "");
   }
 }
