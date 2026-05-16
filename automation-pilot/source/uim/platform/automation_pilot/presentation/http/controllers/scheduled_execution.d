@@ -67,10 +67,10 @@ class ScheduledExecutionController : PlatformController {
 
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
-            dto.id = ScheduledExecutionId(j.getString("id"));
+            dto.scheduledExecutionId = ScheduledExecutionId(j.getString("id"));
             dto.commandId = CommandId(j.getString("commandId"));
             dto.cronExpression = j.getString("cronExpression");
-            dto.scheduledAt = j.getString("scheduledAt");
+            dto.scheduledAt = j.getLong("scheduledAt");
             dto.inputValues = j.getString("inputValues");
             dto.description = j.getString("description");
             dto.maxRetries = j.getString("maxRetries");
@@ -97,11 +97,12 @@ class ScheduledExecutionController : PlatformController {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto j = req.json;
+            
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
-            dto.id = ScheduledExecutionId(extractIdFromPath(path));
+            dto.scheduledExecutionId = ScheduledExecutionId(extractIdFromPath(path));
             dto.cronExpression = j.getString("cronExpression");
-            dto.scheduledAt = j.getString("scheduledAt");
+            dto.scheduledAt = j.getLong("scheduledAt");
             dto.description = j.getString("description");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 

@@ -66,7 +66,7 @@ class CatalogController : PlatformController {
             auto j = req.json;
 
             CatalogDTO dto;
-            dto.id = CatalogId(j.getString("id"));
+            dto.catalogId = CatalogId(j.getString("id"));
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

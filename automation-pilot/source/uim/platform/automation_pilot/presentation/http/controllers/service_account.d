@@ -65,13 +65,13 @@ class ServiceAccountController : PlatformController {
 
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
-            dto.id = j.getString("id");
+            dto.serviceAccountId = ServiceAccountId(j.getString("id"));
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.clientId = j.getString("clientId");
             dto.permissions = j.getString("permissions");
-            dto.expiresAt = j.getString("expiresAt");
+            dto.expiresAt = j.getLong("expiresAt");
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createServiceAccount(dto);

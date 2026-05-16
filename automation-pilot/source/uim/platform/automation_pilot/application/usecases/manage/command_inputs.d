@@ -29,7 +29,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     CommandResult createCommandInput(CommandInputDTO dto) {
         CommandInput ci;
         ci.initEntity(dto.tenantId, dto.createdBy);
-        
+
         ci.id = dto.commandInputId;
         ci.name = dto.name;
         ci.description = dto.description;
@@ -45,7 +45,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateCommandInput(CommandInputDTO dto) {
-        auto existing = repo.findById(dto.tenantId, CommandInputId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.commandInputId);
         if (existing.isNull)
             return CommandResult(false, "", "Command input not found");
 

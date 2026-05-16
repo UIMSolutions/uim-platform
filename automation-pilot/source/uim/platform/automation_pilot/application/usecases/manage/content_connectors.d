@@ -28,7 +28,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
 
     CommandResult createContentConnector(ContentConnectorDTO dto) {
         ContentConnector cc;
-        cc.id = ContentConnectorId(dto.id);
+        cc.id = dto.contentConnectorId;
         cc.tenantId = dto.tenantId;
         cc.name = dto.name;
         cc.description = dto.description;
@@ -39,11 +39,11 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidContentConnector(cc))
             return CommandResult(false, "", "Invalid content connector data");
         repo.save(cc);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, cc.id.value, "");
     }
 
     CommandResult updateContentConnector(ContentConnectorDTO dto) {
-        auto existing = repo.findById(ContentConnectorId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.contentConnectorId);
         if (existing.isNull)
             return CommandResult(false, "", "Content connector not found");
 

@@ -33,7 +33,7 @@ class ContentConnectorController : PlatformController {
             auto tenantId = req.getTenantId();
             
             auto items = usecase.listContentConnectors(tenantId);
-            auto jarr = items.map!(e => e.contentConnectorToJson()).array.toJson;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", items.length)
@@ -121,9 +121,9 @@ class ContentConnectorController : PlatformController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ContentConnectorId(extractIdFromPath(path));
+            auto contentConnectorId = ContentConnectorId(extractIdFromPath(path));
 
-            auto result = usecase.deleteContentConnector(id);
+            auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

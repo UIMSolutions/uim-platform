@@ -49,9 +49,9 @@ class ExecutionController : PlatformController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ExecutionId(extractIdFromPath(path));
+            auto executionId = ExecutionId(extractIdFromPath(path));
 
-            auto e = executions.getExecution(tenantId, id);
+            auto e = executions.getExecution(tenantId, executionId);
             if (e.isNull) {
                 writeError(res, 404, "Execution not found");
                 return;

@@ -18,8 +18,8 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Execution getExecution(ExecutionId id) {
-        return repo.findById(tenantId, id);
+    Execution getExecution(TenantId tenantId, ExecutionId executionId) {
+        return repo.findById(tenantId, executionId);
     }
 
     Execution[] listExecutions(TenantId tenantId) {
@@ -38,8 +38,8 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         Execution e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = ExecutionId(dto.id);
-        e.commandId = CommandId(dto.commandId);
+        e.id = dto.executionId;
+        e.commandId = dto.commandId;
         e.inputValues = dto.inputValues;
         e.triggeredBy = dto.triggeredBy;
         if (!AutomationValidator.isValidExecution(e))
@@ -50,7 +50,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateExecution(ExecutionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, ExecutionId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.executionId);
         if (existing.isNull)
             return CommandResult(false, "", "Execution not found");
 

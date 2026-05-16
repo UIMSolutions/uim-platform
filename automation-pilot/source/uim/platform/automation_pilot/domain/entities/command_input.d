@@ -21,7 +21,7 @@ struct CommandInput {
     string keys;
     string values;
     string version_;
-    string commandId;
+    CommandId commandId;
 
     Json toJson() const {
         return entityToJson

@@ -34,8 +34,8 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         ScheduledExecution se;
         se.initEntity(dto.tenantId, dto.createdBy);
 
-        se.id = ScheduledExecutionId(dto.id);
-        se.commandId = CommandId(dto.commandId);
+        se.id = dto.scheduledExecutionId;
+        se.commandId = dto.commandId;
         se.cronExpression = dto.cronExpression;
         se.scheduledAt = dto.scheduledAt;
         se.inputValues = dto.inputValues;
@@ -46,11 +46,11 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid scheduled execution data");
             
         repo.save(se);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, se.id.value, "");
     }
 
     CommandResult updateScheduledExecution(ScheduledExecutionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, ScheduledExecutionId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.scheduledExecutionId);
         if (existing.isNull)
             return CommandResult(false, "", "Scheduled execution not found");
 
@@ -60,7 +60,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id) {

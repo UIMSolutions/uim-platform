@@ -38,7 +38,7 @@ class ConsentRecordController : PlatformController {
             r.purposeId = j.getString("purposeId");
             r.consentText = j.getString("consentText");
             r.consentVersion = j.getString("consentVersion");
-            r.expiresAt = j.getString("expiresAt");
+            r.expiresAt = j.getLong("expiresAt");
             r.ipAddress = j.getString("ipAddress");
             r.userAgent = j.getString("userAgent");
             r.source = j.getString("source");

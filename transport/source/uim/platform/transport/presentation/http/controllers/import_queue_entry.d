@@ -61,7 +61,7 @@ class ImportQueueEntryController : PlatformController {
             dto.requestId = j.getString("requestId");
             dto.queuePosition = cast(int) j.getLong("queuePosition");
             dto.isSelected = getBoolean(j, "isSelected");
-            dto.scheduledAt = j.getString("scheduledAt");
+            dto.scheduledAt = j.getLong("scheduledAt");
             dto.createdBy = UserId(j.getString("createdBy"));
             auto result = usecase.enqueue(dto);
             if (result.success)

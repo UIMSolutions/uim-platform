@@ -22,15 +22,11 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    Trigger[] list() {
-        return repo.findAll();
-    }
-
-    Trigger[] listByTenant(TenantId tenantId) {
+    Trigger[] listTriggers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Trigger[] listByCommand(TenantId tenantId, CommandId commandId) {
+    Trigger[] listTriggers(TenantId tenantId, CommandId commandId) {
         return repo.findByCommand(tenantId, commandId);
     }
 
@@ -38,7 +34,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         Trigger t;
         t.initEntity(dto.tenantId, dto.createdBy);
 
-        t.id = TriggerId(dto.id);
+        t.id = dto.triggerId;
         t.commandId = dto.commandId;
         t.name = dto.name;
         t.description = dto.description;

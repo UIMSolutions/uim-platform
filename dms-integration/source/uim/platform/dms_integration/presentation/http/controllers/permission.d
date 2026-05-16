@@ -78,7 +78,7 @@ class PermissionController : PlatformController {
             dto.permissionType = j.getString("permissionType");
             dto.isInherited = j.getBool("isInherited");
             dto.isDirect = j.getBool("isDirect");
-            dto.expiresAt = j.getString("expiresAt");
+            dto.expiresAt = j.getLong("expiresAt");
             dto.description = j.getString("description");
             dto.grantedBy = UserId(j.getString("grantedBy"));
             auto result = usecase.grantPermission(dto);

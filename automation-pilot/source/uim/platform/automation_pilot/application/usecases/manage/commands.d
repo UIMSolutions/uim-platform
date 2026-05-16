@@ -18,7 +18,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Command getCommand(CommandId id) {
+    Command getCommand(TenantId tenantId, CommandId id) {
         return repo.findById(tenantId, id);
     }
 

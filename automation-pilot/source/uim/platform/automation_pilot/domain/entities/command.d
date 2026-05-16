@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct Command {
-    mixin TenantEntity!(CommandId);
+    mixin TenantEntity!CommandId;
 
     CatalogId catalogId;
     string name;

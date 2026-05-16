@@ -33,7 +33,7 @@ class CommandInputController : PlatformController {
             auto tenantId = req.getTenantId();
             
             auto items = commandInputs.listCommandInputs(tenantId);
-            auto jarr = items.map!(e => e.commandInputToJson()).array.toJson;
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)
@@ -53,7 +53,7 @@ class CommandInputController : PlatformController {
 
             auto e = commandInputs.getCommandInput(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Input not found"); return; }
-            res.writeJsonBody(e.commandInputToJson(), 200);
+            res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -65,7 +65,7 @@ class CommandInputController : PlatformController {
             auto j = req.json;
 
             CommandInputDTO dto;
-            dto.id = j.getString("id");
+            dto.commandInputId = CommandInputId(j.getString("id"));
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

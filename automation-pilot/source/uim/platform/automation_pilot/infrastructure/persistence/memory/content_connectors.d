@@ -18,7 +18,7 @@ class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, Con
     }
 
     ContentConnector[] filterByType(ContentConnector[] connectors, ConnectorType connectorType) {
-        return connectors.filter!(c => c.type == connectorType).array;
+        return connectors.filter!(c => c.connectorType == connectorType).array;
     }
 
     ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType) {
