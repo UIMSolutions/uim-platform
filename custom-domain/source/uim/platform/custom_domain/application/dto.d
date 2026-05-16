@@ -104,6 +104,7 @@ struct CreateDomainMappingRequest {
     TenantId tenantId;
     DomainMappingId domainMappingId;
     CustomDomainId customDomainId;
+    
     string standardRoute;
     string customRoute;
     string mappingType;

@@ -151,7 +151,7 @@ class ManageDocumentsUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         existing.folderId = targetFolderId;
-        if (!userId.isNull) existing.updatedBy = userId;
+        if (!userId.isEmpty) existing.updatedBy = userId;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

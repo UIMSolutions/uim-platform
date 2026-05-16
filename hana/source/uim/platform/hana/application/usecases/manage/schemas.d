@@ -39,7 +39,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     s.owner = r.owner;
 
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
     s.createdAt = now;
     s.updatedAt = now;
 
@@ -63,7 +63,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     schema.owner = r.owner;
 
     import core.time : MonoTime;
-    schema.updatedAt = MonoTime.currTime.ticks;
+    schema.updatedAt = currentTimestamp;
 
     repo.update(schema);
     return CommandResult(true, schema.id.value, "");

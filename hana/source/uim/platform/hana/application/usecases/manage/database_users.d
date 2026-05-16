@@ -62,7 +62,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     user.forcePasswordChange = r.forcePasswordChange;
 
     import core.time : MonoTime;
-    user.updatedAt = MonoTime.currTime.ticks;
+    user.updatedAt = currentTimestamp;
 
     repo.update(user);
     return CommandResult(true, user.id.value, "");

@@ -19,14 +19,14 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDnsRecord(CreateDnsRecordRequest r) {
-        if (r.isNull)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.hostname.length == 0)
             return CommandResult(false, "", "Hostname is required");
         if (r.value.length == 0)
             return CommandResult(false, "", "Value is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.id);
         if (!existing.isNull)
             return CommandResult(false, "", "DNS record already exists");
 
@@ -41,7 +41,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         rec.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         rec.createdAt = now;
         rec.updatedAt = now;
 
@@ -57,12 +57,12 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    DnsRecord[] listDnsRecords(CustomDomainId domainId) {
-        return repo.findByDomain(domainId);
+    DnsRecord[] listDnsRecords(TenantId tenantId, CustomDomainId domainId) {
+        return repo.findByDomain(tenantId, domainId);
     }
 
     CommandResult updateDnsRecord(UpdateDnsRecordRequest r) {
-        auto record = repo.findById(r.id);
+        auto record = repo.findById(r.tenantId, r.id);
         if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 
@@ -72,13 +72,13 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
             record.ttl = r.ttl;
 
         import core.time : MonoTime;
-        record.updatedAt = MonoTime.currTime.ticks;
+        record.updatedAt = currentTimestamp;
 
         repo.update(record);
         return CommandResult(true, record.id.value, "");
     }
 
-    CommandResult deleteDnsRecord(DnsRecordId id) {
+    CommandResult deleteDnsRecord(TenantId tenantId, DnsRecordId id) {
         auto record = repo.findById(tenantId, id);
         if (record.isNull)
             return CommandResult(false, "", "DNS record not found");

@@ -40,7 +40,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         k.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         k.createdAt = now;
         k.updatedAt = now;
 

@@ -64,7 +64,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       ObjectVersion ver;
       ver.initEntity(req.tenantId, req.createdBy);
 
-      ver.objectId = id;
+      ver.objectId = obj.id;
       ver.versionTag = "v1";
       ver.size = req.size;
       ver.etag = obj.etag;
@@ -108,7 +108,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return objectRepo.findById(tenantId, objectId);
   }
 
-  StorageObject getObjectByKey(TenantId tenantId, BucketId bucketId, string key) {
+  StorageObject getObject(TenantId tenantId, BucketId bucketId, string key) {
     return objectRepo.findByKey(tenantId, bucketId, key);
   }
 
@@ -116,7 +116,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return objectRepo.findByBucket(tenantId, bucketId);
   }
 
-  StorageObject[] listObjectsByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {
+  StorageObject[] listObjects(TenantId tenantId, BucketId bucketId, string prefix) {
     return objectRepo.findByPrefix(tenantId, bucketId, prefix);
   }
 
@@ -129,7 +129,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 
-    auto bucket = bucketRepo.findById(req.tenantId, obj.bucketId);
+    auto bucket = bucketRepo.findById(tenantId, obj.bucketId);
 
     // If versioning enabled, add a delete marker instead of removing
     if (bucket !is null && bucket.versioningEnabled) {
@@ -138,7 +138,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       auto ts = currentTimestamp();
 
       // Mark current latest as not latest
-      auto currentLatest = versionRepo.findLatest(id);
+      auto currentLatest = versionRepo.findLatest(obj.id);
       if (currentLatest !is null && currentLatest.id.length > 0) {
         currentLatest.isLatest = false;
         versionRepo.save(currentLatest);
@@ -147,7 +147,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       ObjectVersion marker;
       marker.id = versionId;
       marker.tenantId = obj.tenantId;
-      marker.objectId = id;
+      marker.objectId = obj.id;
       marker.versionTag = "delete-marker";
       marker.isLatest = true;
       marker.isDeleteMarker = true;

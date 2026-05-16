@@ -81,7 +81,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         existing.formData = r.formData;
 
         import core.time : MonoTime;
-        existing.completedAt = MonoTime.currTime.ticks;
+        existing.completedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

@@ -223,7 +223,7 @@ size_t indexOfSeparator(string key) {
 long clockSeconds() {
   import core.time : MonoTime;
 
-  return MonoTime.currTime.ticks / 10_000_000;
+  return currentTimestamp / 10_000_000;
 }
 // private static long clockSeconds() {
 // import std.datetime.systime : Clock;
@@ -231,7 +231,7 @@ long clockSeconds() {
 // }
 // private static long clockSeconds() {
 // // import core.time : MonoTime;
-// return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
+// return currentTimestamp / MonoTime.ticksPerSecond;
 // }
 
 string formatLong(long v) {

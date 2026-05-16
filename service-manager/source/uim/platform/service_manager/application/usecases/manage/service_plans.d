@@ -23,7 +23,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
 
     CommandResult createServicePlan(CreateServicePlanRequest dto) {
         ServicePlan e;
-        e.id = ServicePlanId(MonoTime.currTime.ticks.to!string);
+        e.id = ServicePlanId(currentTimestamp.to!string);
         e.tenantId = TenantId(dto.tenantId);
         e.name = dto.name;
         e.description = dto.description;
@@ -32,7 +32,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         e.maxInstances = dto.maxInstances;
         e.schemas = dto.schemas;
         e.metadata = dto.metadata;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
         e.updatedAt = e.createdAt;
 
         if (dto.name.length == 0)
@@ -52,7 +52,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         if (dto.metadata.length > 0) existing.metadata = dto.metadata;
         if (dto.schemas.length > 0) existing.schemas = dto.schemas;
         existing.maxInstances = dto.maxInstances;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

@@ -82,7 +82,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
 
         import core.time : MonoTime;
 
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

@@ -86,7 +86,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
     doc.status = DocumentStatus.confirmed;
 
     import core.time : MonoTime;
-    doc.updatedAt = MonoTime.currTime.ticks;
+    doc.updatedAt = currentTimestamp;
 
     docRepo.update(doc);
     return CommandResult(true, doc.id.value, "");

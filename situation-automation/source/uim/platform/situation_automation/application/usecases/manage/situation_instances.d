@@ -70,7 +70,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
             existing.assignedTo = r.assignedTo;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
@@ -88,7 +88,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         existing.resolution.outcome = r.outcome;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         existing.resolution.resolvedAt = now;
         existing.updatedAt = now;
 

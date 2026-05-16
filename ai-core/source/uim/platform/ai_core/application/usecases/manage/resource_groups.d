@@ -49,7 +49,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
 
     import core.time : MonoTime;
 
-    rg.createdAt = MonoTime.currTime.ticks;
+    rg.createdAt = currentTimestamp;
 
     repo.save(rg);
     return CommandResult(true, rg.id.value, "");

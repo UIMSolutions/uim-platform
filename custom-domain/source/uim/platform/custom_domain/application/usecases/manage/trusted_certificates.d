@@ -39,8 +39,8 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         c.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        c.createdAt = MonoTime.currTime.ticks;
-        c.updatedAt = MonoTime.currTime.ticks;
+        c.createdAt = currentTimestamp;
+        c.updatedAt = currentTimestamp;
         repo.save(c);
         return CommandResult(true, c.id.value, "");
     }

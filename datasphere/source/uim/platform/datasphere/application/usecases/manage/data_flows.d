@@ -59,7 +59,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data flow not found");
 
     import core.time : MonoTime;
-    flow.updatedAt = MonoTime.currTime.ticks;
+    flow.updatedAt = currentTimestamp;
 
     repo.update(flow);
     return CommandResult(true, flow.id.value, "");

@@ -18,7 +18,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDataContext(CreateDataContextRequest r) {
-        if (r.dataContextId.isNull)
+        if (r.dataContextId.isEmpty)
             return CommandResult(false, "", "Data context ID is required");
         if (r.situationInstanceId.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
@@ -39,7 +39,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         d.expiresAt = r.expiresAt;
 
         import core.time : MonoTime;
-        d.capturedAt = MonoTime.currTime.ticks;
+        d.capturedAt = currentTimestamp;
 
         repo.save(d);
         return CommandResult(true, d.id.value, "");

@@ -21,7 +21,7 @@ class ManageScalingPoliciesUseCase {
   CommandResult createPolicy(CreateScalingPolicyRequest r) {
     import core.time : MonoTime;
     auto id = generateId();
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
 
     ScalingPolicyEntity policy;
     policy.id               = id;
@@ -92,7 +92,7 @@ class ManageScalingPoliciesUseCase {
     existing.timezone = r.timezone.length > 0 ? r.timezone : existing.timezone;
     existing.customMetricAllowFrom = r.customMetricAllowFrom == "bound_app"
       ? MetricAllowFrom.boundApp : MetricAllowFrom.sameApp;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     // Replace rules
     ScalingRuleEntity[] newRules;
@@ -137,6 +137,6 @@ class ManageScalingPoliciesUseCase {
     import std.conv : to;
     import core.time : MonoTime;
     import std.random : uniform;
-    return "pol-" ~ MonoTime.currTime.ticks.to!string ~ "-" ~ uniform(1000, 9999).to!string;
+    return "pol-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
   }
 }

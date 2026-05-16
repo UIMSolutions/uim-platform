@@ -87,7 +87,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
       d.ttl = request.ttl;
 
     import core.time : MonoTime;
-    d.updatedAt = MonoTime.currTime.ticks;
+    d.updatedAt = currentTimestamp;
 
     deployments.update(d);
     return CommandResult(true, d.id.value, "");

@@ -13,13 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - lifecycle rule persistence.
-interface LifecycleRuleRepository : {
-  bool existsById(LifecycleRuleId id);
-  LifecycleRule findById(LifecycleRuleId id);
+interface LifecycleRuleRepository : ITenantRepository!(LifecycleRule, LifecycleRuleId) {
 
+  size_t countByBucket(BucketId bucketId);
   LifecycleRule[] findByBucket(BucketId bucketId);
+  void removeByBucket(BucketId bucketId);
   
-  void save(LifecycleRule rule);
-  void update(LifecycleRule rule);
-  void remove(LifecycleRuleId id);
 }

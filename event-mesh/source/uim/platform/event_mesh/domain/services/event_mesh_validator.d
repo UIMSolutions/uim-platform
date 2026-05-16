@@ -13,34 +13,34 @@ mixin(ShowModule!());
 
 struct EventMeshValidator {
     static bool isValidBrokerService(BrokerService bs) {
-        return bs.name.length > 0 && !bs.tenantId.isNull;
+        return bs.name.length > 0 && !bs.tenantId.isEmpty;
     }
 
     static bool isValidQueue(Queue q) {
-        return q.name.length > 0 && !q.tenantId.isNull && !q.serviceId.isNull;
+        return q.name.length > 0 && !q.tenantId.isEmpty && !q.serviceId.isEmpty;
     }
 
     static bool isValidTopic(Topic t) {
-        return t.name.length > 0 && !t.tenantId.isNull && !t.serviceId.isNull;
+        return t.name.length > 0 && !t.tenantId.isEmpty && !t.serviceId.isEmpty;
     }
 
     static bool isValidSubscription(EventSubscription s) {
-        return s.name.length > 0 && !s.tenantId.isNull && !s.serviceId.isNull;
+        return s.name.length > 0 && !s.tenantId.isEmpty && !s.serviceId.isEmpty;
     }
 
     static bool isValidEventMessage(EventMessage m) {
-        return !m.tenantId.isNull && !m.serviceId.isNull && m.payload.length > 0;
+        return !m.tenantId.isEmpty && !m.serviceId.isEmpty && m.payload.length > 0;
     }
 
     static bool isValidEventSchema(EventSchema s) {
-        return s.name.length > 0 && !s.tenantId.isNull && s.schemaContent.length > 0;
+        return s.name.length > 0 && !s.tenantId.isEmpty && s.schemaContent.length > 0;
     }
 
     static bool isValidEventApplication(EventApplication a) {
-        return a.name.length > 0 && !a.tenantId.isNull /* && !a.serviceId.isNull */; // TODO: add serviceId to EventApplication
+        return a.name.length > 0 && !a.tenantId.isEmpty /* && !a.serviceId.isEmpty */; // TODO: add serviceId to EventApplication
     }
 
     static bool isValidMeshBridge(MeshBridge b) {
-        return b.name.length > 0 && !b.tenantId.isNull && !b.sourceServiceId.isNull && !b.targetServiceId.isNull;
+        return b.name.length > 0 && !b.tenantId.isEmpty && !b.sourceServiceId.isEmpty && !b.targetServiceId.isEmpty;
     }
 }

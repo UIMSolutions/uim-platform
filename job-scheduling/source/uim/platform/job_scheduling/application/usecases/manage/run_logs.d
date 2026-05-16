@@ -68,7 +68,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         if (targetStatus == RunStatus.triggered) {
             import core.time : MonoTime;
 
-            runlog.triggeredAt = MonoTime.currTime.ticks;
+            runlog.triggeredAt = currentTimestamp;
         }
 
         repo.update(runlog);

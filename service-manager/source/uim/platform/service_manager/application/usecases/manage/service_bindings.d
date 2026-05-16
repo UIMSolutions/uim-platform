@@ -24,7 +24,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     CommandResult createServiceBinding(CreateServiceBindingRequest dto) {
 
         ServiceBinding e;
-        e.id = ServiceBindingId(MonoTime.currTime.ticks.to!string);
+        e.id = ServiceBindingId(currentTimestamp.to!string);
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.instanceId = ServiceInstanceId(dto.instanceId);
@@ -33,7 +33,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         e.context = dto.context;
         e.labels = dto.labels;
         e.status = ServiceBindingStatus.creating;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
         e.updatedAt = e.createdAt;
 
         if (dto.name.length == 0)
@@ -53,7 +53,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.parameters.length > 0) existing.parameters = dto.parameters;
         if (dto.labels.length > 0) existing.labels = dto.labels;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, id.value, "");

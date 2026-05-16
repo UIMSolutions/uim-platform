@@ -28,8 +28,8 @@ class ManageCustomMetricsUseCase {
     if (r.appId.length == 0)
       return CommandResult(false, "", "appId is required");
 
-    auto id  = "cm-" ~ MonoTime.currTime.ticks.to!string ~ "-" ~ uniform(1000, 9999).to!string;
-    auto now = r.timestamp > 0 ? r.timestamp : MonoTime.currTime.ticks;
+    auto id  = "cm-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
+    auto now = r.timestamp > 0 ? r.timestamp : currentTimestamp;
 
     CustomMetricEntity m;
     m.id         = id;

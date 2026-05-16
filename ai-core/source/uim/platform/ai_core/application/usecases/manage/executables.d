@@ -21,7 +21,7 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createExecutable(CreateExecutableRequest r) {
-        if (r.executableId.isNull)
+        if (r.executableId.isEmpty)
             return CommandResult(false, "", "Executable ID is required");
         if (r.scenarioId.isEmpty)
             return CommandResult(false, "", "Scenario ID is required");

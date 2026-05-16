@@ -27,13 +27,13 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
 
     CommandResult createLabel(TenantId tenantId, CreateLabelRequest dto) {
         Label e;
-        e.id = LabelId(MonoTime.currTime.ticks.to!string);
+        e.id = LabelId(currentTimestamp.to!string);
         e.tenantId = tenantId;
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;
         e.key = dto.key;
         e.value = dto.value;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
 
         if (dto.key.length == 0)
             return CommandResult(false, "", "Label key is required");

@@ -19,7 +19,7 @@ class UIMTenantMiddleware {
 
   void handleRequest(HttpServerRequest req, HttpServerResponse res) {
   TenantId tenantId = req.getHeader("X-Tenant-ID");
-  if (!tenantId.isNull && tenantId.length > 0) {
+  if (!tenantId.isEmpty && tenantId.length > 0) {
     auto tenant = tenantRepository.findById(tenantId);
     if (!tenant.isNull) {
     req.setUserData(tenant);

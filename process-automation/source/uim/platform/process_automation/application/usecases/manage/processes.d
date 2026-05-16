@@ -62,7 +62,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         process.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        process.updatedAt = MonoTime.currTime.ticks;
+        process.updatedAt = currentTimestamp;
 
         repo.update(process);
         return CommandResult(true, process.id.value, "");
@@ -85,7 +85,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         }
 
         import core.time : MonoTime;
-        process.updatedAt = MonoTime.currTime.ticks;
+        process.updatedAt = currentTimestamp;
 
         repo.update(process);
         return CommandResult(true, process.id.value, "");

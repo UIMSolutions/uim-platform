@@ -48,7 +48,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     c.poolConfig.maxConnections = r.maxConnections;
 
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
     c.createdAt = now;
     c.updatedAt = now;
 
@@ -82,7 +82,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     existing.poolConfig.maxConnections = r.maxConnections;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

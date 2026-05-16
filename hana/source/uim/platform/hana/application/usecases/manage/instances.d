@@ -79,7 +79,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     existing.whitelistedIps = r.whitelistedIps;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");
@@ -105,7 +105,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

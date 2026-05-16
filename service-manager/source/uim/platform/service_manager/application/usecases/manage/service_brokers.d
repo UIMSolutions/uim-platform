@@ -25,7 +25,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         ServiceBroker e;
         e.initEntity(tenantId);
 
-        e.id = ServiceBrokerId(MonoTime.currTime.ticks.to!string);
+        e.id = ServiceBrokerId(currentTimestamp.to!string);
         e.name = dto.name;
         e.description = dto.description;
         e.brokerUrl = dto.brokerUrl;
@@ -47,7 +47,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.brokerUrl.length > 0) existing.brokerUrl = dto.brokerUrl;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

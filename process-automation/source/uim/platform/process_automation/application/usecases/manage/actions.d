@@ -40,7 +40,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         a.version_ = r.version_;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         a.createdAt = now;
         a.updatedAt = now;
 
@@ -71,7 +71,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         action.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        action.updatedAt = MonoTime.currTime.ticks;
+        action.updatedAt = currentTimestamp;
 
         repo.update(action);
         return CommandResult(true, action.id.value, "");

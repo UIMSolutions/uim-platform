@@ -67,7 +67,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         artifact.contentUrl = r.contentUrl;
 
         import core.time : MonoTime;
-        artifact.updatedAt = MonoTime.currTime.ticks;
+        artifact.updatedAt = currentTimestamp;
 
         repo.update(artifact);
         return CommandResult(true, artifact.id.value, "");

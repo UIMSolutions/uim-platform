@@ -57,7 +57,7 @@ class ScalingEngineUseCase {
     if (newInstances > currentInstances)      direction = ScalingDirection.scaleOut;
     else if (newInstances < currentInstances) direction = ScalingDirection.scaleIn;
 
-    auto histId = "hist-" ~ MonoTime.currTime.ticks.to!string ~ "-" ~ uniform(1000, 9999).to!string;
+    auto histId = "hist-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
 
     ScalingHistoryEntity evt;
     evt.id           = histId;
@@ -68,12 +68,12 @@ class ScalingEngineUseCase {
     evt.reason       = "Metric " ~ r.metricType ~ " = " ~ r.currentValue.to!string;
     evt.oldInstances = currentInstances;
     evt.newInstances = newInstances;
-    evt.timestamp    = MonoTime.currTime.ticks;
+    evt.timestamp    = currentTimestamp;
 
     if (direction != ScalingDirection.none) {
       // Update binding instance count
       binding.currentInstances = newInstances;
-      binding.updatedAt        = MonoTime.currTime.ticks;
+      binding.updatedAt        = currentTimestamp;
       bindingRepo.update(binding);
     } else {
       evt.status  = ScalingStatus.ignored;

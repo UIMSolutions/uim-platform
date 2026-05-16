@@ -60,7 +60,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         decision.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        decision.updatedAt = MonoTime.currTime.ticks;
+        decision.updatedAt = currentTimestamp;
 
         repo.update(decision);
         return CommandResult(true, decision.id.value, "");

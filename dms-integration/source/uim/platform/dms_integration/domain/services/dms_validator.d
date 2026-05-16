@@ -18,19 +18,19 @@ struct DmsValidator {
     }
 
     static bool isValidDocument(const ref Document doc) {
-        return doc.name.length > 0 && !doc.repositoryId.isNull;
+        return doc.name.length > 0 && !doc.repositoryId.isEmpty;
     }
 
     static bool isValidFolder(const ref Folder folder) {
-        return folder.name.length > 0 && !folder.repositoryId.isNull;
+        return folder.name.length > 0 && !folder.repositoryId.isEmpty;
     }
 
     static bool isValidDocumentVersion(const ref DocumentVersion ver) {
-        return !ver.documentId.isNull && ver.versionLabel.length > 0;
+        return !ver.documentId.isEmpty && ver.versionLabel.length > 0;
     }
 
     static bool isValidPermission(const ref Permission perm) {
         return perm.principalId.length > 0 &&
-               (!perm.documentId.isNull || !perm.folderId.isNull);
+               (!perm.documentId.isEmpty || !perm.folderId.isEmpty);
     }
 }

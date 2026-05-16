@@ -42,7 +42,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.bucketId = req.bucketId;
     rule.name = req.name;
     rule.prefix = req.prefix;
-    rule.status = parseRuleStatus(req.status);
+    rule.status = req.status.to!RuleStatus;
     rule.expirationDays = req.expirationDays;
     rule.transitionDays = req.transitionDays;
     rule.transitionStorageClass = req.transitionStorageClass.to!StorageClass;
@@ -62,7 +62,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     if (req.prefix.length > 0)
       rule.prefix = req.prefix;
     if (req.status.length > 0)
-      rule.status = parseRuleStatus(req.status);
+      rule.status = req.status.to!RuleStatus;
     if (req.expirationDays > 0)
       rule.expirationDays = req.expirationDays;
     if (req.transitionDays > 0)
@@ -91,7 +91,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Lifecycle rule not found");
 
     ruleRepo.remove(rule);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 }
 

@@ -60,7 +60,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         form.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        form.updatedAt = MonoTime.currTime.ticks;
+        form.updatedAt = currentTimestamp;
 
         repo.update(form);
         return CommandResult(true, form.id.value, "");

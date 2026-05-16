@@ -25,7 +25,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         ServiceInstance e;
         e.initEntity(tenantId);
 
-        e.id = ServiceInstanceId(MonoTime.currTime.ticks.to!string);
+        e.id = ServiceInstanceId(currentTimestamp.to!string);
         e.tenantId = tenantId;
         e.name = dto.name;
         e.planId = ServicePlanId(dto.planId);
@@ -35,7 +35,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         e.parameters = dto.parameters;
         e.labels = dto.labels;
         e.status = ServiceInstanceStatus.creating;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
         e.updatedAt = e.createdAt;
 
         if (dto.name.length == 0)
@@ -56,7 +56,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         if (dto.planId.length > 0) existing.planId = ServicePlanId(dto.planId);
         if (dto.parameters.length > 0) existing.parameters = dto.parameters;
         if (dto.labels.length > 0) existing.labels = dto.labels;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

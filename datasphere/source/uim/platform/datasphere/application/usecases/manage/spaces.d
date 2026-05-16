@@ -42,7 +42,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     s.priority = r.priority;
 
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
     s.createdAt = now;
     s.updatedAt = now;
 
@@ -69,7 +69,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     existing.priority = r.priority;
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

@@ -58,7 +58,7 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
         auto dashboard = dashboardRepo.findByTenant(r.tenantId);
         bool isNew = dashboard.isNull;
         if (isNew)
-            dashboard.id = r.tenantId ~ "-dashboard";
+            dashboard.id = r.tenantId.value ~ "-dashboard";
 
         dashboard.tenantId = r.tenantId;
         dashboard.totalDomains = domains.length;
@@ -78,7 +78,7 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
             dashboard.overallHealth = HealthStatus.unknown;
 
         import core.time : MonoTime;
-        dashboard.lastUpdatedAt = MonoTime.currTime.ticks;
+        dashboard.lastUpdatedAt = currentTimestamp;
 
         if (isNew)
             dashboardRepo.save(dashboard);

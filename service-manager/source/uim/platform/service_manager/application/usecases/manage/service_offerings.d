@@ -25,14 +25,14 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         ServiceOffering e;
         e.initEntity(dto.tenantId);
 
-        e.id = ServiceOfferingId(MonoTime.currTime.ticks.to!string);
+        e.id = ServiceOfferingId(currentTimestamp.to!string);
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;
         e.brokerId = ServiceBrokerId(dto.brokerId);
         e.tags = dto.tags;
         e.metadata = dto.metadata;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service offering name is required");
@@ -51,7 +51,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         if (dto.catalogName.length > 0) existing.catalogName = dto.catalogName;
         if (dto.tags.length > 0) existing.tags = dto.tags;
         if (dto.metadata.length > 0) existing.metadata = dto.metadata;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

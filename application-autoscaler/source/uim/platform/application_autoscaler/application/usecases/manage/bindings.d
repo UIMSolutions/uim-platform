@@ -23,8 +23,8 @@ class ManageAppBindingsUseCase {
     import std.conv : to;
     import std.random : uniform;
 
-    auto id  = "bind-" ~ MonoTime.currTime.ticks.to!string ~ "-" ~ uniform(1000, 9999).to!string;
-    auto now = MonoTime.currTime.ticks;
+    auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
+    auto now = currentTimestamp;
 
     AppBindingEntity binding;
     binding.id                = id;
@@ -48,7 +48,7 @@ class ManageAppBindingsUseCase {
     import core.time : MonoTime;
     auto existing = repo.findById(r.id);
     existing.currentInstances = r.currentInstances;
-    existing.updatedAt        = MonoTime.currTime.ticks;
+    existing.updatedAt        = currentTimestamp;
     repo.update(existing);
     return CommandResult(true, r.id, "");
   }
@@ -67,7 +67,7 @@ class ManageAppBindingsUseCase {
     import core.time : MonoTime;
     auto existing = repo.findById(bindingId);
     existing.policyId   = policyId;
-    existing.updatedAt  = MonoTime.currTime.ticks;
+    existing.updatedAt  = currentTimestamp;
     repo.update(existing);
     return CommandResult(true, bindingId, "");
   }

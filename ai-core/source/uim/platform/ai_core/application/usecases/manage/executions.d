@@ -74,7 +74,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    e.updatedAt = MonoTime.currTime.ticks;
+    e.updatedAt = currentTimestamp;
 
     execRepo.update(e);
     return CommandResult(true, e.id.value, "");

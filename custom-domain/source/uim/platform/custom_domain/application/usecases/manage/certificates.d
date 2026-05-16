@@ -19,7 +19,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCertificate(CreateCertificateRequest r) {
-        if (r.certificateId.isNull)
+        if (r.certificateId.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.keyId.isEmpty)
             return CommandResult(false, "", "Key ID is required");
@@ -31,12 +31,12 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         Certificate c;
         c.id = r.certificateId;
         c.tenantId = r.tenantId;
-        c.privateKeyId = r.privateKeyId;
+        c.keyId = r.keyId;
         c.status = CertificateStatus.pending;
         c.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        c.createdAt = MonoTime.currTime.ticks;
+        c.createdAt = currentTimestamp;
 
         repo.save(c);
         return CommandResult(true, c.id.value, "");
@@ -63,7 +63,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         existing.activatedDomains = r.domains;
 
         import core.time : MonoTime;
-        existing.activatedAt = MonoTime.currTime.ticks;
+        existing.activatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

@@ -69,7 +69,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     a.labels = labels;
 
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
     a.createdAt = now;
     a.updatedAt = now;
 

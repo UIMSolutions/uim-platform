@@ -19,8 +19,8 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDomainMapping(CreateDomainMappingRequest r) {
-        if (r.isNull)
-            return CommandResult(false, "", "ID is required");
+        if (r.customDomainId.isEmpty)
+            return CommandResult(false, "", "Custom domain ID is required");
         if (r.standardRoute.length == 0)
             return CommandResult(false, "", "Standard route is required");
         if (r.customRoute.length == 0)
@@ -47,7 +47,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         m.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         m.createdAt = now;
         m.updatedAt = now;
 

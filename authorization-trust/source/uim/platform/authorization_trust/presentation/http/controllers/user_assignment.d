@@ -54,7 +54,7 @@ class UserAssignmentController : PlatformController {
       auto userId = UserId(req.params.get("userId", ""));
 
       auto assignments =
-        userId.isNull ? usecase.listUserAssignments(
+        userId.isEmpty ? usecase.listUserAssignments(
           tenantId) : usecase.listUserAssignments(tenantId, userId);
 
       auto jarr = assignments.map!(ua => ua.toJson).array.toJson;

@@ -39,7 +39,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         c.createdBy = r.createdBy;
 
         import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
+        auto now = currentTimestamp;
         c.createdAt = now;
         c.updatedAt = now;
 
@@ -69,7 +69,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         existing.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

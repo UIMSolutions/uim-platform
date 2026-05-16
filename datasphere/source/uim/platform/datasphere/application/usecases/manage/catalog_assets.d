@@ -70,7 +70,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     asset.glossaryTerms = r.glossaryTerms;
 
     import core.time : MonoTime;
-    asset.updatedAt = MonoTime.currTime.ticks;
+    asset.updatedAt = currentTimestamp;
 
     repo.update(asset);
     return CommandResult(true, asset.id.value, "");

@@ -44,7 +44,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateConfiguration(UpdateConfigurationRequest request) {
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
 
     auto existing = repo.get(request.tenantId);
     if (!repo.existsByTenant(request.tenantId)) {

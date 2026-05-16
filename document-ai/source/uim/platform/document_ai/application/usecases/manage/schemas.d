@@ -67,7 +67,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     s.lineItemFields = lFields;
 
     import core.time : MonoTime;
-    auto now = MonoTime.currTime.ticks;
+    auto now = currentTimestamp;
     s.createdAt = now;
     s.updatedAt = now;
 
@@ -96,7 +96,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     }
 
     import core.time : MonoTime;
-    existing.updatedAt = MonoTime.currTime.ticks;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

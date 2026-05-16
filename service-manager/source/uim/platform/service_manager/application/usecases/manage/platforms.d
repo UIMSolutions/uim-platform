@@ -25,7 +25,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
             Platform e;
         e.initEntity(tenantId);
 
-        e.id = PlatformId(MonoTime.currTime.ticks.to!string);
+        e.id = PlatformId(currentTimestamp.to!string);
         e.name = dto.name;
         e.description = dto.description;
         e.brokerUrl = dto.brokerUrl;
@@ -50,7 +50,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         if (dto.brokerUrl.length > 0) existing.brokerUrl = dto.brokerUrl;
         if (dto.credentials.length > 0) existing.credentials = dto.credentials;
         if (dto.region.length > 0) existing.region = dto.region;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, id.value, "");

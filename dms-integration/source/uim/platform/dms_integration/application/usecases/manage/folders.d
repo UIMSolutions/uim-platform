@@ -90,7 +90,7 @@ class ManageFoldersUseCase {
         if (existing.isSystemFolder)
             return CommandResult(false, "", "Cannot move system folder");
         existing.parentFolderId = targetParentId;
-        if (!userId.isNull) existing.updatedBy = userId;
+        if (!userId.isEmpty) existing.updatedBy = userId;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

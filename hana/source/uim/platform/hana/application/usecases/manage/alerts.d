@@ -71,7 +71,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
 
     import core.time : MonoTime;
 
-    existing.acknowledgedAt = MonoTime.currTime.ticks;
+    existing.acknowledgedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

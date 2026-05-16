@@ -25,12 +25,12 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
         Operation e;
         e.initEntity(tenantId);
 
-        e.id = OperationId(MonoTime.currTime.ticks.to!string);
+        e.id = OperationId(currentTimestamp.to!string);
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;
         e.description = dto.description;
         e.status = OperationStatus.pending;
-        e.createdAt = MonoTime.currTime.ticks;
+        e.createdAt = currentTimestamp;
 
         repo.save(e);
         return CommandResult(true, e.id.value, "");
@@ -42,7 +42,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Operation not found");
 
         if (dto.errorMessage.length > 0) existing.errorMessage = dto.errorMessage;
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
         return CommandResult(true, id.value, "");

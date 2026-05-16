@@ -23,10 +23,10 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        if (r.isNull)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.id);
         if (!existing.isNull)
             return CommandResult(false, "", "Custom domain already exists");
 
@@ -35,18 +35,13 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Domain name already registered");
 
         CustomDomain d;
+        d.initEntity(r.tenantId, r.createdBy);
+
         d.id = r.id;
-        d.tenantId = r.tenantId;
         d.domainName = r.domainName;
         d.organizationId = r.organizationId;
         d.spaceId = r.spaceId;
         d.status = DomainStatus.pending;
-        d.createdBy = r.createdBy;
-
-        import core.time : MonoTime;
-        auto now = MonoTime.currTime.ticks;
-        d.createdAt = now;
-        d.updatedAt = now;
 
         repo.save(d);
         return CommandResult(true, d.id.value, "");
@@ -73,7 +68,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         domain.updatedBy = r.updatedBy;
 
         import core.time : MonoTime;
-        domain.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
         return CommandResult(true, domain.id.value, "");
@@ -86,7 +81,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         domain.status = DomainStatus.active;
 
         import core.time : MonoTime;
-        domain.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
         return CommandResult(true, id.value, "");
@@ -99,7 +94,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         domain.status = DomainStatus.deactivated;
 
         import core.time : MonoTime;
-        domain.updatedAt = MonoTime.currTime.ticks;
+        domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
         return CommandResult(true, id.value, "");

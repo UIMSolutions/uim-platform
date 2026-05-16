@@ -94,7 +94,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
 
         import core.time : MonoTime;
 
-        existing.updatedAt = MonoTime.currTime.ticks;
+        existing.updatedAt = currentTimestamp;
 
         schedules.update(existing);
         return CommandResult(true, existing.id.value, "");
@@ -125,7 +125,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
             s.status = request.active ? JobScheduleStatus.active : JobScheduleStatus.inactive;
             import core.time : MonoTime;
 
-            s.updatedAt = MonoTime.currTime.ticks;
+            s.updatedAt = currentTimestamp;
             schedules.update(s);
         }
         return CommandResult(true, request.jobId.value, "");

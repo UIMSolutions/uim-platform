@@ -59,7 +59,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Task not found");
 
     import core.time : MonoTime;
-    task.updatedAt = MonoTime.currTime.ticks;
+    task.updatedAt = currentTimestamp;
 
     tasks.update(task);
     return CommandResult(true, task.id.value, "");

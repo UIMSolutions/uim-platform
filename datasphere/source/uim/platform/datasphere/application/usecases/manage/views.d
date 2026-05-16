@@ -69,7 +69,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     view.isPersisted = r.isPersisted;
 
     import core.time : MonoTime;
-    view.updatedAt = MonoTime.currTime.ticks;
+    view.updatedAt = currentTimestamp;
 
     repo.update(view);
     return CommandResult(true, view.id.value, "");
