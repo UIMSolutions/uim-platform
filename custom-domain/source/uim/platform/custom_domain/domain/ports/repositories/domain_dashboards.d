@@ -11,10 +11,12 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DomainDashboardRepository  {
-    DomainDashboard findById(DomainDashboardId id);
-    DomainDashboard findByTenant(TenantId tenantId);
-    void save(DomainDashboard d);
-    void update(DomainDashboard d);
-    void remove(DomainDashboardId id);
+interface DomainDashboardRepository : ITenantRepository!(DomainDashboard, DomainDashboardId) {
+    
+    DomainDashboard get(TenantId tenantId);
+    
+    size_t countByMetricType(TenantId tenantId, DashboardMetricType metricType);
+    DomainDashboard[] findByMetricType(TenantId tenantId, DashboardMetricType metricType);
+    void removeByMetricType(TenantId tenantId, DashboardMetricType metricType);
+
 }

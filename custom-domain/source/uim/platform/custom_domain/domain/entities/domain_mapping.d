@@ -21,7 +21,7 @@ struct DomainMapping {
     string applicationName;
     OrganizationId organizationId;
     SpaceId spaceId;
-    
+
     Json toJson() const {
         return entityToJson
             .set("customDomainId", customDomainId)

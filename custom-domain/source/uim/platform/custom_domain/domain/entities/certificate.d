@@ -54,13 +54,13 @@ struct Certificate {
             .set("subjectDn", subjectDn)
             .set("issuerDn", issuerDn)
             .set("serialNumber", serialNumber)
-            .set("subjectAlternativeNames", subjectAlternativeNames)
+            .set("subjectAlternativeNames", subjectAlternativeNames.toJson())
             .set("certificatePem", certificatePem)
-            .set("chain", chain.map!(entry => entry.toJson()))        
+            .set("chain", chain.map!(entry => entry.toJson()).array.toJson)        
             .set("fingerprint", fingerprint)
             .set("validFrom", validFrom)
             .set("validTo", validTo)
-            .set("activatedDomains", activatedDomains)
+            .set("activatedDomains", activatedDomains.toJson())
             .set("activatedAt", activatedAt);
 
         return j;

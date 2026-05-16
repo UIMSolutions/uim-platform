@@ -12,4 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 interface PrivateKeyRepository : ITenantRepository!(PrivateKey, PrivateKeyId) {
+
+    size_t countByStatus(TenantId tenantId, KeyStatus status);
+    PrivateKey[] findByStatus(TenantId tenantId, KeyStatus status);
+    void removeByStatus(TenantId tenantId, KeyStatus status);
 }

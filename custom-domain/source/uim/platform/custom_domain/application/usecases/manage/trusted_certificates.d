@@ -51,7 +51,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     TrustedCertificate[] listTrustedCertificatesByDomain(TenantId tenantId, CustomDomainId domainId) {
-        return repo.findByDomain(tenantId, domainId);
+        return repo.findByCustomDomain(tenantId, domainId);
     }
 
     CommandResult deleteTrustedCertificate(TenantId tenantId, TrustedCertificateId id) {

@@ -16,6 +16,7 @@ mixin(ShowModule!());
 
 struct CreateCustomDomainRequest {
     TenantId tenantId;
+    CustomDomainId customDomainId;
     CertificateId certificateId;
     UserId createdBy;
     

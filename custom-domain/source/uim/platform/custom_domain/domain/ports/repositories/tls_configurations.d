@@ -14,7 +14,7 @@ mixin(ShowModule!());
 interface TlsConfigurationRepository : ITenantRepository!(TlsConfiguration, TlsConfigurationId) {
 
     size_t countByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
-  TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
-  void removeByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
+    TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
+    void removeByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
 
 }

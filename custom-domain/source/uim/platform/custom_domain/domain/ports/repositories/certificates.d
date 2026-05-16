@@ -13,9 +13,9 @@ mixin(ShowModule!());
 /// Repository interface for managing TLS certificates associated with custom domains.
 interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
-    size_t countByKey(PrivateKeyId keyId);
-    Certificate[] findByKey(PrivateKeyId keyId);
-    void removeByKey(PrivateKeyId keyId);
+    size_t countByKey(TenantId tenantId, PrivateKeyId keyId);
+    Certificate[] findByKey(TenantId tenantId, PrivateKeyId keyId);
+    void removeByKey(TenantId tenantId, PrivateKeyId keyId);
 
     size_t countExpiring(TenantId tenantId, long beforeTimestamp);
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp);

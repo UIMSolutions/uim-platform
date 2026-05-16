@@ -24,7 +24,7 @@ struct PrivateKey {
     Json toJson() const {
         return entityToJson
             .set("subject", subject)
-            .set("domains", domains)
+            .set("domains", domains.toJson)
             .set("algorithm", algorithm.to!string)
             .set("status", status.to!string)
             .set("keySize", keySize)

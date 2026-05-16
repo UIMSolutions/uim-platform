@@ -11,39 +11,30 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDomainDashboardRepository : DomainDashboardRepository {
-    private DomainDashboard[] store;
+class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, DomainDashboardId), DomainDashboardRepository {
 
-    DomainDashboard findById(DomainDashboardId id) {
-        foreach (d; findAll) {
-            if (d.id == id)
-                return d;
-        }
-        return DomainDashboard.init;
+    DomainDashboard get(TenantId tenantId) {
+        auto dashboards = findByTenant(tenantId);
+        if (dashboards.length > 0)
+            return dashboards[0];
+            
+        return Domaindashboard.init;
     }
 
-    DomainDashboard findByTenant(TenantId tenantId) {
-        foreach (d; findAll) {
-            if (d.tenantId == tenantId)
-                return d;
-        }
-        return DomainDashboard.init;
+    size_t countByMetricType(TenantId tenantId, DashboardMetricType metricType) {
+        return findByMetricType(tenantId, metricType).length;
     }
 
-    void save(DomainDashboard d) {
-        store ~= d;
+    DomainDashboard[] filterByMetricType(DomainDashboard[] dashboards, DashboardMetricType metricType) {
+        return dashboards.filter!(d => d.metricType == metricType).array;
     }
 
-    void update(DomainDashboard d) {
-        foreach (existing; findAll) {
-            if (existing.id == d.id) {
-                existing = d;
-                return;
-            }
-        }
+    DomainDashboard[] findByMetricType(TenantId tenantId, DashboardMetricType metricType) {
+        return filterByMetricType(findByTenant(tenantId), metricType);
     }
 
-    void remove(DomainDashboardId id) {
-        store = findAll().filter!(d => d.id != id).array;
+    void removeByMetricType(TenantId tenantId, DashboardMetricType metricType) {
+        findByMetricType(tenantId, metricType).each!(d => remove(d));
     }
+
 }

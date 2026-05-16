@@ -26,7 +26,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         if (r.customRoute.length == 0)
             return CommandResult(false, "", "Custom route is required");
 
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.domainMappingId);
         if (!existing.isNull)
             return CommandResult(false, "", "Domain mapping already exists");
 
@@ -37,7 +37,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         DomainMapping m;
         m.initEntity(r.tenantId, r.createdBy);
 
-        m.id = r.customDomainId;
+        m.id = r.domainMappingId;
         m.customDomainId = r.customDomainId;
         m.standardRoute = r.standardRoute;
         m.customRoute = r.customRoute;

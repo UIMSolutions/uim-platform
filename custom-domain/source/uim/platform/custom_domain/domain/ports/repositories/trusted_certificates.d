@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TrustedCertificateRepository {
+interface TrustedCertificateRepository : ITenantRepository!(TrustedCertificate, TrustedCertificateId) {
 
-    size_t countByDomain(CustomDomainId domainId);
-    TrustedCertificate[] findByDomain(CustomDomainId domainId);
-    void removeByDomain(CustomDomainId domainId);
+    size_t countByCustomDomain(TenantId tenantId, CustomDomainId domainId);
+    TrustedCertificate[] findByCustomDomain(TenantId tenantId, CustomDomainId domainId);
+    void removeByCustomDomain(TenantId tenantId, CustomDomainId domainId);
 
 }

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 struct TrustedCertificate {
     mixin TenantEntity!(TrustedCertificateId);
 
-    string customDomainId;
+    CustomDomainId customDomainId;
     string subjectDn;
     string issuerDn;
     string serialNumber;

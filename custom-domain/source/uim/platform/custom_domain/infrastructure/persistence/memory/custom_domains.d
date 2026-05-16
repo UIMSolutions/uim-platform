@@ -42,7 +42,8 @@ class MemoryCustomDomainRepository : TenantRepository!(CustomDomain, CustomDomai
     }
 
     CustomDomain[] filterByOrganization(CustomDomain[] domains, string organizationId) {
-        return domains.filter!(d => d.organizationId == organizationId).array;
+        // TODO: return domains.filter!(d => d.organizationId == organizationId).array;
+        return null;
     }
 
     CustomDomain[] findByOrganization(TenantId tenantId, string organizationId) {

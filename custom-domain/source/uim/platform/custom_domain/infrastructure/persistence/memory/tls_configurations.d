@@ -11,8 +11,22 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTlsConfigurationRepository : TlsConfigurationRepository {
-    
-    // TODO
-    
+class MemoryTlsConfigurationRepository : TenantRepository!(TlsConfiguration, TlsConfigurationId), TlsConfigurationRepository {
+
+    size_t countByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
+        return findByCustomDomain(tenantId, customDomainId).length;
+    }
+
+    TlsConfiguration[] filterByCustomDomain(TlsConfiguration[] configs, CustomDomainId domainId) {
+        return configs.filter!(c => c.customDomainId == domainId).array;
+    }
+
+    TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
+        return filterByCustomDomain(findAll(tenantId), customDomainId);
+    }
+
+    void removeByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
+        findByCustomDomain(tenantId, customDomainId).each!(c => remove(c));
+    }
+
 }

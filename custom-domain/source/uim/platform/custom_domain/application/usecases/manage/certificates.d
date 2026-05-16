@@ -31,7 +31,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         Certificate c;
         c.id = r.certificateId;
         c.tenantId = r.tenantId;
-        c.keyId = r.keyId;
+        // TODO: c.keyId = r.keyId;
         c.status = CertificateStatus.pending;
         c.createdBy = r.createdBy;
 
@@ -55,7 +55,11 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateCertificate(ActivateCertificateRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
+         if (existing.isNull)
+            return CommandResult(false, "", "Certificate not found");
+        if (existing.certificatePem.length == 0)
+            return CommandResult(false, "", "Certificate PEM is required");
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
 

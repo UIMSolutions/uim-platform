@@ -24,7 +24,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", err);
 
         if (r.customDomainId.isEmpty)
-            return CommandResult(false, "", "ID is required");
+            return CommandResult(false, "", "Certificate ID is required");
 
         auto existing = repo.findById(r.tenantId, r.customDomainId);
         if (!existing.isNull)
@@ -47,7 +47,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    CustomDomain getCustomDomainById(TenantId tenantId, CustomDomainId id) {
+    CustomDomain getCustomDomain(TenantId tenantId, CustomDomainId id) {
         return repo.findById(tenantId, id);
     }
 

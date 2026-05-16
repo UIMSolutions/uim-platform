@@ -14,16 +14,17 @@ mixin(ShowModule!());
 class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
     // #region ByKey
-    size_t countByKey(PrivateKeyId keyId) {
-        return findByKey(keyId).length;
+    size_t countByKey(TenantId tenantId, PrivateKeyId keyId) {
+        return findByKey(tenantId, keyId).length;
     }
 
-    Certificate[] findByKey(PrivateKeyId keyId) {
-        return findAll().filter!(c => c.keyId == keyId).array;
+    Certificate[] findByKey(TenantId tenantId, PrivateKeyId keyId) {
+        // TODO: return findAll().filter!(c => c.keyId == keyId).array;
+        return null;
     }
 
-    void removeByKey(PrivateKeyId keyId) {
-        findByKey(keyId).each!(c => remove(c));
+    void removeByKey(TenantId tenantId, PrivateKeyId keyId) {
+        findByKey(tenantId, keyId).each!(c => remove(c));
     }
     // #endregion ByKey
 

@@ -13,6 +13,20 @@ mixin(ShowModule!());
 
 class MemoryPrivateKeyRepository : TenantRepository!(PrivateKey, PrivateKeyId), PrivateKeyRepository {
 
-    // TODO:
-    
+    size_t countByStatus(TenantId tenantId, KeyStatus status) {
+        return findAll().count!(k => k.tenantId == tenantId && k.status == status);
+    }
+
+    PrivateKey[] filterByStatus(PrivateKey[] keys, KeyStatus status) {
+        return keys.filter!(k => k.status == status).array;
+    }
+
+    PrivateKey[] findByStatus(TenantId tenantId, KeyStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, KeyStatus status) {
+        findByStatus(tenantId, status).each!(k => remove(k));
+    }
+
 }

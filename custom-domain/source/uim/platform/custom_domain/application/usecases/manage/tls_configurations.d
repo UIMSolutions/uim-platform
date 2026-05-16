@@ -19,7 +19,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTlsConfiguration(CreateTlsConfigurationRequest r) {
-        auto err = DomainValidator.validate(r.id, r.name);
+        auto err = DomainValidator.validate(r.tlsConfigurationId.value, r.name);
         if (err.length > 0)
             return CommandResult(false, "", err);
 

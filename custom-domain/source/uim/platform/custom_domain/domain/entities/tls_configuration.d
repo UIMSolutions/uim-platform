@@ -24,7 +24,7 @@ struct CipherSuite {
 }
 
 struct TlsConfiguration {
-    mixin TenantEntity!(TlsConfigurationId);
+    mixin TenantEntity!TlsConfigurationId;
 
     string name;
     string description;
