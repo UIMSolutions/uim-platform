@@ -13,14 +13,14 @@ mixin(ShowModule!());
 @safe:
 
 struct OutputArtifact {
+  ArtifactId artifactId;
   string name;
-  string artifactId;
   string artifactUrl;
 
   Json toJson() const {
     return Json.emptyObject
       .set("name", name)
-      .set("artifactId", artifactId)
+      .set("artifactId", artifactId.value)
       .set("artifactUrl", artifactUrl);
   }
 }
@@ -31,7 +31,8 @@ struct Execution {
   ConnectionId connectionId;
   ConfigurationId configurationId;
   ScenarioId scenarioId;
-  string resourceGroupId;
+  ResourceGroupId resourceGroupId;
+
   ExecutionStatus status;
   string targetStatus;
   OutputArtifact[] outputArtifacts;

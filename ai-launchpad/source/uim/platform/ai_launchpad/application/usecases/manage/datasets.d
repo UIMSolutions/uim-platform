@@ -22,12 +22,13 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult register(RegisterDatasetRequest r) {
+  CommandResult registerDataset(RegisterDatasetRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Dataset name is required");
 
     Dataset d;
     d.initEntity(r.tenantId);
+
     d.connectionId = r.connectionId;
     d.name = r.name;
     d.description = r.description;
@@ -41,33 +42,34 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Dataset getById(ConnectionId connectionId, DatasetId id) {
-    return repo.findById(connectionId, id);
+  Dataset getDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+    return repo.findById(tenantId, connectionId, id);
   }
 
-  Dataset[] listByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+  Dataset[] listDatasets(TenantId tenantId, ConnectionId connectionId) {
+    return repo.findByConnection(tenantId, connectionId);
   }
 
-  Dataset[] listByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
-    return repo.findByScenario(connectionId, scenarioId);
+  Dataset[] listDatasets(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patch(PatchDatasetRequest r) {
-    auto d = repo.findById(r.connectionId, r.datasetId);
+  CommandResult patchDataset(PatchDatasetRequest r) {
+    auto d = repo.findById(r.tenantId, r.connectionId, r.datasetId);
     if (d.isNull)
       return CommandResult(false, "", "Dataset not found");
     if (r.description.length > 0)
       d.description = r.description;
     if (r.status == "archived")
       d.status = DatasetStatus.archived;
-    d.updatedAt = "now";
+    d.updatedAt = currentTimestamp;
+
     repo.save(d);
     return CommandResult(true, d.id.value, "");
   }
 
-  CommandResult deleteDataset(ConnectionId connectionId, DatasetId id) {
-    auto dataset = repo.findById(connectionId, id);
+  CommandResult deleteDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+    auto dataset = repo.findById(tenantId, connectionId, id);
     if (dataset.isNull)
       return CommandResult(false, "", "Dataset not found");
       

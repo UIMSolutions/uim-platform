@@ -13,6 +13,15 @@ mixin(ShowModule!());
 
 // ID aliases
 
+struct ArtifactId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 struct WorkspaceId {
   string value;
 

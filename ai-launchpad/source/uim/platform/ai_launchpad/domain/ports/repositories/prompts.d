@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 interface IPromptRepository : ITenantRepository!(Prompt, PromptId) {
 
-  bool existsById(TenantId tenantId, PromptId id);
-  Prompt findById(TenantId tenantId, PromptId id);
-  void removeById(TenantId tenantId, PromptId id);
+  // bool existsById(TenantId tenantId, PromptId id);
+  // Prompt findById(TenantId tenantId, PromptId id);
+  // void removeById(TenantId tenantId, PromptId id);
 
   size_t countByCollection(TenantId tenantId, PromptCollectionId collectionId);
   Prompt[] findByCollection(TenantId tenantId, PromptCollectionId collectionId);

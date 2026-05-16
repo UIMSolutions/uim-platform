@@ -35,20 +35,20 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, e.id.value, "");
   }
 
-  Execution getExecution(ConnectionId connectionId, ExecutionId id) {
-    return executions.findById(connectionId, id);
+  Execution getExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+    return executions.findById(tenantId, connectionId, id);
   }
 
-  Execution[] listExecutions(ConnectionId connectionId) {
-    return executions.findByConnection(connectionId);
+  Execution[] listExecutions(TenantId tenantId, ConnectionId connectionId) {
+    return executions.findByConnection(tenantId, connectionId);
   }
 
-  Execution[] listExecutions(ConnectionId connectionId, ScenarioId scenarioId) {
-    return executions.findByScenario(connectionId, scenarioId);
+  Execution[] listExecutions(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return executions.findByScenario(tenantId, connectionId, scenarioId);
   }
 
   CommandResult patchExecution(PatchExecutionRequest r) {
-    auto e = executions.findById(r.connectionId, r.executionId);
+    auto e = executions.findById(r.tenantId, r.connectionId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
@@ -66,6 +66,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     CommandResult[] results;
     foreach (eid; r.executionIds) {
       PatchExecutionRequest pr;
+      pr.tenantId = r.tenantId;
       pr.connectionId = r.connectionId;
       pr.executionId = eid;
       pr.targetStatus = r.targetStatus;
@@ -74,8 +75,8 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return results;
   }
 
-  CommandResult deleteExecution(ConnectionId connectionId, ExecutionId id) {
-    auto execution = executions.findById(connectionId, id);
+  CommandResult deleteExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+    auto execution = executions.findById(tenantId, connectionId, id);
     if (execution.isNull)
       return CommandResult(false, "", "Execution not found");
 

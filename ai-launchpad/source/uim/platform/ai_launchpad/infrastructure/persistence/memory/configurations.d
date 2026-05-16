@@ -14,38 +14,41 @@ mixin(ShowModule!());
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), IConfigurationRepository {
   
-  Configuration findById(ConfigurationId id, ConnectionId connectionId) {
-    foreach (c; findAll) {
-      if (c.id == id && c.connectionId == connectionId) return c;
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+    return findByConnection(tenantId, connectionId).any!(c => c.id == id); 
+  }
+
+  Configuration findById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+    foreach (c; findByConnection(tenantId, connectionId)) {
+      if (c.id == id) return c;
     }
     return Configuration.init;
   }
-
-  Configuration[] findByConnection(ConnectionId connectionId) {
-    Configuration[] result;
-    foreach (c; findAll) {
-      if (c.connectionId == connectionId) result ~= c;
-    }
-    return result;
+  void removeById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+    remove(tenantId, connectionId, id);
   }
 
-  Configuration[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
-    Configuration[] result;
-    foreach (c; findAll) {
-      if (c.scenarioId == scenarioId && c.connectionId == connectionId) result ~= c;
-    }
-    return result;
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return findByConnection(tenantId, connectionId).length;
+  }
+  Configuration[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
+    return filterByConnection(findByTenant(tenantId), connectionId);
+  }
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
+    findByConnection(tenantId, connectionId).each!(c => remove(c));
   }
 
-  Configuration[] findAll() {
-    return store.dup;
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, connectionId, scenarioId).length;
+  }
+  Configuration[] filterByScenario(Configuration[] configs, ScenarioId scenarioId) {
+    return configs.filter!(c => c.scenarioId == scenarioId);
+  }
+  Configuration[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return filterByScenario(findByConnection(tenantId, connectionId), scenarioId);
+  }
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    findByScenario(tenantId, connectionId, scenarioId).each!(c => remove(c));
   }
 
-  void remove(ConfigurationId id, ConnectionId connectionId) {
-    Configuration[] filtered;
-    foreach (c; findAll) {
-      if (!(c.id == id && c.connectionId == connectionId)) filtered ~= c;
-    }
-    store = filtered;
-  }
 }

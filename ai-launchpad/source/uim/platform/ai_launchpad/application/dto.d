@@ -13,6 +13,7 @@ mixin(ShowModule!());
 struct CreateConnectionRequest {
   TenantId tenantId;
   WorkspaceId workspaceId;
+
   string name;
   string type;
   string url;
@@ -71,7 +72,7 @@ struct CreateWorkspaceRequest {
 }
 
 struct PatchWorkspaceRequest {
-  string workspaceId;
+  WorkspaceId workspaceId;
   TenantId tenantId;
   string name;
   string description;
@@ -87,8 +88,8 @@ struct PatchWorkspaceRequest {
 
 // --- Scenario ---
 struct SyncScenarioRequest {
-  string connectionId;
-  string scenarioId;
+  ConnectionId connectionId;
+  ScenarioId scenarioId;
   string name;
   string description;
   string[] labels;
@@ -105,9 +106,9 @@ struct SyncScenarioRequest {
 
 // --- Configuration ---
 struct CreateConfigurationRequest {
-  string connectionId;
-  string scenarioId;
-  string executableId;
+  ConnectionId connectionId;
+  ScenarioId scenarioId;
+  // ExecutableId executableId;
   string name;
   string[][] parameterValues;
   string[][] inputArtifacts;
@@ -125,86 +126,98 @@ struct CreateConfigurationRequest {
 
 // --- Execution ---
 struct CreateExecutionRequest {
-  string connectionId;
-  string configurationId;
-  string resourceGroupId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ConfigurationId configurationId;
+  ResourceGroupId resourceGroupId;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("configurationId", configurationId)
-      .set("resourceGroupId", resourceGroupId);
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("configurationId", configurationId.value)
+      .set("resourceGroupId", resourceGroupId.value);
   }
 }
 
 struct PatchExecutionRequest {
-  string connectionId;
-  string executionId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ExecutionId executionId;
   string targetStatus;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("executionId", executionId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("executionId", executionId.value)
       .set("targetStatus", targetStatus);
   }
 }
 
 struct BulkPatchExecutionRequest {
-  string connectionId;
-  string[] executionIds;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ExecutionId[] executionIds;
   string targetStatus;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("executionIds", executionIds.array.toJson)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("executionIds", executionIds.array.map!(e => e.value).toJson)
       .set("targetStatus", targetStatus);
   }
 }
 
 // --- Deployment ---
 struct CreateDeploymentRequest {
-  string connectionId;
-  string configurationId;
-  string resourceGroupId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ConfigurationId configurationId;
+  ResourceGroupId resourceGroupId;
   int ttl;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("configurationId", configurationId)
-      .set("resourceGroupId", resourceGroupId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("configurationId", configurationId.value)
+      .set("resourceGroupId", resourceGroupId.value)
       .set("ttl", ttl);
   }
 }
 
 struct PatchDeploymentRequest {
-  string connectionId;
-  string deploymentId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  DeploymentId deploymentId;
   string targetStatus;
-  string configurationId;
+  ConfigurationId configurationId;
   int ttl;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("deploymentId", deploymentId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("deploymentId", deploymentId.value)
       .set("targetStatus", targetStatus)
-      .set("configurationId", configurationId)
+      .set("configurationId", configurationId.value)
       .set("ttl", ttl);
   }
 }
 
 struct BulkPatchDeploymentRequest {
-  string connectionId;
-  string[] deploymentIds;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  DeploymentId[] deploymentIds;
   string targetStatus;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("deploymentIds", deploymentIds.array.toJson)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("deploymentIds", deploymentIds.array.map!(e => e.value).toJson)
       .set("targetStatus", targetStatus);
   }
 
@@ -212,24 +225,25 @@ struct BulkPatchDeploymentRequest {
 
 // --- Model ---
 struct RegisterModelRequest {
-  string connectionId;
+  TenantId tenantId;
+  ConnectionId connectionId;
   string name;
   string version_;
   string description;
-  string scenarioId;
-  string executionId;
+  ScenarioId scenarioId;
+  ExecutionId executionId;
   string url;
   long size;
   string[] labels;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
+      .set("connectionId", connectionId.value)
       .set("name", name)
       .set("version", version_)
       .set("description", description)
-      .set("scenarioId", scenarioId)
-      .set("executionId", executionId)
+      .set("scenarioId", scenarioId.value)
+      .set("executionId", executionId.value)
       .set("url", url)
       .set("size", size)
       .set("labels", labels.array.toJson);
@@ -237,15 +251,17 @@ struct RegisterModelRequest {
 }
 
 struct PatchModelRequest {
-  string connectionId;
-  string modelId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ModelId modelId;
   string description;
   string status;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("modelId", modelId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("modelId", modelId.value)
       .set("description", description)
       .set("status", status);
   }
@@ -253,20 +269,22 @@ struct PatchModelRequest {
 
 // --- Dataset ---
 struct RegisterDatasetRequest {
-  string connectionId;
+  TenantId tenantId;
+  ConnectionId connectionId;
   string name;
   string description;
-  string scenarioId;
+  ScenarioId scenarioId;
   string url;
   long size;
   string[] labels;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
       .set("name", name)
       .set("description", description)
-      .set("scenarioId", scenarioId)
+      .set("scenarioId", scenarioId.value)
       .set("url", url)
       .set("size", size)
       .set("labels", labels.array.toJson);
@@ -274,15 +292,17 @@ struct RegisterDatasetRequest {
 }
 
 struct PatchDatasetRequest {
-  string connectionId;
-  string datasetId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  DatasetId datasetId;
   string description;
   string status;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("datasetId", datasetId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("datasetId", datasetId.value)
       .set("description", description)
       .set("status", status);
   }
@@ -290,7 +310,9 @@ struct PatchDatasetRequest {
 
 // --- Prompt ---
 struct CreatePromptRequest {
-  string collectionId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ConnectionId collectionId;
   string name;
   string modelName;
   string modelVersion;
@@ -305,7 +327,9 @@ struct CreatePromptRequest {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("collectionId", collectionId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("collectionId", collectionId.value)
       .set("name", name)
       .set("modelName", modelName)
       .set("modelVersion", modelVersion)
@@ -316,11 +340,13 @@ struct CreatePromptRequest {
       .set("frequencyPenalty", frequencyPenalty)
       .set("presencePenalty", presencePenalty)
       .set("inputParams", inputParams.array.toJson)
-      .set("createdBy", createdBy);
+      .set("createdBy", createdBy.value);
   }
 }
 
 struct PatchPromptRequest {
+  TenantId tenantId;
+  ConnectionId connectionId;
   string promptId;
   string name;
   string status;
@@ -341,28 +367,34 @@ struct PatchPromptRequest {
 
 // --- Prompt Collection ---
 struct CreatePromptCollectionRequest {
+  TenantId tenantId;
+  ConnectionId connectionId;
   string name;
   string description;
-  string scenarioId;
-  string workspaceId;
+  ScenarioId scenarioId;
+  WorkspaceId workspaceId;
 
   Json toJson() const {
     return Json.emptyObject
       .set("name", name)
       .set("description", description)
-      .set("scenarioId", scenarioId)
-      .set("workspaceId", workspaceId);
+      .set("scenarioId", scenarioId.value)
+      .set("workspaceId", workspaceId.value);
   }
 }
 
 struct PatchPromptCollectionRequest {
-  string collectionId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  PromptCollectionId collectionId;
   string name;
   string description;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("collectionId", collectionId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("collectionId", collectionId.value)
       .set("name", name)
       .set("description", description);
   }
@@ -370,41 +402,47 @@ struct PatchPromptCollectionRequest {
 
 // --- Resource Group ---
 struct CreateResourceGroupRequest {
-  string connectionId;
-  string resourceGroupId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ResourceGroupId resourceGroupId;
   string[][] labels;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("resourceGroupId", resourceGroupId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("resourceGroupId", resourceGroupId.value)
       .set("labels", labels.array.toJson);
   }
 }
 
 struct PatchResourceGroupRequest {
-  string connectionId;
-  string resourceGroupId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ResourceGroupId resourceGroupId;
   string[][] labels;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("resourceGroupId", resourceGroupId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("resourceGroupId", resourceGroupId.value)
       .set("labels", labels.array.toJson);
   }
 }
 
 // --- Usage Statistics ---
 struct GetStatisticsRequest {
-  string connectionId;
-  string scenarioId;
+  TenantId tenantId;
+  ConnectionId connectionId;
+  ScenarioId scenarioId;
   string period;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("connectionId", connectionId)
-      .set("scenarioId", scenarioId)
+      .set("tenantId", tenantId.value)
+      .set("connectionId", connectionId.value)
+      .set("scenarioId", scenarioId.value)
       .set("period", period);
   }
 }

@@ -13,11 +13,13 @@ mixin(ShowModule!());
 @safe:
 
 struct Dataset {
-  DatasetId id;
+  mixin TenantEntity!DatasetId;
+
   ConnectionId connectionId;
+  ScenarioId scenarioId;
+  
   string name;
   string description;
-  ScenarioId scenarioId;
   string url;
   long size;
   DatasetStatus status;
@@ -27,8 +29,7 @@ struct Dataset {
 
   Json toJson() {
 
-    return Json.emptyObject
-      .set("id", id)
+    return entityToJson
       .set("connectionId", connectionId)
       .set("name", name)
       .set("description", description)
@@ -36,8 +37,6 @@ struct Dataset {
       .set("url", url)
       .set("size", size)
       .set("status", status.to!string)
-      .set("labels", JsonArray(d.labels))
-      .set("createdAt", createdAt)
-      .set("updatedAt", updatedAt);
+      .set("labels", labels.map!(l => l.toJson).array.toJson);
   }
 }

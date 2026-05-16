@@ -14,21 +14,21 @@ mixin(ShowModule!());
 @safe:
 class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepository {
 
-  bool existsById(TenantId tenantId, PromptId id) {
-    return findByTenant(tenantId).any!(p => p.id == id);
-  }
+  // bool existsById(TenantId tenantId, PromptId id) {
+  //   return findByTenant(tenantId).any!(p => p.id == id);
+  // }
 
-  Prompt findById(TenantId tenantId, PromptId id) {
-    foreach (p; findByTenant(tenantId)) {
-      if (p.id == id)
-        return p;
-    }
-    return Prompt.init;
-  }
+  // Prompt findById(TenantId tenantId, PromptId id) {
+  //   foreach (p; findByTenant(tenantId)) {
+  //     if (p.id == id)
+  //       return p;
+  //   }
+  //   return Prompt.init;
+  // }
 
-  void removeById(TenantId tenantId, PromptId id) {
-    remove(findById(tenantId, id));
-  }
+  // void removeById(TenantId tenantId, PromptId id) {
+  //   remove(findById(tenantId, id));
+  // }
 
   size_t countByCollection(TenantId tenantId, PromptCollectionId collectionId) {
     return findByCollection(tenantId, collectionId).length;

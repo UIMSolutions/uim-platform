@@ -9,7 +9,6 @@ module uim.platform.ai_launchpad.application.usecases.manage.deployments;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
 
-
 import uim.platform.ai_launchpad;
 
 mixin(ShowModule!());
@@ -36,32 +35,34 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getDeployment(ConnectionId connectionId, DeploymentId id) {
-    return repo.findById(connectionId, id);
+  Deployment getDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+    return repo.findById(tenantId, connectionId, id);
   }
 
-  Deployment[] listDeploymentsByConnection(ConnectionId connectionId) {
-    return repo.findByConnection(connectionId);
+  Deployment[] listDeployments(TenantId tenantId, ConnectionId connectionId) {
+    return repo.findByConnection(tenantId, connectionId);
   }
 
-  Deployment[] listDeployments(ConnectionId connectionId, ScenarioId scenarioId) {
-    return repo.findByScenario(connectionId, scenarioId);
+  Deployment[] listDeployments(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
+    return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
   CommandResult patchDeployment(PatchDeploymentRequest r) {
-    auto d = repo.findById(r.connectionId, r.deploymentId);
+    auto d = repo.findById(r.tenantId, r.connectionId, r.deploymentId);
     if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
+
     d.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped")
       d.status = DeploymentStatus.stopped;
     else if (r.targetStatus == "deleted")
       d.status = DeploymentStatus.dead;
-    if (r.configurationId.length > 0)
+    if (!r.configurationId.isEmpty)
       d.configurationId = r.configurationId;
     if (r.ttl > 0)
       d.ttl = r.ttl;
     d.updatedAt = currentTimestamp();
+
     repo.save(d);
     return CommandResult(true, d.id.value, "");
   }
@@ -70,6 +71,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     CommandResult[] results;
     foreach (did; r.deploymentIds) {
       PatchDeploymentRequest pr;
+      pr.tenantId = r.tenantId;
       pr.connectionId = r.connectionId;
       pr.deploymentId = did;
       pr.targetStatus = r.targetStatus;
@@ -78,8 +80,8 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return results;
   }
 
-  CommandResult deleteDeployment(ConnectionId connectionId, DeploymentId id) {
-    auto deployment = repo.findById(connectionId, id);
+  CommandResult deleteDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+    auto deployment = repo.findById(tenantId, connectionId, id);
     if (deployment.isNull)
       return CommandResult(false, "", "Deployment not found");
 

@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectionRepository : IConnectionRepository {
+class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), IConnectionRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;
