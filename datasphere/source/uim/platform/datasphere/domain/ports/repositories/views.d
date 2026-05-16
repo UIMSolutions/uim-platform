@@ -11,13 +11,22 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface ViewRepository {
-  View findById(SpaceId spaceId, ViewId id);
-  View[] findBySpace(SpaceId spaceId);
-  View[] findBySemantic(SpaceId spaceId, ViewSemantic semantic);
-  View[] findExposed(SpaceId spaceId);
-  void save(View v);
-  void update(View v);
-  void remove(SpaceId spaceId, ViewId id);
-  size_t countBySpace(SpaceId spaceId);
+interface ViewRepository : ITenantRepository!(View, ViewId) {
+
+  bool existsById(TenantId tenantId, SpaceId spaceId, ViewId id);
+  View findById(TenantId tenantId, SpaceId spaceId, ViewId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, ViewId id);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  View[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
+
+  size_t countBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
+  View[] findBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
+  void removeBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
+
+  size_t countExposed(TenantId tenantId, SpaceId spaceId);
+  View[] findExposed(TenantId tenantId, SpaceId spaceId);
+  void removeExposed(TenantId tenantId, SpaceId spaceId);
+
 }

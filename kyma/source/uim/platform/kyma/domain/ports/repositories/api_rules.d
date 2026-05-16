@@ -12,18 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — API rule persistence.
-interface ApiRuleRepository {
-  bool existsById(ApiRuleId ruleId);
-  ApiRule findById(ApiRuleId ruleId);
+interface ApiRuleRepository : ITenantRepository!(ApiRule, ApiRuleId) {
 
-  bool existsByName(NamespaceId nsId, string name);
-  ApiRule findByName(NamespaceId nsId, string name);
+  bool existsByName(TenantId tenantId, NamespaceId nsId, string name);
+  ApiRule findByName(TenantId tenantId, NamespaceId nsId, string name);
+  void removeByName(TenantId tenantId, NamespaceId nsId, string name);
 
-  ApiRule[] findByNamespace(NamespaceId nsId);
-  ApiRule[] findByEnvironment(KymaEnvironmentId envId);
-  ApiRule[] findByStatus(ApiRuleStatus status);
+  size_t countByNamespace(TenantId tenantId, NamespaceId nsId);
+  ApiRule[] findByNamespace(TenantId tenantId, NamespaceId nsId);
+  void removeByNamespace(TenantId tenantId, NamespaceId nsId);
 
-  void save(ApiRule rule);
-  void update(ApiRule rule);
-  void remove(ApiRuleId ruleId);
+  size_t countByEnvironment(TenantId tenantId, KymaEnvironmentId envId);
+  ApiRule[] findByEnvironment(TenantId tenantId, KymaEnvironmentId envId);
+  void removeByEnvironment(TenantId tenantId, KymaEnvironmentId envId);
+
+  size_t countByStatus(TenantId tenantId, ApiRuleStatus status);
+  ApiRule[] findByStatus(TenantId tenantId, ApiRuleStatus status);
+  void removeByStatus(TenantId tenantId, ApiRuleStatus status);
+  
 }

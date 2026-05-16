@@ -11,16 +11,16 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface DocumentTypeRepository {
-  bool existsById(DocumentTypeId id, ClientId clientId);
-  DocumentType findById(DocumentTypeId id, ClientId clientId);
+interface DocumentTypeRepository : ITenantRepository!(DocumentType, DocumentTypeId) {
 
-  size_t countByClient(ClientId clientId);
+  bool existsById(TenantId tenantId, DocumentTypeId id, ClientId clientId);
+  DocumentType findById(TenantId tenantId, DocumentTypeId id, ClientId clientId);
 
-  DocumentType[] findByClient(ClientId clientId);
-  DocumentType[] findByCategory(DocumentCategory category, ClientId clientId);
+  size_t countByClient(TenantId tenantId, ClientId clientId);
+  DocumentType[] findByClient(TenantId tenantId, ClientId clientId);
+  void removeByClient(TenantId tenantId, ClientId clientId);
 
-  void save(DocumentType dt);
-  void update(DocumentType dt);
-  void remove(DocumentTypeId id, ClientId clientId);
+  size_t countByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
+  DocumentType[] findByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
+  void removeByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
 }

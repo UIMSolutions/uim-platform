@@ -11,13 +11,19 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface CatalogAssetRepository {
-  CatalogAsset findById(SpaceId spaceId, CatalogAssetId id);
-  CatalogAsset[] findBySpace(SpaceId spaceId);
-  CatalogAsset[] findByType(SpaceId spaceId, AssetType type);
-  CatalogAsset[] search(SpaceId spaceId, string query);
-  void save(CatalogAsset ca);
-  void update(CatalogAsset ca);
-  void remove(SpaceId spaceId, CatalogAssetId id);
-  size_t countBySpace(SpaceId spaceId);
+interface CatalogAssetRepository : ITenantRepository!(CatalogAsset, CatalogAssetId) {
+
+  bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
+  CatalogAsset findById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  CatalogAsset[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
+
+  size_t countByType(TenantId tenantId, SpaceId spaceId, AssetType type);
+  CatalogAsset[] findByType(TenantId tenantId, SpaceId spaceId, AssetType type);
+  void removeByType(TenantId tenantId, SpaceId spaceId, AssetType type);
+
+  CatalogAsset[] search(TenantId tenantId, SpaceId spaceId, string query);
 }

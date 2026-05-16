@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface ScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
 
-  bool        existsByName(string name);
+  bool existsByName(string name);
   ScopeEntity findByName(string name);
-  void       removeByName(string name);
+  void removeByName(string name);
 
   size_t countByAppId(string appId);
   ScopeEntity[] findByAppId(string appId);

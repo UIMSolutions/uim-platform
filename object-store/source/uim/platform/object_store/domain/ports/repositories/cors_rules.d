@@ -13,13 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - CORS rule persistence.
-interface CorsRuleRepository {
-  bool existsById(CorsRuleId id);
-  CorsRule findById(CorsRuleId id);
+interface CorsRuleRepository : ITenantRepository!(CorsRule, CorsRuleId) {
 
-  CorsRule[] findByBucket(BucketId bucketId);
-  
-  void save(CorsRule rule);
-  void update(CorsRule rule);
-  void remove(CorsRuleId id);
+  size_t countByBucket(TenantId tenantId, BucketId bucketId);
+  CorsRule[] findByBucket(TenantId tenantId, BucketId bucketId);
+  void removeByBucket(TenantId tenantId, BucketId bucketId);
+
 }

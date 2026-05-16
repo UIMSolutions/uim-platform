@@ -11,7 +11,7 @@ mixin(Showmodule!());
 
 @safe:
 
-interface FeatureRestrictionRepository {
+interface FeatureRestrictionRepository : ITenantRepository!(FeatureRestriction, FeatureRestrictionId) {
 
   bool existsByKey(TenantId tenantId, MobileAppId appId, string featureKey);
   FeatureRestriction findByKey(TenantId tenantId, MobileAppId appId, string featureKey);

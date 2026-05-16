@@ -8,13 +8,10 @@ module uim.platform.portal.domain.ports.repositories.sections;
 import uim.platform.portal.domain.entities.section;
 import uim.platform.portal.domain.types;
 /// Port: outgoing — section persistence.
-interface SectionRepository {
-  bool existsById(SectionId id);
-  PortalSection findById(SectionId id);
+interface SectionRepository : ITenantRepository!(PortalSection, SectionId) {
 
-  PortalSection[] findByPage(PageId pageId);
-
-  void save(PortalSection section);
-  void update(PortalSection section);
-  void remove(SectionId id);
+  size_t countByPage(TenantId tenantId, PageId pageId);
+  PortalSection[] findByPage(TenantId tenantId, PageId pageId);
+  void removeByPage(TenantId tenantId, PageId pageId);
+  
 }

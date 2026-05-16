@@ -11,16 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UserAssignmentRepository {
-  bool                 existsById(UserAssignmentId id);
-  UserAssignmentEntity findById(UserAssignmentId id);
+interface UserAssignmentRepository : ITenantRepository!(UserAssignmentEntity, UserAssignmentId) {
 
-  UserAssignmentEntity[] findAll();
+  size_t countByUserId(string userId);
   UserAssignmentEntity[] findByUserId(string userId);
+  void removeByUserId(string userId);
+
+  size_t countByRoleCollectionId(RoleCollectionId rcId);
   UserAssignmentEntity[] findByRoleCollectionId(RoleCollectionId rcId);
-
-  void save(UserAssignmentEntity ua);
-  void remove(UserAssignmentId id);
-
-  size_t count();
+  void removeByRoleCollectionId(RoleCollectionId rcId);
+  
 }

@@ -12,17 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service binding persistence.
-interface ServiceBindingRepository {
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+  
   bool existsById(ServiceBindingId id);
   ServiceBinding findById(ServiceBindingId id);
+  void removeById(ServiceBindingId id);
 
   bool existsByName(NamespaceId nsId, string name);
   ServiceBinding findByName(NamespaceId nsId, string name);
+  void removeByName(NamespaceId nsId, string name);
 
+  size_t countByNamespace(NamespaceId nsId);
   ServiceBinding[] findByNamespace(NamespaceId nsId);
-  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId);
+  void removeByNamespace(NamespaceId nsId);
 
-  void save(ServiceBinding binding);
-  void update(ServiceBinding binding);
-  void remove(ServiceBindingId id);
+  size_t countByServiceInstance(ServiceInstanceId instanceId);
+  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId);
+  void removeByServiceInstance(ServiceInstanceId instanceId);
+
 }

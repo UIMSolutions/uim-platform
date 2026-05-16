@@ -11,18 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RoleCollectionRepository {
-  bool                 existsById(RoleCollectionId id);
-  RoleCollectionEntity findById(RoleCollectionId id);
+interface RoleCollectionRepository : ITenantRepository!(RoleCollectionEntity, RoleCollectionId) {
 
-  bool                 existsByName(string name);
+  bool existsByName(string name);
   RoleCollectionEntity findByName(string name);
+  void removeByName(string name);
 
-  RoleCollectionEntity[] findAll();
-
-  void save(RoleCollectionEntity rc);
-  void update(RoleCollectionEntity rc);
-  void remove(RoleCollectionId id);
-
-  size_t count();
 }

@@ -11,19 +11,22 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface TrainingJobRepository {
-  bool existsById(TrainingJobId id, ClientId clientId);
-  TrainingJob findById(TrainingJobId id, ClientId clientId);
+interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
+  
+  bool existsById(TenantId tenantId, TrainingJobId id, ClientId clientId);
+  TrainingJob findById(TenantId tenantId, TrainingJobId id, ClientId clientId);
+  void removeById(TenantId tenantId, TrainingJobId id, ClientId clientId);
 
-  size_t countByClient(ClientId clientId);
-  TrainingJob[] findByClient(ClientId clientId);
+  size_t countByClient(TenantId tenantId, ClientId clientId);
+  TrainingJob[] findByClient(TenantId tenantId, ClientId clientId);
+  void removeByClient(TenantId tenantId, ClientId clientId);
 
-  TrainingJob[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
+  size_t countByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
+  TrainingJob[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
+  void removeByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
 
-  size_t countByStatus(TrainingJobStatus status, ClientId clientId);
-  TrainingJob[] findByStatus(TrainingJobStatus status, ClientId clientId);
+  size_t countByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
+  TrainingJob[] findByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
+  void removeByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
 
-  void save(TrainingJob tj);
-  void update(TrainingJob tj);
-  void remove(TrainingJobId id, ClientId clientId);
 }

@@ -12,14 +12,22 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — menu item persistence.
-interface MenuItemRepository {
-  bool existsById(MenuItemId id);
-  MenuItem findById(MenuItemId id);
+interface MenuItemRepository : ITenantRepository!(MenuItem, MenuItemId) {
 
-  MenuItem[] findBySite(SiteId siteId);
-  MenuItem[] findChildren(MenuItemId parentId);
+  bool existsById(TenantId tenantId, MenuItemId id);
+  MenuItem findById(TenantId tenantId, MenuItemId id);
+  void removeById(TenantId tenantId, MenuItemId id);
 
-  void save(MenuItem item);
-  void update(MenuItem item);
-  void remove(MenuItemId id);
+  bool existsByName(TenantId tenantId, SiteId siteId, string name);
+  MenuItem findByName(TenantId tenantId, SiteId siteId, string name);
+  void removeByName(TenantId tenantId, SiteId siteId, string name);
+
+  size_t countBySite(TenantId tenantId, SiteId siteId);
+  MenuItem[] findBySite(TenantId tenantId, SiteId siteId);
+  void removeBySite(TenantId tenantId, SiteId siteId);
+
+  size_t countChildren(TenantId tenantId, MenuItemId parentId);
+  MenuItem[] findChildren(TenantId tenantId, MenuItemId parentId);
+  void removeChildren(TenantId tenantId, MenuItemId parentId);
+  
 }

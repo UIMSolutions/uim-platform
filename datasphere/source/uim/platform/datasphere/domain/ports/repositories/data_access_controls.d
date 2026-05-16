@@ -11,12 +11,18 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface DataAccessControlRepository {
-  DataAccessControl findById(SpaceId spaceId, DataAccessControlId id);
-  DataAccessControl[] findBySpace(SpaceId spaceId);
-  DataAccessControl[] findByView(SpaceId spaceId, ViewId viewId);
-  void save(DataAccessControl dac);
-  void update(DataAccessControl dac);
-  void remove(SpaceId spaceId, DataAccessControlId id);
-  size_t countBySpace(SpaceId spaceId);
+interface DataAccessControlRepository : ITenantRepository!(DataAccessControl, DataAccessControlId) {
+
+  bool existsById(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
+  DataAccessControl findById(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  DataAccessControl[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
+
+  size_t countByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
+  DataAccessControl[] findByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
+  void removeByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
+
 }

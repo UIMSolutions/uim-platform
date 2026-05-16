@@ -11,12 +11,18 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface RemoteTableRepository {
-  RemoteTable findById(SpaceId spaceId, RemoteTableId id);
-  RemoteTable[] findBySpace(SpaceId spaceId);
-  RemoteTable[] findByConnection(SpaceId spaceId, ConnectionId connId);
-  void save(RemoteTable rt);
-  void update(RemoteTable rt);
-  void remove(SpaceId spaceId, RemoteTableId id);
-  size_t countBySpace(SpaceId spaceId);
+interface RemoteTableRepository : ITenantRepository!(RemoteTable, RemoteTableId) {
+
+  bool existsById(TenantId tenantId, SpaceId spaceId, RemoteTableId id);  
+  RemoteTable findById(TenantId tenantId, SpaceId spaceId, RemoteTableId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, RemoteTableId id);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  RemoteTable[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
+
+  size_t countByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId);
+  RemoteTable[] findByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId);
+  void removeByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId);
+  
 }

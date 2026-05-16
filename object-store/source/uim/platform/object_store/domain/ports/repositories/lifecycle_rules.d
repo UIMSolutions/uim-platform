@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - lifecycle rule persistence.
-interface LifecycleRuleRepository {
+interface LifecycleRuleRepository : {
   bool existsById(LifecycleRuleId id);
   LifecycleRule findById(LifecycleRuleId id);
 

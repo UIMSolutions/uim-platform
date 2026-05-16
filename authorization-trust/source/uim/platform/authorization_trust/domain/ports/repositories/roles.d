@@ -11,19 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RoleRepository {
-  bool       existsById(RoleId id);
-  RoleEntity findById(RoleId id);
+interface RoleRepository : ITenantRepository!(RoleEntity, RoleId) {
 
-  bool       existsByName(string name, string appId);
+  bool existsByName(string name, string appId);
   RoleEntity findByName(string name, string appId);
+  void removeByName(string name, string appId);
 
-  RoleEntity[] findAll();
-  RoleEntity[] findByAppId(string appId);
-
-  void save(RoleEntity role);
-  void update(RoleEntity role);
-  void remove(RoleId id);
-
-  size_t count();
 }

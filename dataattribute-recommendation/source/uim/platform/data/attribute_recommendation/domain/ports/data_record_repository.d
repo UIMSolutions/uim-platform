@@ -8,13 +8,13 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 
-interface DataRecordRepository {
-  DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId);
-  DataRecord findById(DataRecordId tenantId, id tenantId);
-  DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status);
-  size_t countByDataset(DatasetId datasettenantId, id tenantId);
-  void save(DataRecord record);
-  void update(DataRecord record);
-  void remove(DataRecordId tenantId, id tenantId);
-  void removeByDataset(DatasetId datasettenantId, id tenantId);
+interface DataRecordRepository : ITenantRepository!(DataRecordEntity, DataRecordId) {
+
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId);
+  DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId);
+  void removeByDataset(TenantId tenantId, DatasetId datasetId);
+
+  size_t countByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status);
+  DataRecord[] findByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status);
+  void removeByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status);
 }

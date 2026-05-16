@@ -11,12 +11,18 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface DataFlowRepository {
-  DataFlow findById(SpaceId spaceId, DataFlowId id);
-  DataFlow[] findBySpace(SpaceId spaceId);
-  DataFlow[] findByStatus(SpaceId spaceId, FlowStatus status);
-  void save(DataFlow df);
-  void update(DataFlow df);
-  void remove(SpaceId spaceId, DataFlowId id);
-  size_t countBySpace(SpaceId spaceId);
+interface DataFlowRepository : ITenantRepository!(DataFlow, DataFlowId) {
+
+  bool existsById(TenantId tenantId, SpaceId spaceId, DataFlowId id);
+  DataFlow findById(TenantId tenantId, SpaceId spaceId, DataFlowId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, DataFlowId id);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  DataFlow[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
+
+  size_t countByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status);
+  DataFlow[] findByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status);
+  void removeByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status);
+  
 }
