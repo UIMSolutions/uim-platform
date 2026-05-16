@@ -99,7 +99,7 @@ class OAuthClientController : PlatformController {
       auto id = OAuthClientId(extractIdFromPath(req));
 
       auto c = usecase.getOAuthClient(tenantId, id);
-      if (c.id.length == 0) {
+      if (c.isNull) {
         writeError(res, 404, "OAuth client not found");
         return;
       }

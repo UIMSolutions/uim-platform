@@ -25,10 +25,11 @@ class ManageRoleCollectionsUseCase {
       return CommandResult(false, "", "A role collection with this name already exists");
 
     import std.uuid : randomUUID;
+
     RoleCollectionEntity rc;
     rc.initEntity(r.tenantId);
-    rc.name           = r.name;
-    rc.description    = r.description;
+    rc.name = r.name;
+    rc.description = r.description;
     rc.roleReferences = r.roleReferences.dup;
 
     repo.save(rc);
@@ -36,12 +37,14 @@ class ManageRoleCollectionsUseCase {
   }
 
   CommandResult updateRoleCollection(UpdateRoleCollectionRequest r) {
-    auto rc = repo.findById(r.id);
-    if (rc.id.length == 0)
+    auto rc = repo.findById(r.tenantId, r.roleCollectionId);
+    if (rc.isNull)
       return CommandResult(false, "", "Role collection not found");
 
-    if (r.description.length > 0)    rc.description = r.description;
-    if (r.roleReferences.length > 0) rc.roleReferences = r.roleReferences.dup;
+    if (r.description.length > 0)
+      rc.description = r.description;
+    if (r.roleReferences.length > 0)
+      rc.roleReferences = r.roleReferences.dup;
     rc.updatedAt = currentTimestamp();
 
     repo.update(rc);

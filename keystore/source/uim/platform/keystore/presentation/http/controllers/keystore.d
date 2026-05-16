@@ -105,8 +105,9 @@ class KeystoreController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = KeystoreId(extractIdFromPath(req));
+
       auto ks = usecase.getById(tenantId, id);
-      if (ks.id.length == 0) {
+      if (ks.isNull) {
         writeError(res, 404, "Keystore not found");
         return;
       }
@@ -185,7 +186,7 @@ class KeystoreController : PlatformController {
       }
 
       auto ks = searchSvc.findByName(tenantId, accountId, applicationId, subscriptionId, name);
-      if (ks.id.length == 0) {
+      if (ks.isNull) {
         writeError(res, 404, "Keystore not found");
         return;
       }

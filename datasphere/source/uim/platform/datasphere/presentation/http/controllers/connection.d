@@ -96,7 +96,7 @@ class ConnectionController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto c = usecase.getConnection(tenantId, spaceId, id);
-      if (c.id.isEmpty) {
+      if (c.isNull) {
         writeError(res, 404, "Connection not found");
         return;
       }

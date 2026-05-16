@@ -11,8 +11,8 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 struct CreatePredictionRequest {
-    TenantId tenantId;
-    ResourceGroupId resourceGroupId;
+  TenantId tenantId;
+  ResourceGroupId resourceGroupId;
 
   string name;
   string description;
@@ -28,10 +28,9 @@ Json toJson(CreatePredictionRequest request) {
 }
 
 struct PredictionResponse {
-  TenantId tenantId;
+  mixin TenanatEntity!PredictionId;
   ResourceGroupId resourceGroupId;
 
-  string id;
   string name;
   string description;
   DatasetId datasetId;
@@ -46,15 +45,21 @@ struct PredictionResponse {
       return PredictionResponse.init;
 
     return PredictionResponse(p.tenantId, p.resourceGroupId, p.id, p.name, p.description,
-        p.datasetId, p.predictionType.to!string,
-        p.predStatus.to!string, p.lastResult.accuracy, p.lastResult.rmse,
-        p.lastResult.modelSummary,);
+      p.datasetId, p.predictionType.to!string,
+      p.predStatus.to!string, p.lastResult.accuracy, p.lastResult.rmse,
+      p.lastResult.modelSummary,);
   }
 
-  Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("name", name).set("description",
-        description).set("datasetId", datasetId).set("predictionType",
-        predictionType).set("status", status).set("accuracy", accuracy)
-      .set("rmse", rmse).set("modelSummary", modelSummary);
+  Json toJson() const {
+    return entityToJson
+      .set("resource_group_id", resourceGroupId)
+      .set("name", name)
+      .set("description", description)
+      .set("dataset_id", datasetId)
+      .set("prediction_type", predictionType)
+      .set("status", status)
+      .set("accuracy", accuracy)
+      .set("rmse", rmse)
+      .set("model_summary", modelSummary);
   }
 }

@@ -93,7 +93,7 @@ class DataAccessControlController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto dac = usecase.getDataAccessControl(tenantId, spaceId, id);
-      if (dac.id.isEmpty) {
+      if (dac.isNull) {
         writeError(res, 404, "Data access control not found");
         return;
       }

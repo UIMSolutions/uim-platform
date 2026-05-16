@@ -76,7 +76,7 @@ class UserAssignmentController : PlatformController {
       auto id = UserAssignmentId(extractIdFromPath(req));
 
       auto ua = usecase.getUserAssignment(tenantId, id);
-      if (ua.id.length == 0) {
+      if (ua.isNull) {
         writeError(res, 404, "User assignment not found");
         return;
       }

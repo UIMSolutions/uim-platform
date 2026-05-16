@@ -11,8 +11,9 @@ mixin(ShowModule!());
 @safe:
 /// A Dashboard is a collection of pages, each containing analytical widgets.
 /// Corresponds to an "Analytic Application" in SAP Analytics Cloud.
-class Dashboard {
-  EntityId id;
+struct Dashboard {
+  mixin TenantEntity!DashboardId;
+
   string name;
   string description;
   EntityId ownerId;
@@ -22,47 +23,64 @@ class Dashboard {
   AuditInfo audit;
   string[] tags;
 
-  this() {
-  }
-
-  static Dashboard create(string name, string description, string ownerId) {
-    auto d = new Dashboard();
-    d.id = EntityId.generate();
-    d.name = name;
-    d.description = description;
-    d.ownerId = EntityId(ownerId);
-    d.visibility = Visibility.Private;
-    d.status = ArtifactStatus.Draft;
-    d.pages = [];
-    d.tags = [];
-    d.audit = AuditInfo.create(ownerId);
-    return d;
-  }
-
-  void addPage(string title) {
-    pages ~= Page(EntityId.generate(), title, []);
-  }
-
-  void publish() {
-    status = ArtifactStatus.Published;
-  }
-
-  void archive() {
-    status = ArtifactStatus.Archived;
-  }
-
   Json toJson() {
     auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
-        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array.toJson)).array.toJson;
+        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array.toJson))
+      .array.toJson;
 
-    return Json.emptyObject.set("id", id.value).set("name", name)
+    return entityToJson()
+      .set("id", id.value).set("name", name)
       .set("description", description).set("ownerId", ownerId.value)
       .set("visibility", to!string(visibility)).set("status", to!string(status))
-      .set("pages", jPages).set("audit", Json.emptyObject.set("createdBy",
-        audit.createdBy).set("createdAt", audit.createdAt.toISOExtString())
-        .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
+      .set("pages", jPages)
+      .set("audit", Json.emptyObject
+          .set("createdBy",
+            audit.createdBy)
+          .set("createdAt", audit.createdAt.toISOExtString())
+          .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
         tags);
   }
+  // this() {
+  // }
+
+  // static Dashboard create(string name, string description, string ownerId) {
+  //   auto d = new Dashboard();
+  //   d.id = EntityId.generate();
+  //   d.name = name;
+  //   d.description = description;
+  //   d.ownerId = EntityId(ownerId);
+  //   d.visibility = Visibility.Private;
+  //   d.status = ArtifactStatus.Draft;
+  //   d.pages = [];
+  //   d.tags = [];
+  //   d.audit = AuditInfo.create(ownerId);
+  //   return d;
+  // }
+
+  // void addPage(string title) {
+  //   pages ~= Page(EntityId.generate(), title, []);
+  // }
+
+  // void publish() {
+  //   status = ArtifactStatus.Published;
+  // }
+
+  // void archive() {
+  //   status = ArtifactStatus.Archived;
+  // }
+
+  // Json toJson() {
+  //   auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
+  //       .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array.toJson)).array.toJson;
+
+  //   return Json.emptyObject.set("id", id.value).set("name", name)
+  //     .set("description", description).set("ownerId", ownerId.value)
+  //     .set("visibility", to!string(visibility)).set("status", to!string(status))
+  //     .set("pages", jPages).set("audit", Json.emptyObject.set("createdBy",
+  //       audit.createdBy).set("createdAt", audit.createdAt.toISOExtString())
+  //       .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
+  //       tags);
+  // }
 }
 /// A page / tab within a dashboard.
 struct Page {
@@ -71,7 +89,8 @@ struct Page {
   EntityId[] widgetIds;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id.value).set("title", title)
+    return entityToJson()
+      .set("id", id.value).set("title", title)
       .set("widgetIds", widgetIds.map!(wid => wid.value).array.toJson);
   }
 }

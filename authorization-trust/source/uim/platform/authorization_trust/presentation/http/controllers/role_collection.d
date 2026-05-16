@@ -73,8 +73,9 @@ class RoleCollectionController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = RoleCollectionId(extractIdFromPath(req));
+      
       auto rc = usecase.getRoleCollection(tenantId, id);
-      if (rc.id.length == 0) {
+      if (rc.isNull) {
         writeError(res, 404, "Role collection not found");
         return;
       }

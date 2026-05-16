@@ -91,7 +91,7 @@ class DataFlowController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto df = usecase.getDataFlow(tenantId, spaceId, id);
-      if (df.id.isEmpty) {
+      if (df.isNull) {
         writeError(res, 404, "Data flow not found");
         return;
       }

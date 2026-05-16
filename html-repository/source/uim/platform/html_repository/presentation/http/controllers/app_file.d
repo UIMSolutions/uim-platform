@@ -91,7 +91,7 @@ class AppFileController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = AppFileId(extractIdFromPath(req.requestURI.to!string));
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (isNull) {
         writeError(res, 404, "File not found");
         return;
       }

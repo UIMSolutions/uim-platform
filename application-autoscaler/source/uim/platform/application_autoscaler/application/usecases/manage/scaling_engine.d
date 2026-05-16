@@ -36,15 +36,15 @@ class ScalingEngineUseCase {
     import std.random : uniform;
 
     // Resolve binding
-    auto binding = bindingRepo.findByAppGuid(r.appId);
-    if (binding.id.length == 0)
+    auto binding = bindingRepo.findByAppGuid(r.tenantId, r.appId);
+    if (binding.isNull)
       return CommandResult(false, "", "No binding found for appId " ~ r.appId);
 
     if (binding.policyId.length == 0)
       return CommandResult(false, "", "No policy attached to app binding");
 
     auto policy = policyRepo.findById(binding.policyId);
-    if (policy.id.length == 0)
+    if (policy.isNull)
       return CommandResult(false, "", "Policy not found");
 
     if (policy.status != PolicyStatus.active)

@@ -56,7 +56,7 @@ class ScalingHistoryController : PlatformController {
       auto id = ScalingHistoryId(extractIdFromPath(req));
 
       auto evt = usecase.getEvent(tenantId, id);
-      if (evt.id.length == 0) {
+      if (evt.isNull) {
         writeError(res, 404, "Scaling event not found");
         return;
       }

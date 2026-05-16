@@ -68,7 +68,7 @@ class ScopeController : PlatformController {
       auto id = ScopeId(extractIdFromPath(req));
 
       auto s = usecase.getScope(tenantId, id);
-      if (s.id.length == 0) {
+      if (s.isNull) {
         writeError(res, 404, "Scope not found");
         return;
       }

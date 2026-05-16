@@ -46,7 +46,7 @@ class ManageIdentityProvidersUseCase {
 
   CommandResult updateIdentityProvider(UpdateIdentityProviderRequest r) {
     auto idp = repo.findById(r.tenantId, r.id);
-    if (idp.id.length == 0)
+    if (idp.isNull)
       return CommandResult(false, "", "Identity provider not found");
 
     if (r.displayName.length > 0) idp.displayName = r.displayName;

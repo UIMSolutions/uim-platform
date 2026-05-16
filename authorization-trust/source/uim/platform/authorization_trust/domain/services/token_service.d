@@ -27,7 +27,7 @@ class TokenService {
   /// Returns empty array when credentials are invalid.
   string[] validateClientCredentials(string clientId, string clientSecret) {
     auto client = clientRepo.findByClientId(clientId);
-    if (client.id.length == 0)
+    if (client.isNull)
       return [];
     if (client.clientSecret != hashSecret(clientSecret))
       return [];

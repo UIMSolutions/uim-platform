@@ -28,7 +28,7 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
 
   void removeByName(TenantId tenantId, string name) {
     auto instance = findByName(tenantId, name);
-    if (!instance.id.isEmpty)
+    if (!instance.isNull)
       remove(instance);
   }
   

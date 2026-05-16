@@ -26,8 +26,8 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(dashboard);
   }
 
-  DashboardResponse getDashboard(string id) {
-    auto d = repo.findById(EntityId(id));
+  DashboardResponse getDashboard(TenantId tenantId, DashboardId id) {
+    auto d = repo.findById(tenantId, id);
     return DashboardResponse.fromEntity(d);
   }
 
@@ -38,8 +38,8 @@ class DashboardUseCases {
     return result;
   }
 
-  DashboardResponse addPageToDashboard(string dashboardId, string title) {
-    auto d = repo.findById(EntityId(dashboardId));
+  DashboardResponse addPageToDashboard(TenantId tenantId, DashboardId dashboardId, string title) {
+    auto d = repo.findById(tenantId, dashboardId);
     if (d.isNull)
       return DashboardResponse.init;
     d.addPage(title);
@@ -47,8 +47,8 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  DashboardResponse publishDashboard(string dashboardId) {
-    auto d = repo.findById(EntityId(dashboardId));
+  DashboardResponse publishDashboard(TenantId tenantId, DashboardId dashboardId) {
+    auto d = repo.findById(tenantId, dashboardId);
     if (d.isNull)
       return DashboardResponse.init;
     d.publish();
@@ -56,8 +56,8 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  CommandResult deleteDashboard(string dashboardId) {
-    auto d = repo.findById(EntityId(dashboardId));
+  CommandResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
+    auto d = repo.findById(tenantId, dashboardId);
     if (d.isNull)
       return CommandResult(false, "", "Dashboard not found");
 

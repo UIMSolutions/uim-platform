@@ -82,11 +82,11 @@ class IdentityProviderController : PlatformController {
       auto id = IdentityProviderId(extractIdFromPath(req));
 
       auto idp = usecase.getIdentityProvider(tenantId, id);
-      if (idp.id.length == 0) {
+      if (idp.isNull) {
         writeError(res, 404, "Identity provider not found");
         return;
       }
-      res.writeJsonBody(idpToJson(idp), 200);
+      res.writeJsonBody(idpToJson(idp.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

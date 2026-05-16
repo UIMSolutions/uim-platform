@@ -13,19 +13,16 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDataSubject(CreateDataSubjectRequest req) {
-        import std.uuid : randomUUID;
-
-        if (req.externalId.length == 0)
+        if (req.externalId.isEmpty)
             return CommandResult(false, "", "External ID is required");
 
         DataSubject ds;
-        ds.id = DataSubjectId(randomUUID().toString());
-        ds.tenantId = req.tenantId;
+        ds.initEntity(req.tenantId, req.createdBy);
+
         ds.roleId = DataSubjectRoleId(req.roleId);
         ds.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         ds.externalId = req.externalId;
         ds.lifecycleStatus = DataLifecycleStatus.active;
-        ds.createdBy = req.createdBy;
         ds.createdAt = clockSeconds();
 
         repo.save(ds);

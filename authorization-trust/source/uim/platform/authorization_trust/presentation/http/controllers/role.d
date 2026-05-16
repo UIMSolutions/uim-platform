@@ -71,8 +71,9 @@ class RoleController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = RoleId(extractIdFromPath(req));
+      
       auto role = usecase.getRole(tenantId, id);
-      if (role.id.length == 0) {
+      if (role.isNull) {
         writeError(res, 404, "Role not found");
         return;
       }

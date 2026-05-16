@@ -92,7 +92,7 @@ class DataSubjectController : PlatformController {
             DataSubject[] results;
             if (!email.isEmpty) {
                 auto s = usecase.findByEmail(email);
-                if (!s.id.isEmpty)
+                if (!s.isNull)
                     results ~= s;
             } else {
                 results = usecase.searchDataSubjects(tenantId, firstName, lastName);

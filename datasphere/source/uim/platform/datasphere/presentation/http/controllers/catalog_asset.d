@@ -125,7 +125,7 @@ class CatalogAssetController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto ca = assets.getCatalogAsset(tenantId, spaceId, id);
-      if (ca.id.isEmpty) {
+      if (ca.isNull) {
         writeError(res, 404, "Catalog asset not found");
         return;
       }

@@ -95,7 +95,7 @@ class TaskChainController : PlatformController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tc = usecase.getTaskChain(spaceId, id);
-      if (tc.id.isEmpty) {
+      if (tc.isNull) {
         writeError(res, 404, "Task chain not found");
         return;
       }

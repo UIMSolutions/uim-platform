@@ -19,7 +19,7 @@ class ManageOAuthClientsUseCase {
   }
 
   CommandResult createOAuthClient(CreateOAuthClientRequest r) {
-    if (r.clientId.length == 0)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "clientId is required");
     if (repo.existsByClientId(r.clientId))
       return CommandResult(false, "", "A client with this clientId already exists");

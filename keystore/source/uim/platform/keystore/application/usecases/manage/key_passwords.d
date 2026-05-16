@@ -66,8 +66,9 @@ class ManageKeyPasswordsUseCase {
   // Delete a stored password by alias.
   CommandResult deletePassword(string accountId, string applicationId, string alias_) {
     auto kp = repo.findByAlias(accountId, applicationId, alias_);
-    if (kp.id.length == 0)
+    if (kp.isNull)
       return CommandResult(false, "", "Password not found");
+      
     repo.removeByAlias(accountId, applicationId, alias_);
     return CommandResult(true, kp.id.value, "");
   }

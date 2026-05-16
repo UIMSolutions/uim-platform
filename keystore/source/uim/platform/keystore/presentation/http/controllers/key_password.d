@@ -59,7 +59,7 @@ class KeyPasswordController : PlatformController {
       auto applicationId = req.params.get("applicationId", "");
 
       auto kp = usecase.getPassword(accountId, applicationId, alias_);
-      if (kp.id.length == 0) {
+      if (kp.isNull) {
         writeError(res, 404, "Password not found");
         return;
       }
