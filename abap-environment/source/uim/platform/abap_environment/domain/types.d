@@ -28,6 +28,16 @@ struct SoftwareComponentId  {
 
   mixin DomainId;
 }
+
+struct CatalogAssignmentId  {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 struct CommunicationArrangementId  {
   string value;
 

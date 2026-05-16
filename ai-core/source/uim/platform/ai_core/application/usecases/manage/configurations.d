@@ -39,7 +39,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;
     c.name = r.name;
-    c.description = r.description;
+    // c.description = r.description;
     // Parse parameter values from key-value pairs
     ParameterValue[] params;
     foreach (pair; r.parameterValues) {

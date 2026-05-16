@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 /// Catalog assignment attached to a role.
 struct CatalogAssignment {
-    mixin TenantEntity!CatalogAssignment;
+    mixin TenantEntity!CatalogAssignmentId;
     string catalogName;
 
     Json toJson() const {

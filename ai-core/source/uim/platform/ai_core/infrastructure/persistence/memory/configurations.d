@@ -20,7 +20,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
   }
 
   Configuration findById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id) {
-    return findByResourceGroup(tenantId, rgId).find!(c => c.id == id);
+    return findByResourceGroup(tenantId, rgId).filter!(c => c.id == id);
   }
   void removeById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id) {
     remove(findById(tenantId, rgId, id));
@@ -36,30 +36,30 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     findByResourceGroup(tenantId, rgId).each!(c => remove(c));
   }
 
-  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
-    return findByScenario(tenantId, scenarioId, rgId).length;
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    return findByScenario(tenantId, rgId, scenarioId).length;
   }
   Configuration[] filterByScenario(Configuration[] configs, ScenarioId scenarioId) {
     return configs.filter!(c => c.scenarioId == scenarioId).array;
   }
-  Configuration[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId){
+  Configuration[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId){
     return filterByScenario(findByResourceGroup(tenantId, rgId), scenarioId);
   }
-  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId) {
-    findByScenario(tenantId, scenarioId, rgId).each!(c => remove(c));
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
+    findByScenario(tenantId, rgId, scenarioId).each!(c => remove(c));
   }
 
-  size_t countByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId) {
-    return findByExecutable(tenantId, execId, rgId).length;
+  size_t countByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId) {
+    return findByExecutable(tenantId, rgId, execId).length;
   }
   Configuration[] filterByExecutable(Configuration[] configs, ExecutableId execId) {
     return configs.filter!(c => c.executableId == execId).array;
   }
-  Configuration[] findByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId){
+  Configuration[] findByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId){
     return filterByExecutable(findByResourceGroup(tenantId, rgId), execId);
   }
-  void removeByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId) {
-    findByExecutable(tenantId, execId, rgId).each!(c => remove(c));
+  void removeByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId) {
+    findByExecutable(tenantId, rgId, execId).each!(c => remove(c));
   } 
 
 

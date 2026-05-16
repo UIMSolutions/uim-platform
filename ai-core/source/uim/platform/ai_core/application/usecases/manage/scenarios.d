@@ -24,7 +24,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createScenario(CreateScenarioRequest r) {
-    auto err = ScenarioValidator.validate(r.scenarioId, r.name);
+    auto err = ScenarioValidator.validate(r.scenarioId.value, r.name);
     if (err.length > 0)
       return CommandResult(false, "", err);
 

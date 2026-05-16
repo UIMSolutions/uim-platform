@@ -189,6 +189,15 @@ struct VisibilityId  {
     mixin DomainId;
 }
 
+struct VisibilityMetricId  {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
 struct ProjectId  {
     string value;
 

@@ -38,6 +38,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
 
     Execution e;
     e.initEntity(r.tenantId);
+
     e.resourceGroupId = r.resourceGroupId;
     e.configurationId = r.configurationId;
     e.scenarioId = conf.scenarioId;
@@ -87,15 +88,15 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     return execRepo.findByResourceGroup(tenantId, resourceGroupId);
   }
 
-  Execution[] listExecutionsByScenario(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
+  Execution[] listExecutionsB(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId) {
     return execRepo.findByScenario(tenantId, resourceGroupId, scenarioId);
   }
 
-  Execution[] listExecutionsByStatus(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionStatus status) {
+  Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionStatus status) {
     return execRepo.findByStatus(tenantId, resourceGroupId, status);
   }
 
-  size_t count(TenantId tenantId, ResourceGroupId resourceGroupId) {
+  size_t countExecutions(TenantId tenantId, ResourceGroupId resourceGroupId) {
     return execRepo.countByResourceGroup(tenantId, resourceGroupId);
   }
 

@@ -21,12 +21,12 @@ interface ConfigurationRepository : ITenantRepository!(Configuration, Configurat
   Configuration[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId);
 
-  size_t countByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
-  Configuration[] findByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
-  void removeByScenario(TenantId tenantId, ScenarioId scenarioId, ResourceGroupId rgId);
+  size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  Configuration[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId);
 
-  size_t countByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
-  Configuration[] findByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
-  void removeByExecutable(TenantId tenantId, ExecutableId execId, ResourceGroupId rgId);
+  size_t countByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId);
+  Configuration[] findByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId);
+  void removeByExecutable(TenantId tenantId, ResourceGroupId rgId, ExecutableId execId);
 
 }

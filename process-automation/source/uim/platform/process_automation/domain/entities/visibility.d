@@ -12,7 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 struct VisibilityMetric {
-    string id;
+    mixin IdEntity!VisibilityMetricId;
+    
     string name;
     MetricType type;
     string sourceField;

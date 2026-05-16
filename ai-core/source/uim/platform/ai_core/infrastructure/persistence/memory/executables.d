@@ -8,11 +8,9 @@ module uim.platform.ai_core.infrastructure.persistence.memory.executables;
 // import uim.platform.ai_core.domain.entities.executable;
 // import uim.platform.ai_core.domain.ports.repositories.executables;
 
-
- 
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {
@@ -20,6 +18,7 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id) {
     return findByResourceGroup(tenantId, rgId).any!(e => e.id == id);
   }
+
   Executable findById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id) {
     auto executables = findByResourceGroup(tenantId, rgId);
     foreach (e; executables) {
@@ -29,6 +28,7 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
     }
     return Executable.init;
   }
+
   void removeById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id) {
     auto executable = findById(tenantId, rgId, id);
     remove(executable);
@@ -37,9 +37,11 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
   size_t countByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
     return findByResourceGroup(tenantId, rgId).length;
   }
+
   Executable[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
     return filterByResourceGroup(findByTenant(tenantId), rgId);
   }
+
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
     findByResourceGroup(tenantId, rgId).each!(e => remove(e));
   }
@@ -47,12 +49,15 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
   size_t countByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
     return findByScenario(tenantId, rgId, scenarioId).length;
   }
+
   Executable[] filterByScenario(Executable[] executables, ScenarioId scenarioId) {
     return executables.filter!(e => e.scenarioId == scenarioId).array;
   }
+
   Executable[] findByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
     return filterByScenario(findByResourceGroup(tenantId, rgId), scenarioId);
   }
+
   void removeByScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId scenarioId) {
     findByScenario(tenantId, rgId, scenarioId).each!(e => remove(e));
   }
