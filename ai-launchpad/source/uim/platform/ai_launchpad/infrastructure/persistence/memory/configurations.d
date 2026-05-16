@@ -12,19 +12,8 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : IConfigurationRepository {
-  private Configuration[] store;
-
-  void save(Configuration c) {
-    foreach (existing; findAll) {
-      if (existing.id == c.id && existing.connectionId == c.connectionId) {
-        existing = c;
-        return;
-      }
-    }
-    store ~= c;
-  }
-
+class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), IConfigurationRepository {
+  
   Configuration findById(ConfigurationId id, ConnectionId connectionId) {
     foreach (c; findAll) {
       if (c.id == id && c.connectionId == connectionId) return c;
@@ -40,7 +29,7 @@ class MemoryConfigurationRepository : IConfigurationRepository {
     return result;
   }
 
-  Configuration[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
+  Configuration[] findByScenario(ConnectionId connectionId, ScenarioId scenarioId) {
     Configuration[] result;
     foreach (c; findAll) {
       if (c.scenarioId == scenarioId && c.connectionId == connectionId) result ~= c;

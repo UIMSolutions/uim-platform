@@ -8,7 +8,7 @@ module uim.platform.mobile.application.usecases.manage.user_sessions;
 // import uim.platform.mobile.domain.entities.user_session;
 // import uim.platform.mobile.domain.types;
 // import uim.platform.mobile.application.dto;
-// import std.uuid : randomUUID;
+
 import uim.platform.mobile;
 
 mixin(Showmodule!());

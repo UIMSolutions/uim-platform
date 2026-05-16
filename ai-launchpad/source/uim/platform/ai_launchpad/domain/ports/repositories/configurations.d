@@ -13,14 +13,17 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IConfigurationRepository {
-  bool existsById(ConfigurationId id, ConnectionId connectionId);
-  Configuration findById(ConfigurationId id, ConnectionId connectionId);
+interface IConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
-  Configuration[] findByConnection(ConnectionId connectionId);
-  Configuration[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId);
-  Configuration[] findAll();
+  bool existsById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
+  Configuration findById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
+  void removeById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
 
-  void save(Configuration c);
-  void remove(ConfigurationId id, ConnectionId connectionId);
+  size_t countByConnection(TenantId tenantId, ConnectionId connectionId);
+  Configuration[] findByConnection(TenantId tenantId, ConnectionId connectionId);
+  void removeByConnection(TenantId tenantId, ConnectionId connectionId);
+
+  size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  Configuration[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
+  void removeByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 }

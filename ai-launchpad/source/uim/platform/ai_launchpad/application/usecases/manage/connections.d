@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.application.usecases.manage.connections;
 // import uim.platform.ai_launchpad.domain.services.connection_validator;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.application.dto;
-// import std.uuid : randomUUID;
+
 
 import uim.platform.ai_launchpad;
 
@@ -28,7 +28,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   CommandResult createConnection(CreateConnectionRequest r) {
     Connection c;
     c.initEntity(r.tenantId);
-    
+
     c.name = r.name;
     c.url = r.url;
     c.authUrl = r.authUrl;

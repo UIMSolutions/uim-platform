@@ -587,7 +587,7 @@ graph TB
 graph TD
     APP["app.d"] --> CONT["infrastructure.container"]
     CONT --> MEM_REPOS["infrastructure.persistence.memory.*"]
-    CONT --> USECASES["application.use_cases.*"]
+    CONT --> USECASES["application.usecases.*"]
     CONT --> CONTROLLERS["presentation.http.controllers.*"]
     CONT --> CONFIG["infrastructure.config"]
 

@@ -8,7 +8,7 @@ module uim.platform.document_ai.application.usecases.manage.document_types;
 // import uim.platform.document_ai.domain.entities.document_type;
 // import uim.platform.document_ai.domain.ports.repositories.document_types;
 // import uim.platform.document_ai.application.dto;
-// import std.uuid : randomUUID;
+
 import uim.platform.document_ai;
 
 mixin(ShowModule!());

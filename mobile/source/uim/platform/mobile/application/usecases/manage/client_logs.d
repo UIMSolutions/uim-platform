@@ -8,7 +8,7 @@ module uim.platform.mobile.application.usecases.manage.client_logs;
 // import uim.platform.mobile.domain.entities.client_log_entry;
 // import uim.platform.mobile.domain.types;
 // import uim.platform.mobile.application.dto;
-// import std.uuid : randomUUID;
+
 
 import uim.platform.mobile;
 

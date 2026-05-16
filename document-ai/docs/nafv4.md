@@ -634,7 +634,7 @@ document-ai/
         │       └── enrichment_matcher.d     # Scored enrichment matching
         ├── application/                     # USE CASES
         │   ├── dto.d                        # Request/Result DTOs + CapabilitiesResponse
-        │   └── use_cases/                   # 8 use case classes
+        │   └── usecases/                   # 8 use case classes
         │       ├── process_documents.d      # Upload, list, get, delete, confirm, results
         │       ├── manage.schemas.d
         │       ├── manage.templates.d
@@ -671,12 +671,12 @@ app.d
       │    └── domain/ports/*                   (8 interfaces)
       │         └── domain/entities/*           (8 entity structs)
       │              └── domain/types           (aliases + 10 enums)
-      ├── application/use_cases/*               (8 use case classes)
+      ├── application/usecases/*               (8 use case classes)
       │    ├── domain/ports/*
       │    ├── domain/services/*                (DocumentValidator, EnrichmentMatcher)
       │    └── application/dto                  (request/result DTOs)
       └── presentation/http/controllers/*       (9 controllers)
-           ├── application/use_cases/*
+           ├── application/usecases/*
            ├── application/dto
            └── presentation/http/json_utils
 ```

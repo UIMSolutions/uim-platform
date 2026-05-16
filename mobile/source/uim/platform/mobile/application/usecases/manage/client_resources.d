@@ -8,7 +8,7 @@ module uim.platform.mobile.application.usecases.manage.client_resources;
 // import uim.platform.mobile.domain.entities.client_resource;
 // import uim.platform.mobile.domain.types;
 // import uim.platform.mobile.application.dto;
-// import std.uuid : randomUUID;
+
 
 import uim.platform.mobile;
 

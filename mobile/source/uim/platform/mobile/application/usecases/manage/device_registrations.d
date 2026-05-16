@@ -8,7 +8,7 @@ module uim.platform.mobile.application.usecases.manage.device_registrations;
 // import uim.platform.mobile.domain.entities.device_registration;
 // import uim.platform.mobile.domain.types;
 // import uim.platform.mobile.application.dto;
-// import std.uuid : randomUUID;
+
 
 import uim.platform.mobile;
 
