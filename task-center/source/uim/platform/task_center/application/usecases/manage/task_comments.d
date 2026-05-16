@@ -18,23 +18,25 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskComment getTaskCommentById(TenantId tenantId, TaskCommentId id) {
+    TaskComment getTaskComment(TenantId tenantId, TaskCommentId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskComment[] listTaskCommentsByTask(TenantId tenantId, TaskId taskId) {
+    TaskComment[] listTaskComments(TenantId tenantId, TaskId taskId) {
         return repo.findByTask(tenantId, taskId);
     }
 
     CommandResult createTaskComment(CreateTaskCommentRequest req) {
-        TaskComment c;
-        c.id = req.id;
-        c.tenantId = req.tenantId;
-        c.taskId = req.taskId;
-        c.author = req.author;
-        c.content = req.content;
-        repo.save(req.tenantId, c);
-        return CommandResult(true, req.id.value, "");
+        TaskComment comment;
+        comment.initEntity(req.tenantId);
+
+        comment.id = req.id;
+        comment.taskId = req.taskId;
+        comment.author = req.author;
+        comment.content = req.content;
+
+        repo.save(comment);
+        return CommandResult(true, comment.id.value, "");
     }
 
     CommandResult updateTaskComment(UpdateTaskCommentRequest req) {
@@ -42,8 +44,9 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Comment not found");
         if (req.content.length > 0) existing.content = req.content;
+ 
         repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult deleteTaskComment(TenantId tenantId, TaskCommentId id) {

@@ -27,16 +27,18 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTaskAttachment(CreateTaskAttachmentRequest req) {
-        TaskAttachment a;
-        a.id = req.id;
-        a.tenantId = req.tenantId;
-        a.taskId = req.taskId;
-        a.fileName = req.fileName;
-        a.fileSize = req.fileSize;
-        a.mimeType = req.mimeType;
-        a.uploadedBy = req.uploadedBy;
-        repo.save(req.tenantId, a);
-        return CommandResult(true, req.id.value, "");
+        TaskAttachment attachment;
+        attachment.initEntity(req.tenantId);
+
+        attachment.id = req.taskAttachmentId;
+        attachment.taskId = req.taskId;
+        attachment.fileName = req.fileName;
+        attachment.fileSize = req.fileSize;
+        attachment.mimeType = req.mimeType;
+        attachment.uploadedBy = req.uploadedBy;
+
+        repo.save(attachment);
+        return CommandResult(true, attachment.id.value, "");
     }
 
     CommandResult deleteTaskAttachment(TenantId tenantId, TaskAttachmentId id) {

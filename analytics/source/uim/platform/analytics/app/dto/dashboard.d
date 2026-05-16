@@ -22,7 +22,9 @@ struct CreateDashboardRequest {
 }
 
 struct DashboardResponse {
-  string id;
+  TenantId tenantId;
+  DashboardId dashboardId;
+
   string name;
   string description;
   string ownerId;
@@ -45,7 +47,7 @@ struct DashboardResponse {
 }
 
 struct PageResponse {
-  string id;
+  PageId pageId;
   string title;
 }
  

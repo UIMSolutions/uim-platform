@@ -21,7 +21,7 @@ struct FilterCriterion {
             .set("value", value);
     }
 }
-
+    
 struct UserTaskFilter {
     mixin TenantEntity!(UserTaskFilterId);
 

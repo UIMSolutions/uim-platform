@@ -7,23 +7,24 @@ mixin(ShowModule!());
 @safe:
 struct CreateSubstitutionRuleRequest {
     TenantId tenantId;
-    string id;
+    SubstitutionRuleId substitutionRuleId; // This is needed to ensure idempotency of the request. The client can generate a UUID and pass it here. If a substitution rule with the same ID already exists, the service can return the existing rule instead of creating a new one.
+
     UserId userId;
-    string substituteId;
-    string taskDefinitionId;
-    string startDate;
-    string endDate;
+    UserId substituteId;
+    TaskDefinitionId taskDefinitionId;
+    Date startDate;
+    Date endDate;
     bool isAutoForward;
     UserId createdBy;
 }
 
 struct UpdateSubstitutionRuleRequest {
     TenantId tenantId;
-    string id;
-    string substituteId;
-    string taskDefinitionId;
-    string startDate;
-    string endDate;
+    SubstitutionRuleId substitutionRuleId;
+    UserId substituteId;
+    TaskDefinitionId taskDefinitionId;
+    Date startDate;
+    Date endDate;
     bool isAutoForward;
     UserId updatedBy;
 }

@@ -13,6 +13,8 @@ mixin(ShowModule!());
 @safe:
 
 struct CreateDatasetRequest {
+  TenantId tenantId;
+  ResourceGroupId resourceGroupId;
   string name;
   string description;
   string dataSourceId;
@@ -20,7 +22,9 @@ struct CreateDatasetRequest {
 }
 
 struct DatasetResponse {
-  string id;
+  TenantId tenantId;
+  ResourceGroupId resourceGroupId;
+  DatasetId datasetId;
   string name;
   string description;
   string dataSourceId;

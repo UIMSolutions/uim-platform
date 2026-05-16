@@ -7,12 +7,11 @@ mixin(ShowModule!());
 @safe:
 /// Catalog assignment attached to a role.
 struct CatalogAssignment {
-    string id;
+    mixin TenantEntity!CatalogAssignment;
     string catalogName;
 
     Json toJson() const {
-        return Json.emptyObject
-            .set("id", id)
+        return entityToJson()
             .set("catalogName", catalogName);
     }
 }

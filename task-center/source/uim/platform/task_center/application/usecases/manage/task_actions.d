@@ -31,20 +31,22 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTaskAction(PerformTaskActionRequest req) {
-        TaskAction a;
-        a.id = req.id;
-        a.tenantId = req.tenantId;
-        a.taskId = req.taskId;
-        a.performedBy = req.performedBy;
-        a.forwardTo = req.forwardTo;
-        a.comment = req.comment;
-        repo.save(req.tenantId, a);
+        TaskAction action;
+        action.initEntity(req.tenantId);
+
+        action.id = req.id;
+        action.taskId = req.taskId;
+        action.performedBy = req.performedBy;
+        action.forwardTo = req.forwardTo;
+        action.comment = req.comment;
+
+        repo.save(action);
         return CommandResult(true, req.id.value, "");
     }
 
     CommandResult deleteTaskAction(TenantId tenantId, TaskActionId id) {
         auto action = repo.findById(tenantId, id);
-        if (action == TaskAction.init)
+        if (action.isNull)
             return CommandResult(false, "", "Task action not found");
 
         repo.remove(action);

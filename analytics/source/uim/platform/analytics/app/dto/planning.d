@@ -13,6 +13,8 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 struct CreatePlanningModelRequest {
+  TeanantId tenantId;
+
   string name;
   string description;
   string datasetId;
@@ -21,7 +23,9 @@ struct CreatePlanningModelRequest {
 }
 
 struct PlanningModelResponse {
-  string id;
+  TenantId tenantId;
+  PlanningModelId planningModelId;
+
   string name;
   string description;
   string datasetId;
@@ -37,8 +41,8 @@ struct PlanningModelResponse {
     foreach (v; pm.versions)
       vers ~= VersionResponse(v.id.value, v.name, v.versionType.to!string, v.isReadOnly);
 
-    return PlanningModelResponse(pm.id.value, pm.name, pm.description,
-        pm.datasetId.value, pm.granularity.to!string, pm.planStatus.to!string, vers,);
+    return PlanningModelResponse(pm.tenantId, pm.id, pm.name, pm.description,
+        pm.datasetId, pm.granularity.to!string, pm.planStatus.to!string, vers,);
   }
 }
 

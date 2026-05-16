@@ -36,15 +36,16 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult createTaskProvider(CreateTaskProviderRequest req) {
         TaskProvider p;
+        p.iniEntity(req.tenantId, req.createdBy);
+
         p.id = req.id;
-        p.tenantId = req.tenantId;
         p.name = req.name;
         p.description = req.description;
         p.endpointUrl = req.endpointUrl;
         p.authEndpointUrl = req.authEndpointUrl;
         p.clientId = req.clientId;
-        p.createdBy = req.createdBy;
-        repo.save(req.tenantId, p);
+        
+        repo.save(p);
         return CommandResult(true, req.id.value, "");
     }
 
@@ -58,7 +59,8 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         if (req.authEndpointUrl.length > 0) existing.authEndpointUrl = req.authEndpointUrl;
         if (req.clientId.length > 0) existing.clientId = req.clientId;
         existing.updatedBy = req.updatedBy;
-        repo.update(req.tenantId, existing);
+        
+        repo.update(existing);
         return CommandResult(true, req.id.value, "");
     }
 
@@ -67,7 +69,8 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         if (provider == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
         provider.status = ProviderStatus.active;
-        repo.update(tenantId, provider);
+        
+        repo.update(provider);
         return CommandResult(true, id.value, "");
     }
 

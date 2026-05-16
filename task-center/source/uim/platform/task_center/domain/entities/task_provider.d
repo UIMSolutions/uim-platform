@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct TaskProvider {
-    mixin TenantEntity!(TaskProviderId);
+    mixin TenantEntity!TaskProviderId;
 
     string name; // e.g., "Jira", "GitHub", "Custom API"
     string description;

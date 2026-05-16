@@ -13,8 +13,9 @@ mixin(ShowModule!());
 
 struct CreateUserTaskFilterRequest {
     TenantId tenantId;
-    string id;
+    UserTaskFilterId userTaskFilterId;
     UserId userId;
+
     string name;
     string description;
     bool isDefault;
@@ -22,7 +23,8 @@ struct CreateUserTaskFilterRequest {
 
 struct UpdateUserTaskFilterRequest {
     TenantId tenantId;
-    string id;
+    UserTaskFilterId userTaskFilterId;
+
     string name;
     string description;
     bool isDefault;

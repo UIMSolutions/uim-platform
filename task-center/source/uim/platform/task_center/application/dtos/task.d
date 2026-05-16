@@ -7,10 +7,10 @@ mixin(ShowModule!());
 @safe:
 struct CreateTaskRequest {
     TenantId tenantId;
-    string id;
-    string taskDefinitionId;
-    string providerId;
-    string externalTaskId;
+    TaskId taskId;
+    TaskDefinitionId taskDefinitionId;
+    ProviderId providerId;
+    ExternalTaskId externalTaskId;
     string title;
     string description;
     string priority;
@@ -24,7 +24,7 @@ struct CreateTaskRequest {
 
 struct UpdateTaskRequest {
     TenantId tenantId;
-    string id;
+    TaskId taskId;
     string title;
     string description;
     string priority;
