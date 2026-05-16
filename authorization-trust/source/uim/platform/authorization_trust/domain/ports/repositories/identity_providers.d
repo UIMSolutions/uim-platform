@@ -11,19 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IdentityProviderRepository {
-  bool                   existsById(IdentityProviderId id);
-  IdentityProviderEntity findById(IdentityProviderId id);
+interface IdentityProviderRepository : ITenantRepository!(IdentityProviderEntity, IdentityProviderId) {
 
-  bool                   existsByAlias(string alias_);
-  IdentityProviderEntity findByAlias(string alias_);
+  bool existsByAlias(TenantId tenantId, string alias_);
+  IdentityProviderEntity findByAlias(TenantId tenantId, string alias_);
+  void removeByAlias(TenantId tenantId, string alias_);
 
-  IdentityProviderEntity[] findAll();
-  IdentityProviderEntity   findDefault();
+  bool existsDefault(TenantId tenantId);
+  IdentityProviderEntity findDefault(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
 
-  void save(IdentityProviderEntity idp);
-  void update(IdentityProviderEntity idp);
-  void remove(IdentityProviderId id);
-
-  size_t count();
 }

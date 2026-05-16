@@ -11,19 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScopeRepository {
-  bool        existsById(ScopeId id);
-  ScopeEntity findById(ScopeId id);
+interface ScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
 
   bool        existsByName(string name);
   ScopeEntity findByName(string name);
+  void       removeByName(string name);
 
-  ScopeEntity[] findAll();
+  size_t countByAppId(string appId);
   ScopeEntity[] findByAppId(string appId);
+  void removeByAppId(string appId);
 
-  void save(ScopeEntity scope_);
-  void update(ScopeEntity scope_);
-  void remove(ScopeId id);
-
-  size_t count();
 }

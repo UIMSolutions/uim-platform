@@ -52,6 +52,10 @@ struct CreateObjectRequest {
 }
 
 struct UpdateObjectMetadataRequest {
+  TenantId tenantId;
+  BucketId bucketId;
+  ObjectId objectId;
+
   string contentType;
   string metadata;
   string storageClass;
@@ -107,6 +111,8 @@ struct CreateLifecycleRuleRequest {
 }
 
 struct UpdateLifecycleRuleRequest {
+  TenantId tenantId;
+  LifecycleRuleId lifecycleRuleId;
   string name;
   string prefix;
   string status;
@@ -121,6 +127,7 @@ struct UpdateLifecycleRuleRequest {
 struct CreateCorsRuleRequest {
   TenantId tenantId;
   BucketId bucketId;
+
   string allowedOrigins; // JSON array
   string allowedMethods; // JSON array
   string allowedHeaders; // JSON array
@@ -129,6 +136,9 @@ struct CreateCorsRuleRequest {
 }
 
 struct UpdateCorsRuleRequest {
+  TenantId tenantId;
+  BucketId bucketId;
+  CorsRuleId corsRuleId;
   string allowedOrigins;
   string allowedMethods;
   string allowedHeaders;

@@ -12,24 +12,22 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDatasetRepository : DatasetRepository {
-  private Dataset[string] store;
+class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRepository {
 
-  Dataset findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
-    return null;
+  size_t countByDataSource(TenantId tenantId, DataSourceId dataSourceId) {
+    return findByDataSource(tenantId, dataSourceId).length;
   }
 
-  Dataset[] findAll() {
-    return store.values;
+  Dataset[] filterByDataSource(Dataset[] datasets, DataSourceId dataSourceId) {
+    return datasets.filter!(d => d.dataSourceId == dataSourceId).array;
   }
 
-  void save(Dataset dataset) {
-    store[dataset.id.value] = dataset;
+  Dataset[] findByDataSource(TenantId tenantId, DataSourceId dataSourceId) {
+    return filterByDataSource(findByTenant(tenantId), dataSourceId);
   }
 
-  void remove(EntityId id) {
-    store.remove(id.value);
+  void removeByDataSource(TenantId tenantId, DataSourceId dataSourceId) {
+    foreach (d; findByDataSource(tenantId, dataSourceId))
+      remove(d);
   }
 }

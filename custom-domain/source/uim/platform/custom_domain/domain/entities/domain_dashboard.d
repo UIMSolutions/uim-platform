@@ -32,7 +32,7 @@ struct CertificateExpirationWarning {
     string certificateId;
     string domainName;
     long expiresAt;
-    int daysRemaining;
+    long daysRemaining;
     ExpirationSeverity severity;
 
     Json toJson() const {

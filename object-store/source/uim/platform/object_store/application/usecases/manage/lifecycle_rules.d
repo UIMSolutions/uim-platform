@@ -45,7 +45,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     rule.status = parseRuleStatus(req.status);
     rule.expirationDays = req.expirationDays;
     rule.transitionDays = req.transitionDays;
-    rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
+    rule.transitionStorageClass = req.transitionStorageClass.to!StorageClass;
     rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
 
     ruleRepo.save(rule);
@@ -53,7 +53,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateLifecycleRule(UpdateLifecycleRuleRequest req) {
-    auto rule = ruleRepo.findById(req.tenantId, req.id);
+    auto rule = ruleRepo.findById(req.tenantId, req.lifecycleRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");
 
@@ -68,7 +68,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     if (req.transitionDays > 0)
       rule.transitionDays = req.transitionDays;
     if (req.transitionStorageClass.length > 0)
-      rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
+      rule.transitionStorageClass = req.transitionStorageClass.to!StorageClass;
     if (req.abortIncompleteUploadDays > 0)
       rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
     rule.updatedAt = currentTimestamp();
@@ -77,16 +77,16 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  LifecycleRule getLifecycleRule(TenantId tenantId, LifecycleRuleId id) {
-    return ruleRepo.findById(tenantId, id);
+  LifecycleRule getLifecycleRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
+    return ruleRepo.findById(tenantId, lifecycleRuleId);
   }
 
   LifecycleRule[] listLifecycleRules(TenantId tenantId, BucketId bucketId) {
     return ruleRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deleteLifecycleRule(TenantId tenantId, LifecycleRuleId id) {
-    auto rule = ruleRepo.findById(tenantId, id);
+  CommandResult deleteLifecycleRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
+    auto rule = ruleRepo.findById(tenantId, lifecycleRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");
 

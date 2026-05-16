@@ -11,14 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AppBindingRepository {
-  bool             existsById(AppBindingId id);
-  AppBindingEntity findById(AppBindingId id);
+interface AppBindingRepository : ITenantRepository!(AppBindingEntity, AppBindingId) {
+
+  bool existsByAppGuid(string appGuid);
   AppBindingEntity findByAppGuid(string appGuid);
-  AppBindingEntity[] findAll();
-  AppBindingEntity[] findByTenantId(TenantId tenantId);
-  void save(AppBindingEntity binding);
-  void update(AppBindingEntity binding);
-  void remove(AppBindingId id);
-  size_t count();
+  void removeByAppGuid(string appGuid);
+  
 }

@@ -11,11 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScalingHistoryRepository {
-  bool                   existsById(ScalingHistoryId id);
-  ScalingHistoryEntity   findById(ScalingHistoryId id);
-  ScalingHistoryEntity[] findByAppId(AppBindingId appId);
-  ScalingHistoryEntity[] findByAppIdSince(AppBindingId appId, long sinceTimestamp);
-  void save(ScalingHistoryEntity event);
-  size_t countByAppId(AppBindingId appId);
+interface ScalingHistoryRepository : ITenantRepository!(ScalingHistoryEntity, ScalingHistoryId) {
+
+  size_t countByAppId(TenantId tenantId, AppBindingId appId);
+  ScalingHistoryEntity[] findByAppId(TenantId tenantId, AppBindingId appId);
+  void removeByAppId(TenantId tenantId, AppBindingId appId);
+
+  size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
+  ScalingHistoryEntity[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
+  void removeByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
+  
 }

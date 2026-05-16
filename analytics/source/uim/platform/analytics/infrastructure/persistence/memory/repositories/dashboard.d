@@ -13,40 +13,39 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing DashboardRepository port.
-class MemoryDashboardRepository : DashboardRepository {
-  private Dashboard[string] store;
+class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
 
-  Dashboard findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
-    return null;
+  size_t countByOwner(TenantId tenantId, EntityId ownerId) {
+    return findByOwner(tenantId, ownerId).length;
   }
 
-  Dashboard[] findByOwner(EntityId ownerId) {
-    Dashboard[] result;
-    foreach (d; findAll())
-      if (d.ownerId == ownerId)
-        result ~= d;
-    return result;
+  Dashboard[] filterByOwner(Dashboard[] dashboards, EntityId ownerId) {
+    return dashboards.filter!(d => d.ownerId == ownerId).array;
   }
 
-  Dashboard[] findByStatus(ArtifactStatus status) {
-    Dashboard[] result;
-    foreach (d; findAll())
-      if (d.status == status)
-        result ~= d;
-    return result;
+  Dashboard[] findByOwner(TenantId tenantId, EntityId ownerId) {
+    return filterByOwner(findByTenant(tenantId), ownerId);
   }
 
-  Dashboard[] findAll() {
-    return store.values;
+  void removeByOwner(TenantId tenantId, EntityId ownerId) {
+    foreach (d; findByOwner(tenantId, ownerId))
+      remove(d);
   }
 
-  void save(Dashboard dashboard) {
-    store[dashboard.id.value] = dashboard;
+  size_t countByStatus(TenantId tenantId, ArtifactStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  void remove(EntityId id) {
-    store.remove(id.value);
+  Dashboard[] filterByStatus(Dashboard[] dashboards, ArtifactStatus status) {
+    return dashboards.filter!(d => d.status == status).array;
+  }
+
+  Dashboard[] findByStatus(TenantId tenantId, ArtifactStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, ArtifactStatus status) {
+    foreach (d; findByStatus(tenantId, status))
+      remove(d);
   }
 }

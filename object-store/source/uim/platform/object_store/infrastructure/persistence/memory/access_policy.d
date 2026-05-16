@@ -18,17 +18,17 @@ mixin(ShowModule!());
 @safe:
 class MemoryAccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {
 
-  size_t countByBucket(BucketId bucketId) {
-    return findByBucket(bucketId).length;
+  size_t countByBucket(TenantId tenantId, BucketId bucketId) {
+    return findByBucket(tenantId, bucketId).length;
   }
   AccessPolicy[] filterByBucket(AccessPolicy[] policies, BucketId bucketId) {
     return policies.filter!(e => e.bucketId == bucketId).array;
   }
-  AccessPolicy[] findByBucket(BucketId bucketId) {
-    return findAll().filter!(e => e.bucketId == bucketId).array;
+  AccessPolicy[] findByBucket(TenantId tenantId, BucketId bucketId) {
+    return filterByBucket(findByTenant(tenantId), bucketId);
   }
-  void removeByBucket(BucketId bucketId) {
-    foreach (e; findByBucket(bucketId))
+  void removeByBucket(TenantId tenantId, BucketId bucketId) {
+    foreach (e; findByBucket(tenantId, bucketId))
       remove(e);
   }
 

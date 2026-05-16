@@ -39,14 +39,11 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  PlanningModelResponse[] listPlanningModels() {
-    PlanningModelResponse[] result;
-    foreach (pm; repo.findAll())
-      result ~= PlanningModelResponse.fromEntity(pm);
-    return result;
+  PlanningModelResponse[] listPlanningModels(TenantId tenantId) {
+    return repo.findByTenant(tenantId).map!(pm => PlanningModelResponse.fromEntity(pm)).array;
   }
 
-  PlanningModelResponse lockPlanningModel(string id) {
+  PlanningModelResponse lockPlanningModel(TenantId tenantId, string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -55,7 +52,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse approvePlanningModel(string id) {
+  PlanningModelResponse approvePlanningModel(TenantId tenantId, string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -64,7 +61,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  CommandResult deletePlanningModel(string id) {
+  CommandResult deletePlanningModel(TenantId tenantId, string id) {
     repo.remove(EntityId(id));
   }
 }

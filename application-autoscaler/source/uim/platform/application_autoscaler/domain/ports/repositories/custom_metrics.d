@@ -11,12 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomMetricRepository {
-  bool                existsById(CustomMetricId id);
-  CustomMetricEntity  findById(CustomMetricId id);
+interface CustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
+
+  size_t countByAppId(TenantId tenantId, AppBindingId appId);
   CustomMetricEntity[] findByAppId(AppBindingId appId);
+  void removeByAppId(TenantId tenantId, AppBindingId appId);
+
+  size_t countByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
   CustomMetricEntity[] findByAppIdAndName(AppBindingId appId, string metricName);
-  void save(CustomMetricEntity metric);
-  void removeOlderThan(AppBindingId appId, long cutoffTimestamp);
-  size_t countByAppId(AppBindingId appId);
+  void removeByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
+  
 }

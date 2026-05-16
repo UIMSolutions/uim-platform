@@ -11,14 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScalingPolicyRepository {
-  bool                existsById(PolicyId id);
-  ScalingPolicyEntity findById(PolicyId id);
-  ScalingPolicyEntity findByAppId(AppBindingId appId);
-  ScalingPolicyEntity[] findAll();
-  ScalingPolicyEntity[] findByTenantId(TenantId tenantId);
-  void save(ScalingPolicyEntity policy);
-  void update(ScalingPolicyEntity policy);
-  void remove(PolicyId id);
-  size_t count();
+interface ScalingPolicyRepository : ITenantRepository!(ScalingPolicyEntity, PolicyId) {
+
+  size_t countByAppId(TenantId tenantId, AppBindingId appId);
+  ScalingPolicyEntity findByAppId(TenantId tenantId, AppBindingId appId);
+  void removeByAppId(TenantId tenantId, AppBindingId appId);
+  
 }

@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing - access policy persistence.
 interface AccessPolicyRepository : ITenantRepository!(AccessPolicy, AccessPolicyId) {
 
-  size_t countByBucket(BucketId bucketId);
-  AccessPolicy[] findByBucket(BucketId bucketId);
-  void removeByBucket(BucketId bucketId);
+  size_t countByBucket(TenantId tenantId, BucketId bucketId);
+  AccessPolicy[] findByBucket(TenantId tenantId, BucketId bucketId);
+  void removeByBucket(TenantId tenantId, BucketId bucketId);
 
 }

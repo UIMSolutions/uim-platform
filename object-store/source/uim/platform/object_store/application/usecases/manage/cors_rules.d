@@ -34,6 +34,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
 
     CorsRule rule;
     rule.initEntity(req.tenantId);
+
     rule.bucketId = req.bucketId;
     rule.allowedOrigins = req.allowedOrigins;
     rule.allowedMethods = req.allowedMethods;
@@ -46,7 +47,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateCorsRule(UpdateCorsRuleRequest req) {
-    auto rule = corsRules.findById(req.tenantId, req.id);
+    auto rule = corsRules.findById(req.tenantId, req.corsRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 
@@ -66,16 +67,16 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CorsRule getCorsRule(CorsRuleId id) {
-    return corsRules.findById(tenantId, id);
+  CorsRule getCorsRule(TenantId tenantId, CorsRuleId corsRuleId) {
+    return corsRules.findById(tenantId, corsRuleId);
   }
 
-  CorsRule[] listCorsRules(BucketId bucketId) {
+  CorsRule[] listCorsRules(TenantId tenantId, BucketId bucketId) {
     return corsRules.findByBucket(bucketId);
   }
 
-  CommandResult deleteCorsRule(CorsRuleId id) {
-    auto rule = corsRules.findById(tenantId, id);
+  CommandResult deleteCorsRule(TenantId tenantId, CorsRuleId corsRuleId) {
+    auto rule = corsRules.findById(tenantId, corsRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "CORS rule not found");
 

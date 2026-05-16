@@ -57,8 +57,8 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
 
     if (req.name.length > 0)
       policy.name = req.name;
-    if (req.effect.length > 0)
-      policy.effect = parseEffect(req.effect);
+    // if (req.effect.length > 0)
+    //   policy.effect = parseEffect(req.effect);
     if (req.principal.length > 0)
       policy.principal = req.principal;
     if (req.actions.length > 0)

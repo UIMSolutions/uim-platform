@@ -11,10 +11,9 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface PredictionRepository {
-  Prediction findById(EntityId id);
-  Prediction[] findByDataset(EntityId datasetId);
-  Prediction[] findAll();
-  void save(Prediction prediction);
-  void remove(EntityId id);
+interface PredictionRepository : ITenantRepository!(Prediction, PredictionId) {
+  
+  size_t countByDataset(TenantId tenantId, EntityId datasetId);
+  Prediction[] findByDataset(TenantId tenantId, EntityId datasetId);
+  void removeByDataset(TenantId tenantId, EntityId datasetId);
 }

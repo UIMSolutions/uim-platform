@@ -89,7 +89,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateObjectMetadata(UpdateObjectMetadataRequest req) {
     auto obj = objectRepo.findById(req.tenantId, req.objectId);
-    if (obj.isNull || obj.isNull)
+    if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 
     if (req.contentType.length > 0)
@@ -104,8 +104,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, obj.id.value, "");
   }
 
-  StorageObject getObject(TenantId tenantId, ObjectId id) {
-    return objectRepo.findById(tenantId, id);
+  StorageObject getObject(TenantId tenantId, ObjectId objectId) {
+    return objectRepo.findById(tenantId, objectId);
   }
 
   StorageObject getObjectByKey(TenantId tenantId, BucketId bucketId, string key) {
@@ -129,7 +129,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 
-    auto bucket = bucketRepo.findById(tenantId, obj.bucketId);
+    auto bucket = bucketRepo.findById(req.tenantId, obj.bucketId);
 
     // If versioning enabled, add a delete marker instead of removing
     if (bucket !is null && bucket.versioningEnabled) {
