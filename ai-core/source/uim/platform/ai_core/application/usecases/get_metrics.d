@@ -75,7 +75,7 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     return CommandResult(true,  metric.id.value, "");
   }
 
-  Metric[] listMetrics(TenantId tenantId, ExecutionId execId, ResourceGroupId rgId) {
+  Metric[] listMetrics(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
     return repo.findByExecution(tenantId, rgId, execId);
   }
 

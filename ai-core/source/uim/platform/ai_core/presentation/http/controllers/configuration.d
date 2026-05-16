@@ -34,7 +34,7 @@ class ConfigurationController : ManageController {
     auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
     auto configs = scenarioId.isEmpty
-      ? usecase.list(tenantId, rgId) : usecase.listByScenario(tenantId, scenarioId, rgId);
+      ? usecase.listConfigurations(tenantId, rgId) : usecase.listConfigurations(tenantId, rgId, scenarioId);
 
     auto jarr = Json.emptyArray;
     foreach (c; configs) {
@@ -63,14 +63,17 @@ class ConfigurationController : ManageController {
   override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     CreateConfigurationRequest r;
     r.tenantId = req.getTenantId;
+    auto j = req.json;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.scenarioId = ScenarioId(req.params.get("scenarioId", ""));
-    r.executableId = req.params.get("executableId", "");
+    r.executableId = ExecutableId(req.params.get("executableId", ""));
     r.name = req.params.get("name", "");
-    r.parameterValues = jsonKeyValuePairs(req, "parameterBindings");
-    r.inputArtifacts = jsonKeyValuePairs(req, "inputArtifactBindings");
 
-    auto result = usecase.create(r);
+    // TODO: Decide if we want to allow parameter and artifact bindings at configuration level or only at execution level. If we allow at configuration level, we need to add them to the create configuration request and handle them here. 
+    //  r.parameterValues = jsonKeyValuePairs(j, "parameterBindings");
+    // r.inputArtifacts = jsonKeyValuePairs(j, "inputArtifactBindings");
+  
+    auto result = usecase.createConfiguration(r);
     if (result.success) {
       auto resp = Json.emptyObject
         .set("id", result.id)

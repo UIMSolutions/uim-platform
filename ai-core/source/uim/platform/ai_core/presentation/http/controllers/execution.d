@@ -37,7 +37,7 @@ class ExecutionController : PlatformController {
       CreateExecutionRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.configurationId = j.getString("configurationId");
+      r.configurationId = ConfigurationId(j.getString("configurationId"));
 
       auto result = usecase.createExecution(r);
       if (result.success) {
@@ -103,9 +103,9 @@ class ExecutionController : PlatformController {
       r.tenantId = tenantId;
       r.resourceGroupId = rgId;
       r.executionId = id;
-      r.targetStatus = TargetStatus(j.getString("targetStatus"));
+      r.targetStatus = j.getString("targetStatus");
 
-      auto result = usecase.patch(r);
+      auto result = usecase.patchExecution(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)

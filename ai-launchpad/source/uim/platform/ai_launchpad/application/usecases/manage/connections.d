@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ai_launchpad.application.use_cases.manage.connections;
+module uim.platform.ai_launchpad.application.usecases.manage.connections;
 // import uim.platform.ai_launchpad.domain.ports.repositories.connections;
 // import uim.platform.ai_launchpad.domain.entities.connection : Connection;
 // import uim.platform.ai_launchpad.domain.services.connection_validator;
@@ -28,6 +28,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   CommandResult createConnection(CreateConnectionRequest r) {
     Connection c;
     c.initEntity(r.tenantId);
+    
     c.name = r.name;
     c.url = r.url;
     c.authUrl = r.authUrl;

@@ -36,7 +36,7 @@ class ArtifactController : PlatformController {
       CreateArtifactRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = j.getString("scenarioId");
+      r.scenarioId = ScenarioId(j.getString("scenarioId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.kind = j.getString("kind");
@@ -62,7 +62,7 @@ class ArtifactController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarioId = req.params.get("scenarioId", "");
+      auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
       auto artifacts = scenarioId.isEmpty
         ? usecase.listArtifacts(tenantId, rgId)
