@@ -55,7 +55,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateConnection(UpdateConnectionRequest r) {
     auto connection = repo.findById(r.spaceId, r.connectionId);
-    if (connection.id.isEmpty)
+    if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 
     connection.name = r.name;
@@ -74,7 +74,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteConnection(ConnectionId id, SpaceId spaceId) {
     auto connection = repo.findById(spaceId, id);
-    if (connection.id.isEmpty)
+    if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 
     repo.remove(connection);

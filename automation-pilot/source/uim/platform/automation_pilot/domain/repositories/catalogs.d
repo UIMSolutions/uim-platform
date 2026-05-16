@@ -19,6 +19,6 @@ interface CatalogRepository : ITenantRepository!(Catalog, CatalogId) {
 
     size_t countByType(TenantId tenantId, CatalogType catalogType);
     Catalog[] findByType(TenantId tenantId, CatalogType catalogType);
-    void removeByType(CatalogType catalogType);
+    void removeByType(TenantId tenantId, CatalogType catalogType);
 
 }

@@ -19,6 +19,6 @@ interface ContentConnectorRepository : ITenantRepository!(ContentConnector, Cont
 
     size_t countByStatus(TenantId tenantId, ConnectorStatus status);
     ContentConnector[] findByStatus(TenantId tenantId, ConnectorStatus status);
-    void removeByStatus(ConnectorStatus status);
+    void removeByStatus(TenantId tenantId, ConnectorStatus status);
 
 }

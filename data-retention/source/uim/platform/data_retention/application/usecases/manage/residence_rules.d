@@ -64,7 +64,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id) {
         auto rule = repo.findById(tenantId, id);
-        if (rule.id.isEmpty)
+        if (rule.isNull)
             return CommandResult(false, "", "Residence rule not found");
 
         repo.remove(rule);

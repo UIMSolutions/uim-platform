@@ -52,7 +52,7 @@ class ProjectTemplateController : PlatformController {
             auto id = ProjectTemplateId(extractIdFromPath(path));
 
             auto e = usecase.getProjectTemplate(tenantId, id);
-            if (e.id.isEmpty) {
+            if (e.isNull) {
                 writeError(res, 404, "Project template not found");
                 return;
             }

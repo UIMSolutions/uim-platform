@@ -30,7 +30,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
         ServiceAccount sa;
         sa.initEntity(dto.tenantId, dto.createdBy);
         
-        sa.id = ServiceAccountId(dto.id);
+        sa.id = dto.serviceAccountId;
         sa.name = dto.name;
         sa.description = dto.description;
         sa.clientId = dto.clientId;
@@ -44,7 +44,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateServiceAccount(ServiceAccountDTO dto) {
-        auto existing = repo.findById(dto.tenantId, ServiceAccountId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.serviceAccountId);
         if (existing.isNull)
             return CommandResult(false, "", "Service account not found");
 

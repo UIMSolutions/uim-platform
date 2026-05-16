@@ -33,8 +33,9 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     CommandResult createCommand(CommandDTO dto) {
         Command cmd;
         cmd.initEntity(dto.tenantId, dto.createdBy);
-        cmd.id = CommandId(dto.id);
-        cmd.catalogId = CatalogId(dto.catalogId);
+
+        cmd.id = dto.commandId;
+        cmd.catalogId = dto.catalogId;
         cmd.name = dto.name;
         cmd.description = dto.description;
         cmd.version_ = dto.version_;
@@ -48,11 +49,11 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid command data");
 
         repo.save(cmd);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, cmd.id.value, "");
     }
 
     CommandResult updateCommand(CommandDTO dto) {
-        auto existing = repo.findById(dto.commandId);
+        auto existing = repo.findById(dto.tenantId, dto.commandId);
         if (existing.isNull)
             return CommandResult(false, "", "Command not found");
             
@@ -64,10 +65,10 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         if (dto.timeout.length > 0) existing.timeout = dto.timeout;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCommand(CommandId id) {
+    CommandResult deleteCommand(TenantId tenantId, CommandId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Command not found");

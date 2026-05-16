@@ -55,7 +55,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
 
   CommandResult patchDataFlow(PatchDataFlowRequest r) {
     auto flow = repo.findById(r.spaceId, r.dataFlowId);
-    if (flow.id.isEmpty)
+    if (flow.isNull)
       return CommandResult(false, "", "Data flow not found");
 
     import core.time : MonoTime;
@@ -67,7 +67,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteDataFlow(SpaceId spaceId, DataFlowId id) {
     auto flow = repo.findById(spaceId, id);
-    if (flow.id.isEmpty)
+    if (flow.isNull)
       return CommandResult(false, "", "Data flow not found");
 
     repo.remove(flow);

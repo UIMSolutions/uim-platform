@@ -28,19 +28,20 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
 
     CommandResult createCommandInput(CommandInputDTO dto) {
         CommandInput ci;
-        ci.id = CommandInputId(dto.id);
-        ci.tenantId = dto.tenantId;
+        ci.initEntity(dto.tenantId, dto.createdBy);
+        
+        ci.id = dto.commandInputId;
         ci.name = dto.name;
         ci.description = dto.description;
         ci.keys = dto.keys;
         ci.values = dto.values;
         ci.version_ = dto.version_;
         ci.commandId = dto.commandId;
-        ci.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidCommandInput(ci))
             return CommandResult(false, "", "Invalid command input data");
+
         repo.save(ci);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, ci.id.value, "");
     }
 
     CommandResult updateCommandInput(CommandInputDTO dto) {

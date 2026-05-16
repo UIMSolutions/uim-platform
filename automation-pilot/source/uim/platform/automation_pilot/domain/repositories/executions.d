@@ -19,6 +19,6 @@ interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
 
     size_t countByStatus(TenantId tenantId, ExecutionStatus status);
     Execution[] findByStatus(TenantId tenantId, ExecutionStatus status);
-    void removeByStatus(ExecutionStatus status);
+    void removeByStatus(TenantId tenantId, ExecutionStatus status);
 
 }

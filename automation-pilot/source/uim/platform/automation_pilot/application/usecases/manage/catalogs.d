@@ -33,7 +33,8 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     CommandResult createCatalog(CatalogDTO dto) {
         Catalog c;
         c.initEntity(dto.tenantId, dto.createdBy);
-        c.id = CatalogId(dto.id);
+
+        c.id = dto.catalogId;
         c.name = dto.name;
         c.description = dto.description;
         c.tags = dto.tags;
@@ -42,11 +43,11 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
         if (!AutomationValidator.isValidCatalog(c))
             return CommandResult(false, "", "Invalid catalog data");
         repo.save(c);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.catalogId.value, "");
     }
 
     CommandResult updateCatalog(CatalogDTO dto) {
-        auto existing = repo.findById(CatalogId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.catalogId);
         if (existing.isNull)
             return CommandResult(false, "", "Catalog not found");
 

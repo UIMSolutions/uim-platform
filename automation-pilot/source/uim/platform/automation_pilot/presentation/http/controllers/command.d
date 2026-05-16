@@ -68,8 +68,8 @@ class CommandController : PlatformController {
             auto j = req.json;
 
             CommandDTO dto;
-            dto.id = CommandId(j.getString("id"));
             dto.tenantId = tenantId;
+            dto.commandId = CommandId(j.getString("id"));
             dto.catalogId = CatalogId(j.getString("catalogId"));
             dto.name = j.getString("name");
             dto.description = j.getString("description");

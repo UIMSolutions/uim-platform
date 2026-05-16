@@ -51,7 +51,7 @@ class ExtensionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
             auto e = usecase.getExtension(tenantId, id);
-            if (e.id.isEmpty) { writeError(res, 404, "Extension not found"); return; }
+            if (e.isNull) { writeError(res, 404, "Extension not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
