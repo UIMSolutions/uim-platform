@@ -1,9 +1,9 @@
-name "sap-event-mesh"
-description "SAP Event Mesh Service - Namespace-based pub/sub messaging, message queues, webhook delivery, event channels, and message client management"
+name "events"
+description "Event Mesh Service - Namespace-based pub/sub messaging, message queues, webhook delivery, event channels, and message client management"
 authors "Ozan Nurettin Suel"
 copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
-targetName "uim-sap-event-mesh-platform-service"
+targetName "uim-event-mesh-platform-service"
 
 dependency "uim-platform:service" path=".."
 

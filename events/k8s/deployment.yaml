@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sap-event-mesh
+  namespace: uim-platform
+  labels:
+    app: sap-event-mesh
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sap-event-mesh
+  template:
+    metadata:
+      labels:
+        app: sap-event-mesh
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: sap-event-mesh
+        image: uim-platform/sap-event-mesh:latest
+        ports:
+        - containerPort: 8109
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: sap-event-mesh-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8109
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8109
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ "ALL" ]

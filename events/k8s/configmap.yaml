@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sap-event-mesh-config
+  namespace: uim-platform
+  labels:
+    app: sap-event-mesh
+    part-of: uim-platform
+data:
+  SAP_EVENT_MESH_HOST: "0.0.0.0"
+  SAP_EVENT_MESH_PORT: "8109"
