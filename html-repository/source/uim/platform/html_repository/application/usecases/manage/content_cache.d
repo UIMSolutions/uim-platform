@@ -5,14 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.content_cache;
 
-import uim.platform.html_repository.domain.ports.repositories.content_caches;
-import uim.platform.html_repository.domain.entities.content_cache;
-import uim.platform.html_repository.domain.services.content_delivery_service;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.domain.ports.repositories.content_caches;
+// import uim.platform.html_repository.domain.entities.content_cache;
+// import uim.platform.html_repository.domain.services.content_delivery_service;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import std.uuid : randomUUID;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 
 class ManageContentCacheUseCase { // TODO: UIMUseCase {
     private ContentCacheRepository repo;

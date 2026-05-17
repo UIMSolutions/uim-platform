@@ -5,12 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.overview;
 
-import uim.platform.html_repository.application.usecases.get_overview;
-import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.application.usecases.get_overview;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.htmls;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
 
+@safe:
 
 class OverviewController : PlatformController {
   private GetOverviewUseCase usecase;

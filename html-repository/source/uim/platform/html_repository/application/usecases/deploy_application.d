@@ -5,18 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.deploy_application;
 
-import uim.platform.html_repository.domain.ports.repositories.deployment_records;
-import uim.platform.html_repository.domain.ports.repositories.html_apps;
-import uim.platform.html_repository.domain.ports.repositories.app_versions;
-import uim.platform.html_repository.domain.entities.deployment_record;
-import uim.platform.html_repository.domain.entities.html_app;
-import uim.platform.html_repository.domain.entities.app_version;
-import uim.platform.html_repository.domain.services.deployment_validator;
-import uim.platform.html_repository.domain.types;
-import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.domain.ports.repositories.deployment_records;
+// import uim.platform.html_repository.domain.ports.repositories.html_apps;
+// import uim.platform.html_repository.domain.ports.repositories.app_versions;
+// import uim.platform.html_repository.domain.entities.deployment_record;
+// import uim.platform.html_repository.domain.entities.html_app;
+// import uim.platform.html_repository.domain.entities.app_version;
+// import uim.platform.html_repository.domain.services.deployment_validator;
+// import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.application.dto;
 
-import std.uuid : randomUUID;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
 
 class DeployApplicationUseCase { // TODO: UIMUseCase {
     private DeploymentRecordRepository deploymentRepo;

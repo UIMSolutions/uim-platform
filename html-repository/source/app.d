@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.html_repository.infrastructure.config;
-import uim.platform.html_repository.infrastructure.container;
+// import uim.platform.html_repository.infrastructure.config;
+// import uim.platform.html_repository.infrastructure.container;
+
+import uim.platform.html_repository;
+
+mixin(ShowModule!());
 
 @safe:
-
 version (unittest) {
 } else {
   void main() {
