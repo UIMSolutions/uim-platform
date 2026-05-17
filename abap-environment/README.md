@@ -18,7 +18,7 @@ Clean/Hexagonal architecture with four layers:
 └─────────────────────────────────────────┘
 ```
 
-- **Domain**: System instances, software components, communication arrangements, service bindings, business users, business roles, transport requests, application jobs
+- **Domain**: System instances, software components, communication arrangements, service bindings, business users, business roles, transport requests, catalog assignments, application jobs, execution logs
 - **Application**: Use cases orchestrating domain logic, request/response DTOs
 - **Infrastructure**: In-memory repository adapters, environment-based configuration, dependency injection container
 - **Presentation**: HTTP controllers with JSON serialization, health endpoint
@@ -65,14 +65,14 @@ dub run
 dub test
 ```
 
-The service starts on port **8090** by default.
+The service starts on port **10000** by default.
 
 ## Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `ABAP_HOST` | `0.0.0.0` | Bind address |
-| `ABAP_PORT` | `8090` | Listen port |
+| `ABAP_PORT` | `10000` | Listen port |
 
 ## Testing
 
