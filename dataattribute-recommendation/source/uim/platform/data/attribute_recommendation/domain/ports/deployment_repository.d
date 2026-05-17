@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId);

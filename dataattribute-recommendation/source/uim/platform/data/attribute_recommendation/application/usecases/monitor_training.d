@@ -5,14 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.application.usecases.monitor_training;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.training_job;
-import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
-import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.training_job;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+
+import uim.platform.data.attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
 struct TrainingJobSummary {
   TrainingJobId jobId;

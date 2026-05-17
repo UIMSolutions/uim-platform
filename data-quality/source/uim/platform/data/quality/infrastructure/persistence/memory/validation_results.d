@@ -5,13 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.persistence.memory.validation_results;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_result;
-import uim.platform.data.quality.domain.ports.repositories.validation_results;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_result;
+// import uim.platform.data.quality.domain.ports.repositories.validation_results;
 
+import uim.platform.data.quality;
 
- 
+mixin(ShowModule!());
 
+@safe:
 class MemoryValidationResultRepository : TenantRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

@@ -7,14 +7,18 @@ module uim.platform.data.attribute_recommendation.application.usecases.manage.de
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
-import uim.platform.data.attribute_recommendation.domain.entities.training_job;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
-import uim.platform.data.attribute_recommendation.application.dto;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+// import uim.platform.data.attribute_recommendation.domain.entities.training_job;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+// import uim.platform.data.attribute_recommendation.application.dto;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   private DeploymentRepository repo;
   private TrainingJobRepository jobRepo;

@@ -7,12 +7,16 @@ module uim.platform.data.attribute_recommendation.application.usecases.manage.da
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.dataset;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
-import uim.platform.data.attribute_recommendation.application.dto;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.dataset;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
+// import uim.platform.data.attribute_recommendation.application.dto;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDatasetsUseCase { // TODO: UIMUseCase {
   private DatasetRepository repo;
   private DataRecordRepository recordRepo;

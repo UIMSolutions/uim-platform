@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.dataset;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.dataset;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
 
   bool existsByName(TenantId tenantId, string name);
