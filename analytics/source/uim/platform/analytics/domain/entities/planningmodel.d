@@ -29,11 +29,7 @@ struct PlanningModel {
       .set("datasetId", datasetId.value)
       .set("granularity", granularity.to!string)
       .set("planStatus", planStatus.to!string)
-      .set("versions", versions.map!(v => Json.emptyObject
-        .set("id", v.id.value)
-        .set("name", v.name)
-        .set("versionType", v.versionType.to!string)
-        .set("isReadOnly", v.isReadOnly)).array.toJson);
+      .set("versions", versions.map!(v => v.toJson()).array.toJson);
     return json;
   }
   static PlanningModel create(string name, string description, string datasetId,
@@ -53,11 +49,17 @@ struct PlanningModel {
   void approve() { planStatus = PlanningStatus.Approved; }
 }
 
-
-
 struct PlanningVersion {
   EntityId id;
   string name;
   VersionType versionType;
   bool isReadOnly;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("id", id.value)
+      .set("name", name)
+      .set("versionType", versionType.to!string)
+      .set("isReadOnly", isReadOnly);
+  }
 }

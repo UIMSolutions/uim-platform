@@ -33,7 +33,9 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto configs = useCase.listAuditConfigs();
+    auto tenantId = req.getTenantId;
+    
+    auto configs = useCase.listAuditConfigs(tenantId);
     auto arr = configs.map!(c => c.toJson).array.toJson;
 
     return Json.emptyObject
