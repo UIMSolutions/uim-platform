@@ -25,7 +25,7 @@ class OperationController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             
-            auto items = usecase.listByTenant(tenantId);
+            auto items = usecase.listOperations(tenantId);
             auto jarr = Json.emptyArray;
             foreach (e; items) {
                 jarr ~= Json.emptyObject
@@ -43,8 +43,9 @@ class OperationController : PlatformController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto e = usecase.getById(tenantId, OperationId(id));
+            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
+
+            auto e = usecase.getOperation(tenantId, (id));
             if (e.isNull) { writeError(res, 404, "Operation not found"); return; }
             res.writeJsonBody(Json.emptyObject
                 .set("id", e.id.value)
@@ -55,6 +56,7 @@ class OperationController : PlatformController {
                 .set("description", e.description)
                 .set("errorMessage", e.errorMessage)
                 .set("createdAt", e.createdAt), 200);
+
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -62,6 +64,7 @@ class OperationController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             CreateOperationRequest r;
             r.tenantId = tenantId;
             r.resourceId = j.getString("resourceId");
@@ -79,10 +82,11 @@ class OperationController : PlatformController {
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
             UpdateOperationRequest r;
             r.tenantId = tenantId;
+            r.operationId = id;
             r.status = j.getString("status");
             r.errorMessage = j.getString("errorMessage");
 
