@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.provisioning_log;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, ProvisioningLogId), ProvisioningLogRepository {
 
   size_t countByJob(TenantId tenantId, ProvisioningJobId jobId) {

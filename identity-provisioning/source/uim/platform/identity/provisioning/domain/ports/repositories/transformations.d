@@ -5,15 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.ports.repositories.transformations;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.transformation;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.transformation;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:  
 interface TransformationRepository : ITenantRepository!(Transformation, TransformationId) {
 
-
-  size_t countBySystem(string systemtenantId, id tenantId);
-  Transformation[] findBySystem(string systemtenantId, id tenantId);
-  void removeBySystem(string systemtenantId, id tenantId);
+  size_t countBySystem(TenantId tenantId, string systemtenantId);
+  Transformation[] findBySystem(TenantId tenantId, string systemtenantId);
+  void removeBySystem(TenantId tenantId, string systemtenantId);
 
   size_t countBySystemRole(TenantId tenantId, SystemRole role);
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role);

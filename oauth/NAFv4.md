@@ -1,302 +1,121 @@
-# OAuth 2.0 Service — NAFv4 Architecture Views
+# NAF v4 Architecture Description — OAuth Service
 
-## C1 — Capability Taxonomy
+> NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
+> OAuth Service — OAuth 2.0 client management, access and refresh token lifecycle,
+> authorization codes, scope definitions, and branding configuration modelled on
+> SAP Authorization and Trust Management Service OAuth flows.
 
-```mermaid
-graph TB
-    OA[OAuth 2.0 Service]
-    OA --> OCM[OAuth Client Management]
-    OA --> OSM[OAuth Scope Management]
-    OA --> ATM[Access Token Management]
-    OA --> RTM[Refresh Token Management]
-    OA --> ACM[Authorization Code Management]
-    OA --> BCM[Branding Configuration]
+---
 
-    OCM --> OCM1[Client Registration]
-    OCM --> OCM2[Client Types - Confidential/Public]
-    OCM --> OCM3[Redirect URI Management]
-    OCM --> OCM4[Grant Type Configuration]
+## 1. NAF v4 Grid Mapping
 
-    OSM --> OSM1[Scope Definition]
-    OSM --> OSM2[Application Scope Binding]
-    OSM --> OSM3[Scope Status Management]
-    OSM --> OSM4[Tenant Scope Isolation]
+| NAF View | Viewpoint | Covered Below |
+|---|---|---|
+| **NCV** | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** | NSOV-2 Service Definitions | §3 |
+| **NOV** | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** | NLV-1 Logical Data Model | §5 |
+| **NPV** | NPV-1 Physical Deployment | §6 |
+| **NIV** | NIV-1 Information Structure | §7 |
 
-    ATM --> ATM1[Token Issuance]
-    ATM --> ATM2[Token Validation]
-    ATM --> ATM3[Token Revocation]
-    ATM --> ATM4[Token Expiration]
+---
 
-    RTM --> RTM1[Refresh Token Issuance]
-    RTM --> RTM2[Token Rotation]
-    RTM --> RTM3[Refresh Token Revocation]
-    RTM --> RTM4[Access Token Association]
+## 2. Capability View (NCV)
 
-    ACM --> ACM1[Code Generation]
-    ACM --> ACM2[Single-Use Enforcement]
-    ACM --> ACM3[Redirect URI Binding]
-    ACM --> ACM4[Code Expiration]
+### C1 – Capability Taxonomy
 
-    BCM --> BCM1[Logo Configuration]
-    BCM --> BCM2[Color Theming]
-    BCM --> BCM3[Page Title and Footer]
-    BCM --> BCM4[Custom CSS]
+```
+OAuth
+├── C1.1  Client Management
+│   ├── C1.1.1  Register OAuth clients
+│   └── C1.1.2  Client secret management
+│
+├── C1.2  Token Management
+│   ├── C1.2.1  Access token issuance and revocation
+│   └── C1.2.2  Refresh token management
+│
+├── C1.3  Authorization Code Flow
+│   └── C1.3.1  Authorization code issuance and exchange
+│
+├── C1.4  Scope Management
+│   └── C1.4.1  Define and publish OAuth scopes
+│
+├── C1.5  Branding
+│   └── C1.5.1  Custom consent page branding
+│
+└── C1.6  Cross-Cutting
+    ├── C1.6.1  Tenant isolation
+    └── C1.6.2  Health monitoring
 ```
 
-## C2 — Service Taxonomy
+### C2 – Enterprise Vision
 
-```mermaid
-graph TB
-    subgraph "OAuth 2.0 Platform Service"
-        API[REST API Layer]
-        APP[Application Layer]
-        DOM[Domain Layer]
-        INF[Infrastructure Layer]
-    end
+| Aspect | Description |
+|---|---|
+| **Mission** | Provide OAuth 2.0 server capabilities modelled on SAP XSUAA OAuth flows. |
+| **Vision** | Enable all UIM Platform services to delegate authentication and authorisation to a central standards-compliant OAuth provider. |
+| **Scope** | OAuth clients, access tokens, refresh tokens, authorization codes, scopes, and branding configurations. |
+| **Stakeholders** | Platform Architects, Application Developers, Security Administrators. |
 
-    subgraph "Consumed Services"
-        IAS[Identity Authentication]
-        IDS[Identity Directory]
-        AUD[Audit Log Service]
-        CRS[Credential Store]
-    end
+---
 
-    API --> APP
-    APP --> DOM
-    DOM --> INF
+## 3. Service View (NSV)
 
-    API -.-> IAS
-    INF -.-> IDS
-    INF -.-> AUD
-    INF -.-> CRS
+| Service ID | Name | Path Prefix | Methods |
+|---|---|---|---|
+| SVC-CLIENT-CRUD | OAuth Client | `/api/v1/oauth-clients` | GET, POST, PUT, DELETE |
+| SVC-AT-CRUD | Access Token | `/api/v1/access-tokens` | GET, POST, DELETE |
+| SVC-RT-CRUD | Refresh Token | `/api/v1/refresh-tokens` | GET, DELETE |
+| SVC-AC-CRUD | Authorization Code | `/api/v1/authorization-codes` | GET, POST |
+| SVC-SCOPE-CRUD | OAuth Scope | `/api/v1/oauth-scopes` | GET, POST, DELETE |
+| SVC-BRAND-CRUD | Branding Config | `/api/v1/branding-configs` | GET, POST, PUT |
+| SVC-HLTH | Health Check | `/api/v1/health` | GET |
+
+---
+
+## 4. Operational View (NOV)
+
+```
+┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
+│  Client Application │ ─────────────────> │  OAuth Service               │
+│  / User Agent       │                    │  port 8114                    │
+└────────────────────┘                    └──────────────────────────────┘
 ```
 
-## L1 — Logical Data Model
+---
 
-```mermaid
-erDiagram
-    OAUTH_CLIENT ||--o{ ACCESS_TOKEN : issues
-    OAUTH_CLIENT ||--o{ REFRESH_TOKEN : issues
-    OAUTH_CLIENT ||--o{ AUTHORIZATION_CODE : generates
-    OAUTH_CLIENT }o--o{ OAUTH_SCOPE : uses
-    ACCESS_TOKEN ||--o| REFRESH_TOKEN : "paired with"
+## 5. Logical View (NLV)
 
-    OAUTH_CLIENT {
-        string id PK
-        TenantId tenantId
-        string clientId
-        string clientSecret
-        string name
-        string clientType
-        string status
-        string redirectUris
-        string allowedScopes
-        string grantTypes
-        long accessTokenValidity
-        long refreshTokenValidity
-    }
+| Entity | Key Relationships |
+|---|---|
+| `OAuthClient` | Registered application with scopes |
+| `OAuthScope` | Permission scope definition |
+| `AccessToken` | Short-lived bearer token |
+| `RefreshToken` | Long-lived token for access token renewal |
+| `AuthorizationCode` | One-time code exchanged for tokens |
+| `BrandingConfig` | Custom consent page styling |
 
-    OAUTH_SCOPE {
-        string id PK
-        TenantId tenantId
-        string applicationId
-        string name
-        string description
-        string status
-    }
+---
 
-    ACCESS_TOKEN {
-        string id PK
-        TenantId tenantId
-        string tokenValue
-        string tokenType
-        string status
-        string clientId FK
-        UserId userId
-        string scopes
-        long expiresAt
-    }
+## 6. Physical View (NPV)
 
-    REFRESH_TOKEN {
-        string id PK
-        TenantId tenantId
-        string tokenValue
-        string status
-        string clientId FK
-        UserId userId
-        string scopes
-        string accessTokenId FK
-        long expiresAt
-    }
-
-    AUTHORIZATION_CODE {
-        string id PK
-        TenantId tenantId
-        string code
-        string clientId FK
-        UserId userId
-        string redirectUri
-        string scopes
-        string status
-        long expiresAt
-    }
-
-    BRANDING_CONFIG {
-        string id PK
-        TenantId tenantId
-        string name
-        string logoUrl
-        string primaryColor
-        string secondaryColor
-        string pageTitle
-        string customCss
-    }
+```
+Kubernetes Cluster — Namespace: uim-platform
+├── ConfigMap: oauth-config
+│   OAUTH_HOST: "0.0.0.0"
+│   OAUTH_PORT: "8114"
+├── Deployment: oauth  port: 8114
+└── Service: oauth (ClusterIP :8114)
 ```
 
-## L2 — Service Architecture
+---
 
-```mermaid
-graph TB
-    subgraph "Presentation Layer"
-        R[URLRouter]
-        OCC[OAuthClientController]
-        OSC[OAuthScopeController]
-        ATC[AccessTokenController]
-        RTC[RefreshTokenController]
-        ACC[AuthorizationCodeController]
-        BCC[BrandingConfigController]
-        HC[HealthController]
-    end
+## 7. Architecture Decisions
 
-    subgraph "Application Layer"
-        MOCU[ManageOAuthClientsUseCase]
-        MOSU[ManageOAuthScopesUseCase]
-        MATU[ManageAccessTokensUseCase]
-        MRTU[ManageRefreshTokensUseCase]
-        MACU[ManageAuthorizationCodesUseCase]
-        MBCU[ManageBrandingConfigsUseCase]
-    end
-
-    subgraph "Domain Layer"
-        E[Entities]
-        RI[Repository Interfaces]
-        V[OAuthValidator]
-    end
-
-    subgraph "Infrastructure Layer"
-        MR[Memory Repositories]
-        AC[AppConfig]
-        DI[Container]
-    end
-
-    R --> OCC & OSC & ATC & RTC & ACC & BCC & HC
-    OCC --> MOCU
-    OSC --> MOSU
-    ATC --> MATU
-    RTC --> MRTU
-    ACC --> MACU
-    BCC --> MBCU
-    MOCU & MOSU & MATU & MRTU & MACU & MBCU --> RI
-    MOCU & MOSU & MATU & MRTU & MACU & MBCU --> V
-    MR -.-> RI
-    DI --> MR
-    DI --> AC
-```
-
-## L4 — Deployment View
-
-```mermaid
-graph TB
-    subgraph "Kubernetes Cluster"
-        subgraph "uim-platform namespace"
-            CM[ConfigMap: oauth-config]
-            DEP[Deployment: oauth]
-            SVC[Service: oauth]
-            POD[Pod: oauth]
-        end
-    end
-
-    subgraph "Container"
-        APP[uim-oauth-platform-service]
-    end
-
-    CM --> DEP
-    DEP --> POD
-    POD --> APP
-    SVC --> POD
-    APP -->|":8114"| SVC
-```
-
-## P1 — Physical Network
-
-```mermaid
-graph LR
-    CLIENT[HTTP Client] -->|"port 8114"| SVC[K8s Service: oauth]
-    SVC --> POD[Pod: oauth]
-    POD --> CTR[Container: Alpine Linux]
-    CTR --> BIN[uim-oauth-platform-service]
-```
-
-## S1 — Security Architecture
-
-```mermaid
-graph TB
-    subgraph "Security Controls"
-        TLS[TLS Termination]
-        AUTH[Tenant Isolation]
-        VAL[Input Validation]
-        SEC[Secret Protection]
-    end
-
-    subgraph "OAuth 2.0 Flows"
-        ACF[Authorization Code Flow]
-        CCF[Client Credentials Flow]
-        RTF[Refresh Token Flow]
-    end
-
-    subgraph "Token Security"
-        TI[Token Issuance]
-        TV[Token Validation]
-        TR[Token Revocation]
-        TE[Token Expiration]
-    end
-
-    TLS --> ACF & CCF & RTF
-    AUTH --> ACF & CCF & RTF
-    VAL --> TI
-    SEC --> TI
-    TI --> TV
-    TV --> TR
-    TV --> TE
-```
-
-## Sv1 — Service View
-
-```mermaid
-graph TB
-    subgraph "OAuth 2.0 Service"
-        EP1["/api/v1/oauth/clients"]
-        EP2["/api/v1/oauth/scopes"]
-        EP3["/api/v1/oauth/access-tokens"]
-        EP4["/api/v1/oauth/refresh-tokens"]
-        EP5["/api/v1/oauth/authorization-codes"]
-        EP6["/api/v1/oauth/branding-configs"]
-        EP7["/health"]
-    end
-
-    subgraph "Operations"
-        CRUD[CRUD Operations]
-        REVOKE[Token Revocation]
-        USE[Code Consumption]
-    end
-
-    EP1 --> CRUD
-    EP2 --> CRUD
-    EP3 --> CRUD
-    EP3 --> REVOKE
-    EP4 --> CRUD
-    EP4 --> REVOKE
-    EP5 --> CRUD
-    EP5 --> USE
-    EP6 --> CRUD
-```
+| ID | Decision | Rationale |
+|---|---|---|
+| AD-1 | RFC 6749 compliant model | Standards-based OAuth 2.0 |
+| AD-2 | Separate refresh token entity | Enables sliding-window token renewal |
+| AD-3 | Branding configuration | Whitelabel consent page support |
+| AD-4 | In-memory repositories | Fast testing |
+| AD-5 | Port 8114 | Consistent UIM platform port allocation |

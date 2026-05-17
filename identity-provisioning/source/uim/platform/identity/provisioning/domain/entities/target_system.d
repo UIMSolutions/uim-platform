@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.entities.target_system;
 
-import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning;
+
+mixin(ShowModule!());
+
+@safe:
 /// A target system to which identities (users/groups) are written
 /// during provisioning runs.
 struct TargetSystem {

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.proxy_system;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.proxy_system;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 interface ProxySystemRepository : ITenantRepository!(ProxySystem, ProxySystemId) {
 
   bool existsByName(TenantId tenantId, string name);

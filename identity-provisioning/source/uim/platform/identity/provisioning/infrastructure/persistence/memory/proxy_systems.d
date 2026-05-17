@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.proxy_system;
-import uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.proxy_system;
+// import uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {

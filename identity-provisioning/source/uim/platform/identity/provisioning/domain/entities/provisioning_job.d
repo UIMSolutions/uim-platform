@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.entities.provisioning_job;
 
-import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning;
+
+mixin(ShowModule!());
+
+@safe:
 /// A provisioning job that synchronises identities from a source
 /// system to a target system.
 struct ProvisioningJob {

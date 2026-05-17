@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entities;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
 
   bool existsByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {

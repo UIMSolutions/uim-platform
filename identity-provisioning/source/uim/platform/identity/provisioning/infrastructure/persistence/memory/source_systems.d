@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.persistence.memory.source_systems;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.source_system;
-import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.source_system;
+// import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {

@@ -1,254 +1,118 @@
-# Master Data Governance — NAFv4 Architecture Views
+# NAF v4 Architecture Description — Master Data Governance Service
 
-## C1 — Capability Taxonomy
+> NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
+> Master Data Governance Service — business partner governance, change request
+> workflows, data quality rules, replication management, and quality scoring
+> modelled on SAP Master Data Governance on Cloud.
 
-```mermaid
-graph TB
-    MDG[Master Data Governance Service]
+---
 
-    MDG --> BPM[Business Partner Management]
-    MDG --> CRW[Change Request Workflow]
-    MDG --> DQM[Data Quality Management]
-    MDG --> REP[Replication Management]
-    MDG --> HLT[Health Monitoring]
+## 1. NAF v4 Grid Mapping
 
-    BPM --> BPM1[Create Business Partner]
-    BPM --> BPM2[Update BP Attributes]
-    BPM --> BPM3[BP Category Classification]
-    BPM --> BPM4[BP Role Assignment]
-    BPM --> BPM5[Address Management]
-    BPM --> BPM6[Tax Information]
-    BPM --> BPM7[Bank Details]
-    BPM --> BPM8[Search and Filter]
-    BPM --> BPM9[Block / Mark for Deletion]
+| NAF View | Viewpoint | Covered Below |
+|---|---|---|
+| **NCV** | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** | NSOV-2 Service Definitions | §3 |
+| **NOV** | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** | NLV-1 Logical Data Model | §5 |
+| **NPV** | NPV-1 Physical Deployment | §6 |
+| **NIV** | NIV-1 Information Structure | §7 |
 
-    CRW --> CRW1[Draft Change Request]
-    CRW --> CRW2[Submit for Review]
-    CRW --> CRW3[Review and Approve]
-    CRW --> CRW4[Reject with Comments]
-    CRW --> CRW5[Request Revision]
-    CRW --> CRW6[Withdraw Request]
-    CRW --> CRW7[Audit Trail]
+---
 
-    DQM --> DQM1[Define Quality Rules]
-    DQM --> DQM2[Field-Level Validation]
-    DQM --> DQM3[Rule Severity Levels]
-    DQM --> DQM4[BP Category Scoping]
-    DQM --> DQM5[Score Calculation]
-    DQM --> DQM6[Completeness Scoring]
-    DQM --> DQM7[Consistency Scoring]
-    DQM --> DQM8[Accuracy Scoring]
-    DQM --> DQM9[Quality Status Classification]
+## 2. Capability View (NCV)
 
-    REP --> REP1[Trigger Replication]
-    REP --> REP2[Full Replication]
-    REP --> REP3[Delta Replication]
-    REP --> REP4[Selective Replication]
-    REP --> REP5[Batch Processing]
-    REP --> REP6[Retry Management]
-    REP --> REP7[Cancel Replication]
-    REP --> REP8[Correlation Tracking]
+### C1 – Capability Taxonomy
 
-    HLT --> HLT1[Health Check Endpoint]
-    HLT --> HLT2[Service Status]
+```
+Master Data Governance
+├── C1.1  Business Partner Management
+│   └── C1.1.1  Create and govern business partner records
+│
+├── C1.2  Change Request Workflow
+│   ├── C1.2.1  Submit and approve data change requests
+│   └── C1.2.2  Workflow routing and approval
+│
+├── C1.3  Data Quality Rules
+│   └── C1.3.1  Define validation rules for master data
+│
+├── C1.4  Data Quality Scoring
+│   └── C1.4.1  Score master data records against rules
+│
+├── C1.5  Replication
+│   └── C1.5.1  Distribute approved master data to target systems
+│
+└── C1.6  Cross-Cutting
+    ├── C1.6.1  Tenant isolation
+    └── C1.6.2  Health monitoring
 ```
 
-## C2 — Service Taxonomy
+### C2 – Enterprise Vision
 
-```mermaid
-graph TB
-    subgraph "Master Data Governance Platform Service"
-        API[REST API Layer - vibe.d]
-        APP[Application Layer - Use Cases]
-        DOM[Domain Layer - Entities and Ports]
-        INF[Infrastructure Layer - Adapters]
-    end
+| Aspect | Description |
+|---|---|
+| **Mission** | Provide master data governance modelled on SAP Master Data Governance on Cloud. |
+| **Vision** | Establish a single source of truth for business partner master data with governed change workflows and quality-scored records. |
+| **Scope** | Business partners, change requests, data quality rules, quality scores, and replication. |
+| **Stakeholders** | Data Stewards, MDG Administrators, Business Process Owners. |
 
-    subgraph "Consumed / Integrated Services"
-        IAS[Identity Authentication Service]
-        IPS[Identity Provisioning Service]
-        MDI[Master Data Integration]
-        S4H[SAP S/4HANA Cloud]
-        ECC[SAP ECC On-Premise]
-        AUD[Auditlog Service]
-        DEST[Destination Service]
-    end
+---
 
-    API --> APP
-    APP --> DOM
-    DOM --> INF
+## 3. Service View (NSV)
 
-    API -.->|Auth token validation| IAS
-    INF -.->|User provisioning| IPS
-    INF -.->|BP replication| MDI
-    INF -.->|BP replication| S4H
-    INF -.->|BP replication| ECC
-    INF -.->|Change request audit| AUD
-    INF -.->|Target system connectivity| DEST
+| Service ID | Name | Path Prefix | Methods |
+|---|---|---|---|
+| SVC-BP-CRUD | Business Partner | `/api/v1/business-partners` | GET, POST, PUT, DELETE |
+| SVC-CR-CRUD | Change Request | `/api/v1/change-requests` | GET, POST, PUT, DELETE |
+| SVC-DQR-CRUD | Data Quality Rule | `/api/v1/data-quality-rules` | GET, POST, DELETE |
+| SVC-DQS-LIST | Data Quality Score | `/api/v1/data-quality-scores` | GET |
+| SVC-REP-CRUD | Replication | `/api/v1/replications` | GET, POST |
+| SVC-HLTH | Health Check | `/api/v1/health` | GET |
+
+---
+
+## 4. Operational View (NOV)
+
+```
+┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
+│  Data Steward /     │ ─────────────────> │  Master Data Governance      │
+│  MDG Admin          │                    │  port 8108                    │
+└────────────────────┘                    └──────────────────────────────┘
 ```
 
-## C3 — System Context
+---
 
-```mermaid
-graph TB
-    subgraph External Users
-        BPA[Business Partner Admin]
-        DQA[Data Quality Analyst]
-        GVA[Governance Approver]
-        SYS[Integration Systems]
-    end
+## 5. Logical View (NLV)
 
-    subgraph "UIM Platform"
-        MDG[Master Data Governance Service :8108]
-        MDI[Master Data Integration Service]
-        IAS[Identity Authentication Service]
-        AUD[Auditlog Service]
-    end
+| Entity | Key Relationships |
+|---|---|
+| `BusinessPartner` | Core master data entity |
+| `ChangeRequest` | Governed change submission for BusinessPartner |
+| `DataQualityRule` | Validation rule applied to BusinessPartner |
+| `DataQualityScore` | Rule evaluation score per BusinessPartner |
+| `Replication` | Distribution of approved data to targets |
 
-    subgraph "Target Systems"
-        S4H[SAP S/4HANA Cloud]
-        ECC[SAP ECC]
-        CUS[Custom Systems]
-    end
+---
 
-    BPA -->|Manage BPs via REST API| MDG
-    DQA -->|Define quality rules and view scores| MDG
-    GVA -->|Approve or reject change requests| MDG
-    SYS -->|Trigger replications| MDG
+## 6. Physical View (NPV)
 
-    MDG -->|Replicate approved BPs| MDI
-    MDG -->|Validate tokens| IAS
-    MDG -->|Write audit events| AUD
-    MDI -->|Distribute BPs| S4H
-    MDI -->|Distribute BPs| ECC
-    MDI -->|Distribute BPs| CUS
+```
+Kubernetes Cluster — Namespace: uim-platform
+├── ConfigMap: masterdata-governance-config
+│   MASTERDATA_GOVERNANCE_HOST: "0.0.0.0"
+│   MASTERDATA_GOVERNANCE_PORT: "8108"
+├── Deployment: masterdata-governance  port: 8108
+└── Service: masterdata-governance (ClusterIP :8108)
 ```
 
-## L1 — Logical Architecture
+---
 
-```mermaid
-graph LR
-    subgraph "Domain"
-        BP[BusinessPartner]
-        CR[ChangeRequest]
-        DQR[DataQualityRule]
-        DQS[DataQualityScore]
-        RPL[Replication]
-        VAL[MasterdataGovernanceValidator]
-    end
+## 7. Architecture Decisions
 
-    subgraph "Ports (Interfaces)"
-        BPR[BusinessPartnerRepository]
-        CRR[ChangeRequestRepository]
-        DQRR[DataQualityRuleRepository]
-        DQSR[DataQualityScoreRepository]
-        RPLR[ReplicationRepository]
-    end
-
-    subgraph "Application"
-        BPUC[ManageBusinessPartnersUseCase]
-        CRUC[ManageChangeRequestsUseCase]
-        DQRUC[ManageDataQualityRulesUseCase]
-        DQSUC[ManageDataQualityScoresUseCase]
-        RPLUC[ManageReplicationsUseCase]
-    end
-
-    subgraph "Adapters (Infrastructure)"
-        MBPR[MemoryBusinessPartnerRepository]
-        MCRR[MemoryChangeRequestRepository]
-        MDQRR[MemoryDataQualityRuleRepository]
-        MDQSR[MemoryDataQualityScoreRepository]
-        MRPLR[MemoryReplicationRepository]
-    end
-
-    subgraph "Presentation"
-        BPCTL[BusinessPartnerController]
-        CRCTL[ChangeRequestController]
-        DQRCTL[DataQualityRuleController]
-        DQSCTL[DataQualityScoreController]
-        RPLCTL[ReplicationController]
-    end
-
-    BP --> BPR
-    CR --> CRR
-    DQR --> DQRR
-    DQS --> DQSR
-    RPL --> RPLR
-
-    BPUC --> BPR
-    CRUC --> CRR
-    DQRUC --> DQRR
-    DQSUC --> DQSR
-    RPLUC --> RPLR
-
-    BPR -.->|implements| MBPR
-    CRR -.->|implements| MCRR
-    DQRR -.->|implements| MDQRR
-    DQSR -.->|implements| MDQSR
-    RPLR -.->|implements| MRPLR
-
-    BPCTL --> BPUC
-    CRCTL --> CRUC
-    DQRCTL --> DQRUC
-    DQSCTL --> DQSUC
-    RPLCTL --> RPLUC
-```
-
-## L2 — Physical Deployment View
-
-```mermaid
-graph TB
-    subgraph "Kubernetes Cluster - uim-platform namespace"
-        subgraph "masterdata-governance Pod"
-            BIN[uim-masterdata-governance-platform-service]
-            ENV[Env: MASTERDATA_GOVERNANCE_HOST, MASTERDATA_GOVERNANCE_PORT]
-        end
-        CM[ConfigMap: masterdata-governance-config]
-        SVC[Service: ClusterIP :8108]
-        DEP[Deployment: 1 replica]
-    end
-
-    subgraph "Container Registry"
-        IMG[uim-platform/masterdata-governance:latest]
-    end
-
-    subgraph "Build Stage - Alpine:3.20 + LDC"
-        SRC[D source code]
-        DUB[dub build - ldc2 release]
-        BLD[Binary artifact]
-    end
-
-    SRC --> DUB --> BLD --> IMG
-    IMG --> DEP
-    CM --> DEP
-    DEP --> BIN
-    SVC --> BIN
-```
-
-## S1 — Standards and Compliance
-
-| Standard | Application |
-|----------|-------------|
-| **REST / HTTP 1.1** | All API endpoints follow REST conventions |
-| **JSON** | Request and response payloads |
-| **SAP BP Data Model** | BusinessPartner entity aligns with SAP BP core attributes (category, roles, address, tax, bank) |
-| **SAP MDG Change Request** | Workflow states aligned with SAP MDG CR lifecycle (draft, submitted, inReview, approved, rejected, revisionRequested, withdrawn) |
-| **Apache 2.0 License** | Open source license |
-| **D Language (dlang)** | Implementation language |
-| **vibe.d 0.10.x** | HTTP server framework |
-| **Hexagonal Architecture** | Ports and adapters separation |
-| **Clean Architecture** | Dependency inversion, layer isolation |
-| **Kubernetes** | Container orchestration |
-| **OCI-compatible containers** | Docker and Podman compatible |
-
-## S2 — Quality Attributes
-
-| Attribute | Design Decision |
-|-----------|----------------|
-| **Modularity** | 4 architectural layers with strict dependency direction |
-| **Testability** | Repository interfaces allow mock injection |
-| **Scalability** | Stateless design — horizontal scaling via Kubernetes replicas |
-| **Observability** | `/health` endpoint for liveness/readiness probes |
-| **Security** | Tenant isolation via TenantId on all entities and queries |
-| **Portability** | Container-based deployment via Docker/Podman/Kubernetes |
-| **Maintainability** | DI container wires all dependencies, single responsibility per class |
+| ID | Decision | Rationale |
+|---|---|---|
+| AD-1 | Change request workflow | Enforces governed data change |
+| AD-2 | Quality rule scoring | Quantifies data quality per record |
+| AD-3 | Replication model | Distributes golden record downstream |
+| AD-4 | In-memory repositories | Fast testing |
+| AD-5 | Port 8108 | Consistent UIM platform port allocation |

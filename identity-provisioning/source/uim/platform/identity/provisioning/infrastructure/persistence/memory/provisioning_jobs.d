@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
 
   size_t countBySource(TenantId tenantId, SourceSystemId sourceId) {

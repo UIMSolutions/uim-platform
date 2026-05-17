@@ -5,15 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.application.usecases.manage.destinations;
 
-
-
-import uim.platform.integration.automation.domain.types;
-import uim.platform.integration.automation.domain.entities.destination;
+// import uim.platform.integration.automation.domain.types;
+// import uim.platform.integration.automation.domain.entities.destination;
 // import uim.platform.integration.automation.domain.ports.repositories.destinations;
 // import uim.platform.integration.automation.domain.ports.repositories.systems;
-import uim.platform.integration.automation.domain.ports;
-import uim.platform.integration.automation.application.dto;
+// import uim.platform.integration.automation.domain.ports;
+// import uim.platform.integration.automation.application.dto;
+import uim.platform.integration.automation;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDestinationsUseCase { // TODO: UIMUseCase {
   private DestinationRepository repo;
   private SystemRepository systemRepo;

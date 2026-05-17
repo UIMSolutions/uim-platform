@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
-import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning;
+
+mixin(ShowModule!());
+
+@safe:
 /// A tracked identity entity (user or group) that has been
 /// provisioned from a source to a target system.
 struct ProvisionedEntity {

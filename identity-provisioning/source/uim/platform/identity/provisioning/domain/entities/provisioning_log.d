@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.entities.provisioning_log;
 
-import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning;
+
+mixin(ShowModule!());
+
+@safe:
 /// An audit record for a single entity operation within a
 /// provisioning job run.
 struct ProvisioningLog {

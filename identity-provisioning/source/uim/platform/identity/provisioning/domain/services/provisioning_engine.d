@@ -7,17 +7,22 @@ module uim.platform.identity.provisioning.domain.services.provisioning_engine;
 
 
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.source_system;
-import uim.platform.identity.provisioning.domain.entities.target_system;
-import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.entities.provisioning_log;
-import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
-import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
-import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.source_system;
+// import uim.platform.identity.provisioning.domain.entities.target_system;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+// import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+// import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+// import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
+// import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+import uim.platform.identity.provisioning;
+
+mixin(ShowModule!());
+
+@safe:
 /// Core domain service that orchestrates the provisioning pipeline:
 /// reads entities from a source, applies transformations, and writes
 /// to a target system.
@@ -38,16 +43,16 @@ class ProvisioningEngine {
   }
 
   /// Validate that a provisioning job can be started.
-  bool canRun(ProvisioningJobId jobtenantId, id tenantId) {
-    auto job = jobRepo.findById(jobtenantId, id);
+  bool canRun( TenantId tenantId, ProvisioningJobId jobId) {
+    auto job = jobRepo.findById(tenantId, jobId);
     if (job.isNull)
       return false;
 
-    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
+    auto src = sourceRepo.findById(tenantId, job.sourceSystemId);
     if (src.isNull || src.status != SystemStatus.active)
       return false;
 
-    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
+    auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
     if (tgt.isNull || tgt.status != SystemStatus.active)
       return false;
 

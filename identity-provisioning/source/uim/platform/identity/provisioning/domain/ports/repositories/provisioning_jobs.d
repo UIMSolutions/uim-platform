@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
 
-import uim.platform.identity.provisioning.domain.types;
-import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+// import uim.platform.identity.provisioning.domain.types;
+// import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+import uim.platform.identity.provisioning;
 
+mixin(ShowModule!());
+
+@safe:
 interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
 
   size_t countBySource(SourceSystemId sourcetenantId, id tenantId);
