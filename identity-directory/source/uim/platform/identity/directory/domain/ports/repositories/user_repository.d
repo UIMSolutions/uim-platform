@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.ports.repositories.users;
 
-import uim.platform.identity.directory.domain.entities.user;
-import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.entities.user;
+// import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory;
+
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
 interface UserRepository : ITenantRepository!(User, UserId) {
 
@@ -22,9 +27,9 @@ interface UserRepository : ITenantRepository!(User, UserId) {
   User[] findByEmail(TenantId tenantId, string email);
   void removeByEmail(TenantId tenantId, string email);
 
-  size_t countByGroupId(GroupId groupId);
-  User[] findByGroupId(GroupId groupId);
-  void removeByGroupId(GroupId groupId);
+  size_t countByGroupId(TenantId tenantId, GroupId groupId);
+  User[] findByGroupId(TenantId tenantId, GroupId groupId);
+  void removeByGroupId(TenantId tenantId, GroupId groupId);
 
   User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100);
 

@@ -7,8 +7,10 @@ module app;
 
 // import vibe.core.core : runApplication;
 
-import uim.platform.identity.directory.infrastructure.config;
-import uim.platform.identity.directory.infrastructure.container;
+// import uim.platform.identity.directory.infrastructure.config;
+// import uim.platform.identity.directory.infrastructure.container;
+
+import uim.platform.identity.directory;
 
 mixin(ShowModule!());
 

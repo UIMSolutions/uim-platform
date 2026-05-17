@@ -5,13 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.service_instance;
 
-import uim.platform.html_repository.application.usecases.manage.service_instances;
-import uim.platform.html_repository.application.dto;
+// import uim.platform.html_repository.application.usecases.manage.service_instances;
+// import uim.platform.html_repository.application.dto;
 
-import uim.platform.htmls;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
 
-
+@safe:
 class ServiceInstanceController : PlatformController {
   private ManageServiceInstancesUseCase usecase;
 

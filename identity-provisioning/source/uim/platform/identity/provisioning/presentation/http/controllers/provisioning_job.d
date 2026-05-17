@@ -12,7 +12,7 @@ module uim.platform.identity.provisioning.presentation.http.provisioning_job;
 // import uim.platform.identity.provisioning.application.dto;
 // import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 // import uim.platform.identity.provisioning.domain.types;
-import uim.platform.integration.automation;
+import uim.platform.identity.provisioning;
 
 mixin(ShowModule!());
 

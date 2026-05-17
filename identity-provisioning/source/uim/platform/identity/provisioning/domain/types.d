@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.domain.types;
-import uim.platform.integration.automation;
+import uim.platform.identity.provisioning;
 
 mixin(ShowModule!());
 

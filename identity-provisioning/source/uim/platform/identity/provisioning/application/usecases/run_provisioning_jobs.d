@@ -14,7 +14,7 @@ module uim.platform.identity.provisioning.application.usecases.run_provisioning_
 // import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
 // import uim.platform.identity.provisioning.domain.services.provisioning_engine;
 // import uim.platform.identity.provisioning.application.dto;
-import uim.platform.integration.automation;
+import uim.platform.identity.provisioning;
 
 mixin(ShowModule!());
 
