@@ -4,6 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.config;
+import std.process : environment;
+import uim.platform.data.attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";

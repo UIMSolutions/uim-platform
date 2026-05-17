@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.training_job;
+  // import uim.platform.data.attribute_recommendation.domain.types;
+  // import uim.platform.data.attribute_recommendation.domain.entities.training_job;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
 
   size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);

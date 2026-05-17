@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployments;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {

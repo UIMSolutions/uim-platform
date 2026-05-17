@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.model_configs;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigId), ModelConfigRepository {
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);

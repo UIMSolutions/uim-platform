@@ -5,39 +5,43 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.container;
 
-import uim.platform.data.attribute_recommendation.infrastructure.config;
-// Repositories
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.data_record;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.model_config;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.training_job;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.inference_request;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.inference_result;
-// Domain services
-import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
-import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
-// Use cases
-import uim.platform.data.attribute_recommendation.application.usecases.manage.datasets;
-import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
-import uim.platform.data.attribute_recommendation.application.usecases.manage.models;
-import uim.platform.data.attribute_recommendation.application.usecases.manage.deployments;
-import uim.platform.data.attribute_recommendation.application.usecases.process_inference;
-import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;
-// Controllers
-import uim.platform.data.attribute_recommendation.presentation.http.dataset;
-import uim.platform.data.attribute_recommendation.presentation.http.data_record;
-import uim.platform.data.attribute_recommendation.presentation.http.model;
-import uim.platform.data.attribute_recommendation.presentation.http.deployment;
-import uim.platform.data.attribute_recommendation.presentation.http.inference;
-import uim.platform.data.attribute_recommendation.presentation.http.monitoring;
-import uim.platform.data.attribute_recommendation.presentation.http.health;
-/// Dependency injection container - wires all layers together.
+// import uim.platform.data.attribute_recommendation.infrastructure.config;
+// // Repositories
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence
+//   .memory.data_record;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence
+//   .memory.model_config;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence
+//   .memory.training_job;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence
+//   .memory.inference_request;
+// import uim.platform.data.attribute_recommendation.infrastructure.persistence
+//   .memory.inference_result;
+// // Domain services
+// import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
+// import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
+// // Use cases
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.datasets;
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.models;
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.deployments;
+// import uim.platform.data.attribute_recommendation.application.usecases.process_inference;
+// import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;
+// // Controllers
+// import uim.platform.data.attribute_recommendation.presentation.http.dataset;
+// import uim.platform.data.attribute_recommendation.presentation.http.data_record;
+// import uim.platform.data.attribute_recommendation.presentation.http.model;
+// import uim.platform.data.attribute_recommendation.presentation.http.deployment;
+// import uim.platform.data.attribute_recommendation.presentation.http.inference;
+// import uim.platform.data.attribute_recommendation.presentation.http.monitoring;
+// import uim.platform.data.attribute_recommendation.presentation.http.health;
+import uim.platform.data.attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:/// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
   MemoryDatasetRepository datasetRepo;

@@ -7,15 +7,19 @@ module uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.dataset;
-import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
-import uim.platform.data.attribute_recommendation.domain.entities.training_job;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
-/// Domain service that orchestrates the training lifecycle:
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.dataset;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
+// import uim.platform.data.attribute_recommendation.domain.entities.training_job;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
+import uim.platform.data.attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:/// Domain service that orchestrates the training lifecycle:
 /// validates dataset readiness, creates training jobs, and
 /// simulates training with quality metrics.
 class ModelTrainer {

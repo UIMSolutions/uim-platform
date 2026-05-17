@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_requests;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, InferenceRequestId), InferenceRequestRepository {
   
   // #region ByDeployment

@@ -7,11 +7,14 @@ module app;
 
 // import vibe.core.core : runApplication;
 
-import uim.platform.data.attribute_recommendation.infrastructure.config;
-import uim.platform.data.attribute_recommendation.infrastructure.container;
+// import uim.platform.data.attribute_recommendation.infrastructure.config;
+// import uim.platform.data.attribute_recommendation.infrastructure.container;
 // import std.stdio : writefln;
-@safe:
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 version (unittest) {
 }
 else {

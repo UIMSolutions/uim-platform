@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigId) {
 
   bool existsByName(TenantId tenantId, string name);
@@ -16,7 +20,7 @@ interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelCo
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   ModelConfiguration[] filterByDataset(ModelConfiguration[] configs, DatasetId datasetId);
-  ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId);
+  ModelConfiguration[] findByDataset(TenantId tenantId, DatasetId datasetId);
   void removeByDataset(TenantId tenantId, DatasetId datasetId);
 
   size_t countByStatus(TenantId tenantId, ModelConfigStatus status);

@@ -7,14 +7,18 @@ module uim.platform.data.attribute_recommendation.domain.services.inference_engi
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
-import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
-import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
-/// Domain service that processes inference requests against deployed
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
+// import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
+// import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
+import uim.platform.data.attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:/// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.
 class InferenceEngine {
   private DeploymentRepository deploymentRepo;

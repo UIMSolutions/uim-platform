@@ -6,10 +6,14 @@
 module uim.platform.data.attribute_recommendation.infrastructure.persistence
   .memory.inference_result;
 
-import uim.platform.data.attribute_recommendation.domain.types;
-import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
-import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
+// import uim.platform.data.attribute_recommendation.domain.types;
+// import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
+// import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
+import uim.platform.data.attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), InferenceResultRepository {
 
   bool existsByRequest(TenantId tenantId, InferenceRequestId requestId) {
