@@ -23,6 +23,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
 
     CommandResult createServicePlan(CreateServicePlanRequest dto) {
         ServicePlan e;
+        e.initEntity(TenantId(dto.tenantId), dto.createdBy);
+
         e.id = ServicePlanId(currentTimestamp.to!string);
         e.tenantId = TenantId(dto.tenantId);
         e.name = dto.name;
@@ -58,8 +60,8 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServicePlan(DeleteServicePlanRequest dto) {
-        auto plan = repo.findById(TenantId(dto.tenantId), ServicePlanId(dto.id));
+    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
+        auto plan = repo.findById(tenantId, id);
         if (plan.isNull)
             return CommandResult(false, "", "Service plan not found");
 

@@ -25,11 +25,11 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         ServiceOffering e;
         e.initEntity(dto.tenantId);
 
-        e.id = ServiceOfferingId(currentTimestamp.to!string);
+        e.id = dto.serviceOfferingId;
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;
-        e.brokerId = ServiceBrokerId(dto.brokerId);
+        e.brokerId = dto.serviceBrokerId;
         e.tags = dto.tags;
         e.metadata = dto.metadata;
         e.createdAt = currentTimestamp;

@@ -9,6 +9,8 @@ mixin(ShowModule!());
 // --- Platform DTOs ---
 
 struct CreatePlatformRequest {
+    TenantId tenantId;
+
     string name;
     string description;
     string type;
@@ -19,6 +21,9 @@ struct CreatePlatformRequest {
 }
 
 struct UpdatePlatformRequest {
+    TenantId tenantId;
+    PlatformId platformId;
+
     string name;
     string description;
     string type;
@@ -30,12 +35,16 @@ struct UpdatePlatformRequest {
 // --- Service Broker DTOs ---
 
 struct CreateServiceBrokerRequest {
+    TenantId tenantId;
+
     string name;
     string description;
     string brokerUrl;
 }
 
 struct UpdateServiceBrokerRequest {
+    TenantId tenantId;
+
     string name;
     string description;
     string brokerUrl;
@@ -44,10 +53,12 @@ struct UpdateServiceBrokerRequest {
 // --- Service Offering DTOs ---
 
 struct CreateServiceOfferingRequest {
+    TenantId tenantId;
+    ServiceBrokerId serviceBrokerId;
+
     string name;
     string description;
     string catalogName;
-    string brokerId;
     string category;
     string bindable;
     string tags;
@@ -55,6 +66,8 @@ struct CreateServiceOfferingRequest {
 }
 
 struct UpdateServiceOfferingRequest {
+    TenantId tenantId;
+
     string name;
     string description;
     string catalogName;
@@ -66,10 +79,12 @@ struct UpdateServiceOfferingRequest {
 // --- Service Plan DTOs ---
 
 struct CreateServicePlanRequest {
+    TenantId tenantId;
+
     string name;
     string description;
     string catalogName;
-    string offeringId;
+    ServiceOfferingId serviceOfferingId;
     string pricing;
     string free;
     string bindable;
@@ -79,6 +94,8 @@ struct CreateServicePlanRequest {
 }
 
 struct UpdateServicePlanRequest {
+    TenantId tenantId;
+    ServicePlanId servicePlanId;
     string name;
     string description;
     string pricing;
@@ -90,6 +107,8 @@ struct UpdateServicePlanRequest {
 // --- Service Instance DTOs ---
 
 struct CreateServiceInstanceRequest {
+    TenantId tenantId;
+
     string name;
     string planId;
     string offeringId;
@@ -101,8 +120,11 @@ struct CreateServiceInstanceRequest {
 }
 
 struct UpdateServiceInstanceRequest {
+    TenantId tenantId;
+    ServiceInstanceId serviceInstanceId;
+
     string name;
-    string planId;
+    ServicePlanId servicePlanId;
     string parameters;
     string labels;
     string shared_;

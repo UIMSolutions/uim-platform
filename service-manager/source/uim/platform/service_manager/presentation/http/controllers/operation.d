@@ -63,12 +63,13 @@ class OperationController : PlatformController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             CreateOperationRequest r;
+            r.tenantId = tenantId;
             r.resourceId = j.getString("resourceId");
             r.resourceType = j.getString("resourceType");
             r.type = j.getString("type");
             r.description = j.getString("description");
 
-            auto result = usecase.create(req.getTenantId, r);
+            auto result = usecase.createOperation(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.error); }
@@ -77,14 +78,15 @@ class OperationController : PlatformController {
 
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateOperationRequest r;
+            r.tenantId = tenantId;
             r.status = j.getString("status");
             r.errorMessage = j.getString("errorMessage");
 
-            auto result = usecase.update(req.getTenantId, OperationId(id), r);
+            auto result = usecase.updateOperation(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.error); }
@@ -93,9 +95,10 @@ class OperationController : PlatformController {
 
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteOperation(req.getTenantId, OperationId(id));
+            auto tenantId = req.getTenantId;
+            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
+
+            auto result = usecase.deleteOperation(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.error); }
