@@ -7,7 +7,7 @@ module uim.platform.management.infrastructure.persistence.memory.labels;
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.label;
 // import uim.platform.management.domain.ports.repositories.labels;
-// // import std.algorithm : filter, canFind;
+// import std.algorithm : filter, canFind;
 //  
 
 import uim.platform.management;

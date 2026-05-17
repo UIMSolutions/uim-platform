@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.application.usecases.delegated_auth;
 // import uim.platform.identity.authentication.domain.ports.repositories.idp_config;
 // import uim.platform.identity.authentication.domain.ports.repositories.user;
 // 
-// // import std.string : split;
+// import std.string : split;
 import uim.platform.identity.authentication;
 
 mixin(ShowModule!());

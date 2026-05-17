@@ -6,7 +6,7 @@
 module uim.platform.data.attribute_recommendation.infrastructure.container;
 
 // import uim.platform.data.attribute_recommendation.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset;
 // import uim.platform.data.attribute_recommendation.infrastructure.persistence
 //   .memory.data_record;
@@ -19,17 +19,17 @@ module uim.platform.data.attribute_recommendation.infrastructure.container;
 //   .memory.inference_request;
 // import uim.platform.data.attribute_recommendation.infrastructure.persistence
 //   .memory.inference_result;
-// // Domain services
+// Domain services
 // import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 // import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
-// // Use cases
+// Use cases
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.datasets;
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.models;
 // import uim.platform.data.attribute_recommendation.application.usecases.manage.deployments;
 // import uim.platform.data.attribute_recommendation.application.usecases.process_inference;
 // import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;
-// // Controllers
+// Controllers
 // import uim.platform.data.attribute_recommendation.presentation.http.dataset;
 // import uim.platform.data.attribute_recommendation.presentation.http.data_record;
 // import uim.platform.data.attribute_recommendation.presentation.http.model;

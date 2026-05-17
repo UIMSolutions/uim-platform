@@ -6,7 +6,7 @@
 module uim.platform.integration.automation.infrastructure.persistence.memory.destinations;
 // import uim.platform.integration.automation.domain.types;
 // import uim.platform.integration.automation.domain.entities.destination;
-// // import uim.platform.integration.automation.domain.ports.repositories.destinations;
+// import uim.platform.integration.automation.domain.ports.repositories.destinations;
 // import uim.platform.integration.automation.domain.ports;
 
 import uim.platform.integration.automation;

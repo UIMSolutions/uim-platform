@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.document_ai.infrastructure.persistence.memory.document;
 // import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
 // import uim.platform.document_ai.infrastructure.persistence.memory.schema;
@@ -14,7 +14,7 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
 // import uim.platform.document_ai.infrastructure.persistence.memory.training_job;
 // import uim.platform.document_ai.infrastructure.persistence.memory.client;
-// // Use Cases
+// Use Cases
 // import uim.platform.document_ai.application.usecases.process_documents;
 // import uim.platform.document_ai.application.usecases.manage.schemas;
 // import uim.platform.document_ai.application.usecases.manage.templates;
@@ -23,7 +23,7 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.application.usecases.manage.training_jobs;
 // import uim.platform.document_ai.application.usecases.manage.clients;
 // import uim.platform.document_ai.application.usecases.get_capabilities;
-// // Controllers
+// Controllers
 // import uim.platform.document_ai.presentation.http.controllers.document;
 // import uim.platform.document_ai.presentation.http.controllers.schema;
 // import uim.platform.document_ai.presentation.http.controllers.template_;

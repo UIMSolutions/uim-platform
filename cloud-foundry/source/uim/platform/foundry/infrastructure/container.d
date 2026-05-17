@@ -7,7 +7,7 @@ module uim.platform.foundry.infrastructure.container;
 
 // import uim.platform.foundry.infrastructure.config;
 
-// // Repositories
+// Repositories
 // import uim.platform.foundry.infrastructure.persistence.memory.org;
 // import uim.platform.foundry.infrastructure.persistence.memory.space;
 // import uim.platform.foundry.infrastructure.persistence.memory.app;
@@ -17,11 +17,11 @@ module uim.platform.foundry.infrastructure.container;
 // import uim.platform.foundry.infrastructure.persistence.memory.domain;
 // import uim.platform.foundry.infrastructure.persistence.memory.buildpack;
 
-// // Domain Services
+// Domain Services
 // import uim.platform.foundry.domain.services.app_lifecycle_manager;
 // import uim.platform.foundry.domain.services.route_resolver;
 
-// // Use Cases
+// Use Cases
 // import uim.platform.foundry.application.usecases.manage.orgs;
 // import uim.platform.foundry.application.usecases.manage.spaces;
 // import uim.platform.foundry.application.usecases.manage.apps;
@@ -30,7 +30,7 @@ module uim.platform.foundry.infrastructure.container;
 // import uim.platform.foundry.application.usecases.manage.buildpacks;
 // import uim.platform.foundry.application.usecases.monitor_apps;
 
-// // Controllers
+// Controllers
 import uim.platform.foundry.presentation.http.controllers.org;
 import uim.platform.foundry.presentation.http.controllers.space;
 import uim.platform.foundry.presentation.http.controllers.app;

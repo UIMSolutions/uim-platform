@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.container;
 // import uim.platform.data.privacy.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.data.privacy.infrastructure.persistence.memory.data_subject;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.personal_data_model;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request;
@@ -27,7 +27,7 @@ module uim.platform.data.privacy.infrastructure.container;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.rule_set;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.information_report;
 // import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_config;
-// // Use Cases
+// Use Cases
 // import uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
 // import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
@@ -49,7 +49,7 @@ module uim.platform.data.privacy.infrastructure.container;
 // import uim.platform.data.privacy.application.usecases.manage.rule_sets;
 // import uim.platform.data.privacy.application.usecases.manage.information_reports;
 // import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
-// // Controllers
+// Controllers
 // import uim.platform.data.privacy.presentation.http.data_subject;
 // import uim.platform.data.privacy.presentation.http.personal_data_model;
 // import uim.platform.data.privacy.presentation.http.deletion;

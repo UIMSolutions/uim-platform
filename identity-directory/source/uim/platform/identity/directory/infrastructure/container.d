@@ -5,23 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.infrastructure.container;
 // import uim.platform.identity.directory.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.identity.directory.infrastructure.persistence.memory.user;
 // import uim.platform.identity.directory.infrastructure.persistence.memory.group;
 // import uim.platform.identity.directory.infrastructure.persistence.memory.schema;
 // import uim.platform.identity.directory.infrastructure.persistence.memory.password_policy;
 // import uim.platform.identity.directory.infrastructure.persistence.memory.api_client;
 // import uim.platform.identity.directory.infrastructure.persistence.memory.audit;
-// // Services
+// Services
 // import uim.platform.identity.directory.infrastructure.security.sha256_password_service;
-// // Use Cases
+// Use Cases
 // import uim.platform.identity.directory.application.usecases.manage.users;
 // import uim.platform.identity.directory.application.usecases.manage.groups;
 // import uim.platform.identity.directory.application.usecases.manage.schemas;
 // import uim.platform.identity.directory.application.usecases.manage.password_policies;
 // import uim.platform.identity.directory.application.usecases.manage.api_clients;
 // import uim.platform.identity.directory.application.usecases.query_audit_log;
-// // Controllers
+// Controllers
 // import uim.platform.identity.authentication.presentation.http.user;
 // import uim.platform.identity.authentication.presentation.http.group;
 // import uim.platform.identity.authentication.presentation.http.schema;

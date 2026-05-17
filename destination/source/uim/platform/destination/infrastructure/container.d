@@ -5,16 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.container;
 // import uim.platform.destination.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.destination.infrastructure.persistence.memory.destination;
 // import uim.platform.destination.infrastructure.persistence.memory.certificate;
 // import uim.platform.destination.infrastructure.persistence.memory.fragment;
-// // Use Cases
+// Use Cases
 // import uim.platform.destination.application.usecases.manage.destinations;
 // import uim.platform.destination.application.usecases.manage.certificates;
 // import uim.platform.destination.application.usecases.manage.fragments;
 // import uim.platform.destination.application.usecases.find_destination;
-// // Controllers
+// Controllers
 // import uim.platform.destination.presentation.http.destination;
 // import uim.platform.destination.presentation.http.certificate;
 // import uim.platform.destination.presentation.http.fragment;

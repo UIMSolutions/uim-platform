@@ -8,17 +8,17 @@ module app;
 // import vibe.core.core;
 // import vibe.core.log;
 // 
-// // Infrastructure — persistence adapters (driven / outgoing)
+// Infrastructure — persistence adapters (driven / outgoing)
 // import uim.platform.analytics.infrastructure.persistence.memory;
-// // Infrastructure — external service adapters
+// Infrastructure — external service adapters
 // import uim.platform.analytics.infrastructure.adapters;
-// // Infrastructure — web layer
+// Infrastructure — web layer
 // import uim.platform.analytics.infrastructure.web.routes;
 // import uim.platform.analytics.infrastructure.web.handlers;
-// // Infrastructure — configuration
+// Infrastructure — configuration
 // import uim.platform.analytics.infrastructure.config;
 // 
-// // Application — use cases
+// Application — use cases
 // import uim.platform.analytics.app.usecases;
 
 import uim.platform.analytics;

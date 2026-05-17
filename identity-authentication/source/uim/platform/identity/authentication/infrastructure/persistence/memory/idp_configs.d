@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.id
 // import uim.platform.identity.authentication.domain.entities.idp_config;
 // import uim.platform.identity.authentication.domain.types;
 // import uim.platform.identity.authentication.domain.ports.repositories.idp_config;
-// // import std.algorithm : canFind;
+// import std.algorithm : canFind;
 
 import uim.platform.identity.authentication;
 

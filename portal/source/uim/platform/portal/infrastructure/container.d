@@ -6,7 +6,7 @@
 module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.infrastructure.config;
 // 
-// // Repositories
+// Repositories
 // import uim.platform.portal.infrastructure.persistence.memory.site;
 // import uim.platform.portal.infrastructure.persistence.memory.page;
 // import uim.platform.portal.infrastructure.persistence.memory.section;
@@ -18,7 +18,7 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.infrastructure.persistence.memory.menu_item;
 // import uim.platform.portal.infrastructure.persistence.memory.translation;
 // 
-// // Use Cases
+// Use Cases
 // import uim.platform.portal.application.usecases.manage.sites;
 // import uim.platform.portal.application.usecases.manage.pages;
 // import uim.platform.portal.application.usecases.manage.sections;
@@ -30,7 +30,7 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.application.usecases.manage.menu_items;
 // import uim.platform.portal.application.usecases.manage.translations;
 // 
-// // Controllers
+// Controllers
 // import uim.platform.identity.authentication.presentation.http.site;
 // import uim.platform.identity.authentication.presentation.http.page;
 // import uim.platform.identity.authentication.presentation.http.section;

@@ -1,170 +1,117 @@
-# UML — Application Autoscaler Service
+# UML Diagrams — Application Autoscaler Service
 
-## Component Diagram (Hexagonal Architecture)
+## Class Diagram
 
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│                   APPLICATION AUTOSCALER SERVICE                     │
-│                                                                      │
-│  ┌──────────────────────────────────────────────────────────────┐   │
-│  │  PRESENTATION LAYER (Driving Adapters)                       │   │
-│  │                                                              │   │
-│  │  ScalingPolicyController  AppBindingController               │   │
-│  │  CustomMetricController   ScalingEngineController            │   │
-│  │  ScalingHistoryController HealthController                   │   │
-│  └────────────────────────────┬─────────────────────────────────┘   │
-│                               │ calls                               │
-│  ┌────────────────────────────▼─────────────────────────────────┐   │
-│  │  APPLICATION LAYER (Use Cases)                               │   │
-│  │                                                              │   │
-│  │  ManageScalingPoliciesUseCase                                │   │
-│  │  ManageAppBindingsUseCase                                    │   │
-│  │  ManageCustomMetricsUseCase                                  │   │
-│  │  ScalingEngineUseCase                                        │   │
-│  │  ManageScalingHistoryUseCase                                 │   │
-│  └────────────────────────────┬─────────────────────────────────┘   │
-│                               │ uses                                │
-│  ┌────────────────────────────▼─────────────────────────────────┐   │
-│  │  DOMAIN LAYER (Core)                                         │   │
-│  │                                                              │   │
-│  │  Entities: ScalingPolicyEntity, AppBindingEntity,            │   │
-│  │            ScalingRuleEntity, RecurringScheduleEntity,       │   │
-│  │            SpecificDateScheduleEntity, CustomMetricEntity,   │   │
-│  │            ScalingHistoryEntity                              │   │
-│  │                                                              │   │
-│  │  Ports (interfaces): ScalingPolicyRepository,                │   │
-│  │    AppBindingRepository, CustomMetricRepository,             │   │
-│  │    ScalingHistoryRepository                                  │   │
-│  │                                                              │   │
-│  │  Domain Service: ScalingEvaluatorService                     │   │
-│  └────────────────────────────┬─────────────────────────────────┘   │
-│                               │ implemented by                      │
-│  ┌────────────────────────────▼─────────────────────────────────┐   │
-│  │  INFRASTRUCTURE LAYER (Driven Adapters)                      │   │
-│  │                                                              │   │
-│  │  MemoryScalingPolicyRepository                               │   │
-│  │  MemoryAppBindingRepository                                  │   │
-│  │  MemoryCustomMetricRepository                                │   │
-│  │  MemoryScalingHistoryRepository                              │   │
-│  │  Container (DI) · SrvConfig · loadConfig()                  │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────────────┘
-```
+```mermaid
+classDiagram
+    class ScalingPolicy {
+        +string id
+        +string appId
+        +string policyType
+        +int minInstances
+        +int maxInstances
+        +string status
+    }
+    class SpecificDateSchedule {
+        +string id
+        +string policyId
+        +string startDateTime
+        +string endDateTime
+        +int instanceCount
+    }
+    class RecurringSchedule {
+        +string id
+        +string policyId
+        +string cronExpression
+        +int instanceCount
+        +string timezone
+    }
+    class ScalingRule {
+        +string id
+        +string policyId
+        +string metricType
+        +string operator
+        +float threshold
+        +int adjustment
+    }
+    class CustomMetric {
+        +string id
+        +string appId
+        +string metricName
+        +float value
+        +string timestamp
+    }
+    class AppBinding {
+        +string id
+        +string appId
+        +string policyId
+        +string status
+        +string createdAt
+    }
+    class ScalingHistory {
+        +string id
+        +string appId
+        +string triggerType
+        +int previousInstances
+        +int newInstances
+        +string timestamp
+    }
 
----
-
-## Class Diagram — Domain
-
-```
-ScalingPolicyEntity
-  + id: PolicyId
-  + appId: AppBindingId
-  + tenantId: TenantId
-  + instanceMinCount: int
-  + instanceMaxCount: int
-  + status: PolicyStatus
-  + timezone: string
-  + customMetricAllowFrom: MetricAllowFrom
-  + scalingRules: ScalingRuleEntity[]
-  + recurringSchedules: RecurringScheduleEntity[]
-  + specificDateSchedules: SpecificDateScheduleEntity[]
-  + createdAt / updatedAt: long
-  + toJson(): Json
-
-ScalingRuleEntity
-  + id: ScalingRuleId
-  + metricType: MetricType
-  + customMetricName: string
-  + threshold: int
-  + operator: ScalingOperator
-  + breachDurationSecs: int
-  + coolDownSecs: int
-  + adjustment: string
-  + toJson(): Json
-
-RecurringScheduleEntity
-  + id / startTime / endTime / startDate / endDate: string
-  + daysOfWeek: int[] | daysOfMonth: int[]
-  + instanceMinCount / instanceMaxCount / initialMinInstanceCount: int
-
-SpecificDateScheduleEntity
-  + id / startDateTime / endDateTime: string
-  + instanceMinCount / instanceMaxCount / initialMinInstanceCount: int
-
-AppBindingEntity
-  + id / tenantId / appGuid / appName / serviceInstanceId: string
-  + policyId: PolicyId
-  + currentInstances: int
-  + boundAt / updatedAt: long
-
-CustomMetricEntity
-  + id / appId / metricName / unit: string
-  + value: double
-  + timestamp: long
-
-ScalingHistoryEntity
-  + id / appId / tenantId: string
-  + direction: ScalingDirection
-  + status: ScalingStatus
-  + reason / message: string
-  + oldInstances / newInstances: int
-  + timestamp: long
+    ScalingPolicy --> AppBinding : bound via
+    ScalingPolicy "1" --> "*" ScalingRule : contains
+    ScalingPolicy "1" --> "*" SpecificDateSchedule : has
+    ScalingPolicy "1" --> "*" RecurringSchedule : has
+    CustomMetric --> ScalingRule : triggers
+    ScalingHistory --> ScalingPolicy : records
 ```
 
----
+## Component Diagram
 
-## Sequence Diagram — Scaling Trigger Flow
+```mermaid
+flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        REST["REST API\n/api/v1/..."]
+    end
+    subgraph Application["Application Layer"]
+        POLICY_UC["ScalingPolicyUseCases"]
+        RULE_UC["ScalingRuleUseCases"]
+        METRIC_UC["CustomMetricUseCases"]
+        HISTORY_UC["ScalingHistoryUseCases"]
+    end
+    subgraph Domain["Domain Layer"]
+        POLICY["ScalingPolicy"]
+        RULE["ScalingRule"]
+        SCHEDULE_SD["SpecificDateSchedule"]
+        SCHEDULE_REC["RecurringSchedule"]
+        METRIC["CustomMetric"]
+        BINDING["AppBinding"]
+        HISTORY["ScalingHistory"]
+    end
+    subgraph Infrastructure["Infrastructure Layer"]
+        POLICY_REPO["InMemoryPolicyRepository"]
+        METRIC_REPO["InMemoryMetricRepository"]
+        HISTORY_REPO["InMemoryHistoryRepository"]
+    end
 
-```
-Client              ScalingEngineController      ScalingEngineUseCase
-  |                          |                           |
-  |  POST /scaling/trigger   |                           |
-  |─────────────────────────>|                           |
-  |                          |  triggerScaling(req)      |
-  |                          |──────────────────────────>|
-  |                          |                           | findByAppGuid()
-  |                          |                           |──────> BindingRepo
-  |                          |                           | findById(policyId)
-  |                          |                           |──────> PolicyRepo
-  |                          |                           | evaluate(policy, metric, value, instances)
-  |                          |                           |──────> ScalingEvaluatorService
-  |                          |                           | save(ScalingHistoryEntity)
-  |                          |                           |──────> HistoryRepo
-  |                          |                           | update(binding.currentInstances)
-  |                          |                           |──────> BindingRepo
-  |                          |  CommandResult(id)        |
-  |                          |<──────────────────────────|
-  |  200 { scaling_history_id }
-  |<─────────────────────────|
-```
-
----
-
-## Sequence Diagram — Policy CRUD
-
-```
-Client              ScalingPolicyController     ManageScalingPoliciesUseCase    PolicyRepo
-  |  POST /policies        |                              |                         |
-  |───────────────────────>|                              |                         |
-  |                        |  createPolicy(request)       |                         |
-  |                        |─────────────────────────────>|                         |
-  |                        |                              |  save(policy)            |
-  |                        |                              |────────────────────────>|
-  |                        |  CommandResult(id)           |                         |
-  |                        |<─────────────────────────────|                         |
-  |  201 { id }            |
-  |<───────────────────────|
+    REST --> Application
+    Application --> Domain
+    Infrastructure --> Domain
+    Application --> Infrastructure
 ```
 
----
+## Sequence Diagram — Create Scaling Policy
 
-## Enum Reference
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant R as REST Handler
+    participant UC as PolicyUseCases
+    participant PR as PolicyRepository
 
-| Enum             | Values                                                                     |
-|------------------|----------------------------------------------------------------------------|
-| `MetricType`     | memoryused, memoryutil, cpu, cpuutil, disk, diskutil, throughput, responsetime, custom_ |
-| `ScalingOperator`| lt (<), gt (>), lte (<=), gte (>=)                                        |
-| `ScalingDirection`| scaleOut, scaleIn, none                                                   |
-| `ScalingStatus`  | succeeded, failed, ignored                                                 |
-| `PolicyStatus`   | active, inactive, deleted_                                                 |
-| `MetricAllowFrom`| sameApp, boundApp                                                          |
+    C->>R: POST /api/v1/scaling-policies {appId, minInstances, maxInstances}
+    R->>UC: createPolicy(appId, min, max)
+    UC->>PR: save(policy)
+    PR-->>UC: saved
+    UC-->>R: policy
+    R-->>C: 201 Created {policy}
+```

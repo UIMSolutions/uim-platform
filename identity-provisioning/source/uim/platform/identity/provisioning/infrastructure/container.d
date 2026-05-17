@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.infrastructure.container;
 // import uim.platform.identity.provisioning.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.source_system;
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.target_system;
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system;
@@ -13,17 +13,17 @@ module uim.platform.identity.provisioning.infrastructure.container;
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job;
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log;
 // import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entity;
-// // Domain services
+// Domain services
 // import uim.platform.identity.provisioning.domain.services.provisioning_engine;
 // import uim.platform.identity.provisioning.domain.services.transformation_engine;
-// // Use cases
+// Use cases
 // import uim.platform.identity.provisioning.application.usecases.manage.source_systems;
 // import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
 // import uim.platform.identity.provisioning.application.usecases.manage.proxy_systems;
 // import uim.platform.identity.provisioning.application.usecases.manage.transformations;
 // import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
 // import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
-// // Controllers
+// Controllers
 // import uim.platform.identity.provisioning.presentation.http.source_system;
 // import uim.platform.identity.provisioning.presentation.http.target_system;
 // import uim.platform.identity.provisioning.presentation.http.proxy_system;

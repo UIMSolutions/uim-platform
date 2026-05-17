@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.workzone.infrastructure.persistence.memory.workspace;
 // import uim.platform.workzone.infrastructure.persistence.memory.workpage;
 // import uim.platform.workzone.infrastructure.persistence.memory.card;
@@ -16,7 +16,7 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.infrastructure.persistence.memory.channel;
 // import uim.platform.workzone.infrastructure.persistence.memory.app;
 // import uim.platform.workzone.infrastructure.persistence.memory.widget;
-// // Use Cases
+// Use Cases
 // import uim.platform.workzone.application.usecases.manage.workspaces;
 // import uim.platform.workzone.application.usecases.manage.workpages;
 // import uim.platform.workzone.application.usecases.manage.cards;
@@ -27,7 +27,7 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.application.usecases.manage.channels;
 // import uim.platform.workzone.application.usecases.manage.apps;
 // import uim.platform.workzone.application.usecases.manage.widgets;
-// // Controllers
+// Controllers
 // import uim.platform.identity.authentication.presentation.http.workspace;
 // import uim.platform.identity.authentication.presentation.http.workpage;
 // import uim.platform.identity.authentication.presentation.http.card;

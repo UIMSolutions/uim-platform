@@ -1,384 +1,120 @@
-# Personal Data Manager Service - UML Diagrams
+# UML Diagrams — Personal Data Service
 
-## Domain Class Diagram
+## Class Diagram
 
 ```mermaid
 classDiagram
     class DataSubject {
-        +DataSubjectId id
-        +TenantId tenantId
-        +DataSubjectType subjectType
-        +DataSubjectStatus status
-        +string firstName
-        +string lastName
-        +string email
-        +string phone
-        +string dateOfBirth
-        +string organizationName
-        +string organizationId
+        +string id
+        +string subjectType
         +string externalId
-        +string[] applicationIds
-        +UserId createdBy
+        +string status
         +string createdAt
     }
-
-    class DataSubjectRequest {
-        +DataSubjectRequestId id
-        +TenantId tenantId
-        +DataSubjectId dataSubjectId
-        +RequestType requestType
-        +RequestStatus status
-        +RequestPriority priority
-        +string description
-        +string[] applicationIds
-        +string[] dataCategoryIds
-        +ProcessingComment[] comments
-        +string assignedTo
-        +string dueDate
-        +string rejectionReason
-    }
-
-    class PersonalDataRecord {
-        +PersonalDataRecordId id
-        +TenantId tenantId
-        +DataSubjectId dataSubjectId
-        +RegisteredApplicationId applicationId
-        +DataCategoryType dataCategory
-        +DataSensitivity sensitivity
-        +string fieldName
-        +string fieldValue
-        +ProcessingPurposeId purposeId
-        +LegalBasis legalBasis
-        +RetentionRuleId retentionRuleId
-        +bool isAnonymized
-    }
-
-    class RegisteredApplication {
-        +RegisteredApplicationId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +ApplicationStatus status
-        +string endpointUrl
-        +string apiVersion
-        +string[] dataCategoryIds
-        +string[] purposeIds
-        +string contactEmail
-        +string contactName
-    }
-
-    class ProcessingPurpose {
-        +ProcessingPurposeId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +PurposeStatus status
-        +LegalBasis legalBasis
-        +string[] dataCategoryIds
-        +string[] applicationIds
-        +string retentionPeriod
-        +string dataProtectionOfficer
-        +bool requiresConsent
-    }
-
     class ConsentRecord {
-        +ConsentRecordId id
-        +TenantId tenantId
-        +DataSubjectId dataSubjectId
-        +ProcessingPurposeId purposeId
-        +ConsentStatus status
-        +string consentText
-        +string consentVersion
-        +string givenAt
-        +string withdrawnAt
-        +long expiresAt
-        +string ipAddress
-        +string userAgent
-        +string source
+        +string id
+        +string dataSubjectId
+        +string purposeId
+        +string consentStatus
+        +string recordedAt
     }
-
-    class RetentionRule {
-        +RetentionRuleId id
-        +TenantId tenantId
+    class ProcessingPurpose {
+        +string id
         +string name
         +string description
-        +RetentionRuleStatus status
-        +string retentionPeriod
-        +RetentionPeriodUnit periodUnit
-        +bool autoDelete
-        +bool notifyBeforeExpiry
-        +string notifyDaysBefore
-        +string[] applicationIds
+        +string legalGround
+        +string[] dataCategories
     }
-
-    class DataProcessingLog {
-        +DataProcessingLogId id
-        +TenantId tenantId
-        +DataSubjectId dataSubjectId
-        +DataSubjectRequestId requestId
+    class PersonalDataRecord {
+        +string id
+        +string dataSubjectId
+        +string dataCategory
+        +string dataAttribute
         +string applicationId
-        +LogEntryType entryType
-        +LogSeverity severity
-        +string action
-        +string details
-        +string[] affectedFields
-        +string ipAddress
+    }
+    class RetentionRule {
+        +string id
+        +string purposeId
+        +int retentionDays
+        +string deleteAction
+    }
+    class DataProcessingLog {
+        +string id
+        +string dataSubjectId
+        +string applicationId
+        +string operation
+        +string timestamp
+    }
+    class RegisteredApplication {
+        +string id
+        +string name
+        +string appType
+        +string[] processingPurposeIds
+        +string status
     }
 
-    DataSubject "1" --> "*" DataSubjectRequest : triggers
-    DataSubject "1" --> "*" PersonalDataRecord : owns
-    DataSubject "1" --> "*" ConsentRecord : gives
-    DataSubject "1" --> "*" DataProcessingLog : generates
-
-    RegisteredApplication "1" --> "*" PersonalDataRecord : stores
-    RegisteredApplication "1" --> "*" ProcessingPurpose : implements
-
-    ProcessingPurpose "1" --> "*" ConsentRecord : requires
-    ProcessingPurpose "1" --> "*" PersonalDataRecord : justifies
-
-    RetentionRule "1" --> "*" PersonalDataRecord : governs
-    DataSubjectRequest "1" --> "*" DataProcessingLog : produces
-```
-
-## Hexagonal Architecture
-
-```mermaid
-graph TB
-    subgraph "Driving Adapters (Left)"
-        HTTP[HTTP Controllers]
-        REST[REST API Clients]
-    end
-
-    subgraph "Application Core"
-        subgraph "Presentation Layer"
-            DSC[DataSubjectController]
-            DSRC[DataSubjectRequestController]
-            PDRC[PersonalDataRecordController]
-            RAC[RegisteredApplicationController]
-            PPC[ProcessingPurposeController]
-            CRC[ConsentRecordController]
-            RRC[RetentionRuleController]
-            DPLC[DataProcessingLogController]
-        end
-
-        subgraph "Application Layer"
-            UCS[ManageDataSubjectsUseCase]
-            UCR[ManageDataSubjectRequestsUseCase]
-            UCP[ManagePersonalDataRecordsUseCase]
-            UCA[ManageRegisteredApplicationsUseCase]
-            UCPP[ManageProcessingPurposesUseCase]
-            UCC[ManageConsentRecordsUseCase]
-            UCRT[ManageRetentionRulesUseCase]
-            UCL[ManageDataProcessingLogsUseCase]
-        end
-
-        subgraph "Domain Layer"
-            DS[DataSubject]
-            DSR[DataSubjectRequest]
-            PDR[PersonalDataRecord]
-            RA[RegisteredApplication]
-            PP[ProcessingPurpose]
-            CR[ConsentRecord]
-            RR[RetentionRule]
-            DPL[DataProcessingLog]
-            VAL[DataSubjectValidator]
-        end
-
-        subgraph "Ports"
-            PR1[DataSubjectRepository]
-            PR2[DataSubjectRequestRepository]
-            PR3[PersonalDataRecordRepository]
-            PR4[RegisteredApplicationRepository]
-            PR5[ProcessingPurposeRepository]
-            PR6[ConsentRecordRepository]
-            PR7[RetentionRuleRepository]
-            PR8[DataProcessingLogRepository]
-        end
-    end
-
-    subgraph "Driven Adapters (Right)"
-        MEM[Memory Repositories]
-        FILE[File Repositories]
-        MONGO[MongoDB Repositories]
-    end
-
-    HTTP --> DSC & DSRC & PDRC & RAC & PPC & CRC & RRC & DPLC
-    DSC --> UCS
-    DSRC --> UCR
-    PDRC --> UCP
-    RAC --> UCA
-    PPC --> UCPP
-    CRC --> UCC
-    RRC --> UCRT
-    DPLC --> UCL
-
-    UCS --> PR1
-    UCR --> PR2
-    UCP --> PR3
-    UCA --> PR4
-    UCPP --> PR5
-    UCC --> PR6
-    UCRT --> PR7
-    UCL --> PR8
-
-    PR1 & PR2 & PR3 & PR4 & PR5 & PR6 & PR7 & PR8 --> MEM
-    PR1 & PR2 & PR3 & PR4 & PR5 & PR6 & PR7 & PR8 -.-> FILE
-    PR1 & PR2 & PR3 & PR4 & PR5 & PR6 & PR7 & PR8 -.-> MONGO
-```
-
-## GDPR Request Processing Sequence
-
-```mermaid
-sequenceDiagram
-    actor DPO as Data Protection Officer
-    participant API as REST API
-    participant Ctrl as DataSubjectRequestController
-    participant usecase as ManageDataSubjectRequestsUseCase
-    participant Repo as DataSubjectRequestRepository
-    participant Log as DataProcessingLogRepository
-
-    DPO->>API: POST /api/v1/personal-data/requests
-    API->>Ctrl: handleCreate(req, res)
-    Ctrl->>usecase: create(CreateDataSubjectRequestRequest)
-    usecase->>Repo: save(DataSubjectRequest)
-    Repo-->>usecase: ok
-    usecase-->>Ctrl: CommandResult{success, id}
-    Ctrl-->>API: 201 Created
-
-    DPO->>API: PUT /api/v1/personal-data/requests/{id}
-    API->>Ctrl: handleUpdate(req, res)
-    Ctrl->>usecase: update(UpdateDataSubjectRequestRequest)
-    usecase->>Repo: findById(id)
-    Repo-->>usecase: DataSubjectRequest
-    usecase->>Repo: update(modified request)
-    Repo-->>usecase: ok
-    usecase-->>Ctrl: CommandResult{success}
-    Ctrl-->>API: 200 OK
-```
-
-## Data Subject Erasure Sequence
-
-```mermaid
-sequenceDiagram
-    actor User as Data Subject
-    participant API as REST API
-    participant Ctrl as DataSubjectController
-    participant usecase as ManageDataSubjectsUseCase
-    participant Repo as DataSubjectRepository
-
-    User->>API: POST /api/v1/personal-data/subjects/{id}/erase
-    API->>Ctrl: handleErase(req, res)
-    Ctrl->>usecase: erase(id)
-    usecase->>Repo: findById(id)
-    Repo-->>usecase: DataSubject
-
-    Note over usecase: Anonymize personal fields
-    Note over usecase: firstName = "***"
-    Note over usecase: lastName = "***"
-    Note over usecase: email = ""
-    Note over usecase: phone = ""
-    Note over usecase: dateOfBirth = ""
-    Note over usecase: status = erased
-
-    usecase->>Repo: update(anonymized subject)
-    Repo-->>usecase: ok
-    usecase-->>Ctrl: CommandResult{success}
-    Ctrl-->>API: 200 OK {"message": "Data subject erased (anonymized)"}
-```
-
-## Consent Lifecycle State Diagram
-
-```mermaid
-stateDiagram-v2
-    [*] --> Active : Give Consent
-    Active --> Withdrawn : Withdraw Consent
-    Active --> Expired : Expiry Date Reached
-    Withdrawn --> [*]
-    Expired --> [*]
-    Active --> Active : Update Version
-```
-
-## Request Status State Diagram
-
-```mermaid
-stateDiagram-v2
-    [*] --> submitted : Create Request
-    submitted --> inReview : Assign Reviewer
-    inReview --> processing : Begin Processing
-    processing --> completed : Finish Processing
-    processing --> rejected : Reject Request
-    inReview --> rejected : Reject Request
-    submitted --> cancelled : Cancel Request
-    inReview --> cancelled : Cancel Request
-    completed --> [*]
-    rejected --> [*]
-    cancelled --> [*]
+    ConsentRecord --> DataSubject : for
+    ConsentRecord --> ProcessingPurpose : consents to
+    PersonalDataRecord --> DataSubject : about
+    PersonalDataRecord --> RegisteredApplication : managed by
+    RetentionRule --> ProcessingPurpose : governs
+    DataProcessingLog --> DataSubject : records
+    DataProcessingLog --> RegisteredApplication : by
 ```
 
 ## Component Diagram
 
 ```mermaid
-graph LR
-    subgraph "Personal Data Manager Service"
-        subgraph "API Layer"
-            S[Subjects API]
-            R[Requests API]
-            REC[Records API]
-            A[Applications API]
-            P[Purposes API]
-            C[Consents API]
-            RET[Retention API]
-            L[Logs API]
-            H[Health API]
-        end
-
-        subgraph "Business Logic"
-            BL1[Subject Management]
-            BL2[Request Processing]
-            BL3[Record Tracking]
-            BL4[App Registration]
-            BL5[Purpose Management]
-            BL6[Consent Lifecycle]
-            BL7[Retention Enforcement]
-            BL8[Audit Logging]
-        end
-
-        subgraph "Data Store"
-            DS[(In-Memory Store)]
-        end
+flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        REST["REST API\n/api/v1/..."]
+    end
+    subgraph Application["Application Layer"]
+        DS_UC["DataSubjectUseCases"]
+        CONSENT_UC["ConsentUseCases"]
+        PURPOSE_UC["ProcessingPurposeUseCases"]
+        LOG_UC["DataProcessingLogUseCases"]
+    end
+    subgraph Domain["Domain Layer"]
+        DS["DataSubject"]
+        CR["ConsentRecord"]
+        PP["ProcessingPurpose"]
+        PDR["PersonalDataRecord"]
+        RR["RetentionRule"]
+        DPL["DataProcessingLog"]
+        RA["RegisteredApplication"]
+    end
+    subgraph Infrastructure["Infrastructure Layer"]
+        DS_REPO["InMemoryDataSubjectRepository"]
+        CR_REPO["InMemoryConsentRepository"]
+        PP_REPO["InMemoryPurposeRepository"]
     end
 
-    S --> BL1
-    R --> BL2
-    REC --> BL3
-    A --> BL4
-    P --> BL5
-    C --> BL6
-    RET --> BL7
-    L --> BL8
-
-    BL1 & BL2 & BL3 & BL4 & BL5 & BL6 & BL7 & BL8 --> DS
+    REST --> Application
+    Application --> Domain
+    Infrastructure --> Domain
+    Application --> Infrastructure
 ```
 
-## Deployment Diagram
+## Sequence Diagram — Record Consent
 
 ```mermaid
-graph TB
-    subgraph "Kubernetes Cluster"
-        subgraph "Pod: cloud-personal-data"
-            Container[Personal Data Manager<br/>Port: 8102]
-        end
-        CM[ConfigMap: cloud-personal-data-config]
-        SVC[Service: cloud-personal-data<br/>ClusterIP:8102]
-    end
+sequenceDiagram
+    participant C as Client App
+    participant R as REST Handler
+    participant UC as ConsentUseCases
+    participant DSR as DataSubjectRepository
+    participant PPR as PurposeRepository
+    participant CRR as ConsentRepository
 
-    Client[API Client] --> SVC
-    SVC --> Container
-    CM -.-> Container
-
-    subgraph "Container Registry"
-        IMG[uim-platform/cloud-personal-data:latest]
-    end
-
-    IMG -.-> Container
+    C->>R: POST /api/v1/consent-records {dataSubjectId, purposeId, consentStatus}
+    R->>UC: recordConsent(dataSubjectId, purposeId, status)
+    UC->>DSR: getById(dataSubjectId)
+    DSR-->>UC: dataSubject
+    UC->>PPR: getById(purposeId)
+    PPR-->>UC: purpose
+    UC->>CRR: save(consentRecord)
+    CRR-->>UC: saved
+    UC-->>R: consentRecord
+    R-->>C: 201 Created {consentRecord}
 ```

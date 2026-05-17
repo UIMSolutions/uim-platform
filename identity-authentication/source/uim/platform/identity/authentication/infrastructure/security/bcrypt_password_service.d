@@ -6,7 +6,7 @@
 module uim.platform.identity.authentication.infrastructure.security.bcrypt_password_service;
 // import uim.platform.identity.authentication.domain.ports.repositories.services.password;
 // 
-// // import std.digest.sha : SHA256, toHexString;
+// import std.digest.sha : SHA256, toHexString;
 // 
 import uim.platform.identity.authentication;
 

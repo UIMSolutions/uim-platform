@@ -1,372 +1,149 @@
-# Event Mesh — UML Diagrams
+# UML Diagrams — Advanced Events Service
 
-## Class Diagram — Domain Entities
+## Class Diagram
 
 ```mermaid
 classDiagram
-    class BrokerService {
-        +BrokerServiceId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +BrokerType brokerType
-        +BrokerServiceClass serviceClass
-        +CloudProvider cloudProvider
-        +string region
-        +BrokerStatus status
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
-    }
-
-    class Queue {
-        +QueueId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +BrokerServiceId brokerServiceId
-        +QueueType queueType
-        +long maxCapacity
-        +long ttlSeconds
-        +QueueStatus status
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
-    }
-
-    class Topic {
-        +TopicId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +BrokerServiceId brokerServiceId
-        +string topicPattern
-        +TopicStatus status
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
-    }
-
-    class EventSubscription {
-        +EventSubscriptionId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +TopicId topicId
-        +QueueId queueId
+    class Subscription {
+        +string id
+        +string topicId
+        +string appId
+        +string status
         +string filterExpression
-        +SubscriptionStatus status
         +string createdAt
-        +string updatedAt
-        +toJson() Json
     }
-
-    class EventMessage {
-        +EventMessageId id
-        +TenantId tenantId
-        +TopicId topicId
-        +EventSchemaId schemaId
-        +string payload
-        +string contentType
-        +EventMessageStatus status
-        +long publishedAt
-        +string acknowledgedAt
-        +toJson() Json
+    class Topic {
+        +string id
+        +string name
+        +string schemaId
+        +string brokerId
+        +string description
     }
-
+    class BrokerService {
+        +string id
+        +string name
+        +string brokerType
+        +string endpoint
+        +string status
+    }
     class EventSchema {
-        +EventSchemaId id
-        +TenantId tenantId
+        +string id
         +string name
-        +string description
-        +SchemaFormat format
         +string version
-        +string definition
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
+        +string schemaContent
+        +string format
     }
-
+    class EventMessage {
+        +string id
+        +string topicId
+        +string payload
+        +string headers
+        +string timestamp
+    }
     class EventApplication {
-        +EventApplicationId id
-        +TenantId tenantId
+        +string id
         +string name
-        +string description
-        +BrokerServiceId brokerServiceId
-        +string applicationUrl
-        +ProtocolType protocol
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
+        +string appType
+        +string endpoint
+        +string status
     }
-
     class MeshBridge {
-        +MeshBridgeId id
-        +TenantId tenantId
+        +string id
+        +string sourceBrokerId
+        +string targetBrokerId
+        +string bridgeType
+        +string status
+    }
+    class Queue {
+        +string id
         +string name
-        +string description
-        +BrokerServiceId sourceBrokerId
-        +BrokerServiceId targetBrokerId
-        +BridgeType bridgeType
-        +string topicFilter
-        +BridgeStatus status
-        +string createdAt
-        +string updatedAt
-        +toJson() Json
+        +string brokerId
+        +string maxSizeBytes
+        +string status
     }
 
-    BrokerService "1" --> "*" Queue : hosts
-    BrokerService "1" --> "*" Topic : hosts
-    BrokerService "1" --> "*" EventApplication : connects
-    Topic "1" --> "*" EventSubscription : subscribedBy
-    Queue "1" --> "*" EventSubscription : delivers to
-    Topic "1" --> "*" EventMessage : receives
-    EventSchema "1" --> "*" EventMessage : validates
-    BrokerService "1" --> "*" MeshBridge : source
-    BrokerService "1" --> "*" MeshBridge : target
-```
-
-## Class Diagram — Repository Interfaces
-
-```mermaid
-classDiagram
-    class IBrokerServiceRepository {
-        <<interface>>
-        +findAll() BrokerService[]
-        +findByTenant(tenantId) BrokerService[]
-        +findById(id) BrokerService
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class IQueueRepository {
-        <<interface>>
-        +findAll() Queue[]
-        +findByTenant(tenantId) Queue[]
-        +findById(id) Queue
-        +findByBrokerServiceId(id) Queue[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class ITopicRepository {
-        <<interface>>
-        +findAll() Topic[]
-        +findByTenant(tenantId) Topic[]
-        +findById(id) Topic
-        +findByBrokerServiceId(id) Topic[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class ISubscriptionRepository {
-        <<interface>>
-        +findAll() EventSubscription[]
-        +findByTenant(tenantId) EventSubscription[]
-        +findById(id) EventSubscription
-        +findByTopicId(id) EventSubscription[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class IEventMessageRepository {
-        <<interface>>
-        +findAll() EventMessage[]
-        +findByTenant(tenantId) EventMessage[]
-        +findById(id) EventMessage
-        +findByTopicId(id) EventMessage[]
-        +findByStatus(status) EventMessage[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class IEventSchemaRepository {
-        <<interface>>
-        +findAll() EventSchema[]
-        +findByTenant(tenantId) EventSchema[]
-        +findById(id) EventSchema
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class IEventApplicationRepository {
-        <<interface>>
-        +findAll() EventApplication[]
-        +findByTenant(tenantId) EventApplication[]
-        +findById(id) EventApplication
-        +findByBrokerServiceId(id) EventApplication[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-
-    class IMeshBridgeRepository {
-        <<interface>>
-        +findAll() MeshBridge[]
-        +findByTenant(tenantId) MeshBridge[]
-        +findById(id) MeshBridge
-        +findByStatus(status) MeshBridge[]
-        +save(entity) void
-        +update(entity) void
-        +removeById(id) void
-    }
-```
-
-## Use Case Diagram
-
-```mermaid
-graph LR
-    subgraph Actors
-        A[API Client]
-    end
-
-    subgraph "Event Mesh Service"
-        UC1[Manage Broker Services]
-        UC2[Manage Queues]
-        UC3[Manage Topics]
-        UC4[Manage Subscriptions]
-        UC5[Publish / Acknowledge Messages]
-        UC6[Manage Event Schemas]
-        UC7[Manage Event Applications]
-        UC8[Manage Mesh Bridges]
-        UC9[Health Check]
-    end
-
-    A --> UC1
-    A --> UC2
-    A --> UC3
-    A --> UC4
-    A --> UC5
-    A --> UC6
-    A --> UC7
-    A --> UC8
-    A --> UC9
+    Topic --> BrokerService : hosted on
+    Topic --> EventSchema : validated by
+    Subscription --> Topic : subscribes to
+    Subscription --> EventApplication : owned by
+    EventMessage --> Topic : published to
+    Queue --> BrokerService : hosted on
+    MeshBridge --> BrokerService : source
+    MeshBridge --> BrokerService : target
 ```
 
 ## Component Diagram
 
 ```mermaid
-graph TB
-    subgraph Presentation
-        C1[BrokerServiceController]
-        C2[QueueController]
-        C3[TopicController]
-        C4[SubscriptionController]
-        C5[EventMessageController]
-        C6[EventSchemaController]
-        C7[EventApplicationController]
-        C8[MeshBridgeController]
+flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        REST["REST API\n/api/v1/..."]
+    end
+    subgraph Application["Application Layer"]
+        SUB_UC["SubscriptionUseCases"]
+        TOPIC_UC["TopicUseCases"]
+        MSG_UC["MessageUseCases"]
+        BROKER_UC["BrokerUseCases"]
+    end
+    subgraph Domain["Domain Layer"]
+        SUB_DOM["Subscription"]
+        TOPIC_DOM["Topic"]
+        BROKER_DOM["BrokerService"]
+        SCHEMA_DOM["EventSchema"]
+        MSG_DOM["EventMessage"]
+        APP_DOM["EventApplication"]
+        BRIDGE_DOM["MeshBridge"]
+        QUEUE_DOM["Queue"]
+    end
+    subgraph Infrastructure["Infrastructure Layer"]
+        SUB_REPO["InMemorySubscriptionRepository"]
+        TOPIC_REPO["InMemoryTopicRepository"]
+        BROKER_REPO["InMemoryBrokerRepository"]
+        MSG_REPO["InMemoryMessageRepository"]
     end
 
-    subgraph Application
-        U1[ManageBrokerServicesUseCase]
-        U2[ManageQueuesUseCase]
-        U3[ManageTopicsUseCase]
-        U4[ManageSubscriptionsUseCase]
-        U5[ManageEventMessagesUseCase]
-        U6[ManageEventSchemasUseCase]
-        U7[ManageEventApplicationsUseCase]
-        U8[ManageMeshBridgesUseCase]
-    end
+    REST --> Application
+    Application --> Domain
+    Infrastructure --> Domain
+    Application --> Infrastructure
+```
 
-    subgraph Domain
-        E[Entities]
-        R[Repository Interfaces]
-        V[EventMeshValidator]
-    end
+## Sequence Diagram — Subscribe to Topic
 
-    subgraph Infrastructure
-        MR[Memory Repositories]
-        CFG[AppConfig]
-        DI[Container]
-    end
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant R as REST Handler
+    participant UC as SubscriptionUseCases
+    participant TR as TopicRepository
+    participant SR as SubscriptionRepository
 
-    C1 --> U1
-    C2 --> U2
-    C3 --> U3
-    C4 --> U4
-    C5 --> U5
-    C6 --> U6
-    C7 --> U7
-    C8 --> U8
-
-    U1 --> R
-    U2 --> R
-    U3 --> R
-    U4 --> R
-    U5 --> R
-    U6 --> R
-    U7 --> R
-    U8 --> R
-
-    U1 --> V
-    U2 --> V
-    U3 --> V
-    U4 --> V
-    U5 --> V
-    U6 --> V
-    U7 --> V
-    U8 --> V
-
-    MR -.-> R
-
-    DI --> MR
-    DI --> U1
-    DI --> U2
-    DI --> U3
-    DI --> U4
-    DI --> U5
-    DI --> U6
-    DI --> U7
-    DI --> U8
-    DI --> C1
-    DI --> C2
-    DI --> C3
-    DI --> C4
-    DI --> C5
-    DI --> C6
-    DI --> C7
-    DI --> C8
+    C->>R: POST /api/v1/subscriptions {topicId, appId}
+    R->>UC: createSubscription(topicId, appId)
+    UC->>TR: getById(topicId)
+    TR-->>UC: topic
+    UC->>SR: save(subscription)
+    SR-->>UC: saved
+    UC-->>R: subscription
+    R-->>C: 201 Created {subscription}
 ```
 
 ## Sequence Diagram — Publish Event Message
 
 ```mermaid
 sequenceDiagram
-    participant Client
-    participant Controller as EventMessageController
-    participant UseCase as ManageEventMessagesUseCase
-    participant Repo as IEventMessageRepository
+    participant P as Publisher
+    participant R as REST Handler
+    participant UC as MessageUseCases
+    participant TR as TopicRepository
+    participant MR as MessageRepository
 
-    Client->>Controller: POST /api/v1/event-mesh/messages/publish
-    Controller->>UseCase: publish(dto)
-    UseCase->>UseCase: validate message
-    UseCase->>Repo: save(eventMessage)
-    Repo-->>UseCase: void
-    UseCase-->>Controller: EventMessage
-    Controller-->>Client: 201 Created (JSON)
-```
-
-## Sequence Diagram — Create Mesh Bridge
-
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Controller as MeshBridgeController
-    participant UseCase as ManageMeshBridgesUseCase
-    participant Repo as IMeshBridgeRepository
-
-    Client->>Controller: POST /api/v1/event-mesh/bridges
-    Controller->>UseCase: create(dto)
-    UseCase->>UseCase: validate bridge
-    UseCase->>Repo: save(meshBridge)
-    Repo-->>UseCase: void
-    UseCase-->>Controller: MeshBridge
-    Controller-->>Client: 201 Created (JSON)
+    P->>R: POST /api/v1/messages {topicId, payload}
+    R->>UC: publishMessage(topicId, payload)
+    UC->>TR: getById(topicId)
+    TR-->>UC: topic
+    UC->>MR: save(message)
+    MR-->>UC: saved
+    UC-->>R: message
+    R-->>P: 201 Created {message}
 ```

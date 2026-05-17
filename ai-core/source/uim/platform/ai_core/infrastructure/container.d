@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.infrastructure.container;
 // import uim.platform.ai_core.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
 // import uim.platform.ai_core.infrastructure.persistence.memory.executables;
 // import uim.platform.ai_core.infrastructure.persistence.memory.configurations;
@@ -14,7 +14,7 @@ module uim.platform.ai_core.infrastructure.container;
 // import uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
 // import uim.platform.ai_core.infrastructure.persistence.memory.resource_groups;
 // import uim.platform.ai_core.infrastructure.persistence.memory.metrics;
-// // Use Cases
+// Use Cases
 // import uim.platform.ai_core.application.usecases.manage.scenarios;
 // import uim.platform.ai_core.application.usecases.manage.executables;
 // import uim.platform.ai_core.application.usecases.manage.configurations;
@@ -23,7 +23,7 @@ module uim.platform.ai_core.infrastructure.container;
 // import uim.platform.ai_core.application.usecases.manage.artifacts;
 // import uim.platform.ai_core.application.usecases.manage.resource_groups;
 // import uim.platform.ai_core.application.usecases.get_metrics;
-// // Controllers
+// Controllers
 // import uim.platform.ai_core.presentation.http.controllers.scenario;
 // import uim.platform.ai_core.presentation.http.controllers.executable;
 // import uim.platform.ai_core.presentation.http.controllers.configuration;

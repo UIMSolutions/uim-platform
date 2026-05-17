@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.infrastructure.container;
 // import uim.platform.datasphere.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.datasphere.infrastructure.persistence.memory.space;
 // import uim.platform.datasphere.infrastructure.persistence.memory.connection;
 // import uim.platform.datasphere.infrastructure.persistence.memory.remote_table;
@@ -15,7 +15,7 @@ module uim.platform.datasphere.infrastructure.container;
 // import uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
 // import uim.platform.datasphere.infrastructure.persistence.memory.data_access_control;
 // import uim.platform.datasphere.infrastructure.persistence.memory.catalog_asset;
-// // Use Cases
+// Use Cases
 // import uim.platform.datasphere.application.usecases.manage.spaces;
 // import uim.platform.datasphere.application.usecases.manage.connections;
 // import uim.platform.datasphere.application.usecases.manage.remote_tables;
@@ -25,7 +25,7 @@ module uim.platform.datasphere.infrastructure.container;
 // import uim.platform.datasphere.application.usecases.manage.task_chains;
 // import uim.platform.datasphere.application.usecases.manage.data_access_controls;
 // import uim.platform.datasphere.application.usecases.manage.catalog_assets;
-// // Controllers
+// Controllers
 // import uim.platform.datasphere.presentation.http.controllers.space;
 // import uim.platform.datasphere.presentation.http.controllers.connection;
 // import uim.platform.datasphere.presentation.http.controllers.remote_table;

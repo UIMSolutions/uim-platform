@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.logging.infrastructure.persistence.memory.log_entry;
 // import uim.platform.logging.infrastructure.persistence.memory.log_stream;
 // import uim.platform.logging.infrastructure.persistence.memory.span;
@@ -16,7 +16,7 @@ module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.infrastructure.persistence.memory.notification_channel;
 // import uim.platform.logging.infrastructure.persistence.memory.pipeline;
 // import uim.platform.logging.infrastructure.persistence.memory.ingestion_token;
-// // Use Cases
+// Use Cases
 // import uim.platform.logging.application.usecases.ingest_logs;
 // import uim.platform.logging.application.usecases.ingest_traces;
 // import uim.platform.logging.application.usecases.search_logs;
@@ -28,7 +28,7 @@ module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.application.usecases.manage.notification_channels;
 // import uim.platform.logging.application.usecases.manage.pipelines;
 // import uim.platform.logging.application.usecases.get_overview;
-// // Controllers
+// Controllers
 // import uim.platform.logging.presentation.http.controllers.log;
 // import uim.platform.logging.presentation.http.controllers.trace;
 // import uim.platform.logging.presentation.http.controllers.search;

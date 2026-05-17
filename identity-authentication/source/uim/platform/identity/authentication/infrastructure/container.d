@@ -6,7 +6,7 @@
 module uim.platform.identity.authentication.infrastructure.container;
 // import uim.platform.identity.authentication.infrastructure.config;
 // 
-// // Repositories
+// Repositories
 // import uim.platform.identity.authentication.infrastructure.persistence.memory.user;
 // import uim.platform.identity.authentication.infrastructure.persistence.memory.group;
 // import uim.platform.identity.authentication.infrastructure.persistence.memory.tenant;
@@ -17,12 +17,12 @@ module uim.platform.identity.authentication.infrastructure.container;
 // import uim.platform.identity.authentication.infrastructure.persistence.memory.idp_config;
 // import uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rule;
 // 
-// // Services
+// Services
 // import uim.platform.identity.authentication.infrastructure.security.bcrypt_password_service;
 // import uim.platform.identity.authentication.infrastructure.security.jwt_token_service;
 // import uim.platform.identity.authentication.infrastructure.security.totp_mfa_service;
 // 
-// // Use Cases
+// Use Cases
 // import uim.platform.identity.authentication.application.usecases.authenticate_user;
 // import uim.platform.identity.authentication.application.usecases.issue_token;
 // import uim.platform.identity.authentication.application.usecases.manage.users;
@@ -32,7 +32,7 @@ module uim.platform.identity.authentication.infrastructure.container;
 // import uim.platform.identity.authentication.application.usecases.manage.policies;
 // import uim.platform.identity.authentication.application.usecases.delegated_auth;
 // 
-// // Controllers
+// Controllers
 // import uim.platform.identity.authentication.presentation.http.controllers.auth;
 // import uim.platform.identity.authentication.presentation.http.controllers.user;
 // import uim.platform.identity.authentication.presentation.http.controllers.group;

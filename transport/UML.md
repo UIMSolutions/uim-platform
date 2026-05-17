@@ -1,193 +1,100 @@
-# UML – Transport Platform Service
+# UML Diagrams — Transport Service
 
-## Class Diagram (Domain Layer)
+## Class Diagram
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                          DOMAIN ENTITIES                                │
-├────────────────────┬────────────────────────────────────────────────────┤
-│  TransportNode     │  TransportRoute                                    │
-│  ────────────────  │  ────────────────────────────────────────────────  │
-│  id: NodeId        │  id: RouteId                                       │
-│  tenantId          │  tenantId                                          │
-│  name              │  name                                              │
-│  description       │  description                                       │
-│  nodeType          │  sourceNodeId ──────────────────────────►NodeId    │
-│  status            │  destinationNodeId ─────────────────────►NodeId    │
-│  environment       │  status: RouteStatus                               │
-│  region            │  isSequential: bool                                │
-│  globalAccount     │  sequence: int                                     │
-│  subaccountId      ├────────────────────────────────────────────────────┤
-│  spaceId           │  TransportRequest                                  │
-│  isForwardEnabled  │  ────────────────────────────────────────────────  │
-│  autoImport        │  id: RequestId                                     │
-│  toJson()          │  tenantId                                          │
-├────────────────────┤  name                                              │
-│  ImportQueueEntry  │  contentType: ContentType                          │
-│  ────────────────  │  status: RequestStatus                             │
-│  id: EntryId       │  version_                                          │
-│  tenantId          │  storageUrl                                        │
-│  nodeId ──────────►NodeId                                               │
-│  requestId ───────►RequestId                                            │
-│  status: ImportStatus                                                   │
-│  queuePosition     ├────────────────────────────────────────────────────┤
-│  isSelected        │  TransportAction                                   │
-│  scheduledAt       │  ────────────────────────────────────────────────  │
-│  importLog         │  id: ActionId                                      │
-│  toJson()          │  tenantId                                          │
-│                    │  actionType: ActionType                             │
-│                    │  actionStatus: ActionStatus                         │
-│                    │  nodeId ────────────────────────────────────►NodeId │
-│                    │  requestId ────────────────────────────►RequestId  │
-│                    │  routeId ────────────────────────────────►RouteId  │
-│                    │  performedBy                                        │
-│                    │  logDetails                                         │
-│                    │  toJson()                                           │
-└────────────────────┴────────────────────────────────────────────────────┘
-```
+```mermaid
+classDiagram
+    class TransportNode {
+        +string id
+        +string name
+        +string nodeType
+        +string description
+        +string endpoint
+    }
+    class TransportRoute {
+        +string id
+        +string sourceNodeId
+        +string targetNodeId
+        +string routeType
+        +string status
+    }
+    class TransportRequest {
+        +string id
+        +string name
+        +string description
+        +string status
+        +string createdBy
+    }
+    class ImportQueueEntry {
+        +string id
+        +string transportRequestId
+        +string targetNodeId
+        +string queueStatus
+        +string queuedAt
+    }
+    class TransportAction {
+        +string id
+        +string transportRequestId
+        +string actionType
+        +string performedBy
+        +string performedAt
+    }
 
----
-
-## Interface (Port) Diagram
-
-```
-ITenantRepository<E, ID>
-        │
-        ├── TransportNodeRepository
-        │       findByStatus(), findByType()
-        │
-        ├── TransportRouteRepository
-        │       findBySourceNode(), findByDestinationNode(), findByStatus()
-        │
-        ├── TransportRequestRepository
-        │       findByStatus(), findBySourceNode(), findByContentType()
-        │
-        ├── ImportQueueEntryRepository
-        │       findByNode(), findByRequest(), findByStatus(),
-        │       findByNodeAndStatus()
-        │
-        └── TransportActionRepository
-                findByNode(), findByRequest(), findByType(), findByStatus()
+    TransportRoute --> TransportNode : from source
+    TransportRoute --> TransportNode : to target
+    ImportQueueEntry --> TransportRequest : queues
+    ImportQueueEntry --> TransportNode : at
+    TransportAction --> TransportRequest : acts on
 ```
 
----
+## Component Diagram
 
-## Component Diagram (Hexagonal Architecture)
+```mermaid
+flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        REST["REST API\n/api/v1/..."]
+    end
+    subgraph Application["Application Layer"]
+        NODE_UC["TransportNodeUseCases"]
+        ROUTE_UC["TransportRouteUseCases"]
+        REQ_UC["TransportRequestUseCases"]
+        IQ_UC["ImportQueueUseCases"]
+    end
+    subgraph Domain["Domain Layer"]
+        NODE["TransportNode"]
+        ROUTE["TransportRoute"]
+        REQ["TransportRequest"]
+        IQE["ImportQueueEntry"]
+        ACTION["TransportAction"]
+    end
+    subgraph Infrastructure["Infrastructure Layer"]
+        NODE_REPO["InMemoryNodeRepository"]
+        REQ_REPO["InMemoryRequestRepository"]
+        IQ_REPO["InMemoryQueueRepository"]
+    end
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                     Transport Platform Service                         │
-│                                                                        │
-│  ┌─────────────────────────────┐    ┌──────────────────────────────┐  │
-│  │    PRESENTATION (HTTP)       │    │      APPLICATION             │  │
-│  │  ─────────────────────────  │    │  ──────────────────────────  │  │
-│  │  TransportNodeController    │───►│  ManageTransportNodesUseCase │  │
-│  │  TransportRouteController   │───►│  ManageTransportRoutes...    │  │
-│  │  TransportRequestController │───►│  ManageTransportRequests...  │  │
-│  │  ImportQueueEntryController │───►│  ManageImportQueueEntries... │  │
-│  │  TransportActionController  │───►│  ManageTransportActions...   │  │
-│  │  HealthController           │    │                              │  │
-│  └─────────────────────────────┘    └──────────┬───────────────────┘  │
-│                                                │ calls                 │
-│                                     ┌──────────▼───────────────────┐  │
-│                                     │         DOMAIN               │  │
-│                                     │  ─────────────────────────   │  │
-│                                     │  TransportNode               │  │
-│                                     │  TransportRoute              │  │
-│                                     │  TransportRequest            │  │
-│                                     │  ImportQueueEntry            │  │
-│                                     │  TransportAction             │  │
-│                                     │  TransportValidator          │  │
-│                                     │  <<ports>>                   │  │
-│                                     │  TransportNodeRepository     │  │
-│                                     │  TransportRouteRepository    │  │
-│                                     │  ...                         │  │
-│                                     └──────────▲───────────────────┘  │
-│                                                │ implements            │
-│                                     ┌──────────┴───────────────────┐  │
-│                                     │     INFRASTRUCTURE           │  │
-│                                     │  ─────────────────────────   │  │
-│                                     │  MemoryTransportNodeRepo     │  │
-│                                     │  MemoryTransportRouteRepo    │  │
-│                                     │  MemoryTransportRequestRepo  │  │
-│                                     │  MemoryImportQueueEntryRepo  │  │
-│                                     │  MemoryTransportActionRepo   │  │
-│                                     │  Container / loadConfig()    │  │
-│                                     └──────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────────┘
+    REST --> Application
+    Application --> Domain
+    Infrastructure --> Domain
+    Application --> Infrastructure
 ```
 
----
+## Sequence Diagram — Trigger Import
 
-## Sequence Diagram – Export Transport Request
+```mermaid
+sequenceDiagram
+    participant R as Release Manager
+    participant H as REST Handler
+    participant UC as ImportQueueUseCases
+    participant RQR as RequestRepository
+    participant IQR as QueueRepository
 
-```
-CI/CD Pipeline          HTTP API          TransportRequestController
-      │                    │                         │
-      │  POST /requests    │                         │
-      │───────────────────►│  handleCreate()         │
-      │                    │────────────────────────►│
-      │                    │                    ManageTransportRequestsUseCase
-      │                    │                         │──────────────────────►│
-      │                    │                         │  createRequest(dto)   │
-      │                    │                         │◄──────────────────────│
-      │                    │  201 {id, message}      │
-      │◄───────────────────│◄────────────────────────│
-      │                    │                         │
-```
-
----
-
-## Sequence Diagram – Import Queue Flow
-
-```
-Operator    ImportQueueEntryController    ManageImportQueueEntriesUseCase
-    │                  │                              │
-    │  POST /queue-entries (enqueue)                  │
-    │─────────────────►│  enqueue(dto)               │
-    │                  │────────────────────────────►│
-    │                  │                   save to repo
-    │◄─────────────────│  201 {id}                   │
-    │                  │                             │
-    │  PUT /queue-entries/:id {status:"running"}      │
-    │─────────────────►│  updateEntryStatus()        │
-    │                  │────────────────────────────►│
-    │                  │◄────────────────────────────│
-    │◄─────────────────│  200 {message:"Status updated"}
-    │                  │                             │
-    │  PUT /queue-entries/:id {status:"success"}      │
-    │─────────────────►│  updateEntryStatus()        │
-    │                  │────────────────────────────►│
-    │◄─────────────────│  200                        │
-```
-
----
-
-## State Machine – Transport Request Lifecycle
-
-```
-       ┌──────────┐
-  ──►  │ initial  │
-       └────┬─────┘
-            │ start import
-            ▼
-       ┌──────────┐
-       │ running  │
-       └──┬───┬───┘
-     ok   │   │ error
-          │   ▼
-          │ ┌─────────┐
-          │ │ failed  │◄─── retry ───┐
-          │ └─────────┘              │
-          │                          │
-          ▼                          │
-       ┌──────────┐    reset    ┌────┴──────┐
-       │ success  │◄────────────│ repeating │
-       └──────────┘             └───────────┘
-            │
-            │ newer version available
-            ▼
-       ┌──────────┐
-       │ outdated │
-       └──────────┘
+    R->>H: POST /api/v1/import-queue-entries {transportRequestId, targetNodeId}
+    H->>UC: queueImport(requestId, nodeId)
+    UC->>RQR: getById(requestId)
+    RQR-->>UC: request
+    UC->>IQR: save(queueEntry)
+    IQR-->>UC: saved
+    UC-->>H: queueEntry
+    H-->>R: 201 Created {queueEntry}
 ```

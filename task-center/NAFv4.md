@@ -1,221 +1,126 @@
-# Task Center Service - NATO Architecture Framework v4 (NAFv4)
+# NAF v4 Architecture Description — Task Center Service
 
-## 1. Concepts (C1 - Capability Taxonomy)
+> NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
+> Task Center Service — unified inbox for human tasks aggregated from SAP and
+> third-party providers, including task definitions, actions, comments,
+> attachments, filters, and substitution rules modelled on SAP Task Center.
 
-### 1.1 Service Purpose
+---
 
-The Task Center Service provides a **unified task federation and processing** capability for enterprise environments. It aggregates tasks from multiple heterogeneous source systems into a single inbox, enabling efficient task management across organizational boundaries.
+## 1. NAF v4 Grid Mapping
 
-### 1.2 Capability Taxonomy
+| NAF View | Viewpoint | Covered Below |
+|---|---|---|
+| **NCV** | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** | NSOV-2 Service Definitions | §3 |
+| **NOV** | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** | NLV-1 Logical Data Model | §5 |
+| **NPV** | NPV-1 Physical Deployment | §6 |
+| **NIV** | NIV-1 Information Structure | §7 |
 
-| Capability ID | Capability Name | Description |
-|--------------|----------------|-------------|
-| C-TC-001 | Task Federation | Aggregate tasks from multiple provider systems into unified cache |
-| C-TC-002 | Task Processing | Execute task actions (approve, reject, forward, claim, release, escalate) |
-| C-TC-003 | Task Definition Management | Define and manage task types, categories, and schemas |
-| C-TC-004 | Provider Connectivity | Register and manage connections to source task systems |
-| C-TC-005 | Substitution Management | Configure delegation rules for task handling during absences |
-| C-TC-006 | Task Collaboration | Enable comments and attachments on tasks |
-| C-TC-007 | Action Audit Trail | Track all task actions for compliance and traceability |
-| C-TC-008 | Filter Management | Personal saved filter configurations for task retrieval |
-| C-TC-009 | Health Monitoring | Runtime health and readiness probing |
+---
 
-## 2. Service Specification (S1 - Service Taxonomy)
+## 2. Capability View (NCV)
 
-### 2.1 Service Interfaces
-
-| Interface | Protocol | Base Path | Description |
-|-----------|----------|-----------|-------------|
-| Task API | REST/HTTP | `/api/v1/task-center/tasks` | CRUD + lifecycle actions for tasks |
-| Definition API | REST/HTTP | `/api/v1/task-center/definitions` | Task type management |
-| Provider API | REST/HTTP | `/api/v1/task-center/providers` | Source system connector management |
-| Comment API | REST/HTTP | `/api/v1/task-center/comments` | Task commenting |
-| Attachment API | REST/HTTP | `/api/v1/task-center/attachments` | Task attachment metadata |
-| Substitution API | REST/HTTP | `/api/v1/task-center/substitutions` | Delegation rule management |
-| Action API | REST/HTTP | `/api/v1/task-center/actions` | Task action audit log |
-| Filter API | REST/HTTP | `/api/v1/task-center/filters` | Saved user filter management |
-| Health API | REST/HTTP | `/health` | Liveness and readiness probe |
-
-### 2.2 Service Qualities
-
-| Quality Attribute | Target | Implementation |
-|------------------|--------|----------------|
-| Availability | 99.9% | Kubernetes liveness/readiness probes |
-| Scalability | Horizontal | Stateless container design, replicas |
-| Multi-tenancy | Full | X-Tenant-Id header isolation |
-| Response Time | < 200ms | In-memory repository, vibe.d async I/O |
-| Interoperability | REST/JSON | Standard HTTP methods and JSON payloads |
-
-## 3. Operational Viewpoint (NOV - NATO Operational View)
-
-### 3.1 Operational Node Connectivity (NOV-2)
+### C1 – Capability Taxonomy
 
 ```
-+-------------------+       +-------------------+       +-------------------+
-|   SAP S/4HANA     |       |  SAP SuccessFactors|       |    SAP Ariba      |
-|   (Task Provider)  |       |  (Task Provider)   |       |  (Task Provider)  |
-+--------+----------+       +--------+----------+       +--------+----------+
-         |                           |                           |
-         |    Task Federation        |    Task Federation        |
-         v                           v                           v
-+--------+---------------------------+---------------------------+----------+
-|                        Task Center Service                                 |
-|                                                                            |
-|  +---------------+  +---------------+  +---------------+                   |
-|  | Task Cache    |  | Provider Mgmt |  | Substitution  |                   |
-|  | (Unified      |  | (Connector    |  | Mgmt (Deleg-  |                   |
-|  |  Inbox)       |  |  Registry)    |  |  ation Rules) |                   |
-|  +---------------+  +---------------+  +---------------+                   |
-|                                                                            |
-|  +---------------+  +---------------+  +---------------+                   |
-|  | Action Audit  |  | Comments /    |  | Saved Filters |                   |
-|  | (Compliance)  |  | Attachments   |  | (Personal)    |                   |
-|  +---------------+  +---------------+  +---------------+                   |
-+--------+------------------------------------------------------------------+
-         |
-         | REST API (JSON)
-         v
-+--------+----------+
-|   End Users /     |
-|   Applications    |
-+-------------------+
+Task Center
+├── C1.1  Task Aggregation
+│   ├── C1.1.1  Pull tasks from multiple task providers
+│   └── C1.1.2  Task definition registry
+│
+├── C1.2  Task Execution
+│   ├── C1.2.1  Claim, approve, reject tasks
+│   └── C1.2.2  Custom task actions
+│
+├── C1.3  Task Collaboration
+│   ├── C1.3.1  Task comments
+│   └── C1.3.2  Task attachments
+│
+├── C1.4  Task Organisation
+│   └── C1.4.1  User-defined task filters
+│
+├── C1.5  Substitution
+│   └── C1.5.1  User absence and substitution rules
+│
+└── C1.6  Cross-Cutting
+    ├── C1.6.1  Tenant isolation
+    └── C1.6.2  Health monitoring
 ```
 
-### 3.2 Operational Activity (NOV-5)
+### C2 – Enterprise Vision
 
-| Activity | Input | Output | Actor |
-|----------|-------|--------|-------|
-| Browse Tasks | Filter criteria | Task list | End User |
-| Process Task | Task ID + Action | Updated task | End User |
-| Claim Task | Task ID + User | Reserved task | End User |
-| Forward Task | Task ID + Target user | Forwarded task | End User |
-| Register Provider | Provider config | Active connector | Admin |
-| Sync Provider | Provider ID | Updated task cache | Admin / Scheduler |
-| Configure Substitution | Rule parameters | Active delegation | End User |
-| Review Audit | Task ID | Action history | Auditor |
+| Aspect | Description |
+|---|---|
+| **Mission** | Provide a unified task inbox modelled on SAP Task Center. |
+| **Vision** | Eliminate task silos by aggregating human tasks from SAP S/4HANA, Ariba, SuccessFactors, and custom applications into a single multi-source inbox. |
+| **Scope** | Tasks, task definitions, providers, actions, comments, attachments, filters, and substitution rules. |
+| **Stakeholders** | End Users, Line Managers, IT Administrators. |
 
-## 4. Systems Viewpoint (NSV - NATO Systems View)
+---
 
-### 4.1 System Interface Description (NSV-1)
+## 3. Service View (NSV)
 
-```
-+-------------------------------------------------------------------+
-|                    Task Center Microservice                        |
-|                                                                    |
-|   +-----------+    +-------------+    +-------------------+        |
-|   | Presenta- |    | Application |    | Infrastructure    |        |
-|   | tion      |--->| Layer       |--->| Layer             |        |
-|   | Layer     |    |             |    |                   |        |
-|   |           |    | Use Cases:  |    | - MemoryRepos     |        |
-|   | 8 REST    |    | - Tasks     |    | - AppConfig       |        |
-|   | Controllers    | - Defs      |    | - Container (DI)  |        |
-|   |           |    | - Providers |    |                   |        |
-|   |           |    | - Comments  |    +-------------------+        |
-|   |           |    | - Attach.   |            |                    |
-|   |           |    | - Substit.  |            v                    |
-|   |           |    | - Actions   |    +-------------------+        |
-|   |           |    | - Filters   |    | Domain Layer      |        |
-|   +-----------+    +-------------+    | - Entities (8)    |        |
-|                                       | - Repo Interfaces |        |
-|                                       | - TaskValidator   |        |
-|                                       | - Value Types     |        |
-|                                       +-------------------+        |
-+-------------------------------------------------------------------+
-```
+| Service ID | Name | Path Prefix | Methods |
+|---|---|---|---|
+| SVC-TASK-CRUD | Task | `/api/v1/tasks` | GET, POST, PUT, DELETE |
+| SVC-TD-CRUD | Task Definition | `/api/v1/task-definitions` | GET, POST, DELETE |
+| SVC-TP-CRUD | Task Provider | `/api/v1/task-providers` | GET, POST, DELETE |
+| SVC-TA-CRUD | Task Action | `/api/v1/task-actions` | GET, POST |
+| SVC-TC-CRUD | Task Comment | `/api/v1/task-comments` | GET, POST, DELETE |
+| SVC-TATT-CRUD | Task Attachment | `/api/v1/task-attachments` | GET, POST, DELETE |
+| SVC-TF-CRUD | User Task Filter | `/api/v1/user-task-filters` | GET, POST, DELETE |
+| SVC-SUB-CRUD | Substitution Rule | `/api/v1/substitution-rules` | GET, POST, DELETE |
+| SVC-HLTH | Health Check | `/api/v1/health` | GET |
 
-### 4.2 System Technology (NSV-2)
+---
 
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| Language | D (dlang) | DMD/LDC |
-| Web Framework | vibe.d | 0.10.x |
-| Container Runtime | Docker / Podman | Latest |
-| Orchestration | Kubernetes | 1.28+ |
-| Build System | DUB | Latest |
-| Base Image | Alpine Linux | 3.20 |
-
-### 4.3 System Connectivity (NSV-6)
-
-| From | To | Protocol | Port | Description |
-|------|----|----------|------|-------------|
-| Client | Task Center | HTTP/REST | 8103 | API requests |
-| Kubernetes | Task Center | HTTP | 8103 | Health probes |
-| Task Center | Task Providers | HTTP/REST | Varies | Task federation (future) |
-
-## 5. Technical Standards (NTV - NATO Technical View)
-
-### 5.1 Standards Profile (NTV-1)
-
-| Category | Standard | Notes |
-|----------|----------|-------|
-| Architecture | Clean / Hexagonal Architecture | Ports and Adapters pattern |
-| API Design | RESTful HTTP/JSON | Resource-oriented endpoints |
-| Multi-tenancy | Header-based (X-Tenant-Id) | Tenant isolation at repository level |
-| Authentication Types | OAuth2, Basic, Certificate, API Key, SAML | Provider auth schemes |
-| Container | OCI Container Image | Docker/Podman compatible |
-| Orchestration | Kubernetes Deployment | ConfigMap, Service, Deployment |
-| Health Checks | Kubernetes probes (liveness/readiness) | /health endpoint |
-
-### 5.2 Data Model Standards
-
-| Entity | Key Fields | Lifecycle States |
-|--------|-----------|-----------------|
-| Task | tenantId, id, taskDefinitionId, providerId | open, inProgress, completed, cancelled, failed, forwarded, reserved |
-| TaskDefinition | tenantId, id, providerId, name | isActive: true/false |
-| TaskProvider | tenantId, id, providerType | active, inactive, error, syncing |
-| SubstitutionRule | tenantId, id, userId, substituteId | active, inactive, expired, pending |
-| TaskComment | tenantId, id, taskId, author | Created/Deleted |
-| TaskAttachment | tenantId, id, taskId, fileName | uploaded, processing, available, deleted |
-| TaskAction | tenantId, id, taskId, actionType | Immutable audit record |
-| UserTaskFilter | tenantId, id, userId, name | isDefault: true/false |
-
-## 6. Deployment View
-
-### 6.1 Container Deployment
+## 4. Operational View (NOV)
 
 ```
-+----------------------------------+
-|       Kubernetes Cluster          |
-|                                   |
-|  +-----------------------------+  |
-|  |  Namespace: uim-platform    |  |
-|  |                             |  |
-|  |  +--------+ +-----------+  |  |
-|  |  | Config | | Service   |  |  |
-|  |  | Map    | | (ClusterIP|  |  |
-|  |  |        | |  :8103)   |  |  |
-|  |  +--------+ +-----+-----+  |  |
-|  |                    |        |  |
-|  |              +-----v-----+  |  |
-|  |              | Deployment|  |  |
-|  |              | (1+ pods) |  |  |
-|  |              |           |  |  |
-|  |              | Container:|  |  |
-|  |              | task-     |  |  |
-|  |              | center    |  |  |
-|  |              | :8103     |  |  |
-|  |              +-----------+  |  |
-|  +-----------------------------+  |
-+----------------------------------+
+┌──────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
+│  End User /           │ ─────────────────> │  Task Center Service         │
+│  Workflow System      │                    │  port 8103                    │
+└──────────────────────┘                    └──────────────────────────────┘
 ```
 
-### 6.2 Build Pipeline
+---
 
-| Stage | Command | Artifact |
-|-------|---------|----------|
-| Compile | `dub build --compiler=ldc2 -b release` | Binary executable |
-| Containerize | `docker build -t uim-platform/task-center:latest .` | OCI image |
-| Deploy | `kubectl apply -f k8s/` | Kubernetes resources |
+## 5. Logical View (NLV)
 
-## 7. Information Exchange (NIV - NATO Information View)
+| Entity | Key Relationships |
+|---|---|
+| `Task` | Human task from a TaskProvider |
+| `TaskDefinition` | Template defining a task type |
+| `TaskProvider` | Source system registering tasks |
+| `TaskAction` | Executable action on a Task |
+| `TaskComment` | User comment on a Task |
+| `TaskAttachment` | File attached to a Task |
+| `UserTaskFilter` | Saved filter for task inbox views |
+| `SubstitutionRule` | Delegation of tasks during absence |
 
-### 7.1 Information Exchange Matrix
+---
 
-| Producer | Consumer | Information | Format | Frequency |
-|----------|----------|-------------|--------|-----------|
-| Task Providers | Task Center | Federated tasks | REST/JSON | On sync |
-| End Users | Task Center | Task actions | REST/JSON | On demand |
-| Task Center | End Users | Task lists, details | REST/JSON | On request |
-| Admins | Task Center | Provider config | REST/JSON | As needed |
-| Task Center | Auditors | Action audit trail | REST/JSON | On request |
-| End Users | Task Center | Substitution rules | REST/JSON | As needed |
+## 6. Physical View (NPV)
+
+```
+Kubernetes Cluster — Namespace: uim-platform
+├── ConfigMap: task-center-config
+│   TASK_CENTER_HOST: "0.0.0.0"
+│   TASK_CENTER_PORT: "8103"
+├── Deployment: task-center  port: 8103
+└── Service: task-center (ClusterIP :8103)
+```
+
+---
+
+## 7. Architecture Decisions
+
+| ID | Decision | Rationale |
+|---|---|---|
+| AD-1 | Multi-provider model | Aggregates tasks from any system |
+| AD-2 | Substitution rules | Compliance with absence workflows |
+| AD-3 | Task filters | Personalised inbox management |
+| AD-4 | In-memory repositories | Fast testing |
+| AD-5 | Port 8103 | Consistent UIM platform port allocation |

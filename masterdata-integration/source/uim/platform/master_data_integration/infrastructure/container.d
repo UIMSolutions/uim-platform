@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.master_data_integration.infrastructure.persistence.memory
 //   .master_data_object;
 // import uim.platform.master_data_integration.infrastructure.persistence.memory.data_model;
@@ -16,10 +16,10 @@ module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.infrastructure.persistence.memory.client;
 // import uim.platform.master_data_integration.infrastructure.persistence.memory.replication_job;
 // import uim.platform.master_data_integration.infrastructure.persistence.memory.filter_rule;
-// // Domain services
+// Domain services
 // import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
 // import uim.platform.master_data_integration.domain.services.distribution_evaluator;
-// // Use Cases
+// Use Cases
 // import uim.platform.master_data_integration.application.usecases.manage.master_data_objects;
 // import uim.platform.master_data_integration.application.usecases.manage.data_models;
 // import uim.platform.master_data_integration.application.usecases.manage.distribution_models;
@@ -28,7 +28,7 @@ module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
 // import uim.platform.master_data_integration.application.usecases.manage.filter_rules;
 // import uim.platform.master_data_integration.application.usecases.query_change_log;
-// // Controllers
+// Controllers
 // import uim.platform.master_data_integration.presentation.http.master_data;
 // import uim.platform.master_data_integration.presentation.http.data_model;
 // import uim.platform.master_data_integration.presentation.http.distribution;

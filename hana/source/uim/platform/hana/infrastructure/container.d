@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.hana.infrastructure.persistence.memory.instances;
 // import uim.platform.hana.infrastructure.persistence.memory.data_lakes;
 // import uim.platform.hana.infrastructure.persistence.memory.schemas;
@@ -16,7 +16,7 @@ module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
 // import uim.platform.hana.infrastructure.persistence.memory.configurations;
 // import uim.platform.hana.infrastructure.persistence.memory.database_connections;
-// // Use Cases
+// Use Cases
 // import uim.platform.hana.application.usecases.manage.instances;
 // import uim.platform.hana.application.usecases.manage.data_lakes;
 // import uim.platform.hana.application.usecases.manage.schemas;
@@ -27,7 +27,7 @@ module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.application.usecases.manage.replication_tasks;
 // import uim.platform.hana.application.usecases.manage.configurations;
 // import uim.platform.hana.application.usecases.manage.database_connections;
-// // Controllers
+// Controllers
 // import uim.platform.hana.presentation.http.controllers.instance;
 // import uim.platform.hana.presentation.http.controllers.data_lake;
 // import uim.platform.hana.presentation.http.controllers.schema;

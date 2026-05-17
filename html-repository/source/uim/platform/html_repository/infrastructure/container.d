@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.container;
 // import uim.platform.html_repository.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.html_repository.infrastructure.persistence.memory.html_app_repository;
 // import uim.platform.html_repository.infrastructure.persistence.memory.app_version_repository;
 // import uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
@@ -13,7 +13,7 @@ module uim.platform.html_repository.infrastructure.container;
 // import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_repository;
 // import uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
 // import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
-// // Use Cases
+// Use Cases
 // import uim.platform.html_repository.application.usecases.manage.html_apps;
 // import uim.platform.html_repository.application.usecases.manage.app_versions;
 // import uim.platform.html_repository.application.usecases.manage.app_files;
@@ -23,7 +23,7 @@ module uim.platform.html_repository.infrastructure.container;
 // import uim.platform.html_repository.application.usecases.manage.content_cache;
 // import uim.platform.html_repository.application.usecases.get_deployment_history;
 // import uim.platform.html_repository.application.usecases.get_overview;
-// // Controllers
+// Controllers
 // import uim.platform.html_repository.presentation.http.controllers.html_app;
 // import uim.platform.html_repository.presentation.http.controllers.app_version;
 // import uim.platform.html_repository.presentation.http.controllers.app_file;

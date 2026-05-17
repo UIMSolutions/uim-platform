@@ -7,23 +7,23 @@ module uim.platform.application_autoscaler.infrastructure.container;
 
 // import uim.platform.application_autoscaler.infrastructure.config;
 
-// // Repositories
+// Repositories
 // import uim.platform.application_autoscaler.infrastructure.persistence.memory.bindings;
 // import uim.platform.application_autoscaler.infrastructure.persistence.memory.custom_metrics;
 // import uim.platform.application_autoscaler.infrastructure.persistence.memory.policies;
 // import uim.platform.application_autoscaler.infrastructure.persistence.memory.scaling_history;
 
-// // Domain services
+// Domain services
 // import uim.platform.application_autoscaler.domain.services.scaling_evaluator;
 
-// // Use cases
+// Use cases
 // import uim.platform.application_autoscaler.application.usecases.manage.bindings;
 // import uim.platform.application_autoscaler.application.usecases.manage.custom_metrics;
 // import uim.platform.application_autoscaler.application.usecases.manage.policies;
 // import uim.platform.application_autoscaler.application.usecases.manage.scaling_engine;
 // import uim.platform.application_autoscaler.application.usecases.manage.scaling_history;
 
-// // Controllers
+// Controllers
 // import uim.platform.application_autoscaler.presentation.http.controllers.bindings;
 // import uim.platform.application_autoscaler.presentation.http.controllers.custom_metrics;
 // import uim.platform.application_autoscaler.presentation.http.controllers.policies;

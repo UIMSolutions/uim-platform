@@ -6,7 +6,7 @@
 module uim.platform.dms.application.infrastructure.container;
 // import uim.platform.dms.application.infrastructure.config;
 // 
-// // Repositories
+// Repositories
 // import uim.platform.dms.application.infrastructure.persistence.memory.repository;
 // import uim.platform.dms.application.infrastructure.persistence.memory.folder;
 // import uim.platform.dms.application.infrastructure.persistence.memory.document;
@@ -15,11 +15,11 @@ module uim.platform.dms.application.infrastructure.container;
 // import uim.platform.dms.application.infrastructure.persistence.memory.permission;
 // import uim.platform.dms.application.infrastructure.persistence.memory.favorite;
 // 
-// // Domain services
+// Domain services
 // import uim.platform.dms.application.domain.services.versioning_service;
 // import uim.platform.dms.application.domain.services.access_control_service;
 // 
-// // Use cases
+// Use cases
 // import uim.platform.dms.application.application.usecases.manage.repositories;
 // import uim.platform.dms.application.application.usecases.manage.folders;
 // import uim.platform.dms.application.application.usecases.manage.documents;
@@ -28,7 +28,7 @@ module uim.platform.dms.application.infrastructure.container;
 // import uim.platform.dms.application.application.usecases.manage.permissions;
 // import uim.platform.dms.application.application.usecases.browse_content;
 // 
-// // Controllers
+// Controllers
 // import uim.platform.dms.application.presentation.http.repository;
 // import uim.platform.dms.application.presentation.http.folder;
 // import uim.platform.dms.application.presentation.http.document;

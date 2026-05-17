@@ -6,7 +6,7 @@
 module uim.platform.auditlog.infrastructure.container;
 
 import uim.platform.auditlog.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.auditlog.infrastructure.persistence.memory.audit_log;
 // import uim.platform.auditlog.infrastructure.persistence.memory.retention;
 // import uim.platform.auditlog.infrastructure.persistence.memory.audit_config;
@@ -14,7 +14,7 @@ import uim.platform.auditlog.infrastructure.config;
 // import uim.platform.auditlog.infrastructure.persistence.memory.security_event;
 // import uim.platform.auditlog.infrastructure.persistence.memory.data_access;
 // import uim.platform.auditlog.infrastructure.persistence.memory.config_change;
-// // Use Cases
+// Use Cases
 // import uim.platform.auditlog.application.usecases.write.audit_log;
 // import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 // import uim.platform.auditlog.application.usecases.manage.retention;
@@ -23,7 +23,7 @@ import uim.platform.auditlog.infrastructure.config;
 // import uim.platform.auditlog.application.usecases.write.security_event;
 // import uim.platform.auditlog.application.usecases.write.data_access_log;
 // import uim.platform.auditlog.application.usecases.write.config_change;
-// // Controllers
+// Controllers
 // import uim.platform.auditlog.presentation.http.controllers.audit_log;
 // import uim.platform.auditlog.presentation.http.controllers.retention;
 // import uim.platform.auditlog.presentation.http.controllers.audit_config;

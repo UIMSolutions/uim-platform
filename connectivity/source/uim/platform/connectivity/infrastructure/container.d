@@ -5,21 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.infrastructure.container;
 // import uim.platform.connectivity.infrastructure.config;
-// // Repositories
+// Repositories
 // import uim.platform.connectivity.infrastructure.persistence.memory.destinations;
 // import uim.platform.connectivity.infrastructure.persistence.memory.connectors;
 // import uim.platform.connectivity.infrastructure.persistence.memory.channels;
 // import uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
 // import uim.platform.connectivity.infrastructure.persistence.memory.certificates;
 // import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_logs;
-// // Use Cases
+// Use Cases
 // import uim.platform.connectivity.application.usecases.manage.destinations;
 // import uim.platform.connectivity.application.usecases.manage.connectors;
 // import uim.platform.connectivity.application.usecases.manage.channels;
 // import uim.platform.connectivity.application.usecases.manage.access_rules;
 // import uim.platform.connectivity.application.usecases.manage.certificates;
 // import uim.platform.connectivity.application.usecases.monitor_connectivity;
-// // Controllers
+// Controllers
 // import uim.platform.connectivity.presentation.http.destination;
 // import uim.platform.connectivity.presentation.http.connector;
 // import uim.platform.connectivity.presentation.http.channel;
