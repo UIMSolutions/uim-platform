@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usage-data-config
+  namespace: uim-platform
+data:
+  USAGE_DATA_HOST: "0.0.0.0"
+  USAGE_DATA_PORT: "10004"

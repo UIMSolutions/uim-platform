@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usage-data
+  namespace: uim-platform
+  labels:
+    app: usage-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usage-data
+  template:
+    metadata:
+      labels:
+        app: usage-data
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: usage-data
+        image: uim-platform/usage-data:latest
+        ports:
+        - containerPort: 10004
+        envFrom:
+        - configMapRef:
+            name: usage-data-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 10004
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 10004
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
