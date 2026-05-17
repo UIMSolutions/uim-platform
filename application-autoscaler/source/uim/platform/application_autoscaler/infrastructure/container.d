@@ -5,32 +5,37 @@
 *****************************************************************************************************************/
 module uim.platform.application_autoscaler.infrastructure.container;
 
-import uim.platform.application_autoscaler.infrastructure.config;
+// import uim.platform.application_autoscaler.infrastructure.config;
 
-// Repositories
-import uim.platform.application_autoscaler.infrastructure.persistence.memory.bindings;
-import uim.platform.application_autoscaler.infrastructure.persistence.memory.custom_metrics;
-import uim.platform.application_autoscaler.infrastructure.persistence.memory.policies;
-import uim.platform.application_autoscaler.infrastructure.persistence.memory.scaling_history;
+// // Repositories
+// import uim.platform.application_autoscaler.infrastructure.persistence.memory.bindings;
+// import uim.platform.application_autoscaler.infrastructure.persistence.memory.custom_metrics;
+// import uim.platform.application_autoscaler.infrastructure.persistence.memory.policies;
+// import uim.platform.application_autoscaler.infrastructure.persistence.memory.scaling_history;
 
-// Domain services
-import uim.platform.application_autoscaler.domain.services.scaling_evaluator;
+// // Domain services
+// import uim.platform.application_autoscaler.domain.services.scaling_evaluator;
 
-// Use cases
-import uim.platform.application_autoscaler.application.usecases.manage.bindings;
-import uim.platform.application_autoscaler.application.usecases.manage.custom_metrics;
-import uim.platform.application_autoscaler.application.usecases.manage.policies;
-import uim.platform.application_autoscaler.application.usecases.manage.scaling_engine;
-import uim.platform.application_autoscaler.application.usecases.manage.scaling_history;
+// // Use cases
+// import uim.platform.application_autoscaler.application.usecases.manage.bindings;
+// import uim.platform.application_autoscaler.application.usecases.manage.custom_metrics;
+// import uim.platform.application_autoscaler.application.usecases.manage.policies;
+// import uim.platform.application_autoscaler.application.usecases.manage.scaling_engine;
+// import uim.platform.application_autoscaler.application.usecases.manage.scaling_history;
 
-// Controllers
-import uim.platform.application_autoscaler.presentation.http.controllers.bindings;
-import uim.platform.application_autoscaler.presentation.http.controllers.custom_metrics;
-import uim.platform.application_autoscaler.presentation.http.controllers.policies;
-import uim.platform.application_autoscaler.presentation.http.controllers.scaling_engine;
-import uim.platform.application_autoscaler.presentation.http.controllers.scaling_history;
-import uim.platform.service.presentation.controllers.health;
+// // Controllers
+// import uim.platform.application_autoscaler.presentation.http.controllers.bindings;
+// import uim.platform.application_autoscaler.presentation.http.controllers.custom_metrics;
+// import uim.platform.application_autoscaler.presentation.http.controllers.policies;
+// import uim.platform.application_autoscaler.presentation.http.controllers.scaling_engine;
+// import uim.platform.application_autoscaler.presentation.http.controllers.scaling_history;
+// import uim.platform.service.presentation.controllers.health;
 
+import uim.platform.application_autoscaler;
+
+mixin(ShowModule!());
+
+@safe: 
 struct Container {
   // Repositories (driven adapters)
   MemoryScalingPolicyRepository  policyRepo;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// A Widget is a single visualization component placed on a dashboard page or story section.
 struct Widget {
   mixin TenantEntity!WidgetId;
-  ResourceGroupId resourceGroupId;
+  // ResourceGroupId resourceGroupId;
 
   string title;
   ChartType chartType;

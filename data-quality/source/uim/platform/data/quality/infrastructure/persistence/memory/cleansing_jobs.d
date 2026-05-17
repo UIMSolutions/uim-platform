@@ -5,12 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.persistence.memory.cleansing_jobs;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.cleansing_job;
-import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.cleansing_job;
+// import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 
+import uim.platform.data.quality;
 
- 
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJobId), CleansingJobRepository {
 

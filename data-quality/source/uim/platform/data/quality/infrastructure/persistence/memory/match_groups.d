@@ -5,12 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.persistence.memory.match_groups;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.match_group;
-import uim.platform.data.quality.domain.ports.repositories.match_groups;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.match_group;
+// import uim.platform.data.quality.domain.ports.repositories.match_groups;
 
+import uim.platform.data.quality;
 
- 
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
 

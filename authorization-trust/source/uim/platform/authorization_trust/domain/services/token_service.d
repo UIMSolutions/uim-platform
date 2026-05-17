@@ -5,12 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.authorization_trust.domain.services.token_service;
 
-// import uim.platform.authorization_trust;
-// import std.base64 : Base64;
-// import std.string : representation;
-// import std.conv : to;
-
-import uim.platform.authorization_trust; 
+import uim.platform.authorization_trust;
 
 mixin(ShowModule!());
 
@@ -41,7 +36,6 @@ class TokenService {
   string buildAccessToken(string clientId, string[] scopes, int expiresInSeconds) @trusted {
     import std.format : format;
     import std.algorithm : joiner;
-    import uim.platform.mobile;
 
     long issuedAt = currentTimestamp();
     long expiresAt = issuedAt + expiresInSeconds;

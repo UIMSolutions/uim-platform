@@ -5,17 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.manage.transport_requests;
 
-import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.transport_request;
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.entities.transport_queue;
-import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.repositories.transport_requests;
-import uim.platform.content_agent.domain.ports.repositories.content_packages;
-import uim.platform.content_agent.domain.ports.repositories.transport_queues;
-import uim.platform.content_agent.domain.ports.repositories.content_activitys;
-import uim.platform.content_agent.domain.services.transport_validator;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.transport_request;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.entities.transport_queue;
+// import uim.platform.content_agent.domain.entities.content_activity;
+// import uim.platform.content_agent.domain.ports.repositories.transport_requests;
+// import uim.platform.content_agent.domain.ports.repositories.content_packages;
+// import uim.platform.content_agent.domain.ports.repositories.transport_queues;
+// import uim.platform.content_agent.domain.ports.repositories.content_activitys;
+// import uim.platform.content_agent.domain.services.transport_validator;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
 /// Application service for transport request lifecycle management.
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private TransportRequestRepository requestRepo;
@@ -126,11 +131,12 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     return requestRepo.findByStatus(tenantId, status);
   }
 
-  private void recordActivity(TenantId tenantId, ActivityType actType,
+  private CommandResult recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
    
     ContentActivity activity;
-    acr´tivity.initEntity(tenantId);
+    activity.initEntity(tenantId);
+
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;
@@ -140,6 +146,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     activity.timestamp = activity.createdAt;
 
     activityRepo.save(activity);
+    return CommandResult(true, activity.id.value, "");
   }
 
 }

@@ -6,11 +6,6 @@
 module uim.platform.authorization_trust.infrastructure.persistence.memory.user_assignments;
 
 import uim.platform.authorization_trust;
-import uim.platform.mobile;
-
-mixin(Showmodule!());
-
-@safe:
 
 mixin(ShowModule!());
 

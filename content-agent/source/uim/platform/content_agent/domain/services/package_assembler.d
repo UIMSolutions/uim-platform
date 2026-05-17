@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.services.package_assembler;
 
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.entities.content_provider;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.entities.content_provider;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
 /// Result of a package assembly operation.
 struct AssemblyResult {
   bool valid;

@@ -5,12 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.manage.transport_queues;
 
-import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.transport_queue;
-import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.repositories.transport_queues;
-import uim.platform.content_agent.domain.ports.repositories.content_activitys;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.transport_queue;
+// import uim.platform.content_agent.domain.entities.content_activity;
+// import uim.platform.content_agent.domain.ports.repositories.transport_queues;
+// import uim.platform.content_agent.domain.ports.repositories.content_activitys;
+// import uim.platform.content_agent.domain.types;
+
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
 /// Application service for transport queue configuration.
 class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   private TransportQueueRepository queueRepo;
