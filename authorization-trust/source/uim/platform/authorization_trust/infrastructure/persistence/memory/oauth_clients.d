@@ -33,7 +33,7 @@ class MemoryOAuthClientRepository : OAuthClientRepository {
     return OAuthClientEntity.init;
   }
 
-  OAuthClientEntity[] findAll() {
+  OAuthClientEntity[] findByTenant(tenantId) {
     return store.values.dup;
   }
 

@@ -41,7 +41,7 @@ class MemoryKeyEntryRepository : KeyEntryRepository {
   }
 
   KeyEntry[] findByKeystore(KeystoreId keystoreId) {
-    return findAll().filter!(e => e.keystoreId == keystoreId).array;
+    return findByTenant(tenantId).filter!(e => e.keystoreId == keystoreId).array;
   }
 
   void save(KeyEntry entry) {
@@ -64,6 +64,6 @@ class MemoryKeyEntryRepository : KeyEntryRepository {
   }
 
   size_t countByKeystore(KeystoreId keystoreId) {
-    return findAll().filter!(e => e.keystoreId == keystoreId).array.length;
+    return findByTenant(tenantId).filter!(e => e.keystoreId == keystoreId).array.length;
   }
 }

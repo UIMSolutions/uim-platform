@@ -8,32 +8,16 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.wid
 // import uim.platform.analytics.domain.repositories.widget;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryWidgetRepository : WidgetRepository {
-  private Widget[string] store;
+class MemoryWidgetRepository : TenantRepository!(Widget, EntityId), WidgetRepository {
 
-  Widget findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
-    return null;
+  size_t countByDataset(EntityId datasetId) {
+    return findByDataset(datasetId).length;
   }
-
   Widget[] findByDataset(EntityId datasetId) {
-    Widget[] result;
-    foreach (w; findAll())
-      if (w.datasetId == datasetId)
-        result ~= w;
-    return result;
+    return findByTenant(tenantId).filter!(w => w.datasetId == datasetId).array;
+  }
+  void removeByDataset(EntityId datasetId) {
+    findByDataset(datasetId)      .each!(w => store.remove(w.id.value))  ;
   }
 
-  Widget[] findAll() {
-    return store.values;
-  }
-
-  void save(Widget widget) {
-    store[widget.id.value] = widget;
-  }
-
-  void remove(EntityId id) {
-    store.remove(id.value);
-  }
 }

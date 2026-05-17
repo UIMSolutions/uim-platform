@@ -31,7 +31,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
     return caches.filter!(c => c.status == status).array;
   }
   ContentCache[] findByStatus(CacheStatus status) {
-    return filterByStatus(findAll(), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(CacheStatus status) {
     findByStatus(status).each!(c => remove(c.id));
@@ -44,7 +44,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
     return caches.filter!(c => c.expiresAt < currentTime).array;
   }
   ContentCache[] findExpired(long currentTime) {
-    return filterByExpiration(findAll(), currentTime);
+    return filterByExpiration(findByTenant(tenantId), currentTime);
   }
   void removeByExpiration(long currentTime) {
     findExpired(currentTime).each!(c => remove(c.id));

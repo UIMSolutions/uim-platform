@@ -28,7 +28,7 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByService(string serviceName) {
-    return filterByService(findAll(), serviceName);
+    return filterByService(findByTenant(tenantId), serviceName);
   }
 
   void removeByService(string serviceName) {
@@ -46,7 +46,7 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByCategory(ServicePlanCategory category) {
-    return filterByCategory(findAll(), category);
+    return filterByCategory(findByTenant(tenantId), category);
   }
 
   void removeByCategory(ServicePlanCategory category) {
@@ -64,7 +64,7 @@ class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), S
   }
 
   ServicePlan[] findByRegion(string region) {
-    return filterByRegion(findAll(), region);
+    return filterByRegion(findByTenant(tenantId), region);
   }
 
   void removeByRegion(string region) {

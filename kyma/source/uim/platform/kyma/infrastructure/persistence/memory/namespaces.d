@@ -35,7 +35,7 @@ class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), Nam
     return namespaces.filter!(e => e.environmentId == envId).array;
   }
   Namespace[] findByEnvironment(KymaEnvironmentId envId) {
-    return findAll().filter!(e => e.environmentId == envId).array;
+    return findByTenant(tenantId).filter!(e => e.environmentId == envId).array;
   }
   void removeByEnvironment(KymaEnvironmentId envId) {
     findByEnvironment(envId).each!(e => remove(e));

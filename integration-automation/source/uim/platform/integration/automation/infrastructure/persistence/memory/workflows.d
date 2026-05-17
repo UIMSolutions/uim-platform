@@ -31,11 +31,11 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
   size_t countByStatus(TenantId tenantId, WorkflowStatus status) {
     return findByStatus(tenantId, status).length;
   }
-  Workflow[] filterByStatus(Workflow[] workflows, TenantId tenantId, WorkflowStatus status) {
-    return workflows.filter!(e => e.tenantId == tenantId && e.status == status).array;
+  Workflow[] filterByStatus(Workflow[] workflows, WorkflowStatus status) {
+    return workflows.filter!(e => e.status == status).array;
   }
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status) {
-    return filterByStatus(findByTenant(tenantId), tenantId, status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, WorkflowStatus status) {
     findByStatus(tenantId, status).each!(entity => remove(entity));
@@ -55,7 +55,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
-    return findAll().filter!(e => e.tenantId == tenantId
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;

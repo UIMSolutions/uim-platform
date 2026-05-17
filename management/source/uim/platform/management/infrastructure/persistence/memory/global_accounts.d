@@ -27,7 +27,7 @@ class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccount
   }
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status) {
-    return filterByStatus(findAll(), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(GlobalAccountStatus status) {

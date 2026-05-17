@@ -16,11 +16,11 @@ mixin(ShowModule!());
 class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
-    return findAll().any!(g => g.tenantId == tenantId && g.displayName == displayName);
+    return findByTenant(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);
   }
   
   Group findByDisplayName(TenantId tenantId, string displayName) {
-    foreach (g; findAll()) {
+    foreach (g; findByTenant(tenantId)) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
@@ -34,7 +34,7 @@ class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository
     return groups.filter!(g => g.hasMember(memberId)).array;
   }
   Group[] findByMember(string memberId) {
-    return findAll().filter!(g => g.hasMember(memberId)).array;
+    return findByTenant(tenantId).filter!(g => g.hasMember(memberId)).array;
   }
 
   void removeByMember(string memberId) {

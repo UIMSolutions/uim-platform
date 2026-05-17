@@ -37,12 +37,12 @@ class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, Cleansing
     return findActive(tenantId).length;
   }
 
-  CleansingRule[] filterActive(CleansingRule[] rules, TenantId tenantId) {
-    return rules.filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active).array;
+  CleansingRule[] filterActive(CleansingRule[] rules) {
+    return rules.filter!(r => r.status == RuleStatus.active).array;
   }
 
   CleansingRule[] findActive(TenantId tenantId) {
-    return filterActive(findByTenant(tenantId), tenantId);
+    return filterActive(findByTenant(tenantId));
   }
 
   void removeActive(TenantId tenantId) {

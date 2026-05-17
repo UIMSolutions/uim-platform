@@ -41,14 +41,14 @@ class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   Role[] findByUser(UserId userId) {
     Role[] result;
-    foreach (r; findAll())
+    foreach (r; findByTenant(tenantId))
       if (r.userIds.canFind(userId))
         result ~= r;
     return result;
   }
 
   void removeByUser(UserId userId) {
-    foreach (r; findAll())
+    foreach (r; findByTenant(tenantId))
       if (r.userIds.canFind(userId))
         store.remove(r.id);
   }

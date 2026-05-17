@@ -20,7 +20,7 @@ class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, Dep
   }
 
   DeploymentRecord[] findByApp(HtmlAppId appId) {
-    return filterByApp(findAll(), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(HtmlAppId appId) {
@@ -36,7 +36,7 @@ class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, Dep
   }
 
   DeploymentRecord[] findByVersion(AppVersionId versionId) {
-    return filterByVersion(findAll(), versionId);
+    return filterByVersion(findByTenant(tenantId), versionId);
   }
 
   void removeByVersion(AppVersionId versionId) {
@@ -52,7 +52,7 @@ class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, Dep
   }
 
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-    return filterByStatus(findAll().filter!(r => r.tenantId == tenantId).array, status);
+    return filterByStatus(findByTenant(tenantId).filter!(r => r.tenantId == tenantId).array, status);
   }
 
   void removeByStatus(TenantId tenantId, DeploymentStatus status) {

@@ -33,7 +33,7 @@ class MemoryIdentityProviderRepository : IdentityProviderRepository {
     return IdentityProviderEntity.init;
   }
 
-  IdentityProviderEntity[] findAll() {
+  IdentityProviderEntity[] findByTenant(tenantId) {
     return store.values.dup;
   }
 

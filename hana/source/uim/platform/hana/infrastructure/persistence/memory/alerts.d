@@ -24,7 +24,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
     return alerts.filter!(a => a.instanceId == instanceId).array;
   }
   Alert[] findByInstance(DatabaseInstanceId instanceId) {
-    return findAll().map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
+    return findByTenant(tenantId).map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
   }
   void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(entity => remove(entity));

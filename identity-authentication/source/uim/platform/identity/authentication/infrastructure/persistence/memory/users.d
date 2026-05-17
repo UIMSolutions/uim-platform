@@ -16,14 +16,14 @@ mixin(ShowModule!());
 class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
 
   bool existsByEmail(TenantId tenantId, string email) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.email == email)
         return true;
     }
     return false;
   }
   User findByEmail(TenantId tenantId, string email) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.email == email)
         return u;
     }
@@ -31,14 +31,14 @@ class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
   }
 
   bool existsByUserName(TenantId tenantId, string userName) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.userName == userName)
         return true;
     }
     return false;
   }
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -53,7 +53,7 @@ class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
     return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
   User[] findByGroupId(GroupId groupId) {
-    return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
+    return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
   void removeByGroupId(GroupId groupId) {
     findByGroupId(groupId).each!(u => remove(u.id));

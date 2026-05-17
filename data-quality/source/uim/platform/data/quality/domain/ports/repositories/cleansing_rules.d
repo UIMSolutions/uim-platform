@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// Port for persisting data cleansing rules.
 interface CleansingRuleRepository : ITenantRepository!(CleansingRule, CleansingRuleId) {
 
-  CleansingRule[] findAll();
+  CleansingRule[] findByTenant(tenantId);
 
   size_t countByDataset(TenantId tenantId, string datasetPattern);
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern);

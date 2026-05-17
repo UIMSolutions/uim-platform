@@ -18,7 +18,7 @@ class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration,
     }   
 
     BuildConfiguration[] findByProject(ProjectId projectId) {
-        return findAll().filter!(e => e.projectId == projectId).array;
+        return findByTenant(tenantId).filter!(e => e.projectId == projectId).array;
     }
 
     void removeByProject(ProjectId projectId) {
@@ -30,7 +30,7 @@ class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration,
     }
 
     BuildConfiguration[] findByStatus(BuildStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(BuildStatus status) {

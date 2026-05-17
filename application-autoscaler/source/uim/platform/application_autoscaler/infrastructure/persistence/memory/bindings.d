@@ -29,7 +29,7 @@ class MemoryAppBindingRepository : AppBindingRepository {
     return AppBindingEntity.init;
   }
 
-  override AppBindingEntity[] findAll() {
+  override AppBindingEntity[] findByTenant(tenantId) {
     AppBindingEntity[] result;
     foreach (b; store.byValue) result ~= b;
     return result;

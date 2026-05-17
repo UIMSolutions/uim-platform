@@ -15,22 +15,13 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemorySchemaRepository : SchemaRepository {
-  private Schema[][string] store;
-
-  Schema findById(SchemaId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      foreach (s; *cl) {
-        if (s.id == id)
-          return s;
-      }
-    }
-    return Schema.init;
-  }
-
+class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
+  
+  
   Schema[] findByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return *cl;
+    foreach (s; findByTenant(tenantId))
+      if (s.clientId == clientId)   
+      return cl;
     return null;
   }
 
@@ -46,27 +37,7 @@ class MemorySchemaRepository : SchemaRepository {
     return null;
   }
 
-  void save(Schema s) {
-    store[s.clientId] ~= s;
-  }
-
-  void update(Schema s) {
-    if (auto cl = s.clientId in store) {
-      foreach (existing; *cl) {
-        if (existing.id == s.id) {
-          existing = s;
-          return;
-        }
-      }
-    }
-  }
-
-  void remove(SchemaId id, ClientId clientId) {
-    if (auto cl = clientId in store) {
-      *cl = (cl).filter!(s => s.id != id).array;
-    }
-  }
-
+ 
   size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
       return (cl).length;

@@ -41,7 +41,7 @@ class WidgetUseCases {
 
   WidgetResponse[] listWidgets() {
     WidgetResponse[] result;
-    foreach (w; repo.findAll())
+    foreach (w; repo.findByTenant(tenantId))
       result ~= WidgetResponse.fromEntity(w);
     return result;
   }

@@ -15,14 +15,14 @@ mixin(ShowModule!());
 @safe:
 class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
 
-  bool existsByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {
+  bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
     foreach (e; findAll)
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return true;
     return false;
   }
 
-  ProvisionedEntity findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {
+  ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
     foreach (e; findAll)
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return e;
@@ -50,7 +50,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] filterByTarget(ProvisionedEntity[] entities, TargetSystemId targetId) {
-    return entities.filter!(e => e.tenantId == tenantId && e.targetSystemId == targetId).array;
+    return entities.filter!(e => e.targetSystemId == targetId).array;
   }
 
   ProvisionedEntity[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
@@ -66,7 +66,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] filterByStatus(ProvisionedEntity[] entities, EntityStatus status) {
-    return entities.filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return entities.filter!(e => e.status == status).array;
   }
 
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status) {
@@ -82,7 +82,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] filterByType(ProvisionedEntity[] entities, EntityType entityType) {
-    return entities.filter!(e => e.tenantId == tenantId && e.entityType == entityType).array;
+    return entities.filter!(e => e.entityType == entityType).array;
   }
 
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType) {

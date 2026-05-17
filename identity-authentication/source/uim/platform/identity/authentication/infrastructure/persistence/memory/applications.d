@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class MemoryApplicationRepository : ApplicationRepository {
   
   bool existsByClientId(string clientId) {
-    foreach (a; findAll()) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return true;
     }
@@ -24,7 +24,7 @@ class MemoryApplicationRepository : ApplicationRepository {
   }
 
   Application findByClientId(string clientId) {
-    foreach (a; findAll()) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return a;
     }

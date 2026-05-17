@@ -17,7 +17,7 @@ mixin(ShowModule!());
 class MemoryFragmentRepository : TenantRepository!(DestinationFragment, DestinationFragmentId), FragmentRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return findAll().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (e; findByTenant(tenantId))

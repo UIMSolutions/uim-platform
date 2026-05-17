@@ -51,7 +51,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   Survey[] findByStatus(TenantId tenantId, SurveyStatus status) {
-    return findAll().filter!(s => s.tenantId == tenantId && s.status == status).array;
+    return findByTenant(tenantId).filter!(s => s.tenantId == tenantId && s.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, SurveyStatus status) {

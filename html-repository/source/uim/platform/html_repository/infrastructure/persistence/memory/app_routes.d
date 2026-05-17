@@ -28,7 +28,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
     return routes.filter!(r => r.appId == appId).array;
   }
   AppRoute[] findByApp(HtmlAppId appId) {
-    return filterByApp(findAll(), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
   void removeByApp(HtmlAppId appId) {
     findByApp(appId).each!(r => remove(r.id));

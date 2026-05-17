@@ -59,7 +59,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   AuditConfig[] listAuditConfigs() {
-    return configs.findAll();
+    return configs.findByTenant(tenantId);
   }
 
   CommandResult updateAuditConfig(UpdateAuditConfigRequest req) {

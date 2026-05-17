@@ -26,7 +26,7 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
   }
   
   CommunicationArrangement[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(findAll(), systemId);
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {

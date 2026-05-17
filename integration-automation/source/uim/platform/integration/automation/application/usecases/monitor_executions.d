@@ -28,12 +28,12 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
     this.stepRepo = stepRepo;
   }
 
-  ExecutionLog[] getWorkflowLogs(WorkflowId workflowtenantId, id tenantId) {
-    return logRepo.findByWorkflow(workflowtenantId, id);
+  ExecutionLog[] getWorkflowLogs(TenantId tenantId, WorkflowId workflowId) {
+    return logRepo.findByWorkflow(tenantId, workflowId);
   }
 
-  ExecutionLog[] getStepLogs(StepId steptenantId, id tenantId) {
-    return logRepo.findByStep(steptenantId, id);
+  ExecutionLog[] getStepLogs(TenantId tenantId, StepId stepId) {
+    return logRepo.findByStep(tenantId, stepId);
   }
 
   ExecutionLog[] getAllLogs(TenantId tenantId) {
@@ -49,12 +49,12 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   /// Get a workflow status summary suitable for a monitoring dashboard.
-  WorkflowSummary getWorkflowSummary(WorkflowId workflowtenantId, id tenantId) {
-    auto wf = workflowRepo.findById(workflowtenantId, id);
+  WorkflowSummary getWorkflowSummary(TenantId tenantId, WorkflowId workflowId) {
+    auto wf = workflowRepo.findById(tenantId, workflowId);
     if (wf.isNull)
       return WorkflowSummary.init;
 
-    auto steps = stepRepo.findByWorkflow(workflowtenantId, id);
+    auto steps = stepRepo.findByWorkflow(tenantId, workflowId);
     int pending, inProg, completed, failed, skipped;
     foreach (s; steps) {
       final switch (s.status) {
@@ -79,7 +79,7 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    auto logs = logRepo.findByWorkflow(workflowtenantId, id);
+    auto logs = logRepo.findByWorkflow(tenantId, workflowId);
 
     return WorkflowSummary(wf.id, wf.name, wf.status, wf.totalSteps, completed,
         inProg, pending, failed, skipped, logs.length);

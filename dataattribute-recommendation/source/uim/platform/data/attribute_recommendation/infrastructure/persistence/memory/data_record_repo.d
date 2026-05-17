@@ -24,48 +24,48 @@ class MemoryDataRecordRepository : DataRecordRepository {
     store[entity.id] = entity;
   }
 
-  void remove(DataRecordId tenantId, id tenantId) {
+  void remove(TenantId tenantId, DataRecordId id) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         removeById(id);
   }
 
-  void removeByDataset(DatasetId datasettenantId, id tenantId) {
+  void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     string[] toRemove;
-    foreach (e; findAll)
-      if (e.datasetId == datasetId && e.tenantId == tenantId)
+    foreach (e; findByTenant(tenantId))
+      if (e.datasetId == datasetId)
         toRemove ~= e.id;
     foreach (id; toRemove)
       removeById(id);
   }
 
-  DataRecord findById(DataRecordId tenantId, id tenantId) {
+  DataRecord findById(TenantId tenantId, DataRecordId id) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId) {
+  DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId) {
     DataRecord[] result;
-    foreach (e; findAll)
-      if (e.datasetId == datasetId && e.tenantId == tenantId)
+    foreach (e; findByTenant(tenantId))
+      if (e.datasetId == datasetId)
         result ~= e;
     return result;
   }
 
-  DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status) {
+  DataRecord[] findByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status) {
     DataRecord[] result;
-    foreach (e; findAll)
-      if (e.datasetId == datasetId && e.tenantId == tenantId && e.status == status)
+    foreach (e; findByTenant(tenantId))
+      if (e.datasetId == datasetId && e.status == status)
         result ~= e;
     return result;
   }
 
-  size_t countByDataset(DatasetId datasettenantId, id tenantId) {
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
     size_t count;
-    foreach (e; findAll)
-      if (e.datasetId == datasetId && e.tenantId == tenantId)
+    foreach (e; findByTenant(tenantId))
+      if (e.datasetId == datasetId)
         count++;
     return count;
   }

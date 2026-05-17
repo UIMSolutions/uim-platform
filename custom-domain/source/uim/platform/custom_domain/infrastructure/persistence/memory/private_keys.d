@@ -14,7 +14,7 @@ mixin(ShowModule!());
 class MemoryPrivateKeyRepository : TenantRepository!(PrivateKey, PrivateKeyId), PrivateKeyRepository {
 
     size_t countByStatus(TenantId tenantId, KeyStatus status) {
-        return findAll().count!(k => k.tenantId == tenantId && k.status == status);
+        return findByTenant(tenantId).count!(k => k.tenantId == tenantId && k.status == status);
     }
 
     PrivateKey[] filterByStatus(PrivateKey[] keys, KeyStatus status) {

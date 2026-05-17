@@ -17,10 +17,10 @@ mixin(ShowModule!());
 class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfigRepository {
 
   bool exists(string id) {
-    return findAll().any!(c => c.id == id);
+    return findByTenant(tenantId).any!(c => c.id == id);
   }
   IdpConfig findDefaultForTenant(TenantId tenantId) {
-    foreach (c; findAll()) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.tenantId == tenantId && c.isDefault)
         return c;
     }
@@ -28,14 +28,14 @@ class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfi
   }
 
   bool hasDomainHint(TenantId tenantId, string emailDomain) {
-    foreach (c; findAll()) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
         return true;
     }
     return false;
   }
   IdpConfig findByDomainHint(TenantId tenantId, string emailDomain) {
-    foreach (c; findAll()) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
         return c;
     }

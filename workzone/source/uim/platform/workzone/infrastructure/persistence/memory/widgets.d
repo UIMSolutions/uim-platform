@@ -21,7 +21,7 @@ class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetReposi
     return findByPage(tenantId, pageId).length;
   }
   Widget[] findByPage(TenantId tenantId, WorkpageId pageId) {
-    return findAll().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
+    return findByTenant(tenantId).filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
   void removeByPage(TenantId tenantId, WorkpageId pageId) {
     findByPage(tenantId, pageId).each!(w => remove(w));
@@ -31,7 +31,7 @@ class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetReposi
     return findBySite(tenantId, siteId).length;
   }
    Widget[] findBySite(TenantId tenantId, SiteId siteId) {
-    return findAll().filter!(w => w.tenantId == tenantId && w.siteId == siteId).array;
+    return findByTenant(tenantId).filter!(w => w.tenantId == tenantId && w.siteId == siteId).array;
   }
   void removeBySite(TenantId tenantId, SiteId siteId) {
     findBySite(tenantId, siteId).each!(w => remove(w));

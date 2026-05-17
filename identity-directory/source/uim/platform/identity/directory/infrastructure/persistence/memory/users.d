@@ -18,11 +18,11 @@ mixin(ShowModule!());
 class MemoryUserRepository : UserRepository {
 
   bool existsByUserName(TenantId tenantId, string userName) {
-    return findAll().any!(u => u.tenantId == tenantId && u.userName == userName);
+    return findByTenant(tenantId).any!(u => u.tenantId == tenantId && u.userName == userName);
   }
 
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -30,11 +30,11 @@ class MemoryUserRepository : UserRepository {
   }
 
   bool existsByExternalId(TenantId tenantId, string externalId) {
-    return findAll().any!(u => u.tenantId == tenantId && u.externalId == externalId);
+    return findByTenant(tenantId).any!(u => u.tenantId == tenantId && u.externalId == externalId);
   }
 
   User findByExternalId(TenantId tenantId, string externalId) {
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.externalId == externalId)
         return u;
     }
@@ -43,7 +43,7 @@ class MemoryUserRepository : UserRepository {
 
   size_t countByUserName(TenantId tenantId, string userName) {
     size_t count;
-    foreach (u; findAll()) {
+    foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.userName == userName)
         count++;
     }
@@ -87,7 +87,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User[] findByGroupId(GroupId groupId) {
-    return findAll().filter!(u => u.groupIds.canFind(groupId)).array;
+    return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
   User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {

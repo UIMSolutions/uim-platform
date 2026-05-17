@@ -33,7 +33,7 @@ class MemoryRoleRepository : RoleRepository {
     return RoleEntity.init;
   }
 
-  RoleEntity[] findAll() {
+  RoleEntity[] findByTenant(tenantId) {
     return store.values.dup;
   }
 

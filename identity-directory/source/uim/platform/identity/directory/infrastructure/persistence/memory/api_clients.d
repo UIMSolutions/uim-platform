@@ -15,11 +15,11 @@ mixin(ShowModule!());
 /// In-memory adapter for API client persistence.
 class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), ApiClientRepository {
   bool existsByClientId(string clientId) {
-    return findAll().any!(c => c.clientId == clientId);{
+    return findByTenant(tenantId).any!(c => c.clientId == clientId);{
   }
 
   ApiClient findByClientId(string clientId) {
-    foreach (c; findAll()) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.clientId == clientId)
         return c;
     }

@@ -31,7 +31,7 @@ class DatasetUseCases {
 
   DatasetResponse[] listDatasets() {
     DatasetResponse[] result;
-    foreach (d; repo.findAll())
+    foreach (d; repo.findByTenant(tenantId))
       result ~= DatasetResponse.fromEntity(d);
     return result;
   }

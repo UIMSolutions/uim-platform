@@ -15,7 +15,7 @@ mixin(ShowModule!());
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
 
   bool existsByHash(string tokenHash) {
-    return findAll().any!(t => t.tokenHash == tokenHash);
+    return findByTenant(tenantId).any!(t => t.tokenHash == tokenHash);
   }
 
   IngestionToken findByHash(string tokenHash) {

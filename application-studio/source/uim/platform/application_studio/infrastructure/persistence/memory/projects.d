@@ -18,7 +18,7 @@ class MemoryProjectRepository : TenantRepository!(Project, ProjectId), ProjectRe
     }
 
     Project[] findByDevSpace(DevSpaceId devSpaceId) {
-        return findAll().filter!(e => e.devSpaceId == devSpaceId).array;
+        return findByTenant(tenantId).filter!(e => e.devSpaceId == devSpaceId).array;
     }
 
     void removeByDevSpace(DevSpaceId devSpaceId) {

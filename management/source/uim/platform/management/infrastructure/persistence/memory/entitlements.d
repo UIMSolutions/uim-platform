@@ -28,7 +28,7 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   }
 
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(findAll(), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -46,7 +46,7 @@ class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), E
   }
 
   Entitlement[] findBySubaccount(SubaccountId subaccountId) {
-    return filterBySubaccount(findAll(), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
@@ -64,7 +64,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   }
 
   Entitlement[] findByDirectory(DirectoryId directoryId) {
-    return filterByDirectory(findAll(), directoryId);
+    return filterByDirectory(findByTenant(tenantId), directoryId);
   }
 
   void removeByDirectory(DirectoryId directoryId) {
@@ -82,7 +82,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   }
 
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return filterByServicePlan(findAll(), globalAccountId, planId);
+    return filterByServicePlan(findByTenant(tenantId), globalAccountId, planId);
   }
 
   void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {

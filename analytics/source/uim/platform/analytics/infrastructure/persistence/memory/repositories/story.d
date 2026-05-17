@@ -19,13 +19,13 @@ class MemoryStoryRepository : StoryRepository {
 
   Story[] findByOwner(EntityId ownerId) {
     Story[] result;
-    foreach (s; findAll())
+    foreach (s; findByTenant(tenantId))
       if (s.ownerId == ownerId)
         result ~= s;
     return result;
   }
 
-  Story[] findAll() {
+  Story[] findByTenant(tenantId) {
     return store.values;
   }
 

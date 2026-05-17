@@ -23,7 +23,7 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount findBySubdomain(string subdomain) {
-    foreach (s; findAll()) {
+    foreach (s; findByTenant(tenantId)) {
       if (s.subdomain == subdomain)
         return s;
     }
@@ -41,7 +41,7 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(findAll(), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -59,7 +59,7 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   } 
   
   Subaccount[] findByDirectory(DirectoryId directoryId) {
-    return filterByDirectory(findAll(), directoryId);
+    return filterByDirectory(findByTenant(tenantId), directoryId);
   }
 
   void removeByDirectory(DirectoryId directoryId) {
@@ -76,7 +76,7 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region) {
-    return filterByRegion(findAll(), globalAccountId, region);
+    return filterByRegion(findByTenant(tenantId), globalAccountId, region);
   }
 
   void removeByRegion(GlobalAccountId globalAccountId, string region) {
@@ -94,7 +94,7 @@ class MemorySubaccountRepository : IdRepository!(Subaccount, SubaccountId), Suba
   }
 
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
-    return filterByStatus(findAll(), globalAccountId, status);
+    return filterByStatus(findByTenant(tenantId), globalAccountId, status);
   }
 
   void removeByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {

@@ -40,7 +40,7 @@ class PredictionUseCases {
 
   PredictionResponse[] listPredictions() {
     PredictionResponse[] result;
-    foreach (p; repo.findAll())
+    foreach (p; repo.findByTenant(tenantId))
       result ~= PredictionResponse.fromEntity(p);
     return result;
   }

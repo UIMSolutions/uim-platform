@@ -32,7 +32,7 @@ class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,
   }
 
   FeatureRestriction[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return findAll().filter!(r => r.appId == appId).array;
+    return findByTenant(tenantId).filter!(r => r.appId == appId).array;
   }
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(r => remove(r));

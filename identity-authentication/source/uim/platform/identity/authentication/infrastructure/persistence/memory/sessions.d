@@ -29,7 +29,7 @@ class MemorySessionRepository : SessionRepository {
   }
 
   IdaSession[] findByUser(UserId userId) {
-    return findAll().filter!(s => s.userId == userId).array;
+    return findByTenant(tenantId).filter!(s => s.userId == userId).array;
   }
 
   void save(IdaSession session) {
@@ -45,7 +45,7 @@ class MemorySessionRepository : SessionRepository {
   }
 
   void revokeAllForUser(UserId userId) {
-    foreach (s; findAll()) {
+    foreach (s; findByTenant(tenantId)) {
       if (s.userId == userId) {
         auto updated = s;
         updated.revoked = true;

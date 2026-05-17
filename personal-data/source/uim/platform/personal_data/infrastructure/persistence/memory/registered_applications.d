@@ -14,7 +14,7 @@ mixin(ShowModule!());
 class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
 
     bool existsByName(string name) {
-        return findAll().any!(v => v.name == name);
+        return findByTenant(tenantId).any!(v => v.name == name);
     }
     RegisteredApplication findByName(string name) {
         foreach (v; findAll)
@@ -24,7 +24,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     }
 
     size_t countByStatus(ApplicationStatus status) {
-        return findAll().count!(v => v.status == status);
+        return findByTenant(tenantId).count!(v => v.status == status);
     }
     RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, size_t offset = 0, size_t limit = 0) {
         return (limit == 0) 
@@ -32,7 +32,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
             : applications.filter!(v => v.status == status).skip(offset).take(limit).array;
     }
     RegisteredApplication[] findByStatus(ApplicationStatus status) {
-        return filterByStatus(findAll(), status, 0, 0);
+        return filterByStatus(findByTenant(tenantId), status, 0, 0);
     }
     void removeByStatus(ApplicationStatus status) {
         findByStatus(status).each!(v => remove(v.id));

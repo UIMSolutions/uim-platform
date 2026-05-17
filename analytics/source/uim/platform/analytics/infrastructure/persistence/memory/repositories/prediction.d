@@ -8,24 +8,19 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.pre
 // import uim.platform.analytics.domain.repositories.prediction;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryPredictionRepository : PredictionRepository {
-  private Prediction[string] store;
-
-  Prediction findById(EntityId id) {
-    if (auto p = id.value in store)
-      return *p;
-    return null;
-  }
+class MemoryPredictionRepository : TenantRepository!(Prediction, EntityId), PredictionRepository {
+ 
+ 
 
   Prediction[] findByDataset(EntityId datasetId) {
     Prediction[] result;
-    foreach (p; findAll())
+    foreach (p; findByTenant(tenantId))
       if (p.datasetId == datasetId)
         result ~= p;
     return result;
   }
 
-  Prediction[] findAll() {
+  Prediction[] findByTenant(tenantId) {
     return store.values;
   }
 

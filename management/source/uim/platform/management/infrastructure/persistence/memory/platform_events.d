@@ -27,7 +27,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(findAll(), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -45,7 +45,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findBySubaccount(SubaccountId subaccountId) {
-    return findAll().filter!(e => e.subaccountId == subaccountId).array;
+    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
@@ -64,7 +64,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category) {
-    return findAll().filter!(e => e.globalAccountId == globalAccountId
+    return findByTenant(tenantId).filter!(e => e.globalAccountId == globalAccountId
         && e.category == category).array;
   }
 
@@ -84,7 +84,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
-    return findAll().filter!(e => e.globalAccountId == globalAccountId
+    return findByTenant(tenantId).filter!(e => e.globalAccountId == globalAccountId
         && e.severity == severity).array;
   }
   
@@ -104,7 +104,7 @@ class MemoryPlatformEventRepository : IdRepository!(PlatformEvent, PlatformEvent
   }
 
   PlatformEvent[] findSince(GlobalAccountId globalAccountId, long sinceTimestamp) {
-    return findAll().filter!(e => e.globalAccountId == globalAccountId
+    return findByTenant(tenantId).filter!(e => e.globalAccountId == globalAccountId
         && e.timestamp >= sinceTimestamp).array;
   }
 

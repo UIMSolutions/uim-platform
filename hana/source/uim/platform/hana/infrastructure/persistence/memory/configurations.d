@@ -25,7 +25,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     return configurations.filter!(c => c.instanceId == instanceId).array;
   }
   Configuration[] findByInstance(DatabaseInstanceId instanceId) {
-    return filterByInstance(findAll(), instanceId);
+    return filterByInstance(findByTenant(tenantId), instanceId);
   }
   void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(c => remove(c.id));
@@ -38,7 +38,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     return configurations.filter!(c => c.instanceId == instanceId && c.section == section).array;
   }
   Configuration[] findBySection(DatabaseInstanceId instanceId, string section) {
-    return filterBySection(findAll(), instanceId, section);
+    return filterBySection(findByTenant(tenantId), instanceId, section);
   }
   void removeBySection(DatabaseInstanceId instanceId, string section) {
     findBySection(instanceId, section).each!(c => remove(c.id));

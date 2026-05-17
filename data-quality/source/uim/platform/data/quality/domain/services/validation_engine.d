@@ -17,7 +17,7 @@ mixin(ShowModule!());
 /// Domain service - evaluates validation rules against record field values.
 class ValidationEngine {
   /// Validate a set of field values against applicable rules.
-  ValidationResult validate(RecordId recordtenantId, id tenantId,
+  ValidationResult validate(TenantId tenantId, RecordId recordId,
       DatasetId datasetId, string[string] fieldValues, ValidationRule[] rules) {
     ValidationResult result;
     result.recordId = recordId;

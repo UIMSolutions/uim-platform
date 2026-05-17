@@ -27,7 +27,7 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findBySubaccount(SubaccountId subaccountId) {
-    return filterBySubaccount(findAll(), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(SubaccountId subaccountId) {
@@ -43,7 +43,7 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findByApp(SubaccountId subaccountId, string appName) {
-    return filterByApp(findAll(), subaccountId, appName);
+    return filterByApp(findByTenant(tenantId), subaccountId, appName);
   }
 
   void removeByApp(SubaccountId subaccountId, string appName) {
@@ -59,7 +59,7 @@ class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId)
   }
 
   Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    return filterByStatus(findAll(), subaccountId, status);
+    return filterByStatus(findByTenant(tenantId), subaccountId, status);
   }
 
   void removeByStatus(SubaccountId subaccountId, SubscriptionStatus status) {

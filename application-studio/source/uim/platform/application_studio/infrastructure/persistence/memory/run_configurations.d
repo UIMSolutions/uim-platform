@@ -22,7 +22,7 @@ class MemoryRunConfigurationRepository : TenantRepository!(RunConfiguration, Run
     }
 
     RunConfiguration[] findByProject(ProjectId projectId) {
-        return filterByProject(findAll(), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
 
     void removeByProject(ProjectId projectId) {

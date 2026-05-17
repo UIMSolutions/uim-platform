@@ -58,7 +58,7 @@ class ValidateDataUseCase { // TODO: UIMUseCase {
   }
 
   /// Retrieve validation result for a single record.
-  ValidationResult getResultByRecord(RecordId recordtenantId, id tenantId) {
-    return resultRepo.findByRecord(recordtenantId, id);
+  ValidationResult getResultByRecord(TenantId tenantId, RecordId recordId) {
+    return resultRepo.findByRecord(tenantId, recordId);
   }
 }

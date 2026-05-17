@@ -34,7 +34,7 @@ class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId
     return findByApp(tenantId, appId).length;
   } 
   UsageReport[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(findAll().array, appId);
+    return filterByApp(findByTenant(tenantId).array, appId);
   }
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(r => remove(r));
@@ -47,7 +47,7 @@ class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId
     return reports.filter!(r => r.deviceId == deviceId).array;
   }
   UsageReport[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
-    return filterByDevice(findAll().array, deviceId);
+    return filterByDevice(findByTenant(tenantId).array, deviceId);
   }
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
     findByDevice(tenantId, deviceId).each!(r => remove(r));
@@ -60,7 +60,7 @@ class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId
     return reports.filter!(r => r.userId == userId).array;
   }
   UsageReport[] findByUser(TenantId tenantId, UserId userId) {
-    return filterByUser(findAll().array, userId);
+    return filterByUser(findByTenant(tenantId).array, userId);
   }
 
   UsageReport[] findByMetricType(TenantId tenantId, MobileAppId appId, MetricType metricType) {

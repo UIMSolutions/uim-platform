@@ -14,7 +14,7 @@ mixin(ShowModule!());
 interface WidgetRepository {
   Widget findById(EntityId id);
   Widget[] findByDataset(EntityId datasetId);
-  Widget[] findAll();
+  Widget[] findByTenant(tenantId);
   void save(Widget widget);
   void remove(EntityId id);
 }

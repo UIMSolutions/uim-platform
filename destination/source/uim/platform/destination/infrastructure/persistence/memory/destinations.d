@@ -33,8 +33,8 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }
-  Destination[] filterBySubaccount(Destination[] dests, TenantId tenantId, SubaccountId subaccountId) {
-    return dests.filter!(e => e.tenantId == tenantId && e.subaccountId == subaccountId).array;
+  Destination[] filterBySubaccount(Destination[] dests, SubaccountId subaccountId) {
+    return dests.filter!(e => e.subaccountId == subaccountId).array;
   }
   Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
@@ -46,8 +46,8 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
   size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return findByServiceInstance(tenantId, instanceId).length;
   }
-Destination[] filterByServiceInstance(Destination[] dests, TenantId tenantId, ServiceInstanceId instanceId) {
-    return dests.filter!(e => e.tenantId == tenantId && e.serviceInstanceId == instanceId).array;
+  Destination[] filterByServiceInstance(Destination[] dests, ServiceInstanceId instanceId) {
+    return dests.filter!(e => e.serviceInstanceId == instanceId).array;
   }
   Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return findByTenant(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;

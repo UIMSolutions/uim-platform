@@ -19,7 +19,7 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
     return apps.filter!(a => a.spaceId == spaceId).array;
   }
   HtmlApp[] findBySpace(SpaceId spaceId) {
-    return filterBySpace(findAll(), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
   void removeBySpace(SpaceId spaceId) {
     findBySpace(spaceId).each!(a => remove(a));
@@ -32,7 +32,7 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
     return apps.filter!(a => a.serviceInstanceId == instanceId).array;
   }
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
-    return filterByServiceInstance(findAll(), instanceId);
+    return filterByServiceInstance(findByTenant(tenantId), instanceId);
   }
   void removeByServiceInstance(ServiceInstanceId instanceId) {
     findByServiceInstance(instanceId).each!(a => remove(a));
@@ -41,11 +41,11 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
   size_t countPublicByTenant(TenantId tenantId) {
     return findPublic(tenantId).length;
   }
-  HtmlApp[] filterPublic(HtmlApp[] apps, TenantId tenantId) {
-    return apps.filter!(a => a.tenantId == tenantId && a.visibility == AppVisibility.public_).array;
+  HtmlApp[] filterPublic(HtmlApp[] apps) {
+    return apps.filter!(a => a.visibility == AppVisibility.public_).array;
   }
   HtmlApp[] findPublic(TenantId tenantId) {
-    return filterPublic(findAll(), tenantId);
+    return filterPublic(findByTenant(tenantId));
   }
   void removePublic(TenantId tenantId) {
     findPublic(tenantId).each!(a => remove(a));

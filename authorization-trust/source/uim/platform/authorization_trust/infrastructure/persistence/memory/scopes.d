@@ -33,7 +33,7 @@ class MemoryScopeRepository : ScopeRepository {
     return ScopeEntity.init;
   }
 
-  ScopeEntity[] findAll() {
+  ScopeEntity[] findByTenant(tenantId) {
     return store.values.dup;
   }
 

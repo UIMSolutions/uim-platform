@@ -33,7 +33,7 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
     return instances.filter!(i => i.spaceId == spaceId).array;
   }
   ServiceInstance[] findBySpace(SpaceId spaceId) {
-    return filterBySpace(findAll(), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
   void removeBySpace(SpaceId spaceId) {
     findBySpace(spaceId).each!(i => remove(i.id));
@@ -42,11 +42,11 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
   size_t countByPlan(TenantId tenantId, ServicePlan plan) {
     return findByPlan(tenantId, plan).length;
   }
-  ServiceInstance[] filterByPlan(ServiceInstance[] instances, TenantId tenantId, ServicePlan plan) {
-    return instances.filter!(i => i.tenantId == tenantId && i.plan == plan).array;
+  ServiceInstance[] filterByPlan(ServiceInstance[] instances, ServicePlan plan) {
+    return instances.filter!(i => i.plan == plan).array;
   }
   ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan) {
-    return filterByPlan(findAll(), tenantId, plan);
+    return filterByPlan(findByTenant(tenantId), plan);
   }
   void removeByPlan(TenantId tenantId, ServicePlan plan) {
     findByPlan(tenantId, plan).each!(i => remove(i.id));

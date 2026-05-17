@@ -16,10 +16,10 @@ mixin(ShowModule!());
 class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findAll().any!(s => s.tenantId == tenantId && s.name == name);
+    return findByTenant(tenantId).any!(s => s.tenantId == tenantId && s.name == name);
   }
   Schema findByName(TenantId tenantId, string name) {
-    foreach (s; findAll()) {
+    foreach (s; findByTenant(tenantId)) {
       if (s.tenantId == tenantId && s.name == name)
         return s;
     }

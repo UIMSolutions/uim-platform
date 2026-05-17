@@ -17,10 +17,10 @@ mixin(ShowModule!());
 class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findAll().any!(e => e.tenantId == tenantId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.name == name);
   }
   SystemInstance findByName(TenantId tenantId, string name) {
-    foreach (e; findAll())
+    foreach (e; findByTenant(tenantId))
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return SystemInstance.init;

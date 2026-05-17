@@ -22,7 +22,7 @@ class MemoryUserAssignmentRepository : UserAssignmentRepository {
     return existsById(id) ? store[id] : UserAssignmentEntity.init;
   }
 
-  UserAssignmentEntity[] findAll() {
+  UserAssignmentEntity[] findByTenant(tenantId) {
     return store.values.dup;
   }
 

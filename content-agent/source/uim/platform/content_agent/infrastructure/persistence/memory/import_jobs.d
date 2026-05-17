@@ -22,7 +22,7 @@ class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), Imp
   }
 
   ImportJob[] findByPackage(ContentPackageId packageId) {
-    return findAll().filter!(e => e.packageId == packageId).array;
+    return findByTenant(tenantId).filter!(e => e.packageId == packageId).array;
   }
 
   void removeByPackage(ContentPackageId packageId) {
@@ -34,7 +34,7 @@ class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), Imp
   }
 
   ImportJob[] findByStatus(TenantId tenantId, ImportStatus status) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ImportStatus status) {

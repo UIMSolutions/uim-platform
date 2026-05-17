@@ -28,7 +28,7 @@ class MemoryLifecycleRuleRepository : LifecycleRuleRepository {
   }
 
   LifecycleRule[] findByBucket(BucketId bucketId) {
-    return findAll().filter!(e => e.bucketId == bucketId).array;
+    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
 
   void save(LifecycleRule entity) {

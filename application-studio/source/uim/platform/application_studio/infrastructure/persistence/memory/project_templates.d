@@ -18,7 +18,7 @@ class MemoryProjectTemplateRepository : TenantRepository!(ProjectTemplate, Proje
     }
 
     ProjectTemplate[] findByCategory(TemplateCategory category) {
-        return findAll().filter!(e => e.category == category).array;
+        return findByTenant(tenantId).filter!(e => e.category == category).array;
     }
 
     void removeByCategory(TemplateCategory category) {

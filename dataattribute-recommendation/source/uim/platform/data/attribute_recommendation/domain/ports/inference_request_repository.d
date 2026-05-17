@@ -16,7 +16,7 @@ interface InferenceRequestRepository : ITenantRepository!(InferenceRequest, Infe
 
   size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId);
   InferenceRequest[] filterByDeployment(InferenceRequest[] requests, DeploymentId deploymentId);
-  InferenceRequest[] findByDeployment(DeploymentId deploymenttenantId, id tenantId);
+  InferenceRequest[] findByDeployment(TenantId tenantId, DeploymentId deploymentId);
   void removeByDeployment(TenantId tenantId, DeploymentId deploymentId);
 
   size_t countByStatus(TenantId tenantId, InferenceStatus status);

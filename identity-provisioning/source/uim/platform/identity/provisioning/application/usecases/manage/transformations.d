@@ -88,7 +88,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   /// Test a transformation with sample input.
-  string testTransformation(string inputAttributes, string systemId, TenantId tenantId) {
+  string testTransformation(TenantId tenantId, string inputAttributes, string systemId) {
     return engine.applyTransformations(inputAttributes, systemId, tenantId);
   }
 

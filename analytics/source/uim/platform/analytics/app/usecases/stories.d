@@ -32,7 +32,7 @@ class StoryUseCases {
 
   StoryResponse[] listStories() {
     StoryResponse[] result;
-    foreach (s; repo.findAll())
+    foreach (s; repo.findByTenant(tenantId))
       result ~= StoryResponse.fromEntity(s);
     return result;
   }

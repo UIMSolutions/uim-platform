@@ -33,20 +33,20 @@ class InferenceEngine {
   }
 
   /// Check whether a deployment is available for inference.
-  bool isDeploymentReady(DeploymentId deploymenttenantId, id tenantId) {
-    auto dep = deploymentRepo.findById(deploymenttenantId, id);
+  bool isDeploymentReady(TenantId tenantId, DeploymentId deploymentId) {
+    auto dep = deploymentRepo.findById(tenantId, deploymentId);
     if (dep.isNull)
       return false;
     return dep.status == DeploymentStatus.active;
   }
 
   /// Process an inference request: validate, run prediction, store result.
-  InferenceResult* predict(InferenceRequestId requesttenantId, id tenantId) {
-    auto request = requestRepo.findById(requesttenantId, id);
+  InferenceResult* predict(TenantId tenantId, InferenceRequestId requestId) {
+    auto request = requestRepo.findById(tenantId, requestId);
     if (request.isNull)
       return null;
 
-    if (!isDeploymentReady(request.deploymenttenantId, id)) {
+    if (!isDeploymentReady(tenantId, request.deploymentId)) {
       request.status = InferenceStatus.failed;
       requestRepo.update(request);
       return null;
@@ -72,6 +72,6 @@ class InferenceEngine {
     request.status = InferenceStatus.completed;
     requestRepo.update(request);
 
-    return resultRepo.findById(result.tenantId, id);
+    return resultRepo.findById(tenantId, result.id);
   }
 }

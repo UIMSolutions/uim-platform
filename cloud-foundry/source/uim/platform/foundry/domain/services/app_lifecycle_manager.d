@@ -125,7 +125,7 @@ class AppLifecycleManager {
   }
 
   /// Check if org memory quota would be exceeded by adding the given memory.
-  bool isQuotaExceeded(OrgId orgId, TenantId tenantId, int additionalMemoryMb) {
+  bool isQuotaExceeded(TenantId tenantId, OrgId orgId, int additionalMemoryMb) {
     auto org = orgs.findById(tenantId, orgId);
     if (org.isNull)
       return true;

@@ -22,7 +22,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     return findByBucket(bucketId).length;
   }
   ServiceBinding[] findByBucket(BucketId bucketId) {
-    return findAll().filter!(e => e.bucketId == bucketId).array;
+    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
   void removeByBucket(BucketId bucketId) {
     foreach (e; findByBucket(bucketId))

@@ -21,7 +21,7 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
     return findByWorkflow(tenantId, workflowId).length;
   }
   WorkflowStep[] findByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    auto result = findAll().filter!(e => e.workflowId == workflowId
+    auto result = findByTenant(tenantId).filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
@@ -38,21 +38,21 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
   }
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
   }
 
   WorkflowStep[] findByRole(TenantId tenantId, string assignedRole) {
-    return findAll().filter!(e => e.tenantId == tenantId
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId
         && e.assignedRole == assignedRole).array;
   }
 
   WorkflowStep[] findByStatus(TenantId tenantId, WorkflowId workflowId, StepStatus status) {
-    return findAll().filter!(e => e.workflowId == workflowId
+    return findByTenant(tenantId).filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId && e.status == status).array;
   }
 
   WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
-    foreach (s; findAll())
+    foreach (s; findByTenant(tenantId))
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
     return null;
@@ -66,10 +66,8 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
     store[step.id] = step;
   }
 
-  void remove(StepId id, TenantId tenantId) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        removeById(id);
+  void remove(TenantId tenantId, StepId id) {
+        removeById(tenantId, id);
   }
 
   void removeByWorkflow(TenantId tenantId, WorkflowId workflowId) {
@@ -78,6 +76,6 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
       if (kv.value.workflowId == workflowId && kv.value.tenantId == tenantId)
         toRemove ~= kv.key;
     foreach (id; toRemove)
-      removeById(id);
+      removeById(tenantId, id);
   }
 }

@@ -59,14 +59,14 @@ class MemoryChangeLogRepository : ChangeLogRepository {
     return filterSinceTimestamp(findByTenant(tenantId), 0, 0):
     }
     // Return all entries after that timestamp
-    return findAll().filter!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
   }
 
   ChangeLogEntry[] findSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
-    return findAll().filter!(e => e.tenantId == tenantId && e.timestamp > sinceTimestamp)
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.timestamp > sinceTimestamp)
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;

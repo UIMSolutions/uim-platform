@@ -26,7 +26,7 @@ class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), Directo
   }
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(findAll(), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(GlobalAccountId globalAccountId) {

@@ -19,7 +19,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     }
 
     Certificate[] findByKey(TenantId tenantId, PrivateKeyId keyId) {
-        // TODO: return findAll().filter!(c => c.keyId == keyId).array;
+        // TODO: return findByTenant(tenantId).filter!(c => c.keyId == keyId).array;
         return null;
     }
 

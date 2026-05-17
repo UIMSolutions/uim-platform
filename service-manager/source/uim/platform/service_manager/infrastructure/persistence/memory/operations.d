@@ -17,7 +17,7 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), Ope
     }
 
     Operation[] findByOperationType(OperationType type) {
-        return this.filterByOperationType(this.findAll(), type);
+        return this.filterByOperationType(this.findByTenant(tenantId), type);
     }
 
     void removeByOperationType(OperationType type) {
@@ -33,7 +33,7 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), Ope
     }
 
     Operation[] findByOperationStatus(OperationStatus status) {
-        return this.filterByOperationStatus(this.findAll(), status);
+        return this.filterByOperationStatus(this.findByTenant(tenantId), status);
     }
 
     void removeByOperationStatus(OperationStatus status) {

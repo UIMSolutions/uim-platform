@@ -29,7 +29,7 @@ class MemoryScalingPolicyRepository : ScalingPolicyRepository {
     return ScalingPolicyEntity.init;
   }
 
-  override ScalingPolicyEntity[] findAll() {
+  override ScalingPolicyEntity[] findByTenant(tenantId) {
     ScalingPolicyEntity[] result;
     foreach (p; store.byValue) result ~= p;
     return result;

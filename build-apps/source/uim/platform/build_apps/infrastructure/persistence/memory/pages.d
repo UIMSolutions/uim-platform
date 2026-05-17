@@ -17,7 +17,7 @@ class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
         return findByApplication(applicationId).length;
     }
     Page[] findByApplication(ApplicationId applicationId) {
-        return findAll().filter!(e => e.applicationId == applicationId).array;
+        return findByTenant(tenantId).filter!(e => e.applicationId == applicationId).array;
     }
     void removeByApplication(ApplicationId applicationId) {
         findByApplication(applicationId).each!(e => remove(e));

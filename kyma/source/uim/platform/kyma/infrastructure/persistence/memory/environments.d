@@ -37,7 +37,7 @@ class MemoryEnvironmentRepository : TenantRepository!(KymaEnvironment, KymaEnvir
     return envs.filter!(e => e.status == status).array;
   }
   KymaEnvironment[] findByStatus(EnvironmentStatus status) {
-    return filterByStatus(findAll(), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(EnvironmentStatus status) {
     findByStatus(status).each!(e => remove(e));

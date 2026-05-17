@@ -27,7 +27,7 @@ class MemoryTenantRepository : TenantRepository {
   }
 
   Tenant findBySubdomain(string subdomain) {
-    foreach (t; findAll()) {
+    foreach (t; findByTenant(tenantId)) {
       if (t.subdomain == subdomain)
         return t;
     }
@@ -37,7 +37,7 @@ class MemoryTenantRepository : TenantRepository {
   Tenant[] findAll(size_t offset = 0, size_t limit = 100) {
     Tenant[] result;
     size_t idx;
-    foreach (t; findAll()) {
+    foreach (t; findByTenant(tenantId)) {
       if (idx >= offset && result.length < limit)
         result ~= t;
       idx++;

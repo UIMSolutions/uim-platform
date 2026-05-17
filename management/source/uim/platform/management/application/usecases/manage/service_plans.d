@@ -77,7 +77,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   ServicePlan[] listServicePlans() {
-    return servicePlans.findAll();
+    return servicePlans.findByTenant(tenantId);
   }
 
   ServicePlan[] listServicePlansByService(string serviceName) {

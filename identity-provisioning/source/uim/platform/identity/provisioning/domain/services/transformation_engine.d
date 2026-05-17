@@ -23,15 +23,15 @@ class TransformationEngine {
   }
 
   /// Retrieve the transformation rules for a given system.
-  Transformation[] getTransformations(string systemtenantId, id tenantId) {
-    return repo.findBySystem(systemtenantId, id);
+  Transformation[] getTransformations(TenantId tenantId, SystemId systemId) {
+    return repo.findBySystem(tenantId, systemId);
   }
 
   /// Simulate applying transformations.
   /// In a real implementation this would evaluate JSONata / expression
   /// rules to map source attributes to target attributes.
-  string applyTransformations(string inputAttributes, string systemtenantId, id tenantId) {
-    auto transforms = repo.findBySystem(systemtenantId, id);
+  string applyTransformations(TenantId tenantId, string inputAttributes, SystemId systemId) {
+    auto transforms = repo.findBySystem(tenantId, systemId);
     if (transforms.length == 0)
       return inputAttributes; // pass-through when no rules
 

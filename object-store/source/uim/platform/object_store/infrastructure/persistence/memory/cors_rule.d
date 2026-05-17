@@ -28,7 +28,7 @@ class MemoryCorsRuleRepository : CorsRuleRepository {
   }
 
   CorsRule[] findByBucket(BucketId bucketId) {
-    return findAll().filter!(e => e.bucketId == bucketId).array;
+    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
 
   void save(CorsRule entity) {

@@ -18,7 +18,7 @@ class MemoryDevSpaceTypeRepository : TenantRepository!(DevSpaceType, DevSpaceTyp
     }
 
     DevSpaceType[] findByCategory(DevSpaceTypeCategory category) {
-        return findAll().filter!(e => e.category == category).array;
+        return findByTenant(tenantId).filter!(e => e.category == category).array;
     }
 
     void removeByCategory(DevSpaceTypeCategory category) {

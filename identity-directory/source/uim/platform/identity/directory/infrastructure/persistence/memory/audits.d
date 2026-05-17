@@ -22,7 +22,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.actorId == actorId).array;
   }
   AuditEvent[] findByActor(string actorId) {
-    return filterByActor(findAll(), actorId);
+    return filterByActor(findByTenant(tenantId), actorId);
   }
   void removeByActor(string actorId) {
     findByActor(actorId).each!(e => remove(e));
@@ -35,7 +35,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.targetId == targetId).array;
   }
   AuditEvent[] findByTarget(string targetId) {
-    return filterByTarget(findAll(), targetId);
+    return filterByTarget(findByTenant(tenantId), targetId);
   }
   void removeByTarget(string targetId) {
     findByTarget(targetId).each!(e => remove(e));
@@ -44,11 +44,11 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
   size_t countByType(TenantId tenantId, AuditEventType eventType) {
     return findByType(tenantId, eventType).length;
   }
-  AuditEvent[] filterByType(AuditEvent[] events, TenantId tenantId, AuditEventType eventType) {
+  AuditEvent[] filterByType(TenantId tenantId, AuditEvent[] events, AuditEventType eventType) {
     return events.filter!(e => e.tenantId == tenantId && e.eventType == eventType).array;
   }
   AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType) {
-    return filterByType(findAll(), tenantId, eventType);
+    return filterByType(tenantId, findByTenant(tenantId), eventType);
   }
   void removeByType(TenantId tenantId, AuditEventType eventType) {
     findByType(tenantId, eventType).each!(e => remove(e));

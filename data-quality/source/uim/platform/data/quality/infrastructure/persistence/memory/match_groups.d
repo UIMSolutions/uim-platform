@@ -40,12 +40,12 @@ class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), 
     return findUnresolved(tenantId).length;
   }
 
-  MatchGroup[] filterUnresolved(MatchGroup[] groups, TenantId tenantId) {
-    return groups.filter!(g => g.tenantId == tenantId && !g.resolved).array;
+  MatchGroup[] filterUnresolved(MatchGroup[] groups) {
+    return groups.filter!(g => !g.resolved).array;
   }
 
   MatchGroup[] findUnresolved(TenantId tenantId) {
-    return filterUnresolved(findByTenant(tenantId), tenantId);
+    return filterUnresolved(findByTenant(tenantId));
   }
 
   void removeUnresolved(TenantId tenantId) {
