@@ -76,3 +76,15 @@ dub test
 ## License
 
 See the repository root [LICENSE](../LICENSE) file.
+
+## Domain Model
+
+| Entity | Description |
+|--------|-------------|
+| `Repository` | Top-level document storage container |
+| `Folder` | Hierarchical folder within a Repository |
+| `Document` | File stored within a Folder |
+| `DocumentVersion` | Immutable version snapshot of a Document |
+| `Share` | Shared access link for a Document or Folder |
+| `Permission` | Access control entry for a Repository, Folder, or Document |
+| `Favorite` | Bookmarked Document or Folder for quick access |

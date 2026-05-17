@@ -75,3 +75,15 @@ dub test
 ## License
 
 See the repository root [LICENSE](../LICENSE) file.
+
+## Domain Model
+
+| Entity | Description |
+|--------|-------------|
+| `SourceSystem` | Identity data source (LDAP, SAP HR, IAS, custom) |
+| `TargetSystem` | Identity provisioning target (IAS, SAP app, LDAP) |
+| `ProxySystem` | System acting as both source and target |
+| `Transformation` | Attribute mapping rule between source and target |
+| `ProvisioningJob` | Scheduled or on-demand identity synchronisation run |
+| `ProvisionedEntity` | Tracked user or group in the target system |
+| `ProvisioningLog` | Audit log entry for a provisioning job run |

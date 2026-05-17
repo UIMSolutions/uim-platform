@@ -1,589 +1,109 @@
-# Integration Automation – Architecture (PlantUML)
+# UML Diagrams — Integration Automation Service
 
-```plantuml
-@startuml Integration Automation – Hexagonal Architecture
+## Class Diagram
 
-!define PRESENTATION_COLOR #E3F2FD
-!define APPLICATION_COLOR  #FFF3E0
-!define DOMAIN_COLOR       #E8F5E9
-!define INFRA_COLOR        #F3E5F5
-!define PORT_COLOR         #E1F5FE
-!define SERVICE_COLOR      #FFF8E1
-!define VALUE_COLOR        #FFFDE7
-
-skinparam class {
-  BackgroundColor    WHITE
-  BorderColor        #37474F
-  ArrowColor         #37474F
-  FontSize           11
-}
-
-skinparam package {
-  FontSize          12
-  FontStyle         bold
-  BorderThickness   2
-}
-
-title UIM Integration Automation Platform Service\nClean + Hexagonal Architecture
-
-' ============================================================
-' PRESENTATION LAYER (Driving Adapters)
-' ============================================================
-
-package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
-  skinparam packageBackgroundColor PRESENTATION_COLOR
-
-  package "HTTP Controllers" as HANDLERS <<Rectangle>> {
-    class HealthController << (H,#EF5350) >> {
-      GET /api/v1/health
+```mermaid
+classDiagram
+    class IntegrationScenario {
+        +string id
+        +string name
+        +string description
+        +string status
+        +string version
+    }
+    class Workflow {
+        +string id
+        +string scenarioId
+        +string name
+        +string description
+        +string status
+    }
+    class WorkflowStep {
+        +string id
+        +string workflowId
+        +string stepType
+        +string name
+        +int orderIndex
+        +string configuration
+    }
+    class SystemConnection {
+        +string id
+        +string name
+        +string systemType
+        +string host
+        +string status
+    }
+    class Destination {
+        +string id
+        +string connectionId
+        +string name
+        +string url
+        +string authType
+    }
+    class ExecutionLog {
+        +string id
+        +string workflowId
+        +string status
+        +string triggeredBy
+        +string startedAt
+        +string completedAt
     }
 
-    class ScenarioController << (H,#EF5350) >> {
-      GET    /api/v1/scenarios
-      POST   /api/v1/scenarios
-      GET    /api/v1/scenarios/{id}
-      PUT    /api/v1/scenarios/{id}
-      DELETE /api/v1/scenarios/{id}
-    }
-
-    class WorkflowController << (H,#EF5350) >> {
-      GET    /api/v1/workflows
-      POST   /api/v1/workflows
-      GET    /api/v1/workflows/{id}
-      POST   /api/v1/workflows/start/{id}
-      POST   /api/v1/workflows/suspend/{id}
-      POST   /api/v1/workflows/resume/{id}
-      POST   /api/v1/workflows/terminate/{id}
-      DELETE /api/v1/workflows/{id}
-    }
-
-    class StepController << (H,#EF5350) >> {
-      GET    /api/v1/steps
-      POST   /api/v1/steps
-      GET    /api/v1/steps/{id}
-      POST   /api/v1/steps/start/{id}
-      POST   /api/v1/steps/complete/{id}
-      POST   /api/v1/steps/fail/{id}
-      POST   /api/v1/steps/skip/{id}
-      GET    /api/v1/my-tasks
-      DELETE /api/v1/steps/{id}
-    }
-
-    class SystemController << (H,#EF5350) >> {
-      GET    /api/v1/systems
-      POST   /api/v1/systems
-      GET    /api/v1/systems/{id}
-      PUT    /api/v1/systems/{id}
-      POST   /api/v1/systems/test/{id}
-      DELETE /api/v1/systems/{id}
-    }
-
-    class DestinationController << (H,#EF5350) >> {
-      GET    /api/v1/destinations
-      POST   /api/v1/destinations
-      GET    /api/v1/destinations/{id}
-      PUT    /api/v1/destinations/{id}
-      DELETE /api/v1/destinations/{id}
-    }
-
-    class MonitoringController << (H,#EF5350) >> {
-      GET /api/v1/monitoring/logs
-      GET /api/v1/monitoring/failures
-      GET /api/v1/monitoring/summary/{id}
-    }
-  }
-}
-
-' ============================================================
-' APPLICATION LAYER (Use Cases & Outgoing Ports)
-' ============================================================
-
-package "Application Layer  «use cases»" as APP <<Rectangle>> {
-  skinparam packageBackgroundColor APPLICATION_COLOR
-
-  package "Use Cases" as USECASES <<Rectangle>> {
-    class ManageScenariosUseCase << (U,#FF7043) >> {
-      + createScenario(req) : CommandResult
-      + updateScenario(id, req) : CommandResult
-      + getScenario(id) : IntegrationScenario
-      + listScenarios() : IntegrationScenario[]
-      + deleteScenario(id) : CommandResult
-    }
-
-    class ManageWorkflowsUseCase << (U,#FF7043) >> {
-      + createWorkflow(req) : CommandResult
-      + getWorkflow(id) : Workflow
-      + listWorkflows() : Workflow[]
-      + startWorkflow(id) : CommandResult
-      + suspendWorkflow(id) : CommandResult
-      + resumeWorkflow(id) : CommandResult
-      + terminateWorkflow(id) : CommandResult
-      + deleteWorkflow(id) : CommandResult
-    }
-
-    class ManageStepsUseCase << (U,#FF7043) >> {
-      + createStep(req) : CommandResult
-      + getStep(id) : WorkflowStep
-      + listSteps() : WorkflowStep[]
-      + startStep(id, userId) : CommandResult
-      + completeStep(req) : CommandResult
-      + failStep(req) : CommandResult
-      + skipStep(req) : CommandResult
-      + assignStep(req) : CommandResult
-      + getMyTasks(userId) : WorkflowStep[]
-      + getTasksByRole(role) : WorkflowStep[]
-    }
-
-    class ManageSystemsUseCase << (U,#FF7043) >> {
-      + createSystem(req) : CommandResult
-      + updateSystem(id, req) : CommandResult
-      + getSystem(id) : SystemConnection
-      + listSystems() : SystemConnection[]
-      + testConnection(id) : CommandResult
-      + deleteSystem(id) : CommandResult
-    }
-
-    class ManageDestinationsUseCase << (U,#FF7043) >> {
-      + createDestination(req) : CommandResult
-      + updateDestination(id, req) : CommandResult
-      + getDestination(id) : Destination
-      + listDestinations() : Destination[]
-      + deleteDestination(id) : CommandResult
-    }
-
-    class MonitorExecutionsUseCase << (U,#FF7043) >> {
-      + getAllLogs(tenantId) : ExecutionLog[]
-      + getWorkflowLogs(workflowId) : ExecutionLog[]
-      + getStepLogs(stepId) : ExecutionLog[]
-      + getFailures(tenantId) : ExecutionLog[]
-      + getLogsByTimeRange(from, to) : ExecutionLog[]
-      + getWorkflowSummary(id) : WorkflowSummary
-    }
-  }
-}
-
-' ============================================================
-' DOMAIN LAYER
-' ============================================================
-
-package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
-  skinparam packageBackgroundColor DOMAIN_COLOR
-
-  package "Entities" as ENTITIES <<Rectangle>> {
-    class IntegrationScenario << (E,#66BB6A) >> {
-      id : ScenarioId
-      tenantId : TenantId
-      name, description : string
-      category : ScenarioCategory
-      version_ : string
-      status : ScenarioStatus
-      sourceSystemType : SystemType
-      targetSystemType : SystemType
-      prerequisites : string[]
-      stepTemplates : ScenarioStepTemplate[]
-      createdBy : string
-      createdAt, updatedAt : long
-    }
-
-    class ScenarioStepTemplate << (V,#FDD835) >> {
-      name, description : string
-      type_ : StepType
-      priority : StepPriority
-      sequenceNumber : int
-      assignedRole : string
-      instructions : string
-      automationEndpoint : string
-      automationPayload : string
-      requiresSourceSystem : bool
-      requiresTargetSystem : bool
-      dependsOnSteps : int[]
-      estimatedDurationMinutes : int
-    }
-
-    class Workflow << (E,#66BB6A) >> {
-      id : WorkflowId
-      tenantId : TenantId
-      scenarioId : ScenarioId
-      name, description : string
-      status : WorkflowStatus
-      currentStepIndex : int
-      totalSteps : int
-      completedSteps : int
-      sourceSystemConnectionId : SystemConnectionId
-      targetSystemConnectionId : SystemConnectionId
-      createdBy : string
-      startedAt, completedAt : long
-      createdAt, updatedAt : long
-    }
-
-    class WorkflowStep << (E,#66BB6A) >> {
-      id : StepId
-      workflowId : WorkflowId
-      tenantId : TenantId
-      name, description : string
-      type_ : StepType
-      status : StepStatus
-      priority : StepPriority
-      sequenceNumber : int
-      assignedTo : UserId
-      assignedRole : string
-      instructions : string
-      automationEndpoint : string
-      automationPayload : string
-      sourceSystemConnectionId : SystemConnectionId
-      targetSystemConnectionId : SystemConnectionId
-      dependencies : StepId[]
-      result : string
-      errorMessage : string
-      startedAt, completedAt : long
-      createdAt : long
-      estimatedDurationMinutes : int
-    }
-
-    class SystemConnection << (E,#66BB6A) >> {
-      id : SystemConnectionId
-      tenantId : TenantId
-      name, description : string
-      systemType : SystemType
-      host : string
-      port : ushort
-      client : string
-      protocol : string
-      status : ConnectionStatus
-      environment : string
-      region : string
-      systemId : string
-      tenant : string
-      createdBy : string
-      createdAt, updatedAt : long
-    }
-
-    class Destination << (E,#66BB6A) >> {
-      id : DestinationId
-      tenantId : TenantId
-      name, description : string
-      systemId : SystemConnectionId
-      destinationType : DestinationType
-      url : string
-      authenticationType : AuthenticationType
-      proxyType : ProxyType
-      cloudConnectorLocationId : string
-      user : string
-      tokenServiceUrl : string
-      tokenServiceUser : string
-      audience, scope_ : string
-      isEnabled : bool
-      createdBy : string
-      createdAt, updatedAt : long
-    }
-
-    class ExecutionLog << (E,#66BB6A) >> {
-      id : ExecutionLogId
-      workflowId : WorkflowId
-      stepId : StepId
-      tenantId : TenantId
-      action : string
-      outcome : ExecutionOutcome
-      message, details : string
-      executedBy : string
-      durationMs : long
-      timestamp : long
-    }
-  }
-
-  package "Repository Interfaces  «ports»" as REPOS <<Rectangle>> {
-    skinparam packageBackgroundColor PORT_COLOR
-
-    interface ScenarioRepository << (P,#42A5F5) >> {
-      findByTenant(tenantId)
-      findById(tenantId, id)
-      findByCategory(tenantId, category)
-      findByStatus(tenantId, status)
-      findBySystemType(tenantId, systemType)
-      save() / update() / remove()
-    }
-
-    interface WorkflowRepository << (P,#42A5F5) >> {
-      findByTenant(tenantId)
-      findById(tenantId, id)
-      findByScenario(tenantId, scenarioId)
-      findByStatus(tenantId, status)
-      findByCreator(tenantId, createdBy)
-      countByTenant() / countActiveByTenant()
-      save() / update() / remove()
-    }
-
-    interface StepRepository << (P,#42A5F5) >> {
-      findByWorkflow(workflowtenantId, id)
-      findById(tenantId, id)
-      findByAssignee(tenantId, assignedTo)
-      findByRole(tenantId, assignedRole)
-      findByStatus(workflowtenantId, id, status)
-      findBySequence(workflowtenantId, id, seq)
-      save() / update() / remove()
-      removeByWorkflow(workflowtenantId, id)
-    }
-
-    interface SystemRepository << (P,#42A5F5) >> {
-      findByTenant(tenantId)
-      findById(tenantId, id)
-      findByType(tenantId, systemType)
-      findByStatus(tenantId, status)
-      save() / update() / remove()
-    }
-
-    interface DestinationRepository << (P,#42A5F5) >> {
-      findByTenant(tenantId)
-      findById(tenantId, id)
-      findBySystem(tenantId, systemId)
-      findByName(tenantId, name)
-      findEnabled(tenantId)
-      save() / update() / remove()
-    }
-
-    interface ExecutionLogRepository << (P,#42A5F5) >> {
-      findByWorkflow(workflowtenantId, id)
-      findByStep(steptenantId, id)
-      findByTenant(tenantId)
-      findByOutcome(tenantId, outcome)
-      findByTimeRange(tenantId, from, to)
-      countByWorkflow(workflowtenantId, id)
-      save() / removeByWorkflow()
-      removeOlderThan(tenantId, before)
-    }
-  }
-
-  package "Domain Services" as DSVC <<Rectangle>> {
-    skinparam packageBackgroundColor SERVICE_COLOR
-
-    class WorkflowEngine << (S,#FFB74D) >> {
-      + areDependenciesMet(step, tenantId) : bool
-      + advanceWorkflow(workflowtenantId, id) : bool
-      + isWorkflowLimitReached(tenantId) : bool
-      --
-      Max 15 concurrent workflows per tenant
-      Dependency-based step progression
-    }
-
-    class StepExecutor << (S,#FFB74D) >> {
-      + startStep(steptenantId, id, userId) : bool
-      + completeStep(steptenantId, id, userId, result) : bool
-      + failStep(steptenantId, id, userId, errorMsg) : bool
-      + skipStep(steptenantId, id, userId, reason) : bool
-      --
-      Automatically records ExecutionLog entries
-      Tracks durationMs for completed steps
-    }
-  }
-
-  package "Value Objects & Enums" as VALS <<Rectangle>> {
-    skinparam packageBackgroundColor VALUE_COLOR
-
-    enum ScenarioStatus {
-      Draft, Active
-      Deprecated, Archived
-    }
-
-    enum WorkflowStatus {
-      Planned, InProgress
-      Completed, Terminated
-      Failed, Suspended
-    }
-
-    enum StepType {
-      Manual, Automated
-      Approval, Notification
-    }
-
-    enum StepStatus {
-      Pending, InProgress
-      Completed, Skipped
-      Failed, Blocked
-    }
-
-    enum SystemType {
-      SapS4Hana, SapS4HanaCloud
-      SapBtp, SapSuccessFactors
-      SapAriba, SapConcur
-      SapFieldglass, SapIBP
-      SapBuildWorkZone
-      OnPremise, ThirdParty
-    }
-
-    enum DestinationType {
-      HTTP, RFC, OData
-      SOAP, RestApi
-    }
-
-    enum AuthenticationType {
-      Basic, OAuth2ClientCredentials
-      OAuth2Saml, Certificate
-      SamlBearer, PrincipalPropagation
-      NoAuthentication
-    }
-
-    enum ScenarioCategory {
-      LeadToCash, SourceToPay
-      RecruitToRetire, DesignToOperate
-      BtpServices, S4HanaIntegration
-      CommunicationManagement, Custom
-    }
-
-    enum StepPriority {
-      Low, Medium
-      High, Critical
-    }
-
-    enum ConnectionStatus {
-      Active, Inactive
-      Error, Testing
-    }
-
-    enum ProxyType {
-      Internet, OnPremise
-      PrivateLink
-    }
-
-    enum ExecutionOutcome {
-      Success, Failure
-      Skipped, Timeout
-      Error
-    }
-  }
-
-  package "Read Models" as READS <<Rectangle>> {
-    skinparam packageBackgroundColor #E8EAF6
-
-    class WorkflowSummary << (R,#7986CB) >> {
-      workflowId : WorkflowId
-      workflowName : string
-      status : WorkflowStatus
-      totalSteps : int
-      completedSteps : int
-      inProgressSteps : int
-      pendingSteps : int
-      failedSteps : int
-      skippedSteps : int
-      totalLogEntries : long
-    }
-  }
-}
-
-' ============================================================
-' INFRASTRUCTURE LAYER (Driven Adapters)
-' ============================================================
-
-package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
-  skinparam packageBackgroundColor INFRA_COLOR
-
-  class AppConfig << (F,#90A4AE) >> {
-    host : string = "0.0.0.0"
-    port : ushort = 8090
-    serviceName : string
-  }
-
-  class Container << (F,#90A4AE) >> {
-    buildContainer(config) : Container
-    --
-    Wires all dependencies
-  }
-
-  package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class MemoryScenarioRepo << (A,#B0BEC5) >>
-    class MemoryWorkflowRepo << (A,#B0BEC5) >>
-    class MemoryStepRepo << (A,#B0BEC5) >>
-    class MemorySystemRepo << (A,#B0BEC5) >>
-    class MemoryDestinationRepo << (A,#B0BEC5) >>
-    class MemoryExecutionLogRepo << (A,#B0BEC5) >>
-  }
-}
-
-' ============================================================
-' RELATIONSHIPS – Controller → Use Case
-' ============================================================
-
-ScenarioController    --> ManageScenariosUseCase
-WorkflowController    --> ManageWorkflowsUseCase
-StepController        --> ManageStepsUseCase
-SystemController      --> ManageSystemsUseCase
-DestinationController --> ManageDestinationsUseCase
-MonitoringController  --> MonitorExecutionsUseCase
-
-' ============================================================
-' RELATIONSHIPS – Use Case → Repository Port
-' ============================================================
-
-ManageScenariosUseCase    --> ScenarioRepository
-ManageWorkflowsUseCase    --> WorkflowRepository
-ManageWorkflowsUseCase    --> ScenarioRepository : reads templates
-ManageStepsUseCase        --> StepRepository
-ManageSystemsUseCase      --> SystemRepository
-ManageDestinationsUseCase --> DestinationRepository
-ManageDestinationsUseCase --> SystemRepository : validates system
-MonitorExecutionsUseCase  --> ExecutionLogRepository
-MonitorExecutionsUseCase  --> WorkflowRepository : reads workflow
-MonitorExecutionsUseCase  --> StepRepository : counts steps
-
-' ============================================================
-' RELATIONSHIPS – Use Case → Domain Service
-' ============================================================
-
-ManageWorkflowsUseCase --> WorkflowEngine : enforces limit
-ManageStepsUseCase     --> StepExecutor : lifecycle transitions
-
-' ============================================================
-' RELATIONSHIPS – Domain Service → Repository Port
-' ============================================================
-
-WorkflowEngine --> WorkflowRepository : checks tenant limit
-WorkflowEngine --> StepRepository : reads step status
-StepExecutor   --> StepRepository : updates step status
-StepExecutor   --> ExecutionLogRepository : records logs
-
-' ============================================================
-' RELATIONSHIPS – Adapter implements Port
-' ============================================================
-
-MemoryScenarioRepo     ..|> ScenarioRepository
-MemoryWorkflowRepo     ..|> WorkflowRepository
-MemoryStepRepo         ..|> StepRepository
-MemorySystemRepo       ..|> SystemRepository
-MemoryDestinationRepo  ..|> DestinationRepository
-MemoryExecutionLogRepo ..|> ExecutionLogRepository
-
-' ============================================================
-' ENTITY ASSOCIATIONS
-' ============================================================
-
-IntegrationScenario "1" *-- "0..*" ScenarioStepTemplate : stepTemplates
-Workflow "1" --> "1" IntegrationScenario : scenarioId
-WorkflowStep "0..*" --> "1" Workflow : workflowId
-Destination "0..*" --> "0..1" SystemConnection : systemId
-ExecutionLog "0..*" --> "1" Workflow : workflowId
-ExecutionLog "0..*" --> "1" WorkflowStep : stepId
-MonitorExecutionsUseCase ..> WorkflowSummary : produces
-
-' ============================================================
-' LEGEND
-' ============================================================
-
-legend bottom right
-  | Symbol | Layer |
-  | (H) | Controller (Presentation) |
-  | (U) | Use Case (Application) |
-  | (E) | Entity (Domain) |
-  | (P) | Port / Interface |
-  | (S) | Domain Service |
-  | (V) | Value Object / Struct |
-  | (R) | Read Model |
-  | (A) | Adapter (Infrastructure) |
-  | (F) | Framework / Config |
-  |→| depends on |
-  |..|>| implements |
-  |..>| produces |
-  |*--| composition |
-endlegend
-
-footer UIM Platform – Integration Automation Service\n© 2018-2026 UIM Platform Team
-@enduml
+    Workflow --> IntegrationScenario : part of
+    WorkflowStep --> Workflow : step in
+    Destination --> SystemConnection : endpoint of
+    ExecutionLog --> Workflow : records
+```
+
+## Component Diagram
+
+```mermaid
+flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        REST["REST API\n/api/v1/..."]
+    end
+    subgraph Application["Application Layer"]
+        SCEN_UC["ScenarioUseCases"]
+        WF_UC["WorkflowUseCases"]
+        CONN_UC["SystemConnectionUseCases"]
+        LOG_UC["ExecutionLogUseCases"]
+    end
+    subgraph Domain["Domain Layer"]
+        SCEN["IntegrationScenario"]
+        WF["Workflow"]
+        STEP["WorkflowStep"]
+        CONN["SystemConnection"]
+        DEST["Destination"]
+        LOG["ExecutionLog"]
+    end
+    subgraph Infrastructure["Infrastructure Layer"]
+        SCEN_REPO["InMemoryScenarioRepository"]
+        WF_REPO["InMemoryWorkflowRepository"]
+        LOG_REPO["InMemoryExecutionLogRepository"]
+    end
+
+    REST --> Application
+    Application --> Domain
+    Infrastructure --> Domain
+    Application --> Infrastructure
+```
+
+## Sequence Diagram — Execute Workflow
+
+```mermaid
+sequenceDiagram
+    participant O as Operator
+    participant R as REST Handler
+    participant UC as WorkflowUseCases
+    participant WFR as WorkflowRepository
+    participant LR as ExecutionLogRepository
+
+    O->>R: POST /api/v1/workflows/{id}/execute
+    R->>UC: executeWorkflow(workflowId)
+    UC->>WFR: getById(workflowId)
+    WFR-->>UC: workflow
+    UC->>LR: save(executionLog)
+    LR-->>UC: saved
+    UC-->>R: executionLog
+    R-->>O: 201 Created {executionLog}
 ```

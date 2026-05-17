@@ -77,3 +77,15 @@ dub test
 ## License
 
 See the repository root [LICENSE](../LICENSE) file.
+
+## Domain Model
+
+| Entity | Description |
+|--------|-------------|
+| `Bucket` | Storage container with quota and access configuration |
+| `StorageObject` | File stored in a Bucket |
+| `ObjectVersion` | Immutable version of a StorageObject |
+| `AccessPolicy` | Bucket or object-level access policy |
+| `LifecycleRule` | Expiry or transition rule for objects in a Bucket |
+| `CorsRule` | Cross-Origin Resource Sharing rule for browser clients |
+| `ServiceBinding` | Credential binding granting access to a Bucket |

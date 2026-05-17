@@ -73,3 +73,13 @@ dub test
 ## License
 
 See the repository root [LICENSE](../LICENSE) file.
+
+## Domain Model
+
+| Entity | Description |
+|--------|-------------|
+| `Destination` | Named outbound connectivity target (HTTP/RFC/LDAP) with authentication config |
+| `DestinationLookup` | Result of a destination name lookup used by consumers |
+| `Certificate` | Client certificate used by destination configurations |
+| `AuthToken` | Authentication token associated with a destination |
+| `DestinationFragment` | Reusable partial destination configuration |
