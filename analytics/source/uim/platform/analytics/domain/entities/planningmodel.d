@@ -33,7 +33,7 @@ struct PlanningModel {
         .set("id", v.id.value)
         .set("name", v.name)
         .set("versionType", v.versionType.to!string)
-        .set("isReadOnly", v.isReadOnly)));
+        .set("isReadOnly", v.isReadOnly)).array.toJson);
     return json;
   }
   static PlanningModel create(string name, string description, string datasetId,

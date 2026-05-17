@@ -22,14 +22,14 @@ struct Dataset {
   AuditInfo audit;
   ArtifactStatus status;
 
-  Json toJson() const {
+  Json toJson() {
     return entityToJson
       .set("name", name)
       .set("description", description)
       .set("dataSourceId", dataSourceId.value)
-      .set("columns", toJsonArray(columns))
+      .set("columns", columns.map!(c => c.toJson()).array.toJson)
       .set("audit", audit.toJson())
-      .set("status", status.toString());
+      .set("status", status.to!string);
   }
 
   // this() {
@@ -58,8 +58,8 @@ struct Column {
   Json toJson() const {
     return Json.emptyObject
       .set("name", name)
-      .set("role", role.toString())
-      .set("dataType", dataType.toString())
-      .set("defaultAggregation", defaultAggregation.toString());
+      .set("role", role.to!string)
+      .set("dataType", dataType.to!string)
+      .set("defaultAggregation", defaultAggregation.to!string);
   }
 }

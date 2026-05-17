@@ -19,6 +19,6 @@ class ConsoleNotificationAdapter : NotificationPort {
 
   void notifyGroup(string[] userIds, string subject, string body_) {
     foreach (uid; userIds)
-      notify(uid, subject, body_);
+      notify(UserId(uid), subject, body_);
   }
 }

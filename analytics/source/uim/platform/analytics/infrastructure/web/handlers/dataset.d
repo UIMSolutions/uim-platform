@@ -21,20 +21,21 @@ class DatasetHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(toJsonArray(useCases.list()));
+    auto items = useCases.listDatasets();
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
-    auto id = DatasetId(extractIdFromPath(req.requestURI, "datasets"));
-
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
-    auto item = useCases.getById(tenantId, id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getDataset(id);
+    if (item.datasetId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -43,21 +44,20 @@ class DatasetHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateDatasetRequest(json["name"].get!string,
-          json["description"].get!string, json["dataSourceId"].get!string,
-          json["userId"].get!string,);
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+      auto cmd = CreateDatasetRequest(TenantId.init, ResourceGroupId.init,
+          json["name"].get!string, json["description"].get!string,
+          DataSourceId(json["dataSourceId"].get!string),
+          UserId(json["userId"].get!string));
+      res.writeJsonBody(toJsonValue(useCases.createDataset(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
-    auto id = DatasetId(extractIdFromPath(req.requestURI, "datasets"));
-    
-    useCases.removeById(tenantId, id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deleteDataset(id);
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }

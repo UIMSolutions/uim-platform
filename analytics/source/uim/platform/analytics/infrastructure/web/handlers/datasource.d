@@ -21,18 +21,21 @@ class DataSourceHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(toJsonArray(useCases.list()));
+    auto items = useCases.listSources(TenantId.init);
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "datasources");
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
-    auto item = useCases.getById(id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getSource(TenantId.init, DataSourceId(id));
+    if (item.id.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -41,31 +44,37 @@ class DataSourceHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateDataSourceRequest(json["name"].get!string,
-          json["sourceType"].get!string, json["host"].get!string,
-          json["port"].get!int, json["databaseName"].get!string,
-          json["username"].get!string, json["userId"].get!string,);
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+      DataSourceType srcType;
+      try {
+        srcType = json["sourceType"].get!string.to!DataSourceType;
+      } catch (Exception) {
+        srcType = DataSourceType.Database;
+      }
+      auto cmd = CreateDataSourceRequest(json["name"].get!string, srcType,
+          json["host"].get!string, json["port"].get!int,
+          json["databaseName"].get!string, json["username"].get!string,
+          UserId(json["userId"].get!string));
+      res.writeJsonBody(toJsonValue(useCases.createSource(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "datasources");
-    auto result = useCases.testConnection(id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.testConnection(TenantId.init, DataSourceId(id));
+    if (result.id.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "datasources");
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deleteSource(TenantId.init, DataSourceId(id));
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }
 

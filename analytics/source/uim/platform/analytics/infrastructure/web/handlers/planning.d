@@ -20,18 +20,21 @@ class PlanningHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(toJsonArray(useCases.list()));
+    auto items = useCases.listPlanningModels(TenantId.init);
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "planning");
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    if (item.planningModelId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -40,39 +43,40 @@ class PlanningHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreatePlanningModelRequest(json["name"].get!string,
-          json["description"].get!string, json["datasetId"].get!string,
-          json["granularity"].get!string, json["userId"].get!string,);
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+      auto cmd = CreatePlanningModelRequest(TenantId.init,
+          json["name"].get!string, json["description"].get!string,
+          json["datasetId"].get!string, json["granularity"].get!string,
+          UserId(json["userId"].get!string));
+      res.writeJsonBody(toJsonValue(useCases.createPlanningModel(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "planning");
-    auto result = useCases.lock(id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.lockPlanningModel(TenantId.init, id);
+    if (result.planningModelId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "planning");
-    auto result = useCases.approve(id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.approvePlanningModel(TenantId.init, id);
+    if (result.planningModelId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "planning");
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deletePlanningModel(TenantId.init, id);
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }

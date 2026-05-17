@@ -38,7 +38,7 @@ struct Dashboard {
             audit.createdBy)
           .set("createdAt", audit.createdAt.toISOExtString())
           .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
-        tags);
+        tags.toJson);
   }
   static Dashboard create(string name, string description, string ownerId) {
     Dashboard d;
@@ -65,7 +65,7 @@ struct Page {
   EntityId[] widgetIds;
 
   Json toJson() {
-    return entityToJson()
+    return Json.emptyObject
       .set("id", id.value).set("title", title)
       .set("widgetIds", widgetIds.map!(wid => wid.value).array.toJson);
   }

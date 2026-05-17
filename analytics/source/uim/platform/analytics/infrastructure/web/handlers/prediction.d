@@ -19,19 +19,21 @@ class PredictionHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(useCases.list().toJson);
+    auto items = useCases.listPredictions();
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI, "predictions");
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
-    auto item = useCases.getById(tenantId, id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getPrediction(id);
+    if (item.predictionId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -40,32 +42,32 @@ class PredictionHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      string[] features = json.getArray("featureColumns").map!(f => f.get!string).array.toJson;
-      auto cmd = CreatePredictionRequest(json.getString("name"), json.getString("description"),
-          json.getString("datasetId"), json.getString("predictionType"),
-          json.getString("targetColumn"), features, json.getString("userId"));
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+      string[] features = getStrings(json, "featureColumns");
+      auto cmd = CreatePredictionRequest(TenantId.init, ResourceGroupId.init,
+          json["name"].get!string, json["description"].get!string,
+          DatasetId(json["datasetId"].get!string), json["predictionType"].get!string,
+          json["targetColumn"].get!string, features,
+          UserId(json["userId"].get!string));
+      res.writeJsonBody(toJsonValue(useCases.createPrediction(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI, "predictions");
-    auto result = useCases.train(tenantId, id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.trainPrediction(id);
+    if (result.predictionId.isEmpty) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI, "predictions");
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deletePrediction(id);
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }

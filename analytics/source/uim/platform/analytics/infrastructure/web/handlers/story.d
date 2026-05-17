@@ -21,18 +21,21 @@ class StoryHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(toJsonArray(useCases.list()));
+    auto items = useCases.listStories();
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "stories");
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
-    auto item = useCases.getById(id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getStory(id);
+    if (item.id.length == 0) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -42,28 +45,28 @@ class StoryHandler {
     try {
       auto json = req.json;
       auto cmd = CreateStoryRequest(json["title"].get!string,
-          json["description"].get!string, json["ownerId"].get!string,);
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+          json["description"].get!string, json["ownerId"].get!string);
+      res.writeJsonBody(toJsonValue(useCases.createStory(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "stories");
-    auto result = useCases.publish(id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.publishStory(id);
+    if (result.id.length == 0) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI, "stories");
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deleteStory(id);
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }
 

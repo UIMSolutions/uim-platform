@@ -39,7 +39,11 @@ struct Story {
   }
 
   void addSection(string heading, string narrative) {
-    sections ~= Section(EntityId.generate(), heading, narrative, []);
+    Section s;
+    s.id = SectionId(EntityId.generate().value);
+    s.heading = heading;
+    s.narrative = narrative;
+    sections ~= s;
   }
 
   void publish() {

@@ -21,19 +21,21 @@ class DashboardHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto items = useCases.list();
-    res.writeJsonBody(toJsonArray(items));
+    auto items = useCases.listDashboards();
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractId(req);
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing dashboard id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing dashboard id"), 400);
       return;
     }
-    auto item = useCases.getById(id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getDashboard(TenantId.init, DashboardId(id));
+    if (item.dashboardId.isEmpty) {
+      res.writeJsonBody(errorJson("Dashboard not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -43,41 +45,41 @@ class DashboardHandler {
     try {
       auto json = req.json;
       auto cmd = CreateDashboardRequest(json["name"].get!string,
-          json["description"].get!string, json["ownerId"].get!string,);
-      auto result = useCases.create(cmd);
-      res.writeJsonBody(result.toJson, HTTPStatus.created);
+          json["description"].get!string, json["ownerId"].get!string);
+      auto result = useCases.createDashboard(cmd);
+      res.writeJsonBody(toJsonValue(result), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void addPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractId(req);
+    auto id = extractIdFromPath(req.requestURI);
     try {
       auto json = req.json;
-      auto result = useCases.addPage(id, json["title"].get!string);
-      res.writeJsonBody(result.toJson);
+      auto result = useCases.addPageToDashboard(TenantId.init, DashboardId(id), json["title"].get!string);
+      res.writeJsonBody(toJsonValue(result));
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractId(req);
-    auto result = useCases.publish(id);
-    if (result.isNull) {
-      res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
+    auto id = extractIdFromPath(req.requestURI);
+    auto result = useCases.publishDashboard(TenantId.init, DashboardId(id));
+    if (result.dashboardId.isEmpty) {
+      res.writeJsonBody(errorJson("Dashboard not found", 404), 404);
       return;
     }
-    res.writeJsonBody(result.toJson);
+    res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractId(req);
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deleteDashboard(TenantId.init, DashboardId(id));
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }
 

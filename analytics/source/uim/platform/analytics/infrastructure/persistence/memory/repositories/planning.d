@@ -16,7 +16,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
     return findByStatus(tenantId, status).length;
   }
   PlanningModel[] filterByStatus(PlanningModel[] models, PlanningStatus status) {
-    return models.filter!(m => m.status == status).array;
+    return models.filter!(m => m.planStatus == status).array;
   }
   PlanningModel[] findByStatus(TenantId tenantId, PlanningStatus status) {
     return filterByStatus(findByTenant(tenantId), status);  

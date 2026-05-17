@@ -21,18 +21,21 @@ class WidgetHandler {
   }
 
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(toJsonArray(useCases.list()));
+    auto items = useCases.listWidgets();
+    Json jArr = Json.emptyArray;
+    foreach (item; items) jArr ~= toJsonValue(item);
+    res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = WidgetId(extractIdFromPath(req.requestURI, "widgets"));
-    if (id.isEmpty) {
-      res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+    auto id = extractIdFromPath(req.requestURI);
+    if (id.length == 0) {
+      res.writeJsonBody(errorJson("Missing id"), 400);
       return;
     }
-    auto item = useCases.getById(id);
-    if (item.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+    auto item = useCases.getWidget(id);
+    if (item.id.length == 0) {
+      res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -41,20 +44,20 @@ class WidgetHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateWidgetRequest(json["name"].get!string,
+      auto cmd = CreateWidgetRequest(json["title"].get!string,
           json["chartType"].get!string, json["datasetId"].get!string,
-          json["userId"].get!string,);
-      res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
+          UserId(json["userId"].get!string));
+      res.writeJsonBody(toJsonValue(useCases.createWidget(cmd)), 201);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), 400);
     }
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = WidgetId(extractIdFromPath(req.requestURI, "widgets"));
-    useCases.removeById(id);
-    res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
+    auto id = extractIdFromPath(req.requestURI);
+    useCases.deleteWidget(id);
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }
 
