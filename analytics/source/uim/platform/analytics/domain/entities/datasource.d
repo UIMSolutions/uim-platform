@@ -19,27 +19,26 @@ struct DataSource {
   DataSourceStatus connStatus;
   AuditInfo audit;
 
-  // static DataSource create(string name, DataSourceType sourceType,
-  //     ConnectionInfo conn, UserId userId) {
-  //   auto ds = new DataSource();
-  //   ds.id = EntityId.generate();
-  //   ds.name = name;
-  //   ds.sourceType = sourceType;
-  //   ds.connection = conn;
-  //   ds.schedule = ImportSchedule.init;
-  //   ds.connStatus = DataSourceStatus.Disconnected;
-  //   ds.audit = AuditInfo.create(userId);
-  //   return ds;
-  // }
+  static DataSource create(string name, DataSourceType sourceType,
+      ConnectionInfo conn, UserId userId) {
+    DataSource ds;
+    ds.id = DataSourceId(EntityId.generate().value);
+    ds.name = name;
+    ds.sourceType = sourceType;
+    ds.connection = conn;
+    ds.schedule = ImportSchedule.init;
+    ds.connStatus = DataSourceStatus.Disconnected;
+    return ds;
+  }
 
-  // void markConnected() {
-  //   connStatus = DataSourceStatus.Connected;
-  // }
+  void markConnected() {
+    connStatus = DataSourceStatus.Connected;
+  }
 
-  // void markError(string msg) {
-  //   connStatus = DataSourceStatus.Error;
-  //   connection.lastError = msg;
-  // }
+  void markError(string msg) {
+    connStatus = DataSourceStatus.Error;
+    connection.lastError = msg;
+  }
 
   Json toJson() const {
     return entityToJson

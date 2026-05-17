@@ -28,7 +28,8 @@ Json toJson(CreatePredictionRequest request) {
 }
 
 struct PredictionResponse {
-  mixin TenantEntity!PredictionId;
+  TenantId tenantId;
+  PredictionId predictionId;
   ResourceGroupId resourceGroupId;
 
   string name;
@@ -44,18 +45,20 @@ struct PredictionResponse {
     if (p.isNull)
       return PredictionResponse.init;
 
-    return PredictionResponse(p.tenantId, p.resourceGroupId, p.id, p.name, p.description,
+    return PredictionResponse(p.tenantId, p.id, p.resourceGroupId, p.name, p.description,
       p.datasetId, p.predictionType.to!string,
       p.predStatus.to!string, p.lastResult.accuracy, p.lastResult.rmse,
-      p.lastResult.modelSummary,);
+      p.lastResult.modelSummary);
   }
 
   Json toJson() const {
-    return entityToJson
-      .set("resource_group_id", resourceGroupId)
+    return Json.emptyObject
+      .set("tenantId", tenantId.value)
+      .set("predictionId", predictionId.value)
+      .set("resource_group_id", resourceGroupId.value)
       .set("name", name)
       .set("description", description)
-      .set("dataset_id", datasetId)
+      .set("dataset_id", datasetId.value)
       .set("prediction_type", predictionType)
       .set("status", status)
       .set("accuracy", accuracy)

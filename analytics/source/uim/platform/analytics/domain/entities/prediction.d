@@ -26,20 +26,18 @@ struct Prediction {
   // this() {
   // }
 
-  // static Prediction create(string name, string description, string datasetId,
-  //     PredictionType ptype, PredictionConfig cfg, UserId userId) {
-  //   auto p = new Prediction();
-  //   p.id = EntityId.generate();
-  //   p.name = name;
-  //   p.description = description;
-  //   p.datasetId = EntityId(datasetId);
-  //   p.predictionType = ptype;
-  //   p.config = cfg;
-  //   p.lastResult = PredictionResult.init;
-  //   p.predStatus = PredictionStatus.Created;
-  //   p.audit = AuditInfo.create(userId);
-  //   return p;
-  // }
+  static Prediction create(string name, string description, DatasetId datasetId,
+      PredictionType predType, PredictionConfig cfg, UserId userId) {
+    Prediction p;
+    p.id = PredictionId(EntityId.generate().value);
+    p.name = name;
+    p.description = description;
+    p.datasetId = datasetId;
+    p.predictionType = predType;
+    p.config = cfg;
+    p.predStatus = PredictionStatus.Created;
+    return p;
+  }
 
   void markTraining() {
     predStatus = PredictionStatus.Training;

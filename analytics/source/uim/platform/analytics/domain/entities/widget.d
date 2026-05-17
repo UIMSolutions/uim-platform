@@ -28,19 +28,14 @@ struct Widget {
   // this() {
   // }
 
-  // static Widget create(string title, ChartType chartType, string datasetId, UserId userId) {
-  //   auto w = new Widget();
-  //   w.id = EntityId.generate();
-  //   w.title = title;
-  //   w.chartType = chartType;
-  //   w.datasetId = EntityId(datasetId);
-  //   w.dimensions = [];
-  //   w.measures = [];
-  //   w.filters = [];
-  //   w.style = WidgetStyle.init;
-  //   w.audit = AuditInfo.create(userId);
-  //   return w;
-  // }
+  static Widget create(string title, ChartType chartType, string datasetId, UserId userId) {
+    Widget w;
+    w.id = WidgetId(EntityId.generate().value);
+    w.title = title;
+    w.chartType = chartType;
+    w.datasetId = EntityId(datasetId);
+    return w;
+  }
 
   void bindDimension(string columnName) {
     dimensions ~= WidgetBinding(columnName, AggregationType.Count);

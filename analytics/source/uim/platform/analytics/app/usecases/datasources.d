@@ -42,7 +42,7 @@ class DataSourceUseCases {
 
   DataSourceResponse[] listSources(TenantId tenantId) {
     DataSourceResponse[] result;
-    foreach (ds; repo.findAll(tenantId))
+    foreach (ds; repo.findByTenant(tenantId))
       result ~= DataSourceResponse.fromEntity(ds);
     return result;
   }

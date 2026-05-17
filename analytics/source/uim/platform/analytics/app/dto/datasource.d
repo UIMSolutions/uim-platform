@@ -29,12 +29,12 @@ struct DataSourceResponse {
   string databaseName;
   string status;
 
-  // static DataSourceResponse fromEntity(DataSource ds) {
-  //   if (ds.isNull)
-  //     return DataSourceResponse.init;
+  static DataSourceResponse fromEntity(DataSource ds) {
+    if (ds.isNull)
+      return DataSourceResponse.init;
 
-  //   return DataSourceResponse(ds.id, ds.name, ds.sourceType,
-  //       ds.connection.host, ds.connection.port, ds.connection.databaseName,
-  //       ds.connStatus.to!string);
-  // }
+    return DataSourceResponse(ds.id, ds.name, ds.sourceType,
+        ds.connection.host, ds.connection.port, ds.connection.databaseName,
+        ds.connStatus.to!string);
+  }
 }

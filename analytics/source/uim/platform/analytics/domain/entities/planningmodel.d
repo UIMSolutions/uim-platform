@@ -36,41 +36,21 @@ struct PlanningModel {
         .set("isReadOnly", v.isReadOnly)));
     return json;
   }
-  // this() {
-  // }
+  static PlanningModel create(string name, string description, string datasetId,
+      TimeGranularity granularity, UserId userId) {
+    PlanningModel pm;
+    pm.id = PlanningModelId(EntityId.generate().value);
+    pm.name = name;
+    pm.description = description;
+    pm.datasetId = DatasetId(datasetId);
+    pm.granularity = granularity;
+    pm.planStatus = PlanningStatus.Draft;
+    return pm;
+  }
 
-  // static PlanningModel create(string name, string description, string datasetId,
-  //     TimeGranularity granularity, UserId userId) {
-  //   auto pm = new PlanningModel();
-  //   pm.id = EntityId.generate();
-  //   pm.name = name;
-  //   pm.description = description;
-  //   pm.datasetId = EntityId(datasetId);
-  //   pm.granularity = granularity;
-  //   pm.planStatus = PlanningStatus.Draft;
-  //   pm.versions = [];
-  //   pm.audit = AuditInfo.create(userId);
-  //   // Create default "Actual" and "Plan" versions
-  //   pm.versions ~= PlanningVersion(EntityId.generate(), "Actual", VersionType.Actual, true);
-  //   pm.versions ~= PlanningVersion(EntityId.generate(), "Plan", VersionType.Plan, false);
-  //   return pm;
-  // }
-
-  // void addForecastVersion(string name) {
-  //   versions ~= PlanningVersion(EntityId.generate(), name, VersionType.Forecast, false);
-  // }
-
-  // void lock() {
-  //   planStatus = PlanningStatus.Locked;
-  // }
-
-  // void unlock() {
-  //   planStatus = PlanningStatus.InProgress;
-  // }
-
-  // void approve() {
-  //   planStatus = PlanningStatus.Approved;
-  // }
+  void lock() { planStatus = PlanningStatus.Locked; }
+  void unlock() { planStatus = PlanningStatus.InProgress; }
+  void approve() { planStatus = PlanningStatus.Approved; }
 }
 
 

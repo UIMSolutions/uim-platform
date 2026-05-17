@@ -42,7 +42,7 @@ struct PlanningModelResponse {
       vers ~= VersionResponse(v.id.value, v.name, v.versionType.to!string, v.isReadOnly);
 
     return PlanningModelResponse(pm.tenantId, pm.id, pm.name, pm.description,
-        pm.datasetId, pm.granularity.to!string, pm.planStatus.to!string, vers,);
+        pm.datasetId.value, pm.granularity.to!string, pm.planStatus.to!string, vers);
   }
 }
 

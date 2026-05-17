@@ -26,21 +26,22 @@ class DatasetUseCases {
   }
 
   DatasetResponse getDataset(string id) {
-    return DatasetResponse.fromEntity(repo.findById(EntityId(id)));
+    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+    return DatasetResponse.fromEntity(found.empty ? Dataset.init : found[0]);
   }
 
   DatasetResponse[] listDatasets() {
     DatasetResponse[] result;
-    foreach (d; repo.findByTenant(tenantId))
+    foreach (d; repo.findAll())
       result ~= DatasetResponse.fromEntity(d);
     return result;
   }
 
   CommandResult deleteDataset(string datasetId) {
-    auto ds = repo.findById(EntityId(datasetId));
-    if (ds.isNull)
+    auto found = repo.findAll().filter!(e => e.id.value == datasetId).array;
+    if (found.empty)
       return CommandResult(false, "", "Dataset not found");
-
+    auto ds = found[0];
     repo.remove(ds);
     return CommandResult(true, ds.id.value, "");
   }

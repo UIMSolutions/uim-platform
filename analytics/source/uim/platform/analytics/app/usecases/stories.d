@@ -27,18 +27,20 @@ class StoryUseCases {
   }
 
   StoryResponse getStory(string id) {
-    return StoryResponse.fromEntity(repo.findById(EntityId(id)));
+    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+    return StoryResponse.fromEntity(found.empty ? Story.init : found[0]);
   }
 
   StoryResponse[] listStories() {
     StoryResponse[] result;
-    foreach (s; repo.findByTenant(tenantId))
+    foreach (s; repo.findAll())
       result ~= StoryResponse.fromEntity(s);
     return result;
   }
 
   StoryResponse addSectionToStory(string storyId, string heading, string narrative) {
-    auto s = repo.findById(EntityId(storyId));
+    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+    auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
     s.addSection(heading, narrative);
@@ -47,7 +49,8 @@ class StoryUseCases {
   }
 
   StoryResponse publishStory(string storyId) {
-    auto s = repo.findById(EntityId(storyId));
+    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+    auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
     s.publish();
@@ -56,7 +59,8 @@ class StoryUseCases {
   }
 
   CommandResult deleteStory(string storyId) {
-    auto s = repo.findById(EntityId(storyId));
+    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+    auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return CommandResult(false, "", "Story not found");
 

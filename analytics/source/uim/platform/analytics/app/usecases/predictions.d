@@ -35,18 +35,20 @@ class PredictionUseCases {
   }
 
   PredictionResponse getPrediction(string id) {
-    return PredictionResponse.fromEntity(repo.findById(EntityId(id)));
+    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+    return PredictionResponse.fromEntity(found.empty ? Prediction.init : found[0]);
   }
 
   PredictionResponse[] listPredictions() {
     PredictionResponse[] result;
-    foreach (p; repo.findByTenant(tenantId))
+    foreach (p; repo.findAll())
       result ~= PredictionResponse.fromEntity(p);
     return result;
   }
 
   PredictionResponse trainPrediction(string id) {
-    auto p = repo.findById(EntityId(id));
+    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+    auto p = found.empty ? Prediction.init : found[0];
     if (p.isNull)
       return PredictionResponse.init;
     p.markTraining();
@@ -57,6 +59,8 @@ class PredictionUseCases {
   }
 
   CommandResult deletePrediction(string id) {
-    repo.remove(EntityId(id));
+    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+    if (!found.empty) repo.remove(found[0]);
+    return CommandResult(true, id, "");
   }
 }

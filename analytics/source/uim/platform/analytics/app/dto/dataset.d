@@ -36,9 +36,9 @@ struct DatasetResponse {
       return DatasetResponse.init;
 
     ColumnResponse[] cols = d.columns.map!(col => ColumnResponse(col.name,
-        col.role.to!string, col.dataType.to!string)).array.toJson;
+        col.role.to!string, col.dataType.to!string)).array;
 
-    return DatasetResponse(d.tenantId, d.resourceGroupId, d.id, d.name, d.description,
+    return DatasetResponse(d.tenantId, ResourceGroupId.init, d.id, d.name, d.description,
         d.dataSourceId, d.status.to!string, cols);
   }
 }

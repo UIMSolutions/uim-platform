@@ -39,10 +39,10 @@ struct DashboardResponse {
 
     PageResponse[] pgs;
     foreach (p; d.pages)
-      pgs ~= PageResponse(p.id.value, p.title);
+      pgs ~= PageResponse(PageId(p.id.value), p.title);
 
-    return DashboardResponse(d.id.value, d.name, d.description,
-        d.ownerId.value, d.visibility.to!string, d.status.to!string, pgs, d.tags,);
+    return DashboardResponse(d.tenantId, d.id, d.name, d.description,
+        d.ownerId.value, d.visibility.to!string, d.status.to!string, pgs, d.tags);
   }
 }
 

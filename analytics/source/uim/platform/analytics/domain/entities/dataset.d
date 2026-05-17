@@ -35,41 +35,16 @@ struct Dataset {
   // this() {
   // }
 
-  // static Dataset create(string name, string description, string dataSourceId, UserId userId) {
-  //   auto dataset = new Dataset();
-  //   dataset.id = EntityId.generate();
-  //   dataset.name = name;
-  //   dataset.description = description;
-  //   dataset.dataSourceId = DataSourceId(dataSourceId);
-  //   dataset.columns = [];
-  //   dataset.status = ArtifactStatus.Draft;
-  //   dataset.audit = AuditInfo.create(userId);
-  //   return dataset;
-  // }
+  static Dataset create(string name, string description, DataSourceId dataSourceId, UserId userId) {
+    Dataset d;
+    d.id = DatasetId(EntityId.generate().value);
+    d.name = name;
+    d.description = description;
+    d.dataSourceId = dataSourceId;
+    d.status = ArtifactStatus.Draft;
+    return d;
+  }
 
-  // void addDimension(string colName, ColumnDataType dataType) {
-  //   columns ~= Column(colName, ColumnRole.Dimension, dataType, AggregationType.Count);
-  // }
-
-  // void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg) {
-  //   columns ~= Column(colName, ColumnRole.Measure, dataType, defaultAgg);
-  // }
-
-  // Column[] dimensions() {
-  //   Column[] result;
-  //   foreach (c; columns)
-  //     if (c.role == ColumnRole.Dimension)
-  //       result ~= c;
-  //   return result;
-  // }
-
-  // Column[] measures() {
-  //   Column[] result;
-  //   foreach (c; columns)
-  //     if (c.role == ColumnRole.Measure)
-  //       result ~= c;
-  //   return result;
-  // }
 }
 
 
