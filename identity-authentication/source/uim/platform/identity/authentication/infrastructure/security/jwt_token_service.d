@@ -9,9 +9,9 @@ module uim.platform.identity.authentication.infrastructure.security.jwt_token_se
 // import uim.platform.identity.authentication.domain.types;
 // import uim.platform.identity.authentication.domain.ports.repositories.token_service;
 // 
-// // import std.uuid;
 // 
-// // import std.datetime.systime : Clock;
+// 
+// 
 // import core.time;
 // // import std.digest.sha : SHA256, toHexString;
 import uim.platform.identity.authentication;

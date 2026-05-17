@@ -4,8 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.consent_records;
-// import std.uuid;
-// import std.datetime.systime : Clock;
+
+
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.consent_record;
 // import uim.platform.data.privacy.domain.ports.repositories.consent_records;

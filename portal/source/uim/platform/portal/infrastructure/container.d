@@ -43,7 +43,7 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.identity.authentication.presentation.http.translation;
 // import uim.platform.identity.authentication.presentation.http.health;
 
-    import uim.platform.portal.application.usecases.manage;
+    // import uim.platform.portal.application.usecases.manage;
 
 
 import uim.platform.portal;

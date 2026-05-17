@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.ports.repositories.sections;
 
-import uim.platform.portal.domain.entities.section;
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.entities.section;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
+
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — section persistence.
 interface SectionRepository : ITenantRepository!(PortalSection, SectionId) {
 

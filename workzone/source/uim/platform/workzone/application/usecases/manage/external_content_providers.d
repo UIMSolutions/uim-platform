@@ -4,8 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone.application.usecases.manage.external_content_providers;
-// import std.uuid;
-// import std.datetime.systime : Clock;
+
+
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.external_content_provider;
 // import uim.platform.workzone.domain.ports.repositories.external_content_providers;

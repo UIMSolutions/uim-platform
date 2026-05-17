@@ -1,193 +1,121 @@
-# NAFv4 — Authorization and Trust Management Service
+# NAF v4 Architecture Description — Authorization and Trust Service
 
-NATO Architecture Framework v4 — Architectural Viewpoints
-
----
-
-## 1. Capability View (CV-1) — Capability Overview
-
-| Capability | Description |
-|------------|-------------|
-| OAuth 2.0 Client Management | Register, update, and delete OAuth 2.0 client applications; manage client secrets, grant types, scopes, and redirect URIs |
-| Scope Management | Define and manage fine-grained authorization scopes for applications |
-| Role Management | Create role templates that bundle scopes into reusable authorization units |
-| Role Collection Management | Aggregate roles into business-level role collections for large-scale authorization scenarios |
-| User Authorization | Assign role collections to users and user groups; query effective authorizations for a user |
-| Trust Management | Register and manage trusted identity providers (SAML 2.0 / OIDC); configure SSO metadata |
-| Token Issuance | Issue OAuth 2.0 JWT access tokens via client credentials and authorization code flows |
-| Token Validation | Validate JWT tokens against registered clients and active scopes |
-| Health Monitoring | Expose `/api/v1/health` for liveness and readiness probes |
+> NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
+> Authorization and Trust Management Service — OAuth clients, identity providers,
+> scopes, roles, role collections, and user assignments modelled on SAP Authorization
+> and Trust Management Service (XSUAA).
 
 ---
 
-## 2. Architecture Viewpoints
+## 1. NAF v4 Grid Mapping
 
-### 2.1 Logical Architecture View
-
-The service is structured using **Hexagonal (Ports & Adapters) Architecture** combined with **Clean Architecture** layering:
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│  Driving Adapters (Presentation)                                   │
-│  HTTP REST Controllers (vibe.d URLRouter)                          │
-│    OAuthClientController  ScopeController  RoleController          │
-│    RoleCollectionController  UserAssignmentController              │
-│    IdentityProviderController  TokenController  HealthController   │
-└──────────────────────────┬─────────────────────────────────────────┘
-                           │ calls use cases
-┌──────────────────────────▼─────────────────────────────────────────┐
-│  Application Layer                                                 │
-│  Use Cases:                                                        │
-│    ManageOAuthClientsUseCase    ManageScopesUseCase                │
-│    ManageRolesUseCase           ManageRoleCollectionsUseCase       │
-│    ManageUserAssignmentsUseCase ManageIdentityProvidersUseCase     │
-│  DTOs: CreateOAuthClientRequest, CreateScopeRequest,              │
-│        CreateRoleRequest, CreateRoleCollectionRequest,            │
-│        CreateUserAssignmentRequest, CreateIdentityProviderRequest, │
-│        IssueTokenRequest, CommandResult                           │
-└──────────────────────────┬─────────────────────────────────────────┘
-                           │ uses domain ports
-┌──────────────────────────▼─────────────────────────────────────────┐
-│  Domain Layer                                                      │
-│  Entities: OAuthClientEntity, ScopeEntity, RoleEntity,            │
-│            RoleCollectionEntity, UserAssignmentEntity,            │
-│            IdentityProviderEntity                                  │
-│  Value Types / Enums: GrantType, ClientType, IdpType              │
-│  Repository Interfaces (Ports):                                   │
-│    OAuthClientRepository, ScopeRepository, RoleRepository,        │
-│    RoleCollectionRepository, UserAssignmentRepository,            │
-│    IdentityProviderRepository                                      │
-│  Domain Service: TokenService                                      │
-└──────────────────────────┬─────────────────────────────────────────┘
-                           │ implements ports
-┌──────────────────────────▼─────────────────────────────────────────┐
-│  Driven Adapters (Infrastructure)                                  │
-│  In-Memory Repositories:                                           │
-│    MemoryOAuthClientRepository  MemoryScopeRepository             │
-│    MemoryRoleRepository         MemoryRoleCollectionRepository    │
-│    MemoryUserAssignmentRepository  MemoryIdentityProviderRepository│
-│  Config: SrvConfig (env-var based, port 8116)                     │
-│  DI Container: buildContainer(SrvConfig)                          │
-└────────────────────────────────────────────────────────────────────┘
-```
-
-**Dependency Rule**: dependencies point strictly inward (presentation → application → domain ← infrastructure).
+| NAF View | Viewpoint | Covered Below |
+|---|---|---|
+| **NCV** | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** | NSOV-2 Service Definitions | §3 |
+| **NOV** | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** | NLV-1 Logical Data Model | §5 |
+| **NPV** | NPV-1 Physical Deployment | §6 |
+| **NIV** | NIV-1 Information Structure | §7 |
 
 ---
 
-### 2.2 System Context View (AV-2)
+## 2. Capability View (NCV)
+
+### C1 – Capability Taxonomy
 
 ```
-┌─────────────┐      REST / HTTP          ┌──────────────────────────────┐
-│  Client App │ ───────────────────────►  │  Authorization & Trust Mgmt  │
-│  (consumer) │                           │  Service  :8116              │
-└─────────────┘                           └────────────┬─────────────────┘
-                                                        │ in-memory store
-┌─────────────┐      SAML / OIDC Metadata│      ┌───────▼──────────┐
-│  Identity   │ ───────────────────────► │      │  MemoryRepos     │
-│  Provider   │                           │      │  (volatile)      │
-└─────────────┘                           │      └──────────────────┘
-                                          │
-                External Orchestrators:
-                ┌──────────────┐    ┌─────────────────┐
-                │  Docker /    │    │  Kubernetes      │
-                │  Podman      │    │  (k8s manifests) │
-                └──────────────┘    └─────────────────┘
+Authorization and Trust
+├── C1.1  OAuth Client Management
+│   ├── C1.1.1  Register OAuth clients
+│   └── C1.1.2  Client secret rotation
+│
+├── C1.2  Identity Provider Management
+│   └── C1.2.1  SAML / OIDC IdP configuration
+│
+├── C1.3  Scope Management
+│   └── C1.3.1  Define and publish authorization scopes
+│
+├── C1.4  Role Management
+│   ├── C1.4.1  Role creation with scope assignments
+│   └── C1.4.2  Role collection aggregation
+│
+├── C1.5  User Assignments
+│   └── C1.5.1  Assign role collections to users
+│
+└── C1.6  Cross-Cutting
+    ├── C1.6.1  Tenant isolation
+    └── C1.6.2  Health monitoring
+```
+
+### C2 – Enterprise Vision
+
+| Aspect | Description |
+|---|---|
+| **Mission** | Provide authorization and trust management modelled on SAP XSUAA. |
+| **Vision** | Centralise OAuth 2.0 client registration, identity provider trust, and fine-grained RBAC across all BTP services. |
+| **Scope** | OAuth clients, IdP configurations, scopes, roles, role collections, and user assignments. |
+| **Stakeholders** | Security Architects, Platform Admins, Application Developers. |
+
+---
+
+## 3. Service View (NSV)
+
+| Service ID | Name | Path Prefix | Methods |
+|---|---|---|---|
+| SVC-IDP-CRUD | Identity Provider | `/api/v1/identity-providers` | GET, POST, DELETE |
+| SVC-SCOPE-CRUD | Scope | `/api/v1/scopes` | GET, POST, DELETE |
+| SVC-ROLE-CRUD | Role | `/api/v1/roles` | GET, POST, DELETE |
+| SVC-RC-CRUD | Role Collection | `/api/v1/role-collections` | GET, POST, DELETE |
+| SVC-OA-CRUD | OAuth Client | `/api/v1/oauth-clients` | GET, POST, DELETE |
+| SVC-UA-CRUD | User Assignment | `/api/v1/user-assignments` | GET, POST, DELETE |
+| SVC-HLTH | Health Check | `/api/v1/health` | GET |
+
+---
+
+## 4. Operational View (NOV)
+
+```
+┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
+│  Platform Admin /   │ ─────────────────> │  Authorization Trust Service │
+│  Application        │                    │  port 8116                    │
+└────────────────────┘                    └──────────────────────────────┘
 ```
 
 ---
 
-### 2.3 Information View (DIV-1)
+## 5. Logical View (NLV)
 
-| Entity | Key Attributes | Relationships |
-|--------|---------------|---------------|
-| OAuthClientEntity | id, clientId, clientSecret, grantTypes, scopes, redirectUris, clientType, appId | has many scopes |
-| ScopeEntity | id, name, description, appId | referenced by RoleEntity |
-| RoleEntity | id, name, description, scopeReferences, appId | referenced by RoleCollectionEntity |
-| RoleCollectionEntity | id, name, description, roleReferences | assigned to UserAssignmentEntity |
-| UserAssignmentEntity | id, userId, userEmail, roleCollectionId, origin | links user to RoleCollectionEntity |
-| IdentityProviderEntity | id, alias, displayName, idpType, metadataUrl, entityId, ssoUrl, sloUrl, signingCert, isActive, isDefault | standalone trust configuration |
-
----
-
-### 2.4 Service View (SvcV-1) — REST API Surface
-
-| Service | Endpoint | HTTP Method | Description |
-|---------|----------|-------------|-------------|
-| OAuth Client | `/api/v1/oauth/clients` | POST | Register OAuth 2.0 client |
-| OAuth Client | `/api/v1/oauth/clients` | GET | List clients |
-| OAuth Client | `/api/v1/oauth/clients/*` | GET | Get client by ID |
-| OAuth Client | `/api/v1/oauth/clients/*` | PUT | Update client |
-| OAuth Client | `/api/v1/oauth/clients/*` | DELETE | Delete client |
-| Scope | `/api/v1/scopes` | POST | Create scope |
-| Scope | `/api/v1/scopes` | GET | List scopes |
-| Scope | `/api/v1/scopes/*` | GET / PUT / DELETE | Manage scope |
-| Role | `/api/v1/roles` | POST | Create role |
-| Role | `/api/v1/roles` | GET | List roles |
-| Role | `/api/v1/roles/*` | GET / PUT / DELETE | Manage role |
-| Role Collection | `/api/v1/role-collections` | POST | Create role collection |
-| Role Collection | `/api/v1/role-collections` | GET | List role collections |
-| Role Collection | `/api/v1/role-collections/*` | GET / PUT / DELETE | Manage role collection |
-| User Assignment | `/api/v1/user-assignments` | POST | Assign role collection to user |
-| User Assignment | `/api/v1/user-assignments` | GET | List assignments |
-| User Assignment | `/api/v1/user-assignments/*` | GET / DELETE | Manage assignment |
-| Identity Provider | `/api/v1/identity-providers` | POST | Register IdP |
-| Identity Provider | `/api/v1/identity-providers` | GET | List IdPs |
-| Identity Provider | `/api/v1/identity-providers/*` | GET / PUT / DELETE | Manage IdP |
-| Token | `/api/v1/oauth/token` | POST | Issue OAuth 2.0 token |
-| Health | `/api/v1/health` | GET | Liveness / readiness |
+| Entity | Key Relationships |
+|---|---|
+| `IdentityProvider` | External IdP trust configuration |
+| `OAuthClient` | Application OAuth 2.0 client |
+| `ScopeEntity` | Authorization scope definition |
+| `RoleEntity` | Role aggregating scopes |
+| `RoleCollection` | Role collection aggregating roles |
+| `UserAssignment` | Links user to RoleCollection |
 
 ---
 
-### 2.5 Operational View (OV-1) — Deployment
+## 6. Physical View (NPV)
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Kubernetes Cluster                                                 │
-│                                                                     │
-│  ┌───────────────────────────────────────────────────────────────┐ │
-│  │  Deployment: authorization-trust  (1 replica)                 │ │
-│  │  ┌──────────────────────────────────────────────────────────┐ │ │
-│  │  │  Container: uim-authorization-trust-platform-service     │ │ │
-│  │  │  Image: uim-platform/authorization-trust:latest          │ │ │
-│  │  │  Port: 8116                                              │ │ │
-│  │  │  Resources: req 64Mi/100m, limit 256Mi/500m              │ │ │
-│  │  │  Probes: GET /api/v1/health (liveness + readiness)       │ │ │
-│  │  │  Security: runAsNonRoot=true, readOnlyRootFilesystem=true │ │ │
-│  │  └──────────────────────────────────────────────────────────┘ │ │
-│  └───────────────────────────────────────────────────────────────┘ │
-│                                                                     │
-│  ConfigMap: authorization-trust-config                             │
-│  Service:   authorization-trust (ClusterIP :8116)                 │
-└─────────────────────────────────────────────────────────────────────┘
+Kubernetes Cluster — Namespace: uim-platform
+├── ConfigMap: authorization-trust-config
+│   AUTHORIZATION_TRUST_HOST: "0.0.0.0"
+│   AUTHORIZATION_TRUST_PORT: "8116"
+├── Deployment: authorization-trust  port: 8116
+└── Service: authorization-trust (ClusterIP :8116)
 ```
 
 ---
 
-### 2.6 Standards View (StdV-1)
+## 7. Architecture Decisions
 
-| Standard | Application |
-|----------|-------------|
-| OAuth 2.0 (RFC 6749) | Token issuance: client credentials, authorization code |
-| JWT (RFC 7519) | Access token format |
-| SAML 2.0 | Identity provider trust / federation |
-| OpenID Connect 1.0 | OIDC identity provider integration |
-| REST / HTTP 1.1 | API transport |
-| Apache 2.0 | Software license |
-| Docker / OCI Image Spec | Container packaging |
-| Kubernetes API | Orchestration manifests |
-
----
-
-## 3. Architecture Decisions
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Language | D (dlang) | Type-safe, compiled, memory-efficient |
-| HTTP Framework | vibe.d 0.10.x | Async I/O, production-grade, integrates with dub |
-| Architecture | Hexagonal + Clean | Testability, replaceability of adapters |
-| Persistence | In-memory (initial) | Portable, zero external dependencies; replace with DB adapter later |
-| Token format | JWT (simplified) | Stateless, industry standard |
-| DI | Manual container | Transparent wiring, no reflection |
-| Container | Docker / Podman (multi-stage) | Small runtime image, security hardened |
-| Orchestration | Kubernetes | Cloud-native horizontal scaling |
+| ID | Decision | Rationale |
+|---|---|---|
+| AD-1 | XSUAA-aligned model | Mirrors SAP platform authorization service |
+| AD-2 | Scope → Role → RoleCollection hierarchy | Fine-grained RBAC |
+| AD-3 | IdP federation support | Enables corporate SSO |
+| AD-4 | In-memory repositories | Fast testing |
+| AD-5 | Port 8116 | Consistent UIM platform port allocation |

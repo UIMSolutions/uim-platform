@@ -10,8 +10,8 @@ module uim.platform.portal.presentation.http.controllers.tile;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.tile;
 // import uim.platform.portal.domain.types;
-// import uim.platform.identity.authentication.presentation.http
-import uim.platform.portal.application.usecases.manage;
+// .platform.identity.authentication.presentation.http
+// import uim.platform.portal.application.usecases.manage;
 import uim.platform.portal;
 
 mixin(ShowModule!());

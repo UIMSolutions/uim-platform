@@ -18,7 +18,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-// import std.datetime.systime : Clock;
+
 
 /// Domain service that manages application lifecycle transitions —
 /// staging, starting, stopping, scaling, and quota enforcement.

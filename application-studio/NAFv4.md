@@ -1,189 +1,123 @@
-# Application Studio — NAFv4 Architecture Views
+# NAF v4 Architecture Description — Application Studio Service
 
-## C1 — Capability Taxonomy
+> NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
+> Application Studio Service — cloud-based IDE with dev space management,
+> project scaffolding, run/build configurations, and service bindings modelled
+> on SAP Business Application Studio.
 
-```mermaid
-graph TB
-    AS[Application Studio Service]
-    AS --> DSM[Dev Space Management]
-    AS --> DSTM[Dev Space Type Management]
-    AS --> EM[Extension Management]
-    AS --> PM[Project Management]
-    AS --> PTM[Project Template Management]
-    AS --> SBM[Service Binding Management]
-    AS --> RCM[Run Configuration Management]
-    AS --> BCM[Build Configuration Management]
+---
 
-    DSM --> DSM1[Create Dev Space]
-    DSM --> DSM2[Start/Stop Dev Space]
-    DSM --> DSM3[Configure Resources]
-    DSM --> DSM4[Hibernate Dev Space]
+## 1. NAF v4 Grid Mapping
 
-    DSTM --> DSTM1[Define Dev Space Types]
-    DSTM --> DSTM2[Configure Runtime Stacks]
-    DSTM --> DSTM3[Map Project Types]
+| NAF View | Viewpoint | Covered Below |
+|---|---|---|
+| **NCV** | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** | NSOV-2 Service Definitions | §3 |
+| **NOV** | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** | NLV-1 Logical Data Model | §5 |
+| **NPV** | NPV-1 Physical Deployment | §6 |
+| **NIV** | NIV-1 Information Structure | §7 |
 
-    EM --> EM1[Install Extensions]
-    EM --> EM2[Manage Scope]
-    EM --> EM3[Track Dependencies]
+---
 
-    PM --> PM1[Create from Template]
-    PM --> PM2[Clone from Git]
-    PM --> PM3[Manage Lifecycle]
+## 2. Capability View (NCV)
 
-    PTM --> PTM1[Define Templates]
-    PTM --> PTM2[Configure Scaffolding]
-    PTM --> PTM3[Set Default Files]
+### C1 – Capability Taxonomy
 
-    SBM --> SBM1[Connect SAP BTP Services]
-    SBM --> SBM2[Connect External Systems]
-    SBM --> SBM3[Manage Credentials]
-
-    RCM --> RCM1[Configure Run Mode]
-    RCM --> RCM2[Configure Debug Mode]
-    RCM --> RCM3[Configure Test Mode]
-    RCM --> RCM4[Configure Preview]
-
-    BCM --> BCM1[Build MTA]
-    BCM --> BCM2[Deploy to Cloud Foundry]
-    BCM --> BCM3[Deploy to Kyma]
-    BCM --> BCM4[Deploy to ABAP]
+```
+Application Studio
+├── C1.1  Dev Space Management
+│   ├── C1.1.1  Create / stop / delete dev spaces
+│   └── C1.1.2  Extension installation
+│
+├── C1.2  Project Management
+│   ├── C1.2.1  Scaffold from templates
+│   └── C1.2.2  Project lifecycle
+│
+├── C1.3  Build and Run
+│   ├── C1.3.1  Build configuration management
+│   └── C1.3.2  Run configuration management
+│
+├── C1.4  Service Bindings
+│   └── C1.4.1  Bind BTP services to projects
+│
+└── C1.5  Cross-Cutting
+    ├── C1.5.1  Tenant isolation
+    └── C1.5.2  Health monitoring
 ```
 
-## C2 — Service Taxonomy
+### C2 – Enterprise Vision
 
-| Service | Description |
-|---------|-------------|
-| Dev Space Service | Manages cloud-based development environments with resource allocation and lifecycle control |
-| Dev Space Type Service | Defines available development environment templates with runtime configurations |
-| Extension Service | Manages IDE extensions, tools, and plugins with versioning and dependency resolution |
-| Project Service | Handles project creation, Git integration, and project lifecycle management |
-| Project Template Service | Provides scaffolding templates for SAP project types with configuration wizards |
-| Service Binding Service | Connects development environments to SAP BTP and external service endpoints |
-| Run Configuration Service | Manages application execution profiles for running, debugging, testing, and previewing |
-| Build Configuration Service | Orchestrates build and deployment pipelines for multiple target platforms |
+| Aspect | Description |
+|---|---|
+| **Mission** | Provide a cloud-based IDE modelled on SAP Business Application Studio. |
+| **Vision** | Give developers a full-featured browser-based development environment with SAP-specific tooling. |
+| **Scope** | Dev spaces, projects, extensions, run/build configurations, service bindings, and templates. |
+| **Stakeholders** | Application Developers, Full-Stack Developers, Platform Architects. |
 
-## L1 — Logical Data Model
+---
 
-```mermaid
-erDiagram
-    DevSpace ||--o{ Project : contains
-    DevSpace ||--o{ ServiceBinding : has
-    DevSpace }o--|| DevSpaceType : instanceOf
-    Project }o--o| ProjectTemplate : createdFrom
-    Project ||--o{ RunConfiguration : has
-    Project ||--o{ BuildConfiguration : has
-    DevSpaceType ||--o{ Extension : predefined
+## 3. Service View (NSV)
+
+| Service ID | Name | Path Prefix | Methods |
+|---|---|---|---|
+| SVC-DS-CRUD | Dev Space | `/api/v1/dev-spaces` | GET, POST, PUT, DELETE |
+| SVC-PRJ-CRUD | Project | `/api/v1/projects` | GET, POST, PUT, DELETE |
+| SVC-EXT-CRUD | Extension | `/api/v1/extensions` | GET, POST, DELETE |
+| SVC-DST-CRUD | Dev Space Type | `/api/v1/dev-space-types` | GET, POST, DELETE |
+| SVC-PT-CRUD | Project Template | `/api/v1/project-templates` | GET, POST |
+| SVC-SB-CRUD | Service Binding | `/api/v1/service-bindings` | GET, POST, DELETE |
+| SVC-RC-CRUD | Run Configuration | `/api/v1/run-configurations` | GET, POST, DELETE |
+| SVC-BC-CRUD | Build Configuration | `/api/v1/build-configurations` | GET, POST, DELETE |
+| SVC-HLTH | Health Check | `/api/v1/health` | GET |
+
+---
+
+## 4. Operational View (NOV)
+
+```
+┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
+│  Developer /        │ ─────────────────> │  Application Studio Service  │
+│  IDE Client         │                    │  port 8111                    │
+└────────────────────┘                    └──────────────────────────────┘
 ```
 
-## L2 — Logical Service Architecture
+---
 
-```mermaid
-graph TB
-    subgraph "API Gateway"
-        API[REST API /api/v1/application-studio]
-    end
+## 5. Logical View (NLV)
 
-    subgraph "Presentation Layer"
-        DSC[Dev Space Controller]
-        DSTC[Dev Space Type Controller]
-        EC[Extension Controller]
-        PC[Project Controller]
-        PTC[Project Template Controller]
-        SBC[Service Binding Controller]
-        RCC[Run Configuration Controller]
-        BCC[Build Configuration Controller]
-    end
+| Entity | Key Relationships |
+|---|---|
+| `DevSpace` | Root IDE environment; has Extensions and ServiceBindings |
+| `Project` | Code project within a DevSpace |
+| `Extension` | Plugin installed into a DevSpace |
+| `DevSpaceType` | DevSpace template type |
+| `ProjectTemplate` | Scaffold template for new projects |
+| `ServiceBinding` | BTP service bound to a Project |
+| `RunConfiguration` | Run target for a Project |
+| `BuildConfiguration` | Build pipeline for a Project |
 
-    subgraph "Application Layer"
-        DSUC[Dev Space Use Cases]
-        DSTUC[Dev Space Type Use Cases]
-        EUC[Extension Use Cases]
-        PUC[Project Use Cases]
-        PTUC[Project Template Use Cases]
-        SBUC[Service Binding Use Cases]
-        RCUC[Run Configuration Use Cases]
-        BCUC[Build Configuration Use Cases]
-    end
+---
 
-    subgraph "Domain Layer"
-        ENT[Domain Entities]
-        REPO[Repository Interfaces]
-        VAL[StudioValidator]
-    end
+## 6. Physical View (NPV)
 
-    subgraph "Infrastructure Layer"
-        MEM[In-Memory Repositories]
-        CFG[AppConfig]
-        CTR[Container / DI]
-    end
-
-    API --> DSC & DSTC & EC & PC & PTC & SBC & RCC & BCC
-    DSC --> DSUC
-    DSTC --> DSTUC
-    EC --> EUC
-    PC --> PUC
-    PTC --> PTUC
-    SBC --> SBUC
-    RCC --> RCUC
-    BCC --> BCUC
-    DSUC & DSTUC & EUC & PUC & PTUC & SBUC & RCUC & BCUC --> ENT & REPO & VAL
-    MEM -.-> REPO
-    CFG --> CTR
+```
+Kubernetes Cluster — Namespace: uim-platform
+├── ConfigMap: application-studio-config
+│   APPLICATION_STUDIO_HOST: "0.0.0.0"
+│   APPLICATION_STUDIO_PORT: "8111"
+├── Deployment: application-studio  port: 8111
+└── Service: application-studio (ClusterIP :8111)
 ```
 
-## L4 — Activity Flow: Create Dev Space
+---
 
-```mermaid
-graph TD
-    A[Developer submits dev space request] --> B[Controller parses JSON body]
-    B --> C[Use case builds DevSpace entity]
-    C --> D{StudioValidator.isValidDevSpace?}
-    D -->|Yes| E[Repository saves dev space]
-    E --> F[Return 201 Created with ID]
-    D -->|No| G[Return 400 Bad Request with error]
-```
+## 7. Architecture Decisions
 
-## P1 — Physical Deployment
-
-```mermaid
-graph TB
-    subgraph "Kubernetes Cluster"
-        subgraph "uim-platform namespace"
-            CM[ConfigMap: application-studio-config]
-            DEP[Deployment: application-studio]
-            SVC[Service: ClusterIP :8111]
-            POD[Pod: application-studio]
-        end
-    end
-
-    CM --> POD
-    DEP --> POD
-    SVC --> POD
-    POD -->|":8111"| APP[uim-application-studio-platform-service]
-```
-
-## S1 — Security Overview
-
-| Aspect | Implementation |
-|--------|---------------|
-| Transport | HTTPS via Kubernetes Ingress TLS termination |
-| Authentication | Tenant ID extraction from request headers |
-| Authorization | Tenant-scoped data isolation on all queries |
-| Credential Storage | Service binding credentials stored as opaque strings |
-| Input Validation | StudioValidator validates all entities before persistence |
-| Error Handling | Generic error messages returned to clients (no internal details leaked) |
-
-## Sv1 — Service Contract
-
-| Endpoint Group | Base Path | Operations | Content Type |
-|----------------|-----------|------------|--------------|
-| Dev Spaces | `/api/v1/application-studio/dev-spaces` | CRUD | application/json |
-| Dev Space Types | `/api/v1/application-studio/dev-space-types` | CRUD | application/json |
-| Extensions | `/api/v1/application-studio/extensions` | CRUD | application/json |
-| Projects | `/api/v1/application-studio/projects` | CRUD | application/json |
-| Project Templates | `/api/v1/application-studio/project-templates` | CRUD | application/json |
-| Service Bindings | `/api/v1/application-studio/service-bindings` | CRUD | application/json |
-| Run Configurations | `/api/v1/application-studio/run-configurations` | CRUD | application/json |
-| Build Configurations | `/api/v1/application-studio/build-configurations` | CRUD | application/json |
-| Health | `/health` | GET | application/json |
+| ID | Decision | Rationale |
+|---|---|---|
+| AD-1 | Dev-space-centric model | Mirrors SAP BAS dev space isolation |
+| AD-2 | Extension catalogue | Supports modular tooling installation |
+| AD-3 | Template-based scaffolding | Accelerates project creation |
+| AD-4 | In-memory repositories | Fast testing |
+| AD-5 | Port 8111 | Consistent UIM platform port allocation |

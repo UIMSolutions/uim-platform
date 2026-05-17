@@ -11,7 +11,6 @@ module uim.platform.portal.presentation.http.controllers.role;
 // import uim.platform.portal.domain.entities.role;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
-import uim.platform.portal.application.usecases.manage;
 
 mixin(ShowModule!());
 

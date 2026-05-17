@@ -4,8 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.write.security_event;
-// // import std.uuid;
-// // import std.datetime.systime : Clock;
+// 
+// 
 // 
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
