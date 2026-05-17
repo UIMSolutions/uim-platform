@@ -17,7 +17,7 @@ class MemoryWidgetRepository : TenantRepository!(Widget, EntityId), WidgetReposi
     return findByTenant(tenantId).filter!(w => w.datasetId == datasetId).array;
   }
   void removeByDataset(EntityId datasetId) {
-    findByDataset(datasetId)      .each!(w => store.remove(w.id.value))  ;
+    findByDataset(datasetId).each!(w => store.remove(w.id.value))  ;
   }
 
 }

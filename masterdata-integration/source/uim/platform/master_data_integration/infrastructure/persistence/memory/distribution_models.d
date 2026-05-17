@@ -24,7 +24,7 @@ class MemoryDistributionModelRepository : TenantRepository!(DistributionModel, D
     return models.filter!(e => e.status == status).array;
   }
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status) {
-    return filterByStatus(findByTenant(tenantId), tenantId, status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, DistributionModelStatus status) {
     findByStatus(tenantId, status).each!(entity => remove(entity));
