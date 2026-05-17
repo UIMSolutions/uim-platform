@@ -34,13 +34,13 @@ class TrustedCertificateController : PlatformController {
 
             CreateTrustedCertificateRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.customDomainId = j.getString("customDomainId");
+            r.trustedCertificateId = TrustedCertificateId(j.getString("id"));
+            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.certificatePem = j.getString("certificatePem");
             r.authMode = j.getString("authMode");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.createTrustedCertificate(r);
+            auto result = usecase.createCertificate(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -58,7 +58,7 @@ class TrustedCertificateController : PlatformController {
     protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto certs = usecase.listTrustedCertificates(tenantId);
+            auto certs = usecase.listCertificates(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
@@ -91,25 +91,25 @@ class TrustedCertificateController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = TrustedCertificateId(extractIdFromPath(req.requestURI.to!string));
 
-            auto c = usecase.getTrustedCertificate(tenantId, id);
+            auto c = usecase.getCertificate(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Trusted certificate not found");
                 return;
             }
 
             auto resp = Json.emptyObject
-                .set("id", Json(c.id))
-                .set("customDomainId", Json(c.customDomainId))
-                .set("subjectDn", Json(c.subjectDn))
-                .set("issuerDn", Json(c.issuerDn))
-                .set("serialNumber", Json(c.serialNumber))
-                .set("fingerprint", Json(c.fingerprint))
-                .set("status", Json(c.status.to!string))
-                .set("authMode", Json(c.authMode.to!string))
-                .set("validFrom", Json(c.validFrom))
-                .set("validTo", Json(c.validTo))
-                .set("createdBy", Json(c.createdBy))
-                .set("createdAt", Json(c.createdAt));
+                .set("id", c.id)
+                .set("customDomainId", c.customDomainId)
+                .set("subjectDn", c.subjectDn)
+                .set("issuerDn", c.issuerDn)
+                .set("serialNumber", c.serialNumber)
+                .set("fingerprint", c.fingerprint)
+                .set("status", c.status.to!string)
+                .set("authMode", c.authMode.to!string)
+                .set("validFrom", c.validFrom)
+                .set("validTo", c.validTo)
+                .set("createdBy", c.createdBy)
+                .set("createdAt", c.createdAt);
                 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -120,9 +120,9 @@ class TrustedCertificateController : PlatformController {
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = TrustedCertificateId(extractIdFromPath(req.requestURI.to!string));
 
-            auto result = usecase.deleteTrustedCertificate(id);
+            auto result = usecase.deleteCertificate(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)

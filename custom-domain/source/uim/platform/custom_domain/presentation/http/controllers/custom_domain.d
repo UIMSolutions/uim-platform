@@ -43,7 +43,7 @@ class CustomDomainController : PlatformController {
             r.environment = j.getString("environment");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.createCustomDomain(r);
+            auto result = usecase.createDomain(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                     .set("id", result.id)
@@ -61,7 +61,7 @@ class CustomDomainController : PlatformController {
     protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto domains = usecase.listCustomDomains(tenantId);
+            auto domains = usecase.listDomains(tenantId);
 
             auto jarr = Json.emptyArray;
             foreach (d; domains) {
@@ -99,7 +99,7 @@ class CustomDomainController : PlatformController {
                 return;
 
             auto id = CustomDomainId(extractIdFromPath(path));
-            auto d = usecase.getCustomDomain(tenantId, id);
+            auto d = usecase.getDomain(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Custom domain not found");
                 return;
@@ -208,9 +208,9 @@ class CustomDomainController : PlatformController {
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-
             auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
-            auto result = usecase.deleteCustomDomain(tenantId, id);
+
+            auto result = usecase.deleteDomain(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

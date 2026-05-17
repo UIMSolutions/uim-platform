@@ -18,7 +18,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createTrustedCertificate(CreateTrustedCertificateRequest r) {
+    CommandResult createCertificate(CreateTrustedCertificateRequest r) {
         if (r.trustedCertificateId.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.certificatePem.length == 0)
@@ -42,19 +42,19 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, c.id.value, "");
     }
 
-    TrustedCertificate getTrustedCertificateById(TenantId tenantId, TrustedCertificateId id) {
+    TrustedCertificate getCertificate(TenantId tenantId, TrustedCertificateId id) {
         return repo.findById(tenantId, id);
     }
 
-    TrustedCertificate[] listTrustedCertificates(TenantId tenantId) {
+    TrustedCertificate[] listCertificates(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    TrustedCertificate[] listTrustedCertificatesByDomain(TenantId tenantId, CustomDomainId domainId) {
+    TrustedCertificate[] listCertificates(TenantId tenantId, CustomDomainId domainId) {
         return repo.findByCustomDomain(tenantId, domainId);
     }
 
-    CommandResult deleteTrustedCertificate(TenantId tenantId, TrustedCertificateId id) {
+    CommandResult deleteCertificate(TenantId tenantId, TrustedCertificateId id) {
         auto certificate = repo.findById(tenantId, id);
         if (certificate.isNull)
             return CommandResult(false, "", "Trusted certificate not found");

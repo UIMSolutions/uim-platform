@@ -34,8 +34,8 @@ class DomainMappingController : PlatformController {
 
             CreateDomainMappingRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.customDomainId = j.getString("customDomainId");
+            r.domainMappingId = DomainMappingId(j.getString("id"));
+            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.standardRoute = j.getString("standardRoute");
             r.customRoute = j.getString("customRoute");
             r.mappingType = j.getString("mappingType");

@@ -31,15 +31,15 @@ class DomainDashboardController : PlatformController {
             auto d = usecase.getDashboard(tenantId);
 
             auto resp = Json.emptyObject
-                .set("id", Json(d.id))
-                .set("totalDomains", Json(d.totalDomains))
-                .set("activeDomains", Json(d.activeDomains))
-                .set("totalCertificates", Json(d.totalCertificates))
-                .set("activeCertificates", Json(d.activeCertificates))
-                .set("totalMappings", Json(d.totalMappings))
-                .set("activeMappings", Json(d.activeMappings))
-                .set("overallHealth", Json(d.overallHealth.to!string))
-                .set("lastUpdatedAt", Json(d.lastUpdatedAt))
+                .set("id", d.id)
+                .set("totalDomains", d.totalDomains)
+                .set("activeDomains", d.activeDomains)
+                .set("totalCertificates", d.totalCertificates)
+                .set("activeCertificates", d.activeCertificates)
+                .set("totalMappings", d.totalMappings)
+                .set("activeMappings", d.activeMappings)
+                .set("overallHealth", d.overallHealth.to!string)
+                .set("lastUpdatedAt", d.lastUpdatedAt)
                 .set("message", "Dashboard data retrieved successfully");
 
             res.writeJsonBody(resp, 200);

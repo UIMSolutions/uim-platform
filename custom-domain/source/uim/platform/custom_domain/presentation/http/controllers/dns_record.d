@@ -35,7 +35,7 @@ class DnsRecordController : PlatformController {
 
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.id = DnsRecordId(j.getString("id"));
+            r.dnsRecordId = DnsRecordId(j.getString("id"));
             r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.recordType = j.getString("recordType");
             r.hostname = j.getString("hostname");
@@ -64,17 +64,17 @@ class DnsRecordController : PlatformController {
 
             auto records = usecase.listDnsRecords(tenantId);
             auto jarr = Json.emptyArray;
-            foreach (r; records) {
+            foreach (record; records) {
                 jarr ~= Json.emptyObject
-                .set("id", r.id)
-                .set("customDomainId", r.customDomainId)
-                .set("recordType", r.recordType.to!string)
-                .set("hostname", r.hostname)
-                .set("value", r.value)
-                .set("ttl", r.ttl)
-                .set("validationStatus", r.validationStatus.to!string)
-                .set("createdBy", r.createdBy)
-                .set("createdAt", r.createdAt);
+                .set("id", record.id)
+                .set("customDomainId", record.customDomainId)
+                .set("recordType", record.recordType.to!string)
+                .set("hostname", record.hostname)
+                .set("value", record.value)
+                .set("ttl", record.ttl)
+                .set("validationStatus", record.validationStatus.to!string)
+                .set("createdBy", record.createdBy)
+                .set("createdAt", record.createdAt);
             }
 
             auto resp = Json.emptyObject
@@ -93,24 +93,24 @@ class DnsRecordController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
             
-            auto r = usecase.getDnsRecord(tenantId, id);
-            if (r.isNull) {
+            auto record = usecase.getDnsRecord(tenantId, id);
+            if (record.isNull) {
                 writeError(res, 404, "DNS record not found");
                 return;
             }
 
             auto resp = Json.emptyObject
-                .set("id", Json(r.id))
-                .set("customDomainId", r.customDomainId)
-                .set("recordType", r.recordType.to!string)
-                .set("hostname", r.hostname)
-                .set("value", r.value)
-                .set("ttl", r.ttl)
-                .set("validationStatus", r.validationStatus.to!string)
-                .set("lastValidatedAt", r.lastValidatedAt)
-                .set("createdBy", r.createdBy)
-                .set("createdAt", r.createdAt)
-                .set("updatedAt", r.updatedAt);
+                .set("id", record.id)
+                .set("customDomainId", record.customDomainId)
+                .set("recordType", record.recordType.to!string)
+                .set("hostname", record.hostname)
+                .set("value", record.value)
+                .set("ttl", record.ttl)
+                .set("validationStatus", record.validationStatus.to!string)
+                .set("lastValidatedAt", record.lastValidatedAt)
+                .set("createdBy", record.createdBy)
+                .set("createdAt", record.createdAt)
+                .set("updatedAt", record.updatedAt);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -125,7 +125,7 @@ class DnsRecordController : PlatformController {
 
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.id = DnsRecordId(extractIdFromPath(req.requestURI.to!string)) ;
+            r.dnsRecordId = DnsRecordId(extractIdFromPath(req.requestURI.to!string)) ;
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
 

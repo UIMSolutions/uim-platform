@@ -34,7 +34,7 @@ class PrivateKeyController : PlatformController {
 
             CreatePrivateKeyRequest r;
             r.tenantId = tenantId;
-            r.id = PrivateKeyId(j.getString("id"));
+            r.privateKeyId = PrivateKeyId(j.getString("id"));
             r.subject = j.getString("subject");
             r.domains = getStrings(j, "domains");
             r.algorithm = j.getString("algorithm");
@@ -97,14 +97,15 @@ class PrivateKeyController : PlatformController {
             auto domainsArr = k.domains.map!(d => Json(d)).array.toJson;
             
             auto resp = Json.emptyObject
-                .set("id", Json(k.id))
-                .set("subject", Json(k.subject))
-                .set("algorithm", Json(k.algorithm.to!string))
-                .set("status", Json(k.status.to!string))
-                .set("keySize", Json(k.keySize))
-                .set("publicKeyFingerprint", Json(k.publicKeyFingerprint))
-                .set("createdBy", Json(k.createdBy))
-                .set("createdAt", Json(k.createdAt))
+                .set("id", k.id)
+                .set("tenantId", k.tenantId)
+                .set("subject", k.subject)
+                .set("algorithm", k.algorithm.to!string)
+                .set("status", k.status.to!string)
+                .set("keySize", k.keySize)
+                .set("publicKeyFingerprint", k.publicKeyFingerprint)
+                .set("createdBy", k.createdBy)
+                .set("createdAt", k.createdAt)
                 .set("domains", domainsArr);
 
             res.writeJsonBody(resp, 200);

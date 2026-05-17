@@ -26,7 +26,7 @@ class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, Domai
     }
 
     DomainDashboard[] filterByMetricType(DomainDashboard[] dashboards, DashboardMetricType metricType) {
-        return dashboards.filter!(d => d.metrics.canFind!metricType).array;
+        return dashboards.filter!(d => d.metrics.any!(m => m.metricType == metricType)).array;
     }
 
     DomainDashboard[] findByMetricType(TenantId tenantId, DashboardMetricType metricType) {

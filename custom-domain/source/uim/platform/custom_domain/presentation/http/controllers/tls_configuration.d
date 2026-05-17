@@ -35,7 +35,7 @@ class TlsConfigurationController : PlatformController {
 
             CreateTlsConfigurationRequest r;
             r.tenantId = tenantId;
-            r.id = TlsConfigurationId(j.getString("id"));
+            r.tlsConfigurationId = TlsConfigurationId(j.getString("id"));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
@@ -128,7 +128,7 @@ class TlsConfigurationController : PlatformController {
 
             UpdateTlsConfigurationRequest r;
             r.tenantId = tenantId;
-            r.id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
+            r.tlsConfigurationId = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
