@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A PlanningModel supports budget planning, forecasting, and what-if scenarios (SAC Planning).
 struct PlanningModel {
-  mixin(TenantEntity!PlanningModelId);
+  mixin TenantEntity!PlanningModelId;
 
   string name;
   string description;

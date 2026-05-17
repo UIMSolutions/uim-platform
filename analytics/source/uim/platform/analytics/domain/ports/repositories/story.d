@@ -11,10 +11,10 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface StoryRepository : ITenantRepository!(Story, EntityId) {
+interface StoryRepository : ITenantRepository!(Story, StoryId) {
 
-  size_t countByOwner(EntityId ownerId);
-  Story[] findByOwner(EntityId ownerId);
-  void removeByOwner(EntityId ownerId);
+  size_t countByOwner(TenantId tenantId, EntityId ownerId);
+  Story[] findByOwner(TenantId tenantId, EntityId ownerId);
+  void removeByOwner(TenantId tenantId, EntityId ownerId);
 
 }

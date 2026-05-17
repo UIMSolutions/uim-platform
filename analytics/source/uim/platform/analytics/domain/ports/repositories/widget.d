@@ -11,10 +11,8 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface WidgetRepository {
-  Widget findById(EntityId id);
-  Widget[] findByDataset(EntityId datasetId);
-  Widget[] findByTenant(tenantId);
-  void save(Widget widget);
-  void remove(EntityId id);
+interface WidgetRepository : ITenantRepository!(Widget, WidgetId) {
+  size_t countByDataset(TenantId tenantId, EntityId datasetId);
+  Widget[] findByDataset(TenantId tenantId, EntityId datasetId);
+  void removeByDataset(TenantId tenantId, EntityId datasetId);
 }

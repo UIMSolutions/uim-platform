@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.analytics.app.ports.notification_port;
+import uim.platform.analytics;
 @safe:
 /// Outgoing port: send notifications (email, in-app, webhook).
 interface NotificationPort {

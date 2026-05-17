@@ -13,7 +13,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 struct CreatePlanningModelRequest {
-  TeanantId tenantId;
+  TenantId tenantId;
 
   string name;
   string description;

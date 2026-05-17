@@ -6,7 +6,22 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.datasource;
 // import uim.platform.analytics.domain.entities.datasource;
 // import uim.platform.analytics.domain.repositories.datasource;
-import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics;
 
-class MemoryDataSourceRepository : TenantRepository!(DataSource, EntityId), DataSourceRepository {
+mixin(ShowModule!());
+@safe:
+class MemoryDataSourceRepository : TenantRepository!(DataSource, DataSourceId), DataSourceRepository {
+
+  size_t countBySourceType(TenantId tenantId, DataSourceType sourceType) {
+    return findBySourceType(tenantId, sourceType).length;
+  }
+
+  DataSource[] findBySourceType(TenantId tenantId, DataSourceType sourceType) {
+    return findByTenant(tenantId).filter!(ds => ds.sourceType == sourceType).array;
+  }
+
+  void removeBySourceType(TenantId tenantId, DataSourceType sourceType) {
+    foreach (ds; findBySourceType(tenantId, sourceType))
+      remove(ds);
+  }
 }

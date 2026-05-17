@@ -28,7 +28,7 @@ Json toJson(CreatePredictionRequest request) {
 }
 
 struct PredictionResponse {
-  mixin TenanatEntity!PredictionId;
+  mixin TenantEntity!PredictionId;
   ResourceGroupId resourceGroupId;
 
   string name;

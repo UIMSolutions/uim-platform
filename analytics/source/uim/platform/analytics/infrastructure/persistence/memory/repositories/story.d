@@ -6,34 +6,22 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.story;
 // import uim.platform.analytics.domain.entities.story;
 // import uim.platform.analytics.domain.repositories.story;
-import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics;
 
-class MemoryStoryRepository : StoryRepository {
-  private Story[string] store;
+mixin(ShowModule!());
+@safe:
+class MemoryStoryRepository : TenantRepository!(Story, StoryId), StoryRepository {
 
-  Story findById(EntityId id) {
-    if (id.value in store)
-      return store[id.value];
-    return null;
+  size_t countByOwner(TenantId tenantId, EntityId ownerId) {
+    return findByOwner(tenantId, ownerId).length;
   }
 
-  Story[] findByOwner(EntityId ownerId) {
-    Story[] result;
-    foreach (s; findByTenant(tenantId))
-      if (s.ownerId == ownerId)
-        result ~= s;
-    return result;
+  Story[] findByOwner(TenantId tenantId, EntityId ownerId) {
+    return findByTenant(tenantId).filter!(s => s.ownerId == ownerId).array;
   }
 
-  Story[] findByTenant(tenantId) {
-    return store.values;
-  }
-
-  void save(Story story) {
-    store[story.id.value] = story;
-  }
-
-  void remove(EntityId id) {
-    store.remove(id);
+  void removeByOwner(TenantId tenantId, EntityId ownerId) {
+    foreach (s; findByOwner(tenantId, ownerId))
+      remove(s);
   }
 }

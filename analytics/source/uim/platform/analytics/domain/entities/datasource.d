@@ -76,7 +76,7 @@ struct ImportSchedule {
   string cronExpression = "";
   string timezone = "UTC";
 
-  Jaon toJson() const {
+  Json toJson() const {
     return Json.emptyObject
       .set("enabled", enabled)
       .set("cronExpression", cronExpression)

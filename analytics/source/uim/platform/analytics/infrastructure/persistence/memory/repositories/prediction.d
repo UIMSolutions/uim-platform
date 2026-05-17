@@ -6,29 +6,22 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.prediction;
 // import uim.platform.analytics.domain.entities.prediction;
 // import uim.platform.analytics.domain.repositories.prediction;
-import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics;
 
-class MemoryPredictionRepository : TenantRepository!(Prediction, EntityId), PredictionRepository {
- 
- 
+mixin(ShowModule!());
+@safe:
+class MemoryPredictionRepository : TenantRepository!(Prediction, PredictionId), PredictionRepository {
 
-  Prediction[] findByDataset(EntityId datasetId) {
-    Prediction[] result;
-    foreach (p; findByTenant(tenantId))
-      if (p.datasetId == datasetId)
-        result ~= p;
-    return result;
+  size_t countByDataset(TenantId tenantId, EntityId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
   }
 
-  Prediction[] findByTenant(tenantId) {
-    return store.values;
+  Prediction[] findByDataset(TenantId tenantId, EntityId datasetId) {
+    return findByTenant(tenantId).filter!(p => p.datasetId.value == datasetId.value).array;
   }
 
-  void save(Prediction prediction) {
-    store[prediction.id.value] = prediction;
-  }
-
-  void remove(EntityId id) {
-    store.remove(id.value);
+  void removeByDataset(TenantId tenantId, EntityId datasetId) {
+    foreach (p; findByDataset(tenantId, datasetId))
+      remove(p);
   }
 }
