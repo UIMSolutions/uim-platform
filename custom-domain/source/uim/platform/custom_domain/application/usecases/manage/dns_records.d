@@ -19,8 +19,8 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDnsRecord(CreateDnsRecordRequest r) {
-        if (r.id.isEmpty)
-            return CommandResult(false, "", "ID is required");
+        if (r.dnsRecordId.isEmpty)
+            return CommandResult(false, "", "DNS record ID is required");
         if (r.hostname.length == 0)
             return CommandResult(false, "", "Hostname is required");
         if (r.value.length == 0)
@@ -45,7 +45,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rec.id.value, "");
     }
 
-    DnsRecord getDnsRecordById(TenantId tenantId, DnsRecordId id) {
+    DnsRecord getDnsRecord(TenantId tenantId, DnsRecordId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -58,7 +58,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDnsRecord(UpdateDnsRecordRequest r) {
-        auto record = repo.findById(r.tenantId, r.id);
+        auto record = repo.findById(r.tenantId, r.dnsRecordId);
         if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 

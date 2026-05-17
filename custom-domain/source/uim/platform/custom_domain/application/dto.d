@@ -28,6 +28,7 @@ struct CreateCustomDomainRequest {
 
 struct UpdateCustomDomainRequest {
     TenantId tenantId;
+    CustomDomainId customDomainId;
     CertificateId certificateId;
     UserId updatedBy;
 

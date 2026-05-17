@@ -18,20 +18,20 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createCustomDomain(CreateCustomDomainRequest r) {
+    CommandResult createDomain(CreateCustomDomainRequest r) {
         auto err = DomainValidator.validateDomainName(r.domainName);
         if (err.length > 0)
             return CommandResult(false, "", err);
 
         if (r.customDomainId.isEmpty)
-            return CommandResult(false, "", "Certificate ID is required");
+            return CommandResult(false, "", "Domain ID is required");
 
         auto existing = repo.findById(r.tenantId, r.customDomainId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Custom domain already exists");
+            return CommandResult(false, "", "Domain already exists");
 
-        auto byName = repo.findByDomainName(r.tenantId, r.domainName);
-        if (byName.id.length > 0)
+        auto finding = repo.findByDomainName(r.tenantId, r.domainName);
+        if (!finding.isNull)
             return CommandResult(false, "", "Domain name already registered");
 
         CustomDomain d;
@@ -47,15 +47,15 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, d.id.value, "");
     }
 
-    CustomDomain getCustomDomain(TenantId tenantId, CustomDomainId id) {
+    CustomDomain getDomain(TenantId tenantId, CustomDomainId id) {
         return repo.findById(tenantId, id);
     }
 
-    CustomDomain[] listCustomDomains(TenantId tenantId) {
+    CustomDomain[] listDomains(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateCustomDomain(UpdateCustomDomainRequest r) {
+    CommandResult updateDomain(UpdateCustomDomainRequest r) {
         auto domain = repo.findById(r.tenantId, r.customDomainId);
         if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
@@ -74,7 +74,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, domain.id.value, "");
     }
 
-    CommandResult activateCustomDomain(TenantId tenantId, CustomDomainId id) {
+    CommandResult activateDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
@@ -87,7 +87,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deactivateCustomDomain(TenantId tenantId, CustomDomainId id) {
+    CommandResult deactivateDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
@@ -100,7 +100,7 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deleteCustomDomain(TenantId tenantId, CustomDomainId id) {
+    CommandResult deleteDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");

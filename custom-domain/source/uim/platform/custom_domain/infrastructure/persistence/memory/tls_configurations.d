@@ -18,11 +18,11 @@ class MemoryTlsConfigurationRepository : TenantRepository!(TlsConfiguration, Tls
     }
 
     TlsConfiguration[] filterByCustomDomain(TlsConfiguration[] configs, CustomDomainId domainId) {
-        return configs.filter!(c => c.customDomainId == domainId).array;
+        return configs.filter!(c => c.domainId == domainId).array;
     }
 
     TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
-        return filterByCustomDomain(findAll(tenantId), customDomainId);
+        return filterByCustomDomain(findByTenant(tenantId), customDomainId);
     }
 
     void removeByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {

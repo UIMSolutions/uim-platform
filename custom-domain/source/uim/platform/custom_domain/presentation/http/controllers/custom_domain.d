@@ -91,6 +91,7 @@ class CustomDomainController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
+            
             // Check for /activate or /deactivate suffix — skip
             if (path.length > 9 && path[$ - 9 .. $] == "/activate")
                 return;
@@ -129,12 +130,13 @@ class CustomDomainController : PlatformController {
 
     protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
+            auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
             auto j = req.json;
+
             UpdateCustomDomainRequest r;
+            r.customDomainId = id;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
             r.activeCertificateId = j.getString("activeCertificateId");
             r.tlsConfigurationId = j.getString("tlsConfigurationId");
             r.isShared = j.getBoolean("isShared");
@@ -142,7 +144,7 @@ class CustomDomainController : PlatformController {
             r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
             r.updatedBy = UserId(j.getString("updatedBy"));
 
-            auto result = usecase.update(r);
+            auto result = usecase.updateDomain(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -159,15 +161,15 @@ class CustomDomainController : PlatformController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             // path: /api/v1/custom-domain/domains/{id}/activate
             // Extract ID: strip /activate suffix, then extract last segment
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = extractIdFromPath(stripped);
+            auto id = CustomDomainId(extractIdFromPath(stripped));
 
-            auto result = usecase.activate(id);
+            auto result = usecase.activateDomain(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -183,13 +185,13 @@ class CustomDomainController : PlatformController {
 
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = extractIdFromPath(stripped);
+            auto id = CustomDomainId(extractIdFromPath(stripped));
 
-            auto result = usecase.deactivate(id);
+            auto result = usecase.deactivateDomain(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
@@ -205,10 +207,10 @@ class CustomDomainController : PlatformController {
 
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+            auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteCustomDomain(id);
+            auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
+            auto result = usecase.deleteCustomDomain(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)

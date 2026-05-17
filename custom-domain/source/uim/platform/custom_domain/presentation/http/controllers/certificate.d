@@ -37,7 +37,7 @@ class CertificateController : PlatformController {
 
             CreateCertificateRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.certificateId = CertificateId(j.getString("id"));
             r.keyId = j.getString("keyId");
             r.certificateType = j.getString("certificateType");
             r.createdBy = UserId(j.getString("createdBy"));
@@ -100,7 +100,7 @@ class CertificateController : PlatformController {
             if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
                 return;
 
-            auto id = extractIdFromPath(path);
+            auto id = CertificateId(extractIdFromPath(path));
             auto c = certificates.getCertificate(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Certificate not found");
@@ -138,12 +138,12 @@ class CertificateController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
-            auto id = extractIdFromPath(stripped);
+            auto id = CertificateId(extractIdFromPath(stripped));
 
             auto j = req.json;
             UploadCertificateChainRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.certificateId = id;
             r.certificatePem = j.getString("certificatePem");
 
             auto result = certificates.uploadCertificateChain(r);
@@ -163,19 +163,18 @@ class CertificateController : PlatformController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
+            auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = extractIdFromPath(stripped);
+            auto id = CertificateId(extractIdFromPath(stripped));
 
             auto j = req.json;
             ActivateCertificateRequest r;
             r.tenantId = tenantId;
-            r.id = id;
+            r.certificateId = id;
             r.domains = getStrings(j, "domains");
 
-            auto result = certificates.activate(r);
+            auto result = certificates.activateCertificate(r);
             if (result.success) {
                 auto response = Json.emptyObject
                     .set("id", result.id)
@@ -196,7 +195,7 @@ class CertificateController : PlatformController {
 
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = extractIdFromPath(stripped);
+            auto id = CertificateId(extractIdFromPath(stripped));
 
             auto result = certificates.deactivateCertificate(tenantId, id);
             if (result.success) {
@@ -217,7 +216,7 @@ class CertificateController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = CertificateId(extractIdFromPath(req.requestURI.to!string));
             auto result = certificates.deleteCertificate(tenantId, id);
             if (result.success) {
                 auto response = Json.emptyObject

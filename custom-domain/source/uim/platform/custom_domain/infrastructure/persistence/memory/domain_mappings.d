@@ -40,7 +40,7 @@ class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMap
 
     // #region ByDomain
     size_t countByDomain(TenantId tenantId, CustomDomainId domainId) {
-        return findByDomain(domainId).length;
+        return findByDomain(tenantId, domainId).length;
     }
 
     DomainMapping[] filterByDomain(DomainMapping[] mappings, CustomDomainId domainId) {

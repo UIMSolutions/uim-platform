@@ -36,6 +36,8 @@ struct TlsConfiguration {
     long hstsMaxAge;
     bool hstsIncludeSubDomains;
 
+    CustomDomainId domainId; // TODO: This should be a reference to the CustomDomain entity, but for simplicity we just store the ID here.  
+
     Json toJson() const {
         return entityToJson
             .set("name", name)

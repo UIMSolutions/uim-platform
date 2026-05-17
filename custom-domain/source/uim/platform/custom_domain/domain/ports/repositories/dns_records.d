@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface DnsRecordRepository : ITenantRepository!(DnsRecord, DnsRecordId) {
 
-    size_t countByDomain(CustomDomainId domainId);
-    DnsRecord[] findByDomain(CustomDomainId domainId);
-    void removeByDomain(CustomDomainId domainId);
+    size_t countByDomain(TenantId tenantId, CustomDomainId domainId);
+    DnsRecord[] findByDomain(TenantId tenantId, CustomDomainId domainId);
+    void removeByDomain(TenantId tenantId, CustomDomainId domainId);
     
 }

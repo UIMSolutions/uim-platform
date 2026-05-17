@@ -13,16 +13,20 @@ mixin(ShowModule!());
 
 class MemoryDnsRecordRepository : TenantRepository!(DnsRecord, DnsRecordId), DnsRecordRepository {
 
-    size_t countByDomain(CustomDomainId domainId) {
-        return findByDomain(domainId).length;
+    size_t countByDomain(TenantId tenantId, CustomDomainId domainId) {
+        return findByDomain(tenantId, domainId).length;
     }
 
-    DnsRecord[] findByDomain(CustomDomainId domainId) {
-        return findAll().filter!(r => r.customDomainId == domainId).array;
+    DnsRecord[] filterByDomain(DnsRecord[] records, CustomDomainId domainId) {
+        return records.filter!(r => r.customDomainId == domainId).array;
     }
 
-    void removeByDomain(CustomDomainId domainId) {
-        findByDomain(domainId).each!(r => remove(r));
+    DnsRecord[] findByDomain(TenantId tenantId, CustomDomainId domainId) {
+        return filterByDomain(findByTenant(tenantId), domainId);
+    }
+
+    void removeByDomain(TenantId tenantId, CustomDomainId domainId) {
+        findByDomain(tenantId, domainId).each!(r => remove(r));
     }
 
 }

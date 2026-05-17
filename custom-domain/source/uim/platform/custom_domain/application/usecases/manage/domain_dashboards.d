@@ -25,11 +25,11 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
         this.mappingRepo = mappingRepo;
     }
 
-    DomainDashboard getById(TenantId tenantId) {
-        return dashboardRepo.findByTenant(tenantId);
+    DomainDashboard getDashboard(TenantId tenantId) {
+        return dashboardRepo.get(tenantId);
     }
 
-    CommandResult refresh(RefreshDashboardRequest r) {
+    CommandResult refreshDashboard(RefreshDashboardRequest r) {
         if (r.tenantId.isEmpty)
             return CommandResult(false, "", "Tenant ID is required");
 

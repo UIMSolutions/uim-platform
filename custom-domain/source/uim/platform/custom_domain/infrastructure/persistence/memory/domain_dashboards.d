@@ -18,7 +18,7 @@ class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, Domai
         if (dashboards.length > 0)
             return dashboards[0];
             
-        return Domaindashboard.init;
+        return DomainDashboard.init;
     }
 
     size_t countByMetricType(TenantId tenantId, DashboardMetricType metricType) {
@@ -26,7 +26,7 @@ class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, Domai
     }
 
     DomainDashboard[] filterByMetricType(DomainDashboard[] dashboards, DashboardMetricType metricType) {
-        return dashboards.filter!(d => d.metricType == metricType).array;
+        return dashboards.filter!(d => d.metrics.canFind!metricType).array;
     }
 
     DomainDashboard[] findByMetricType(TenantId tenantId, DashboardMetricType metricType) {
