@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: saas-provisioning
+  labels:
+    app: saas-provisioning
+    tier: platform-service
+spec:
+  selector:
+    app: saas-provisioning
+  ports:
+  - name: http
+    port: 8096
+    targetPort: 8096
+    protocol: TCP
+  type: ClusterIP

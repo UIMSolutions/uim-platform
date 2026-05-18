@@ -1,0 +1,12 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.saas_provisioning.application.usecases.manage;
+
+public {
+    import uim.platform.saas_provisioning.application.usecases.manage.saas_applications;
+    import uim.platform.saas_provisioning.application.usecases.manage.app_subscriptions;
+    import uim.platform.saas_provisioning.application.usecases.manage.subscription_jobs;
+}

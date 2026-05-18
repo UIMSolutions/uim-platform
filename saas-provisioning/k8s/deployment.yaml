@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-provisioning
+  labels:
+    app: saas-provisioning
+    tier: platform-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saas-provisioning
+  template:
+    metadata:
+      labels:
+        app: saas-provisioning
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsNonRoot: true
+      containers:
+      - name: saas-provisioning
+        image: uim-saas-provisioning-platform-service:latest
+        ports:
+        - containerPort: 8096
+        envFrom:
+        - configMapRef:
+            name: saas-provisioning-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

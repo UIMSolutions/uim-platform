@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: saas-provisioning-config
+  labels:
+    app: saas-provisioning
+    tier: platform-service
+data:
+  SAAS_PROVISIONING_HOST: "0.0.0.0"
+  SAAS_PROVISIONING_PORT: "8096"
