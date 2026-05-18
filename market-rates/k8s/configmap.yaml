@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: market-rates-config
+  labels:
+    app: market-rates
+    tier: platform-service
+data:
+  MARKET_RATES_HOST: "0.0.0.0"
+  MARKET_RATES_PORT: "8097"

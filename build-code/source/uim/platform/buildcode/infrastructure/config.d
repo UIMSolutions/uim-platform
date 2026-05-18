@@ -1,0 +1,32 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.buildcode.infrastructure.config;
+
+import std.process : environment;
+import uim.platform.buildcode;
+import std.conv : to;
+
+mixin(ShowModule!());
+
+@safe:
+
+struct AppConfig {
+  string host        = "0.0.0.0";
+  ushort port        = 8098;
+  string serviceName = "SAP Build Code Platform Service";
+}
+
+AppConfig loadConfig() {
+  AppConfig config;
+  auto hostEnv = environment.get("BUILD_CODE_HOST", "");
+  if (hostEnv.length > 0) config.host = hostEnv;
+  auto portEnv = environment.get("BUILD_CODE_PORT", "");
+  if (portEnv.length > 0) {
+    try config.port = portEnv.to!ushort;
+    catch (Exception) { }
+  }
+  return config;
+}

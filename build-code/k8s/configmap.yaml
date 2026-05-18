@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-code-config
+  namespace: uim-platform
+  labels:
+    app: uim-build-code
+    component: config
+data:
+  BUILD_CODE_HOST: "0.0.0.0"
+  BUILD_CODE_PORT: "8098"

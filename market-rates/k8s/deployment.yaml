@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: market-rates
+  labels:
+    app: market-rates
+    tier: platform-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: market-rates
+  template:
+    metadata:
+      labels:
+        app: market-rates
+        tier: platform-service
+    spec:
+      containers:
+      - name: market-rates
+        image: uim-market-rates-platform-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8097
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: market-rates-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 1000

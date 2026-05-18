@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uim-build-code
+  namespace: uim-platform
+  labels:
+    app: uim-build-code
+spec:
+  selector:
+    app: uim-build-code
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8098
+    targetPort: 8098
+  type: ClusterIP
