@@ -34,7 +34,7 @@ class DataSourceHandler {
       return;
     }
     auto item = useCases.getSource(TenantId.init, DataSourceId(id));
-    if (item.id.isEmpty) {
+    if (item.id.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }
@@ -64,7 +64,7 @@ class DataSourceHandler {
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI);
     auto result = useCases.testConnection(TenantId.init, DataSourceId(id));
-    if (result.id.isEmpty) {
+    if (result.id.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
       return;
     }

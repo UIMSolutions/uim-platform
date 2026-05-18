@@ -1,0 +1,106 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.solution_lifecycle.presentation.http.controllers.mta_subscription;
+
+import uim.platform.solution_lifecycle;
+
+mixin(ShowModule!());
+
+@safe:
+
+/// REST /api/v1/slm/subscriptions — subscribe/unsubscribe/list MTA subscriptions.
+class MtaSubscriptionController : PlatformController {
+    private ManageMtaSubscriptionsUseCase usecase;
+
+    this(ManageMtaSubscriptionsUseCase usecase) {
+        this.usecase = usecase;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        router.get("/api/v1/slm/subscriptions",       &handleList);
+        router.get("/api/v1/slm/subscriptions/*",      &handleGet);
+        router.post("/api/v1/slm/subscriptions",      &handleSubscribe);
+        router.delete_("/api/v1/slm/subscriptions/*", &handleUnsubscribe);
+    }
+
+    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto subs = usecase.listSubscriptions(tenantId);
+            auto arr = Json.emptyArray;
+            foreach (s; subs) arr ~= s.toJson;
+            res.writeJsonBody(
+                Json.emptyObject.set("count", subs.length).set("subscriptions", arr),
+                200
+            );
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto id = MtaSubscriptionId(extractIdFromPath(req.requestURI.to!string));
+            auto s = usecase.getSubscription(tenantId, id);
+            if (s.isNull) { writeError(res, 404, "Subscription not found"); return; }
+            res.writeJsonBody(s.toJson, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto j = req.json;
+            SubscribeMtaRequest r;
+            r.tenantId            = req.getTenantId;
+            r.providerMtaId       = j.getString("providerMtaId");
+            r.providerTenantId    = j.getString("providerTenantId");
+            r.providerSpaceId     = j.getString("providerSpaceId");
+            r.subscribedBy        = j.getString("subscribedBy");
+            r.extensionDescriptor = j.getString("extensionDescriptor");
+
+            auto result = usecase.subscribe(r);
+            if (result.success) {
+                res.writeJsonBody(
+                    Json.emptyObject
+                        .set("operationId", result.id)
+                        .set("message", "Subscribe operation started"),
+                    202
+                );
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            UnsubscribeMtaRequest r;
+            r.tenantId        = req.getTenantId;
+            r.subscriptionId  = extractIdFromPath(req.requestURI.to!string);
+            r.unsubscribedBy  = req.json.getString("unsubscribedBy");
+
+            auto result = usecase.unsubscribe(r);
+            if (result.success) {
+                res.writeJsonBody(
+                    Json.emptyObject
+                        .set("operationId", result.id)
+                        .set("message", "Unsubscribe operation started"),
+                    202
+                );
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}

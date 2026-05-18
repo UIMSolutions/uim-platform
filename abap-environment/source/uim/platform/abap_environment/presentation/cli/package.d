@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.cli;
+
+public {
+    import uim.platform.abap_environment.presentation.cli.commands;
+}

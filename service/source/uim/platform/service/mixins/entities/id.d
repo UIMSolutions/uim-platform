@@ -15,7 +15,7 @@ mixin template IdEntity(TId) {
 
     // Helper method to check if the entity is new (i.e. has no ID assigned yet)
     bool isNull() const {
-        return id.isEmpty;
+        return id.isNull;
     }
 
     // Call this method when creating a new entity to initialize ID, tenantId, and timestamps

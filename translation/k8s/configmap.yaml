@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-translation-config
+  labels:
+    app: cloud-translation
+    part-of: uim-platform
+data:
+  TRANSLATION_HOST: "0.0.0.0"
+  TRANSLATION_PORT: "8096"

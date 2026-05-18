@@ -87,7 +87,7 @@ class DeploymentController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Deployment not found");
         return;
       }

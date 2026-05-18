@@ -33,7 +33,7 @@ class ServiceBindingController : ManageController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
@@ -47,7 +47,7 @@ class ServiceBindingController : ManageController {
       .set("message", "Service bindings retrieved successfully");
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto j = req.json;
 
@@ -72,7 +72,7 @@ class ServiceBindingController : ManageController {
       .set("message", "Service binding created");
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
 
@@ -89,7 +89,7 @@ class ServiceBindingController : ManageController {
       .set("message", "Service binding retrieved successfully");
   }
 
-  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
     auto j = req.json;
@@ -112,7 +112,7 @@ class ServiceBindingController : ManageController {
       .set("message", "Service binding updated");
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
 

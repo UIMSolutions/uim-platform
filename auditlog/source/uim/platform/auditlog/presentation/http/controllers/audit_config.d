@@ -32,7 +32,7 @@ class AuditConfigController : ManageController {
     router.delete_("/api/v1/configs/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     
     auto configs = useCase.listAuditConfigs(tenantId);
@@ -44,7 +44,7 @@ class AuditConfigController : ManageController {
       .set("message", "Audit configs retrieved successfully");
   }
 
-  override Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override Json createHandler(HTTPServerRequest req) {
     auto request = CreateAuditConfigRequest();
     request.tenantId = TenantId(req.json.getString("tenantId"));
     request.name = req.json.getString("name");
@@ -83,7 +83,7 @@ class AuditConfigController : ManageController {
     }
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
 
     auto cfg = useCase.getAuditConfig(tenantId);
@@ -97,7 +97,7 @@ class AuditConfigController : ManageController {
       .set("message", "Audit config retrieved successfully");
   }
 
-  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
 
     auto j = req.json;
@@ -138,7 +138,7 @@ class AuditConfigController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
       auto tenantId = req.getTenantId;
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
 

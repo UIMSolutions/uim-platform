@@ -14,7 +14,7 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class ApplicationJobController : PlatformController {
+class ApplicationJobController : ManageController {
   private ManageApplicationJobsUseCase usecase;
 
   this(ManageApplicationJobsUseCase usecase) {
@@ -32,111 +32,119 @@ class ApplicationJobController : PlatformController {
     router.delete_("/api/v1/application-jobs/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-
-      CreateApplicationJobRequest r;
-      r.tenantId = tenantId;
-      r.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.jobTemplateName = j.getString("jobTemplateName");
-      r.frequency = j.getString("frequency");
-      r.scheduledAt = jsonLong(j, "scheduledAt");
-      r.cronExpression = j.getString("cronExpression");
-
-      auto result = usecase.createApplicationJob(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Application job created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
     }
+
+    auto data = precheck["data"];
+    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto systemId = SystemInstanceId(data.getString("systemInstanceId"));
+
+    auto jobs = usecase.listApplicationJobs(tenantId, systemId);
+    auto arr = jobs.map!(job => job.toJson).array.toJson;
+
+    return Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", jobs.length)
+      .set("message", "Application jobs retrieved successfully")
+      .set("statusCode", 200);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
+    }
 
-      auto jobs = usecase.listApplicationJobs(tenantId, systemId);
-      auto arr = jobs.map!(job => job.toJson).array.toJson;
+    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto data = precheck["data"];
 
+    CreateApplicationJobRequest r;
+    r.tenantId = tenantId;
+    r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.jobTemplateName = data.getString("jobTemplateName");
+    r.frequency = data.getString("frequency");
+    r.scheduledAt = data.getLong("scheduledAt");
+    r.cronExpression = data.getString("cronExpression");
+
+    auto result = usecase.createApplicationJob(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Application job created successfully")
+      .set("statusCode", 201);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
+    }
+    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+
+    auto job = usecase.getApplicationJob(tenantId, id);
+    if (job.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Application job not found")
+        .set("statusCode", 404);
+    }
+
+    return Json.emptyObject
+      .set("item", job.toJson)
+      .set("message", "Application job retrieved successfully")
+      .set("statusCode", 200);
+  }
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
+    }
+
+    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+    auto data = req.json;
+
+    UpdateApplicationJobRequest r;
+    r.tenantId = tenantId;
+    r.applicationJobId = id;
+    r.description = data.getString("description");
+    r.frequency = data.getString("frequency");
+    r.scheduledAt = data.getLong("scheduledAt");
+    r.cronExpression = data.getString("cronExpression");
+    r.active = data.getBoolean("active", true);
+
+    auto result = usecase.updateApplicationJob(r);
+    if (result.isFailure()) {
       auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", jobs.length)
-        .set("message", "Application jobs retrieved successfully");
-      
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
     }
-  }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-
-      auto job = usecase.getApplicationJob(tenantId, id);
-      if (job.isNull) {
-        writeError(res, 404, "Application job not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
-        .set("item", job.toJson)
-        .set("message", "Application job retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
-
-      UpdateApplicationJobRequest r;
-      r.tenantId = tenantId;
-      r.applicationJobId = id;
-      r.description = j.getString("description");
-      r.frequency = j.getString("frequency");
-      r.scheduledAt = jsonLong(j, "scheduledAt");
-      r.cronExpression = j.getString("cronExpression");
-      r.active = j.getBoolean("active", true);
-
-      auto result = usecase.updateApplicationJob(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Application job updated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return Json.emptyObject
+      .set("status", "updated")
+      .set("message", "Application job updated successfully")
+      .set("statusCode", 200);
   }
 
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-      
+
       auto result = usecase.cancelApplicationJob(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -152,23 +160,26 @@ class ApplicationJobController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
-
-      auto result = usecase.deleteApplicationJob(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Application job deleted successfully");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
     }
+
+    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+
+    auto result = usecase.deleteApplicationJob(tenantId, id);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("status", "deleted")
+      .set("message", "Application job deleted successfully")
+      .set("statusCode", 200);
   }
 }

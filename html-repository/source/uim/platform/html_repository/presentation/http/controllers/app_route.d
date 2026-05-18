@@ -88,7 +88,7 @@ class AppRouteController : PlatformController {
       auto tenantId = req.getTenantId;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;
       }
@@ -121,7 +121,7 @@ class AppRouteController : PlatformController {
 
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;
       }
@@ -149,7 +149,7 @@ class AppRouteController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;
       }

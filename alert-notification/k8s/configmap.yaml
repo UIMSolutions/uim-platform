@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-notification-config
+  labels:
+    app: cloud-alert-notification
+    tier: platform-service
+data:
+  ALERT_NOTIFICATION_HOST: "0.0.0.0"
+  ALERT_NOTIFICATION_PORT: "8095"
+  ALERT_NOTIFICATION_SERVICE_NAME: "Alert Notification Service"
+  ALERT_NOTIFICATION_MAX_EVENTS_BUFFER: "10000"
+  ALERT_NOTIFICATION_RETENTION_SECONDS: "604800"

@@ -32,7 +32,7 @@ class ExportController : ManageController {
     router.delete_("/api/v1/exports/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
 
     auto jobs = useCase.listExports(tenantId);
@@ -45,7 +45,7 @@ class ExportController : ManageController {
       .set("message", "Export jobs retrieved successfully");
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto j = req.json;
 
@@ -78,7 +78,7 @@ class ExportController : ManageController {
 
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
     auto tenantId = req.getTenantId;
 
@@ -93,7 +93,7 @@ class ExportController : ManageController {
       .set("message", "Export job retrieved successfully");
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
     auto tenantId = req.getTenantId;
 

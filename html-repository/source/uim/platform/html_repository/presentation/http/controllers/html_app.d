@@ -84,7 +84,7 @@ class HtmlAppController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -118,7 +118,7 @@ class HtmlAppController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -147,7 +147,7 @@ class HtmlAppController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "App not found");
         return;
       }

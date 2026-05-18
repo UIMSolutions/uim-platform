@@ -33,7 +33,7 @@ class RetentionController : ManageController {
     router.delete_("/api/v1/retention/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
 
     auto policies = useCase.listPolicies(tenantId);
@@ -45,7 +45,7 @@ class RetentionController : ManageController {
       .set("totalCount", Json(policies.length));
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto json = req.json;
     auto policyRequest = CreateRetentionPolicyRequest();
     policyRequest.tenantId = req.getTenantId;
@@ -67,7 +67,7 @@ class RetentionController : ManageController {
       .set("statusCode", 201);
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
     auto tenantId = req.getTenantId;
 
@@ -81,7 +81,7 @@ class RetentionController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
     auto json = req.json;
     auto policyRequest = UpdateRetentionPolicyRequest();
     policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
@@ -110,7 +110,7 @@ class RetentionController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
     auto tenantId = req.getTenantId;
 

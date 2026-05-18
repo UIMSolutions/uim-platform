@@ -28,7 +28,7 @@ class ConfigurationController : ManageController {
     router.delete_("/api/v2/lm/configurations/*", &handleDelete);
   }
 
-  protected override Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected override Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
@@ -60,7 +60,7 @@ class ConfigurationController : ManageController {
       .set("message", "Configurations retrieved");
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     CreateConfigurationRequest r;
     r.tenantId = req.getTenantId;
     auto j = req.json;
@@ -87,7 +87,7 @@ class ConfigurationController : ManageController {
     }
   }
 
-  protected override Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected override Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -109,7 +109,7 @@ class ConfigurationController : ManageController {
       .set("statusCode", 200);
   }
 
-  protected override Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.gui;
+
+public {
+    import uim.platform.abap_environment.presentation.gui.controllers;
+    import uim.platform.abap_environment.presentation.gui.models;
+    import uim.platform.abap_environment.presentation.gui.views;
+}

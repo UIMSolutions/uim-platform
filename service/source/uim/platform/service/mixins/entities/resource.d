@@ -16,7 +16,7 @@ mixin template ResourceEntity(TId) {
 
     // Helper method to check if the entity is new (i.e. has no ID assigned yet)
     bool isNull() const {
-        return id.isEmpty;
+        return id.isNull;
     }
 
     void initEntity(ResourceGroupId resourceGroupId) {

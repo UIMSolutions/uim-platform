@@ -15,9 +15,30 @@ dependency "uim-platform:service" path=".."
 // Build settings
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"
+
 // Configurations 
 configuration "defaultRun" {
 	targetType "executable"
+}
+
+configuration "cli" {
+    targetName "app-alpha"
+    versions "LaunchAlpha"
+}
+
+configuration "gui" {
+    targetName "app-alpha"
+    versions "LaunchAlpha"
+}
+
+configuration "http" {
+    targetName "app-alpha"
+    versions "LaunchAlpha"
+}
+
+configuration "web" {
+    targetName "app-beta"
+    versions "LaunchBeta"
 }
 
 configuration "defaultTest" {

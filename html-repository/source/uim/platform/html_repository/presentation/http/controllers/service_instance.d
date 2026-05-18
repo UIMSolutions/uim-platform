@@ -82,7 +82,7 @@ class ServiceInstanceController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -116,7 +116,7 @@ class ServiceInstanceController : PlatformController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -141,7 +141,7 @@ class ServiceInstanceController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      if (id.isEmpty) {
+      if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
       }

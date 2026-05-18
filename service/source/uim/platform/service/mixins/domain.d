@@ -6,35 +6,70 @@ mixin(ShowModule!());
 @safe:
 
 mixin template DomainId() {
-    // this(string newValue) {
-    //     this.value = newValue;
-    // }
+  // this(string newValue) {
+  //     this.value = newValue;
+  // }
 
-    // this(UUID newValue) {
-    //     this.value = newValue.toString();
-    // }
+  // this(UUID newValue) {
+  //     this.value = newValue.toString();
+  // }
 
-    void opAssign(UUID newValue) {
-        this.value = newValue.toString();
+  void opAssign(UUID newValue) {
+    this.value = newValue.toString();
+  }
+
+  void opAssign(string newValue) {
+    this.value = newValue;
+  }
+
+  // bool opEquals(UUID aValue) {
+  //   return this.value == aValue.toString();
+  // }
+
+  // bool opEquals(string aValue) {
+  //   return this.value == aValue;
+  // }
+
+  bool isNull() const {
+    return value.length == 0;
+  }
+
+  bool isEmpty() const {
+    return value.length == 0;
+  }
+
+  string toString() const {
+    return value;
+  }
+
+  Json toJson() const {
+    return Json(value);
+  }
+}
+///
+unittest {
+  struct TestId {
+    mixin DomainId;
+
+    string value;
+
+    this(string value) {
+      this.value = value;
     }
+  }
 
-    void opAssign(string newValue) {
-        this.value = newValue;
-    }
+  TestId id = "test-id";
+  assert(id.toString() == "test-id");
+  assert(!id.isNull());
+  assert(!id.isEmpty());
+  // assert(id == "test-id");
+  assert(id.toJson().getString() == "test-id");
 
-    bool isNull() const {
-        return value.length == 0;
-    }
+  id = UUID("12345678-1234-5678-1234-567812345678");
+  assert(id.toString() == "12345678-1234-5678-1234-567812345678");
+  // assert(id == UUID("12345678-1234-5678-1234-567812345678"));
 
-    bool isEmpty() const {
-        return value.length == 0;
-    }
-
-    string toString() const {
-        return value;
-    }
-
-    Json toJson() const {
-        return Json(value);
-    }
+  id = "";
+  assert(id.isNull());
+  assert(id.isEmpty());
 }

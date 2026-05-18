@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-solution-lifecycle
+  labels:
+    app: cloud-solution-lifecycle
+    tier: platform-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-solution-lifecycle
+  template:
+    metadata:
+      labels:
+        app: cloud-solution-lifecycle
+        tier: platform-service
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: cloud-solution-lifecycle
+        image: uim-solution-lifecycle-platform-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8097
+          name: http
+        env:
+        - name: SOLUTION_LIFECYCLE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: solution-lifecycle-config
+              key: SOLUTION_LIFECYCLE_HOST
+        - name: SOLUTION_LIFECYCLE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: solution-lifecycle-config
+              key: SOLUTION_LIFECYCLE_PORT
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL

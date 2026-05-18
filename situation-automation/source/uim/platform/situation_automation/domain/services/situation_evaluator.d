@@ -15,7 +15,7 @@ struct SituationEvaluator {
     static string validate(TenantId tenantId, string id, string name) {
         if (tenantId.isEmpty)
             return "Tenant ID is required";
-        if (id.isEmpty)
+        if (id.isNull)
             return "ID is required";
         if (name.length == 0)
             return "Name is required";

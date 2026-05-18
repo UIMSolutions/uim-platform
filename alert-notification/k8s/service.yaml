@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-alert-notification
+  labels:
+    app: cloud-alert-notification
+    tier: platform-service
+spec:
+  selector:
+    app: cloud-alert-notification
+  ports:
+  - name: http
+    port: 8095
+    targetPort: 8095
+    protocol: TCP
+  type: ClusterIP

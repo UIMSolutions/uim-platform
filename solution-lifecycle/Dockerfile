@@ -1,0 +1,46 @@
+# syntax=docker/dockerfile:1
+# ---------------------------------------------------------------------------
+# Stage 1 — Build
+# ---------------------------------------------------------------------------
+FROM dlang2/ldc-ubuntu:1.40.1 AS builder
+
+WORKDIR /build
+
+# Copy service sources and shared service library
+COPY solution-lifecycle/ ./solution-lifecycle/
+COPY service/             ./service/
+COPY dub.sdl              ./dub.sdl
+COPY dub.selections.json  ./dub.selections.json
+
+WORKDIR /build/solution-lifecycle
+
+RUN dub build --build=release --config=defaultRun
+
+# ---------------------------------------------------------------------------
+# Stage 2 — Runtime
+# ---------------------------------------------------------------------------
+FROM ubuntu:24.04 AS runtime
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libssl3 \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
+COPY --from=builder /build/solution-lifecycle/build/uim-solution-lifecycle-platform-service /app/uim-solution-lifecycle-platform-service
+
+RUN chown appuser:appgroup /app/uim-solution-lifecycle-platform-service && \
+    chmod 550 /app/uim-solution-lifecycle-platform-service
+
+USER appuser
+
+ENV SOLUTION_LIFECYCLE_HOST=0.0.0.0
+ENV SOLUTION_LIFECYCLE_PORT=8097
+
+EXPOSE 8097
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8097/api/v1/health || exit 1
+
+ENTRYPOINT ["/app/uim-solution-lifecycle-platform-service"]

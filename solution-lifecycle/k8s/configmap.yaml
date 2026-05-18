@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solution-lifecycle-config
+data:
+  SOLUTION_LIFECYCLE_HOST: "0.0.0.0"
+  SOLUTION_LIFECYCLE_PORT: "8097"

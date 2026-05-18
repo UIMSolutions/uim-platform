@@ -33,7 +33,7 @@ class SoftwareComponentController : ManageController {
     router.delete_("/api/v1/software-components/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
     if (systemId.isEmpty)
@@ -50,7 +50,7 @@ class SoftwareComponentController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto j = req.json;
 
@@ -81,7 +81,7 @@ class SoftwareComponentController : ManageController {
       .set("message", "Software component created");
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
 
@@ -155,7 +155,7 @@ class SoftwareComponentController : ManageController {
     }
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
 

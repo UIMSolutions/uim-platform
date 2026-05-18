@@ -29,7 +29,7 @@ class DestinationController : ManageController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  override protected Json listHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
 
     auto dests = usecase.listDestinations(tenantId);
@@ -42,7 +42,7 @@ class DestinationController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json createHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto j = req.json;
     auto r = CreateDestinationRequest();
@@ -88,7 +88,7 @@ class DestinationController : ManageController {
       .set("statusCode", 201);
   }
 
-  override protected Json getHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = DestinationId(extractIdFromPath(req.requestURI));
 
@@ -103,7 +103,7 @@ class DestinationController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json updateHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = DestinationId(extractIdFromPath(req.requestURI));
     auto j = req.json;
@@ -149,7 +149,7 @@ class DestinationController : ManageController {
       .set("statusCode", 200);
   }
 
-  override protected Json deleteHandler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto id = DestinationId(extractIdFromPath(req.requestURI));
 

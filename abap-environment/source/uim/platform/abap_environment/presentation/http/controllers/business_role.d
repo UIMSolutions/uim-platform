@@ -26,7 +26,7 @@ mixin(ShowModule!());
   * - DELETE /api/v1/business-roles/{id}: Delete a business role.
   * Each endpoint expects and returns JSON data, and uses standard HTTP status codes to indicate success or failure.
   */
-class BusinessRoleController : PlatformController {
+class BusinessRoleController : ManageController {
   private ManageBusinessRolesUseCase usecase;
 
   this(ManageBusinessRolesUseCase usecase) {
@@ -43,119 +43,193 @@ class BusinessRoleController : PlatformController {
     router.delete_("/api/v1/business-roles/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-
-      auto j = req.json;
-      CreateBusinessRoleRequest r;
-      r.tenantId = tenantId;
-      r.systemInstanceId = j.getString("systemInstanceId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.roleType = j.getString("roleType");
-      r.restrictionTypes = getStrings(j, "restrictionTypes");
-
-      auto result = usecase.createBusinessRole(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Business role created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
     }
+
+    auto data = precheck["data"];
+    auto tenantId = TenantId(data.getString("tenantId"));
+
+    CreateBusinessRoleRequest r;
+    r.tenantId = tenantId;
+    r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.roleType = data.getString("roleType");
+    r.restrictionTypes = getStrings(data, "restrictionTypes");
+
+    auto result = usecase.createBusinessRole(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Business role created")
+      .set("status", "created")
+      .set("statusCode", 201);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-
-      auto roles = usecase.listBusinessRoles(tenantId, systemId);
-      auto arr = roles.map!(r => r.toJson).array.toJson;
-
-      auto response = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", roles.length)
-        .set("message", "Business roles fetched");
-
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    if (tenantId.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Tenant ID is required")
+        .set("statusCode", 400);
     }
+
+    auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
+    if (systemId.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "System Instance ID is required in X-System-Id header")
+        .set("statusCode", 400);
+    }
+
+    auto roles = usecase.listBusinessRoles(tenantId, systemId);
+    auto arr = roles.map!(r => r.toJson).array.toJson;
+
+    return Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", roles.length)
+      .set("message", "Business roles fetched")
+      .set("status", "success")
+      .set("statusCode", 200);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-
-      auto role = usecase.getBusinessRole(tenantId, id);
-      if (role.isNull) {
-        writeError(res, 404, "Business role not found");
-        return;
-      }
-
-      auto response = role.toJson
-        .set("message", "Business role fetched"); 
-        
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    if (tenantId.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Tenant ID is required")
+        .set("statusCode", 400);
     }
+
+    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    if (id.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Business Role ID is required in the path")
+        .set("statusCode", 400);
+    }
+
+    auto role = usecase.getBusinessRole(tenantId, id);
+    if (role.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Business role not found")
+        .set("statusCode", 404);
+    }
+
+    return Json.emptyObject
+      .set("entity", role.toJson)
+      .set("message", "Business role fetched")
+      .set("status", "success")
+      .set("statusCode", 200);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-
-      auto j = req.json;
-      UpdateBusinessRoleRequest r;
-      r.tenantId = tenantId;
-      r.businessRoleId = id;
-      r.description = j.getString("description");
-      r.roleType = j.getString("roleType");
-      r.restrictionTypes = getStrings(j, "restrictionTypes");
-
-      auto result = usecase.updateBusinessRole(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Business role updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
     }
+
+    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    if (id.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Business Role ID is required in the path")
+        .set("statusCode", 400);
+    }
+
+    auto data = precheck["data"];
+    auto tenantId = TenantId(data.getString("tenantId"));
+
+    UpdateBusinessRoleRequest r;
+    r.tenantId = tenantId;
+    r.businessRoleId = id;
+    r.description = data.getString("description");
+    r.roleType = data.getString("roleType");
+    r.restrictionTypes = getStrings(data, "restrictionTypes");
+
+    auto result = usecase.updateBusinessRole(r);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("status", "updated")
+      .set("message", "Business role updated")
+      .set("statusCode", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
-
-      auto result = usecase.deleteBusinessRole(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Business role deleted");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.error);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.getString("status") == "error") {
+      return precheck;
     }
-  }
 
+    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    if (id.isNull) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", "Business Role ID is required in the path")
+        .set("statusCode", 400);
+    }
+
+    auto data = precheck["data"];
+    auto tenantId = TenantId(data.getString("tenantId"));
+    auto result = usecase.deleteBusinessRole(tenantId, id);
+    if (result.isFailure()) {
+      return Json.emptyObject
+        .set("status", "error")
+        .set("message", result.error)
+        .set("statusCode", 400);
+    }
+
+    return Json.emptyObject
+      .set("status", "deleted")
+      .set("message", "Business role deleted")
+      .set("statusCode", 200);
+  }
+}
+/// 
+unittest {
+  auto usecase = new ManageBusinessRolesUseCase(new MemoryBusinessRoleRepository);
+  auto controller = new BusinessRoleController(usecase);
+
+  // Test createHandler with missing tenant ID
+  auto createResponse = controller.createHandler(null);
+  assert(createResponse.getString("status") == "error");
+  assert(createResponse.getString("message") == "Tenant ID is required");
+
+  // Test listHandler with missing tenant ID
+  auto listResponse = controller.listHandler(null);
+  assert(listResponse.getString("status") == "error");
+  assert(listResponse.getString("message") == "Tenant ID is required");
+
+  // Test getHandler with missing tenant ID
+  auto getResponse = controller.getHandler(null);
+  assert(getResponse.getString("status") == "error");
+  assert(getResponse.getString("message") == "Tenant ID is required");  
+
+  // Test updateHandler with missing tenant ID
+  auto updateResponse = controller.updateHandler(null);
+  assert(updateResponse.getString("status") == "error");
+  assert(updateResponse.getString("message") == "Tenant ID is required");
+
+  // Test deleteHandler with missing tenant ID
+  auto deleteResponse = controller.deleteHandler(null); 
+  assert(deleteResponse.getString("status") == "error");
+  assert(deleteResponse.getString("message") == "Tenant ID is required");
 }

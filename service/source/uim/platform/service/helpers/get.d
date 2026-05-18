@@ -44,10 +44,12 @@ TenantId getTenantId(Json json, string key) {
 }
 
 bool hasTenantId(HTTPServerRequest req) {
+  if (req is null) return false;
   return req.headers.get("X-Tenant-Id", "") != "";
 }
 
 TenantId getTenantId(HTTPServerRequest req) {
+  if (req is null) return TenantId("");
   return TenantId(req.headers.get("X-Tenant-Id", ""));
 }
 
@@ -56,10 +58,12 @@ UserId getUserId(Json json, string key) {
 }
 
 bool hasUserId(HTTPServerRequest req) {
+  if (req is null) return false;
   return req.headers.get("X-User-Id", "") != "";
 }
 
 UserId getUserId(HTTPServerRequest req) {
+  if (req is null) return UserId("");
   return UserId(req.headers.get("X-User-Id", ""));
 }
 
@@ -68,9 +72,11 @@ ConnectionId getConnectionId(Json json, string key) {
 }
 
 bool hasConnectionId(HTTPServerRequest req) {
+  if (req is null) return false;
   return req.headers.get("X-Connection-Id", "") != "";
 }
 
 ConnectionId getConnectionId(HTTPServerRequest req) {
+  if (req is null) return ConnectionId("");
   return ConnectionId(req.headers.get("X-Connection-Id", ""));
 }
