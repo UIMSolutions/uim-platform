@@ -127,7 +127,7 @@ class AuditConfigController : ManageController {
       r.minimumSeverity = AuditSeverity.info;
 
     auto result = useCase.updateAuditConfig(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("error", result.error)
         .set("statusCode", 400);

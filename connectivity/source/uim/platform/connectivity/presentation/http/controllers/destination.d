@@ -76,7 +76,7 @@ class DestinationController : ManageController {
     }
 
     auto result = usecase.createDestination(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("message", result.error)
         .set("statusCode", 400);
@@ -137,7 +137,7 @@ class DestinationController : ManageController {
     }
 
     auto result = usecase.updateDestination(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("message", result.error)
         .set("statusCode", result.error == "Destination not found" ? 404 : 400);
@@ -154,7 +154,7 @@ class DestinationController : ManageController {
     auto id = DestinationId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteDestination(tenantId, id);
-    if (result.isFailure()) {
+    if (result.failure()) {
         return Json.emptyObject
           .set("message", result.error)
           .set("statusCode", result.error == "Destination not found" ? 404 : 400);

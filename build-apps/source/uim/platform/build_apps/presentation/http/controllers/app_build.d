@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AppBuildController : PlatformController {
+class AppBuildController : ManageController {
     private ManageAppBuildsUseCase usecase;
 
     this(ManageAppBuildsUseCase usecase) {
@@ -28,116 +28,152 @@ class AppBuildController : PlatformController {
         router.delete_("/api/v1/build-apps/app-builds/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto items = usecase.listAppBuilds(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
+        }
+
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+
+        auto items = usecase.listAppBuilds(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        return Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr)
+            .set("message", "App builds retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
+    }
+
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
+        }
+
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto j = req.json;
+
+        AppBuildDTO dto;
+        dto.appBuildId = AppBuildId(j.getString("id"));
+        dto.tenantId = tenantId;
+        dto.applicationId = ApplicationId(j.getString("applicationId"));
+        dto.name = j.getString("name");
+        dto.description = j.getString("description");
+        dto.buildTarget = j.getString("buildTarget");
+        dto.version_ = j.getString("version");
+        dto.buildConfig = j.getString("buildConfig");
+        dto.signingConfig = j.getString("signingConfig");
+        dto.createdBy = UserId(j.getString("createdBy"));
+
+        auto result = usecase.createAppBuild(dto);
+        if (result.success) {
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "App builds retrieved successfully");
+                .set("id", result.id)
+                .set("message", "App build created");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            return resp.set("status", "success").set("statusCode", 201);
+        } else {
+            return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = AppBuildId(extractIdFromPath(path));
-
-            auto e = usecase.getAppBuild(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "App build not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = AppBuildId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid App Build ID")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        auto e = usecase.getAppBuild(tenantId, id);
+        if (e.isNull) {
+            return Json.emptyObject
+                .set("error", "App build not found")
+                .set("status", "error")
+                .set("statusCode", 404);
+        }
+        return e.toJson()
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto j = req.json;
-            AppBuildDTO dto;
-            dto.appBuildId = AppBuildId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.appBuildId = AppBuildId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.buildTarget = j.getString("buildTarget");
-            dto.version_ = j.getString("version");
-            dto.buildConfig = j.getString("buildConfig");
-            dto.signingConfig = j.getString("signingConfig");
-            dto.createdBy = UserId(j.getString("createdBy"));
-
-            auto result = usecase.createAppBuild(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "App build created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = AppBuildId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid App Build ID")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        auto data = precheck["data"];
+
+        AppBuildDTO dto;
+        dto.appBuildId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.version_ = data.getString("version");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateAppBuild(dto);
+        if (result.failure) {
+            return Json.emptyObject
+                .set("error", result.error)
+                .set("status", "error")
+                .set("statusCode", 404);
+        }
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "App build updated")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-
-            AppBuildDTO dto;
-            dto.appBuildId = AppBuildId(extractIdFromPath(path));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
-
-            auto result = usecase.updateAppBuild(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "App build updated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
-    }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = AppBuildId(extractIdFromPath(path));
-
-            auto result = usecase.deleteAppBuild(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("message", "App build deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = AppBuildId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid App Build ID")
+                .set("status", "error")
+                .set("statusCode", 400);
         }
+
+        auto result = usecase.deleteAppBuild(tenantId, id);
+        if (result.failure) {
+            return Json.emptyObject
+                .set("error", result.error)
+                .set("status", "error")
+                .set("statusCode", 404);
+        }
+        return Json.emptyObject
+            .set("message", "App build deleted")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 }

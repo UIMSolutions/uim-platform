@@ -1,0 +1,145 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.customer_identity.presentation.http.controllers.customer;
+
+import uim.platform.customer_identity;
+
+mixin(ShowModule!());
+
+@safe:
+
+class CustomerController : PlatformController {
+    private ManageCustomersUseCase customers;
+
+    this(ManageCustomersUseCase customers) {
+        this.customers = customers;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
+        router.get("/api/v1/customer-identity/customers", &handleList);
+        router.get("/api/v1/customer-identity/customers/*", &handleGet);
+        router.post("/api/v1/customer-identity/customers", &handleCreate);
+        router.put("/api/v1/customer-identity/customers/*", &handleUpdate);
+        router.delete_("/api/v1/customer-identity/customers/*", &handleDelete);
+    }
+
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (!precheck.success)
+            return Json.emptyObject.set("error", precheck.error);
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto items = customers.listCustomers(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        return Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr)
+            .set("message", "Customers retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
+    }
+
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (!precheck.success)
+            return Json.emptyObject.set("error", precheck.error);
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto j = req.json;
+
+        CustomerDTO dto;
+        dto.tenantId = tenantId;
+        dto.email = j.getString("email");
+        dto.phone = j.getString("phone");
+        dto.firstName = j.getString("firstName");
+        dto.lastName = j.getString("lastName");
+        dto.password = j.getString("password");
+        dto.locale = j.getString("locale");
+        dto.country = j.getString("country");
+        dto.birthDate = j.getString("birthDate");
+        dto.profileData = j.getString("profileData");
+        dto.createdBy = UserId(j.getString("createdBy"));
+
+        auto result = customers.registerCustomer(dto);
+        if (result.success) {
+            return Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Customer registered successfully")
+                .set("status", "success")
+                .set("statusCode", 201);
+        }
+        return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (!precheck.success)
+            return Json.emptyObject.set("error", precheck.error);
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = CustomerId(extractIdFromPath(path));
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid Customer ID").set("status", "error").set("statusCode", 400);
+
+        auto e = customers.getCustomer(tenantId, id);
+        if (e.isNull)
+            return Json.emptyObject.set("error", "Customer not found").set("status", "error").set("statusCode", 404);
+
+        return e.toJson().set("status", "success").set("statusCode", 200);
+    }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (!precheck.success)
+            return Json.emptyObject.set("error", precheck.error);
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = CustomerId(extractIdFromPath(path));
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid Customer ID").set("status", "error").set("statusCode", 400);
+
+        auto j = req.json;
+        CustomerDTO dto;
+        dto.customerId = id;
+        dto.tenantId = tenantId;
+        dto.firstName = j.getString("firstName");
+        dto.lastName = j.getString("lastName");
+        dto.phone = j.getString("phone");
+        dto.locale = j.getString("locale");
+        dto.country = j.getString("country");
+        dto.birthDate = j.getString("birthDate");
+        dto.profileData = j.getString("profileData");
+        dto.progressiveData = j.getString("progressiveData");
+        dto.updatedBy = UserId(j.getString("updatedBy"));
+
+        auto result = customers.updateCustomer(dto);
+        if (result.success)
+            return Json.emptyObject.set("id", result.id).set("message", "Customer updated").set("status", "success").set("statusCode", 200);
+        return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (!precheck.success)
+            return Json.emptyObject.set("error", precheck.error);
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = CustomerId(extractIdFromPath(path));
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid Customer ID").set("status", "error").set("statusCode", 400);
+
+        auto result = customers.deleteCustomer(tenantId, id);
+        if (result.success)
+            return Json.emptyObject.set("message", "Customer deleted").set("status", "success").set("statusCode", 200);
+        return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 404);
+    }
+}

@@ -61,7 +61,7 @@ class BusinessRoleController : ManageController {
     r.restrictionTypes = getStrings(data, "restrictionTypes");
 
     auto result = usecase.createBusinessRole(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", "error")
         .set("message", result.error)
@@ -160,7 +160,7 @@ class BusinessRoleController : ManageController {
     r.restrictionTypes = getStrings(data, "restrictionTypes");
 
     auto result = usecase.updateBusinessRole(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", "error")
         .set("message", result.error)
@@ -190,7 +190,7 @@ class BusinessRoleController : ManageController {
     auto data = precheck["data"];
     auto tenantId = TenantId(data.getString("tenantId"));
     auto result = usecase.deleteBusinessRole(tenantId, id);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", "error")
         .set("message", result.error)

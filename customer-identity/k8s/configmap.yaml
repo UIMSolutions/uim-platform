@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customer-identity-config
+  namespace: uim-platform
+  labels:
+    app: customer-identity
+    part-of: uim-platform
+data:
+  CUSTOMER_IDENTITY_HOST: "0.0.0.0"
+  CUSTOMER_IDENTITY_PORT: "8119"

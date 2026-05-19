@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: integration-delivery-config
+  namespace: uim-platform
+data:
+  INTEGRATION_DELIVERY_HOST: "0.0.0.0"
+  INTEGRATION_DELIVERY_PORT: "8120"

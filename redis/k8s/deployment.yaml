@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-service
+  namespace: uim-platform
+  labels:
+    app: redis-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-service
+  template:
+    metadata:
+      labels:
+        app: redis-service
+    spec:
+      containers:
+      - name: redis-service
+        image: uim-redis-platform-service:latest
+        ports:
+        - containerPort: 8130
+        envFrom:
+        - configMapRef:
+            name: redis-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8130
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8130
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

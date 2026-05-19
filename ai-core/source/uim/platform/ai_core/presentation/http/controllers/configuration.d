@@ -115,7 +115,7 @@ class ConfigurationController : ManageController {
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto result = usecase.deleteConfiguration(tenantId, rgId, id);
-    if (result.isFailure) {
+    if (result.failure) {
       return Json.emptyObject
         .set("error", result.error)
         .set("message", "Failed to delete configuration")

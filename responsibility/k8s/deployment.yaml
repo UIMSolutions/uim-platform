@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: responsibility
+  namespace: uim-platform
+  labels:
+    app: responsibility
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: responsibility
+  template:
+    metadata:
+      labels:
+        app: responsibility
+    spec:
+      containers:
+      - name: responsibility
+        image: uim-platform/responsibility:latest
+        ports:
+        - containerPort: 8118
+        envFrom:
+        - configMapRef:
+            name: responsibility-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8118
+          initialDelaySeconds: 5
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8118
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

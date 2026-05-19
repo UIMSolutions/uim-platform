@@ -29,7 +29,7 @@ class GlossaryController : ManageController {
         router.delete_("/api/v1/translation/glossaries/*", &handleDelete);
     }
 
-    override protected Jso createHandler(HTTPServerRequest req) {
+    override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.getString("status") == "error") {
             return precheck;
@@ -49,7 +49,7 @@ class GlossaryController : ManageController {
         r.mandatory = data.getBoolean("mandatory", false);
 
         auto result = usecase.createEntry(r);
-        if (result.isFailure) {
+        if (result.failure) {
             return Json.emptyObject
                 .set("status", "error")
                 .set("message", result.error)
@@ -124,7 +124,7 @@ class GlossaryController : ManageController {
         r.mandatory = data.getBoolean("mandatory", false);
 
         auto result = usecase.updateEntry(r);
-        if (result.isFailure) {
+        if (result.failure) {
             return Json.emptyObject
                 .set("status", "error")
                 .set("message", result.error)
@@ -154,7 +154,7 @@ class GlossaryController : ManageController {
         }
 
         auto result = usecase.deleteEntry(tenantId, entryId);
-        if (result.isFailure) {
+        if (result.failure) {
             return Json.emptyObject
                 .set("status", "error")
                 .set("message", result.error)

@@ -56,7 +56,7 @@ class RetentionController : ManageController {
     policyRequest.categories = json.getArray("categories").map!(c => c.toString.to!AuditCategory).array;
 
     auto result = useCase.createPolicy(policyRequest);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("error", result.error)
         .set("statusCode", 400);
@@ -100,7 +100,7 @@ class RetentionController : ManageController {
       policyRequest.status = RetentionStatus.active;
 
     auto result = useCase.updatePolicy(policyRequest);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("error", result.error)
         .set("statusCode", 400);

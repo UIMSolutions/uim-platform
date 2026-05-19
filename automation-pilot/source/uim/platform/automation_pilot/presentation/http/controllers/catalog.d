@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CatalogController : PlatformController {
+class CatalogController : ManageController {
     private ManageCatalogsUseCase catalogs;
 
     this(ManageCatalogsUseCase catalogs) {
@@ -20,7 +20,7 @@ class CatalogController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/automation-pilot/catalogs", &handleList);
         router.get("/api/v1/automation-pilot/catalogs/*", &handleGet);
         router.post("/api/v1/automation-pilot/catalogs", &handleCreate);
@@ -28,113 +28,163 @@ class CatalogController : PlatformController {
         router.delete_("/api/v1/automation-pilot/catalogs/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-
-            auto items = catalogs.listCatalogs(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Catalogs retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.getString("status") == "error") {
+            return precheck;
         }
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+
+        auto items = catalogs.listCatalogs(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        return Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr)
+            .set("message", "Catalogs retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = CatalogId(extractIdFromPath(path));
-
-            auto e = catalogs.getCatalog(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Catalog not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = CatalogId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid catalog ID")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        auto e = catalogs.getCatalog(tenantId, id);
+        if (e.isNull) {
+            return Json.emptyObject
+                .set("error", "Catalog not found")
+                .set("status", "error")
+                .set("statusCode", 404);
+        }
+
+        return e.toJson()
+            .set("message", "Catalog retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto j = req.json;
-
-            CatalogDTO dto;
-            dto.catalogId = CatalogId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.tags = j.getString("tags");
-            dto.version_ = j.getString("version");
-            dto.createdBy = UserId(j.getString("createdBy"));
-
-            auto result = catalogs.createCatalog(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Catalog created");
-                
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto data = precheck["data"];
+        auto id = CatalogId(data.getString("catalogId", ""));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Missing or invalid catalogId")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        CatalogDTO dto;
+        dto.catalogId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name", "");
+        dto.description = data.getString("description", "");
+        dto.tags = data.getString("tags", "");
+        dto.version_ = data.getString("version", "");
+        dto.createdBy = UserId(data.getString("createdBy", ""));
+
+        auto result = catalogs.createCatalog(dto);
+        if (result.failure) {
+            return Json.emptyObject
+                .set("error", result.error)
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Catalog created")
+            .set("status", "created")
+            .set("statusCode", 201);
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            CatalogDTO dto;
-            dto.tenantId = tenantId;
-            dto.catalogId = CatalogId(extractIdFromPath(path));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.tags = j.getString("tags");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
-
-            auto result = catalogs.updateCatalog(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Catalog updated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto data = precheck["data"];
+        auto path = req.requestURI.to!string;
+        auto id = CatalogId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid catalog ID")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        CatalogDTO dto;
+        dto.tenantId = tenantId;
+        dto.catalogId = id;
+        dto.name = data.getString("name", "");
+        dto.description = data.getString("description", "");
+        dto.tags = data.getString("tags", "");
+        dto.updatedBy = UserId(data.getString("updatedBy", ""));
+
+        auto result = catalogs.updateCatalog(dto);
+        if (result.failure) {
+            return Json.emptyObject
+                .set("error", result.error)
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Catalog updated")
+            .set("status", "updated")
+            .set("statusCode", 200);
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = CatalogId(extractIdFromPath(path));
-
-            auto result = catalogs.deleteCatalog(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Catalog deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (!precheck.success) {
+            return Json.emptyObject.set("error", precheck.error);
         }
+
+        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto path = req.requestURI.to!string;
+        auto id = CatalogId(extractIdFromPath(path));
+        if (id.isNull) {
+            return Json.emptyObject
+                .set("error", "Invalid catalog ID")
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        auto result = catalogs.deleteCatalog(tenantId, id);
+        if (result.failure) {
+            return Json.emptyObject
+                .set("error", result.error)
+                .set("status", "error")
+                .set("statusCode", 400);
+        }
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Catalog deleted")
+            .set("status", "deleted")
+            .set("statusCode", 200);
     }
 }

@@ -64,6 +64,7 @@ dependency ":translation" version="*"
 dependency ":solution-lifecycle" version="*"
 dependency ":usage-data" version="*"
 dependency ":workzone" version="*"
+dependency ":responsibility" version="*"
 // Source files
 sourceFiles "./source/uim/platform/all.d"
 // Subpackages
@@ -120,6 +121,7 @@ subPackage "translation"
 subPackage "solution-lifecycle"
 subPackage "usage-data"
 subPackage "workzone"
+subPackage "responsibility"
 
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"

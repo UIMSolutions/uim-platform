@@ -66,7 +66,7 @@ class ExportController : ManageController {
       jobRequest.categories ~= toAuditCategory(c);
 
     auto result = useCase.createExport(jobRequest);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("error", result.error)
         .set("statusCode", 400);
@@ -98,7 +98,7 @@ class ExportController : ManageController {
     auto tenantId = req.getTenantId;
 
     auto result = useCase.deleteExport(tenantId, jobId);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("error", result.error)
         .set("statusCode", 400);

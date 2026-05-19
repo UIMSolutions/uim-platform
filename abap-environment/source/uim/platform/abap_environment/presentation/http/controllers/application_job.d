@@ -72,7 +72,7 @@ class ApplicationJobController : ManageController {
     r.cronExpression = data.getString("cronExpression");
 
     auto result = usecase.createApplicationJob(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", "error")
         .set("message", result.error)
@@ -127,7 +127,7 @@ class ApplicationJobController : ManageController {
     r.active = data.getBoolean("active", true);
 
     auto result = usecase.updateApplicationJob(r);
-    if (result.isFailure()) {
+    if (result.failure()) {
       auto resp = Json.emptyObject
         .set("status", "error")
         .set("message", result.error)
@@ -170,7 +170,7 @@ class ApplicationJobController : ManageController {
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteApplicationJob(tenantId, id);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", "error")
         .set("message", result.error)

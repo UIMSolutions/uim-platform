@@ -66,7 +66,7 @@ class SoftwareComponentController : ManageController {
     request.namespace = j.getString("namespace");
 
     auto result = usecase.createSoftwareComponent(request);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", 400)
         .set("statusCode", 400)
@@ -160,7 +160,7 @@ class SoftwareComponentController : ManageController {
     auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);
-    if (result.isFailure()) {
+    if (result.failure()) {
       return Json.emptyObject
         .set("status", 404)
         .set("error", result.error)

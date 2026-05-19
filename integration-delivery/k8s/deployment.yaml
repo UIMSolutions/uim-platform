@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-delivery
+  namespace: uim-platform
+  labels:
+    app: integration-delivery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integration-delivery
+  template:
+    metadata:
+      labels:
+        app: integration-delivery
+    spec:
+      containers:
+      - name: integration-delivery
+        image: uim-integration-delivery-platform-service:latest
+        ports:
+        - containerPort: 8120
+        envFrom:
+        - configMapRef:
+            name: integration-delivery-config
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8120
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8120
+          initialDelaySeconds: 5
+          periodSeconds: 10
