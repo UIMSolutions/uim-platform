@@ -32,7 +32,7 @@ class CustomerSessionController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = sessions.listSessions(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -48,7 +48,7 @@ class CustomerSessionController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         CustomerSessionDTO dto;
@@ -72,7 +72,7 @@ class CustomerSessionController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CustomerSessionId(extractIdFromPath(path));
         if (id.isNull)
@@ -90,7 +90,7 @@ class CustomerSessionController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CustomerSessionId(extractIdFromPath(path));
         if (id.isNull)

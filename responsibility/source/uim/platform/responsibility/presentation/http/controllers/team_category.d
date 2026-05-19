@@ -28,7 +28,7 @@ class TeamCategoryController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto pre = super.listHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto items = _uc.listCategories(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -39,7 +39,7 @@ class TeamCategoryController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
         auto e = _uc.getCategory(tenantId, id);
         if (e.isNull)
@@ -50,7 +50,7 @@ class TeamCategoryController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto pre = super.createHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         import std.uuid : randomUUID;
         TeamCategoryDTO dto;
@@ -68,7 +68,7 @@ class TeamCategoryController : ManageController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto pre = super.updateHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         TeamCategoryDTO dto;
         dto.categoryId  = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
@@ -85,7 +85,7 @@ class TeamCategoryController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteCategory(tenantId, id);
         if (!result.success)

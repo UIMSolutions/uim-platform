@@ -34,7 +34,7 @@ class CommandInputController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
 
         auto items = commandInputs.listCommandInputs(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -53,7 +53,7 @@ class CommandInputController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         CommandInputDTO dto;
@@ -85,7 +85,7 @@ class CommandInputController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {
@@ -115,7 +115,7 @@ class CommandInputController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {
@@ -156,7 +156,7 @@ class CommandInputController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {

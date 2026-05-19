@@ -33,7 +33,7 @@ class ScreenSetController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = screenSets.listScreenSets(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -49,7 +49,7 @@ class ScreenSetController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         ScreenSetDTO dto;
@@ -75,7 +75,7 @@ class ScreenSetController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ScreenSetId(extractIdFromPath(path));
         if (id.isNull)
@@ -93,7 +93,7 @@ class ScreenSetController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ScreenSetId(extractIdFromPath(path));
         if (id.isNull)
@@ -123,7 +123,7 @@ class ScreenSetController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ScreenSetId(extractIdFromPath(path));
         if (id.isNull)

@@ -32,7 +32,7 @@ class ServicePlanController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = plans.listServicePlans(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class ServicePlanController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = ServicePlanId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid service plan ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class ServicePlanController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         ServicePlanDTO dto;
@@ -97,7 +97,7 @@ class ServicePlanController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         ServicePlanDTO dto;
@@ -125,7 +125,7 @@ class ServicePlanController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = ServicePlanId(extractIdFromPath(req.requestURI.to!string));
 
         auto result = plans.deleteServicePlan(tenantId, id);

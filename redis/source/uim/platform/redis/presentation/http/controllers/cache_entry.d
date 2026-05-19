@@ -32,7 +32,7 @@ class CacheEntryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = cacheEntries.listCacheEntries(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class CacheEntryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid cache entry ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class CacheEntryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         CacheEntryDTO dto;
@@ -92,7 +92,7 @@ class CacheEntryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         CacheEntryDTO dto;
@@ -118,7 +118,7 @@ class CacheEntryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
 
         auto result = cacheEntries.deleteCacheEntry(tenantId, id);

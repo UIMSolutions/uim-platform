@@ -32,7 +32,7 @@ class DeploymentTargetController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = targets.listDeploymentTargets(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class DeploymentTargetController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = DeploymentTargetId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class DeploymentTargetController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         DeploymentTargetDTO dto;
@@ -90,7 +90,7 @@ class DeploymentTargetController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
         auto id = DeploymentTargetId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -119,7 +119,7 @@ class DeploymentTargetController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = DeploymentTargetId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);

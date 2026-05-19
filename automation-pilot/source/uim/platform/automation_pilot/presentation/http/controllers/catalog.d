@@ -34,7 +34,7 @@ class CatalogController : ManageController {
             return precheck;
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
 
         auto items = catalogs.listCatalogs(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -53,7 +53,7 @@ class CatalogController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CatalogId(extractIdFromPath(path));
         if (id.isNull) {
@@ -83,7 +83,7 @@ class CatalogController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
         auto id = CatalogId(data.getString("catalogId", ""));
         if (id.isNull) {
@@ -123,7 +123,7 @@ class CatalogController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
         auto path = req.requestURI.to!string;
         auto id = CatalogId(extractIdFromPath(path));
@@ -163,7 +163,7 @@ class CatalogController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = CatalogId(extractIdFromPath(path));
         if (id.isNull) {

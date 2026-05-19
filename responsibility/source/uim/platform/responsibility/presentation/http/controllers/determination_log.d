@@ -26,7 +26,7 @@ class DeterminationLogController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto pre = super.listHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto items = _uc.listLogs(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -37,7 +37,7 @@ class DeterminationLogController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = DeterminationLogId(extractIdFromPath(req.requestURI.to!string));
         auto e = _uc.getLog(tenantId, id);
         if (e.isNull)
@@ -48,7 +48,7 @@ class DeterminationLogController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = DeterminationLogId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteLog(tenantId, id);
         if (!result.success)

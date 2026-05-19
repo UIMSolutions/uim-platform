@@ -32,7 +32,7 @@ class AuditLogController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = auditLogs.listAuditLogs(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -48,7 +48,7 @@ class AuditLogController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         AuditLogDTO dto;
@@ -74,7 +74,7 @@ class AuditLogController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = AuditLogId(extractIdFromPath(path));
         if (id.isNull)
@@ -92,7 +92,7 @@ class AuditLogController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = AuditLogId(extractIdFromPath(path));
         if (id.isNull)

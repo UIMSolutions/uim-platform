@@ -33,7 +33,7 @@ class ConsentRecordController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = consentRecords.listConsentRecords(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -49,7 +49,7 @@ class ConsentRecordController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         ConsentRecordDTO dto;
@@ -76,7 +76,7 @@ class ConsentRecordController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(extractIdFromPath(path));
         if (id.isNull)
@@ -94,7 +94,7 @@ class ConsentRecordController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(extractIdFromPath(path));
         if (id.isNull)
@@ -111,7 +111,7 @@ class ConsentRecordController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(extractIdFromPath(path));
         if (id.isNull)

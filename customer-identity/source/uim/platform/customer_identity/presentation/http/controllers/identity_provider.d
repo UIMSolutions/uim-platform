@@ -33,7 +33,7 @@ class IdentityProviderController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = identityProviders.listIdentityProviders(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -49,7 +49,7 @@ class IdentityProviderController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto j = req.json;
 
         IdentityProviderDTO dto;
@@ -77,7 +77,7 @@ class IdentityProviderController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = IdentityProviderId(extractIdFromPath(path));
         if (id.isNull)
@@ -95,7 +95,7 @@ class IdentityProviderController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = IdentityProviderId(extractIdFromPath(path));
         if (id.isNull)
@@ -125,7 +125,7 @@ class IdentityProviderController : PlatformController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto path = req.requestURI.to!string;
         auto id = IdentityProviderId(extractIdFromPath(path));
         if (id.isNull)

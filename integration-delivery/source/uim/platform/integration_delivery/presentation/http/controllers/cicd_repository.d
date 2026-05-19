@@ -32,7 +32,7 @@ class CicdRepositoryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = repos.listCicdRepositories(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class CicdRepositoryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = CicdRepositoryId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class CicdRepositoryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         CicdRepositoryDTO dto;
@@ -89,7 +89,7 @@ class CicdRepositoryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
         auto id = CicdRepositoryId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -116,7 +116,7 @@ class CicdRepositoryController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = CicdRepositoryId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);

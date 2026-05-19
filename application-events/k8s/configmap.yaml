@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-events-config
+  namespace: uim-platform
+data:
+  APPEVENTS_HOST: "0.0.0.0"
+  APPEVENTS_PORT: "8132"
+  APPEVENTS_PERSISTENCE: "memory"
+  APPEVENTS_FILE_PATH: "./data"
+  APPEVENTS_MONGODB_URI: "mongodb://localhost:27017"
+  APPEVENTS_MONGODB_DB: "appevents"

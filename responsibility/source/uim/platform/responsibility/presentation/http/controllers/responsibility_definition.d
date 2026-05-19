@@ -28,7 +28,7 @@ class ResponsibilityDefinitionController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto pre = super.listHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto items = _uc.listDefinitions(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -39,7 +39,7 @@ class ResponsibilityDefinitionController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = ResponsibilityDefinitionId(extractIdFromPath(req.requestURI.to!string));
         auto e = _uc.getDefinition(tenantId, id);
         if (e.isNull)
@@ -50,7 +50,7 @@ class ResponsibilityDefinitionController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto pre = super.createHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         import std.uuid : randomUUID;
         ResponsibilityDefinitionDTO dto;
@@ -74,7 +74,7 @@ class ResponsibilityDefinitionController : ManageController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto pre = super.updateHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         ResponsibilityDefinitionDTO dto;
         dto.definitionId = ResponsibilityDefinitionId(extractIdFromPath(req.requestURI.to!string));
@@ -93,7 +93,7 @@ class ResponsibilityDefinitionController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantIf(pre.gString("tenantId"));
+        auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = ResponsibilityDefinitionId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteDefinition(tenantId, id);
         if (!result.success)

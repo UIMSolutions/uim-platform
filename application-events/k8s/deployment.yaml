@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-events-service
+  namespace: uim-platform
+  labels:
+    app: application-events-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application-events-service
+  template:
+    metadata:
+      labels:
+        app: application-events-service
+    spec:
+      containers:
+      - name: application-events-service
+        image: uim-application-events-platform-service:latest
+        ports:
+        - containerPort: 8132
+        envFrom:
+        - configMapRef:
+            name: application-events-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8132
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8132
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: false

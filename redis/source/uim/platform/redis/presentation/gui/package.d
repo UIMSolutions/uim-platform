@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.redis.presentation.gui;
+
+public {
+    import uim.platform.redis.presentation.gui.models;
+    import uim.platform.redis.presentation.gui.views;
+    import uim.platform.redis.presentation.gui.controllers;
+}

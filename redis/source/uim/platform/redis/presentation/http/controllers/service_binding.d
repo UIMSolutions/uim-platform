@@ -31,7 +31,7 @@ class ServiceBindingController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = bindings.listServiceBindings(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -46,7 +46,7 @@ class ServiceBindingController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid service binding ID").set("statusCode", 400);
@@ -63,7 +63,7 @@ class ServiceBindingController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto data = precheck["data"];
 
         ServiceBindingDTO dto;
@@ -91,7 +91,7 @@ class ServiceBindingController : ManageController {
         if (!precheck.success)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantIf(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
 
         auto result = bindings.deleteServiceBinding(tenantId, id);

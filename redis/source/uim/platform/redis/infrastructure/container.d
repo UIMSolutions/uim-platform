@@ -32,18 +32,55 @@ struct Container {
     HealthController          healthController;
 }
 
-Container buildContainer(SrvConfig config) @safe {
+Container buildContainer(SrvConfig config) @trusted {
     Container c;
 
+    import vibe.db.mongo.mongo : connectMongoDB;
+
     // Repositories
-    auto instanceRepo      = new MemoryServiceInstanceRepository();
-    auto bindingRepo       = new MemoryServiceBindingRepository();
-    auto planRepo          = new MemoryServicePlanRepository();
-    auto configRepo        = new MemoryConfigurationRepository();
-    auto cacheEntryRepo    = new MemoryCacheEntryRepository();
-    auto metricRepo        = new MemoryMetricRepository();
-    auto backupRepo        = new MemoryBackupPolicyRepository();
-    auto accessControlRepo = new MemoryAccessControlRepository();
+    ServiceInstanceRepository  instanceRepo;
+    ServiceBindingRepository   bindingRepo;
+    ServicePlanRepository      planRepo;
+    ConfigurationRepository    configRepo;
+    CacheEntryRepository       cacheEntryRepo;
+    MetricRepository           metricRepo;
+    BackupPolicyRepository     backupRepo;
+    AccessControlRepository    accessControlRepo;
+
+    final switch (config.persistence) {
+        case "file":
+            instanceRepo      = new FileServiceInstanceRepository(config.filePath);
+            bindingRepo       = new FileServiceBindingRepository(config.filePath);
+            planRepo          = new FileServicePlanRepository(config.filePath);
+            configRepo        = new FileConfigurationRepository(config.filePath);
+            cacheEntryRepo    = new FileCacheEntryRepository(config.filePath);
+            metricRepo        = new FileMetricRepository(config.filePath);
+            backupRepo        = new FileBackupPolicyRepository(config.filePath);
+            accessControlRepo = new FileAccessControlRepository(config.filePath);
+            break;
+        case "mongodb":
+            auto mongoDb = connectMongoDB(config.mongoUri)[config.mongoDb];
+            instanceRepo      = new MongoServiceInstanceRepository(mongoDb["service_instances"]);
+            bindingRepo       = new MongoServiceBindingRepository(mongoDb["service_bindings"]);
+            planRepo          = new MongoServicePlanRepository(mongoDb["service_plans"]);
+            configRepo        = new MongoConfigurationRepository(mongoDb["configurations"]);
+            cacheEntryRepo    = new MongoCacheEntryRepository(mongoDb["cache_entries"]);
+            metricRepo        = new MongoMetricRepository(mongoDb["metrics"]);
+            backupRepo        = new MongoBackupPolicyRepository(mongoDb["backup_policies"]);
+            accessControlRepo = new MongoAccessControlRepository(mongoDb["access_controls"]);
+            break;
+        case "memory": goto default;
+        default:
+            instanceRepo      = new MemoryServiceInstanceRepository();
+            bindingRepo       = new MemoryServiceBindingRepository();
+            planRepo          = new MemoryServicePlanRepository();
+            configRepo        = new MemoryConfigurationRepository();
+            cacheEntryRepo    = new MemoryCacheEntryRepository();
+            metricRepo        = new MemoryMetricRepository();
+            backupRepo        = new MemoryBackupPolicyRepository();
+            accessControlRepo = new MemoryAccessControlRepository();
+            break;
+    }
 
     // Use Cases
     c.manageServiceInstancesUseCase = new ManageServiceInstancesUseCase(instanceRepo);
