@@ -74,21 +74,22 @@ class BindingController : ManageController {
     r.expiresAt = jsonLong(data, "expiresAt");
     r.createdBy = UserId(data.getString("createdBy"));
 
-    auto result = bindings.createServiceBinding(r);
-    if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+    auto binding = bindings.createServiceBinding(r);
+    if (binding.serviceBindingId.isNull)
+      return errorResponse("Failed to create service binding", 400);
 
     // Return binding credentials (only shown once at creation)
     auto resp = Json.emptyObject
-      .set("id", result.serviceBindingId)
-      .set("name", result.name)
-      .set("clientId", result.clientId)
-      .set("clientSecret", result.clientSecret)
-      .set("permission", result.permission)
-      .set("status", result.status)
-      .set("allowedNamespaces", toJsonArray(result.allowedNamespaces))
-      .set("createdAt", result.createdAt)
-      .set("expiresAt", result.expiresAt);
+      .set("entity", "ServiceBinding")
+      .set("id", binding.serviceBindingId)
+      .set("name", binding.name)
+      .set("clientId", binding.clientId)
+      .set("clientSecret", binding.clientSecret)
+      .set("permission", binding.permission)
+      .set("status", binding.status)
+      .set("allowedNamespaces", toJsonArray(binding.allowedNamespaces))
+      .set("createdAt", binding.createdAt)
+      .set("expiresAt", binding.expiresAt);
 
     return successResponse("Service binding created successfully", 201, resp);
   }

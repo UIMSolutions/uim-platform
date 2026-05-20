@@ -28,78 +28,93 @@ class EncryptionController : PlatformController {
     router.post("/api/v1/encryption/decrypt", &handleDecrypt);
   }
 
+  protected Json generateHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    auto data = req.json;
+
+    GenerateDekRequest r;
+    r.tenantId = tenantId;
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.keyringName = data.getString("keyringName");
+
+    auto encryption = usecase.generate(r);
+    if (!encryption.success)
+      return errorResponse("Failed to generate DEK", 400);
+
+    auto resp = Json.emptyObject
+      .set("dek", encryption.dek)
+      .set("encryptedDek", encryption.encryptedDek)
+      .set("keyringId", encryption.keyringId.value)
+      .set("keyringVersion", encryption.keyringVersion);
+
+    return successResponse("DEK generated successfully", 200, resp);
+  }
+
   protected void handleGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      GenerateDekRequest r;
-      r.tenantId = tenantId;
-      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
-      r.keyringName = j.getString("keyringName");
-
-      auto result = usecase.generate(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("dek", Json(result.dek))
-          .set("encryptedDek", Json(result.encryptedDek))
-          .set("keyringId", result.keyringId.value)
-          .set("keyringVersion", Json(result.keyringVersion));
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
+    try {
+      auto resp = generateHandler(req);
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json encryptHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    auto data = req.json;
+
+    EncryptDekRequest r;
+    r.tenantId = tenantId;
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.keyringName = data.getString("keyringName");
+    r.dek = data.getString("dek");
+
+    auto result = usecase.encrypt(r);
+    if (!result.success)
+      return errorResponse("Failed to encrypt DEK", 400);
+
+    auto resp = Json.emptyObject
+      .set("encryptedDek", Json(result.encryptedDek))
+      .set("keyringId", result.keyringId.value)
+      .set("keyringVersion", Json(result.keyringVersion));
+
+    return successResponse("DEK encrypted successfully", 200, resp);
   }
 
   protected void handleEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      EncryptDekRequest r;
-      r.tenantId = tenantId;
-      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
-      r.keyringName = j.getString("keyringName");
-      r.dek = j.getString("dek");
-
-      auto result = usecase.encrypt(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("encryptedDek", Json(result.encryptedDek))
-          .set("keyringId", result.keyringId.value)
-          .set("keyringVersion", Json(result.keyringVersion));
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
+    try {
+      auto resp = encryptHandler(req);
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json decryptHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    auto data = req.json;
+
+    DecryptDekRequest r;
+    r.tenantId = tenantId;
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.keyringName = data.getString("keyringName");
+    r.encryptedDek = data.getString("encryptedDek");
+    r.keyringVersion = jsonLong(data, "keyringVersion");
+
+    auto result = usecase.decrypt(r);
+    if (!result.success)
+      return errorResponse("Failed to decrypt DEK", 400);
+
+    auto resp = Json.emptyObject
+      .set("dek", Json(result.dek));
+
+    return successResponse("DEK decrypted successfully", 200, resp);
+  }
+
   protected void handleDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      DecryptDekRequest r;
-      r.tenantId = tenantId;
-      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
-      r.keyringName = j.getString("keyringName");
-      r.encryptedDek = j.getString("encryptedDek");
-      r.keyringVersion = jsonLong(j, "keyringVersion");
-
-      auto result = usecase.decrypt(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("dek", Json(result.dek));
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
+    try {
+      auto resp = decryptHandler(req);
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -55,7 +55,7 @@ class DomainDashboardController : ManageController {
         r.tenantId = tenantId;
 
         auto result = usecase.refreshDashboard(r);
-        if (result.hasError) 
+        if (!result.success) 
             return errorResponse("Failed to refresh dashboard", 500);
         
 
