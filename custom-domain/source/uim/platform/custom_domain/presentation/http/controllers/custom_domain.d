@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomDomainController : PlatformController {
+class CustomDomainController : ManageController {
     private ManageCustomDomainsUseCase usecase;
 
     this(ManageCustomDomainsUseCase usecase) {
@@ -20,7 +20,7 @@ class CustomDomainController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/domains", &handleList);
         router.get("/api/v1/custom-domain/domains/*", &handleGet);
         router.post("/api/v1/custom-domain/domains", &handleCreate);
@@ -30,133 +30,149 @@ class CustomDomainController : PlatformController {
         router.delete_("/api/v1/custom-domain/domains/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            CreateCustomDomainRequest r;
-            r.tenantId = tenantId;
-            r.customDomainId = CustomDomainId(j.getString("id"));
-            r.domainName = j.getString("domainName");
-            r.organizationId = j.getString("organizationId");
-            r.spaceId = j.getString("spaceId");
-            r.environment = j.getString("environment");
-            r.createdBy = UserId(j.getString("createdBy"));
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createDomain(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Custom domain created");
+        auto tenantId = getTenantId(precheck);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto domains = usecase.listDomains(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (d; domains) {
-                jarr ~= Json.emptyObject
-                    .set("id", d.id)
-                    .set("domainName", d.domainName)
-                    .set("status", d.status.to!string)
-                    .set("organizationId", d.organizationId)
-                    .set("spaceId", d.spaceId)
-                    .set("activeCertificateId", d.activeCertificateId)
-                    .set("isShared", d.isShared)
-                    .set("clientAuthEnabled", d.clientAuthEnabled)
-                    .set("createdBy", d.createdBy)
-                    .set("createdAt", d.createdAt);
-            }
-
-            auto response = Json.emptyObject;
-            response["count"] = Json(domains.length);
-            response["resources"] = jarr;
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            
-            // Check for /activate or /deactivate suffix — skip
-            if (path.length > 9 && path[$ - 9 .. $] == "/activate")
-                return;
-            if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
-                return;
-
-            auto id = CustomDomainId(extractIdFromPath(path));
-            auto d = usecase.getDomain(tenantId, id);
-            if (d.isNull) {
-                writeError(res, 404, "Custom domain not found");
-                return;
-            }
-
-            auto response = Json.emptyObject
+        auto domains = usecase.listDomains(tenantId);
+        auto jarr = domains.map!(d => Json.emptyObject
                 .set("id", d.id)
                 .set("domainName", d.domainName)
                 .set("status", d.status.to!string)
-                .set("environment", d.environment.to!string)
                 .set("organizationId", d.organizationId)
                 .set("spaceId", d.spaceId)
                 .set("activeCertificateId", d.activeCertificateId)
-                .set("tlsConfigurationId", d.tlsConfigurationId)
                 .set("isShared", d.isShared)
-                .set("sharedWithOrgs", d.sharedWithOrgs)
                 .set("clientAuthEnabled", d.clientAuthEnabled)
                 .set("createdBy", d.createdBy)
-                .set("updatedBy", d.updatedBy)
-                .set("createdAt", d.createdAt)
-                .set("updatedAt", d.updatedAt);
+                .set("createdAt", d.createdAt)).array.toJson;
 
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return Json.emptyObject
+            .set("count", domains.length)
+            .set("resources", jarr)
+            .set("message", "Custom domains retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
-            auto j = req.json;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            UpdateCustomDomainRequest r;
-            r.customDomainId = id;
-            r.tenantId = tenantId;
-            r.activeCertificateId = j.getString("activeCertificateId");
-            r.tlsConfigurationId = j.getString("tlsConfigurationId");
-            r.isShared = j.getBoolean("isShared");
-            r.sharedWithOrgs = j.getString("sharedWithOrgs");
-            r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = getTenantId(precheck);
+        auto data = precheck["data"];
+        auto id = CustomDomainId(data.getString("id"));
+        if (id.isNull)
+            return errorResponse("Invalid Custom Domain ID", 400);
 
-            auto result = usecase.updateDomain(r);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Custom domain updated");
+        CreateCustomDomainRequest r;
+        r.tenantId = tenantId;
+        r.customDomainId = id;
+        r.domainName = data.getString("domainName");
+        r.organizationId = data.getString("organizationId");
+        r.spaceId = data.getString("spaceId");
+        r.environment = data.getString("environment");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto result = usecase.createDomain(r);
+        if (result.hasError) {
+            return Json.emptyObject
+                .set("error", result.errorMessage)
+                .set("status", "error")
+                .set("statusCode", 400);
         }
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Custom domain created")
+            .set("status", "success")
+            .set("statusCode", 201);
+
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto path = req.requestURI.to!string;
+
+        // Check for /activate or /deactivate suffix — skip
+        if (path.length > 9 && path[$ - 9 .. $] == "/activate")
+            return;
+        if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
+            return;
+
+        auto id = CustomDomainId(extractIdFromPath(path));
+        if (id.isNull) {
+            writeError(res, 400, "Invalid Custom Domain ID");
+            return;
+        }
+
+        auto d = usecase.getDomain(tenantId, id);
+        if (d.isNull) {
+            writeError(res, 404, "Custom domain not found");
+            return;
+        }
+
+        return Json.emptyObject
+            .set("data", Json.emptyObject
+                    .set("id", d.id)
+                    .set("domainName", d.domainName)
+                    .set("status", d.status.to!string)
+                    .set("environment", d.environment.to!string)
+                    .set("organizationId", d.organizationId)
+                    .set("spaceId", d.spaceId)
+                    .set("activeCertificateId", d.activeCertificateId)
+                    .set("tlsConfigurationId", d.tlsConfigurationId)
+                    .set("isShared", d.isShared)
+                    .set("sharedWithOrgs", d.sharedWithOrgs)
+                    .set("clientAuthEnabled", d.clientAuthEnabled)
+                    .set("createdBy", d.createdBy)
+                    .set("updatedBy", d.updatedBy)
+                    .set("createdAt", d.createdAt)
+                    .set("updatedAt", d.updatedAt))
+            .set("message", "Custom domain retrieved successfully")
+            .set("status", "success")
+            .set("statusCode", 200);
+    }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid Custom Domain ID", 400);
+
+        auto data = precheck["data"];
+
+        UpdateCustomDomainRequest r;
+        r.customDomainId = id;
+        r.tenantId = tenantId;
+        r.activeCertificateId = data.getString("activeCertificateId");
+        r.tlsConfigurationId = data.getString("tlsConfigurationId");
+        r.isShared = data.getBoolean("isShared");
+        r.sharedWithOrgs = data.getString("sharedWithOrgs");
+        r.clientAuthEnabled = data.getBoolean("clientAuthEnabled");
+        r.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateDomain(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Custom domain updated")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -168,12 +184,19 @@ class CustomDomainController : PlatformController {
             // Extract ID: strip /activate suffix, then extract last segment
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = CustomDomainId(extractIdFromPath(stripped));
+            if (id.isNull) {
+                writeError(res, 400, "Invalid Custom Domain ID");
+                return;
+            }
 
             auto result = usecase.activateDomain(tenantId, id);
             if (result.success) {
-                auto response = Json.emptyObject;
-                response["id"] = Json(result.id);
-                response["message"] = Json("Custom domain activated");
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Custom domain activated")
+                    .set("status", "success")
+                    .set("statusCode", 200);
+
                 res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.errorMessage);
@@ -190,12 +213,19 @@ class CustomDomainController : PlatformController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = CustomDomainId(extractIdFromPath(stripped));
+            if (id.isNull) {
+                writeError(res, 400, "Invalid Custom Domain ID");
+                return;
+            }
 
             auto result = usecase.deactivateDomain(tenantId, id);
             if (result.success) {
-                auto response = Json.emptyObject;
-                response["id"] = Json(result.id);
-                response["message"] = Json("Custom domain deactivated");
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Custom domain deactivated")
+                    .set("status", "success")
+                    .set("statusCode", 200);
+
                 res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.errorMessage);
@@ -205,23 +235,24 @@ class CustomDomainController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteDomain(tenantId, id);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Custom domain deleted");
-                    
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = getTenantId(precheck);
+        auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid Custom Domain ID", 400);
+
+        auto result = usecase.deleteDomain(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Custom domain deleted")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 }

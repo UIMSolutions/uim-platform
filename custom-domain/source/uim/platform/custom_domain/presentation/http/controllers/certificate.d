@@ -33,7 +33,7 @@ class CertificateController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
-            return errorResponse(precheck.error, 400);
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
         auto certs = certificates.listCertificates(tenantId);
@@ -60,27 +60,26 @@ class CertificateController : ManageController {
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.createHandler(req);
         if (precheck.hasError)
-            return errorResponse(precheck.error, 400);
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
         auto data = req.json;
+        auto id = CertificateId(data.getString("id"));
+        if (id.isNull)
+            return errorResponse("Invalid Certificate ID", 400);
 
         CreateCertificateRequest r;
         r.tenantId = tenantId;
-        r.certificateId = CertificateId(data.getString("id"));
+        r.certificateId = id;
         r.keyId = data.getString("keyId");
         r.certificateType = data.getString("certificateType");
         r.createdBy = UserId(data.getString("createdBy"));
 
         auto result = certificates.createCertificate(r);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -92,7 +91,7 @@ class CertificateController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return errorResponse(precheck.error, 400);
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
 
@@ -149,6 +148,10 @@ class CertificateController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
             auto id = CertificateId(extractIdFromPath(stripped));
+            if (id.isNull) {
+                writeError(res, 400, "Invalid Certificate ID");
+                return;
+            }
 
             auto j = req.json;
             UploadCertificateChainRequest r;
@@ -242,26 +245,21 @@ class CertificateController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
-            return errorResponse(precheck.error, 400);
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
         auto id = CertificateId(extractIdFromPath(req.requestURI.to!string));
-        if (id.isNull) {
-            writeError(res, 400, "Invalid Certificate ID");
-            return;
-        }
+        if (id.isNull)
+            return errorResponse("Invalid Certificate ID", 400);
 
         auto result = certificates.deleteCertificate(tenantId, id);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
 
         return Json.emptyObject
             .set("id", result.id)
-            .set("message", "Certificate deleted");
-
+            .set("message", "Certificate deleted")
+            .set("status", "success")
+            .set("statusCode", 200);
     }
 }

@@ -1,0 +1,51 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.rfc.application.usecases.manage.calls;
+
+import uim.platform.rfc;
+
+mixin(ShowModule!());
+@safe:
+
+class ManageCallsUseCase {
+
+    private RfcCallRepository _repo;
+
+    this(RfcCallRepository repo) { _repo = repo; }
+
+    RfcCall getCall(string tenantId, RfcCallId id) {
+        return _repo.findById(tenantId, id);
+    }
+
+    RfcCall[] listCalls(string tenantId) {
+        return _repo.findByTenant(tenantId);
+    }
+
+    RfcCall[] listCallsByDestination(string tenantId, DestinationId destId) {
+        return _repo.findByDestination(tenantId, destId);
+    }
+
+    RfcCall[] listCallsByTid(string tenantId, TidValue tid) {
+        return _repo.findByTid(tenantId, tid);
+    }
+
+    RfcCall[] listCallsByStatus(string tenantId, RfcStatus status) {
+        return _repo.findByStatus(tenantId, status);
+    }
+
+    CommandResult deleteCall(string tenantId, RfcCallId id) {
+        auto call = _repo.findById(tenantId, id);
+        if (call.isNull())
+            return CommandResult(false, id, "RFC call not found: " ~ id);
+        if (!_repo.remove(tenantId, id))
+            return CommandResult(false, id, "Failed to delete RFC call");
+        return CommandResult(true, id, "");
+    }
+
+    size_t countCalls(string tenantId) {
+        return _repo.countByTenant(tenantId);
+    }
+}

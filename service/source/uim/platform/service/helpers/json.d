@@ -37,3 +37,10 @@ Json errorResponse(string message = "Internal Server Error", int code = 500) {
         .set("statusCode", code);
 }
 
+Json errorResponse(Json json, string message = "Internal Server Error", int code = 500) {
+    return json.isObject ? json
+        .set("status", "error")
+        .set("error", message)
+        .set("statusCode", code) : errorResponse(message, code);
+}
+
