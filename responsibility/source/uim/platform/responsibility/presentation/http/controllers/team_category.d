@@ -61,7 +61,7 @@ class TeamCategoryController : ManageController {
         dto.code        = data.getString("code", "");
         auto result = _uc.createCategory(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
 
@@ -78,7 +78,7 @@ class TeamCategoryController : ManageController {
         dto.code        = data.getString("code", "");
         auto result = _uc.updateCategory(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 
@@ -89,7 +89,7 @@ class TeamCategoryController : ManageController {
         auto id = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteCategory(tenantId, id);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

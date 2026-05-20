@@ -76,9 +76,9 @@ class DestinationController : ManageController {
     }
 
     auto result = usecase.createDestination(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 
@@ -137,10 +137,10 @@ class DestinationController : ManageController {
     }
 
     auto result = usecase.updateDestination(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
-        .set("message", result.error)
-        .set("statusCode", result.error == "Destination not found" ? 404 : 400);
+        .set("message", result.errorMessage)
+        .set("statusCode", result.errorMessage == "Destination not found" ? 404 : 400);
     }
 
     return Json.emptyObject
@@ -154,10 +154,10 @@ class DestinationController : ManageController {
     auto id = DestinationId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteDestination(tenantId, id);
-    if (result.failure()) {
+    if (result.hasError()) {
         return Json.emptyObject
-          .set("message", result.error)
-          .set("statusCode", result.error == "Destination not found" ? 404 : 400);
+          .set("message", result.errorMessage)
+          .set("statusCode", result.errorMessage == "Destination not found" ? 404 : 400);
     }
 
     return Json.emptyObject

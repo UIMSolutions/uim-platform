@@ -13,6 +13,7 @@ dependency "uim-framework" version="~>26.5.1"
 // Internal Dependencies
 dependency ":service" version="*"
 
+dependency ":abap-compiler" version="*"
 dependency ":abap-environment" version="*"
 dependency ":advanced-events" version="*"
 dependency ":agentry" version="*"
@@ -70,6 +71,7 @@ sourceFiles "./source/uim/platform/all.d"
 // Subpackages
 subPackage "service"
 
+subPackage "abap-compiler"
 subPackage "abap-environment"
 subPackage "advanced-events"
 subPackage "agentry"

@@ -8,7 +8,6 @@ module uim.platform.appevents.domain.entities.formation;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.formation_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -23,14 +22,17 @@ struct Formation {
     int systemCount = 0;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]             = id.value;
-        j["tenantId"]       = tenantId.value;
-        j["name"]           = name;
-        j["description"]    = description;
-        j["globalAccountId"]= globalAccountId;
-        j["status"]         = status.to!string;
-        j["systemCount"]    = systemCount;
-        return j;
+        return Json.emptyObject
+            .set("id",              id.value)
+            .set("tenantId",        tenantId.value)
+            .set("name",            name)
+            .set("description",     description)
+            .set("globalAccountId", globalAccountId)
+            .set("status",          status.to!string)
+            .set("systemCount",     systemCount)
+            .set("createdAt",       createdAt)
+            .set("createdBy",       createdBy.value)
+            .set("updatedAt",       updatedAt)
+            .set("updatedBy",       updatedBy.value);
     }
 }

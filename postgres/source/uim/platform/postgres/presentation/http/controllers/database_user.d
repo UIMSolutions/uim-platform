@@ -27,8 +27,8 @@ class DatabaseUserController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto items = users.listDatabaseUsers(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -39,8 +39,8 @@ class DatabaseUserController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = users.getDatabaseUser(tenantId, id);
@@ -50,8 +50,8 @@ class DatabaseUserController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         DatabaseUserDTO dto;
         dto.databaseUserId = DatabaseUserId(data.getString("databaseUserId", ""));
@@ -61,14 +61,14 @@ class DatabaseUserController : ManageController {
         dto.roles          = data.getString("roles", "readonly");
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = users.createDatabaseUser(dto);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Database user created successfully").set("status", "success").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         DatabaseUserDTO dto;
         dto.databaseUserId = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
@@ -76,17 +76,17 @@ class DatabaseUserController : ManageController {
         dto.roles          = data.getString("roles", "");
         dto.updatedBy      = UserId(data.getString("updatedBy", ""));
         auto result = users.updateDatabaseUser(dto);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Database user updated successfully").set("status", "success").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
         auto result = users.deleteDatabaseUser(tenantId, id);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Database user deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

@@ -29,10 +29,10 @@ class CredentialController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto items = creds.listCredentials(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -44,10 +44,10 @@ class CredentialController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
@@ -61,10 +61,10 @@ class CredentialController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
 
         CredentialDTO dto;
@@ -78,18 +78,18 @@ class CredentialController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy", ""));
 
         auto result = creds.createCredential(dto);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential created").set("status", "created").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -104,25 +104,25 @@ class CredentialController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy", ""));
 
         auto result = creds.updateCredential(dto);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential updated").set("status", "updated").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
 
         auto result = creds.deleteCredential(tenantId, id);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential deleted").set("status", "deleted").set("statusCode", 200);
     }

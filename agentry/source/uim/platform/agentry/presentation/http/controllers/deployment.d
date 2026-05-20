@@ -72,7 +72,7 @@ class DeploymentController : PlatformController {
             dto.notes = j.getString("notes");
 
             auto result = usecase.createDeployment(dto);
-            if (!result.success) { writeError(res, 400, result.error); return; }
+            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -95,7 +95,7 @@ class DeploymentController : PlatformController {
             dto.scheduledAt = j.getString("scheduledAt");
 
             auto result = usecase.updateDeployment(dto);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -112,7 +112,7 @@ class DeploymentController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = DeploymentId(extractIdFromPath(path));
             auto result = usecase.deleteDeployment(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Deployment deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

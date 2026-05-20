@@ -94,7 +94,7 @@ class TaskCliController {
         if (result.success)
             dv.renderSuccess("Task '" ~ id ~ "' marked as completed.");
         else
-            dv.renderError(result.error);
+            dv.renderError(result.errorMessage);
         return result.success ? 0 : 1;
     }
 

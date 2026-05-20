@@ -52,7 +52,7 @@ class TagController : PlatformController {
 
         res.writeJsonBody(resp, 201);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -113,7 +113,7 @@ class TagController : PlatformController {
           .set("message", "Tag updated successfully");
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -132,7 +132,7 @@ class TagController : PlatformController {
           .set("message", "Tag deleted successfully");
         res.writeJsonBody(resp, 204);
       } else {
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
       }
     }
     catch (Exception e) {

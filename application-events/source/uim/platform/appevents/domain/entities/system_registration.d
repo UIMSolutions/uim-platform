@@ -9,7 +9,6 @@ import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.system_type;
 import uim.platform.appevents.domain.enums.system_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -25,15 +24,16 @@ struct SystemRegistration {
     long registeredAt;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]           = id.value;
-        j["tenantId"]     = tenantId.value;
-        j["formationId"]  = formationId.value;
-        j["systemId"]     = systemId;
-        j["systemType"]   = systemType.to!string;
-        j["systemUrl"]    = systemUrl;
-        j["status"]       = status.to!string;
-        j["registeredAt"] = registeredAt;
-        return j;
+        return Json.emptyObject
+            .set("id",           id.value)
+            .set("tenantId",     tenantId.value)
+            .set("formationId",  formationId.value)
+            .set("systemId",     systemId)
+            .set("systemType",   systemType.to!string)
+            .set("systemUrl",    systemUrl)
+            .set("status",       status.to!string)
+            .set("registeredAt", registeredAt)
+            .set("createdAt",    createdAt)
+            .set("createdBy",    createdBy.value);
     }
 }

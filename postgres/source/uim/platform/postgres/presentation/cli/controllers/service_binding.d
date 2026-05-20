@@ -55,13 +55,13 @@ class CliServiceBindingController {
         dto.appId      = args[1];
         auto result = _useCase.createServiceBinding(dto);
         if (result.success) _view.renderSuccess("Created binding: " ~ result.id);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteServiceBinding(tenantId, ServiceBindingId(args[0]));
         if (result.success) _view.renderSuccess("Deleted binding: " ~ args[0]);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 }

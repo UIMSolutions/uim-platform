@@ -9,7 +9,6 @@ import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.filter_type;
 import uim.platform.appevents.domain.enums.filter_operator;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -25,15 +24,16 @@ struct EventFilter {
     bool active = true;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]             = id.value;
-        j["tenantId"]       = tenantId.value;
-        j["subscriptionId"] = subscriptionId.value;
-        j["filterType"]     = filterType.to!string;
-        j["attribute"]      = attribute;
-        j["operator"]       = operator_.to!string;
-        j["value"]          = value;
-        j["active"]         = active;
-        return j;
+        return Json.emptyObject
+            .set("id",             id.value)
+            .set("tenantId",       tenantId.value)
+            .set("subscriptionId", subscriptionId.value)
+            .set("filterType",     filterType.to!string)
+            .set("attribute",      attribute)
+            .set("operator",       operator_.to!string)
+            .set("value",          value)
+            .set("active",         active)
+            .set("createdAt",      createdAt)
+            .set("createdBy",      createdBy.value);
     }
 }

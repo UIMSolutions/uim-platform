@@ -82,7 +82,7 @@ class ConfigurationController : ManageController {
       return resp;
     } else {
       auto resp = Json.emptyObject
-        .set("error", result.error);
+        .set("error", result.errorMessage);
       return resp;
     }
   }
@@ -115,9 +115,9 @@ class ConfigurationController : ManageController {
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto result = usecase.deleteConfiguration(tenantId, rgId, id);
-    if (result.failure) {
+    if (result.hasError) {
       return Json.emptyObject
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Failed to delete configuration")
         .set("statusCode", 404);
     }

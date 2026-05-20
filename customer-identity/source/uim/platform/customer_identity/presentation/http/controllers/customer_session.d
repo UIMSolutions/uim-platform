@@ -29,10 +29,10 @@ class CustomerSessionController : PlatformController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto items = sessions.listSessions(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -45,10 +45,10 @@ class CustomerSessionController : PlatformController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto j = req.json;
 
         CustomerSessionDTO dto;
@@ -64,15 +64,15 @@ class CustomerSessionController : PlatformController {
         auto result = sessions.createSession(dto);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Session created").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = CustomerSessionId(extractIdFromPath(path));
         if (id.isNull)
@@ -87,10 +87,10 @@ class CustomerSessionController : PlatformController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = CustomerSessionId(extractIdFromPath(path));
         if (id.isNull)
@@ -99,6 +99,6 @@ class CustomerSessionController : PlatformController {
         auto result = sessions.revokeSession(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("message", "Session revoked").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 404);
+        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 404);
     }
 }

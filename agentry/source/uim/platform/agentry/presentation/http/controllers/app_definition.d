@@ -73,7 +73,7 @@ class AppDefinitionController : PlatformController {
             dto.businessObjectModel = j.getString("businessObjectModel");
 
             auto result = usecase.createAppDefinition(dto);
-            if (!result.success) { writeError(res, 400, result.error); return; }
+            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -98,7 +98,7 @@ class AppDefinitionController : PlatformController {
             dto.schemaVersion = j.getString("schemaVersion");
 
             auto result = usecase.updateAppDefinition(dto);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -115,7 +115,7 @@ class AppDefinitionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = AppDefinitionId(extractIdFromPath(path));
             auto result = usecase.deleteAppDefinition(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "App definition deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

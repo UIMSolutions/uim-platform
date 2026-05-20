@@ -8,8 +8,6 @@ module uim.platform.appevents.domain.entities.event_subscription;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.subscription_status;
-import uim.platform.appevents.domain.enums.formation_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -26,24 +24,23 @@ struct EventSubscription {
     FormationId formationId;
     string filterExpression;
     int maxRetries = 3;
-    long createdAt;
-    long updatedAt;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]               = id.value;
-        j["tenantId"]         = tenantId.value;
-        j["name"]             = name;
-        j["description"]      = description;
-        j["producerSystemId"] = producerSystemId;
-        j["consumerSystemId"] = consumerSystemId;
-        j["eventType"]        = eventType;
-        j["status"]           = status.to!string;
-        j["formationId"]      = formationId.value;
-        j["filterExpression"] = filterExpression;
-        j["maxRetries"]       = maxRetries;
-        j["createdAt"]        = createdAt;
-        j["updatedAt"]        = updatedAt;
-        return j;
+        return Json.emptyObject
+            .set("id",               id.value)
+            .set("tenantId",         tenantId.value)
+            .set("name",             name)
+            .set("description",      description)
+            .set("producerSystemId", producerSystemId)
+            .set("consumerSystemId", consumerSystemId)
+            .set("eventType",        eventType)
+            .set("status",           status.to!string)
+            .set("formationId",      formationId.value)
+            .set("filterExpression", filterExpression)
+            .set("maxRetries",       maxRetries)
+            .set("createdAt",        createdAt)
+            .set("createdBy",        createdBy.value)
+            .set("updatedAt",        updatedAt)
+            .set("updatedBy",        updatedBy.value);
     }
 }

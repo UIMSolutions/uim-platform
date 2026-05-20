@@ -58,7 +58,7 @@ class ModelController : PlatformController {
         res.writeJsonBody(resp, 201);
       }
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -126,8 +126,8 @@ class ModelController : PlatformController {
       }
       else
       {
-        auto status = result.error == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.error);
+        auto status = result.errorMessage == "Model configuration not found" ? 404 : 400;
+        writeError(res, status, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -151,8 +151,8 @@ class ModelController : PlatformController {
       }
       else
       {
-        auto status = result.error == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.error);
+        auto status = result.errorMessage == "Model configuration not found" ? 404 : 400;
+        writeError(res, status, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -179,7 +179,7 @@ class ModelController : PlatformController {
         res.writeJsonBody(resp, 202);
       }
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -201,8 +201,8 @@ class ModelController : PlatformController {
       }
       else
       {
-        auto status = result.error == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.error);
+        auto status = result.errorMessage == "Model configuration not found" ? 404 : 400;
+        writeError(res, status, result.errorMessage);
       }
     }
     catch (Exception e) {

@@ -46,7 +46,7 @@ class ScalingEngineController : PlatformController {
             .set("scaling_history_id", result.id)
             .set("message", "Scaling evaluation completed"), 200);
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

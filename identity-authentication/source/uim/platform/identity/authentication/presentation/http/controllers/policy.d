@@ -55,7 +55,7 @@ class PolicyController : PlatformController {
         response["policyId"] = Json(result.policyId);
         res.writeJsonBody(response, 201);
       } else {
-        response["error"] = Json(result.error);
+        response["error"] = Json(result.errorMessage);
         res.writeJsonBody(response, 400);
       }
     } catch (Exception e) {

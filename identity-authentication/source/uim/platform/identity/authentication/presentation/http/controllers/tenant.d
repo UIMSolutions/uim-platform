@@ -47,7 +47,7 @@ class TenantController : PlatformController {
         response["tenantId"] = Json(result.tenantId);
         res.writeJsonBody(response, 201);
       } else {
-        response["error"] = Json(result.error);
+        response["error"] = Json(result.errorMessage);
         res.writeJsonBody(response, 409);
       }
     } catch (Exception e) {

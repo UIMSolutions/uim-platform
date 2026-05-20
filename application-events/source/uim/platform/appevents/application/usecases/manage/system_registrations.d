@@ -9,64 +9,46 @@ import uim.platform.service;
 import uim.platform.appevents.domain.entities.system_registration;
 import uim.platform.appevents.domain.repositories.system_registrations;
 import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.system_type;
-import uim.platform.appevents.domain.enums.system_status;
 import uim.platform.appevents.application.dto;
 import std.datetime.systime : Clock;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageSystemRegistrationsUseCase {
-    private SystemRegistrationRepository _repo;
+    private SystemRegistrationRepository repo;
 
-    this(SystemRegistrationRepository repo) {
-        _repo = repo;
-    }
+    this(SystemRegistrationRepository repo) { this.repo = repo; }
 
     SystemRegistration getSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SystemRegistration[] listSystemRegistrations(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SystemRegistration[] listByFormation(TenantId tenantId, FormationId formationId) {
-        return _repo.findByFormation(tenantId, formationId);
+        return repo.findByFormation(tenantId, formationId);
     }
 
-    CommandResult registerSystem(TenantId tenantId, SystemRegistrationDTO dto) {
+    CommandResult registerSystem(SystemRegistrationDTO dto) {
         SystemRegistration reg;
-        reg.id = SystemRegistrationId(randomUUID().to!string);
-        reg.tenantId = tenantId;
-        reg.formationId = FormationId(dto.formationId);
+        reg.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.registrationId.isNull) reg.id = dto.registrationId;
+        reg.formationId = dto.formationId;
         reg.systemId = dto.systemId;
         reg.systemType = dto.systemType;
         reg.systemUrl = dto.systemUrl;
         reg.status = dto.status;
-        reg.registeredAt = Clock.currTime().toUnixTime();
-        _repo.save(tenantId, reg);
-        return CommandResult(true, reg.id.value);
-    }
-
-    CommandResult updateSystemRegistration(TenantId tenantId, SystemRegistrationId id, SystemRegistrationDTO dto) {
-        auto reg = _repo.findById(tenantId, id);
-        if (reg.id.isNull) return CommandResult(false, "System registration not found");
-        reg.formationId = FormationId(dto.formationId);
-        reg.systemId = dto.systemId;
-        reg.systemType = dto.systemType;
-        reg.systemUrl = dto.systemUrl;
-        reg.status = dto.status;
-        _repo.save(tenantId, reg);
-        return CommandResult(true, id.value);
+        reg.registeredAt = Clock.currStdTime();
+        repo.save(reg);
+        return CommandResult(true, reg.id.value, "");
     }
 
     CommandResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
-        auto reg = _repo.findById(tenantId, id);
-        if (reg.id.isNull) return CommandResult(false, "System registration not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto reg = repo.findById(tenantId, id);
+        if (reg.isNull) return CommandResult(false, "", "System registration not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

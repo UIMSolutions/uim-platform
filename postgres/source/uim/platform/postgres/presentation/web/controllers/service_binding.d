@@ -54,7 +54,7 @@ class WebServiceBindingController {
         dto.appId      = data.getString("appId", "");
         auto result = _useCase.createServiceBinding(dto);
         if (result.success) _model.setSuccess("Binding created: " ~ result.id);
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         auto list = _useCase.listServiceBindings(tenantId);
         _model.setBindings(list);
         _view.renderList(res, _model);
@@ -65,7 +65,7 @@ class WebServiceBindingController {
         auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteServiceBinding(tenantId, id);
         if (result.success) _model.setSuccess("Binding deleted");
-        else                _model.setError(404, result.error);
+        else                _model.setError(404, result.errorMessage);
         auto list = _useCase.listServiceBindings(tenantId);
         _model.setBindings(list);
         _view.renderList(res, _model);

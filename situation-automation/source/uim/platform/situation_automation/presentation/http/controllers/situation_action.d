@@ -60,7 +60,7 @@ class SituationActionController : PlatformController {
 
                 res.writeJsonBody(resp, 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -160,7 +160,7 @@ class SituationActionController : PlatformController {
 
                 res.writeJsonBody(resp, 200);
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -180,7 +180,7 @@ class SituationActionController : PlatformController {
 
                 res.writeJsonBody(resp, 200);
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

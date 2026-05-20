@@ -85,7 +85,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (!result.valid) {
       // import std.algorithm : joiner;
 
-      return CommandResult(false, "", result.errors.joiner("; ").to!string);
+      return CommandResult(false, "", result.errorMessages.joiner("; ").to!string);
     }
 
     site.status = SiteStatus.published;

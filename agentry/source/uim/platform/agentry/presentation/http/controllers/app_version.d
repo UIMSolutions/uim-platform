@@ -73,7 +73,7 @@ class AppVersionController : PlatformController {
             dto.isMandatoryUpdate = j.getBool("isMandatoryUpdate");
 
             auto result = usecase.createAppVersion(dto);
-            if (!result.success) { writeError(res, 400, result.error); return; }
+            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -97,7 +97,7 @@ class AppVersionController : PlatformController {
             dto.changeLog = j.getString("changeLog");
 
             auto result = usecase.updateAppVersion(dto);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -114,7 +114,7 @@ class AppVersionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = AppVersionId(extractIdFromPath(path));
             auto result = usecase.deleteAppVersion(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "App version deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

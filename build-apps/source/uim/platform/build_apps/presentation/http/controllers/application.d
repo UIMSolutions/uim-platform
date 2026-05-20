@@ -30,11 +30,11 @@ class ApplicationController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
 
         auto items = usecase.listApplications(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -49,11 +49,11 @@ class ApplicationController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto id = ApplicationId(data.getString("id"));
         if (id.isNull) {
@@ -79,9 +79,9 @@ class ApplicationController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createApplication(dto);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -95,11 +95,11 @@ class ApplicationController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = ApplicationId(extractIdFromPath(path));
         if (id.isNull) {
@@ -125,11 +125,11 @@ class ApplicationController : ManageController {
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = ApplicationId(extractIdFromPath(path));
         if (id.isNull) {
@@ -150,9 +150,9 @@ class ApplicationController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateApplication(dto);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -165,20 +165,20 @@ class ApplicationController : ManageController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto applicationId = ApplicationId(extractIdFromPath(path));
 
         auto result = usecase.deleteApplication(tenantId, applicationId);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

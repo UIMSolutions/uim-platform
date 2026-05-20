@@ -8,7 +8,6 @@ module uim.platform.appevents.domain.entities.event_message;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.message_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -25,22 +24,21 @@ struct EventMessage {
     int retryCount = 0;
     string failedReason;
     long deliveredAt;
-    long createdAt;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]             = id.value;
-        j["tenantId"]       = tenantId.value;
-        j["channelId"]      = channelId.value;
-        j["eventType"]      = eventType;
-        j["payload"]        = payload;
-        j["status"]         = status.to!string;
-        j["sourceSystemId"] = sourceSystemId;
-        j["targetSystemId"] = targetSystemId;
-        j["retryCount"]     = retryCount;
-        j["failedReason"]   = failedReason;
-        j["deliveredAt"]    = deliveredAt;
-        j["createdAt"]      = createdAt;
-        return j;
+        return Json.emptyObject
+            .set("id",             id.value)
+            .set("tenantId",       tenantId.value)
+            .set("channelId",      channelId.value)
+            .set("eventType",      eventType)
+            .set("payload",        payload)
+            .set("status",         status.to!string)
+            .set("sourceSystemId", sourceSystemId)
+            .set("targetSystemId", targetSystemId)
+            .set("retryCount",     retryCount)
+            .set("failedReason",   failedReason)
+            .set("deliveredAt",    deliveredAt)
+            .set("createdAt",      createdAt)
+            .set("createdBy",      createdBy.value);
     }
 }

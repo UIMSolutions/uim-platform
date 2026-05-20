@@ -58,13 +58,13 @@ class CliMaintenanceWindowController {
         dto.autoMinorVersionUpgrade = true;
         auto result = _useCase.createMaintenanceWindow(dto);
         if (result.success) _view.renderSuccess("Created maintenance window: " ~ result.id);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteMaintenanceWindow(tenantId, MaintenanceWindowId(args[0]));
         if (result.success) _view.renderSuccess("Deleted maintenance window: " ~ args[0]);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 }

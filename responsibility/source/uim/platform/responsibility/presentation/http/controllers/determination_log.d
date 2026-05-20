@@ -52,7 +52,7 @@ class DeterminationLogController : ManageController {
         auto id = DeterminationLogId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteLog(tenantId, id);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

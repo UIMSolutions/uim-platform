@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: abap-compiler-config
+  labels:
+    app: abap-compiler
+    part-of: uim-platform
+data:
+  ABAPCOMPILER_HOST: "0.0.0.0"
+  ABAPCOMPILER_PORT: "8093"

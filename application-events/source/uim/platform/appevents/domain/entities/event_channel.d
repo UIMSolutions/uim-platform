@@ -10,7 +10,6 @@ import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.channel_type;
 import uim.platform.appevents.domain.enums.channel_status;
 import uim.platform.appevents.domain.enums.delivery_mode;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -27,16 +26,19 @@ struct EventChannel {
     long maxSizeBytes = 1_048_576;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]           = id.value;
-        j["tenantId"]     = tenantId.value;
-        j["name"]         = name;
-        j["topicId"]      = topicId.value;
-        j["channelType"]  = channelType.to!string;
-        j["endpoint"]     = endpoint;
-        j["status"]       = status.to!string;
-        j["deliveryMode"] = deliveryMode.to!string;
-        j["maxSizeBytes"] = maxSizeBytes;
-        return j;
+        return Json.emptyObject
+            .set("id",           id.value)
+            .set("tenantId",     tenantId.value)
+            .set("name",         name)
+            .set("topicId",      topicId.value)
+            .set("channelType",  channelType.to!string)
+            .set("endpoint",     endpoint)
+            .set("status",       status.to!string)
+            .set("deliveryMode", deliveryMode.to!string)
+            .set("maxSizeBytes", maxSizeBytes)
+            .set("createdAt",    createdAt)
+            .set("createdBy",    createdBy.value)
+            .set("updatedAt",    updatedAt)
+            .set("updatedBy",    updatedBy.value);
     }
 }

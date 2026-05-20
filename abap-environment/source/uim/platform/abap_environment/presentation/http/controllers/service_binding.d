@@ -60,10 +60,10 @@ class ServiceBindingController : ManageController {
     r.bindingType = j.getString("bindingType");
 
     auto result = usecase.createServiceBinding(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", 400)
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Failed to create service binding");
     }
     return Json.emptyObject
@@ -101,10 +101,10 @@ class ServiceBindingController : ManageController {
     r.status = j.getString("status");
 
     auto result = usecase.updateServiceBinding(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Service binding not found");
     }
     return Json.emptyObject
@@ -117,10 +117,10 @@ class ServiceBindingController : ManageController {
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteServiceBinding(tenantId, id);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Service binding not found");
     }
     return Json.emptyObject

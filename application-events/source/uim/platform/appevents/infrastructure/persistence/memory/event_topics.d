@@ -20,14 +20,14 @@ class MemoryEventTopicRepository
     , EventTopicRepository
 {
     override EventTopic[] findByStatus(TenantId tenantId, TopicStatus status) {
-        return findAll(tenantId).filter!(t => t.status == status).array;
+        return findByTenant(tenantId).filter!(t => t.status == status).array;
     }
 
     override EventTopic[] findByNamespace(TenantId tenantId, string namespace) {
-        return findAll(tenantId).filter!(t => t.namespace == namespace).array;
+        return findByTenant(tenantId).filter!(t => t.namespace == namespace).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findAll(tenantId).filter!(t => t.name == name).array.length > 0;
+        return findByTenant(tenantId).filter!(t => t.name == name).array.length > 0;
     }
 }

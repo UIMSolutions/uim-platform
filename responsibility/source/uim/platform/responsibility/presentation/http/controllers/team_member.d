@@ -66,7 +66,7 @@ class TeamMemberController : ManageController {
         dto.validTo      = data.getString("validTo", "");
         auto result = _uc.addMember(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
 
@@ -83,7 +83,7 @@ class TeamMemberController : ManageController {
         dto.validTo     = data.getString("validTo", "");
         auto result = _uc.updateMember(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 
@@ -94,7 +94,7 @@ class TeamMemberController : ManageController {
         auto id = TeamMemberId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.removeMember(tenantId, id);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

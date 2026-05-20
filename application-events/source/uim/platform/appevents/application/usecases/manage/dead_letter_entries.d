@@ -12,48 +12,44 @@ import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.dead_letter_status;
 import uim.platform.appevents.application.dto;
 import std.datetime.systime : Clock;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageDeadLetterEntriesUseCase {
-    private DeadLetterEntryRepository _repo;
+    private DeadLetterEntryRepository repo;
 
-    this(DeadLetterEntryRepository repo) {
-        _repo = repo;
-    }
+    this(DeadLetterEntryRepository repo) { this.repo = repo; }
 
     DeadLetterEntry getDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DeadLetterEntry[] listDeadLetterEntries(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DeadLetterEntry[] listByStatus(TenantId tenantId, DeadLetterStatus status) {
-        return _repo.findByStatus(tenantId, status);
+        return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createDeadLetterEntry(TenantId tenantId, DeadLetterEntryDTO dto) {
+    CommandResult createDeadLetterEntry(DeadLetterEntryDTO dto) {
         DeadLetterEntry entry;
-        entry.id = DeadLetterEntryId(randomUUID().to!string);
-        entry.tenantId = tenantId;
-        entry.originalMessageId = EventMessageId(dto.originalMessageId);
-        entry.channelId = EventChannelId(dto.channelId);
+        entry.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.entryId.isNull) entry.id = dto.entryId;
+        entry.originalMessageId = dto.originalMessageId;
+        entry.channelId = dto.channelId;
         entry.errorMessage = dto.errorMessage;
-        entry.failedAt = dto.failedAt > 0 ? dto.failedAt : Clock.currTime().toUnixTime();
+        entry.failedAt = dto.failedAt > 0 ? dto.failedAt : Clock.currStdTime();
         entry.retryCount = 0;
         entry.status = DeadLetterStatus.pending;
-        _repo.save(tenantId, entry);
-        return CommandResult(true, entry.id.value);
+        repo.save(entry);
+        return CommandResult(true, entry.id.value, "");
     }
 
     CommandResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
-        auto entry = _repo.findById(tenantId, id);
-        if (entry.id.isNull) return CommandResult(false, "Dead-letter entry not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto entry = repo.findById(tenantId, id);
+        if (entry.isNull) return CommandResult(false, "", "Dead-letter entry not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

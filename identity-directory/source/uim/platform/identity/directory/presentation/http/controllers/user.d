@@ -57,7 +57,7 @@ class UserController : PlatformController {
       } else {
         response["schemas"] = Json.emptyArray;
         response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
-        response["detail"] = Json(result.error);
+        response["detail"] = Json(result.errorMessage);
         response["status"] = Json("409");
         res.writeJsonBody(response, 409);
       }

@@ -74,7 +74,7 @@ class WebhookController : PlatformController {
             auto result = usecase.createWebhook(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook created"), 201);
-            } else { writeError(res, 400, result.error); }
+            } else { writeError(res, 400, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -95,7 +95,7 @@ class WebhookController : PlatformController {
             auto result = usecase.updateWebhook(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook updated"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -106,7 +106,7 @@ class WebhookController : PlatformController {
             auto result = usecase.deleteWebhook(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook deleted"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

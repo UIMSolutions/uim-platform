@@ -29,10 +29,10 @@ class BuildController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto items = builds.listBuilds(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -44,10 +44,10 @@ class BuildController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);
@@ -61,10 +61,10 @@ class BuildController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
 
         BuildDTO dto;
@@ -78,18 +78,18 @@ class BuildController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy", ""));
 
         auto result = builds.triggerBuild(dto);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build triggered").set("status", "created").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -97,25 +97,25 @@ class BuildController : ManageController {
 
         auto errorMessage = data.getString("errorMessage", "");
         auto result = builds.updateBuildStatus(tenantId, id, BuildStatus.running, errorMessage);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build updated").set("status", "updated").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);
 
         auto result = builds.deleteBuild(tenantId, id);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build deleted").set("status", "deleted").set("statusCode", 200);
     }

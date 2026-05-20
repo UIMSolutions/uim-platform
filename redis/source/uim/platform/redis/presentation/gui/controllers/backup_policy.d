@@ -38,14 +38,14 @@ class GuiBackupPolicyController {
         dto.tenantId = _tenantId;
         auto result = _useCase.createBackupPolicy(dto);
         if (result.success) _model.setSuccess("Created: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setPolicies(_useCase.listBackupPolicies(_tenantId));
         return _view.buildListDescriptor(_model);
     }
     Json handleDelete(BackupPolicyId id) {
         auto result = _useCase.deleteBackupPolicy(_tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setPolicies(_useCase.listBackupPolicies(_tenantId));
         return _view.buildListDescriptor(_model);
     }

@@ -9,63 +9,59 @@ import uim.platform.service;
 import uim.platform.appevents.domain.entities.event_channel;
 import uim.platform.appevents.domain.repositories.event_channels;
 import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.channel_status;
 import uim.platform.appevents.application.dto;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageEventChannelsUseCase {
-    private EventChannelRepository _repo;
+    private EventChannelRepository repo;
 
-    this(EventChannelRepository repo) {
-        _repo = repo;
-    }
+    this(EventChannelRepository repo) { this.repo = repo; }
 
     EventChannel getEventChannel(TenantId tenantId, EventChannelId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventChannel[] listEventChannels(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
-    CommandResult createEventChannel(TenantId tenantId, EventChannelDTO dto) {
-        if (_repo.nameExists(tenantId, dto.name))
-            return CommandResult(false, "Channel name already exists");
+    CommandResult createEventChannel(EventChannelDTO dto) {
+        if (repo.nameExists(dto.tenantId, dto.name))
+            return CommandResult(false, "", "Channel name already exists");
         EventChannel ch;
-        ch.id = EventChannelId(randomUUID().to!string);
-        ch.tenantId = tenantId;
+        ch.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.channelId.isNull) ch.id = dto.channelId;
         ch.name = dto.name;
-        ch.topicId = EventTopicId(dto.topicId);
+        ch.topicId = dto.topicId;
         ch.channelType = dto.channelType;
         ch.endpoint = dto.endpoint;
         ch.status = dto.status;
         ch.deliveryMode = dto.deliveryMode;
         ch.maxSizeBytes = dto.maxSizeBytes;
-        _repo.save(tenantId, ch);
-        return CommandResult(true, ch.id.value);
+        repo.save(ch);
+        return CommandResult(true, ch.id.value, "");
     }
 
-    CommandResult updateEventChannel(TenantId tenantId, EventChannelId id, EventChannelDTO dto) {
-        auto ch = _repo.findById(tenantId, id);
-        if (ch.id.isNull) return CommandResult(false, "Channel not found");
+    CommandResult updateEventChannel(EventChannelDTO dto) {
+        auto ch = repo.findById(dto.tenantId, dto.channelId);
+        if (ch.isNull) return CommandResult(false, "", "Channel not found");
         ch.name = dto.name;
-        ch.topicId = EventTopicId(dto.topicId);
+        ch.topicId = dto.topicId;
         ch.channelType = dto.channelType;
         ch.endpoint = dto.endpoint;
         ch.status = dto.status;
         ch.deliveryMode = dto.deliveryMode;
         ch.maxSizeBytes = dto.maxSizeBytes;
-        _repo.save(tenantId, ch);
-        return CommandResult(true, id.value);
+        if (!dto.updatedBy.isNull) ch.updatedBy = dto.updatedBy;
+        repo.update(ch);
+        return CommandResult(true, ch.id.value, "");
     }
 
     CommandResult deleteEventChannel(TenantId tenantId, EventChannelId id) {
-        auto ch = _repo.findById(tenantId, id);
-        if (ch.id.isNull) return CommandResult(false, "Channel not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto ch = repo.findById(tenantId, id);
+        if (ch.isNull) return CommandResult(false, "", "Channel not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

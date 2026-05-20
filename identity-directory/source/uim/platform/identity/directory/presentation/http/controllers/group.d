@@ -56,7 +56,7 @@ class GroupController : PlatformController {
 
         res.writeJsonBody(response, 201);
       } else {
-        writeScimError(res, 409, result.error);
+        writeScimError(res, 409, result.errorMessage);
       }
     } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");

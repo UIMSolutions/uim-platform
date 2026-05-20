@@ -85,7 +85,7 @@ class DocumentVersionController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document version created"), 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -99,7 +99,7 @@ class DocumentVersionController : PlatformController {
             auto id = DocumentVersionId(extractIdFromPath(path));
             auto result = usecase.deleteDocumentVersion(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document version deleted"), 200);
-            else writeError(res, 400, result.error);
+            else writeError(res, 400, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -66,11 +66,11 @@ class SoftwareComponentController : ManageController {
     request.namespace = j.getString("namespace");
 
     auto result = usecase.createSoftwareComponent(request);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", 400)
         .set("statusCode", 400)
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Failed to create software component");
     }
 
@@ -122,7 +122,7 @@ class SoftwareComponentController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -148,7 +148,7 @@ class SoftwareComponentController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -160,10 +160,10 @@ class SoftwareComponentController : ManageController {
     auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.error)
+        .set("error", result.errorMessage)
         .set("message", "Software component not found");
     }
     return Json.emptyObject

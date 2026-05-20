@@ -11,51 +11,45 @@ import uim.platform.appevents.domain.repositories.event_messages;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.message_status;
 import uim.platform.appevents.application.dto;
-import std.datetime.systime : Clock;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageEventMessagesUseCase {
-    private EventMessageRepository _repo;
+    private EventMessageRepository repo;
 
-    this(EventMessageRepository repo) {
-        _repo = repo;
-    }
+    this(EventMessageRepository repo) { this.repo = repo; }
 
     EventMessage getEventMessage(TenantId tenantId, EventMessageId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventMessage[] listEventMessages(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     EventMessage[] listByChannel(TenantId tenantId, EventChannelId channelId) {
-        return _repo.findByChannel(tenantId, channelId);
+        return repo.findByChannel(tenantId, channelId);
     }
 
-    CommandResult publishMessage(TenantId tenantId, EventMessageDTO dto) {
+    CommandResult publishMessage(EventMessageDTO dto) {
         EventMessage msg;
-        msg.id = EventMessageId(randomUUID().to!string);
-        msg.tenantId = tenantId;
-        msg.channelId = EventChannelId(dto.channelId);
+        msg.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.messageId.isNull) msg.id = dto.messageId;
+        msg.channelId = dto.channelId;
         msg.eventType = dto.eventType;
         msg.payload = dto.payload;
         msg.status = MessageStatus.pending;
         msg.sourceSystemId = dto.sourceSystemId;
         msg.targetSystemId = dto.targetSystemId;
         msg.retryCount = 0;
-        msg.createdAt = Clock.currTime().toUnixTime();
-        _repo.save(tenantId, msg);
-        return CommandResult(true, msg.id.value);
+        repo.save(msg);
+        return CommandResult(true, msg.id.value, "");
     }
 
     CommandResult deleteEventMessage(TenantId tenantId, EventMessageId id) {
-        auto msg = _repo.findById(tenantId, id);
-        if (msg.id.isNull) return CommandResult(false, "Message not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto msg = repo.findById(tenantId, id);
+        if (msg.isNull) return CommandResult(false, "", "Message not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

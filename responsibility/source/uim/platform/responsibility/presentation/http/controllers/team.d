@@ -64,7 +64,7 @@ class TeamController : ManageController {
         dto.scope_      = data.getString("scope", "global");
         auto result = _uc.createTeam(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
 
@@ -81,7 +81,7 @@ class TeamController : ManageController {
         dto.status      = data.getString("status", "active");
         auto result = _uc.updateTeam(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 
@@ -92,7 +92,7 @@ class TeamController : ManageController {
         auto id = TeamId(extractIdFromPath(req.requestURI.to!string));
         auto result = _uc.deleteTeam(tenantId, id);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

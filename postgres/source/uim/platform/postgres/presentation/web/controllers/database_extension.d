@@ -55,7 +55,7 @@ class WebDatabaseExtensionController {
         dto.schema_       = data.getString("schema", "public");
         auto result = _useCase.createDatabaseExtension(dto);
         if (result.success) _model.setSuccess("Extension enabled: " ~ result.id);
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         auto list = _useCase.listDatabaseExtensions(tenantId);
         _model.setExtensions(list);
         _view.renderList(res, _model);
@@ -66,7 +66,7 @@ class WebDatabaseExtensionController {
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteDatabaseExtension(tenantId, id);
         if (result.success) _model.setSuccess("Extension disabled");
-        else                _model.setError(404, result.error);
+        else                _model.setError(404, result.errorMessage);
         auto list = _useCase.listDatabaseExtensions(tenantId);
         _model.setExtensions(list);
         _view.renderList(res, _model);

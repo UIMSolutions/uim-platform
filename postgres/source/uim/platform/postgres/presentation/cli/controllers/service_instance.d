@@ -60,13 +60,13 @@ class CliServiceInstanceController {
         dto.hyperscaler = Hyperscaler.aws;
         auto result = _useCase.createServiceInstance(dto);
         if (result.success) _view.renderSuccess("Created instance: " ~ result.id);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteServiceInstance(tenantId, ServiceInstanceId(args[0]));
         if (result.success) _view.renderSuccess("Deleted instance: " ~ args[0]);
-        else                _view.renderError(result.error);
+        else                _view.renderError(result.errorMessage);
     }
 }

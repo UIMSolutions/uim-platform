@@ -9,58 +9,54 @@ import uim.platform.service;
 import uim.platform.appevents.domain.entities.formation;
 import uim.platform.appevents.domain.repositories.formations;
 import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.formation_status;
 import uim.platform.appevents.application.dto;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageFormationsUseCase {
-    private FormationRepository _repo;
+    private FormationRepository repo;
 
-    this(FormationRepository repo) {
-        _repo = repo;
-    }
+    this(FormationRepository repo) { this.repo = repo; }
 
     Formation getFormation(TenantId tenantId, FormationId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Formation[] listFormations(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
-    CommandResult createFormation(TenantId tenantId, FormationDTO dto) {
-        if (_repo.nameExists(tenantId, dto.name))
-            return CommandResult(false, "Formation name already exists");
+    CommandResult createFormation(FormationDTO dto) {
+        if (repo.nameExists(dto.tenantId, dto.name))
+            return CommandResult(false, "", "Formation name already exists");
         Formation f;
-        f.id = FormationId(randomUUID().to!string);
-        f.tenantId = tenantId;
+        f.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.formationId.isNull) f.id = dto.formationId;
         f.name = dto.name;
         f.description = dto.description;
         f.globalAccountId = dto.globalAccountId;
         f.status = dto.status;
         f.systemCount = 0;
-        _repo.save(tenantId, f);
-        return CommandResult(true, f.id.value);
+        repo.save(f);
+        return CommandResult(true, f.id.value, "");
     }
 
-    CommandResult updateFormation(TenantId tenantId, FormationId id, FormationDTO dto) {
-        auto f = _repo.findById(tenantId, id);
-        if (f.id.isNull) return CommandResult(false, "Formation not found");
+    CommandResult updateFormation(FormationDTO dto) {
+        auto f = repo.findById(dto.tenantId, dto.formationId);
+        if (f.isNull) return CommandResult(false, "", "Formation not found");
         f.name = dto.name;
         f.description = dto.description;
         f.globalAccountId = dto.globalAccountId;
         f.status = dto.status;
-        _repo.save(tenantId, f);
-        return CommandResult(true, id.value);
+        if (!dto.updatedBy.isNull) f.updatedBy = dto.updatedBy;
+        repo.update(f);
+        return CommandResult(true, f.id.value, "");
     }
 
     CommandResult deleteFormation(TenantId tenantId, FormationId id) {
-        auto f = _repo.findById(tenantId, id);
-        if (f.id.isNull) return CommandResult(false, "Formation not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto f = repo.findById(tenantId, id);
+        if (f.isNull) return CommandResult(false, "", "Formation not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

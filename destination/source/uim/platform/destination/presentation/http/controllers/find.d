@@ -40,7 +40,7 @@ class FindController : PlatformController {
       auto result = usecase.find(r);
 
       if (!result.found) {
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
         return;
       }
 

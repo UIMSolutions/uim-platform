@@ -65,7 +65,7 @@ class OAuthClientController : PlatformController {
             .set("id", result.id)
             .set("message", "OAuth client created successfully"), 201);
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -148,7 +148,7 @@ class OAuthClientController : PlatformController {
             .set("id", result.id)
             .set("message", "OAuth client updated successfully"), 200);
       else
-        writeError(res, result.error == "OAuth client not found" ? 404 : 400, result.error);
+        writeError(res, result.errorMessage == "OAuth client not found" ? 404 : 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -167,7 +167,7 @@ class OAuthClientController : PlatformController {
             .set("id", id)
             .set("message", "OAuth client deleted successfully"), 200);
       else
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

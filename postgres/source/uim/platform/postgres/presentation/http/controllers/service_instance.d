@@ -27,8 +27,8 @@ class ServiceInstanceController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto items = instances.listServiceInstances(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -39,8 +39,8 @@ class ServiceInstanceController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = instances.getServiceInstance(tenantId, id);
@@ -50,8 +50,8 @@ class ServiceInstanceController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId", ""));
@@ -66,14 +66,14 @@ class ServiceInstanceController : ManageController {
         dto.multiAz           = data.getBool("multiAz", false);
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = instances.createServiceInstance(dto);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance created successfully").set("status", "success").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
@@ -84,17 +84,17 @@ class ServiceInstanceController : ManageController {
         dto.storageGb         = data.getLong("storageGb", 0);
         dto.updatedBy         = UserId(data.getString("updatedBy", ""));
         auto result = instances.updateServiceInstance(dto);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance updated successfully").set("status", "success").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
         auto result = instances.deleteServiceInstance(tenantId, id);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

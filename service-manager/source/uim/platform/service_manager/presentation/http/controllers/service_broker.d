@@ -66,7 +66,7 @@ class ServiceBrokerController : PlatformController {
             auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
+            } else { writeError(res, 400, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -83,7 +83,7 @@ class ServiceBrokerController : PlatformController {
             auto result = usecase.update(req.getTenantId, ServiceBrokerId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -94,7 +94,7 @@ class ServiceBrokerController : PlatformController {
             auto result = usecase.delete(req.getTenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

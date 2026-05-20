@@ -56,7 +56,7 @@ class LogController : PlatformController {
 
         res.writeJsonBody(resp, 201);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -91,7 +91,7 @@ class LogController : PlatformController {
       auto result = usecase.ingestBatch(batchReq);
       auto resp = Json.emptyObject
         .set("success", result.success)
-        .set("message", result.error);
+        .set("message", result.errorMessage);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

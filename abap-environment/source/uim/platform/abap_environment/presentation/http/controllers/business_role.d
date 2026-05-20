@@ -45,7 +45,7 @@ class BusinessRoleController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
@@ -61,10 +61,10 @@ class BusinessRoleController : ManageController {
     r.restrictionTypes = getStrings(data, "restrictionTypes");
 
     auto result = usecase.createBusinessRole(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 
@@ -137,7 +137,7 @@ class BusinessRoleController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
@@ -160,10 +160,10 @@ class BusinessRoleController : ManageController {
     r.restrictionTypes = getStrings(data, "restrictionTypes");
 
     auto result = usecase.updateBusinessRole(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 
@@ -175,7 +175,7 @@ class BusinessRoleController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
@@ -190,10 +190,10 @@ class BusinessRoleController : ManageController {
     auto data = precheck["data"];
     auto tenantId = TenantId(data.getString("tenantId"));
     auto result = usecase.deleteBusinessRole(tenantId, id);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 

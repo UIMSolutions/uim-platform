@@ -59,7 +59,7 @@ class BucketController : PlatformController {
 
         res.writeJsonBody(resp, 201);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -125,7 +125,7 @@ class BucketController : PlatformController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, result.error == "Bucket not found" ? 404 : 400, result.error);
+        writeError(res, result.errorMessage == "Bucket not found" ? 404 : 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -145,8 +145,8 @@ class BucketController : PlatformController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        auto code = result.error == "Bucket not found" ? 404 : 409;
-        writeError(res, code, result.error);
+        auto code = result.errorMessage == "Bucket not found" ? 404 : 409;
+        writeError(res, code, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

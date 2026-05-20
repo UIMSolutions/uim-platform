@@ -80,7 +80,7 @@ class RepositoryController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository created"), 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -98,13 +98,13 @@ class RepositoryController : PlatformController {
             if (action == "activate") {
                 auto result = usecase.activateRepository(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository activated"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "deactivate") {
                 auto result = usecase.deactivateRepository(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository deactivated"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
 
@@ -122,7 +122,7 @@ class RepositoryController : PlatformController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
             auto result = usecase.updateRepository(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository updated"), 200);
-            else writeError(res, 400, result.error);
+            else writeError(res, 400, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -135,7 +135,7 @@ class RepositoryController : PlatformController {
             auto id = RepositoryId(extractIdFromPath(path));
             auto result = usecase.deleteRepository(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository deleted"), 200);
-            else writeError(res, 404, result.error);
+            else writeError(res, 404, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

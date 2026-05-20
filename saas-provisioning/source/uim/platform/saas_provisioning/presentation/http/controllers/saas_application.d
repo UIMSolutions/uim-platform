@@ -75,7 +75,7 @@ class SaasApplicationController : PlatformController {
             }
 
             auto result = usecase.registerApplication(tenantId, dto);
-            if (!result.success) { writeError(res, 400, result.error); return; }
+            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
         } catch (Exception e) {
             writeError(res, 400, "Invalid request: " ~ e.msg);
@@ -116,7 +116,7 @@ class SaasApplicationController : PlatformController {
             }
 
             auto result = usecase.updateApplication(tenantId, id, dto);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
         } catch (Exception e) {
             writeError(res, 400, "Invalid request: " ~ e.msg);
@@ -128,7 +128,7 @@ class SaasApplicationController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = SaasApplicationId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deregisterApplication(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

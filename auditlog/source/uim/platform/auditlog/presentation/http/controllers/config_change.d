@@ -52,7 +52,7 @@ class ConfigChangeController : PlatformController {
       }
       else
       {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     }
     catch (Exception e) {

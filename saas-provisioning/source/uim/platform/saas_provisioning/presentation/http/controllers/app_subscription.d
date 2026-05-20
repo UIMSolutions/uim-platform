@@ -78,7 +78,7 @@ class AppSubscriptionController : PlatformController {
             string appName                = safeStr(body_, "appName");
 
             auto result = usecase.subscribeConsumer(tenantId, appName, dto);
-            if (!result.success) { writeError(res, 400, result.error); return; }
+            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("subscriptionId", result.id), 201);
         } catch (Exception e) {
             writeError(res, 400, "Invalid request: " ~ e.msg);
@@ -110,7 +110,7 @@ class AppSubscriptionController : PlatformController {
             dto.error = safeStr(body_, "error");
 
             auto result = usecase.updateSubscription(tenantId, id, dto);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
         } catch (Exception e) {
             writeError(res, 400, "Invalid request: " ~ e.msg);
@@ -124,7 +124,7 @@ class AppSubscriptionController : PlatformController {
             string requestedBy = "";
             try { requestedBy = safeStr(req.json, "requestedBy"); } catch (Exception) {}
             auto result = usecase.unsubscribeConsumer(tenantId, id, requestedBy);
-            if (!result.success) { writeError(res, 404, result.error); return; }
+            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

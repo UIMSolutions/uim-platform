@@ -54,7 +54,7 @@ class WebConfigurationController {
         dto.persistenceMode = PersistenceMode.none;
         auto result = _useCase.createConfiguration(dto);
         if (result.success) _model.setSuccess("Configuration created: " ~ result.id);
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         _model.setConfigurations(_useCase.listConfigurations(tenantId));
         _view.renderList(res, _model);
     }
@@ -64,7 +64,7 @@ class WebConfigurationController {
         auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteConfiguration(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         _model.setConfigurations(_useCase.listConfigurations(tenantId));
         _view.renderList(res, _model);
     }

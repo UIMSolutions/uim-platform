@@ -36,7 +36,7 @@ class GuiServiceBindingController {
     Json createBinding(TenantId tenantId, ServiceBindingDTO dto) {
         auto result = _useCase.createServiceBinding(dto);
         if (result.success) _model.setSuccess("Binding created: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setBindings(_useCase.listServiceBindings(tenantId));
         return _view.buildListDescriptor(_model);
     }
@@ -44,7 +44,7 @@ class GuiServiceBindingController {
     Json deleteBinding(TenantId tenantId, ServiceBindingId id) {
         auto result = _useCase.deleteServiceBinding(tenantId, id);
         if (result.success) _model.setSuccess("Binding deleted");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setBindings(_useCase.listServiceBindings(tenantId));
         return _view.buildListDescriptor(_model);
     }

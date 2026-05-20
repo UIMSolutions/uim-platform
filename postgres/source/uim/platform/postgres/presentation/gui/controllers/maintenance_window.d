@@ -36,7 +36,7 @@ class GuiMaintenanceWindowController {
     Json createWindow(TenantId tenantId, MaintenanceWindowDTO dto) {
         auto result = _useCase.createMaintenanceWindow(dto);
         if (result.success) _model.setSuccess("Window created: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setWindows(_useCase.listMaintenanceWindows(tenantId));
         return _view.buildListDescriptor(_model);
     }
@@ -44,7 +44,7 @@ class GuiMaintenanceWindowController {
     Json deleteWindow(TenantId tenantId, MaintenanceWindowId id) {
         auto result = _useCase.deleteMaintenanceWindow(tenantId, id);
         if (result.success) _model.setSuccess("Window deleted");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setWindows(_useCase.listMaintenanceWindows(tenantId));
         return _view.buildListDescriptor(_model);
     }

@@ -38,14 +38,14 @@ class GuiAccessControlController {
         dto.tenantId = _tenantId;
         auto result = _useCase.createAccessControl(dto);
         if (result.success) _model.setSuccess("Created: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setRules(_useCase.listAccessControls(_tenantId));
         return _view.buildListDescriptor(_model);
     }
     Json handleDelete(AccessControlId id) {
         auto result = _useCase.deleteAccessControl(_tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setRules(_useCase.listAccessControls(_tenantId));
         return _view.buildListDescriptor(_model);
     }

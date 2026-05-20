@@ -11,73 +11,67 @@ import uim.platform.appevents.domain.repositories.event_subscriptions;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.subscription_status;
 import uim.platform.appevents.application.dto;
-import std.datetime.systime : Clock;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageEventSubscriptionsUseCase {
-    private EventSubscriptionRepository _repo;
+    private EventSubscriptionRepository repo;
 
-    this(EventSubscriptionRepository repo) {
-        _repo = repo;
-    }
+    this(EventSubscriptionRepository repo) { this.repo = repo; }
 
     EventSubscription getEventSubscription(TenantId tenantId, EventSubscriptionId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventSubscription[] listEventSubscriptions(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     EventSubscription[] listByStatus(TenantId tenantId, SubscriptionStatus status) {
-        return _repo.findByStatus(tenantId, status);
+        return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createEventSubscription(TenantId tenantId, EventSubscriptionDTO dto) {
-        if (_repo.nameExists(tenantId, dto.name))
-            return CommandResult(false, "Subscription name already exists");
+    CommandResult createEventSubscription(EventSubscriptionDTO dto) {
+        if (repo.nameExists(dto.tenantId, dto.name))
+            return CommandResult(false, "", "Subscription name already exists");
         EventSubscription sub;
-        sub.id = EventSubscriptionId(randomUUID().to!string);
-        sub.tenantId = tenantId;
+        sub.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.subscriptionId.isNull) sub.id = dto.subscriptionId;
         sub.name = dto.name;
         sub.description = dto.description;
         sub.producerSystemId = dto.producerSystemId;
         sub.consumerSystemId = dto.consumerSystemId;
         sub.eventType = dto.eventType;
         sub.status = dto.status;
-        sub.formationId = FormationId(dto.formationId);
+        sub.formationId = dto.formationId;
         sub.filterExpression = dto.filterExpression;
         sub.maxRetries = dto.maxRetries;
-        sub.createdAt = Clock.currTime().toUnixTime();
-        sub.updatedAt = sub.createdAt;
-        _repo.save(tenantId, sub);
-        return CommandResult(true, sub.id.value);
+        repo.save(sub);
+        return CommandResult(true, sub.id.value, "");
     }
 
-    CommandResult updateEventSubscription(TenantId tenantId, EventSubscriptionId id, EventSubscriptionDTO dto) {
-        auto sub = _repo.findById(tenantId, id);
-        if (sub.id.isNull) return CommandResult(false, "Subscription not found");
+    CommandResult updateEventSubscription(EventSubscriptionDTO dto) {
+        auto sub = repo.findById(dto.tenantId, dto.subscriptionId);
+        if (sub.isNull) return CommandResult(false, "", "Subscription not found");
         sub.name = dto.name;
         sub.description = dto.description;
         sub.producerSystemId = dto.producerSystemId;
         sub.consumerSystemId = dto.consumerSystemId;
         sub.eventType = dto.eventType;
         sub.status = dto.status;
-        sub.formationId = FormationId(dto.formationId);
+        sub.formationId = dto.formationId;
         sub.filterExpression = dto.filterExpression;
         sub.maxRetries = dto.maxRetries;
-        sub.updatedAt = Clock.currTime().toUnixTime();
-        _repo.save(tenantId, sub);
-        return CommandResult(true, id.value);
+        if (!dto.updatedBy.isNull) sub.updatedBy = dto.updatedBy;
+        repo.update(sub);
+        return CommandResult(true, sub.id.value, "");
     }
 
     CommandResult deleteEventSubscription(TenantId tenantId, EventSubscriptionId id) {
-        auto sub = _repo.findById(tenantId, id);
-        if (sub.id.isNull) return CommandResult(false, "Subscription not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto sub = repo.findById(tenantId, id);
+        if (sub.isNull) return CommandResult(false, "", "Subscription not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }
+

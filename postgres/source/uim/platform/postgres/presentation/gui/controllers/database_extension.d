@@ -36,7 +36,7 @@ class GuiDatabaseExtensionController {
     Json createExtension(TenantId tenantId, DatabaseExtensionDTO dto) {
         auto result = _useCase.createDatabaseExtension(dto);
         if (result.success) _model.setSuccess("Extension enabled: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setExtensions(_useCase.listDatabaseExtensions(tenantId));
         return _view.buildListDescriptor(_model);
     }
@@ -44,7 +44,7 @@ class GuiDatabaseExtensionController {
     Json deleteExtension(TenantId tenantId, DatabaseExtensionId id) {
         auto result = _useCase.deleteDatabaseExtension(tenantId, id);
         if (result.success) _model.setSuccess("Extension disabled");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setExtensions(_useCase.listDatabaseExtensions(tenantId));
         return _view.buildListDescriptor(_model);
     }

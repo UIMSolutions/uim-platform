@@ -67,7 +67,7 @@ class TransportActionController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport action recorded"), 201);
             else
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -86,7 +86,7 @@ class TransportActionController : PlatformController {
                     auto errorMsg = j.getString("errorMessage");
                     auto result = usecase.updateActionStatus(tenantId, id, status, errorMsg);
                     if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Action status updated"), 200);
-                    else writeError(res, 400, result.error);
+                    else writeError(res, 400, result.errorMessage);
                 } catch (Exception) {
                     writeError(res, 400, "Invalid actionStatus value");
                 }

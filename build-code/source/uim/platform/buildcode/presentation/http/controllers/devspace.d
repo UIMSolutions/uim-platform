@@ -48,7 +48,7 @@ class DevSpaceController : SAPController {
     dto.storageGiB   = cast(ushort) body_["storageGiB"].get!long(4);
     dto.ramGiB       = cast(ushort) body_["ramGiB"].get!long(4);
     auto result = _uc.create(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.error);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -68,7 +68,7 @@ class DevSpaceController : SAPController {
     auto body_    = req.json;
     auto status_  = body_["status"].get!string("");
     auto result   = _uc.setStatus(tenantId, id, status_);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.error);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
@@ -76,7 +76,7 @@ class DevSpaceController : SAPController {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = extractIdFromPath(req);
     auto result   = _uc.remove(tenantId, id);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.error);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.errorMessage);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);
   }
 }

@@ -30,11 +30,11 @@ class AppBuildController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
 
         auto items = usecase.listAppBuilds(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -49,11 +49,11 @@ class AppBuildController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto j = req.json;
 
         AppBuildDTO dto;
@@ -76,17 +76,17 @@ class AppBuildController : ManageController {
 
             return resp.set("status", "success").set("statusCode", 201);
         } else {
-            return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
+            return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
         }
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {
@@ -110,11 +110,11 @@ class AppBuildController : ManageController {
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {
@@ -135,9 +135,9 @@ class AppBuildController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateAppBuild(dto);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 404);
         }
@@ -150,11 +150,11 @@ class AppBuildController : ManageController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {
@@ -165,9 +165,9 @@ class AppBuildController : ManageController {
         }
 
         auto result = usecase.deleteAppBuild(tenantId, id);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

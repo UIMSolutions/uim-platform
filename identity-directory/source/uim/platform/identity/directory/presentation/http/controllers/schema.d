@@ -48,7 +48,7 @@ class SchemaController : PlatformController {
       }
       else
       {
-        writeScimError(res, 409, result.error);
+        writeScimError(res, 409, result.errorMessage);
       }
     }
     catch (Exception e) {

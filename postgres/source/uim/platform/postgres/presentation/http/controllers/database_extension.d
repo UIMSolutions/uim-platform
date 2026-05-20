@@ -26,8 +26,8 @@ class DatabaseExtensionController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto items = extensions.listDatabaseExtensions(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -38,8 +38,8 @@ class DatabaseExtensionController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = extensions.getDatabaseExtension(tenantId, id);
@@ -49,8 +49,8 @@ class DatabaseExtensionController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         DatabaseExtensionDTO dto;
         dto.databaseExtensionId = DatabaseExtensionId(data.getString("databaseExtensionId", ""));
@@ -61,17 +61,17 @@ class DatabaseExtensionController : ManageController {
         dto.schema_             = data.getString("schema", "");
         dto.createdBy           = UserId(data.getString("createdBy", ""));
         auto result = extensions.createDatabaseExtension(dto);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Extension enabled successfully").set("status", "success").set("statusCode", 201);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
+        auto tenantId = getTenantId(precheck);
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         auto result = extensions.deleteDatabaseExtension(tenantId, id);
-        if (result.failure) return Json.emptyObject.set("error", result.error).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Extension disabled successfully").set("status", "success").set("statusCode", 200);
     }
 }

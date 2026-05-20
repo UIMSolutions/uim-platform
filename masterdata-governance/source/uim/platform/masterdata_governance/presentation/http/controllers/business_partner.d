@@ -105,7 +105,7 @@ class BusinessPartnerController : PlatformController {
                     .set("id", result.id)
                     .set("message", "Business partner created"), 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -145,7 +145,7 @@ class BusinessPartnerController : PlatformController {
                     .set("id", result.id)
                     .set("message", "Business partner updated"), 200);
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -161,7 +161,7 @@ class BusinessPartnerController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("message", "Business partner deleted"), 200);
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

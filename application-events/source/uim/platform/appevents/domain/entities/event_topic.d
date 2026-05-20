@@ -8,7 +8,6 @@ module uim.platform.appevents.domain.entities.event_topic;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.topic_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -25,16 +24,19 @@ struct EventTopic {
     string ownerId;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]          = id.value;
-        j["tenantId"]    = tenantId.value;
-        j["name"]        = name;
-        j["namespace"]   = namespace;
-        j["description"] = description;
-        j["version"]     = version_;
-        j["category"]    = category;
-        j["status"]      = status.to!string;
-        j["ownerId"]     = ownerId;
-        return j;
+        return Json.emptyObject
+            .set("id",          id.value)
+            .set("tenantId",    tenantId.value)
+            .set("name",        name)
+            .set("namespace",   namespace)
+            .set("description", description)
+            .set("version",     version_)
+            .set("category",    category)
+            .set("status",      status.to!string)
+            .set("ownerId",     ownerId)
+            .set("createdAt",   createdAt)
+            .set("createdBy",   createdBy.value)
+            .set("updatedAt",   updatedAt)
+            .set("updatedBy",   updatedBy.value);
     }
 }

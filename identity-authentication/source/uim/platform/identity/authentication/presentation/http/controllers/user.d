@@ -53,7 +53,7 @@ class UserController : PlatformController {
         response["userId"] = Json(result.userId);
         res.writeJsonBody(response, 201);
       } else {
-        response["error"] = Json(result.error);
+        response["error"] = Json(result.errorMessage);
         res.writeJsonBody(response, 409);
       }
     } catch (Exception e) {

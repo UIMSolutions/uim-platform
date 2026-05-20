@@ -49,7 +49,7 @@ class MtaController : PlatformController {
                     202
                 );
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -102,7 +102,7 @@ class MtaController : PlatformController {
                     202
                 );
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -125,7 +125,7 @@ class MtaController : PlatformController {
                     202
                 );
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

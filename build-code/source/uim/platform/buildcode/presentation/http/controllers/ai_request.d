@@ -33,7 +33,7 @@ class AIRequestController : SAPController {
     dto.prompt         = body_["prompt"].get!string("");
     dto.targetFilePath = body_["targetFilePath"].get!string("");
     auto result = _uc.generate(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.error);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.accepted);
@@ -71,7 +71,7 @@ class AIRequestController : SAPController {
     auto generatedCode = body_["generatedCode"].get!string("");
     auto errorMsg      = body_["errorMessage"].get!string("");
     auto result        = _uc.updateStatus(tenantId, id, statusStr, generatedCode, errorMsg);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.error);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

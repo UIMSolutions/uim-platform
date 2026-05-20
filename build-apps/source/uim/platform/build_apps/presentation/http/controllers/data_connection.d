@@ -30,11 +30,11 @@ class DataConnectionController : PlatformController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
 
         auto items = usecase.listDataConnections(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -116,7 +116,7 @@ class DataConnectionController : PlatformController {
 
                 res.writeJsonBody(resp, 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -147,7 +147,7 @@ class DataConnectionController : PlatformController {
 
                 res.writeJsonBody(resp, 200);
             } else {
-                writeError(res, 404, result.error);
+                writeError(res, 404, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -156,13 +156,13 @@ class DataConnectionController : PlatformController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
 
-        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = DataConnectionId(extractIdFromPath(path));
         if (id.isNull) {
@@ -173,9 +173,9 @@ class DataConnectionController : PlatformController {
         }
 
         auto result = usecase.deleteDataConnection(tenantId, id);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

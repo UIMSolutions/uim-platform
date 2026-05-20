@@ -34,12 +34,12 @@ class ApplicationJobController : ManageController {
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
     auto data = precheck["data"];
-    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto tenantId = getTenantId(precheck);
     auto systemId = SystemInstanceId(data.getString("systemInstanceId"));
 
     auto jobs = usecase.listApplicationJobs(tenantId, systemId);
@@ -54,11 +54,11 @@ class ApplicationJobController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
-    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto tenantId = getTenantId(precheck);
     auto data = precheck["data"];
 
     CreateApplicationJobRequest r;
@@ -72,10 +72,10 @@ class ApplicationJobController : ManageController {
     r.cronExpression = data.getString("cronExpression");
 
     auto result = usecase.createApplicationJob(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 
@@ -87,10 +87,10 @@ class ApplicationJobController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
-    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto tenantId = getTenantId(precheck);
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
     auto job = usecase.getApplicationJob(tenantId, id);
@@ -109,11 +109,11 @@ class ApplicationJobController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
-    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto tenantId = getTenantId(precheck);
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
     auto data = req.json;
 
@@ -127,10 +127,10 @@ class ApplicationJobController : ManageController {
     r.active = data.getBoolean("active", true);
 
     auto result = usecase.updateApplicationJob(r);
-    if (result.failure()) {
+    if (result.hasError()) {
       auto resp = Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 
@@ -153,7 +153,7 @@ class ApplicationJobController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -162,18 +162,18 @@ class ApplicationJobController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.getString("status") == "error") {
+    if (precheck.hasError) {
       return precheck;
     }
 
-    auto tenantId = TenantId(precheck.getString("tenantId"));
+    auto tenantId = getTenantId(precheck);
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteApplicationJob(tenantId, id);
-    if (result.failure()) {
+    if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.error)
+        .set("message", result.errorMessage)
         .set("statusCode", 400);
     }
 

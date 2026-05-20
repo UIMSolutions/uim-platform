@@ -55,7 +55,7 @@ class WebDatabaseUserController {
         dto.roles      = data.getString("roles", "readonly");
         auto result = _useCase.createDatabaseUser(dto);
         if (result.success) _model.setSuccess("User created: " ~ result.id);
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         auto list = _useCase.listDatabaseUsers(tenantId);
         _model.setUsers(list);
         _view.renderList(res, _model);
@@ -66,7 +66,7 @@ class WebDatabaseUserController {
         auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteDatabaseUser(tenantId, id);
         if (result.success) _model.setSuccess("User deleted");
-        else                _model.setError(404, result.error);
+        else                _model.setError(404, result.errorMessage);
         auto list = _useCase.listDatabaseUsers(tenantId);
         _model.setUsers(list);
         _view.renderList(res, _model);

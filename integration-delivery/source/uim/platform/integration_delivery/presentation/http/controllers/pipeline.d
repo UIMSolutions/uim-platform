@@ -29,10 +29,10 @@ class PipelineController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto items = pipelines.listPipelines(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -44,10 +44,10 @@ class PipelineController : ManageController {
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
@@ -61,10 +61,10 @@ class PipelineController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
 
         PipelineDTO dto;
@@ -77,18 +77,18 @@ class PipelineController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy", ""));
 
         auto result = pipelines.createPipeline(dto);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -103,25 +103,25 @@ class PipelineController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy", ""));
 
         auto result = pipelines.updatePipeline(dto);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success)
+        if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
 
         auto result = pipelines.deletePipeline(tenantId, id);
-        if (result.failure)
-            return Json.emptyObject.set("error", result.error).set("statusCode", 400);
+        if (result.hasError)
+            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline deleted").set("status", "deleted").set("statusCode", 200);
     }

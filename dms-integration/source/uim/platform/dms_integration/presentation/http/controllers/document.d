@@ -95,7 +95,7 @@ class DocumentController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document created"), 201);
             } else {
-                writeError(res, 400, result.error);
+                writeError(res, 400, result.errorMessage);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -114,7 +114,7 @@ class DocumentController : PlatformController {
             if (action == "checkout") {
                 auto result = usecase.checkoutDocument(tenantId, id, userId);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document checked out"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "checkin") {
@@ -122,32 +122,32 @@ class DocumentController : PlatformController {
                 auto comment = j.getString("comment");
                 auto result = usecase.checkinDocument(tenantId, id, userId, isMajor, comment);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document checked in"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "cancelCheckout") {
                 auto result = usecase.cancelCheckout(tenantId, id, userId);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Checkout cancelled"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "move") {
                 auto targetFolderId = FolderId(j.getString("targetFolderId"));
                 auto result = usecase.moveDocument(tenantId, id, targetFolderId, userId);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document moved"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "publish") {
                 auto result = usecase.publishDocument(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document published"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
             if (action == "archive") {
                 auto result = usecase.archiveDocument(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document archived"), 200);
-                else writeError(res, 400, result.error);
+                else writeError(res, 400, result.errorMessage);
                 return;
             }
 
@@ -164,7 +164,7 @@ class DocumentController : PlatformController {
             dto.updatedBy = userId;
             auto result = usecase.updateDocument(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document updated"), 200);
-            else writeError(res, 400, result.error);
+            else writeError(res, 400, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -177,7 +177,7 @@ class DocumentController : PlatformController {
             auto id = DocumentId(extractIdFromPath(path));
             auto result = usecase.deleteDocument(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document deleted"), 200);
-            else writeError(res, 400, result.error);
+            else writeError(res, 400, result.errorMessage);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

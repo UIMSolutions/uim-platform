@@ -44,7 +44,7 @@ class KeyPasswordController : PlatformController {
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,7 +89,7 @@ class KeyPasswordController : PlatformController {
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

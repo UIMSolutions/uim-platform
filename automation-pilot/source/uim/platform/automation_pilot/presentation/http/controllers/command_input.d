@@ -30,11 +30,11 @@ class CommandInputController : PlatformController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
 
         auto items = commandInputs.listCommandInputs(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -49,11 +49,11 @@ class CommandInputController : PlatformController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto j = req.json;
 
         CommandInputDTO dto;
@@ -75,17 +75,17 @@ class CommandInputController : PlatformController {
 
             return resp.set("status", "success").set("statusCode", 201);
         } else {
-            return Json.emptyObject.set("error", result.error).set("status", "error").set("statusCode", 400);
+            return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
         }
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {
@@ -111,11 +111,11 @@ class CommandInputController : PlatformController {
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {
@@ -137,9 +137,9 @@ class CommandInputController : PlatformController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = commandInputs.updateCommandInput(dto);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -152,11 +152,11 @@ class CommandInputController : PlatformController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (!precheck.success) {
+        if (precheck.hasError) {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = getTenantId(precheck);
         auto path = req.requestURI.to!string;
         auto id = CommandInputId(extractIdFromPath(path));
         if (id.isNull) {
@@ -167,9 +167,9 @@ class CommandInputController : PlatformController {
         }
 
         auto result = commandInputs.deleteCommandInput(tenantId, id);
-        if (result.failure) {
+        if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.error)
+                .set("error", result.errorMessage)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

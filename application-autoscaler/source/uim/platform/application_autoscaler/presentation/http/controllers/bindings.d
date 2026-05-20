@@ -39,7 +39,7 @@ class AppBindingController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Binding created"), 201);
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -81,7 +81,7 @@ class AppBindingController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Binding deleted"), 200);
       else
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -97,7 +97,7 @@ class AppBindingController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Policy attached"), 200);
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

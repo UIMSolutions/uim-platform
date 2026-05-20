@@ -44,7 +44,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encResult.error);
+      return CommandResult(false, "", encresult.errorMessage);
 
     repo.save(bucket);
     return CommandResult(true, bucket.id.value, "");
@@ -68,7 +68,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encResult.error);
+      return CommandResult(false, "", encresult.errorMessage);
 
     repo.update(bucket);
     return CommandResult(true, bucket.id.value, "");

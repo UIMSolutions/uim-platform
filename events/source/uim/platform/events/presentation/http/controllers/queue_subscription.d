@@ -65,7 +65,7 @@ class QueueSubscriptionController : PlatformController {
             auto result = usecase.createSubscription(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription created"), 201);
-            } else { writeError(res, 400, result.error); }
+            } else { writeError(res, 400, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -84,7 +84,7 @@ class QueueSubscriptionController : PlatformController {
             auto result = usecase.updateSubscription(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription updated"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -95,7 +95,7 @@ class QueueSubscriptionController : PlatformController {
             auto result = usecase.deleteSubscription(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription deleted"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

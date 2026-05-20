@@ -75,7 +75,7 @@ class OperationController : PlatformController {
             auto result = usecase.createOperation(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.error); }
+            } else { writeError(res, 400, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -93,7 +93,7 @@ class OperationController : PlatformController {
             auto result = usecase.updateOperation(r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -105,7 +105,7 @@ class OperationController : PlatformController {
             auto result = usecase.deleteOperation(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

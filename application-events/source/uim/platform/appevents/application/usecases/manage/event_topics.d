@@ -9,34 +9,29 @@ import uim.platform.service;
 import uim.platform.appevents.domain.entities.event_topic;
 import uim.platform.appevents.domain.repositories.event_topics;
 import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.topic_status;
 import uim.platform.appevents.application.dto;
-import std.uuid : randomUUID;
-import std.conv : to;
 
 @safe:
 
 class ManageEventTopicsUseCase {
-    private EventTopicRepository _repo;
+    private EventTopicRepository repo;
 
-    this(EventTopicRepository repo) {
-        _repo = repo;
-    }
+    this(EventTopicRepository repo) { this.repo = repo; }
 
     EventTopic getEventTopic(TenantId tenantId, EventTopicId id) {
-        return _repo.findById(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventTopic[] listEventTopics(TenantId tenantId) {
-        return _repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
-    CommandResult createEventTopic(TenantId tenantId, EventTopicDTO dto) {
-        if (_repo.nameExists(tenantId, dto.name))
-            return CommandResult(false, "Topic name already exists");
+    CommandResult createEventTopic(EventTopicDTO dto) {
+        if (repo.nameExists(dto.tenantId, dto.name))
+            return CommandResult(false, "", "Topic name already exists");
         EventTopic t;
-        t.id = EventTopicId(randomUUID().to!string);
-        t.tenantId = tenantId;
+        t.initEntity(dto.tenantId, dto.createdBy);
+        if (!dto.topicId.isNull) t.id = dto.topicId;
         t.name = dto.name;
         t.namespace = dto.namespace;
         t.description = dto.description;
@@ -44,13 +39,13 @@ class ManageEventTopicsUseCase {
         t.category = dto.category;
         t.status = dto.status;
         t.ownerId = dto.ownerId;
-        _repo.save(tenantId, t);
-        return CommandResult(true, t.id.value);
+        repo.save(t);
+        return CommandResult(true, t.id.value, "");
     }
 
-    CommandResult updateEventTopic(TenantId tenantId, EventTopicId id, EventTopicDTO dto) {
-        auto t = _repo.findById(tenantId, id);
-        if (t.id.isNull) return CommandResult(false, "Topic not found");
+    CommandResult updateEventTopic(EventTopicDTO dto) {
+        auto t = repo.findById(dto.tenantId, dto.topicId);
+        if (t.isNull) return CommandResult(false, "", "Topic not found");
         t.name = dto.name;
         t.namespace = dto.namespace;
         t.description = dto.description;
@@ -58,14 +53,15 @@ class ManageEventTopicsUseCase {
         t.category = dto.category;
         t.status = dto.status;
         t.ownerId = dto.ownerId;
-        _repo.save(tenantId, t);
-        return CommandResult(true, id.value);
+        if (!dto.updatedBy.isNull) t.updatedBy = dto.updatedBy;
+        repo.update(t);
+        return CommandResult(true, t.id.value, "");
     }
 
     CommandResult deleteEventTopic(TenantId tenantId, EventTopicId id) {
-        auto t = _repo.findById(tenantId, id);
-        if (t.id.isNull) return CommandResult(false, "Topic not found");
-        _repo.remove(tenantId, id);
-        return CommandResult(true, id.value);
+        auto t = repo.findById(tenantId, id);
+        if (t.isNull) return CommandResult(false, "", "Topic not found");
+        repo.removeById(tenantId, id);
+        return CommandResult(true, id.value, "");
     }
 }

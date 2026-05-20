@@ -56,7 +56,7 @@ class WebMaintenanceWindowController {
         dto.durationHours = data.getLong("durationHours", 1);
         auto result = _useCase.createMaintenanceWindow(dto);
         if (result.success) _model.setSuccess("Window created: " ~ result.id);
-        else                _model.setError(400, result.error);
+        else                _model.setError(400, result.errorMessage);
         auto list = _useCase.listMaintenanceWindows(tenantId);
         _model.setWindows(list);
         _view.renderList(res, _model);
@@ -67,7 +67,7 @@ class WebMaintenanceWindowController {
         auto id = MaintenanceWindowId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteMaintenanceWindow(tenantId, id);
         if (result.success) _model.setSuccess("Window deleted");
-        else                _model.setError(404, result.error);
+        else                _model.setError(404, result.errorMessage);
         auto list = _useCase.listMaintenanceWindows(tenantId);
         _model.setWindows(list);
         _view.renderList(res, _model);

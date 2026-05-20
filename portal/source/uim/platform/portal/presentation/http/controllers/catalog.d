@@ -49,7 +49,7 @@ class CatalogController : PlatformController {
 
         res.writeJsonBody(response, 201);
       } else {
-        writeApiError(res, 400, result.error);
+        writeApiError(res, 400, result.errorMessage);
       }
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");

@@ -8,7 +8,6 @@ module uim.platform.appevents.domain.entities.dead_letter_entry;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.dead_letter_status;
-import vibe.data.json;
 import std.conv : to;
 
 @safe:
@@ -24,15 +23,16 @@ struct DeadLetterEntry {
     DeadLetterStatus status;
 
     Json toJson() const @safe {
-        auto j = Json.emptyObject;
-        j["id"]                = id.value;
-        j["tenantId"]          = tenantId.value;
-        j["originalMessageId"] = originalMessageId.value;
-        j["channelId"]         = channelId.value;
-        j["errorMessage"]      = errorMessage;
-        j["failedAt"]          = failedAt;
-        j["retryCount"]        = retryCount;
-        j["status"]            = status.to!string;
-        return j;
+        return Json.emptyObject
+            .set("id",                id.value)
+            .set("tenantId",          tenantId.value)
+            .set("originalMessageId", originalMessageId.value)
+            .set("channelId",         channelId.value)
+            .set("errorMessage",      errorMessage)
+            .set("failedAt",          failedAt)
+            .set("retryCount",        retryCount)
+            .set("status",            status.to!string)
+            .set("createdAt",         createdAt)
+            .set("createdBy",         createdBy.value);
     }
 }

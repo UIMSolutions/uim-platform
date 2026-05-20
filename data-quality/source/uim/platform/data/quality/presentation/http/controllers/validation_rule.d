@@ -67,7 +67,7 @@ class ValidationRuleController : PlatformController {
       }
       else
       {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -142,7 +142,7 @@ class ValidationRuleController : PlatformController {
       }
       else
       {
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
       }
     }
     catch (Exception e) {
@@ -159,7 +159,7 @@ class ValidationRuleController : PlatformController {
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

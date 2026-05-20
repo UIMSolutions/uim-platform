@@ -36,7 +36,7 @@ class GuiDatabaseUserController {
     Json createUser(TenantId tenantId, DatabaseUserDTO dto) {
         auto result = _useCase.createDatabaseUser(dto);
         if (result.success) _model.setSuccess("User created: " ~ result.id);
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setUsers(_useCase.listDatabaseUsers(tenantId));
         return _view.buildListDescriptor(_model);
     }
@@ -44,7 +44,7 @@ class GuiDatabaseUserController {
     Json deleteUser(TenantId tenantId, DatabaseUserId id) {
         auto result = _useCase.deleteDatabaseUser(tenantId, id);
         if (result.success) _model.setSuccess("User deleted");
-        else                _model.setError(result.error);
+        else                _model.setError(result.errorMessage);
         _model.setUsers(_useCase.listDatabaseUsers(tenantId));
         return _view.buildListDescriptor(_model);
     }

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abap-compiler
+  labels:
+    app: abap-compiler
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abap-compiler
+  template:
+    metadata:
+      labels:
+        app: abap-compiler
+    spec:
+      containers:
+      - name: abap-compiler
+        image: uim-platform/abap-compiler:latest
+        ports:
+        - containerPort: 8093
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: abap-compiler-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8093
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8093
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false

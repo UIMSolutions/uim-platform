@@ -71,7 +71,7 @@ class MessagingServiceController : PlatformController {
             auto result = usecase.createService(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service created"), 201);
-            } else { writeError(res, 400, result.error); }
+            } else { writeError(res, 400, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -94,7 +94,7 @@ class MessagingServiceController : PlatformController {
             auto result = usecase.updateService(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service updated"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -105,7 +105,7 @@ class MessagingServiceController : PlatformController {
             auto result = usecase.deleteService(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service deleted"), 200);
-            } else { writeError(res, 404, result.error); }
+            } else { writeError(res, 404, result.errorMessage); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

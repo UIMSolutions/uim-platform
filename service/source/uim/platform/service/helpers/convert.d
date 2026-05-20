@@ -20,3 +20,27 @@ Json toJsonArray(UIMEntity[] metrics) {
 private Json toJsonArray(T)(T[] values) {
   return values.map!(v => v.toJson()).array.toJson;
 }
+
+UserId toUserId(string s) {
+  // auto parts = s.split(":");
+  // if (parts.length != 2)
+  //     throw new Exception("Invalid User ID format");
+  // return UserId(parts[0], parts[1]);
+  return UserId(s);
+}
+
+UserId getCreatedBy(Json data) {
+  return toUserId(data.getString("createdBy"));
+}
+
+UserId getUpdatedBy(Json data) {
+  return toUserId(data.getString("updatedBy"));
+}
+
+TenantId toTenantId(string s) {
+    return TenantId(s);
+}
+
+TenantId getTenantId(Json data) {
+    return TenantId(data.getString("tenantId"));
+}

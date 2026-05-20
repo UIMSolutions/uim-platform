@@ -53,7 +53,7 @@ class IdentityProviderController : PlatformController {
             .set("id", result.id)
             .set("message", "Identity provider created successfully"), 201);
       else
-        writeError(res, 400, result.error);
+        writeError(res, 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -115,7 +115,7 @@ class IdentityProviderController : PlatformController {
             .set("id", result.id)
             .set("message", "Identity provider updated successfully"), 200);
       else
-        writeError(res, result.error == "Identity provider not found" ? 404 : 400, result.error);
+        writeError(res, result.errorMessage == "Identity provider not found" ? 404 : 400, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -132,7 +132,7 @@ class IdentityProviderController : PlatformController {
           Json.emptyObject.set("id", id)
             .set("message", "Identity provider deleted successfully"), 200);
       else
-        writeError(res, 404, result.error);
+        writeError(res, 404, result.errorMessage);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

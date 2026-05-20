@@ -1,0 +1,42 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.appevents.presentation.gui.models.system_registration;
+
+import uim.platform.service;
+import uim.platform.appevents.domain.entities.system_registration;
+
+@safe:
+
+class GuiSystemRegistrationModel {
+    private SystemRegistration[] _items;
+    private SystemRegistration   _selected;
+    private bool                 _hasSelected;
+    private string               _errorMessage;
+    private string               _successMessage;
+
+    void delegate() @safe onChanged;
+
+    SystemRegistration[] items()         { return _items; }
+    SystemRegistration   selected()      { return _selected; }
+    bool                 hasSelected()   { return _hasSelected; }
+    string               errorMessage()  { return _errorMessage; }
+    string               successMessage(){ return _successMessage; }
+
+    void setItems(SystemRegistration[] list) {
+        _items = list; _errorMessage = "";
+        if (onChanged !is null) onChanged();
+    }
+
+    void setSelected(SystemRegistration item, bool found) {
+        _selected    = item;
+        _hasSelected = found;
+        _errorMessage = found ? "" : "System registration not found";
+        if (onChanged !is null) onChanged();
+    }
+
+    void setError(string msg)   { _errorMessage = msg; _hasSelected = false; if (onChanged !is null) onChanged(); }
+    void setSuccess(string msg) { _successMessage = msg; _errorMessage = ""; if (onChanged !is null) onChanged(); }
+}

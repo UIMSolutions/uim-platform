@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-bool failure(Json data) {
+bool hasError(Json data) {
     if (data.isNull || !data.hasKey("status")) {
         return true;
     }
@@ -21,11 +21,19 @@ bool failure(Json data) {
 ///
 unittest {
     auto errorJson = Json.emptyObject.set("status", "error").set("error", "Something went wrong");
-    assert(failure(errorJson) == true);
+    assert(hasError(errorJson) == true);
 
     auto successJson = Json.emptyObject.set("status", "success").set("data", "All good");
-    assert(failure(successJson) == false);
+    assert(hasError(successJson) == false);
 
     auto invalidJson = Json.emptyObject.set("message", "No status field");
-    assert(failure(invalidJson) == true);
+    assert(hasError(invalidJson) == true);
 }
+
+Json errorResponse(string message = "Internal Server Error", int code = 500) {
+    return Json.emptyObject
+        .set("status", "error")
+        .set("error", message)
+        .set("statusCode", code);
+}
+

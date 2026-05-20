@@ -5,15 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.domain.valueobjects;
 
+import uim.platform.service;
+
 @safe:
 
-struct EventSubscriptionId { string value; bool isNull() const { return value.length == 0; } }
-struct EventTopicId        { string value; bool isNull() const { return value.length == 0; } }
-struct EventChannelId      { string value; bool isNull() const { return value.length == 0; } }
-struct EventMessageId      { string value; bool isNull() const { return value.length == 0; } }
-struct EventFilterId       { string value; bool isNull() const { return value.length == 0; } }
-struct DeadLetterEntryId   { string value; bool isNull() const { return value.length == 0; } }
-struct FormationId         { string value; bool isNull() const { return value.length == 0; } }
-struct SystemRegistrationId{ string value; bool isNull() const { return value.length == 0; } }
-struct TenantId            { string value; bool isNull() const { return value.length == 0; } }
-struct UserId              { string value; bool isNull() const { return value.length == 0; } }
+// TenantId and UserId are provided by uim.platform.service
+
+struct EventSubscriptionId  { string value; mixin DomainId; }
+struct EventTopicId         { string value; mixin DomainId; }
+struct EventChannelId       { string value; mixin DomainId; }
+struct EventMessageId       { string value; mixin DomainId; }
+struct EventFilterId        { string value; mixin DomainId; }
+struct DeadLetterEntryId    { string value; mixin DomainId; }
+struct FormationId          { string value; mixin DomainId; }
+struct SystemRegistrationId { string value; mixin DomainId; }
