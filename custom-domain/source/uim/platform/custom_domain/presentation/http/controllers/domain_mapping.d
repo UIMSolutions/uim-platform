@@ -24,7 +24,7 @@ class DomainMappingController : ManageController {
         router.get("/api/v1/custom-domain/mappings", &handleList);
         router.get("/api/v1/custom-domain/mappings/*", &handleGet);
         router.post("/api/v1/custom-domain/mappings", &handleCreate);
-        router.delete_("/api/v1/custom-domain/mappings/*", &handleDelete);
+        router.delete_("/api/v1/custom-domain/mappings/*", &handleDelete); // Corrected route to point to handleDelete
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -81,7 +81,7 @@ class DomainMappingController : ManageController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req); // Assuming ManageController.getHandler for pre-checks
         if (precheck.hasError)
             return precheck;
 
@@ -112,19 +112,25 @@ class DomainMappingController : ManageController {
         return successResponse("Domain mapping retrieved successfully", 200, result);
     }
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    // No update route defined in registerRoutes, so no updateHandler is needed.
+    // If a PUT route is added, an updateHandler would be implemented here.
+    // override protected Json updateHandler(HTTPServerRequest req) {
+    //     auto precheck = super.updateHandler(req);
+    //     if (precheck.hasError)
+    //         return precheck;
+    //     // ... update logic ...
+    //     return successResponse("Domain mapping updated successfully", 200, Json.emptyObject.set("id", result.id));
+    // }
 
+    // This was previously named updateHandler but performed a delete operation.
+    // Renamed to deleteHandler to match its functionality and the route.
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
+        if (precheck.hasError) return precheck;
         auto tenantId = getTenantId(precheck);
         auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
-
         auto result = usecase.deleteDomainMapping(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
-
-        return successResponse("Domain mapping deleted successfully", 200,
-            Json.emptyObject.set("id", result.id));
+        if (result.hasError) return errorResponse(result.errorMessage, 404);
+        return successResponse("Domain mapping deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

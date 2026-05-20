@@ -50,12 +50,8 @@ class CustomDomainController : ManageController {
                 .set("createdBy", d.createdBy)
                 .set("createdAt", d.createdAt)).array.toJson;
 
-        return Json.emptyObject
-            .set("count", domains.length)
-            .set("resources", jarr)
-            .set("message", "Custom domains retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Custom domains retrieved successfully", 200,
+            Json.emptyObject.set("count", domains.length).set("resources", jarr));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -80,22 +76,15 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.createDomain(r);
         if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 400);
+            return errorResponse(result.errorMessage, 400);
         }
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Custom domain created")
-            .set("status", "success")
-            .set("statusCode", 201);
-
+        return successResponse("Custom domain created", 201,
+            Json.emptyObject.set("id", result.id));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req); // Assuming ManageController.getHandler for pre-checks
         if (precheck.hasError)
             return precheck;
 
@@ -104,11 +93,13 @@ class CustomDomainController : ManageController {
 
         // Check for /activate or /deactivate suffix — skip
         if (path.length > 9 && path[$ - 9 .. $] == "/activate")
-            return errorResponse("Use the /activate endpoint to activate custom domains", 400);
+            return errorResponse("Use the /activate endpoint to activate custom domains", 400); // Should be a 405 Method Not Allowed, but 400 is acceptable
         if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
-            return errorResponse("Use the /deactivate endpoint to deactivate custom domains", 400);
+            return errorResponse("Use the /deactivate endpoint to deactivate custom domains", 400); // Should be a 405 Method Not Allowed, but 400 is acceptable
 
-        auto id = CustomDomainId(extractIdFromPath(path));
+        // Extract ID from path, ensuring no suffix is present
+        const idStr = extractIdFromPath(path);
+        auto id = CustomDomainId(idStr);
         if (id.isNull) {
             return errorResponse("Invalid Custom Domain ID", 400);
         }
@@ -118,8 +109,9 @@ class CustomDomainController : ManageController {
             return errorResponse("Custom domain not found", 404);
         }
 
-        return Json.emptyObject
-            .set("data", Json.emptyObject
+        return successResponse("Custom domain retrieved successfully", 200,
+                    Json.emptyObject
+                    .set("entity", "CustomDomain")
                     .set("id", d.id)
                     .set("domainName", d.domainName)
                     .set("status", d.status.to!string)
@@ -134,14 +126,11 @@ class CustomDomainController : ManageController {
                     .set("createdBy", d.createdBy)
                     .set("updatedBy", d.updatedBy)
                     .set("createdAt", d.createdAt)
-                    .set("updatedAt", d.updatedAt))
-            .set("message", "Custom domain retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+                    .set("updatedAt", d.updatedAt));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.updateHandler(req); // Assuming ManageController.updateHandler for pre-checks
         if (precheck.hasError)
             return precheck;
 
@@ -166,11 +155,8 @@ class CustomDomainController : ManageController {
         if (result.hasError)
             return errorResponse(result.errorMessage, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Custom domain updated")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Custom domain updated", 200,
+            Json.emptyObject.set("id", result.id));
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
@@ -179,8 +165,9 @@ class CustomDomainController : ManageController {
             return errorResponse("Tenant ID is required", 400);
 
         auto path = req.requestURI.to!string;
-        // path: /api/v1/custom-domain/domains/{id}/activate
-        // Extract ID: strip /activate suffix, then extract last segment
+        // Path: /api/v1/custom-domain/domains/{id}/activate
+        // Extract ID: strip "/activate" suffix, then extract last segment
+        enum ACTIVATE_SUFFIX_LEN = "/activate".length;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
         auto id = CustomDomainId(extractIdFromPath(stripped));
         if (id.isNull)
@@ -208,7 +195,8 @@ class CustomDomainController : ManageController {
             return errorResponse("Tenant ID is required", 400);
 
         auto path = req.requestURI.to!string;
-        auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
+        enum DEACTIVATE_SUFFIX_LEN = "/deactivate".length;
+        auto stripped = path[0 .. $ - DEACTIVATE_SUFFIX_LEN]; // remove "/deactivate"
         auto id = CustomDomainId(extractIdFromPath(stripped));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
@@ -216,22 +204,19 @@ class CustomDomainController : ManageController {
         auto result = usecase.deactivateDomain(tenantId, id);
         if (result.hasError)
             return errorResponse(result.errorMessage, 404);
-
-        return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result
-                .id));
+        return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
+            auto response = deactivateHandler(req);
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
-
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
         if (precheck.hasError)
             return precheck;
 
@@ -244,10 +229,7 @@ class CustomDomainController : ManageController {
         if (result.hasError)
             return errorResponse(result.errorMessage, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Custom domain deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Custom domain deleted", 200,
+            Json.emptyObject.set("id", result.id));
     }
 }

@@ -53,10 +53,8 @@ class CertificateController : ManageController {
                 .set("createdAt", c.createdAt);
         }
 
-        return Json.emptyObject
-            .set("count", Json(certs.length))
-            .set("resources", jarr)
-            .set("message", "Certificates retrieved successfully");
+        return successResponse("Certificates retrieved successfully", 200,
+            Json.emptyObject.set("count", certs.length).set("resources", jarr));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -65,7 +63,7 @@ class CertificateController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto data = req.json;
+        auto data = precheck["data"]; // Consistent with other createHandler implementations
         auto id = CertificateId(data.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);
@@ -81,11 +79,8 @@ class CertificateController : ManageController {
         if (result.hasError)
             return errorResponse(result.errorMessage, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Certificate created")
-            .set("status", "success")
-            .set("statusCode", 201);
+        return successResponse("Certificate created", 201,
+            Json.emptyObject.set("id", result.id));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -96,14 +91,17 @@ class CertificateController : ManageController {
         auto tenantId = getTenantId(precheck);
 
         auto path = req.requestURI.to!string;
-        if (path.length > 13 && path[$ - 13 .. $] == "/upload-chain")
-            return errorResponse("Use the /upload-chain endpoint to upload certificate chains", 400);
-        if (path.length > 9 && path[$ - 9 .. $] == "/activate")
-            return errorResponse("Use the /activate endpoint to activate certificates", 400);
-        if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
-            return errorResponse("Use the /deactivate endpoint to deactivate certificates", 400);
+        enum UPLOAD_CHAIN_SUFFIX = "/upload-chain";
+        enum ACTIVATE_SUFFIX = "/activate";
+        enum DEACTIVATE_SUFFIX = "/deactivate";
 
-        auto id = CertificateId(extractIdFromPath(path));
+        if (path.endsWith(UPLOAD_CHAIN_SUFFIX)) return errorResponse("Use the /upload-chain endpoint to upload certificate chains", 400);
+        if (path.endsWith(ACTIVATE_SUFFIX)) return errorResponse("Use the /activate endpoint to activate certificates", 400);
+        if (path.endsWith(DEACTIVATE_SUFFIX)) return errorResponse("Use the /deactivate endpoint to deactivate certificates", 400);
+
+        // Extract ID from path, ensuring no suffix is present
+        const idStr = extractIdFromPath(path);
+        auto id = CertificateId(idStr);
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);
 
@@ -111,14 +109,11 @@ class CertificateController : ManageController {
         if (c.isNull) {
             return errorResponse("Certificate not found", 404);
         }
-        auto domainsArr = c.activatedDomains.map!(d => Json(d)).array.toJson;
-        auto sansArr = c.subjectAlternativeNames.map!(s => Json(s)).array.toJson;
+        auto domainsArr = c.activatedDomains.map!(d => d).array.toJson; // No need for Json(d) if d is string
+        auto sansArr = c.subjectAlternativeNames.map!(s => s).array.toJson; // No need for Json(s) if s is string
 
-        return Json.emptyObject
-            .set("message", "Certificate retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200)
-            .set("item", Json.emptyObject
+        return successResponse("Certificate retrieved successfully", 200,
+            Json.emptyObject
                     .set("id", c.id)
                     .set("keyId", c.keyId)
                     .set("type", c.type.to!string)
@@ -133,7 +128,7 @@ class CertificateController : ManageController {
                     .set("createdAt", c.createdAt)
                     .set("activatedAt", c.activatedAt)
                     .set("activatedDomains", domainsArr)
-                    .set("subjectAlternativeNames", sansArr)
+                    .set("subjectAlternativeNames", sansArr) // Assuming sansArr is an array of strings
             );
     }
 
@@ -142,12 +137,13 @@ class CertificateController : ManageController {
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
-        auto path = req.requestURI.to!string;
+        const path = req.requestURI.to!string;
+        enum UPLOAD_CHAIN_SUFFIX_LEN = "/upload-chain".length;
         auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
         auto id = CertificateId(extractIdFromPath(stripped));
-        if (id.isNull) {
+        if (id.isNull) 
             return errorResponse("Invalid Certificate ID", 400);
-        }
+        
 
         auto data = req.json;
         UploadCertificateChainRequest r;
@@ -165,7 +161,8 @@ class CertificateController : ManageController {
 
     protected void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            res.writeJsonBody(uploadChainHandler(req), 200);
+            auto resp = uploadChainHandler(req);
+            res.writeJsonBody(resp, resp.statusCode);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -176,7 +173,8 @@ class CertificateController : ManageController {
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
-        auto path = req.requestURI.to!string;
+        const path = req.requestURI.to!string;
+        enum ACTIVATE_SUFFIX_LEN = "/activate".length;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
         auto id = CertificateId(extractIdFromPath(stripped));
         if (id.isNull) {
@@ -198,38 +196,32 @@ class CertificateController : ManageController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            res.writeJsonBody(activateHandler(req), 200);
+            auto resp = activateHandler(req);
+            res.writeJsonBody(resp, resp.statusCode);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json deactivateHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        if (tenantId.isNull) return errorResponse("Tenant ID is required", 400);
+
+        const path = req.requestURI.to!string;
+        enum DEACTIVATE_SUFFIX_LEN = "/deactivate".length;
+        auto stripped = path[0 .. $ - DEACTIVATE_SUFFIX_LEN]; // remove "/deactivate"
+        auto id = CertificateId(extractIdFromPath(stripped));
+        if (id.isNull) return errorResponse("Invalid Certificate ID", 400);
+
+        auto result = certificates.deactivateCertificate(tenantId, id);
+        if (result.hasError) return errorResponse(result.errorMessage, 404);
+        return successResponse("Certificate deactivated", 200, Json.emptyObject.set("id", result.id));
+    }
+
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-            if (tenantId.isNull) {
-                writeError(res, 400, "Missing tenant ID");
-                return;
-            }
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = CertificateId(extractIdFromPath(stripped));
-            if (id.isNull) {
-                writeError(res, 400, "Invalid Certificate ID");
-                return;
-            }
-
-            auto result = certificates.deactivateCertificate(tenantId, id);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Certificate deactivated");
-
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
+            auto resp = deactivateHandler(req);
+            res.writeJsonBody(resp, resp.statusCode);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -249,10 +241,7 @@ class CertificateController : ManageController {
         if (result.hasError)
             return errorResponse(result.errorMessage, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Certificate deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Certificate deleted", 200,
+            Json.emptyObject.set("id", result.id));
     }
 }

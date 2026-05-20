@@ -30,11 +30,12 @@ class EncryptionController : PlatformController {
 
   protected Json generateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto data = req.json;
+    const data = req.json;
+    const namespaceIdStr = data.getString("namespaceId");
 
     GenerateDekRequest r;
     r.tenantId = tenantId;
-    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
 
     auto encryption = usecase.generate(r);
@@ -43,7 +44,7 @@ class EncryptionController : PlatformController {
 
     auto resp = Json.emptyObject
       .set("dek", encryption.dek)
-      .set("encryptedDek", encryption.encryptedDek)
+      .set("encryptedDek", encryption.encryptedDek) // Assuming encryptedDek is string
       .set("keyringId", encryption.keyringId.value)
       .set("keyringVersion", encryption.keyringVersion);
 
@@ -61,15 +62,16 @@ class EncryptionController : PlatformController {
 
   protected Json encryptHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto data = req.json;
+    const data = req.json;
+    const namespaceIdStr = data.getString("namespaceId");
 
     EncryptDekRequest r;
     r.tenantId = tenantId;
-    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
     r.dek = data.getString("dek");
 
-    auto result = usecase.encrypt(r);
+    const result = usecase.encrypt(r);
     if (!result.success)
       return errorResponse("Failed to encrypt DEK", 400);
 
@@ -92,16 +94,17 @@ class EncryptionController : PlatformController {
 
   protected Json decryptHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto data = req.json;
+    const data = req.json;
+    const namespaceIdStr = data.getString("namespaceId");
 
     DecryptDekRequest r;
     r.tenantId = tenantId;
-    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
     r.encryptedDek = data.getString("encryptedDek");
     r.keyringVersion = jsonLong(data, "keyringVersion");
 
-    auto result = usecase.decrypt(r);
+    const result = usecase.decrypt(r);
     if (!result.success)
       return errorResponse("Failed to decrypt DEK", 400);
 

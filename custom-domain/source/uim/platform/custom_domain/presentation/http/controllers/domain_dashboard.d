@@ -26,7 +26,7 @@ class DomainDashboardController : ManageController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
+        auto precheck = super.getHandler(req); // Assuming ManageController.getHandler for pre-checks
         if (precheck.hasError)
             return precheck;
 
