@@ -1,0 +1,143 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.health_fhir.presentation.http.controllers.medication_request;
+import uim.platform.health_fhir;
+
+mixin(ShowModule!());
+
+@safe:
+
+class MedicationRequestController : PlatformController {
+  private ManageMedicationRequestsUseCase usecase;
+
+  this(ManageMedicationRequestsUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.get("/fhir/R4/MedicationRequest",     &handleList);
+    router.get("/fhir/R4/MedicationRequest/*",   &handleGet);
+    router.post("/fhir/R4/MedicationRequest",    &handleCreate);
+    router.put("/fhir/R4/MedicationRequest/*",   &handleUpdate);
+    router.delete_("/fhir/R4/MedicationRequest/*", &handleDelete);
+  }
+
+  private static void writeFhirError(scope HTTPServerResponse res, int status, string msg) {
+    res.writeJsonBody(
+      Json.emptyObject.set("resourceType", "OperationOutcome")
+        .set("issue", Json.emptyArray ~= Json.emptyObject
+          .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
+      status
+    );
+  }
+
+  private static MedicationRequestStatus parseStatus(string s) {
+    switch (s) {
+      case "active":        return MedicationRequestStatus.active_;
+      case "on-hold":       return MedicationRequestStatus.onHold_;
+      case "cancelled":     return MedicationRequestStatus.cancelled_;
+      case "completed":     return MedicationRequestStatus.completed_;
+      case "entered-in-error": return MedicationRequestStatus.enteredInError;
+      case "stopped":       return MedicationRequestStatus.stopped_;
+      case "draft":         return MedicationRequestStatus.draft_;
+      default:              return MedicationRequestStatus.unknown_;
+    }
+  }
+
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto j = req.json;
+      CreateMedicationOrderRequest r;
+      r.tenantId              = tenantId;
+      r.medicationRequestId   = MedicationRequestId(j.getString("id"));
+      r.status_               = parseStatus(j.getString("status"));
+      r.authoredOn_           = j.getString("authoredOn");
+      r.note_                 = j.getString("note");
+      auto subjJ = j.get("subject", Json.emptyObject);
+      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+      auto medJ = j.get("medicationReference", Json.emptyObject);
+      r.medicationReference_ = FhirReference(medJ.getString("reference"), medJ.getString("display"));
+
+      auto result = usecase.createMedicationRequest(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("resourceType", "MedicationRequest").set("id", result.id), 201);
+      else
+        writeFhirError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      MedicationRequest[] requests;
+      auto patientParam = req.query.get("subject", "");
+      if (patientParam.length > 0)
+        requests = usecase.listByPatient(tenantId, patientParam);
+      else
+        requests = usecase.listMedicationRequests(tenantId);
+      auto entries = Json.emptyArray;
+      foreach (mr; requests) entries ~= mr.toJson();
+      res.writeJsonBody(
+        Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+          .set("total", requests.length).set("entry", entries),
+        200
+      );
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = MedicationRequestId(extractIdFromPath(req.requestURI.to!string));
+      auto mr = usecase.getMedicationRequest(tenantId, id);
+      if (mr.isNull) { writeFhirError(res, 404, "MedicationRequest not found"); return; }
+      res.writeJsonBody(mr.toJson(), 200);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = MedicationRequestId(extractIdFromPath(req.requestURI.to!string));
+      auto j = req.json;
+      UpdateMedicationOrderRequest r;
+      r.tenantId            = tenantId;
+      r.medicationRequestId = id;
+      r.status_             = parseStatus(j.getString("status"));
+      r.authoredOn_         = j.getString("authoredOn");
+      r.note_               = j.getString("note");
+      auto subjJ = j.get("subject", Json.emptyObject);
+      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+      auto result = usecase.updateMedicationRequest(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("resourceType", "MedicationRequest").set("id", result.id), 200);
+      else
+        writeFhirError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = MedicationRequestId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteMedicationRequest(tenantId, id);
+      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
+      else writeFhirError(res, 404, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+}

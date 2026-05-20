@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ui-flexibility-config
+  labels:
+    app: uim-ui-flexibility
+    component: platform-service
+data:
+  UIFLEXIBILITY_HOST: "0.0.0.0"
+  UIFLEXIBILITY_PORT: "8098"
+  UIFLEXIBILITY_STORAGE: "memory"
+  UIFLEXIBILITY_DATA_PATH: "/data/ui-flexibility"

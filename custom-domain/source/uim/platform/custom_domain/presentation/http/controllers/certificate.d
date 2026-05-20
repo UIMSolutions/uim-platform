@@ -97,11 +97,11 @@ class CertificateController : ManageController {
 
         auto path = req.requestURI.to!string;
         if (path.length > 13 && path[$ - 13 .. $] == "/upload-chain")
-            return;
+            return errorResponse("Use the /upload-chain endpoint to upload certificate chains", 400);
         if (path.length > 9 && path[$ - 9 .. $] == "/activate")
-            return;
+            return errorResponse("Use the /activate endpoint to activate certificates", 400);
         if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
-            return;
+            return errorResponse("Use the /deactivate endpoint to deactivate certificates", 400);
 
         auto id = CertificateId(extractIdFromPath(path));
         if (id.isNull)
@@ -137,75 +137,68 @@ class CertificateController : ManageController {
             );
     }
 
+    protected Json uploadChainHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        if (tenantId.isNull)
+            return errorResponse("Tenant ID is required", 400);
+
+        auto path = req.requestURI.to!string;
+        auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
+        auto id = CertificateId(extractIdFromPath(stripped));
+        if (id.isNull) {
+            return errorResponse("Invalid Certificate ID", 400);
+        }
+
+        auto data = req.json;
+        UploadCertificateChainRequest r;
+        r.tenantId = tenantId;
+        r.certificateId = id;
+        r.certificatePem = data.getString("certificatePem");
+
+        auto result = certificates.uploadCertificateChain(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
+
+        return successResponse("Certificate chain uploaded", 200, Json.emptyObject.set("id", result
+                .id));
+    }
+
     protected void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-            if (tenantId.isNull) {
-                writeError(res, 400, "Missing tenant ID");
-                return;
-            }
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
-            auto id = CertificateId(extractIdFromPath(stripped));
-            if (id.isNull) {
-                writeError(res, 400, "Invalid Certificate ID");
-                return;
-            }
-
-            auto j = req.json;
-            UploadCertificateChainRequest r;
-            r.tenantId = tenantId;
-            r.certificateId = id;
-            r.certificatePem = j.getString("certificatePem");
-
-            auto result = certificates.uploadCertificateChain(r);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Certificate chain uploaded");
-
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
+            res.writeJsonBody(uploadChainHandler(req), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json activateHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        if (tenantId.isNull)
+            return errorResponse("Tenant ID is required", 400);
+
+        auto path = req.requestURI.to!string;
+        auto stripped = path[0 .. $ - 9]; // remove "/activate"
+        auto id = CertificateId(extractIdFromPath(stripped));
+        if (id.isNull) {
+            return errorResponse("Invalid Certificate ID", 400);
+        }
+
+        auto data = req.json;
+        ActivateCertificateRequest r;
+        r.tenantId = tenantId;
+        r.certificateId = id;
+        r.domains = getStrings(data, "domains");
+
+        auto result = certificates.activateCertificate(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
+
+        return successResponse("Certificate activated", 200, Json.emptyObject.set("id", result.id));
+    }
+
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-            if (tenantId.isNull) {
-                writeError(res, 400, "Missing tenant ID");
-                return;
-            }
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = CertificateId(extractIdFromPath(stripped));
-            if (id.isNull) {
-                writeError(res, 400, "Invalid Certificate ID");
-                return;
-            }
-
-            auto j = req.json;
-            ActivateCertificateRequest r;
-            r.tenantId = tenantId;
-            r.certificateId = id;
-            r.domains = getStrings(j, "domains");
-
-            auto result = certificates.activateCertificate(r);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Certificate activated");
-
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
+            res.writeJsonBody(activateHandler(req), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

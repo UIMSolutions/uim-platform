@@ -1,0 +1,134 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.ui_flexibility.presentation.http.controllers.flex_variants;
+import uim.platform.ui_flexibility;
+
+mixin(ShowModule!());
+
+@safe:
+
+/// Routes: /keyuser/v2/variants
+class FlexVariantsController : PlatformController {
+  private ManageFlexVariantsUseCase usecase;
+
+  this(ManageFlexVariantsUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.get("/keyuser/v2/variants",    &handleList);
+    router.get("/keyuser/v2/variants/*",  &handleGet);
+    router.post("/keyuser/v2/variants",   &handleCreate);
+    router.put("/keyuser/v2/variants/*",  &handleUpdate);
+    router.delete_("/keyuser/v2/variants/*", &handleDelete);
+  }
+
+  private static void writeError(scope HTTPServerResponse res, int status, string msg) {
+    res.writeJsonBody(Json.emptyObject.set("error", msg).set("status", status), status);
+  }
+
+  private static VariantType parseVariantType(string s) {
+    switch (s) {
+      case "table":    return VariantType.table_;
+      case "chart":    return VariantType.chart_;
+      case "dialog":   return VariantType.dialog_;
+      case "page":     return VariantType.page_;
+      default:         return VariantType.filterBar_;
+    }
+  }
+
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto j = req.json;
+      CreateFlexVariantRequest r;
+      r.tenantId    = tenantId;
+      r.variantId   = FlexVariantId(j.getString("id"));
+      r.appId       = j.getString("appId");
+      r.variantType_ = parseVariantType(j.getString("variantType"));
+      r.variantName_ = j.getString("variantName");
+      r.content_     = j.getString("content");
+      r.isDefault_   = j.get("isDefault", Json(false)).get!bool;
+      r.isPublic_    = j.get("isPublic", Json(false)).get!bool;
+      r.layer_       = j.getString("layer") == "user" ? ChangeLayer.user_ : ChangeLayer.customer_;
+      r.author_      = j.getString("author");
+      auto result = usecase.createVariant(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
+      else
+        writeError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      FlexVariant[] variants;
+      auto appParam = req.query.get("appId", "");
+      auto publicParam = req.query.get("public", "");
+      if (publicParam == "true" && appParam.length > 0)
+        variants = usecase.listPublicVariants(tenantId, appParam);
+      else if (appParam.length > 0)
+        variants = usecase.listVariantsByApp(tenantId, appParam);
+      else
+        variants = usecase.listVariants(tenantId);
+      auto arr = Json.emptyArray;
+      foreach (v; variants) arr ~= v.toJson();
+      res.writeJsonBody(Json.emptyObject.set("variants", arr).set("count", variants.length), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));
+      auto v = usecase.getVariant(tenantId, id);
+      if (v.isNull) { writeError(res, 404, "FlexVariant not found"); return; }
+      res.writeJsonBody(v.toJson(), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));
+      auto j = req.json;
+      UpdateFlexVariantRequest r;
+      r.tenantId    = tenantId;
+      r.variantId   = id;
+      r.variantName_ = j.getString("variantName");
+      r.content_     = j.getString("content");
+      r.isDefault_   = j.get("isDefault", Json(false)).get!bool;
+      r.isPublic_    = j.get("isPublic", Json(false)).get!bool;
+      auto result = usecase.updateVariant(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+      else
+        writeError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteVariant(tenantId, id);
+      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
+      else writeError(res, 404, result.errorMessage);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+}

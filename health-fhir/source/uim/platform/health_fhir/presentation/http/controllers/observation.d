@@ -1,0 +1,143 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.health_fhir.presentation.http.controllers.observation;
+import uim.platform.health_fhir;
+
+mixin(ShowModule!());
+
+@safe:
+
+class ObservationController : PlatformController {
+  private ManageObservationsUseCase usecase;
+
+  this(ManageObservationsUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.get("/fhir/R4/Observation",     &handleList);
+    router.get("/fhir/R4/Observation/*",   &handleGet);
+    router.post("/fhir/R4/Observation",    &handleCreate);
+    router.put("/fhir/R4/Observation/*",   &handleUpdate);
+    router.delete_("/fhir/R4/Observation/*", &handleDelete);
+  }
+
+  private static void writeFhirError(scope HTTPServerResponse res, int status, string msg) {
+    res.writeJsonBody(
+      Json.emptyObject.set("resourceType", "OperationOutcome")
+        .set("issue", Json.emptyArray ~= Json.emptyObject
+          .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
+      status
+    );
+  }
+
+  private static ObservationStatus parseStatus(string s) {
+    switch (s) {
+      case "registered":    return ObservationStatus.registered_;
+      case "preliminary":   return ObservationStatus.preliminary_;
+      case "final":         return ObservationStatus.final_;
+      case "amended":       return ObservationStatus.amended_;
+      case "corrected":     return ObservationStatus.corrected_;
+      case "cancelled":     return ObservationStatus.cancelled_;
+      case "entered-in-error": return ObservationStatus.enteredInError;
+      default:              return ObservationStatus.unknown_;
+    }
+  }
+
+  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto j = req.json;
+      CreateObservationRequest r;
+      r.tenantId        = tenantId;
+      r.observationId   = ObservationId(j.getString("id"));
+      r.status_         = parseStatus(j.getString("status"));
+      r.effectiveDateTime_ = j.getString("effectiveDateTime");
+      r.note_           = j.getString("note");
+
+      auto subjJ = j.get("subject", Json.emptyObject);
+      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+
+      auto result = usecase.createObservation(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation").set("id", result.id), 201);
+      else
+        writeFhirError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      Observation[] observations;
+      auto patientParam = req.query.get("subject", "");
+      if (patientParam.length > 0)
+        observations = usecase.listByPatient(tenantId, patientParam);
+      else
+        observations = usecase.listObservations(tenantId);
+
+      auto entries = Json.emptyArray;
+      foreach (o; observations) entries ~= o.toJson();
+      res.writeJsonBody(
+        Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+          .set("total", observations.length).set("entry", entries),
+        200
+      );
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));
+      auto o = usecase.getObservation(tenantId, id);
+      if (o.isNull) { writeFhirError(res, 404, "Observation not found"); return; }
+      res.writeJsonBody(o.toJson(), 200);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));
+      auto j = req.json;
+      UpdateObservationRequest r;
+      r.tenantId      = tenantId;
+      r.observationId = id;
+      r.status_       = parseStatus(j.getString("status"));
+      r.effectiveDateTime_ = j.getString("effectiveDateTime");
+      r.note_         = j.getString("note");
+      auto subjJ = j.get("subject", Json.emptyObject);
+      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+      auto result = usecase.updateObservation(r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation").set("id", result.id), 200);
+      else
+        writeFhirError(res, 400, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.getTenantId;
+      auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));
+      auto result = usecase.deleteObservation(tenantId, id);
+      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
+      else writeFhirError(res, 404, result.errorMessage);
+    } catch (Exception e) {
+      writeFhirError(res, 500, "Internal server error");
+    }
+  }
+}

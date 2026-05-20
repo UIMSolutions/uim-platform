@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: health-fhir-config
+  labels:
+    app: health-fhir
+    layer: platform
+data:
+  HEALTHFHIR_HOST: "0.0.0.0"
+  HEALTHFHIR_PORT: "8097"
+  HEALTHFHIR_STORAGE: "memory"
+  HEALTHFHIR_DATA_PATH: "/data/health-fhir"

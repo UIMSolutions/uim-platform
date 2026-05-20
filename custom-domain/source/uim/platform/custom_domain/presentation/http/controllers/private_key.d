@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PrivateKeyController : PlatformController {
+class PrivateKeyController : ManageController {
     private ManagePrivateKeysUseCase usecase;
 
     this(ManagePrivateKeysUseCase usecase) {
@@ -20,117 +20,112 @@ class PrivateKeyController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/keys", &handleList);
         router.get("/api/v1/custom-domain/keys/*", &handleGet);
         router.post("/api/v1/custom-domain/keys", &handleCreate);
         router.delete_("/api/v1/custom-domain/keys/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            CreatePrivateKeyRequest r;
-            r.tenantId = tenantId;
-            r.privateKeyId = PrivateKeyId(j.getString("id"));
-            r.subject = j.getString("subject");
-            r.domains = getStrings(j, "domains");
-            r.algorithm = j.getString("algorithm");
-            r.keySize = j.getInteger("keySize");
-            r.createdBy = UserId(j.getString("createdBy"));
+        auto tenantId = getTenantId(precheck);
+        auto keys = usecase.listPrivateKeys(tenantId);
 
-            auto result = usecase.createPrivateKey(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Private key created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto keys = usecase.listPrivateKeys(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (k; keys) {
-                jarr ~= Json.emptyObject
-                    .set("id", k.id)
-                    .set("subject", k.subject)
-                    .set("algorithm", k.algorithm.to!string)
-                    .set("status", k.status.to!string)
-                    .set("keySize", k.keySize)
-                    .set("createdBy", k.createdBy)
-                    .set("createdAt", k.createdAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", Json(keys.length))
-                .set("resources", jarr);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
-            
-            auto k = usecase.getPrivateKey(tenantId, id);
-            if (k.isNull) {
-                writeError(res, 404, "Private key not found");
-                return;
-            }
-
-            auto domainsArr = k.domains.map!(d => Json(d)).array.toJson;
-            
-            auto resp = Json.emptyObject
+        auto jarr = Json.emptyArray;
+        foreach (k; keys) {
+            jarr ~= Json.emptyObject
                 .set("id", k.id)
-                .set("tenantId", k.tenantId)
                 .set("subject", k.subject)
                 .set("algorithm", k.algorithm.to!string)
                 .set("status", k.status.to!string)
                 .set("keySize", k.keySize)
-                .set("publicKeyFingerprint", k.publicKeyFingerprint)
                 .set("createdBy", k.createdBy)
-                .set("createdAt", k.createdAt)
-                .set("domains", domainsArr);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+                .set("createdAt", k.createdAt);
         }
+
+        return successResponse("Private keys retrieved successfully", 200,
+            Json.emptyObject.set("count", keys.length).set("keys", jarr));
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deletePrivateKey(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Private key deleted");
+        auto tenantId = getTenantId(precheck);
+        auto data = precheck["data"];
+        auto id = PrivateKeyId(data.getString("id"));
+        if (id.isNull)
+            return errorResponse("Private key ID is required", 400);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        CreatePrivateKeyRequest r;
+        r.tenantId = tenantId;
+        r.privateKeyId = id;
+        r.subject = data.getString("subject");
+        r.domains = getStrings(data, "domains");
+        r.algorithm = data.getString("algorithm");
+        r.keySize = data.getInteger("keySize");
+        r.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createPrivateKey(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
+
+        return successResponse("Private key created successfully", 201,
+            Json.emptyObject.set("id", result.id));
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid Private Key ID", 400);
+
+        auto privateKey = usecase.getPrivateKey(tenantId, id);
+        if (privateKey.isNull)
+            return errorResponse("Private key not found", 404);
+
+        auto domainsArr = privateKey.domains.map!(d => Json(d)).array.toJson;
+
+        auto result = Json.emptyObject
+                .set("entity", "PrivateKey")
+                .set("id", privateKey.id)
+                .set("tenantId", privateKey.tenantId)
+                .set("subject", privateKey.subject)
+                .set("algorithm", privateKey.algorithm.to!string)
+                .set("status", privateKey.status.to!string)
+                .set("keySize", privateKey.keySize)
+                .set("publicKeyFingerprint", privateKey.publicKeyFingerprint)
+                .set("createdBy", privateKey.createdBy)
+                .set("createdAt", privateKey.createdAt)
+                .set("domains", domainsArr);
+                
+        return successResponse("Private key retrieved successfully", 200, result);
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid Private Key ID", 400);
+
+        auto result = usecase.deletePrivateKey(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("Private key deleted successfully", 200,
+            Json.emptyObject.set("id", result.id));
     }
 }

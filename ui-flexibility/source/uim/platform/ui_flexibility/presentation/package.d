@@ -1,0 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.ui_flexibility.presentation;
+
+public {
+  import uim.platform.ui_flexibility.presentation.http;
+  import uim.platform.ui_flexibility.presentation.cli;
+  import uim.platform.ui_flexibility.presentation.web;
+  import uim.platform.ui_flexibility.presentation.gui;
+}

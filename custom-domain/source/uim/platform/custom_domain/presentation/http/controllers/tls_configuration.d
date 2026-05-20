@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TlsConfigurationController : PlatformController {
+class TlsConfigurationController : ManageController {
     private ManageTlsConfigurationsUseCase usecase;
 
     this(ManageTlsConfigurationsUseCase usecase) {
@@ -20,7 +20,7 @@ class TlsConfigurationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/tls-configurations", &handleList);
         router.get("/api/v1/custom-domain/tls-configurations/*", &handleGet);
         router.post("/api/v1/custom-domain/tls-configurations", &handleCreate);
@@ -28,79 +28,17 @@ class TlsConfigurationController : PlatformController {
         router.delete_("/api/v1/custom-domain/tls-configurations/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            CreateTlsConfigurationRequest r;
-            r.tenantId = tenantId;
-            r.tlsConfigurationId = TlsConfigurationId(j.getString("id"));
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.minProtocolVersion = j.getString("minProtocolVersion");
-            r.maxProtocolVersion = j.getString("maxProtocolVersion");
-            r.http2Enabled = j.getBoolean("http2Enabled");
-            r.hstsEnabled = j.getBoolean("hstsEnabled");
-            r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
-            r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
-            r.createdBy = UserId(j.getString("createdBy"));
+        auto tenantId = getTenantId(precheck);
+        auto configs = usecase.listTlsConfigurations(tenantId);
 
-            auto result = usecase.createTlsConfiguration(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "TLS configuration created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto configs = usecase.listTlsConfigurations(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (c; configs) {
-                jarr ~= Json.emptyObject
-                    .set("id", c.id)
-                    .set("name", c.name)
-                    .set("description", c.description)
-                    .set("minProtocolVersion", c.minProtocolVersion.to!string)
-                    .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
-                    .set("http2Enabled", c.http2Enabled)
-                    .set("hstsEnabled", c.hstsEnabled)
-                    .set("createdBy", c.createdBy)
-                    .set("createdAt", c.createdAt);
-            }
-
-            auto response = Json.emptyObject
-                .set("count", configs.length)
-                .set("resources", jarr);
-
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
-            auto c = usecase.getTlsConfiguration(tenantId, id);
-            if (c.isNull) {
-                writeError(res, 404, "TLS configuration not found");
-                return;
-            }
-
-            auto response = Json.emptyObject
+        auto jarr = Json.emptyArray;
+        foreach (c; configs) {
+            jarr ~= Json.emptyObject
                 .set("id", c.id)
                 .set("name", c.name)
                 .set("description", c.description)
@@ -111,66 +49,125 @@ class TlsConfigurationController : PlatformController {
                 .set("hstsMaxAge", c.hstsMaxAge)
                 .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
                 .set("createdBy", c.createdBy)
-                .set("updatedBy", c.updatedBy)
-                .set("createdAt", c.createdAt)
-                .set("updatedAt", c.updatedAt);
-
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+                .set("createdAt", c.createdAt);
         }
+
+        return successResponse("TLS configurations retrieved successfully", 200,
+            Json.emptyObject.set("count", configs.length).set("resources", jarr));
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            UpdateTlsConfigurationRequest r;
-            r.tenantId = tenantId;
-            r.tlsConfigurationId = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.minProtocolVersion = j.getString("minProtocolVersion");
-            r.maxProtocolVersion = j.getString("maxProtocolVersion");
-            r.http2Enabled = j.getBoolean("http2Enabled");
-            r.hstsEnabled = j.getBoolean("hstsEnabled");
-            r.hstsMaxAge = j.getLong("hstsMaxAge");
-            r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = getTenantId(precheck);
+        auto data = precheck["data"];
+        auto id = TlsConfigurationId(data.getString("id"));
+        if (id.isNull)
+            return errorResponse("TLS Configuration ID is required", 400);
 
-            auto result = usecase.updateTlsConfiguration(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "TLS configuration updated");
+        CreateTlsConfigurationRequest r;
+        r.tenantId = tenantId;
+        r.tlsConfigurationId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.minProtocolVersion = data.getString("minProtocolVersion");
+        r.maxProtocolVersion = data.getString("maxProtocolVersion");
+        r.http2Enabled = data.getBoolean("http2Enabled");
+        r.hstsEnabled = data.getBoolean("hstsEnabled");
+        r.hstsMaxAge = jsonLong(data, "hstsMaxAge");
+        r.hstsIncludeSubDomains = data.getBoolean("hstsIncludeSubDomains");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.createTlsConfiguration(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
+
+        return successResponse("TLS configuration created successfully", 201,
+            Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
-            
-            auto result = usecase.deleteTlsConfiguration(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "TLS configuration deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid TLS Configuration ID", 400);
+
+        auto c = usecase.getTlsConfiguration(tenantId, id);
+        if (c.isNull)
+            return errorResponse("TLS configuration not found", 404);
+
+        auto response = Json.emptyObject
+            .set("entity", "TlsConfiguration")
+            .set("id", c.id)
+            .set("name", c.name)
+            .set("description", c.description)
+            .set("minProtocolVersion", c.minProtocolVersion.to!string)
+            .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
+            .set("http2Enabled", c.http2Enabled)
+            .set("hstsEnabled", c.hstsEnabled)
+            .set("hstsMaxAge", c.hstsMaxAge)
+            .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
+            .set("createdBy", c.createdBy)
+            .set("updatedBy", c.updatedBy)
+            .set("createdAt", c.createdAt)
+            .set("updatedAt", c.updatedAt);
+
+        return successResponse("TLS configuration retrieved successfully", 200,
+            Json.emptyObject.set("resource", response));
     }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto data = precheck["data"];
+
+        UpdateTlsConfigurationRequest r;
+        r.tenantId = tenantId;
+        r.tlsConfigurationId = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.minProtocolVersion = data.getString("minProtocolVersion");
+        r.maxProtocolVersion = data.getString("maxProtocolVersion");
+        r.http2Enabled = data.getBoolean("http2Enabled");
+        r.hstsEnabled = data.getBoolean("hstsEnabled");
+        r.hstsMaxAge = data.getLong("hstsMaxAge");
+        r.hstsIncludeSubDomains = data.getBoolean("hstsIncludeSubDomains");
+        r.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateTlsConfiguration(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("TLS configuration updated successfully", 200,
+            Json.emptyObject.set("id", result.id));
+
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid TLS Configuration ID", 400);
+
+        auto result = usecase.deleteTlsConfiguration(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("TLS configuration deleted successfully", 200,
+            Json.emptyObject.set("id", result.id));
+    }
+
 }

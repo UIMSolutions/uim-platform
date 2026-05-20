@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DomainMappingController : PlatformController {
+class DomainMappingController : ManageController {
     private ManageDomainMappingsUseCase usecase;
 
     this(ManageDomainMappingsUseCase usecase) {
@@ -27,78 +27,16 @@ class DomainMappingController : PlatformController {
         router.delete_("/api/v1/custom-domain/mappings/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            CreateDomainMappingRequest r;
-            r.tenantId = tenantId;
-            r.domainMappingId = DomainMappingId(j.getString("id"));
-            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
-            r.standardRoute = j.getString("standardRoute");
-            r.customRoute = j.getString("customRoute");
-            r.mappingType = j.getString("mappingType");
-            r.applicationName = j.getString("applicationName");
-            r.organizationId = j.getString("organizationId");
-            r.spaceId = j.getString("spaceId");
-            r.createdBy = UserId(j.getString("createdBy"));
-
-            auto result = usecase.createDomainMapping(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Domain mapping created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto mappings = usecase.listDomainMappings(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (m; mappings) {
-                jarr ~= Json.emptyObject
-                    .set("id", m.id)
-                    .set("customDomainId", m.customDomainId)
-                    .set("standardRoute", m.standardRoute)
-                    .set("customRoute", m.customRoute)
-                    .set("mappingType", m.mappingType.to!string)
-                    .set("status", m.status.to!string)
-                    .set("applicationName", m.applicationName)
-                    .set("createdBy", m.createdBy)
-                    .set("createdAt", m.createdAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", Json(mappings.length))
-                .set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
-
-            auto m = usecase.getDomainMapping(tenantId, id);
-            if (m.isNull) {
-                writeError(res, 404, "Domain mapping not found");
-                return;
-            }
-
-            auto resp = Json.emptyObject
+        auto tenantId = getTenantId(precheck);
+        auto mappings = usecase.listDomainMappings(tenantId);
+        auto jarr = Json.emptyArray;
+        foreach (m; mappings) {
+            jarr ~= Json.emptyObject
                 .set("id", m.id)
                 .set("customDomainId", m.customDomainId)
                 .set("standardRoute", m.standardRoute)
@@ -106,35 +44,87 @@ class DomainMappingController : PlatformController {
                 .set("mappingType", m.mappingType.to!string)
                 .set("status", m.status.to!string)
                 .set("applicationName", m.applicationName)
-                .set("organizationId", m.organizationId)
-                .set("spaceId", m.spaceId)
                 .set("createdBy", m.createdBy)
-                .set("createdAt", m.createdAt)
-                .set("updatedAt", m.updatedAt);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+                .set("createdAt", m.createdAt);
         }
+
+        return successResponse("Domain mappings retrieved successfully", 200,
+            Json.emptyObject.set("count", mappings.length).set("mappings", jarr));
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteDomainMapping(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Domain mapping deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = getTenantId(precheck);
+        auto data = precheck["data"];
+
+        CreateDomainMappingRequest r;
+        r.tenantId = tenantId;
+        r.domainMappingId = DomainMappingId(data.getString("id"));
+        r.customDomainId = CustomDomainId(data.getString("customDomainId"));
+        r.standardRoute = data.getString("standardRoute");
+        r.customRoute = data.getString("customRoute");
+        r.mappingType = data.getString("mappingType");
+        r.applicationName = data.getString("applicationName");
+        r.organizationId = data.getString("organizationId");
+        r.spaceId = data.getString("spaceId");
+        r.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createDomainMapping(r);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
+
+        return successResponse("Domain mapping created successfully", 201,
+            Json.emptyObject.set("id", result.id));
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
+        if (id.isNull)
+            return errorResponse("Invalid Domain Mapping ID", 400);
+
+        auto m = usecase.getDomainMapping(tenantId, id);
+        if (m.isNull)
+            return errorResponse("Domain mapping not found", 404);
+
+        auto result = m.entityToJson()
+            .set("entity", "DomainMapping")
+            .set("id", m.id)
+            .set("customDomainId", m.customDomainId)
+            .set("standardRoute", m.standardRoute)
+            .set("customRoute", m.customRoute)
+            .set("mappingType", m.mappingType.to!string)
+            .set("status", m.status.to!string)
+            .set("applicationName", m.applicationName)
+            .set("organizationId", m.organizationId)
+            .set("spaceId", m.spaceId)
+            .set("createdBy", m.createdBy)
+            .set("createdAt", m.createdAt)
+            .set("updatedAt", m.updatedAt);
+
+        return successResponse("Domain mapping retrieved successfully", 200, result);
+    }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
+
+        auto result = usecase.deleteDomainMapping(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("Domain mapping deleted successfully", 200,
+            Json.emptyObject.set("id", result.id));
     }
 }

@@ -91,10 +91,4 @@ struct TaskListViewModel {
     bool hasError() const { return errorMessage.length > 0; }
 }
 
-private string formatTimestamp(long ts) {
-    import std.datetime : SysTime, unixTimeToStdTime;
-    import std.format  : format;
-    if (ts == 0) return "—";
-    auto st = SysTime(unixTimeToStdTime(ts));
-    return format!"%04d-%02d-%02d"(st.year, cast(int) st.month, st.day);
-}
+

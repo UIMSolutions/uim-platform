@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BindingController : PlatformController {
+class BindingController : ManageController {
   private ManageServiceBindingsUseCase bindings;
 
   this(ManageServiceBindingsUseCase bindings) {
@@ -30,78 +30,18 @@ class BindingController : PlatformController {
     router.delete_("/api/v1/bindings/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateServiceBindingRequest r;
-      r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.permission = j.getString("permission");
-      r.allowedNamespaces = j.getArray("allowedNamespaces")
-        .map!(ns => NamespaceId(ns.getString)).array;
-      r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = UserId(j.getString("createdBy"));
+    auto tenantId = getTenantId(precheck);
+    auto bindings = this.bindings.listServiceBindings(tenantId);
 
-      auto result = bindings.createServiceBinding(r);
-
-      // Return binding credentials (only shown once at creation)
-      auto resp = Json.emptyObject
-        .set("id", result.serviceBindingId)
-        .set("name", result.name)
-        .set("clientId", result.clientId)
-        .set("clientSecret", result.clientSecret)
-        .set("permission", result.permission)
-        .set("status", result.status)
-        .set("allowedNamespaces", toJsonArray(result.allowedNamespaces))
-        .set("createdAt", result.createdAt)
-        .set("expiresAt", result.expiresAt);
-
-      res.writeJsonBody(resp, 201);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-
-      auto bindings = bindings.listServiceBindings(tenantId);
-      auto jarr = Json.emptyArray;
-      foreach (b; bindings) {
-        jarr ~= Json.emptyObject
-          .set("id", b.id)
-          .set("name", b.name)
-          .set("clientId", b.clientId)
-          .set("createdAt", b.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", bindings.length)
-        .set("message", "Service bindings retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
-      
-      auto b = bindings.getServiceBinding(tenantId, id);
-      if (b.isNull) {
-        writeError(res, 404, "Service binding not found");
-        return;
-      }
-
-      auto response = Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (b; bindings) {
+      jarr ~= Json.emptyObject
+        .set("entity", "ServiceBinding")
         .set("id", b.id)
         .set("name", b.name)
         .set("description", b.description)
@@ -109,60 +49,121 @@ class BindingController : PlatformController {
         .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value)
             .array.toJson)
         .set("createdAt", b.createdAt)
-        .set("expiresAt", b.expiresAt)
-        .set("message", "Service binding retrieved successfully");
-
-      // Note: clientSecret is NOT returned on GET (only on creation)
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("expiresAt", b.expiresAt);
     }
+
+    return successResponse("Service bindings retrieved successfully", 200,
+      Json.emptyObject.set("count", bindings.length).set("items", jarr));
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
-      auto j = req.json;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UpdateServiceBindingRequest r;
-      r.serviceBindingId = id;
-      r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.permission = j.getString("permission");
-      r.status = j.getString("status");
-      r.allowedNamespaces = j.getArray("allowedNamespaces")
-        .map!(ns => NamespaceId(ns.getString)).array;
+    auto tenantId = getTenantId(precheck);
+    auto data = precheck["data"];
 
-      auto result = bindings.updateServiceBinding(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Service binding updated successfully");
+    CreateServiceBindingRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.permission = data.getString("permission");
+    r.allowedNamespaces = data.getArray("allowedNamespaces")
+      .map!(ns => NamespaceId(ns.getString)).array;
+    r.expiresAt = jsonLong(data, "expiresAt");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = bindings.createServiceBinding(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 400);
+
+    // Return binding credentials (only shown once at creation)
+    auto resp = Json.emptyObject
+      .set("id", result.serviceBindingId)
+      .set("name", result.name)
+      .set("clientId", result.clientId)
+      .set("clientSecret", result.clientSecret)
+      .set("permission", result.permission)
+      .set("status", result.status)
+      .set("allowedNamespaces", toJsonArray(result.allowedNamespaces))
+      .set("createdAt", result.createdAt)
+      .set("expiresAt", result.expiresAt);
+
+    return successResponse("Service binding created successfully", 201, resp);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
-      
-      auto result = bindings.deleteServiceBinding(tenantId, id);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = getTenantId(precheck);
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid Service Binding ID", 400);
+
+    auto b = bindings.getServiceBinding(tenantId, id);
+    if (b.isNull)
+      return errorResponse("Service binding not found", 404);
+
+    auto response = Json.emptyObject
+      .set("id", b.id)
+      .set("name", b.name)
+      .set("description", b.description)
+      .set("clientId", b.clientId)
+      .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value)
+          .array.toJson)
+      .set("createdAt", b.createdAt)
+      .set("expiresAt", b.expiresAt)
+      .set("message", "Service binding retrieved successfully");
+
+    return successResponse("Service binding retrieved successfully", 200, response);
+  }
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = getTenantId(precheck);
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid Service Binding ID", 400);
+
+    auto data = precheck["data"];
+
+    UpdateServiceBindingRequest r;
+    r.serviceBindingId = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.permission = data.getString("permission");
+    r.status = data.getString("status");
+    r.allowedNamespaces = data.getArray("allowedNamespaces")
+      .map!(ns => NamespaceId(ns.getString)).array;
+
+    auto result = bindings.updateServiceBinding(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 400);
+
+    return successResponse("Service binding updated successfully", 200,
+      Json.emptyObject.set("id", result.id));
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = getTenantId(precheck);
+    auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid Service Binding ID", 400);
+
+    auto result = bindings.deleteServiceBinding(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 400);
+
+    return successResponse("Service binding deleted successfully", 204, Json.emptyObject);
   }
 }

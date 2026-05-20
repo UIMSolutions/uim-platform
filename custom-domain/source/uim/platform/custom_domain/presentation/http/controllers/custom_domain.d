@@ -104,20 +104,18 @@ class CustomDomainController : ManageController {
 
         // Check for /activate or /deactivate suffix — skip
         if (path.length > 9 && path[$ - 9 .. $] == "/activate")
-            return;
+            return errorResponse("Use the /activate endpoint to activate custom domains", 400);
         if (path.length > 11 && path[$ - 11 .. $] == "/deactivate")
-            return;
+            return errorResponse("Use the /deactivate endpoint to deactivate custom domains", 400);
 
         auto id = CustomDomainId(extractIdFromPath(path));
         if (id.isNull) {
-            writeError(res, 400, "Invalid Custom Domain ID");
-            return;
+            return errorResponse("Invalid Custom Domain ID", 400);
         }
 
         auto d = usecase.getDomain(tenantId, id);
         if (d.isNull) {
-            writeError(res, 404, "Custom domain not found");
-            return;
+            return errorResponse("Custom domain not found", 404);
         }
 
         return Json.emptyObject
@@ -175,61 +173,58 @@ class CustomDomainController : ManageController {
             .set("statusCode", 200);
     }
 
+    protected Json activateHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        if (tenantId.isNull)
+            return errorResponse("Tenant ID is required", 400);
+
+        auto path = req.requestURI.to!string;
+        // path: /api/v1/custom-domain/domains/{id}/activate
+        // Extract ID: strip /activate suffix, then extract last segment
+        auto stripped = path[0 .. $ - 9]; // remove "/activate"
+        auto id = CustomDomainId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid Custom Domain ID", 400);
+
+        auto result = usecase.activateDomain(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("Custom domain activated", 200, Json.emptyObject.set("id", result.id));
+    }
+
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-
-            auto path = req.requestURI.to!string;
-            // path: /api/v1/custom-domain/domains/{id}/activate
-            // Extract ID: strip /activate suffix, then extract last segment
-            auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = CustomDomainId(extractIdFromPath(stripped));
-            if (id.isNull) {
-                writeError(res, 400, "Invalid Custom Domain ID");
-                return;
-            }
-
-            auto result = usecase.activateDomain(tenantId, id);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Custom domain activated")
-                    .set("status", "success")
-                    .set("statusCode", 200);
-
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
+            auto resp = activateHandler(req);
+            res.writeJsonBody(resp, resp.statusCode);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json deactivateHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        if (tenantId.isNull)
+            return errorResponse("Tenant ID is required", 400);
+
+        auto path = req.requestURI.to!string;
+        auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
+        auto id = CustomDomainId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid Custom Domain ID", 400);
+
+        auto result = usecase.deactivateDomain(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 404);
+
+        return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result
+                .id));
+    }
+
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
 
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = CustomDomainId(extractIdFromPath(stripped));
-            if (id.isNull) {
-                writeError(res, 400, "Invalid Custom Domain ID");
-                return;
-            }
-
-            auto result = usecase.deactivateDomain(tenantId, id);
-            if (result.success) {
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Custom domain deactivated")
-                    .set("status", "success")
-                    .set("statusCode", 200);
-
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 404, result.errorMessage);
-            }
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DomainDashboardController : PlatformController {
+class DomainDashboardController : ManageController {
     private ManageDomainDashboardsUseCase usecase;
 
     this(ManageDomainDashboardsUseCase usecase) {
@@ -20,17 +20,24 @@ class DomainDashboardController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/dashboard", &handleGet);
         router.post("/api/v1/custom-domain/dashboard/refresh", &handleRefresh);
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto d = usecase.getDashboard(tenantId);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
+        auto tenantId = getTenantId(precheck);
+        auto d = usecase.getDashboard(tenantId);
+        if (d.isNull) 
+            return errorResponse("Dashboard data not found for tenant", 404);
+        
+
+        return successResponse("Dashboard data retrieved successfully", 200,
+            Json.emptyObject
                 .set("id", d.id)
                 .set("totalDomains", d.totalDomains)
                 .set("activeDomains", d.activeDomains)
@@ -39,31 +46,27 @@ class DomainDashboardController : PlatformController {
                 .set("totalMappings", d.totalMappings)
                 .set("activeMappings", d.activeMappings)
                 .set("overallHealth", d.overallHealth.to!string)
-                .set("lastUpdatedAt", d.lastUpdatedAt)
-                .set("message", "Dashboard data retrieved successfully");
+                .set("lastUpdatedAt", d.lastUpdatedAt));
+    }
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    protected Json refreshHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        RefreshDashboardRequest r;
+        r.tenantId = tenantId;
+
+        auto result = usecase.refreshDashboard(r);
+        if (result.hasError) 
+            return errorResponse("Failed to refresh dashboard", 500);
+        
+
+        return successResponse("Dashboard refreshed successfully", 200,
+            Json.emptyObject.set("id", result.id));
     }
 
     protected void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-            RefreshDashboardRequest r;
-            r.tenantId = tenantId;
-
-            auto result = usecase.refreshDashboard(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Dashboard refreshed");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.errorMessage);
-            }
+            auto resp = refreshHandler(req);
+            res.writeJsonBody(resp, resp.statusCode);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
