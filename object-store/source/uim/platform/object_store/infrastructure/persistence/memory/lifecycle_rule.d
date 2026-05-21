@@ -16,30 +16,22 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryLifecycleRuleRepository : LifecycleRuleRepository {
-  private LifecycleRule[LifecycleRuleId] store;
+class MemoryLifecycleRuleRepository : TenantRepository!(LifecycleRule, LifecycleRuleId),  LifecycleRuleRepository {
 
-  bool existsById(LifecycleRuleId id) {
-    return (id in store) ? true : false;
+  size_t countByBucket(TenantId tenantId, BucketId bucketId) {
+    return findByBucket(tenantId, bucketId).length;
+  }
+  
+  LifecycleRule[] filterByBucket(LifecycleRule[] rules, BucketId bucketId) {
+    return rules.filter!(e => e.bucketId == bucketId).array;
   }
 
-  LifecycleRule findById(LifecycleRuleId id) {
-    return existsById(id) ? store[id] : LifecycleRule.init;
-  }
-
-  LifecycleRule[] findByBucket(BucketId bucketId) {
+  LifecycleRule[] findByBucket(TenantId tenantId, BucketId bucketId) {
     return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
-
-  void save(LifecycleRule entity) {
-    store[entity.id] = entity;
+  
+  void removeByBucket(TenantId tenantId, BucketId bucketId) {
+    findByBucket(tenantId, bucketId).each!(rule => remove(rule));
   }
 
-  void update(LifecycleRule entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(LifecycleRuleId id) {
-    store.remove(id);
-  }
 }

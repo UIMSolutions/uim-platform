@@ -44,7 +44,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encresult.errorMessage);
+      return CommandResult(false, "", encResult.error);
 
     repo.save(bucket);
     return CommandResult(true, bucket.id.value, "");
@@ -52,7 +52,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateBucket(UpdateBucketRequest req) {
     auto bucket = repo.findById(req.tenantId, req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
     if (req.storageClass.length > 0)
@@ -68,7 +68,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encresult.errorMessage);
+      return CommandResult(false, "", encResult.error);
 
     repo.update(bucket);
     return CommandResult(true, bucket.id.value, "");

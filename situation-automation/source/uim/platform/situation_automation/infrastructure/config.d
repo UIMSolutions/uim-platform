@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.situation_automation.infrastructure.config;
+import std.process : environment;
 
 import std.process;
 import uim.platform.situation_automation;

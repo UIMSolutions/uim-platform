@@ -12,41 +12,36 @@ mixin(ShowModule!());
 
 /// In-memory implementation of AbapProgramRepository (driven adapter).
 class MemoryAbapProgramRepository : AbapProgramRepository {
-    private AbapProgram[string] _store; // key: tenantId ~ "|" ~ id
 
-    private string key(string tenantId, ProgramId id) const {
-        return tenantId ~ "|" ~ id;
+    size_t countByProgramType(TenantId tenantId, ProgramType programType) {
+        return findByProgramType(tenantId, programType).length;
     }
 
-    AbapProgram findById(string tenantId, ProgramId id) {
-        auto k = key(tenantId, id);
-        if (auto p = k in _store) return *p;
-        return AbapProgram.init;
+    AbapProgram[] filterByProgramType(AbapProgram[] programs, ProgramType programType) {
+        return programs.filter!(p => p.programType == programType).array;
     }
 
-    AbapProgram[] findByTenant(string tenantId) {
-        AbapProgram[] result;
-        foreach (k, v; _store)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+    AbapProgram[] findByProgramType(TenantId tenantId, ProgramType programType) {
+        return filterByProgramType(findByTenant(tenantId), programType);
     }
 
-    void save(AbapProgram program) {
-        _store[key(program.tenantId, program.id)] = program;
+    void removeByProgramType(TenantId tenantId, ProgramType programType) {
+        findByProgramType(tenantId, programType).each!(p => remove(p));
     }
 
-    void update(AbapProgram program) {
-        _store[key(program.tenantId, program.id)] = program;
+    size_t countByLanguage(TenantId tenantId, string language) {
+        return findByLanguage(tenantId, language).length;
     }
 
-    void remove(AbapProgram program) {
-        _store.remove(key(program.tenantId, program.id));
+    AbapProgram[] filterByLanguage(AbapProgram[] programs, string language) {
+        return programs.filter!(p => p.language == language).array;
     }
 
-    size_t countByTenant(string tenantId) {
-        size_t n = 0;
-        foreach (v; _store)
-            if (v.tenantId == tenantId) n++;
-        return n;
+    AbapProgram[] findByLanguage(TenantId tenantId, string language) {
+        return filterByLanguage(findByTenant(tenantId), language);
+    }
+
+    void removeByLanguage(TenantId tenantId, string language) {
+        findByLanguage(tenantId, language).each!(p => remove(p));
     }
 }

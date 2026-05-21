@@ -7,6 +7,12 @@ module uim.platform.html_repository.infrastructure.config;
 
 import std.process : environment;
 
+import uim.platform.html_repository;
+
+mixin(ShowModule!());
+
+@safe:
+
 
 struct SrvConfig {
   string host = "0.0.0.0";

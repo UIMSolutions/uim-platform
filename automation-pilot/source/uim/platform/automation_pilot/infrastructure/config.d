@@ -19,7 +19,6 @@ struct SrvConfig {
 
 SrvConfig loadConfig() {
     import std.process : environment;
-    
 
     SrvConfig config;
     auto host = environment.get("AUTOMATION_PILOT_HOST", "0.0.0.0");

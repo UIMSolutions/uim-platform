@@ -12,16 +12,13 @@ mixin(ShowModule!());
 
 /// Tracks a single compilation request: input program -> status -> result.
 struct CompilationJob {
-    CompilationJobId id;          /// UUID
-    string           tenantId;
+    mixin TenantEntity!CompilationJobId;          /// UUID
     ProgramId        programId;   /// Source program to compile
     CompilationStatus status;     /// Current lifecycle state
     Diagnostic[]     diagnostics; /// All diagnostics from this run
     string[]         generatedCode;/// Simplified IR / intermediate code lines
     long             startedAt;
     long             finishedAt;
-
-    bool isNull() const { return id.length == 0; }
 
     bool hasErrors() const {
         foreach (d; diagnostics)
@@ -30,15 +27,10 @@ struct CompilationJob {
     }
 
     Json toJson() const {
-        auto jDiag = Json.emptyArray;
-        foreach (d; diagnostics) jDiag ~= d.toJson();
+        auto jDiag = diagnostics.map!(d => d.toJson()).array.toJson;
+        auto jCode = generatedCode.map!(c => Json(c)).array.toJson;
 
-        auto jCode = Json.emptyArray;
-        foreach (c; generatedCode) jCode ~= Json(c);
-
-        return Json.emptyObject
-            .set("id",            id)
-            .set("tenantId",      tenantId)
+        return entityToJson()
             .set("programId",     programId)
             .set("status",        to!string(status))
             .set("diagnostics",   jDiag)
@@ -51,8 +43,8 @@ struct CompilationJob {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;
         CompilationJob j;
+        j.initEntity(TenantId(tenantId));
         j.id         = randomUUID().toString();
-        j.tenantId   = tenantId;
         j.programId  = pid;
         j.status     = CompilationStatus.pending;
         j.startedAt  = MonoTime.currTime.ticks;

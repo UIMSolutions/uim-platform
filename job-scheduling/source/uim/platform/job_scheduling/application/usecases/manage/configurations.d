@@ -9,8 +9,6 @@ module uim.platform.job_scheduling.application.usecases.manage.configurations;
 // import uim.platform.job_scheduling.domain.ports.repositories.configurations;
 // import uim.platform.job_scheduling.application.dto;
 
-
-
 import uim.platform.job_scheduling;
 
 mixin(ShowModule!());

@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.infrastructure.config;
+import std.process : environment;
 
 import uim.platform.identity.authentication;
 

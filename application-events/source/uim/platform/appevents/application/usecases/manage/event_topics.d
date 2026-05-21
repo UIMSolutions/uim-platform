@@ -16,7 +16,9 @@ import uim.platform.appevents.application.dto;
 class ManageEventTopicsUseCase {
     private EventTopicRepository repo;
 
-    this(EventTopicRepository repo) { this.repo = repo; }
+    this(EventTopicRepository repo) {
+        this.repo = repo;
+    }
 
     EventTopic getEventTopic(TenantId tenantId, EventTopicId id) {
         return repo.findById(tenantId, id);
@@ -29,9 +31,12 @@ class ManageEventTopicsUseCase {
     CommandResult createEventTopic(EventTopicDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Topic name already exists");
+
         EventTopic t;
         t.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.topicId.isNull) t.id = dto.topicId;
+        if (!dto.topicId.isNull)
+            t.id = dto.topicId;
+
         t.name = dto.name;
         t.namespace = dto.namespace;
         t.description = dto.description;
@@ -39,13 +44,16 @@ class ManageEventTopicsUseCase {
         t.category = dto.category;
         t.status = dto.status;
         t.ownerId = dto.ownerId;
+
         repo.save(t);
         return CommandResult(true, t.id.value, "");
     }
 
     CommandResult updateEventTopic(EventTopicDTO dto) {
         auto t = repo.findById(dto.tenantId, dto.topicId);
-        if (t.isNull) return CommandResult(false, "", "Topic not found");
+        if (t.isNull)
+            return CommandResult(false, "", "Topic not found");
+
         t.name = dto.name;
         t.namespace = dto.namespace;
         t.description = dto.description;
@@ -53,15 +61,19 @@ class ManageEventTopicsUseCase {
         t.category = dto.category;
         t.status = dto.status;
         t.ownerId = dto.ownerId;
-        if (!dto.updatedBy.isNull) t.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull)
+            t.updatedBy = dto.updatedBy;
+
         repo.update(t);
         return CommandResult(true, t.id.value, "");
     }
 
     CommandResult deleteEventTopic(TenantId tenantId, EventTopicId id) {
         auto t = repo.findById(tenantId, id);
-        if (t.isNull) return CommandResult(false, "", "Topic not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        if (t.isNull)
+            return CommandResult(false, "", "Topic not found");
+
+        repo.remove(t);
+        return CommandResult(true, t.id.value, "");
     }
 }

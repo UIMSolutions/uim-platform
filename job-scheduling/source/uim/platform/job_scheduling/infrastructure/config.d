@@ -7,7 +7,6 @@ module uim.platform.job_scheduling.infrastructure.config;
 
 import std.process : environment;
 
-
 import uim.platform.job_scheduling;
 
 mixin(ShowModule!());

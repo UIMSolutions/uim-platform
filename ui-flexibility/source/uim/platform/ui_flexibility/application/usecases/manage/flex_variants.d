@@ -19,21 +19,22 @@ class ManageFlexVariantsUseCase {
 
   CommandResult createVariant(CreateFlexVariantRequest r) {
     auto v = FlexVariant();
-    v.id_          = r.variantId;
-    v.tenant_      = r.tenantId;
-    v.appId_       = r.appId;
+    v.id_ = r.variantId;
+    v.tenant_ = r.tenantId;
+    v.appId_ = r.appId;
     v.variantType_ = r.variantType_;
     v.variantName_ = r.variantName_;
-    v.content_     = r.content_;
-    v.isDefault_   = r.isDefault_;
-    v.isPublic_    = r.isPublic_;
-    v.layer_       = r.layer_;
-    v.author_      = r.author_;
+    v.content_ = r.content_;
+    v.isDefault_ = r.isDefault_;
+    v.isPublic_ = r.isPublic_;
+    v.layer_ = r.layer_;
+    v.author_ = r.author_;
     v.createdAtTicks_ = MonoTime.currTime.ticks;
     v.updatedAtTicks_ = v.createdAtTicks_;
 
     auto err = FlexValidator.validateFlexVariant(v);
-    if (err !is null) return CommandResult(false, null, err);
+    if (err !is null)
+      return CommandResult(false, null, err);
 
     repo.save(r.tenantId, v);
     return CommandResult(true, v.id_.value);
@@ -41,11 +42,12 @@ class ManageFlexVariantsUseCase {
 
   CommandResult updateVariant(UpdateFlexVariantRequest r) {
     auto existing = repo.findById(r.tenantId, r.variantId);
-    if (existing.isNull) return CommandResult(false, null, "FlexVariant not found");
+    if (existing.isNull)
+      return CommandResult(false, null, "FlexVariant not found");
     existing.variantName_ = r.variantName_;
-    existing.content_     = r.content_;
-    existing.isDefault_   = r.isDefault_;
-    existing.isPublic_    = r.isPublic_;
+    existing.content_ = r.content_;
+    existing.isDefault_ = r.isDefault_;
+    existing.isPublic_ = r.isPublic_;
     existing.updatedAtTicks_ = MonoTime.currTime.ticks;
     repo.update(r.tenantId, existing);
     return CommandResult(true, existing.id_.value);
@@ -72,7 +74,8 @@ class ManageFlexVariantsUseCase {
   }
 
   CommandResult deleteVariant(string tenantId, FlexVariantId id) {
-    if (!repo.existsById(tenantId, id)) return CommandResult(false, null, "FlexVariant not found");
+    if (!repo.existsById(tenantId, id))
+      return CommandResult(false, null, "FlexVariant not found");
     repo.removeById(tenantId, id);
     return CommandResult(true, id.value);
   }

@@ -70,8 +70,9 @@ class ManageEventSubscriptionsUseCase {
     CommandResult deleteEventSubscription(TenantId tenantId, EventSubscriptionId id) {
         auto sub = repo.findById(tenantId, id);
         if (sub.isNull) return CommandResult(false, "", "Subscription not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(sub);
+        return CommandResult(true, sub.id.value, "");
     }
 }
 

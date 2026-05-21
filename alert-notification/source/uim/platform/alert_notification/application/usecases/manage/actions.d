@@ -16,7 +16,7 @@ class ManageActionsUseCase {
 
     this(ActionRepository repo) { this.repo = repo; }
 
-    CommandResult createAction(string tenantId, CreateActionRequest req) {
+    CommandResult createAction(TenantId tenantId, CreateActionRequest req) {
         import std.conv : to;
         import std.uuid : randomUUID;
 
@@ -24,7 +24,7 @@ class ManageActionsUseCase {
         if (!existing.isNull())
             return CommandResult(false, "Action '" ~ req.name ~ "' already exists");
 
-        auto action = new Action();
+        Action action;
         action.id          = ActionId(randomUUID().toString());
         action.tenantId    = tenantId;
         action.name        = req.name;
@@ -40,25 +40,25 @@ class ManageActionsUseCase {
         return CommandResult(true, action.toJson().toString());
     }
 
-    QueryResult getAction(string tenantId, string id) {
-        auto action = repo.findById(tenantId, ActionId(id));
+    QueryResult getAction(TenantId tenantId, ActionId id) {
+        auto action = repo.findById(tenantId, id);
         if (action is null || action.isNull())
             return QueryResult(false, "Action not found", Json.emptyObject);
         return QueryResult(true, "", action.toJson());
     }
 
-    QueryResult listActions(string tenantId) {
+    QueryResult listActions(TenantId tenantId) {
         auto items = repo.findAll(tenantId);
-        auto arr   = Json.emptyArray;
-        foreach (a; items) arr ~= a.toJson();
+        auto arr   = items.map!(a => a.toJson).array.toJson;
+
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateAction(string tenantId, string id, UpdateActionRequest req) {
+    CommandResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req) {
         import std.conv : to;
-        auto action = repo.findById(tenantId, ActionId(id));
-        if (action is null || action.isNull())
-            return CommandResult(false, "Action not found");
+        auto action = repo.findById(tenantId, id);
+        if (action.isNull())
+            return CommandResult(false, "", "Action not found");
 
         if (req.description.length) action.description = req.description;
         if (req.state.length)       action.state = req.state.to!ResourceState;
@@ -71,11 +71,12 @@ class ManageActionsUseCase {
         return CommandResult(true, action.toJson().toString());
     }
 
-    CommandResult deleteAction(string tenantId, string id) {
-        auto action = repo.findById(tenantId, ActionId(id));
-        if (action is null || action.isNull())
-            return CommandResult(false, "Action not found");
-        repo.remove(tenantId, ActionId(id));
-        return CommandResult(true, "Action deleted");
+    CommandResult deleteAction(TenantId tenantId, ActionId id) {
+        auto action = repo.findById(tenantId, id);
+        if (action.isNull())
+            return CommandResult(false, "", "Action not found");
+
+        repo.remove(action);
+        return CommandResult(true, action.id.value, "Action deleted");
     }
 }

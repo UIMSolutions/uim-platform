@@ -37,8 +37,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (req.key.length == 0)
       return CommandResult(false, "", "Object key is required");
 
-    auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
     if (bucket.status != BucketStatus.active)
       return CommandResult(false, "", "Bucket is not active");
@@ -55,9 +55,9 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     obj.key = req.key;
     obj.contentType = req.contentType.length > 0 ? req.contentType : "application/octet-stream";
     obj.size = req.size;
-    obj.etag = generateEtag(id);
+    obj.etag = generateEtag(obj.id);
     obj.metadata = req.metadata;
-    obj.storageClass = parseStorageClass(req.storageClass);
+    obj.storageClass = req.storageClass;
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
@@ -83,7 +83,6 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     bucket.usedBytes = bucket.usedBytes + req.size;
     bucket.updatedAt = obj.createdAt;
     bucketRepo.update(bucket);
-
     return CommandResult(true, obj.id.value, "");
   }
 
@@ -97,14 +96,14 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (req.metadata.length > 0)
       obj.metadata = req.metadata;
     if (req.storageClass.length > 0)
-      obj.storageClass = parseStorageClass(req.storageClass);
+      obj.storageClass = req.storageClass;
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
     return CommandResult(true, obj.id.value, "");
   }
 
-  StorageObject getObject(TenantId tenantId, ObjectId objectId) {
+  StorageObject getObject(TenantId tenantId, StorageObjectId objectId) {
     return objectRepo.findById(tenantId, objectId);
   }
 
@@ -120,11 +119,11 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     return objectRepo.findByPrefix(tenantId, bucketId, prefix);
   }
 
-  ObjectVersion[] listVersions(TenantId tenantId, ObjectId objectId) {
+  ObjectVersion[] listVersions(TenantId tenantId, StorageObjectId objectId) {
     return versionRepo.findByObject(tenantId, objectId);
   }
 
-  CommandResult deleteObject(TenantId tenantId, ObjectId id) {
+  CommandResult deleteObject(TenantId tenantId, StorageObjectId id) {
     auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
@@ -187,7 +186,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaresult.errorMessage);
+      return CommandResult(false, "", quotaResult.errorMessage);
 
     auto copy = new StorageObject();
     copy.initEntity(req.tenantId);
@@ -205,22 +204,9 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     destBucket.objectCount = destBucket.objectCount + 1;
     destBucket.usedBytes = destBucket.usedBytes + sourceObj.size;
     destBucket.updatedAt = copy.createdAt;
+
     bucketRepo.update(destBucket);
-
     return CommandResult(true, copy.id.value, "");
-  }
-}
-
-private StorageClass parseStorageClass(string storage) {
-  switch (storage) {
-  case "nearline":
-    return StorageClass.nearline;
-  case "coldline":
-    return StorageClass.coldline;
-  case "archive":
-    return StorageClass.archive;
-  default:
-    return StorageClass.standard;
   }
 }
 

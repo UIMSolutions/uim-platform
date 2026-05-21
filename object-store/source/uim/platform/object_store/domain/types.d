@@ -19,7 +19,7 @@ struct BucketId {
   
     mixin DomainId;
 }
-struct ObjectId {
+struct StorageObjectId {
     string value;
   
     this(string value) {

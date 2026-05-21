@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing - lifecycle rule persistence.
 interface LifecycleRuleRepository : ITenantRepository!(LifecycleRule, LifecycleRuleId) {
 
-  size_t countByBucket(BucketId bucketId);
-  LifecycleRule[] findByBucket(BucketId bucketId);
-  void removeByBucket(BucketId bucketId);
+  size_t countByBucket(TenantId tenantId, BucketId bucketId);
+  LifecycleRule[] findByBucket(TenantId tenantId, BucketId bucketId);
+  void removeByBucket(TenantId tenantId, BucketId bucketId);
   
 }

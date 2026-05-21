@@ -12,11 +12,9 @@ mixin(ShowModule!());
 
 /// Primary port: repository contract for compilation jobs.
 interface CompilationJobRepository {
-    CompilationJob    findById(string tenantId, CompilationJobId id);
-    CompilationJob[]  findByProgram(string tenantId, ProgramId pid);
-    CompilationJob[]  findByTenant(string tenantId);
-    void              save(CompilationJob job);
-    void              update(CompilationJob job);
-    void              remove(CompilationJob job);
-    size_t            countByTenant(string tenantId);
+ 
+    size_t countByProgram(TenantId tenantId, ProgramId pid);  
+    CompilationJob[] findByProgram(TenantId tenantId, ProgramId pid);
+    void removeByProgram(TenantId tenantId, ProgramId pid);
+ 
 }

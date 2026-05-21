@@ -13,17 +13,17 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - storage object persistence.
-interface StorageObjectRepository {
-  bool existsById(ObjectId id);
-  StorageObject findById(ObjectId id);
-  
-  bool existsByKey(BucketId bucketId, string key);
-  StorageObject findByKey(BucketId bucketId, string key);
-  
-  StorageObject[] findByBucket(BucketId bucketId);
-  StorageObject[] findByPrefix(BucketId bucketId, string prefix);
+interface StorageObjectRepository : ITenantRepository!(StorageObject, StorageObjectId) {
 
-  void save(StorageObject obj);
-  void update(StorageObject obj);
-  void remove(ObjectId id);
-}
+  bool existsByKey(TenantId tenantId, BucketId bucketId, string key);
+  StorageObject findByKey(TenantId tenantId, BucketId bucketId, string key);
+  
+  size_t countByBucket(TenantId tenantId, BucketId bucketId);
+  StorageObject[] findByBucket(TenantId tenantId, BucketId bucketId);
+  void removeByBucket(TenantId tenantId, BucketId bucketId);
+
+  size_t countByPrefix(TenantId tenantId, BucketId bucketId, string prefix);
+  StorageObject[] findByPrefix(TenantId tenantId, BucketId bucketId, string prefix);
+  void removeByPrefix(TenantId tenantId, BucketId bucketId, string prefix);
+
+} 

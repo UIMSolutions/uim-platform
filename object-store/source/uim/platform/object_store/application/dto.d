@@ -47,14 +47,14 @@ struct CreateObjectRequest {
   string contentType;
   long size;
   string metadata; // JSON key-value pairs
-  string storageClass;
+  StorageClass storageClass;
   UserId createdBy;
 }
 
 struct UpdateObjectMetadataRequest {
   TenantId tenantId;
   BucketId bucketId;
-  ObjectId objectId;
+  StorageObjectId objectId;
 
   string contentType;
   string metadata;
@@ -87,7 +87,7 @@ struct CreateAccessPolicyRequest {
 struct UpdateAccessPolicyRequest {
   TenantId tenantId;
   AccessPolicyId accessPolicyId;
-  
+  BucketId bucketId;
   string name;
   string effect;
   string principal;

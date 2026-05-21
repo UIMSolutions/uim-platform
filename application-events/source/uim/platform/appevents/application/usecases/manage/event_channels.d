@@ -61,7 +61,8 @@ class ManageEventChannelsUseCase {
     CommandResult deleteEventChannel(TenantId tenantId, EventChannelId id) {
         auto ch = repo.findById(tenantId, id);
         if (ch.isNull) return CommandResult(false, "", "Channel not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(ch);
+        return CommandResult(true, ch.id.value, "");
     }
 }

@@ -16,30 +16,22 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCorsRuleRepository : CorsRuleRepository {
-  private CorsRule[CorsRuleId] store;
+class MemoryCorsRuleRepository : TenantRepository!(CorsRule, CorsRuleId), CorsRuleRepository {
 
-  bool existsById(CorsRuleId id) {
-    return (id in store) ? true : false;
+  size_t countByBucket(TenantId tenantId, BucketId bucketId) {
+    return findByBucket(tenantId, bucketId).length;
   }
 
-  CorsRule findById(CorsRuleId id) {
-    return existsById(id) ? store[id] : CorsRule.init;
+  CorsRule[] filterByBucket(CorsRule[] rules, BucketId bucketId) {
+    return rules.filter!(e => e.bucketId == bucketId).array;
   }
 
-  CorsRule[] findByBucket(BucketId bucketId) {
-    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
+  CorsRule[] findByBucket(TenantId tenantId, BucketId bucketId) {
+    return filterByBucket(findByTenant(tenantId), bucketId);
   }
 
-  void save(CorsRule entity) {
-    store[entity.id] = entity;
+  void removeByBucket(TenantId tenantId, BucketId bucketId) {
+    findByBucket(tenantId, bucketId).each!(rule => remove(rule));
   }
 
-  void update(CorsRule entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(CorsRuleId id) {
-    removeById(id);
-  }
 }

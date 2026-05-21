@@ -7,10 +7,10 @@ mixin(ShowModule!());
 // --- Enumerations ---
 
 enum StorageClass {
+  archive,
   standard,
   nearline,
   coldline,
-  archive,
 }
 
 enum BucketStatus {

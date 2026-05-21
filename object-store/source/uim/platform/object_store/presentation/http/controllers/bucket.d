@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.bucket;
 
-
-
-
 // 
 // 
 // import uim.platform.object_store.application.usecases.manage.buckets;
@@ -20,7 +17,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class BucketController : PlatformController {
+class BucketController : ManageController {
   private ManageBucketsUseCase usecase;
 
   this(ManageBucketsUseCase usecase) {
@@ -37,65 +34,72 @@ class BucketController : PlatformController {
     router.delete_("/api/v1/buckets/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CreateBucketRequest();
-      r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.region = j.getString("region");
-      r.storageClass = j.getString("storageClass");
-      r.versioningEnabled = j.getBoolean("versioningEnabled");
-      r.encryptionType = j.getString("encryptionType");
-      r.encryptionKeyId = j.getString("encryptionKeyId");
-      r.quotaBytes = jsonLong(j, "quotaBytes");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (!precheck.isNull)
+      return precheck;
 
-      auto result = usecase.createBucket(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto tenantId = precheck.getTenantId;
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.errorMessage);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto r = CreateBucketRequest();
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.region = data.getString("region");
+    r.storageClass = data.getString("storageClass");
+    r.versioningEnabled = data.getBoolean("versioningEnabled");
+    r.encryptionType = data.getString("encryptionType");
+    r.encryptionKeyId = data.getString("encryptionKeyId");
+    r.quotaBytes = jsonLong(data, "quotaBytes");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createBucket(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage);
+
+    return successResponse("Bucket created successfully", 201, Json.emptyObject.set("id", result.id));
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (!precheck.isNull)
+      return precheck;
+      
+    auto tenantId = precheck.getTenantId;
+    auto id = BucketId(precheck.getString("id"));
+     if (id.isNull)
+      return errorResponse("Invalid bucket ID", 400);
+
+    auto data = precheck["data"];
+
+    auto r = UpdateBucketRequest();
+    r.tenantId = tenantId;
+    r.bucketId = id;
+    r.storageClass = data.getString("storageClass").to!StorageClass;
+    r.versioningEnabled = data.getBoolean("versioningEnabled");
+    r.encryptionType = data.getString("encryptionType").to!EncryptionType;
+    r.encryptionKeyId = data.getString("encryptionKeyId");
+    r.quotaBytes = jsonLong(data, "quotaBytes");
+
+    auto result = usecase.updateBucket(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, result.errorMessage == "Bucket not found" ? 404 : 400);
+
+    return successResponse("Bucket updated successfully", 200, Json.emptyObject.set("id", result.id));
+  }
+
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-
-      auto buckets = usecase.listBuckets(tenantId);
-      auto arr = buckets.map!(b => b.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", buckets.length)
-        .set("message", "Buckets retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      if (!existsBucket(id)) {
-        writeError(res, 404, "Bucket not found");
+      auto id = BucketId(extractIdFromPath(req.requestURI));
+      if (id.isNull) {
+        writeError(res, 400, "Invalid bucket ID");
         return;
       }
 
-      auto bucket = usecase.getBucket(id);
+      auto bucket = usecase.getBucket(tenantId, id);
       if (bucket.isNull) {
-        writeError(res, 404, "Bucket not valid");
+        writeError(res, 404, "Bucket not found");
         return;
       }
 
@@ -105,19 +109,21 @@ class BucketController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateBucketRequest();
-      r.storageClass = j.getString("storageClass");
+      r.tenantId = tenantId;
+      r.bucketId = id;
+      r.storageClass = j.getString("storageClass").to!StorageClass;
       r.versioningEnabled = j.getBoolean("versioningEnabled");
-      r.encryptionType = j.getString("encryptionType");
+      r.encryptionType = j.getString("encryptionType").to!EncryptionType;
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");
 
-      auto result = usecase.updateBucket(id, r);
+      auto result = usecase.updateBucket(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id)
@@ -132,11 +138,11 @@ class BucketController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteBucket(id);
+      auto result = usecase.deleteBucket(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
@@ -148,7 +154,7 @@ class BucketController : PlatformController {
         auto code = result.errorMessage == "Bucket not found" ? 404 : 409;
         writeError(res, code, result.errorMessage);
       }
-    } catch (Exception e) {
+    } catch (Exception e) { 
       writeError(res, 500, "Internal server error");
     }
   }

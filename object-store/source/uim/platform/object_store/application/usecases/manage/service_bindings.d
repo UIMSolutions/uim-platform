@@ -31,12 +31,12 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
-    auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket.isNull || bucket.isNull)
+    auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
+    if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    auto accessKeyId = randomUUID();
-    auto secretKey = randomUUID();
+    auto accessKeyId = AccessKeyId(randomUUID());
+    auto secretKey = SecretKey(randomUUID());
 
     ServiceBinding binding;
     binding.initEntity(req.tenantId, req.createdBy);
@@ -45,7 +45,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     binding.bucketId = req.bucketId;
     binding.accessKeyId = accessKeyId;
     binding.secretAccessKeyHash = hashSecret(secretKey);
-    binding.permission = parsePermission(req.permission);
+    binding.permission = req.permission.to!BindingPermission;
     binding.status = BindingStatus.active;
     binding.expiresAt = req.expiresAt;
 
@@ -53,17 +53,17 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  ServiceBinding getBinding(ServiceBindingId id) {
+  ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
     return bindingRepo.findById(tenantId, id);
   }
 
-  ServiceBinding[] listBindings(BucketId bucketId) {
-    return bindingRepo.findByBucket(bucketId);
+  ServiceBinding[] listBindings(TenantId tenantId, BucketId bucketId) {
+    return bindingRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult revokeBinding(ServiceBindingId id) {
+  CommandResult revokeBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = bindingRepo.findById(tenantId, id);
-    if (binding.isNull || binding.isNull)
+    if (binding.isNull)
       return CommandResult(false, "", "Binding not found");
 
     binding.status = BindingStatus.revoked;
@@ -71,24 +71,13 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, binding.id.value, "");
   }
 
-  CommandResult deleteBinding(ServiceBindingId id) {
+  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = bindingRepo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Binding not found");
 
     bindingRepo.remove(binding);
     return CommandResult(true, binding.id.value, "");
-  }
-}
-
-private BindingPermission parsePermission(string s) {
-  switch (s) {
-  case "readWrite":
-    return BindingPermission.readWrite;
-  case "admin":
-    return BindingPermission.admin;
-  default:
-    return BindingPermission.readOnly;
   }
 }
 

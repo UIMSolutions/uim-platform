@@ -16,49 +16,37 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryObjectVersionRepository : ObjectVersionRepository {
-  private ObjectVersion[ObjectVersionId] store;
+class MemoryObjectVersionRepository : TenantRepository!(ObjectVersion, ObjectVersionId),  ObjectVersionRepository {
 
-  bool existsById(ObjectVersionId id) {
-    return (id in store) ? true : false;
+  bool existsLatest(TenantId tenantId, StorageObjectId objectId) {
+    return findByTenant(tenantId).any!(e => e.objectId == objectId && e.isLatest);
   }
 
-  ObjectVersion findById(ObjectVersionId id) {
-    return existsById(id) ? store[id] : ObjectVersion.init;
-  }
-
-  bool existsLatest(ObjectId objectId) {
-    foreach (e; findByTenant(tenantId))
-      if (e.objectId == objectId && e.isLatest)
-        return true;
-    return false;
-  }
-
-  ObjectVersion findLatest(ObjectId objectId) {
+  ObjectVersion findLatest(TenantId tenantId, StorageObjectId objectId) {
     foreach (e; findByTenant(tenantId))
       if (e.objectId == objectId && e.isLatest)
         return e;
     return ObjectVersion.init;
   }
 
-  ObjectVersion[] findByObject(ObjectId objectId) {
+  void removeLatest(TenantId tenantId, StorageObjectId objectId) {
+    remove(findLatest(tenantId, objectId));
+  }
+
+  size_t countByObject(TenantId tenantId, StorageObjectId objectId) {
+    return findByObject(tenantId, objectId).length;
+  }
+
+  ObjectVersion[] filterByObject(ObjectVersion[] versions, StorageObjectId objectId) {
+    return versions.filter!(e => e.objectId == objectId).array;
+  }
+
+  ObjectVersion[] findByObject(TenantId tenantId, StorageObjectId objectId) {
     return findByTenant(tenantId).filter!(e => e.objectId == objectId).array;
   }
 
-  void save(ObjectVersion entity) {
-    store[entity.id] = entity;
+  void removeByObject(TenantId tenantId, StorageObjectId objectId) {
+    findByObject(tenantId, objectId).each!(v => remove(v));
   }
 
-  void remove(ObjectVersionId id) {
-    removeById(id);
-  }
-
-  void removeByObject(ObjectId objectId) {
-    ObjectVersionId[] toRemove;
-    foreach (kv; store.byKeyValue())
-      if (kv.value.objectId == objectId)
-        toRemove ~= kv.key;
-    foreach (id; toRemove)
-      removeById(id);
-  }
 }

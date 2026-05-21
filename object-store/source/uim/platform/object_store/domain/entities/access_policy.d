@@ -25,7 +25,7 @@ struct AccessPolicy {
     auto j = entityToJson
       .set("bucketId", bucketId.value)
       .set("name", name)
-      .set("effect", effect.toString())
+      .set("effect", effect.to!string())
       .set("principal", principal)
       .set("actions", actions)
       .set("resources", resources);

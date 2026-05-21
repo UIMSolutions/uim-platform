@@ -13,14 +13,13 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - object version persistence.
-interface ObjectVersionRepository {
-  bool existsById(ObjectVersionId id);
-  ObjectVersion findById(ObjectVersionId id);
+interface ObjectVersionRepository : ITenantRepository!(ObjectVersion, ObjectVersionId) {
 
-  ObjectVersion[] findByObject(ObjectId objectId);
-  ObjectVersion findLatest(ObjectId objectId);
-  
-  void save(ObjectVersion ver);
-  void remove(ObjectVersionId id);
-  void removeByObject(ObjectId objectId);
+  bool existsLatest(TenantId tenantId, StorageObjectId objectId);
+  ObjectVersion findLatest(TenantId tenantId, StorageObjectId objectId);
+
+  size_t countByObject(TenantId tenantId, StorageObjectId objectId);
+  ObjectVersion[] findByObject(TenantId tenantId, StorageObjectId objectId);
+  void removeByObject(TenantId tenantId, StorageObjectId objectId);
+    
 }

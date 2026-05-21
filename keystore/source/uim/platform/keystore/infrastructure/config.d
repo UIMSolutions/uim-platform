@@ -6,6 +6,12 @@
 module uim.platform.keystore.infrastructure.config;
 
 import std.process : environment;
+import uim.platform.keystore;
+
+mixin(ShowModule!());
+
+@safe:
+
 
 
 struct SrvConfig {

@@ -11,49 +11,22 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of CompilationJobRepository (driven adapter).
-class MemoryCompilationJobRepository : CompilationJobRepository {
-    private CompilationJob[string] _store; // key: tenantId ~ "|" ~ id
-
-    private string key(string tenantId, CompilationJobId id) const {
-        return tenantId ~ "|" ~ id;
+class MemoryCompilationJobRepository : TenantRepository!(CompilationJob, CompilationJobId), CompilationJobRepository {
+    
+    size_t countByProgram(TenantId tenantId, ProgramId pid) {
+        return findByProgram(tenantId, pid).length;
     }
 
-    CompilationJob findById(string tenantId, CompilationJobId id) {
-        auto k = key(tenantId, id);
-        if (auto j = k in _store) return *j;
-        return CompilationJob.init;
+    CompilationJob[] filterByProgram(CompilationJob[] jobs, ProgramId pid) {
+        return jobs.filter!(j => j.programId == pid).array;
     }
 
-    CompilationJob[] findByProgram(string tenantId, ProgramId pid) {
-        CompilationJob[] result;
-        foreach (v; _store)
-            if (v.tenantId == tenantId && v.programId == pid) result ~= v;
-        return result;
+    CompilationJob[] findByProgram(TenantId tenantId, ProgramId pid) {
+        return filterByProgram(findByTenant(tenantId), pid);
     }
 
-    CompilationJob[] findByTenant(string tenantId) {
-        CompilationJob[] result;
-        foreach (v; _store)
-            if (v.tenantId == tenantId) result ~= v;
-        return result;
+    void removeByProgram(TenantId tenantId, ProgramId pid) {
+        findByProgram(tenantId, pid).each!(job => remove(job));
     }
 
-    void save(CompilationJob job) {
-        _store[key(job.tenantId, job.id)] = job;
-    }
-
-    void update(CompilationJob job) {
-        _store[key(job.tenantId, job.id)] = job;
-    }
-
-    void remove(CompilationJob job) {
-        _store.remove(key(job.tenantId, job.id));
-    }
-
-    size_t countByTenant(string tenantId) {
-        size_t n = 0;
-        foreach (v; _store)
-            if (v.tenantId == tenantId) n++;
-        return n;
-    }
 }

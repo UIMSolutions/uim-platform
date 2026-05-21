@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing - service binding persistence.
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
-  size_t countByBucket(BucketId bucketId);
-  ServiceBinding[] findByBucket(BucketId bucketId);
-  void removeByBucket(BucketId bucketId);
+  size_t countByBucket(TenantId tenantId, BucketId bucketId);
+  ServiceBinding[] findByBucket(TenantId tenantId, BucketId bucketId);
+  void removeByBucket(TenantId tenantId, BucketId bucketId);
 
 }

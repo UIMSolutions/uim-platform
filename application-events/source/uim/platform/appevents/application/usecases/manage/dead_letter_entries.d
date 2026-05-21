@@ -49,7 +49,8 @@ class ManageDeadLetterEntriesUseCase {
     CommandResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
         auto entry = repo.findById(tenantId, id);
         if (entry.isNull) return CommandResult(false, "", "Dead-letter entry not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(entry);
+        return CommandResult(true, entry.id.value, "");
     }
 }

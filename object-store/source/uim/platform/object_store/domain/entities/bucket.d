@@ -29,7 +29,7 @@ struct Bucket {
     auto j = entityToJson
       .set("name", name)
       .set("region", region)
-      .set("storageClass", storageClass.toString())
+      .set("storageClass", storageClass.to!string())
       .set("versioningEnabled", versioningEnabled)
       .set("encryptionType", encryptionType.toString())
       .set("encryptionKeyId", encryptionKeyId)

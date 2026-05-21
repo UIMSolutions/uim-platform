@@ -10,53 +10,56 @@ module uim.platform.object_store.infrastructure.persistence.memory.storage_objec
 // import uim.platform.object_store.domain.ports.repositories.storage_object;
 
 // import std.algorithm : filter, startsWith;
- 
+
 import uim.platform.object_store;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryStorageObjectRepository : StorageObjectRepository {
-  private StorageObject[ObjectId] store;
+class MemoryStorageObjectRepository : TenantRepository!(StorageObject, StorageObjectId), StorageObjectRepository {
 
-  bool existsById(ObjectId id) {
-    return (id in store) ? true : false;
+  bool existsByKey(TenantId tenantId, BucketId bucketId, string key) {
+    return findByTenant(tenantId).any!(e => e.bucketId == bucketId && e.key == key);
   }
 
-  StorageObject findById(ObjectId id) {
-    return existsById(id) ? store[id] : StorageObject.init;
-  }
-
-  bool existsByKey(BucketId bucketId, string key) {
-    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active).length > 0;
-  }
-
-  StorageObject findByKey(BucketId bucketId, string key) {
+  StorageObject findByKey(TenantId tenantId, BucketId bucketId, string key) {
     foreach (e; findByTenant(tenantId))
-      if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
+      if (e.bucketId == bucketId && e.key == key)
         return e;
     return StorageObject.init;
   }
 
-  StorageObject[] findByBucket(BucketId bucketId) {
-    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId
-        && e.status == ObjectStatus.active).array;
+  size_t countByBucket(TenantId tenantId, BucketId bucketId) {
+    return findByBucket(tenantId, bucketId).length;
   }
 
-  StorageObject[] findByPrefix(BucketId bucketId, string prefix) {
-    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId
-        && e.status == ObjectStatus.active && e.key.startsWith(prefix)).array;
+  StorageObject[] filterByBucket(StorageObject[] objects, BucketId bucketId) {
+    return objects.filter!(e => e.bucketId == bucketId).array;
   }
 
-  void save(StorageObject entity) {
-    store[entity.id] = entity;
+  StorageObject[] findByBucket(TenantId tenantId, BucketId bucketId) {
+    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
 
-  void update(StorageObject entity) {
-    store[entity.id] = entity;
+  void removeByBucket(TenantId tenantId, BucketId bucketId) {
+    foreach (e; findByBucket(tenantId, bucketId))
+      remove(e);
   }
 
-  void remove(ObjectId id) {
-    removeById(id);
+  size_t countByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {
+    return findByPrefix(tenantId, bucketId, prefix).length;
   }
+
+  StorageObject[] filterByPrefix(StorageObject[] objects, BucketId bucketId, string prefix) {
+    return filterByBucket(objects, bucketId).filter!(e => e.key.startsWith(prefix)).array;
+  }
+
+  StorageObject[] findByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {
+    return filterByPrefix(findByBucket(tenantId, bucketId), prefix);
+  }
+
+  void removeByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {
+    findByPrefix(tenantId, bucketId, prefix).each!(e => remove(e));
+  }
+
 }

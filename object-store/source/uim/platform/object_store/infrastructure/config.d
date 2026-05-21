@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.config;
+import std.process : environment;
 import uim.platform.object_store;
 
 mixin(ShowModule!());
@@ -28,7 +29,6 @@ SrvConfig loadConfig() {
 
   auto portStr = environment.get("OBJSTORE_PORT", "");
   if (portStr.length > 0) {
-    
 
     try
       config.port = portStr.to!ushort;

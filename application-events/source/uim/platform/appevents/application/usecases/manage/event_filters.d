@@ -50,6 +50,7 @@ class ManageEventFiltersUseCase {
         f.value = dto.value;
         f.active = dto.active;
         if (!dto.updatedBy.isNull) f.updatedBy = dto.updatedBy;
+        
         repo.update(f);
         return CommandResult(true, f.id.value, "");
     }
@@ -57,7 +58,8 @@ class ManageEventFiltersUseCase {
     CommandResult deleteEventFilter(TenantId tenantId, EventFilterId id) {
         auto f = repo.findById(tenantId, id);
         if (f.isNull) return CommandResult(false, "", "Filter not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(f);
+        return CommandResult(true, f.id.value, "");
     }
 }

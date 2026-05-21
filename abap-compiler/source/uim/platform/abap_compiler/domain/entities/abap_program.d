@@ -13,8 +13,8 @@ mixin(ShowModule!());
 /// Represents a single ABAP program source artefact managed by the compiler service.
 /// Corresponds to an ABAP "Programm" object stored in the Repository (SAP R/3 se38).
 struct AbapProgram {
-    ProgramId   id;          /// Unique program / report name (matches SAP object key)
-    string      tenantId;    /// Multi-tenant discriminator
+    mixin TenantEntity!ProgramId;
+
     ProgramType programType; /// Program type (report, class pool, …)
     string      title;       /// Short text description (up to 70 chars)
     string      language;    /// Original language key, e.g. "DE" / "EN"
@@ -22,31 +22,25 @@ struct AbapProgram {
     long        createdAt;   /// Unix millis
     long        updatedAt;   /// Unix millis
 
-    bool isNull() const { return id.length == 0; }
-
     Json toJson() const {
-        return Json.emptyObject
-            .set("id",          id)
-            .set("tenantId",    tenantId)
+        return entityToJson()
             .set("programType", to!string(programType))
             .set("title",       title)
             .set("language",    language)
-            .set("sourceCode",  sourceCode)
-            .set("createdAt",   createdAt)
-            .set("updatedAt",   updatedAt);
+            .set("sourceCode",  sourceCode);
     }
 
     static AbapProgram create(string id, string tenantId, ProgramType pt, string title, string language, string src) {
         import core.time : MonoTime;
         AbapProgram p;
+        p.initEntity(TenantId(tenantId));
+
         p.id          = id;
-        p.tenantId    = tenantId;
         p.programType = pt;
         p.title       = title;
         p.language    = language;
         p.sourceCode  = src;
-        p.createdAt   = MonoTime.currTime.ticks;
-        p.updatedAt   = p.createdAt;
+
         return p;
     }
 }

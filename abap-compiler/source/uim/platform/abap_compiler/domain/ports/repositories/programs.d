@@ -11,11 +11,14 @@ mixin(ShowModule!());
 @safe:
 
 /// Primary port: repository contract for ABAP program source artefacts.
-interface AbapProgramRepository {
-    AbapProgram    findById(string tenantId, ProgramId id);
-    AbapProgram[]  findByTenant(string tenantId);
-    void           save(AbapProgram program);
-    void           update(AbapProgram program);
-    void           remove(AbapProgram program);
-    size_t         countByTenant(string tenantId);
+interface AbapProgramRepository : ITenantRepository!(AbapProgram, ProgramId) {
+
+    size_t countByProgramType(TenantId tenantId, ProgramType programType);
+    AbapProgram[]  findByProgramType(TenantId tenantId, ProgramType programType);
+    void removeByProgramType(TenantId tenantId, ProgramType programType);
+
+    size_t countByLanguage(TenantId tenantId, string language);
+    AbapProgram[]  findByLanguage(TenantId tenantId, string language);
+    void removeByLanguage(TenantId tenantId, string language);
+
 }

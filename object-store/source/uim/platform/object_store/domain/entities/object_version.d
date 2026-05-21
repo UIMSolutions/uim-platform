@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct ObjectVersion {
   mixin TenantEntity!ObjectVersionId;
 
-  ObjectId objectId;
+  StorageObjectId objectId;
   string versionTag; // e.g. "v1", "v2", auto-incremented label
   long size;
   string etag;

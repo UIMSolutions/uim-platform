@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.task_center.infrastructure.config;
+import std.process : environment;
 
 import uim.platform.task_center;
 

@@ -16,7 +16,9 @@ import uim.platform.appevents.application.dto;
 class ManageFormationsUseCase {
     private FormationRepository repo;
 
-    this(FormationRepository repo) { this.repo = repo; }
+    this(FormationRepository repo) {
+        this.repo = repo;
+    }
 
     Formation getFormation(TenantId tenantId, FormationId id) {
         return repo.findById(tenantId, id);
@@ -29,34 +31,43 @@ class ManageFormationsUseCase {
     CommandResult createFormation(FormationDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Formation name already exists");
+            
         Formation f;
         f.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.formationId.isNull) f.id = dto.formationId;
+        if (!dto.formationId.isNull)
+            f.id = dto.formationId;
         f.name = dto.name;
         f.description = dto.description;
         f.globalAccountId = dto.globalAccountId;
         f.status = dto.status;
         f.systemCount = 0;
+
         repo.save(f);
         return CommandResult(true, f.id.value, "");
     }
 
     CommandResult updateFormation(FormationDTO dto) {
         auto f = repo.findById(dto.tenantId, dto.formationId);
-        if (f.isNull) return CommandResult(false, "", "Formation not found");
+        if (f.isNull)
+            return CommandResult(false, "", "Formation not found");
+
         f.name = dto.name;
         f.description = dto.description;
         f.globalAccountId = dto.globalAccountId;
         f.status = dto.status;
-        if (!dto.updatedBy.isNull) f.updatedBy = dto.updatedBy;
+        if (!dto.updatedBy.isNull)
+            f.updatedBy = dto.updatedBy;
+
         repo.update(f);
         return CommandResult(true, f.id.value, "");
     }
 
     CommandResult deleteFormation(TenantId tenantId, FormationId id) {
         auto f = repo.findById(tenantId, id);
-        if (f.isNull) return CommandResult(false, "", "Formation not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        if (f.isNull)
+            return CommandResult(false, "", "Formation not found");
+
+        repo.remove(f);
+        return CommandResult(true, f.id.value, "");
     }
 }

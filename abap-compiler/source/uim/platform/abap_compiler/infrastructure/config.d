@@ -9,6 +9,7 @@ import std.process : environment;
 import uim.platform.abap_compiler;
 
 mixin(ShowModule!());
+
 @safe:
 
 /// Service configuration read from environment variables.

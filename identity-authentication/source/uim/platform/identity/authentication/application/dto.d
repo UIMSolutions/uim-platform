@@ -52,8 +52,7 @@ struct UserResponse {
   UserId userId;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }
@@ -69,8 +68,7 @@ struct GroupResponse {
   string groupId;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }
@@ -100,8 +98,7 @@ struct AppResponse {
   string clientSecret;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }
@@ -125,8 +122,7 @@ struct TenantResponse {
   TenantId tenantId;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }
@@ -144,8 +140,7 @@ struct PolicyResponse {
   string policyId;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }

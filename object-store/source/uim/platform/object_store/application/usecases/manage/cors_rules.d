@@ -72,7 +72,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
   }
 
   CorsRule[] listCorsRules(TenantId tenantId, BucketId bucketId) {
-    return corsRules.findByBucket(bucketId);
+    return corsRules.findByBucket(tenantId, bucketId);
   }
 
   CommandResult deleteCorsRule(TenantId tenantId, CorsRuleId corsRuleId) {

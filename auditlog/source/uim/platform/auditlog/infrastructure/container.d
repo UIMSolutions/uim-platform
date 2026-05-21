@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.container;
 
-import uim.platform.auditlog.infrastructure.config;
+//import uim.platform.auditlog.infrastructure.config;
 // Repositories
 // import uim.platform.auditlog.infrastructure.persistence.memory.audit_log;
 // import uim.platform.auditlog.infrastructure.persistence.memory.retention;

@@ -6,6 +6,7 @@
 module uim.platform.document_ai.infrastructure.config;
 // import std.process : environment;
 
+import std.process : environment;
 
 import uim.platform.document_ai;
 

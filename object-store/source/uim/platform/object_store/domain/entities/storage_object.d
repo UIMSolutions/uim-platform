@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 struct StorageObject {
-  mixin TenantEntity!ObjectId;
+  mixin TenantEntity!StorageObjectId;
 
   BucketId bucketId;
   string key; // object path, e.g. "images/photo.jpg"

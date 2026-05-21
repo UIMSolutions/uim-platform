@@ -4,6 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.config;
+
+import std.process : environment;
+import uim.platform.data.quality;
+
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";

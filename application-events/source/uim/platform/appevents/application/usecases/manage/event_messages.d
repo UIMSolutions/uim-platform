@@ -49,7 +49,8 @@ class ManageEventMessagesUseCase {
     CommandResult deleteEventMessage(TenantId tenantId, EventMessageId id) {
         auto msg = repo.findById(tenantId, id);
         if (msg.isNull) return CommandResult(false, "", "Message not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(msg);
+        return CommandResult(true, msg.id.value, "");
     }
 }

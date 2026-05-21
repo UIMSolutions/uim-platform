@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.agentry.infrastructure.config;
+import std.process : environment;
 
 import uim.platform.agentry;
 

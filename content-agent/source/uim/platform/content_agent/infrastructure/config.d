@@ -4,6 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure.config;
+import std.process : environment;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());

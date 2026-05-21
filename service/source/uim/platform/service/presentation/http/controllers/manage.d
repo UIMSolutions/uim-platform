@@ -143,13 +143,14 @@ class ManageController : PlatformController {
       if (tenantId.isNull) 
         return errorResponse("Tenant ID is required", 400);
       
-
       precheck["tenantId"] = tenantId.value;
     }
 
-    if (req is null || req.json == Json(null)) {
-      return errorResponse("Request body is required", 400);
-    }
+    auto id = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid retention policy ID", 400);
+
+    precheck["id"] = id.value;
 
     return precheck
       .set("data", req.json)

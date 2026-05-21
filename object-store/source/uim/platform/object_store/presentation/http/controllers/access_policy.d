@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.access_policy;
 
-
-
-
 // 
 // 
 // import uim.platform.object_store.application.usecases.manage.access_policies;
@@ -37,9 +34,10 @@ class AccessPolicyController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+      
       auto r = CreateAccessPolicyRequest();
       r.tenantId = tenantId;
       r.bucketId = j.getString("bucketId");
@@ -68,7 +66,7 @@ class AccessPolicyController : PlatformController {
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
-      auto policies = usecase.listPolicies(bucketId);
+      auto policies = usecase.listPolicies(tenantId, bucketId);
 
       auto arr = policies.map!(p => p.toJson).array.toJson;
 
@@ -84,11 +82,11 @@ class AccessPolicyController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto policy = usecase.getPolicy(id);
-      if (policy.isNull || policy.isNull) {
+      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
+      auto policy = usecase.getPolicy(tenantId, id);
+      if (policy.isNull) {
         writeError(res, 404, "Access policy not found");
         return;
       }
@@ -99,21 +97,25 @@ class AccessPolicyController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
       auto j = req.json;
-      auto r = UpdateAccessPolicyRequest();
+
+      UpdateAccessPolicyRequest r;
+      r.tenantId = tenantId;
+      r.accessPolicyId = id;
       r.name = j.getString("name");
       r.effect = j.getString("effect");
       r.principal = j.getString("principal");
       r.actions = j.getString("actions");
       r.resources = j.getString("resources");
 
-      auto result = usecase.updatePolicy(id, r);
+      auto result = usecase.updatePolicy(r);
       if (result.success) {
         auto resp = Json.emptyObject
-          .set("id", result.id);
+          .set("id", result.id)
+          .set("message", "Access policy updated successfully");
 
         res.writeJsonBody(resp, 200);
       } else {
@@ -125,10 +127,10 @@ class AccessPolicyController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deletePolicy(id);
+      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
+      auto result = usecase.deletePolicy(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true)
