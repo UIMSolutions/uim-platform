@@ -39,14 +39,14 @@ class GuiEventMessageController {
 
     Json create(TenantId tenantId, EventMessageDTO dto) {
         auto result = _useCase.publishMessage(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Published: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json delete_(TenantId tenantId, EventMessageId id) {
         auto result = _useCase.deleteEventMessage(tenantId, id);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Deleted: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }

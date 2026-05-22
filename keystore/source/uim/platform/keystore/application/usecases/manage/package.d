@@ -6,7 +6,7 @@
 module uim.platform.keystore.application.usecases.manage;
 
 public {
-  import uim.platform.keystore.application.usecases.keystores;
-  import uim.platform.keystore.application.usecases.key_entries;
-  import uim.platform.keystore.application.usecases.key_passwords;
+  import uim.platform.keystore.application.usecases.manage.keystores;
+  import uim.platform.keystore.application.usecases.manage.key_entries;
+  import uim.platform.keystore.application.usecases.manage.key_passwords;
 }

@@ -71,7 +71,7 @@ class EventSubscriptionController : ManageController {
         dto.maxRetries        = cast(int) data.getLong("maxRetries", 3);
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = _useCase.createEventSubscription(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Subscription created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -93,7 +93,7 @@ class EventSubscriptionController : ManageController {
         dto.maxRetries        = cast(int) data.getLong("maxRetries", 3);
         dto.updatedBy         = UserId(data.getString("updatedBy", ""));
         auto result = _useCase.updateEventSubscription(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Subscription updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -103,7 +103,7 @@ class EventSubscriptionController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = EventSubscriptionId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteEventSubscription(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Subscription deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

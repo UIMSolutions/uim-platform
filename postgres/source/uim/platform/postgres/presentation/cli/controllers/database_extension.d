@@ -56,13 +56,13 @@ class CliDatabaseExtensionController {
         dto.schema_        = "public";
         auto result = _useCase.createDatabaseExtension(dto);
         if (result.success) _view.renderSuccess("Enabled extension: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: disable <id>"); return; }
         auto result = _useCase.deleteDatabaseExtension(tenantId, DatabaseExtensionId(args[0]));
         if (result.success) _view.renderSuccess("Disabled extension: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

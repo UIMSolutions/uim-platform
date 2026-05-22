@@ -35,7 +35,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     if (req.sapSystemId.length > 0) {
       auto sidResult = SystemLifecycleValidator.validateSid(req.sapSystemId);
       if (!sidResult.valid)
-        return CommandResult(false, "", sidresult.errorMessage);
+        return CommandResult(false, "", sidresult.message);
     }
 
     // Unique name per tenant

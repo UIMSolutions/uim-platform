@@ -52,7 +52,7 @@ class MenuItemController : PlatformController {
 
         res.writeJsonBody(response, 201);
       } else {
-        writeApiError(res, 400, result.errorMessage);
+        writeApiError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");

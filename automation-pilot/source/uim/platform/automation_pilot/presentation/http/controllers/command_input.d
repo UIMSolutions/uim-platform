@@ -75,7 +75,7 @@ class CommandInputController : PlatformController {
 
             return resp.set("status", "success").set("statusCode", 201);
         } else {
-            return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
         }
     }
 
@@ -139,7 +139,7 @@ class CommandInputController : PlatformController {
         auto result = commandInputs.updateCommandInput(dto);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -169,7 +169,7 @@ class CommandInputController : PlatformController {
         auto result = commandInputs.deleteCommandInput(tenantId, id);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

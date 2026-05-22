@@ -39,21 +39,21 @@ class GuiEventSubscriptionController {
 
     Json create(TenantId tenantId, EventSubscriptionDTO dto) {
         auto result = _useCase.createEventSubscription(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Created: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json update(TenantId tenantId, EventSubscriptionDTO dto) {
         auto result = _useCase.updateEventSubscription(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Updated: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json delete_(TenantId tenantId, EventSubscriptionId id) {
         auto result = _useCase.deleteEventSubscription(tenantId, id);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Deleted: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }

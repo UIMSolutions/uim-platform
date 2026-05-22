@@ -60,7 +60,7 @@ class CliEventFilterController {
         dto.attribute      = args[1];
         auto result = _useCase.createEventFilter(dto);
         if (result.success) _view.renderSuccess("Created filter: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUpdate(TenantId tenantId, string[] args) {
@@ -71,13 +71,13 @@ class CliEventFilterController {
         dto.attribute = args[1];
         auto result = _useCase.updateEventFilter(dto);
         if (result.success) _view.renderSuccess("Updated filter: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteEventFilter(tenantId, EventFilterId(args[0]));
         if (result.success) _view.renderSuccess("Deleted filter: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

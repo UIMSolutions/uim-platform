@@ -79,7 +79,7 @@ class BuildController : ManageController {
 
         auto result = builds.triggerBuild(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build triggered").set("status", "created").set("statusCode", 201);
     }
@@ -98,7 +98,7 @@ class BuildController : ManageController {
         auto errorMessage = data.getString("errorMessage", "");
         auto result = builds.updateBuildStatus(tenantId, id, BuildStatus.running, errorMessage);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build updated").set("status", "updated").set("statusCode", 200);
     }
@@ -115,7 +115,7 @@ class BuildController : ManageController {
 
         auto result = builds.deleteBuild(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Build deleted").set("status", "deleted").set("statusCode", 200);
     }

@@ -56,7 +56,7 @@ class WebServiceInstanceController {
         dto.sslEnabled = data.getBool("sslEnabled", true);
         auto result = _useCase.createServiceInstance(dto);
         if (result.success) _model.setSuccess("Instance created: " ~ result.id);
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _view.renderList(res, _model);
     }
 
@@ -65,7 +65,7 @@ class WebServiceInstanceController {
         auto id  = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteServiceInstance(tenantId, id);
         if (result.success) _model.setSuccess("Instance deleted");
-        else                _model.setError(404, result.errorMessage);
+        else                _model.setError(404, result.message);
         auto list = _useCase.listServiceInstances(tenantId);
         _model.setInstances(list);
         _view.renderList(res, _model);

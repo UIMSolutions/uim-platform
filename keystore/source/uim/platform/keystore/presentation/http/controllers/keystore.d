@@ -32,6 +32,27 @@ class KeystoreController : PlatformController {
     router.get("/api/v1/keystores/resolve", &handleResolve);
   }
 
+  protected Json uploadHandler(HTTPServerRequest req) {
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
+    UploadKeystoreRequest r;
+    r.tenantId = tenantId;
+    r.accountId = j.getString("accountId");
+    r.applicationId = j.getString("applicationId");
+    r.subscriptionId = j.getString("subscriptionId");
+    r.level = j.getString("level");
+    r.name = j.getString("name");
+    r.description = j.getString("description");
+    r.format = j.getString("format");
+    r.content = j.getString("content");
+    r.createdBy = UserId(j.getString("createdBy"));
+
+    auto result = usecase.upload(r);
+    if (result.hasError) 
+      return errorResponse(result.message);
+
+    return successResponse("Keystore uploaded successfully", 201, Json.emptyObject.set("id", result.id));
+  }
   // POST /api/v1/keystores
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
@@ -56,7 +77,7 @@ class KeystoreController : PlatformController {
 
         res.writeJsonBody(resp, 201);
       } else {
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -82,7 +103,7 @@ class KeystoreController : PlatformController {
           .set("name", ks.name)
           .set("description", ks.description)
           .set("format", keystoreFormatToString(ks.format))
-          .set("level", keystoreLevelToString(ks.level))
+          .set("level", ks.level.to!string)
           .set("accountId", ks.accountId)
           .set("applicationId", ks.applicationId)
           .set("createdBy", ks.createdBy)
@@ -116,7 +137,7 @@ class KeystoreController : PlatformController {
         .set("name", ks.name)
         .set("description", ks.description)
         .set("format", keystoreFormatToString(ks.format))
-        .set("level", keystoreLevelToString(ks.level))
+        .set("level", ks.level.to!string)
         .set("content", ks.content)
         .set("accountId", ks.accountId)
         .set("applicationId", ks.applicationId)
@@ -148,7 +169,7 @@ class KeystoreController : PlatformController {
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
-        writeError(res, result.errorMessage == "Keystore not found" ? 404 : 400, result.errorMessage);
+        writeError(res, result.message == "Keystore not found" ? 404 : 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -164,7 +185,7 @@ class KeystoreController : PlatformController {
       if (result.success) {
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
       } else {
-        writeError(res, 404, result.errorMessage);
+        writeError(res, 404, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -196,24 +217,13 @@ class KeystoreController : PlatformController {
         .set("name", ks.name)
         .set("description", ks.description)
         .set("format", keystoreFormatToString(ks.format))
-        .set("level", keystoreLevelToString(ks.level))
+        .set("level", ks.level.to!string)
         .set("content", ks.content)
         .set("accountId", ks.accountId)
         .set("applicationId", ks.applicationId);
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private string keystoreLevelToString(KeystoreLevel level) @safe {
-    final switch (level) {
-    case KeystoreLevel.account:
-      return "account";
-    case KeystoreLevel.application:
-      return "application";
-    case KeystoreLevel.subscription:
-      return "subscription";
     }
   }
 }

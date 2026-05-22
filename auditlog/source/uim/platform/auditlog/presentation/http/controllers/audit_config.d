@@ -129,7 +129,7 @@ class AuditConfigController : ManageController {
     auto result = useCase.updateAuditConfig(r);
     if (result.hasError()) {
       return Json.emptyObject
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("statusCode", 400);
     }
     return Json.emptyObject

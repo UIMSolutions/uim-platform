@@ -39,14 +39,14 @@ class WebEventMessageController {
 
     Json create(TenantId tenantId, EventMessageDTO dto) {
         auto result = _useCase.publishMessage(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Message published: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, EventMessageId id) {
         auto result = _useCase.deleteEventMessage(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Message deleted: " ~ result.id);
     }
 }

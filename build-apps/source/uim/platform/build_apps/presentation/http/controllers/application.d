@@ -81,7 +81,7 @@ class ApplicationController : ManageController {
         auto result = usecase.createApplication(dto);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -152,7 +152,7 @@ class ApplicationController : ManageController {
         auto result = usecase.updateApplication(dto);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 400);
         }
@@ -178,7 +178,7 @@ class ApplicationController : ManageController {
         auto result = usecase.deleteApplication(tenantId, applicationId);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

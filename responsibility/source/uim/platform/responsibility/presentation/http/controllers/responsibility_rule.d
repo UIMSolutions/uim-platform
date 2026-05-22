@@ -70,7 +70,7 @@ class ResponsibilityRuleController : ManageController {
 
         auto result = _uc.createRule(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
 
@@ -91,7 +91,7 @@ class ResponsibilityRuleController : ManageController {
 
         auto result = _uc.updateRule(dto);
         if (!result.success)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 
@@ -103,7 +103,7 @@ class ResponsibilityRuleController : ManageController {
 
         auto result = _uc.deleteRule(tenantId, id);
         if (!result.success)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

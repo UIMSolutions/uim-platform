@@ -76,7 +76,7 @@ class WebhookController : ManageController {
 
         auto result = webhooks.createWebhook(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Webhook created").set("status", "created").set("statusCode", 201);
     }
@@ -101,7 +101,7 @@ class WebhookController : ManageController {
 
         auto result = webhooks.updateWebhook(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Webhook updated").set("status", "updated").set("statusCode", 200);
     }
@@ -118,7 +118,7 @@ class WebhookController : ManageController {
 
         auto result = webhooks.deleteWebhook(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Webhook deleted").set("status", "deleted").set("statusCode", 200);
     }

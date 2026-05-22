@@ -66,7 +66,7 @@ class AuditLogController : PlatformController {
         auto result = auditLogs.recordAuditEvent(dto);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Audit event recorded").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -101,6 +101,6 @@ class AuditLogController : PlatformController {
         auto result = auditLogs.deleteAuditLog(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("message", "Audit log deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 404);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
     }
 }

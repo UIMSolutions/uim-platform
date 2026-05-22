@@ -82,7 +82,7 @@ class JobController : ManageController {
 
         auto result = jobs.createJob(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Job created").set("status", "created").set("statusCode", 201);
     }
@@ -108,7 +108,7 @@ class JobController : ManageController {
 
         auto result = jobs.updateJob(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Job updated").set("status", "updated").set("statusCode", 200);
     }
@@ -125,7 +125,7 @@ class JobController : ManageController {
 
         auto result = jobs.deleteJob(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Job deleted").set("status", "deleted").set("statusCode", 200);
     }

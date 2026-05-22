@@ -79,7 +79,7 @@ class CredentialController : ManageController {
 
         auto result = creds.createCredential(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential created").set("status", "created").set("statusCode", 201);
     }
@@ -105,7 +105,7 @@ class CredentialController : ManageController {
 
         auto result = creds.updateCredential(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential updated").set("status", "updated").set("statusCode", 200);
     }
@@ -122,7 +122,7 @@ class CredentialController : ManageController {
 
         auto result = creds.deleteCredential(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Credential deleted").set("status", "deleted").set("statusCode", 200);
     }

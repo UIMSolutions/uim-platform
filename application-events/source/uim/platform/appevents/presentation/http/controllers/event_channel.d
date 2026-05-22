@@ -71,7 +71,7 @@ class EventChannelController : ManageController {
         dto.maxSizeBytes = data.getLong("maxSizeBytes", 1_048_576);
         dto.createdBy    = UserId(data.getString("createdBy", ""));
         auto result = _useCase.createEventChannel(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Channel created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -91,7 +91,7 @@ class EventChannelController : ManageController {
         dto.maxSizeBytes = data.getLong("maxSizeBytes", 0);
         dto.updatedBy    = UserId(data.getString("updatedBy", ""));
         auto result = _useCase.updateEventChannel(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Channel updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -101,7 +101,7 @@ class EventChannelController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = EventChannelId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteEventChannel(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Channel deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

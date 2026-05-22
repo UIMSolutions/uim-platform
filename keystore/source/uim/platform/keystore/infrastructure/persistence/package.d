@@ -6,5 +6,7 @@
 module uim.platform.keystore.infrastructure.persistence;
 
 public {
+  import uim.platform.keystore.infrastructure.persistence.files;
   import uim.platform.keystore.infrastructure.persistence.memory;
+  import uim.platform.keystore.infrastructure.persistence.mongo;
 }

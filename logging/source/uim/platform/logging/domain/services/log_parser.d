@@ -30,7 +30,7 @@ struct LogParser {
 
     ParseResult result;
     result.valid = errors.length == 0;
-    result.errorMessages = errors;
+    result.messages = errors;
     return result;
   }
 

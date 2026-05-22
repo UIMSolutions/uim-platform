@@ -70,7 +70,7 @@ class MtaOperationController : PlatformController {
                 auto op = usecase.getOperation(tenantId, id);
                 res.writeJsonBody(op.toJson, 200);
             } else {
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -92,7 +92,7 @@ class MtaOperationController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("message", "Operation aborted"), 200);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

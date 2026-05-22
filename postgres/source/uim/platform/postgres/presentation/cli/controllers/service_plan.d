@@ -57,13 +57,13 @@ class CliServicePlanController {
         dto.available  = true;
         auto result = _useCase.createServicePlan(dto);
         if (result.success) _view.renderSuccess("Created plan: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteServicePlan(tenantId, ServicePlanId(args[0]));
         if (result.success) _view.renderSuccess("Deleted plan: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

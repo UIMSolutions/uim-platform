@@ -60,7 +60,7 @@ class CliFormationController {
         dto.globalAccountId = args.length >= 2 ? args[1] : "";
         auto result = _useCase.createFormation(dto);
         if (result.success) _view.renderSuccess("Created formation: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUpdate(TenantId tenantId, string[] args) {
@@ -71,13 +71,13 @@ class CliFormationController {
         dto.name        = args[1];
         auto result = _useCase.updateFormation(dto);
         if (result.success) _view.renderSuccess("Updated formation: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteFormation(tenantId, FormationId(args[0]));
         if (result.success) _view.renderSuccess("Deleted formation: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

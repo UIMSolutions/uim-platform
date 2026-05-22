@@ -65,7 +65,7 @@ class PatientController : PlatformController {
           201
         );
       } else {
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
@@ -147,7 +147,7 @@ class PatientController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Patient").set("id", result.id), 200);
       else
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }
@@ -159,7 +159,7 @@ class PatientController : PlatformController {
       auto id = PatientId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deletePatient(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.errorMessage);
+      else writeFhirError(res, 404, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }

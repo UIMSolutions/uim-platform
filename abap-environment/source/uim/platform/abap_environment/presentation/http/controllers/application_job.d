@@ -75,7 +75,7 @@ class ApplicationJobController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 
@@ -130,7 +130,7 @@ class ApplicationJobController : ManageController {
     if (result.hasError()) {
       auto resp = Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 
@@ -153,7 +153,7 @@ class ApplicationJobController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -173,7 +173,7 @@ class ApplicationJobController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 

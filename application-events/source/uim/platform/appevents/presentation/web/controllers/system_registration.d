@@ -39,14 +39,14 @@ class WebSystemRegistrationController {
 
     Json create(TenantId tenantId, SystemRegistrationDTO dto) {
         auto result = _useCase.registerSystem(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("System registered: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, SystemRegistrationId id) {
         auto result = _useCase.unregisterSystem(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("System unregistered: " ~ result.id);
     }
 }

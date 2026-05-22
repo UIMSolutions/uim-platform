@@ -52,7 +52,7 @@ class GlossaryController : ManageController {
         if (result.hasError) {
             return Json.emptyObject
                 .set("status", "error")
-                .set("message", result.errorMessage)
+                .set("message", result.message)
                 .set("statusCode", 400);
         }
 
@@ -127,7 +127,7 @@ class GlossaryController : ManageController {
         if (result.hasError) {
             return Json.emptyObject
                 .set("status", "error")
-                .set("message", result.errorMessage)
+                .set("message", result.message)
                 .set("statusCode", 400);
         }
 
@@ -157,13 +157,13 @@ class GlossaryController : ManageController {
         if (result.hasError) {
             return Json.emptyObject
                 .set("status", "error")
-                .set("message", result.errorMessage)
+                .set("message", result.message)
                 .set("statusCode", 400);
         }
 
         return Json.emptyObject
             .set("status", "error")
-            .set("message", result.errorMessage)
+            .set("message", result.message)
             .set("statusCode", 404);
     }
 }

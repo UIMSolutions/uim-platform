@@ -80,7 +80,7 @@ class DeploymentTargetController : ManageController {
 
         auto result = targets.createDeploymentTarget(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Deployment target created").set("status", "created").set("statusCode", 201);
     }
@@ -109,7 +109,7 @@ class DeploymentTargetController : ManageController {
 
         auto result = targets.updateDeploymentTarget(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Deployment target updated").set("status", "updated").set("statusCode", 200);
     }
@@ -126,7 +126,7 @@ class DeploymentTargetController : ManageController {
 
         auto result = targets.deleteDeploymentTarget(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Deployment target deleted").set("status", "deleted").set("statusCode", 200);
     }

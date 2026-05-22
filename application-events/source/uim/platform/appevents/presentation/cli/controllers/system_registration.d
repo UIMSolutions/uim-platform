@@ -59,13 +59,13 @@ class CliSystemRegistrationController {
         dto.systemId    = args[1];
         auto result = _useCase.registerSystem(dto);
         if (result.success) _view.renderSuccess("Registered system: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUnregister(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: unregister <id>"); return; }
         auto result = _useCase.unregisterSystem(tenantId, SystemRegistrationId(args[0]));
         if (result.success) _view.renderSuccess("Unregistered system: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

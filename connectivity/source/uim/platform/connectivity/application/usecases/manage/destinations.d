@@ -64,7 +64,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     auto authResult = AuthFlowResolver.validate(dest);
     if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authresult.errorMessages) {
+      foreach (i, e; authresult.messages) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -115,7 +115,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     auto authResult = AuthFlowResolver.validate(dest);
     if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authresult.errorMessages) {
+      foreach (i, e; authresult.messages) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;

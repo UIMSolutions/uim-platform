@@ -46,7 +46,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     // Quota check
     auto quotaResult = QuotaValidator.validate(bucket, req.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaresult.errorMessage);
+      return CommandResult(false, "", quotaresult.message);
 
     StorageObject obj;
     obj.initEntity(req.tenantId, req.createdBy);
@@ -186,7 +186,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaResult.errorMessage);
+      return CommandResult(false, "", quotaresult.message);
 
     auto copy = new StorageObject();
     copy.initEntity(req.tenantId);

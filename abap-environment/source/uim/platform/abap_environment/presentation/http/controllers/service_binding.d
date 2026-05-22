@@ -63,7 +63,7 @@ class ServiceBindingController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", 400)
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("message", "Failed to create service binding");
     }
     return Json.emptyObject
@@ -104,7 +104,7 @@ class ServiceBindingController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("message", "Service binding not found");
     }
     return Json.emptyObject
@@ -120,7 +120,7 @@ class ServiceBindingController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("message", "Service binding not found");
     }
     return Json.emptyObject

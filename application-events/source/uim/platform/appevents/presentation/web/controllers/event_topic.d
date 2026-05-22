@@ -39,21 +39,21 @@ class WebEventTopicController {
 
     Json create(TenantId tenantId, EventTopicDTO dto) {
         auto result = _useCase.createEventTopic(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Topic created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json update(TenantId tenantId, EventTopicDTO dto) {
         auto result = _useCase.updateEventTopic(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Topic updated: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, EventTopicId id) {
         auto result = _useCase.deleteEventTopic(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Topic deleted: " ~ result.id);
     }
 }

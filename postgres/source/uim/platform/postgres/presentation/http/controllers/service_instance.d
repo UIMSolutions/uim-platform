@@ -66,7 +66,7 @@ class ServiceInstanceController : ManageController {
         dto.multiAz           = data.getBool("multiAz", false);
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = instances.createServiceInstance(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -84,7 +84,7 @@ class ServiceInstanceController : ManageController {
         dto.storageGb         = data.getLong("storageGb", 0);
         dto.updatedBy         = UserId(data.getString("updatedBy", ""));
         auto result = instances.updateServiceInstance(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -94,7 +94,7 @@ class ServiceInstanceController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
         auto result = instances.deleteServiceInstance(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

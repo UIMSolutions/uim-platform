@@ -68,7 +68,7 @@ class EventTopicController : ManageController {
         dto.ownerId     = data.getString("ownerId", "");
         dto.createdBy   = UserId(data.getString("createdBy", ""));
         auto result = _useCase.createEventTopic(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Topic created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -88,7 +88,7 @@ class EventTopicController : ManageController {
         dto.ownerId     = data.getString("ownerId", "");
         dto.updatedBy   = UserId(data.getString("updatedBy", ""));
         auto result = _useCase.updateEventTopic(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Topic updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -98,7 +98,7 @@ class EventTopicController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = EventTopicId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteEventTopic(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Topic deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

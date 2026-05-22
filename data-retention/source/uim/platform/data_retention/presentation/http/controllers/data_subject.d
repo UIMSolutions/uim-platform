@@ -39,7 +39,7 @@ class DataSubjectController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -106,7 +106,7 @@ class DataSubjectController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -132,7 +132,7 @@ class DataSubjectController : PlatformController {
 
                 res.writeJsonBody(response, 200);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

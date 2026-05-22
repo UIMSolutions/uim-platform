@@ -68,7 +68,7 @@ class EventChannelController : PlatformController {
             auto result = usecase.createChannel(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel created"), 201);
-            } else { writeError(res, 400, result.errorMessage); }
+            } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -88,7 +88,7 @@ class EventChannelController : PlatformController {
             auto result = usecase.updateChannel(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel updated"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -99,7 +99,7 @@ class EventChannelController : PlatformController {
             auto result = usecase.deleteChannel(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel deleted"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

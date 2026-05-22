@@ -59,13 +59,13 @@ class CliDeadLetterEntryController {
         dto.errorMessage = args[1];
         auto result = _useCase.createDeadLetterEntry(dto);
         if (result.success) _view.renderSuccess("Created dead letter entry: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteDeadLetterEntry(tenantId, DeadLetterEntryId(args[0]));
         if (result.success) _view.renderSuccess("Deleted dead letter entry: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

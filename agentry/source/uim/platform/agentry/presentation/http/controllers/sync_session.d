@@ -69,7 +69,7 @@ class SyncSessionController : PlatformController {
             dto.clientAppVersion = j.getString("clientAppVersion");
 
             auto result = usecase.createSyncSession(dto);
-            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -91,7 +91,7 @@ class SyncSessionController : PlatformController {
             dto.status = j.getString("status");
 
             auto result = usecase.updateSyncSession(dto);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -108,7 +108,7 @@ class SyncSessionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = SyncSessionId(extractIdFromPath(path));
             auto result = usecase.deleteSyncSession(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Sync session deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

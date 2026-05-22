@@ -75,7 +75,7 @@ class ServiceInstanceController : PlatformController {
             auto result = usecase.create(req.getTenantId, r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.errorMessage); }
+            } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -93,7 +93,7 @@ class ServiceInstanceController : PlatformController {
             auto result = usecase.update(req.getTenantId, ServiceInstanceId(id), r);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -104,7 +104,7 @@ class ServiceInstanceController : PlatformController {
             auto result = usecase.deleteServiceInstance(req.getTenantId, ServiceInstanceId(id));
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

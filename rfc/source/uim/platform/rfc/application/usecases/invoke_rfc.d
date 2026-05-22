@@ -104,7 +104,7 @@ class InvokeRfcUseCase {
             foreach (p; result.changingParams) call.changingParams ~= ParameterValue(p.name, p.value);
         } else {
             call.status       = RfcStatus.failed;
-            call.errorMessage = result.errorMessage;
+            call.errorMessage = result.message;
         }
 
         call.completedAt = MonoTime.currTime.ticks;

@@ -12,8 +12,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
-
 struct SrvConfig {
   string host        = "0.0.0.0";
   ushort port        = 8115;

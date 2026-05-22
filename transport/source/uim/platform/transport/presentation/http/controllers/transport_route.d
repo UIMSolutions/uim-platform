@@ -69,7 +69,7 @@ class TransportRouteController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route created"), 201);
             else
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -84,13 +84,13 @@ class TransportRouteController : PlatformController {
             if (action == "enable") {
                 auto result = usecase.enableRoute(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route enabled"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
             if (action == "disable") {
                 auto result = usecase.disableRoute(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route disabled"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
             TransportRouteDTO dto;
@@ -103,7 +103,7 @@ class TransportRouteController : PlatformController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
             auto result = usecase.updateRoute(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route updated"), 200);
-            else writeError(res, 400, result.errorMessage);
+            else writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -115,7 +115,7 @@ class TransportRouteController : PlatformController {
             auto id = TransportRouteId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteRoute(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route deleted"), 200);
-            else writeError(res, 404, result.errorMessage);
+            else writeError(res, 404, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

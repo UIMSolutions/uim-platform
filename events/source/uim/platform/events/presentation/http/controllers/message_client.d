@@ -66,7 +66,7 @@ class MessageClientController : PlatformController {
             auto result = usecase.createClient(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client created"), 201);
-            } else { writeError(res, 400, result.errorMessage); }
+            } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -86,7 +86,7 @@ class MessageClientController : PlatformController {
             auto result = usecase.updateClient(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client updated"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -97,7 +97,7 @@ class MessageClientController : PlatformController {
             auto result = usecase.deleteClient(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client deleted"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

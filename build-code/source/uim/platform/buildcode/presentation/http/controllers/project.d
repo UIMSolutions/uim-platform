@@ -52,7 +52,7 @@ class ProjectController : SAPController {
       foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.create(tenantId, dto);
     if (!result.success)
-      return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
+      return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -79,7 +79,7 @@ class ProjectController : SAPController {
     if (body_["tags"].type == Json.Type.array)
       foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.update(tenantId, id, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.errorMessage);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
@@ -87,7 +87,7 @@ class ProjectController : SAPController {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = extractIdFromPath(req);
     auto result   = _uc.remove(tenantId, id);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.errorMessage);
+    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);
   }
 }

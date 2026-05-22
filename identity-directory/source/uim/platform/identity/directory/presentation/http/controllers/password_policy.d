@@ -53,7 +53,7 @@ class PasswordPolicyController : PlatformController {
       }
       else
       {
-        response["error"] = Json(result.errorMessage);
+        response["error"] = Json(result.message);
         res.writeJsonBody(response, 400);
       }
     }

@@ -66,7 +66,7 @@ class EventMessageController : ManageController {
         dto.targetSystemId = data.getString("targetSystemId", "");
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = _useCase.publishMessage(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Message published successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -76,7 +76,7 @@ class EventMessageController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = EventMessageId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteEventMessage(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Message deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

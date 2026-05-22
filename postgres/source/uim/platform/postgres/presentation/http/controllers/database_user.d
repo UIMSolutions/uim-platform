@@ -61,7 +61,7 @@ class DatabaseUserController : ManageController {
         dto.roles          = data.getString("roles", "readonly");
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = users.createDatabaseUser(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Database user created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -76,7 +76,7 @@ class DatabaseUserController : ManageController {
         dto.roles          = data.getString("roles", "");
         dto.updatedBy      = UserId(data.getString("updatedBy", ""));
         auto result = users.updateDatabaseUser(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Database user updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -86,7 +86,7 @@ class DatabaseUserController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
         auto result = users.deleteDatabaseUser(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Database user deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

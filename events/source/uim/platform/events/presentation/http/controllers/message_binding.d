@@ -67,7 +67,7 @@ class MessageBindingController : PlatformController {
             auto result = usecase.createBinding(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message binding created"), 201);
-            } else { writeError(res, 400, result.errorMessage); }
+            } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -85,7 +85,7 @@ class MessageBindingController : PlatformController {
             auto result = usecase.updateBinding(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message binding updated"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -96,7 +96,7 @@ class MessageBindingController : PlatformController {
             auto result = usecase.deleteBinding(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message binding deleted"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

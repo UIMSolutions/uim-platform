@@ -82,7 +82,7 @@ class TlsConfigurationController : ManageController {
 
         auto result = usecase.createTlsConfiguration(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("TLS configuration created successfully", 201,
             Json.emptyObject.set("id", result.id));
@@ -145,7 +145,7 @@ class TlsConfigurationController : ManageController {
 
         auto result = usecase.updateTlsConfiguration(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("TLS configuration updated successfully", 200,
             Json.emptyObject.set("id", result.id));
@@ -164,7 +164,7 @@ class TlsConfigurationController : ManageController {
 
         auto result = usecase.deleteTlsConfiguration(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("TLS configuration deleted successfully", 200,
             Json.emptyObject.set("id", result.id));

@@ -94,7 +94,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     auto result = PackageAssembler.validate(pkg, providers);
     if (!result.valid) {
       string msg = "Assembly validation failed: ";
-      foreach (i, e; result.errorMessages) {
+      foreach (i, e; result.messages) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;

@@ -8,57 +8,51 @@ module uim.platform.keystore.infrastructure.persistence.memory.key_passwords;
 // import uim.platform.keystore.domain.ports.repositories.key_password_repository;
 // import uim.platform.keystore.domain.types;
 
-
- 
-
 import uim.platform.keystore;
 
 mixin(ShowModule!());
 
 @safe:
 
+class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), KeyPasswordRepository {
 
-class MemoryKeyPasswordRepository : KeyPasswordRepository {
-  private KeyPassword[KeyPasswordId] store;
-
-  bool existsByAlias(string accountId, string applicationId, string alias_) {
-    return findByAlias(accountId, applicationId, alias_).id.length > 0;
+  bool existsByAlias(TenantId tenantId, string applicationId, string alias_) {
+    return findByTenant(tenantId).any!(kp => kp.applicationId == applicationId && kp.alias_ == alias_);
   }
 
-  KeyPassword findByAlias(string accountId, string applicationId, string alias_) {
-    foreach (kp; findAll) {
-      if (kp.accountId == accountId && kp.applicationId == applicationId && kp.alias_ == alias_)
+  KeyPassword findByAlias(TenantId tenantId, string applicationId, string alias_) {
+    foreach (kp; findByTenant(tenantId)) {
+      if (kp.applicationId == applicationId && kp.alias_ == alias_)
         return kp;
     }
     return KeyPassword.init;
   }
 
-  KeyPassword[] findByApplication(string accountId, string applicationId) {
-    return store.values
-      .filter!(kp => kp.accountId == accountId && kp.applicationId == applicationId)
-      .array;
-  }
-
-  void save(KeyPassword kp) {
-    store[kp.id] = kp;
-  }
-
-  void update(KeyPassword kp) {
-    store[kp.id] = kp;
-  }
-
-  void removeByAlias(string accountId, string applicationId, string alias_) {
-    foreach (id, kp; store) {
-      if (kp.accountId == accountId && kp.applicationId == applicationId && kp.alias_ == alias_) {
-        removeById(id);
+  void removeByAlias(TenantId tenantId, string applicationId, string alias_) {
+    foreach (kp; findByTenant(tenantId)) {
+      if (kp.applicationId == applicationId && kp.alias_ == alias_) {
+        remove(kp);
         return;
       }
     }
   }
 
-  size_t countByApplication(string accountId, string applicationId) {
-    return store.values
-      .filter!(kp => kp.accountId == accountId && kp.applicationId == applicationId)
-      .array.length;
+  // #region ByApplication
+  size_t countByApplication(TenantId tenantId, string applicationId) {
+    return findByApplication(tenantId, applicationId).length;
   }
+
+  KeyPassword[] filterByApplication(KeyPassword[] passwords, string applicationId) {
+    return passwords.filter!(kp => kp.applicationId == applicationId).array;
+  }
+
+  KeyPassword[] findByApplication(TenantId tenantId, string applicationId) {
+    return filterByApplication(findByTenant(tenantId), applicationId);
+  }
+
+  void removeByApplication(TenantId tenantId, string applicationId) {
+    findByApplication(tenantId, applicationId).each!(kp => remove(kp));
+  }
+  // #endregion ByApplication
+
 }

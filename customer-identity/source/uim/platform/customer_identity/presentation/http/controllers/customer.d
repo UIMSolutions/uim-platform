@@ -74,7 +74,7 @@ class CustomerController : PlatformController {
                 .set("status", "success")
                 .set("statusCode", 201);
         }
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -123,7 +123,7 @@ class CustomerController : PlatformController {
         auto result = customers.updateCustomer(dto);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Customer updated").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -140,6 +140,6 @@ class CustomerController : PlatformController {
         auto result = customers.deleteCustomer(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("message", "Customer deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 404);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
     }
 }

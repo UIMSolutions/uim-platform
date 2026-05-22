@@ -6,7 +6,7 @@
 module uim.platform.keystore.domain.entities;
 
 public {
-  import uim.platform.keystore.domain.entities.keystore_entity;
+  import uim.platform.keystore.domain.entities.keystore;
   import uim.platform.keystore.domain.entities.key_entry;
   import uim.platform.keystore.domain.entities.key_password;
 }

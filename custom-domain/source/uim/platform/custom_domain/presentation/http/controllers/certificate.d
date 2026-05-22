@@ -77,7 +77,7 @@ class CertificateController : ManageController {
 
         auto result = certificates.createCertificate(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Certificate created", 201,
             Json.emptyObject.set("id", result.id));
@@ -153,7 +153,7 @@ class CertificateController : ManageController {
 
         auto result = certificates.uploadCertificateChain(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Certificate chain uploaded", 200, Json.emptyObject.set("id", result
                 .id));
@@ -189,7 +189,7 @@ class CertificateController : ManageController {
 
         auto result = certificates.activateCertificate(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Certificate activated", 200, Json.emptyObject.set("id", result.id));
     }
@@ -214,7 +214,7 @@ class CertificateController : ManageController {
         if (id.isNull) return errorResponse("Invalid Certificate ID", 400);
 
         auto result = certificates.deactivateCertificate(tenantId, id);
-        if (result.hasError) return errorResponse(result.errorMessage, 404);
+        if (result.hasError) return errorResponse(result.message, 404);
         return successResponse("Certificate deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 
@@ -239,7 +239,7 @@ class CertificateController : ManageController {
 
         auto result = certificates.deleteCertificate(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("Certificate deleted", 200,
             Json.emptyObject.set("id", result.id));

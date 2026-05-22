@@ -39,21 +39,21 @@ class GuiFormationController {
 
     Json create(TenantId tenantId, FormationDTO dto) {
         auto result = _useCase.createFormation(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Created: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json update(TenantId tenantId, FormationDTO dto) {
         auto result = _useCase.updateFormation(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Updated: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json delete_(TenantId tenantId, FormationId id) {
         auto result = _useCase.deleteFormation(tenantId, id);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Deleted: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }

@@ -39,21 +39,21 @@ class WebFormationController {
 
     Json create(TenantId tenantId, FormationDTO dto) {
         auto result = _useCase.createFormation(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Formation created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json update(TenantId tenantId, FormationDTO dto) {
         auto result = _useCase.updateFormation(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Formation updated: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, FormationId id) {
         auto result = _useCase.deleteFormation(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Formation deleted: " ~ result.id);
     }
 }

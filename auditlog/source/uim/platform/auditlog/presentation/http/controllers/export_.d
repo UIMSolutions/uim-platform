@@ -68,7 +68,7 @@ class ExportController : ManageController {
     auto result = useCase.createExport(jobRequest);
     if (result.hasError()) {
       return Json.emptyObject
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("statusCode", 400);
     }
 
@@ -100,7 +100,7 @@ class ExportController : ManageController {
     auto result = useCase.deleteExport(tenantId, jobId);
     if (result.hasError()) {
       return Json.emptyObject
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("statusCode", 400);
     }
     return Json.emptyObject

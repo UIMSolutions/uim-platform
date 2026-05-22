@@ -67,7 +67,7 @@ class ImportQueueEntryController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Enqueued for import"), 201);
             else
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -82,7 +82,7 @@ class ImportQueueEntryController : PlatformController {
             if (action == "reset") {
                 auto result = usecase.resetEntry(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Entry reset"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
             auto statusStr = j.getString("status");
@@ -93,7 +93,7 @@ class ImportQueueEntryController : PlatformController {
                     auto errorMsg = j.getString("errorMessage");
                     auto result = usecase.updateEntryStatus(tenantId, id, status, errorMsg);
                     if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Status updated"), 200);
-                    else writeError(res, 400, result.errorMessage);
+                    else writeError(res, 400, result.message);
                 } catch (Exception) {
                     writeError(res, 400, "Invalid status value");
                 }
@@ -111,7 +111,7 @@ class ImportQueueEntryController : PlatformController {
             auto id = ImportQueueEntryId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteEntry(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Import queue entry deleted"), 200);
-            else writeError(res, 404, result.errorMessage);
+            else writeError(res, 404, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

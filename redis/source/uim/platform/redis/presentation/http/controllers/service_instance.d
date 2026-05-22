@@ -82,7 +82,7 @@ class ServiceInstanceController : ManageController {
 
         auto result = instances.createServiceInstance(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -110,7 +110,7 @@ class ServiceInstanceController : ManageController {
 
         auto result = instances.updateServiceInstance(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -129,7 +129,7 @@ class ServiceInstanceController : ManageController {
 
         auto result = instances.deleteServiceInstance(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
 
         return Json.emptyObject
             .set("id", result.id)

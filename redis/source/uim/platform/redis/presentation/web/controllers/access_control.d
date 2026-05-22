@@ -54,7 +54,7 @@ class WebAccessControlController {
         dto.description = data.getString("description", "");
         auto result = _useCase.createAccessControl(dto);
         if (result.success) _model.setSuccess("Rule created: " ~ result.id);
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setRules(_useCase.listAccessControls(tenantId));
         _view.renderList(res, _model);
     }
@@ -64,7 +64,7 @@ class WebAccessControlController {
         auto id = AccessControlId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteAccessControl(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setRules(_useCase.listAccessControls(tenantId));
         _view.renderList(res, _model);
     }

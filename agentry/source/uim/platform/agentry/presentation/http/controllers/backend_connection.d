@@ -76,7 +76,7 @@ class BackendConnectionController : PlatformController {
             dto.certificateFingerprint = j.getString("certificateFingerprint");
 
             auto result = usecase.createBackendConnection(dto);
-            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -101,7 +101,7 @@ class BackendConnectionController : PlatformController {
             dto.destinationName = j.getString("destinationName");
 
             auto result = usecase.updateBackendConnection(dto);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -118,7 +118,7 @@ class BackendConnectionController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = BackendConnectionId(extractIdFromPath(path));
             auto result = usecase.deleteBackendConnection(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Backend connection deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

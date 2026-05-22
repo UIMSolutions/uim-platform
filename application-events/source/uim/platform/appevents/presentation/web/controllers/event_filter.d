@@ -39,21 +39,21 @@ class WebEventFilterController {
 
     Json create(TenantId tenantId, EventFilterDTO dto) {
         auto result = _useCase.createEventFilter(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Filter created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json update(TenantId tenantId, EventFilterDTO dto) {
         auto result = _useCase.updateEventFilter(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Filter updated: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, EventFilterId id) {
         auto result = _useCase.deleteEventFilter(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Filter deleted: " ~ result.id);
     }
 }

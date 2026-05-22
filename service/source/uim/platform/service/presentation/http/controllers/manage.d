@@ -132,15 +132,12 @@ class ManageController : PlatformController {
     if (precheck.hasError)
       return precheck; // Return error response from precheck 
 
-    auto path = req.requestURI.to!string;
-    auto id = extractIdFromPath(path);
+    auto id = extractIdFromPath(req.requestURI);
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 
     return precheck
       .set("id", id)
-      .set("path", path)
-      .set("data", req.json)
       .set("status", "ok")
       .set("message", "Update handler not implemented")
       .set("code", 200);
@@ -162,14 +159,12 @@ class ManageController : PlatformController {
     if (precheck.hasError)
       return precheck; // Return error response from precheck
 
-    auto path = req.requestURI.to!string;
-    auto id = extractIdFromPath(path);
+    auto id = extractIdFromPath(req.requestURI);
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 
     return precheck
       .set("id", id)
-      .set("path", path)
       .set("status", "ok")
       .set("message", "Delete handler not implemented")
       .set("code", 200);

@@ -12,7 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// A single entry (key or certificate) within a keystore.
 struct KeyEntry {
-  KeyEntryId id;
+  mixin TenantEntity!KeyEntryId;
+
   KeystoreId keystoreId;
   string alias_; // entry alias within the keystore
   KeyEntryType entryType; // privateKey | certificate | secretKey | trustedCertificate

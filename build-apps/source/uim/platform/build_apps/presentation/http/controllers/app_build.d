@@ -76,7 +76,7 @@ class AppBuildController : ManageController {
 
             return resp.set("status", "success").set("statusCode", 201);
         } else {
-            return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
         }
     }
 
@@ -137,7 +137,7 @@ class AppBuildController : ManageController {
         auto result = usecase.updateAppBuild(dto);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 404);
         }
@@ -167,7 +167,7 @@ class AppBuildController : ManageController {
         auto result = usecase.deleteAppBuild(tenantId, id);
         if (result.hasError) {
             return Json.emptyObject
-                .set("error", result.errorMessage)
+                .set("error", result.message)
                 .set("status", "error")
                 .set("statusCode", 404);
         }

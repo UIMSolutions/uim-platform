@@ -56,13 +56,13 @@ class CliDatabaseUserController {
         dto.roles      = "readonly";
         auto result = _useCase.createDatabaseUser(dto);
         if (result.success) _view.renderSuccess("Created database user: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteDatabaseUser(tenantId, DatabaseUserId(args[0]));
         if (result.success) _view.renderSuccess("Deleted database user: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

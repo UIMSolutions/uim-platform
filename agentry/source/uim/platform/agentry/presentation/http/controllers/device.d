@@ -76,7 +76,7 @@ class DeviceController : PlatformController {
             dto.mdmDeviceId = j.getString("mdmDeviceId");
 
             auto result = usecase.enrollDevice(dto);
-            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -101,7 +101,7 @@ class DeviceController : PlatformController {
             dto.pushToken = j.getString("pushToken");
 
             auto result = usecase.updateDevice(dto);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -118,7 +118,7 @@ class DeviceController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = DeviceId(extractIdFromPath(path));
             auto result = usecase.removeDevice(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Device removed successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

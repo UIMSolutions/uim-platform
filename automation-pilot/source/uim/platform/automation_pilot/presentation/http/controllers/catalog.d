@@ -68,7 +68,7 @@ class CatalogController : ManageController {
 
         auto result = catalogs.createCatalog(dto);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Catalog created", 201,
             Json.emptyObject.set("id", result.id));
@@ -113,7 +113,7 @@ class CatalogController : ManageController {
 
         auto result = catalogs.updateCatalog(dto);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Catalog updated", 200,
             Json.emptyObject.set("id", result.id));
@@ -131,7 +131,7 @@ class CatalogController : ManageController {
 
         auto result = catalogs.deleteCatalog(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Catalog deleted", 200,
             Json.emptyObject.set("id", result.id));

@@ -77,7 +77,7 @@ class ServiceBindingController : ManageController {
 
         auto result = bindings.createServiceBinding(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -96,7 +96,7 @@ class ServiceBindingController : ManageController {
 
         auto result = bindings.deleteServiceBinding(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
 
         return Json.emptyObject
             .set("id", result.id)

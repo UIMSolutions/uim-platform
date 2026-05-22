@@ -55,7 +55,7 @@ class BucketController : ManageController {
 
     auto result = usecase.createBucket(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage);
+      return errorResponse(result.message);
 
     return successResponse("Bucket created successfully", 201, Json.emptyObject.set("id", result.id));
   }
@@ -83,7 +83,7 @@ class BucketController : ManageController {
 
     auto result = usecase.updateBucket(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage, result.errorMessage == "Bucket not found" ? 404 : 400);
+      return errorResponse(result.message, result.message == "Bucket not found" ? 404 : 400);
 
     return successResponse("Bucket updated successfully", 200, Json.emptyObject.set("id", result.id));
   }
@@ -131,7 +131,7 @@ class BucketController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, result.errorMessage == "Bucket not found" ? 404 : 400, result.errorMessage);
+        writeError(res, result.message == "Bucket not found" ? 404 : 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -151,8 +151,8 @@ class BucketController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        auto code = result.errorMessage == "Bucket not found" ? 404 : 409;
-        writeError(res, code, result.errorMessage);
+        auto code = result.message == "Bucket not found" ? 404 : 409;
+        writeError(res, code, result.message);
       }
     } catch (Exception e) { 
       writeError(res, 500, "Internal server error");

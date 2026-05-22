@@ -60,13 +60,13 @@ class CliEventMessageController {
         dto.payload   = args[2];
         auto result = _useCase.publishMessage(dto);
         if (result.success) _view.renderSuccess("Published message: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteEventMessage(tenantId, EventMessageId(args[0]));
         if (result.success) _view.renderSuccess("Deleted message: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

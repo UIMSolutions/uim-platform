@@ -39,14 +39,14 @@ class GuiSystemRegistrationController {
 
     Json create(TenantId tenantId, SystemRegistrationDTO dto) {
         auto result = _useCase.registerSystem(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Registered: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json delete_(TenantId tenantId, SystemRegistrationId id) {
         auto result = _useCase.unregisterSystem(tenantId, id);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Unregistered: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }

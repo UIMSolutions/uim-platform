@@ -56,7 +56,7 @@ class WebBackupPolicyController {
         dto.backupLocation = data.getString("backupLocation", "");
         auto result = _useCase.createBackupPolicy(dto);
         if (result.success) _model.setSuccess("Policy created: " ~ result.id);
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setPolicies(_useCase.listBackupPolicies(tenantId));
         _view.renderList(res, _model);
     }
@@ -66,7 +66,7 @@ class WebBackupPolicyController {
         auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteBackupPolicy(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setPolicies(_useCase.listBackupPolicies(tenantId));
         _view.renderList(res, _model);
     }

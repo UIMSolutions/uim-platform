@@ -46,7 +46,7 @@ class MedicationController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);
       else
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }
@@ -92,7 +92,7 @@ class MedicationController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 200);
       else
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }
@@ -104,7 +104,7 @@ class MedicationController : PlatformController {
       auto id = MedicationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteMedication(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.errorMessage);
+      else writeFhirError(res, 404, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }

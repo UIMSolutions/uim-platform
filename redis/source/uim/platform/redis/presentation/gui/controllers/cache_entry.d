@@ -38,14 +38,14 @@ class GuiCacheEntryController {
         dto.tenantId = _tenantId;
         auto result = _useCase.createCacheEntry(dto);
         if (result.success) _model.setSuccess("Set key: " ~ dto.key);
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setEntries(_useCase.listCacheEntries(_tenantId));
         return _view.buildListDescriptor(_model);
     }
     Json handleDelete(CacheEntryId id) {
         auto result = _useCase.deleteCacheEntry(_tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setEntries(_useCase.listCacheEntries(_tenantId));
         return _view.buildListDescriptor(_model);
     }

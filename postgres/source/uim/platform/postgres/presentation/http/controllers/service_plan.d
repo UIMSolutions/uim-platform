@@ -66,7 +66,7 @@ class ServicePlanController : ManageController {
         dto.pricingUnit       = data.getString("pricingUnit", "");
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = plans.createServicePlan(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service plan created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -82,7 +82,7 @@ class ServicePlanController : ManageController {
         dto.available     = data.getBool("available", true);
         dto.updatedBy     = UserId(data.getString("updatedBy", ""));
         auto result = plans.updateServicePlan(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Service plan updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -92,7 +92,7 @@ class ServicePlanController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = ServicePlanId(extractIdFromPath(req.requestURI.to!string));
         auto result = plans.deleteServicePlan(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service plan deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

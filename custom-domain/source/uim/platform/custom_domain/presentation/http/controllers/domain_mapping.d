@@ -74,7 +74,7 @@ class DomainMappingController : ManageController {
 
         auto result = usecase.createDomainMapping(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Domain mapping created successfully", 201,
             Json.emptyObject.set("id", result.id));
@@ -130,7 +130,7 @@ class DomainMappingController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
         auto result = usecase.deleteDomainMapping(tenantId, id);
-        if (result.hasError) return errorResponse(result.errorMessage, 404);
+        if (result.hasError) return errorResponse(result.message, 404);
         return successResponse("Domain mapping deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

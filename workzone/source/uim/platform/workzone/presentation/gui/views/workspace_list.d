@@ -103,7 +103,7 @@ class WorkspaceListView : Box {
             if (name.length > 0) {
                 auto result = _model.createWorkspace(name, "", "", WorkspaceType.team);
                 if (!result.success)
-                    showError(dlg, result.errorMessage);
+                    showError(dlg, result.message);
             }
         }
         dlg.destroy();

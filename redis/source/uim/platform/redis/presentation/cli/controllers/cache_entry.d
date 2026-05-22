@@ -58,13 +58,13 @@ class CliCacheEntryController {
         dto.ttl        = -1;
         auto result = _useCase.createCacheEntry(dto);
         if (result.success) _view.renderSuccess("Set key: " ~ args[1]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteCacheEntry(tenantId, CacheEntryId(args[0]));
         if (result.success) _view.renderSuccess("Deleted entry: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

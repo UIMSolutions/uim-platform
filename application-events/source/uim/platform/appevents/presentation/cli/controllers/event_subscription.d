@@ -60,7 +60,7 @@ class CliEventSubscriptionController {
         dto.eventType = args[1];
         auto result = _useCase.createEventSubscription(dto);
         if (result.success) _view.renderSuccess("Created subscription: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUpdate(TenantId tenantId, string[] args) {
@@ -71,13 +71,13 @@ class CliEventSubscriptionController {
         dto.name           = args[1];
         auto result = _useCase.updateEventSubscription(dto);
         if (result.success) _view.renderSuccess("Updated subscription: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteEventSubscription(tenantId, EventSubscriptionId(args[0]));
         if (result.success) _view.renderSuccess("Deleted subscription: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

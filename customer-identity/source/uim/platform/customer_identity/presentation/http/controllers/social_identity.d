@@ -68,7 +68,7 @@ class SocialIdentityController : PlatformController {
         auto result = socialIdentities.linkSocialIdentity(dto);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Social identity linked").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -103,7 +103,7 @@ class SocialIdentityController : PlatformController {
         auto result = socialIdentities.unlinkSocialIdentity(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Social identity unlinked").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -120,6 +120,6 @@ class SocialIdentityController : PlatformController {
         auto result = socialIdentities.deleteSocialIdentity(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("message", "Social identity deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 404);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
     }
 }

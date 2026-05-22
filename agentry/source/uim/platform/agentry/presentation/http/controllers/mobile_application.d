@@ -75,7 +75,7 @@ class MobileApplicationController : PlatformController {
             dto.packageName = j.getString("packageName");
 
             auto result = usecase.createMobileApplication(dto);
-            if (!result.success) { writeError(res, 400, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -103,7 +103,7 @@ class MobileApplicationController : PlatformController {
             dto.minOsVersion = j.getString("minOsVersion");
 
             auto result = usecase.updateMobileApplication(dto);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -120,7 +120,7 @@ class MobileApplicationController : PlatformController {
             auto path = req.requestURI.to!string;
             auto id = MobileApplicationId(extractIdFromPath(path));
             auto result = usecase.deleteMobileApplication(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.errorMessage); return; }
+            if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Mobile application deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

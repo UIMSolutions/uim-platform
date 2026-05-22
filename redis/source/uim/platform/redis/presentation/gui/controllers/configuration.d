@@ -38,14 +38,14 @@ class GuiConfigurationController {
         dto.tenantId = _tenantId;
         auto result = _useCase.createConfiguration(dto);
         if (result.success) _model.setSuccess("Created: " ~ result.id);
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setConfigurations(_useCase.listConfigurations(_tenantId));
         return _view.buildListDescriptor(_model);
     }
     Json handleDelete(ConfigurationId id) {
         auto result = _useCase.deleteConfiguration(_tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setConfigurations(_useCase.listConfigurations(_tenantId));
         return _view.buildListDescriptor(_model);
     }

@@ -8,76 +8,79 @@ module uim.platform.keystore.infrastructure.persistence.memory.keystores;
 // import uim.platform.keystore.domain.ports.repositories.keystore_repository;
 // import uim.platform.keystore.domain.types;
 
-
- 
-
 import uim.platform.keystore;
 
 mixin(ShowModule!());
 
 @safe:
 
+class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), KeystoreRepository {
 
-class MemoryKeystoreRepository : KeystoreRepository {
-  private KeystoreEntity[KeystoreId] store;
-
-  bool existsById(KeystoreId id) {
-    return (id in store) !is null;
+  bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
+    return findByName(tenantId, accountId, applicationId, level, name).id.length > 0;
   }
 
-  KeystoreEntity findById(KeystoreId id) {
-    return existsById(id) ? store[id] : KeystoreEntity.init;
-  }
-
-  bool existsByName(string accountId, string applicationId, KeystoreLevel level, string name) {
-    return findByName(accountId, applicationId, level, name).id.length > 0;
-  }
-
-  KeystoreEntity findByName(string accountId, string applicationId, KeystoreLevel level, string name) {
+  Keystore findByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
     foreach (ks; findAll) {
       if (ks.accountId == accountId && ks.applicationId == applicationId &&
-          ks.level == level && ks.name == name)
+        ks.level == level && ks.name == name)
         return ks;
     }
-    return KeystoreEntity.init;
+    return Keystore.init;
   }
 
-  KeystoreEntity[] findByAccount(string accountId) {
-    return findByTenant(tenantId).filter!(ks => ks.accountId == accountId).array;
+  // #region ByAccount
+  size_t countByAccount(TenantId tenantId, string accountId) {
+    return findByAccount(tenantId, accountId).length;
   }
 
-  KeystoreEntity[] findByApplication(string accountId, string applicationId) {
-    return store.values
-      .filter!(ks => ks.accountId == accountId && ks.applicationId == applicationId)
-      .array;
+  Keystore[] filterByAccount(Keystore[] keystores, string accountId) {
+    return keystores.filter!(ks => ks.accountId == accountId).array;
   }
 
-  KeystoreEntity[] findBySubscription(string accountId, string subscriptionId) {
-    return store.values
-      .filter!(ks => ks.accountId == accountId && ks.subscriptionId == subscriptionId &&
-                     ks.level == KeystoreLevel.subscription)
-      .array;
+  Keystore[] findByAccount(TenantId tenantId, string accountId) {
+    return filterByAccount(findByTenant(tenantId), accountId);
   }
 
-  void save(KeystoreEntity ks) {
-    store[ks.id] = ks;
+  void removeByAccount(TenantId tenantId, string accountId) {
+    findByAccount(tenantId, accountId).each!(ks => remove(ks));
+  }
+  // #endregion ByAccount
+
+  // #region ByApplication
+  size_t countByApplication(TenantId tenantId, string accountId, string applicationId) {
+    return findByApplication(tenantId, accountId, applicationId).length;
   }
 
-  void update(KeystoreEntity ks) {
-    store[ks.id] = ks;
+  Keystore[] filterByApplication(Keystore[] keystores, string applicationId) {
+    return keystores.filter!(ks => ks.applicationId == applicationId).array;
   }
 
-  void remove(KeystoreId id) {
-    removeById(id);
+  Keystore[] findByApplication(TenantId tenantId, string accountId, string applicationId) {
+    return filterByApplication(findByAccount(tenantId, accountId), applicationId);
   }
 
-  void removeByName(string accountId, string applicationId, KeystoreLevel level, string name) {
-    auto ks = findByName(accountId, applicationId, level, name);
-    if (ks.id.length > 0)
-      store.remove(ks.id);
+  void removeByApplication(TenantId tenantId, string accountId, string applicationId) {
+    findByApplication(tenantId, accountId, applicationId).each!(ks => remove(ks));
+  }
+  // #endregion ByApplication
+
+  // #region BySubscription
+  size_t countBySubscription(TenantId tenantId, string accountId, string subscriptionId) {
+    return findBySubscription(tenantId, accountId, subscriptionId).length;
   }
 
-  size_t countByAccount(string accountId) {
-    return findByTenant(tenantId).filter!(ks => ks.accountId == accountId).array.length;
+  Keystore[] filterBySubscription(Keystore[] keystores, string subscriptionId) {
+    return keystores.filter!(ks => ks.subscriptionId == subscriptionId).array;
   }
+
+  Keystore[] findBySubscription(TenantId tenantId, string accountId, string subscriptionId) {
+    return filterBySubscription(findByAccount(tenantId, accountId), subscriptionId);
+  }
+
+  void removeBySubscription(TenantId tenantId, string accountId, string subscriptionId) {
+    findBySubscription(tenantId, accountId, subscriptionId).each!(ks => remove(ks));
+  }
+  // #endregion BySubscription
+
 }

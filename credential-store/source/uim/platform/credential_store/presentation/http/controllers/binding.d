@@ -145,7 +145,7 @@ class BindingController : ManageController {
 
     auto result = bindings.updateServiceBinding(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
 
     return successResponse("Service binding updated successfully", 200,
       Json.emptyObject.set("id", result.id));
@@ -163,7 +163,7 @@ class BindingController : ManageController {
 
     auto result = bindings.deleteServiceBinding(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
 
     return successResponse("Service binding deleted successfully", 204, Json.emptyObject);
   }

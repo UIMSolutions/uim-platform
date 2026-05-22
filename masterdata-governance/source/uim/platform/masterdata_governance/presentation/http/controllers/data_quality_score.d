@@ -77,7 +77,7 @@ class DataQualityScoreController : PlatformController {
                     .set("id", result.id)
                     .set("message", "Data quality score created"), 201);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -106,7 +106,7 @@ class DataQualityScoreController : PlatformController {
                     .set("id", result.id)
                     .set("message", "Data quality score updated"), 200);
             } else {
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -122,7 +122,7 @@ class DataQualityScoreController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("message", "Data quality score deleted"), 200);
             } else {
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

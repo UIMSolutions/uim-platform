@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.keystore.application.usecases.manage_key_passwords;
+module uim.platform.keystore.application.usecases.manage.key_passwords;
 // import uim.platform.keystore.domain.entities.key_password;
 // import uim.platform.keystore.domain.ports.repositories.key_password_repository;
 // import uim.platform.keystore.domain.types;

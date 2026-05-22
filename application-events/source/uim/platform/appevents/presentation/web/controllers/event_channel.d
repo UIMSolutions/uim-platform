@@ -39,21 +39,21 @@ class WebEventChannelController {
 
     Json create(TenantId tenantId, EventChannelDTO dto) {
         auto result = _useCase.createEventChannel(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Channel created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json update(TenantId tenantId, EventChannelDTO dto) {
         auto result = _useCase.updateEventChannel(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Channel updated: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, EventChannelId id) {
         auto result = _useCase.deleteEventChannel(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Channel deleted: " ~ result.id);
     }
 }

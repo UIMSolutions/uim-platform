@@ -88,7 +88,7 @@ class DeadLetterEntryController : ManageController {
         dto.updatedBy = data.getUpdatedBy;
         auto result = _useCase.createDeadLetterEntry(dto);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry created successfully").set(
             "status", "success").set("statusCode", 201);
@@ -102,7 +102,7 @@ class DeadLetterEntryController : ManageController {
         auto id = DeadLetterEntryId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
         return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry deleted successfully").set(
             "status", "success").set("statusCode", 200);
     }

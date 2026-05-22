@@ -8,62 +8,36 @@ module uim.platform.keystore.infrastructure.persistence.memory.key_entries;
 // import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
 // import uim.platform.keystore.domain.types;
 
-
- 
-
 import uim.platform.keystore;
 
 mixin(ShowModule!());
 
 @safe:
 
-class MemoryKeyEntryRepository : KeyEntryRepository {
-  private KeyEntry[KeyEntryId] store;
+class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), KeyEntryRepository {
 
-  bool existsById(KeyEntryId id) {
-    return (id in store) !is null;
+  bool existsByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
+    return findByKeystore(tenantId, keystoreId).any!(e => e.alias_ == alias_);
   }
 
-  KeyEntry findById(KeyEntryId id) {
-    return existsById(id) ? store[id] : KeyEntry.init;
+  KeyEntry findByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
+    return findByKeystore(tenantId, keystoreId).array!(e => e.alias_ == alias_);
   }
 
-  bool existsByAlias(KeystoreId keystoreId, string alias_) {
-    return findByAlias(keystoreId, alias_).id.length > 0;
+  size_t countByKeystore(TenantId tenantId, KeystoreId keystoreId) {
+    return findByKeystore(tenantId, keystoreId).length;
   }
 
-  KeyEntry findByAlias(KeystoreId keystoreId, string alias_) {
-    foreach (e; findAll) {
-      if (e.keystoreId == keystoreId && e.alias_ == alias_)
-        return e;
-    }
-    return KeyEntry.init;
+  KeyEntry[] filterByKeystore(KeyEntry[] entries, KeystoreId keystoreId) {
+    return entries.filter!(e => e.keystoreId == keystoreId).array;
+  }
+  
+  KeyEntry[] findByKeystore(TenantId tenantId, KeystoreId keystoreId) {
+    return filterByKeystore(findByTenant(tenantId), keystoreId);
+  }
+  
+  void removeByKeystore(TenantId tenantId, KeystoreId keystoreId) {
+    findByKeystore(tenantId, keystoreId).each!(e => remove(e));
   }
 
-  KeyEntry[] findByKeystore(KeystoreId keystoreId) {
-    return findByTenant(tenantId).filter!(e => e.keystoreId == keystoreId).array;
-  }
-
-  void save(KeyEntry entry) {
-    store[entry.id] = entry;
-  }
-
-  void update(KeyEntry entry) {
-    store[entry.id] = entry;
-  }
-
-  void remove(KeyEntryId id) {
-    removeById(id);
-  }
-
-  void removeByKeystore(KeystoreId keystoreId) {
-    foreach (id, e; store) {
-      if (e.keystoreId == keystoreId)
-        removeById(id);
-    }
-  }
-
-  size_t countByKeystore(KeystoreId keystoreId) {
-    return findByTenant(tenantId).filter!(e => e.keystoreId == keystoreId).array.length;
-  }
 }

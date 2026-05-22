@@ -58,7 +58,7 @@ class ProgramController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program created"), 201);
             else
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -86,7 +86,7 @@ class ProgramController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program updated"), 200);
             else
-                writeError(res, result.errorMessage.length > 0 ? 400 : 404, result.errorMessage);
+                writeError(res, result.message.length > 0 ? 400 : 404, result.message);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -98,7 +98,7 @@ class ProgramController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program deleted"), 200);
             else
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

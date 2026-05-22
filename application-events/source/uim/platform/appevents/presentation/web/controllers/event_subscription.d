@@ -39,21 +39,21 @@ class WebEventSubscriptionController {
 
     Json create(TenantId tenantId, EventSubscriptionDTO dto) {
         auto result = _useCase.createEventSubscription(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Subscription created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json update(TenantId tenantId, EventSubscriptionDTO dto) {
         auto result = _useCase.updateEventSubscription(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Subscription updated: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, EventSubscriptionId id) {
         auto result = _useCase.deleteEventSubscription(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Subscription deleted: " ~ result.id);
     }
 }

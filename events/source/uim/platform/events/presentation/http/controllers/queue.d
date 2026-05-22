@@ -73,7 +73,7 @@ class QueueController : PlatformController {
             auto result = usecase.createQueue(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue created"), 201);
-            } else { writeError(res, 400, result.errorMessage); }
+            } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -95,7 +95,7 @@ class QueueController : PlatformController {
             auto result = usecase.updateQueue(dto);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue updated"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
@@ -106,7 +106,7 @@ class QueueController : PlatformController {
             auto result = usecase.deleteQueue(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue deleted"), 200);
-            } else { writeError(res, 404, result.errorMessage); }
+            } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

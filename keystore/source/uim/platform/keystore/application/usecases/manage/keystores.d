@@ -35,7 +35,7 @@ class ManageKeystoresUseCase {
     if (repo.existsByName(r.accountId, r.applicationId, level, r.name))
       return CommandResult(false, "", "A keystore with this name already exists at the specified level");
 
-    KeystoreEntity ks;
+    Keystore ks;
     ks.id            = randomUUID().toString();
     ks.name          = r.name;
     ks.description   = r.description;
@@ -71,19 +71,19 @@ class ManageKeystoresUseCase {
     return CommandResult(true, ks.id.value, "");
   }
 
-  KeystoreEntity getKeystore(TenantId tenantId, KeystoreId id) {
+  Keystore getKeystore(TenantId tenantId, KeystoreId id) {
     return repo.findById(tenantId, id);
   }
 
-  KeystoreEntity getKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
+  Keystore getKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
     return repo.findByName(tenantId, accountId, applicationId, parseKeystoreLevel(level), name);
   }
 
-  KeystoreEntity[] listKeystores(TenantId tenantId, string accountId) {
+  Keystore[] listKeystores(TenantId tenantId, string accountId) {
     return repo.findByAccount(tenantId, accountId);
   }
 
-  KeystoreEntity[] listKeystores(TenantId tenantId, string accountId, string applicationId) {
+  Keystore[] listKeystores(TenantId tenantId, string accountId, string applicationId) {
     return repo.findByApplication(tenantId, accountId, applicationId);
   }
 
@@ -103,7 +103,7 @@ class ManageKeystoresUseCase {
     if (ks.isNull)
       return CommandResult(false, "", "Keystore not found");
       
-    repo.removeByName(tenantId, accountId, applicationId, parseKeystoreLevel(level), name);
+    repo.removeByName(tenantId, accountId, applicationId, level.to!KeystoreLevel, name);
     return CommandResult(true, ks.id.value, "");
   }
 }

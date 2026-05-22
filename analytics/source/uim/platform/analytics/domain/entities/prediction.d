@@ -50,7 +50,7 @@ struct Prediction {
 
   void markFailed(string error) {
     predStatus = PredictionStatus.Failed;
-    lastresult.errorMessageMessage = error;
+    lastresult.messageMessage = error;
   }
 }
 

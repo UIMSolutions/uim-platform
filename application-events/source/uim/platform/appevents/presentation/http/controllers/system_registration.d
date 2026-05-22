@@ -67,7 +67,7 @@ class SystemRegistrationController : ManageController {
         dto.systemUrl      = data.getString("systemUrl", "");
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = _useCase.registerSystem(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "System registered successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -77,7 +77,7 @@ class SystemRegistrationController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = SystemRegistrationId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.unregisterSystem(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "System unregistered successfully").set("status", "success").set("statusCode", 200);
     }
 }

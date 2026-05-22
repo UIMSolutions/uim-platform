@@ -70,7 +70,7 @@ class SoftwareComponentController : ManageController {
       return Json.emptyObject
         .set("status", 400)
         .set("statusCode", 400)
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("message", "Failed to create software component");
     }
 
@@ -122,7 +122,7 @@ class SoftwareComponentController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -148,7 +148,7 @@ class SoftwareComponentController : ManageController {
 
         res.writeJsonBody(resp, 200);
       } else {
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -163,7 +163,7 @@ class SoftwareComponentController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", 404)
-        .set("error", result.errorMessage)
+        .set("error", result.message)
         .set("message", "Software component not found");
     }
     return Json.emptyObject

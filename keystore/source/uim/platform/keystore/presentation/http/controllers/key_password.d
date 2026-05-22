@@ -11,7 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
 class KeyPasswordController : PlatformController {
   private ManageKeyPasswordsUseCase usecase;
 
@@ -44,7 +43,7 @@ class KeyPasswordController : PlatformController {
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,7 +88,7 @@ class KeyPasswordController : PlatformController {
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {
-        writeError(res, 404, result.errorMessage);
+        writeError(res, 404, result.message);
       }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

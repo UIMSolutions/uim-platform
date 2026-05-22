@@ -23,8 +23,8 @@ class KeystoreSearchService {
   }
 
   /// Find a keystore by name, respecting the three-level search order.
-  /// Returns KeystoreEntity.init when not found at any level.
-  KeystoreEntity findByName(string accountId, string applicationId, string subscriptionId, string name) {
+  /// Returns Keystore.init when not found at any level.
+  Keystore findByName(string accountId, string applicationId, string subscriptionId, string name) {
     // 1. Subscription level (most specific)
     if (subscriptionId.length > 0) {
       auto ks = repo.findByName(accountId, subscriptionId, KeystoreLevel.subscription, name);

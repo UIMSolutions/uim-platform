@@ -56,13 +56,13 @@ class CliConfigurationController {
         dto.persistenceMode  = PersistenceMode.none;
         auto result = _useCase.createConfiguration(dto);
         if (result.success) _view.renderSuccess("Created configuration: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteConfiguration(tenantId, ConfigurationId(args[0]));
         if (result.success) _view.renderSuccess("Deleted configuration: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

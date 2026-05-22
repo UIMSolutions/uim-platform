@@ -61,7 +61,7 @@ class DatabaseExtensionController : ManageController {
         dto.schema_             = data.getString("schema", "");
         dto.createdBy           = UserId(data.getString("createdBy", ""));
         auto result = extensions.createDatabaseExtension(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Extension enabled successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -71,7 +71,7 @@ class DatabaseExtensionController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         auto result = extensions.deleteDatabaseExtension(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Extension disabled successfully").set("status", "success").set("statusCode", 200);
     }
 }

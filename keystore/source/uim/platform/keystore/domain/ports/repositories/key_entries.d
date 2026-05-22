@@ -13,19 +13,13 @@ mixin(ShowModule!());
 
 @safe:
 
-interface KeyEntryRepository {
-  bool existsById(KeyEntryId id);
-  KeyEntry findById(KeyEntryId id);
+interface KeyEntryRepository : ITenantRepository!(KeyEntry, KeyEntryId) {
 
-  bool existsByAlias(KeystoreId keystoreId, string alias_);
-  KeyEntry findByAlias(KeystoreId keystoreId, string alias_);
+  bool existsByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_);
+  KeyEntry findByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_);
 
-  KeyEntry[] findByKeystore(KeystoreId keystoreId);
+  size_t countByKeystore(TenantId tenantId, KeystoreId keystoreId);
+  KeyEntry[] findByKeystore(TenantId tenantId, KeystoreId keystoreId);
+  void removeByKeystore(TenantId tenantId, KeystoreId keystoreId);
 
-  void save(KeyEntry entry);
-  void update(KeyEntry entry);
-  void remove(KeyEntryId id);
-  void removeByKeystore(KeystoreId keystoreId);
-
-  size_t countByKeystore(KeystoreId keystoreId);
 }

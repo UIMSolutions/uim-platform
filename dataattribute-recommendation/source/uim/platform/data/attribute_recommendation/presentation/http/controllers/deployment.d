@@ -55,7 +55,7 @@ class DeploymentController : PlatformController {
         res.writeJsonBody(resp, 201);
       }
       else
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -114,8 +114,8 @@ class DeploymentController : PlatformController {
       }
       else
       {
-        auto status = result.errorMessage == "Deployment not found" ? 404 : 400;
-        writeError(res, status, result.errorMessage);
+        auto status = result.message == "Deployment not found" ? 404 : 400;
+        writeError(res, status, result.message);
       }
     }
     catch (Exception e) {
@@ -139,8 +139,8 @@ class DeploymentController : PlatformController {
       }
       else
       {
-        auto status = result.errorMessage == "Deployment not found" ? 404 : 400;
-        writeError(res, status, result.errorMessage);
+        auto status = result.message == "Deployment not found" ? 404 : 400;
+        writeError(res, status, result.message);
       }
     }
     catch (Exception e) {
@@ -163,7 +163,7 @@ class DeploymentController : PlatformController {
         res.writeJsonBody(resp, 200);
       }
       else
-        writeError(res, 404, result.errorMessage);
+        writeError(res, 404, result.message);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -6,5 +6,5 @@
 module uim.platform.keystore.application.usecases;
 
 public {
-  import uim.platform.keystore.application.usecases;
+  import uim.platform.keystore.application.usecases.manage;
 }

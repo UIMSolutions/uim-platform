@@ -83,7 +83,7 @@ class MarketRateController : SAPController {
     j["acceptedCount"] = Json(result.acceptedCount);
     j["rejectedCount"] = Json(result.rejectedCount);
     auto errArr = Json.emptyArray;
-    foreach (e; result.errorMessages) errArr ~= Json(e);
+    foreach (e; result.messages) errArr ~= Json(e);
     j["errors"] = errArr;
 
     int statusCode = result.status == OperationStatus.failed ? 422 : 200;
@@ -187,7 +187,7 @@ class MarketRateController : SAPController {
     auto result = ratesUC.deleteRate(ucReq);
 
     if (!result.success) {
-      writeError(res, 422, result.errorMessage);
+      writeError(res, 422, result.message);
       return;
     }
     res.writeJsonBody(Json.emptyObject.set("deleted", true), 200);
@@ -226,7 +226,7 @@ class MarketRateController : SAPController {
 
     auto result = providersUC.createProvider(ucReq);
     if (!result.success) {
-      writeError(res, 422, result.errorMessage);
+      writeError(res, 422, result.message);
       return;
     }
 
@@ -266,7 +266,7 @@ class MarketRateController : SAPController {
 
     auto result = providersUC.updateProvider(ucReq);
     if (!result.success) {
-      writeError(res, 422, result.errorMessage);
+      writeError(res, 422, result.message);
       return;
     }
     res.writeJsonBody(Json.emptyObject.set("updated", true), 200);
@@ -278,7 +278,7 @@ class MarketRateController : SAPController {
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
     if (!result.success) {
-      writeError(res, 404, result.errorMessage);
+      writeError(res, 404, result.message);
       return;
     }
     res.writeJsonBody(Json.emptyObject.set("deleted", true), 200);

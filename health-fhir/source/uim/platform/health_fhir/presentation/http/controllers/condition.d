@@ -51,7 +51,7 @@ class ConditionController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Condition").set("id", result.id), 201);
       else
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }
@@ -107,7 +107,7 @@ class ConditionController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Condition").set("id", result.id), 200);
       else
-        writeFhirError(res, 400, result.errorMessage);
+        writeFhirError(res, 400, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }
@@ -119,7 +119,7 @@ class ConditionController : PlatformController {
       auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteCondition(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.errorMessage);
+      else writeFhirError(res, 404, result.message);
     } catch (Exception e) {
       writeFhirError(res, 500, "Internal server error");
     }

@@ -60,7 +60,7 @@ class CliEventChannelController {
         dto.topicId  = EventTopicId(args[1]);
         auto result = _useCase.createEventChannel(dto);
         if (result.success) _view.renderSuccess("Created channel: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUpdate(TenantId tenantId, string[] args) {
@@ -71,13 +71,13 @@ class CliEventChannelController {
         dto.name      = args[1];
         auto result = _useCase.updateEventChannel(dto);
         if (result.success) _view.renderSuccess("Updated channel: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteEventChannel(tenantId, EventChannelId(args[0]));
         if (result.success) _view.renderSuccess("Deleted channel: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

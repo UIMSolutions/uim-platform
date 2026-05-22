@@ -73,7 +73,7 @@ class PrivateKeyController : ManageController {
 
         auto result = usecase.createPrivateKey(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
 
         return successResponse("Private key created successfully", 201,
             Json.emptyObject.set("id", result.id));
@@ -123,7 +123,7 @@ class PrivateKeyController : ManageController {
 
         auto result = usecase.deletePrivateKey(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("Private key deleted successfully", 200,
             Json.emptyObject.set("id", result.id));

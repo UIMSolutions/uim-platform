@@ -79,7 +79,7 @@ class BackupPolicyController : ManageController {
 
         auto result = backupPolicies.createBackupPolicy(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -107,7 +107,7 @@ class BackupPolicyController : ManageController {
 
         auto result = backupPolicies.updateBackupPolicy(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -126,7 +126,7 @@ class BackupPolicyController : ManageController {
 
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
 
         return Json.emptyObject
             .set("id", result.id)

@@ -62,7 +62,7 @@ class BackupPolicyController : ManageController {
         dto.backupLocation  = data.getString("backupLocation", "");
         dto.createdBy       = UserId(data.getString("createdBy", ""));
         auto result = backupPolicies.createBackupPolicy(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Backup policy created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -79,7 +79,7 @@ class BackupPolicyController : ManageController {
         dto.backupLocation  = data.getString("backupLocation", "");
         dto.updatedBy       = UserId(data.getString("updatedBy", ""));
         auto result = backupPolicies.updateBackupPolicy(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Backup policy updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -89,7 +89,7 @@ class BackupPolicyController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Backup policy deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

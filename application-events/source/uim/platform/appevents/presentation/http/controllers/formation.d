@@ -66,7 +66,7 @@ class FormationController : ManageController {
         dto.globalAccountId = data.getString("globalAccountId", "");
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = _useCase.createFormation(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Formation created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -83,7 +83,7 @@ class FormationController : ManageController {
         dto.globalAccountId = data.getString("globalAccountId", "");
         dto.updatedBy      = UserId(data.getString("updatedBy", ""));
         auto result = _useCase.updateFormation(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Formation updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -93,7 +93,7 @@ class FormationController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = FormationId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteFormation(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Formation deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

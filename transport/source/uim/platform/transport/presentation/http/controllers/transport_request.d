@@ -73,7 +73,7 @@ class TransportRequestController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport request created"), 201);
             else
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -91,7 +91,7 @@ class TransportRequestController : PlatformController {
                     auto status = statusStr.to!RequestStatus;
                     auto result = usecase.updateRequestStatus(tenantId, id, status);
                     if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Status updated"), 200);
-                    else writeError(res, 400, result.errorMessage);
+                    else writeError(res, 400, result.message);
                 } catch (Exception) {
                     writeError(res, 400, "Invalid status value");
                 }
@@ -109,7 +109,7 @@ class TransportRequestController : PlatformController {
             auto id = TransportRequestId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteRequest(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport request deleted"), 200);
-            else writeError(res, 404, result.errorMessage);
+            else writeError(res, 404, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

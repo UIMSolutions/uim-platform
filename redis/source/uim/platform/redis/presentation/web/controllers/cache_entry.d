@@ -56,7 +56,7 @@ class WebCacheEntryController {
         dto.ttl        = data.getLong("ttl", -1);
         auto result = _useCase.createCacheEntry(dto);
         if (result.success) _model.setSuccess("Entry set: " ~ dto.key);
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setEntries(_useCase.listCacheEntries(tenantId));
         _view.renderList(res, _model);
     }
@@ -66,7 +66,7 @@ class WebCacheEntryController {
         auto id = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteCacheEntry(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
-        else                _model.setError(400, result.errorMessage);
+        else                _model.setError(400, result.message);
         _model.setEntries(_useCase.listCacheEntries(tenantId));
         _view.renderList(res, _model);
     }

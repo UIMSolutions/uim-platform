@@ -94,7 +94,7 @@ class WorkspaceCliController {
         if (result.success)
             dv.renderSuccess("Workspace created with ID: " ~ result.id);
         else
-            dv.renderError(result.errorMessage);
+            dv.renderError(result.message);
         return result.success ? 0 : 1;
     }
 
@@ -104,7 +104,7 @@ class WorkspaceCliController {
         if (result.success)
             dv.renderSuccess("Workspace '" ~ id ~ "' deleted.");
         else
-            dv.renderError(result.errorMessage);
+            dv.renderError(result.message);
         return result.success ? 0 : 1;
     }
 

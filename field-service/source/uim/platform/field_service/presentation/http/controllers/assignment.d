@@ -84,7 +84,7 @@ class AssignmentController : PlatformController {
                 response["message"] = Json("Assignment created");
                 res.writeJsonBody(response, 201);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -114,7 +114,7 @@ class AssignmentController : PlatformController {
                 response["message"] = Json("Assignment updated");
                 res.writeJsonBody(response, 200);
             } else {
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -132,7 +132,7 @@ class AssignmentController : PlatformController {
                 response["message"] = Json("Assignment deleted");
                 res.writeJsonBody(response, 200);
             } else {
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

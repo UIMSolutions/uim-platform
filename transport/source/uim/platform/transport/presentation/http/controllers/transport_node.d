@@ -74,7 +74,7 @@ class TransportNodeController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node created"), 201);
             else
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -89,13 +89,13 @@ class TransportNodeController : PlatformController {
             if (action == "enable") {
                 auto result = usecase.enableNode(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Node enabled"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
             if (action == "disable") {
                 auto result = usecase.disableNode(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Node disabled"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
             TransportNodeDTO dto;
@@ -111,7 +111,7 @@ class TransportNodeController : PlatformController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
             auto result = usecase.updateNode(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node updated"), 200);
-            else writeError(res, 400, result.errorMessage);
+            else writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -123,7 +123,7 @@ class TransportNodeController : PlatformController {
             auto id = TransportNodeId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteNode(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node deleted"), 200);
-            else writeError(res, 404, result.errorMessage);
+            else writeError(res, 404, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

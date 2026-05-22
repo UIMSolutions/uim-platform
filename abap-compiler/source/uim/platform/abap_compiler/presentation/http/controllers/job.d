@@ -57,7 +57,7 @@ class JobController : PlatformController {
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Job deleted"), 200);
             else
-                writeError(res, 404, result.errorMessage);
+                writeError(res, 404, result.message);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 }

@@ -78,7 +78,7 @@ class PipelineController : ManageController {
 
         auto result = pipelines.createPipeline(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set("statusCode", 201);
     }
@@ -104,7 +104,7 @@ class PipelineController : ManageController {
 
         auto result = pipelines.updatePipeline(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set("statusCode", 200);
     }
@@ -121,7 +121,7 @@ class PipelineController : ManageController {
 
         auto result = pipelines.deletePipeline(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject.set("id", result.id).set("message", "Pipeline deleted").set("status", "deleted").set("statusCode", 200);
     }

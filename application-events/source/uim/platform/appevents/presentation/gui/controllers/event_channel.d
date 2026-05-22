@@ -39,21 +39,21 @@ class GuiEventChannelController {
 
     Json create(TenantId tenantId, EventChannelDTO dto) {
         auto result = _useCase.createEventChannel(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Created: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json update(TenantId tenantId, EventChannelDTO dto) {
         auto result = _useCase.updateEventChannel(dto);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Updated: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }
 
     Json delete_(TenantId tenantId, EventChannelId id) {
         auto result = _useCase.deleteEventChannel(tenantId, id);
-        if (result.hasError) { _model.setError(result.errorMessage); return Json.emptyObject.set("error", result.errorMessage); }
+        if (result.hasError) { _model.setError(result.message); return Json.emptyObject.set("error", result.message); }
         _model.setSuccess("Deleted: " ~ result.id);
         return Json.emptyObject.set("id", result.id).set("status", "success");
     }

@@ -78,7 +78,7 @@ class FlexChangesController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
       else
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -130,7 +130,7 @@ class FlexChangesController : PlatformController {
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       else
-        writeError(res, 400, result.errorMessage);
+        writeError(res, 400, result.message);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -142,7 +142,7 @@ class FlexChangesController : PlatformController {
       auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteChange(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeError(res, 404, result.errorMessage);
+      else writeError(res, 404, result.message);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

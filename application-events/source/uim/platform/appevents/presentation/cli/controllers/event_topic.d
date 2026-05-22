@@ -61,7 +61,7 @@ class CliEventTopicController {
         dto.version_  = args.length >= 3 ? args[2] : "1.0.0";
         auto result = _useCase.createEventTopic(dto);
         if (result.success) _view.renderSuccess("Created topic: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleUpdate(TenantId tenantId, string[] args) {
@@ -72,13 +72,13 @@ class CliEventTopicController {
         dto.name     = args[1];
         auto result = _useCase.updateEventTopic(dto);
         if (result.success) _view.renderSuccess("Updated topic: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteEventTopic(tenantId, EventTopicId(args[0]));
         if (result.success) _view.renderSuccess("Deleted topic: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

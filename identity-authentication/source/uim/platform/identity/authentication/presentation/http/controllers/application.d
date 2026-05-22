@@ -56,7 +56,7 @@ class ApplicationController : PlatformController {
         res.writeJsonBody(response, 201);
       } else {
         auto response = Json.emptyObject;
-        response["error"] = Json(result.errorMessage);
+        response["error"] = Json(result.message);
         res.writeJsonBody(response, 400);
       }
     } catch (Exception e) {

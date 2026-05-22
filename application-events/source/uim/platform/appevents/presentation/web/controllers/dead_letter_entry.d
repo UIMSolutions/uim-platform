@@ -39,14 +39,14 @@ class WebDeadLetterEntryController {
 
     Json create(TenantId tenantId, DeadLetterEntryDTO dto) {
         auto result = _useCase.createDeadLetterEntry(dto);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Dead letter entry created: " ~ result.id)
             .set("id", result.id);
     }
 
     Json delete_(TenantId tenantId, DeadLetterEntryId id) {
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);
-        if (result.hasError) return _view.renderError(result.errorMessage);
+        if (result.hasError) return _view.renderError(result.message);
         return _view.renderSuccess("Dead letter entry deleted: " ~ result.id);
     }
 }

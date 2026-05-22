@@ -76,7 +76,7 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.createDomain(r);
         if (result.hasError) {
-            return errorResponse(result.errorMessage, 400);
+            return errorResponse(result.message, 400);
         }
 
         return successResponse("Custom domain created", 201,
@@ -153,7 +153,7 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.updateDomain(r);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("Custom domain updated", 200,
             Json.emptyObject.set("id", result.id));
@@ -175,7 +175,7 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.activateDomain(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("Custom domain activated", 200, Json.emptyObject.set("id", result.id));
     }
@@ -203,7 +203,7 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.deactivateDomain(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
         return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 
@@ -227,7 +227,7 @@ class CustomDomainController : ManageController {
 
         auto result = usecase.deleteDomain(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.errorMessage, 404);
+            return errorResponse(result.message, 404);
 
         return successResponse("Custom domain deleted", 200,
             Json.emptyObject.set("id", result.id));

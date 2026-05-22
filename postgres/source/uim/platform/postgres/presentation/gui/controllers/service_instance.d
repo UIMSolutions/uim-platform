@@ -36,7 +36,7 @@ class GuiServiceInstanceController {
     Json createInstance(TenantId tenantId, ServiceInstanceDTO dto) {
         auto result = _useCase.createServiceInstance(dto);
         if (result.success) _model.setSuccess("Instance created: " ~ result.id);
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setInstances(_useCase.listServiceInstances(tenantId));
         return _view.buildListDescriptor(_model);
     }
@@ -44,7 +44,7 @@ class GuiServiceInstanceController {
     Json deleteInstance(TenantId tenantId, ServiceInstanceId id) {
         auto result = _useCase.deleteServiceInstance(tenantId, id);
         if (result.success) _model.setSuccess("Instance deleted");
-        else                _model.setError(result.errorMessage);
+        else                _model.setError(result.message);
         _model.setInstances(_useCase.listServiceInstances(tenantId));
         return _view.buildListDescriptor(_model);
     }

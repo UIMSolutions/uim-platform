@@ -86,7 +86,7 @@ class FolderController : PlatformController {
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Folder created"), 201);
             } else {
-                writeError(res, 400, result.errorMessage);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -106,7 +106,7 @@ class FolderController : PlatformController {
                 auto targetParentId = FolderId(j.getString("targetParentId"));
                 auto result = usecase.moveFolder(tenantId, id, targetParentId, userId);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Folder moved"), 200);
-                else writeError(res, 400, result.errorMessage);
+                else writeError(res, 400, result.message);
                 return;
             }
 
@@ -121,7 +121,7 @@ class FolderController : PlatformController {
             dto.updatedBy = userId;
             auto result = usecase.updateFolder(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Folder updated"), 200);
-            else writeError(res, 400, result.errorMessage);
+            else writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -134,7 +134,7 @@ class FolderController : PlatformController {
             auto id = FolderId(extractIdFromPath(path));
             auto result = usecase.deleteFolder(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Folder deleted"), 200);
-            else writeError(res, 400, result.errorMessage);
+            else writeError(res, 400, result.message);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

@@ -83,7 +83,7 @@ class ServicePlanController : ManageController {
 
         auto result = plans.createServicePlan(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -111,7 +111,7 @@ class ServicePlanController : ManageController {
 
         auto result = plans.updateServicePlan(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         return Json.emptyObject
             .set("id", result.id)
@@ -130,7 +130,7 @@ class ServicePlanController : ManageController {
 
         auto result = plans.deleteServicePlan(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
 
         return Json.emptyObject
             .set("id", result.id)

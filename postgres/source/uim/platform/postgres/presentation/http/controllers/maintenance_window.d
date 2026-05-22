@@ -63,7 +63,7 @@ class MaintenanceWindowController : ManageController {
         dto.autoMinorVersionUpgrade   = data.getBool("autoMinorVersionUpgrade", true);
         dto.createdBy                 = UserId(data.getString("createdBy", ""));
         auto result = maintenanceWindows.createMaintenanceWindow(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Maintenance window created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -81,7 +81,7 @@ class MaintenanceWindowController : ManageController {
         dto.autoMinorVersionUpgrade = data.getBool("autoMinorVersionUpgrade", true);
         dto.updatedBy               = UserId(data.getString("updatedBy", ""));
         auto result = maintenanceWindows.updateMaintenanceWindow(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Maintenance window updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -91,7 +91,7 @@ class MaintenanceWindowController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = MaintenanceWindowId(extractIdFromPath(req.requestURI.to!string));
         auto result = maintenanceWindows.deleteMaintenanceWindow(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Maintenance window deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

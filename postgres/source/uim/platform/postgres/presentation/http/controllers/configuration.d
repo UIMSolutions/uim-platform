@@ -68,7 +68,7 @@ class ConfigurationController : ManageController {
         dto.maintenanceWindowDuration  = data.getLong("maintenanceWindowDuration", 1);
         dto.createdBy                = UserId(data.getString("createdBy", ""));
         auto result = configurations.createConfiguration(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Configuration created successfully").set("status", "success").set("statusCode", 201);
     }
 
@@ -86,7 +86,7 @@ class ConfigurationController : ManageController {
         dto.sharedBuffersMb     = data.getLong("sharedBuffersMb", 0);
         dto.updatedBy           = UserId(data.getString("updatedBy", ""));
         auto result = configurations.updateConfiguration(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 400);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("message", "Configuration updated successfully").set("status", "success").set("statusCode", 200);
     }
 
@@ -96,7 +96,7 @@ class ConfigurationController : ManageController {
         auto tenantId = getTenantId(precheck);
         auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
         auto result = configurations.deleteConfiguration(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.errorMessage).set("statusCode", 404);
+        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Configuration deleted successfully").set("status", "success").set("statusCode", 200);
     }
 }

@@ -64,7 +64,7 @@ class BusinessRoleController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 
@@ -163,7 +163,7 @@ class BusinessRoleController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 
@@ -193,7 +193,7 @@ class BusinessRoleController : ManageController {
     if (result.hasError()) {
       return Json.emptyObject
         .set("status", "error")
-        .set("message", result.errorMessage)
+        .set("message", result.message)
         .set("statusCode", 400);
     }
 

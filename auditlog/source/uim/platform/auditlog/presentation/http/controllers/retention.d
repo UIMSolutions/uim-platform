@@ -67,14 +67,10 @@ class RetentionController : ManageController {
 
     auto result = useCase.createPolicy(policyRequest);
     if (result.hasError()) {
-      return Json.emptyObject
-        .set("error", result.errorMessage)
-        .set("statusCode", 400);
+      return errorResponse(result.message, 400);
     }
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("status", "created")
-      .set("statusCode", 201);
+    return successResponse("Retention policy created", 201, 
+      Json.emptyObject.set("id", result.id).set("status", "created"));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -83,16 +79,13 @@ class RetentionController : ManageController {
     if (precheck.hasError) 
       return precheck;
 
-    auto tenantId = precheck.getTenantId
+    auto tenantId = precheck.getTenantId;
 
     auto policy = useCase.getPolicy(tenantId, policyId);
     if (policy.isNull) {
-      return Json.emptyObject
-        .set("error", "Retention policy not found")
-        .set("statusCode", 404);
+      return errorResponse("Retention policy not found", 404);
     }
-    return policy.toJson
-      .set("statusCode", 200);
+    return successResponse("Retention policy retrieved successfully", 200, policy.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -103,43 +96,35 @@ class RetentionController : ManageController {
     auto tenantId = precheck.getTenantId;
     auto data = precheck["data"];
 
-    UpdateRetentionPolicyRequest policyRequest = ();
-    policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-    policyRequest.tenantId = req.getTenantId;
+    UpdateRetentionPolicyRequest policyRequest;
+    policyRequest.retentionPolicyId = RetentionPolicyId(precheck.getString("id"));
+    policyRequest.tenantId = tenantId;
     policyRequest.name = data.getString("name");
     policyRequest.description = data.getString("description");
     policyRequest.retentionDays = data.getInteger("retentionDays");
-    policyRequest.categories = json.getArray("categories")
+    policyRequest.categories = data.getArray("categories")
       .map!(c => c.toString.to!AuditCategory).array;
 
-    auto statusStr = json.getString("status");
-    if (statusStr == "inactive")
-      policyRequest.status = RetentionStatus.inactive;
-    else if (statusStr == "expired")
-      policyRequest.status = RetentionStatus.expired;
-    else
-      policyRequest.status = RetentionStatus.active;
+    switch (data.getString("status", "")) {
+        case "inactive": policyRequest.status = RetentionStatus.inactive; break;
+        case "expired":  policyRequest.status = RetentionStatus.expired;  break;
+        default:         policyRequest.status = RetentionStatus.active;   break;
+    }
 
     auto result = useCase.updatePolicy(policyRequest);
     if (result.hasError()) {
-      return Json.emptyObject
-        .set("error", result.errorMessage)
-        .set("statusCode", 400);
+      return errorResponse(result.message, 400);
     }
-    return Json.emptyObject
-      .set("status", "updated")
-      .set("statusCode", 200);
+    return successResponse("Retention policy updated", 200, 
+      Json.emptyObject.set("status", "updated"));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-    auto tenantId = req.getTenantId;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError) return precheck;
 
-    useCase.deletePolicy(tenantId, policyId);
-    return Json.emptyObject
-      .set("status", "deleted")
-      .set("message", "Retention policy deleted successfully")
-      .set("statusCode", 200);
+    useCase.deletePolicy(precheck.getTenantId, RetentionPolicyId(precheck.getString("id")));
+    return successResponse("Retention policy deleted successfully", 200, 
+      Json.emptyObject.set("status", "deleted"));
   }
-
 }

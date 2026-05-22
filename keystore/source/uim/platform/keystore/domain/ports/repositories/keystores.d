@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.keystore.domain.ports.repositories.keystore_repository;
+module uim.platform.keystore.domain.ports.repositories.keystores;
 // import uim.platform.keystore.domain.entities.keystore_entity;
 // import uim.platform.keystore.domain.types;
 
@@ -13,21 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
-interface KeystoreRepository {
-  bool existsById(KeystoreId id);
-  KeystoreEntity findById(KeystoreId id);
+interface KeystoreRepository : ITenantRepository!(Keystore, KeystoreId) {
 
-  bool existsByName(string accountId, string applicationId, KeystoreLevel level, string name);
-  KeystoreEntity findByName(string accountId, string applicationId, KeystoreLevel level, string name);
+  size_t countByAccount(TenantId tenantId, string accountId);
+  Keystore[] findByAccount(TenantId tenantId, string accountId);
+  void removeByAccount(TenantId tenantId, string accountId);
 
-  KeystoreEntity[] findByAccount(string accountId);
-  KeystoreEntity[] findByApplication(string accountId, string applicationId);
-  KeystoreEntity[] findBySubscription(string accountId, string subscriptionId);
+  size_t countByApplication(TenantId tenantId, string accountId, string applicationId);
+  Keystore[] findByApplication(TenantId tenantId, string accountId, string applicationId);
+  void removeByApplication(TenantId tenantId, string accountId, string applicationId);
 
-  void save(KeystoreEntity ks);
-  void update(KeystoreEntity ks);
-  void remove(KeystoreId id);
-  void removeByName(string accountId, string applicationId, KeystoreLevel level, string name);
+  size_t countBySubscription(TenantId tenantId, string accountId, string subscriptionId);
+  Keystore[] findBySubscription(TenantId tenantId, string accountId, string subscriptionId);
+  void removeBySubscription(TenantId tenantId, string accountId, string subscriptionId);
 
-  size_t countByAccount(string accountId);
 }

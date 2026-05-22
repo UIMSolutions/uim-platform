@@ -68,7 +68,7 @@ class ConsentRecordController : PlatformController {
         auto result = consentRecords.grantConsent(dto);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Consent recorded").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -103,7 +103,7 @@ class ConsentRecordController : PlatformController {
         auto result = consentRecords.revokeConsent(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("id", result.id).set("message", "Consent revoked").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 400);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -120,6 +120,6 @@ class ConsentRecordController : PlatformController {
         auto result = consentRecords.deleteConsentRecord(tenantId, id);
         if (result.success)
             return Json.emptyObject.set("message", "Consent record deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.errorMessage).set("status", "error").set("statusCode", 404);
+        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
     }
 }

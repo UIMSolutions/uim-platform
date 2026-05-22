@@ -56,13 +56,13 @@ class CliBackupPolicyController {
         dto.retentionDays  = 7;
         auto result = _useCase.createBackupPolicy(dto);
         if (result.success) _view.renderSuccess("Created backup policy: " ~ result.id);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 
     void handleDelete(TenantId tenantId, string[] args) {
         if (args.length == 0) { _view.renderError("Usage: delete <id>"); return; }
         auto result = _useCase.deleteBackupPolicy(tenantId, BackupPolicyId(args[0]));
         if (result.success) _view.renderSuccess("Deleted backup policy: " ~ args[0]);
-        else                _view.renderError(result.errorMessage);
+        else                _view.renderError(result.message);
     }
 }

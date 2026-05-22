@@ -88,7 +88,7 @@ struct QueueProcessor {
                 processed++;
             } else {
                 call.status       = RfcStatus.failed;
-                call.errorMessage = result.errorMessage;
+                call.errorMessage = result.message;
                 call.completedAt  = _nowTicks();
                 _callRepo.update(call);
 
