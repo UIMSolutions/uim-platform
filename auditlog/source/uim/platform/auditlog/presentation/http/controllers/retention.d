@@ -34,26 +34,36 @@ class RetentionController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError) 
+      return precheck; // Return error response from super if tenant ID is missing or invalid
 
+    auto tenantId = precheck.getTenantId;
     auto policies = useCase.listPolicies(tenantId);
     auto arr = policies.map!(p => p.toJson).array.toJson;
 
-    return Json.emptyObject
-      .set("statusCode", 200)
-      .set("items", arr)
-      .set("totalCount", Json(policies.length));
+    return successResponse("Retention policies retrieved successfully", 200,
+      Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(policies.length)));
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto json = req.json;
-    auto policyRequest = CreateRetentionPolicyRequest();
-    policyRequest.tenantId = req.getTenantId;
-    policyRequest.name = json.getString("name");
-    policyRequest.description = json.getString("description");
-    policyRequest.retentionDays = json.getInteger("retentionDays");
-    policyRequest.isDefault = json.getBoolean("isDefault");
-    policyRequest.categories = json.getArray("categories").map!(c => c.toString.to!AuditCategory).array;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto data = precheck["data"];
+
+    CreateRetentionPolicyRequest policyRequest;
+    policyRequest.tenantId = tenantId;
+    policyRequest.name = data.getString("name");
+    policyRequest.description = data.getString("description");
+    policyRequest.retentionDays = data.getInteger("retentionDays");
+    policyRequest.isDefault = data.getBoolean("isDefault");
+    policyRequest.categories = data.getArray("categories")
+      .map!(c => c.toString.to!AuditCategory).array;
 
     auto result = useCase.createPolicy(policyRequest);
     if (result.hasError()) {
@@ -69,7 +79,11 @@ class RetentionController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
-    auto tenantId = req.getTenantId;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.getTenantId
 
     auto policy = useCase.getPolicy(tenantId, policyId);
     if (policy.isNull) {
@@ -82,14 +96,21 @@ class RetentionController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto json = req.json;
-    auto policyRequest = UpdateRetentionPolicyRequest();
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto data = precheck["data"];
+
+    UpdateRetentionPolicyRequest policyRequest = ();
     policyRequest.retentionPolicyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
     policyRequest.tenantId = req.getTenantId;
-    policyRequest.name = json.getString("name");
-    policyRequest.description = json.getString("description");
-    policyRequest.retentionDays = json.getInteger("retentionDays");
-    policyRequest.categories = json.getArray("categories").map!(c => c.toString.to!AuditCategory).array;
+    policyRequest.name = data.getString("name");
+    policyRequest.description = data.getString("description");
+    policyRequest.retentionDays = data.getInteger("retentionDays");
+    policyRequest.categories = json.getArray("categories")
+      .map!(c => c.toString.to!AuditCategory).array;
 
     auto statusStr = json.getString("status");
     if (statusStr == "inactive")

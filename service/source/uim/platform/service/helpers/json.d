@@ -33,30 +33,30 @@ unittest {
 Json errorResponse(string message = "Internal Server Error", int code = 500) {
     return Json.emptyObject
         .set("status", "error")
-        .set("error", message)
-        .set("statusCode", code);
+        .set("message", message)
+        .set("code", code);
 }
 ///
 unittest {
     auto response = errorResponse("Not Found", 404);
     assert(response.getString("status") == "error");
-    assert(response.getString("error") == "Not Found");
-    assert(response.getInteger("statusCode") == 404);
+    assert(response.getString("message") == "Not Found");
+    assert(response.getInteger("code") == 404);
 }
 
 Json errorResponse(Json json, string message = "Internal Server Error", int code = 500) {
     return json.isObject ? json
         .set("status", "error")
-        .set("error", message)
-        .set("statusCode", code) : errorResponse(message, code);
+        .set("message", message)
+        .set("code", code) : errorResponse(message, code);
 }
 ///
 unittest {
     auto baseJson = Json.emptyObject.set("info", "Additional info");
     auto response = errorResponse(baseJson, "Bad Request", 400);
     assert(response.getString("status") == "error");
-    assert(response.getString("error") == "Bad Request");
-    assert(response.getInteger("statusCode") == 400);
+    assert(response.getString("message") == "Bad Request");
+    assert(response.getInteger("code") == 400);
     assert(response.getString("info") == "Additional info");
 }
 
@@ -65,21 +65,21 @@ Json successResponse(string message = "Success", int code = 200) {
     return Json.emptyObject
         .set("status", "success")
         .set("message", message)
-        .set("statusCode", code);
+        .set("code", code);
 }
 ///
 unittest {
     auto response = successResponse("Operation completed", 201);
     assert(response.getString("status") == "success");
     assert(response.getString("message") == "Operation completed");
-    assert(response.getInteger("statusCode") == 201);
+    assert(response.getInteger("code") == 201);
 }
 
 Json successResponse(string message = "Success", int code = 200, Json data) {
     return Json.emptyObject
         .set("status", "success")
         .set("message", message)
-        .set("statusCode", code)
+        .set("code", code)
         .set("data", data);
 }
 ///
@@ -88,7 +88,7 @@ unittest {
     auto response = successResponse("Data retrieved", 200, data);
     assert(response.getString("status") == "success");
     assert(response.getString("message") == "Data retrieved");
-    assert(response.getInteger("statusCode") == 200);
+    assert(response.getInteger("code") == 200);
     assert(response["data"].getInteger("id") == 123);
     assert(response["data"].getString("name") == "Test");
 }
@@ -97,7 +97,7 @@ Json successResponse(Json json, string message = "Success", int code = 200) {
     return json.isObject ? json
         .set("status", "success")
         .set("message", message)
-        .set("statusCode", code) : successResponse(message, code);
+        .set("code", code) : successResponse(message, code);
 }
 ///
 unittest {
@@ -105,7 +105,7 @@ unittest {
     auto response = successResponse(baseJson, "Operation successful", 200);
     assert(response.getString("status") == "success");
     assert(response.getString("message") == "Operation successful");
-    assert(response.getInteger("statusCode") == 200);
+    assert(response.getInteger("code") == 200);
     assert(response.getString("info") == "Additional info");
 }
 
@@ -113,7 +113,7 @@ Json successResponse(Json json, string message = "Success", int code = 200, Json
     return json.isObject ? json
         .set("status", "success")
         .set("message", message)
-        .set("statusCode", code)
+        .set("code", code)
         .set("data", data) : successResponse(message, code);
 }
 ///
@@ -123,17 +123,17 @@ unittest {
     auto response = successResponse(baseJson, "Operation successful", 200, data);
     assert(response.getString("status") == "success");
     assert(response.getString("message") == "Operation successful");
-    assert(response.getInteger("statusCode") == 200);
+    assert(response.getInteger("code") == 200);
     assert(response.getString("info") == "Additional info");
     assert(response["data"].getInteger("id") == 123);
     assert(response["data"].getString("name") == "Test");
 }
 
-int statusCode(Json response) {
-    if (response.isNull || !response.hasKey("statusCode")) {
+int code(Json response) {
+    if (response.isNull || !response.hasKey("code")) {
         return 500; // Default to 500 if no status code is provided
     }
-    return response.getInteger("statusCode");
+    return response.getInteger("code");
 }
 
 string statusMessage(Json response) {
@@ -145,14 +145,14 @@ string statusMessage(Json response) {
 
 unittest {
     auto response = successResponse("Operation completed", 201);
-    assert(statusCode(response) == 201);
+    assert(code(response) == 201);
     assert(statusMessage(response) == "Operation completed");
 
     auto errorResp = errorResponse("Not Found", 404);
-    assert(statusCode(errorResp) == 404);
+    assert(code(errorResp) == 404);
     assert(statusMessage(errorResp) == "Not Found");
 
-    auto invalidResp = Json.emptyObject; // No statusCode or message
-    assert(statusCode(invalidResp) == 500);
+    auto invalidResp = Json.emptyObject; // No code or message
+    assert(code(invalidResp) == 500);
     assert(statusMessage(invalidResp) == "Internal Server Error");
 }

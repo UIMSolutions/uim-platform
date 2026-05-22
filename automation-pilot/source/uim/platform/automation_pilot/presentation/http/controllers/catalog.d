@@ -30,9 +30,8 @@ class CatalogController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = getTenantId(precheck);
 
@@ -47,92 +46,64 @@ class CatalogController : ManageController {
             .set("statusCode", 200);
     }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error);
-        }
-
-        auto tenantId = getTenantId(precheck);
-        auto path = req.requestURI.to!string;
-        auto id = CatalogId(extractIdFromPath(path));
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid catalog ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
-
-        auto e = catalogs.getCatalog(tenantId, id);
-        if (e.isNull) {
-            return Json.emptyObject
-                .set("error", "Catalog not found")
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
-
-        return e.toJson()
-            .set("message", "Catalog retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
-    }
-
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error);
-        }
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto id = CatalogId(data.getString("catalogId", ""));
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Missing or invalid catalogId")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Missing or invalid catalog ID", 400);
 
         CatalogDTO dto;
         dto.catalogId = id;
         dto.tenantId = tenantId;
-        dto.name = data.getString("name", "");
-        dto.description = data.getString("description", "");
-        dto.tags = data.getString("tags", "");
-        dto.version_ = data.getString("version", "");
-        dto.createdBy = UserId(data.getString("createdBy", ""));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.tags = data.getString("tags");
+        dto.version_ = data.getString("version");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = catalogs.createCatalog(dto);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Catalog created")
-            .set("status", "created")
-            .set("statusCode", 201);
+        return successResponse("Catalog created", 201,
+            Json.emptyObject.set("id", result.id));
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = getTenantId(precheck);
+        auto path = req.requestURI.to!string;
+        auto id = CatalogId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid catalog ID", 400);
+
+        auto e = catalogs.getCatalog(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Catalog not found", 404);
+
+        return successResponse("Catalog retrieved successfully", 200,
+            e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error);
-        }
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
         auto path = req.requestURI.to!string;
         auto id = CatalogId(extractIdFromPath(path));
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid catalog ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid catalog ID", 400);
 
         CatalogDTO dto;
         dto.tenantId = tenantId;
@@ -143,48 +114,28 @@ class CatalogController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy", ""));
 
         auto result = catalogs.updateCatalog(dto);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Catalog updated")
-            .set("status", "updated")
-            .set("statusCode", 200);
+        return successResponse("Catalog updated", 200,
+            Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error);
-        }
+        if (precheck.hasError)
+            return precheck;
 
-        auto tenantId = getTenantId(precheck);
-        auto path = req.requestURI.to!string;
-        auto id = CatalogId(extractIdFromPath(path));
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid catalog ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        auto tenantId = precheck.getTenantId;
+        auto id = CatalogId(precheck.getString("id"));
+        if (id.isNull)
+            return errorResponse("Invalid catalog ID", 400);
 
         auto result = catalogs.deleteCatalog(tenantId, id);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.errorMessage)
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (result.hasError)
+            return errorResponse(result.errorMessage, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Catalog deleted")
-            .set("status", "deleted")
-            .set("statusCode", 200);
+        return successResponse("Catalog deleted", 200,
+            Json.emptyObject.set("id", result.id));
     }
 }
