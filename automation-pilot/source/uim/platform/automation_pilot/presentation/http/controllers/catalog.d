@@ -80,17 +80,16 @@ class CatalogController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto path = req.requestURI.to!string;
-        auto id = CatalogId(extractIdFromPath(path));
+        auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
 
-        auto e = catalogs.getCatalog(tenantId, id);
-        if (e.isNull)
+        auto catalog = catalogs.getCatalog(tenantId, id);
+        if (catalog.isNull)
             return errorResponse("Catalog not found", 404);
 
         return successResponse("Catalog retrieved successfully", 200,
-            e.toJson());
+            catalog.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -100,8 +99,7 @@ class CatalogController : ManageController {
 
         auto tenantId = getTenantId(precheck);
         auto data = precheck["data"];
-        auto path = req.requestURI.to!string;
-        auto id = CatalogId(extractIdFromPath(path));
+        auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
 
