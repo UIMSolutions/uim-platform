@@ -139,7 +139,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.getTenantId;
     auto id = AccessPolicyId(precheck.getString("id"));
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);

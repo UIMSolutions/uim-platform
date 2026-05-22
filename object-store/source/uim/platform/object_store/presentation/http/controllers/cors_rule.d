@@ -95,7 +95,7 @@ class CorsRuleController : ManageController {
       return errorResponse("Invalid CORS rule ID");
 
     auto rule = usecase.getRule(tenantId, id);
-    if (rule.hasError)
+    if (rule.isNull)
       return errorResponse("CORS rule not found");
 
     return successResponse("CORS rule retrieved successfully", 200, rule.toJson);
@@ -124,44 +124,42 @@ class CorsRuleController : ManageController {
 
     auto result = usecase.updateRule(r);
     if (result.hasError)
-      return errorResponse(result.message == "CORS rule not found" ? 404 : 400, result
-          .message);
+      return errorResponse(result
+          .message, result.message == "CORS rule not found" ? 404 : 400);
 
     return successResponse("CORS rule updated successfully", 200, Json.emptyObject.set("id", result
         .id));
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(
-        req.requestURI);
-      auto result = usecase.deleteRule(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true);
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto id = CorsRuleId(precheck.getString("id"));
+    if (id.isEmpty)
+      return errorResponse("Invalid CORS rule ID");
+
+    auto result = usecase.deleteRule(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message == "CORS rule not found" ? 404 : 400, result
+          .message);
+
+    return successResponse("CORS rule deleted successfully", 200);
   }
 
   private static string extractBucketIdFromCorsPath(string uri) {
-    // import std.string : indexOf;
-
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;
     auto bucketsPos = path.indexOf("buckets/");
     if (bucketsPos < 0)
       return "";
+
     auto start = bucketsPos + 8;
     auto rest = path[start .. $];
     auto slashPos = rest.indexOf('/');
-    if (slashPos > 0)
-      return rest[0 .. slashPos];
-    return rest;
+    
+    return slashPos >= 0 ? rest[0 .. slashPos] : rest;
   }
 }

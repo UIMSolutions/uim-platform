@@ -50,8 +50,8 @@ class MemoryStorageObjectRepository : TenantRepository!(StorageObject, StorageOb
     return findByPrefix(tenantId, bucketId, prefix).length;
   }
 
-  StorageObject[] filterByPrefix(StorageObject[] objects, BucketId bucketId, string prefix) {
-    return filterByBucket(objects, bucketId).filter!(e => e.key.startsWith(prefix)).array;
+  StorageObject[] filterByPrefix(StorageObject[] objects, string prefix) {
+    return objects.filter!(e => e.key.startsWith(prefix)).array;
   }
 
   StorageObject[] findByPrefix(TenantId tenantId, BucketId bucketId, string prefix) {

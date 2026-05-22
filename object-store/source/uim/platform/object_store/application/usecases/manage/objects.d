@@ -96,7 +96,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (req.metadata.length > 0)
       obj.metadata = req.metadata;
     if (req.storageClass.length > 0)
-      obj.storageClass = req.storageClass;
+      obj.storageClass = req.storageClass.to!StorageClass;
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
@@ -137,7 +137,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       auto ts = currentTimestamp();
 
       // Mark current latest as not latest
-      auto currentLatest = versionRepo.findLatest(tenanatId, obj.id);
+      auto currentLatest = versionRepo.findLatest(tenantId, obj.id);
       if (currentLatest !is null && currentLatest.id.length > 0) {
         currentLatest.isLatest = false;
         versionRepo.save(currentLatest);
@@ -165,7 +165,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     }
 
     // Update bucket counters
-    if (bucket !is null) {
+    if (!bucket.isNull) {
       bucket.objectCount = bucket.objectCount > 0 ? bucket.objectCount - 1 : 0;
       bucket.usedBytes = bucket.usedBytes > obj.size ? bucket.usedBytes - obj.size : 0;
       bucket.updatedAt = currentTimestamp();

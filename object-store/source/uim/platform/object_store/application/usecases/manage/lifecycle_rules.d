@@ -25,7 +25,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createLifecycleRule(CreateLifecycleRuleRequest req) {
+  CommandResult createRule(CreateLifecycleRuleRequest req) {
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.name.length == 0)
@@ -35,8 +35,6 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-   
-    
     LifecycleRule rule;
     rule.initEntity(req.tenantId, req.createdBy);
     rule.bucketId = req.bucketId;
@@ -52,7 +50,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateLifecycleRule(UpdateLifecycleRuleRequest req) {
+  CommandResult updateRule(UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(req.tenantId, req.lifecycleRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");
@@ -77,15 +75,15 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  LifecycleRule getLifecycleRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
+  LifecycleRule getRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
     return ruleRepo.findById(tenantId, lifecycleRuleId);
   }
 
-  LifecycleRule[] listLifecycleRules(TenantId tenantId, BucketId bucketId) {
+  LifecycleRule[] listRules(TenantId tenantId, BucketId bucketId) {
     return ruleRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deleteLifecycleRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
+  CommandResult deleteRule(TenantId tenantId, LifecycleRuleId lifecycleRuleId) {
     auto rule = ruleRepo.findById(tenantId, lifecycleRuleId);
     if (rule.isNull)
       return CommandResult(false, "", "Lifecycle rule not found");

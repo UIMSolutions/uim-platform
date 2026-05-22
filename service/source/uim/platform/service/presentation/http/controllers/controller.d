@@ -28,10 +28,39 @@ class PlatformController {
 
   bool initialize(Json[string] initData = null) {
     // Initialization logic for the controller
+
+    _requiredTenant = initData.getBoolean("requiredTenant", true);
     return true;
   }
 
   void registerRoutes(URLRouter router) {
     // Register HTTP routes and handlers here
   }
+
+  protected bool _requiredTenant = true; // Tenant is required for manage controllers
+  bool requiredTenant() {
+    return _requiredTenant;
+  }
+
+  Json precheckHandler(HTTPServerRequest req) {
+    auto precheck = Json.emptyObject;
+
+    if (req is null)
+      return errorResponse("Request is required", 400);
+
+    if (requiredTenant()) {
+      auto tenantId = req.getTenantId;
+      if (tenantId.isNull)
+        return errorResponse("Tenant ID is required", 400);
+
+      precheck["tenantId"] = tenantId.value;
+    }
+
+    return precheck
+      .set("data", req.json)
+      .set("status", "ok")
+      .set("message", "Precheck passed")
+      .set("code", 200);
+  }
+
 }

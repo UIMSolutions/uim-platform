@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// Domain service: validates storage quota constraints.
 struct QuotaValidationResult {
   bool valid;
-  string error;
+  string message;
 }
 
 struct QuotaValidator {

@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.service_binding;
 
-
-
-
-
-
 // import uim.platform.object_store.application.usecases.manage.service_bindings;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.service_binding;
@@ -34,7 +29,7 @@ class ServiceBindingController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
@@ -79,13 +74,13 @@ class ServiceBindingController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       if (id == "revoke")
         return;
 
-      auto binding = usecase.getBinding(id);
+      auto binding = usecase.getBinding(tenantId, id);
       if (binding.isNull) {
         writeError(res, 404, "Service binding not found");
         return;
@@ -100,6 +95,7 @@ class ServiceBindingController : PlatformController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId = req.getTenantId;
       // /api/v1/service-bindings/{id}/revoke
       auto path = req.requestURI;
       // import std.string : indexOf;
@@ -113,12 +109,12 @@ class ServiceBindingController : PlatformController {
       auto slashPos = rest.indexOf('/');
       auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
 
-      auto result = usecase.revokeBinding(id);
+      auto result = usecase.revokeBinding(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("revoked", true)
           .set("message", "Service binding revoked");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.message);
@@ -129,10 +125,10 @@ class ServiceBindingController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteBinding(id);
+      auto result = usecase.deleteBinding(tenantId, id);
       if (result.success) {
         auto response = Json.emptyObject
           .set("deleted", true);

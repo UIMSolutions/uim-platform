@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.object;
 
-
-
-
 // 
 // 
 // import uim.platform.object_store.application.usecases.manage.objects;
@@ -20,7 +17,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ObjectController : PlatformController {
+class ObjectController : ManageController {
   private ManageObjectsUseCase usecase;
 
   this(ManageObjectsUseCase usecase) {
@@ -39,202 +36,198 @@ class ObjectController : PlatformController {
     router.get("/api/v1/objects/*/versions", &handleListVersions);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CreateObjectRequest();
-      r.tenantId = tenantId;
-      r.bucketId = j.getString("bucketId");
-      r.key = j.getString("key");
-      r.contentType = j.getString("contentType");
-      r.size = jsonLong(j, "size");
-      r.metadata = j.getString("metadata");
-      r.storageClass = j.getString("storageClass");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createObject(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Object created successfully");
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
+    auto r = CreateObjectRequest();
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    r.tenantId = tenantId;
+    r.bucketId = j.getString("bucketId");
+    r.key = j.getString("key");
+    r.contentType = j.getString("contentType");
+    r.size = jsonLong(j, "size");
+    r.metadata = j.getString("metadata");
+    r.storageClass = j.getString("storageClass");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createObject(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Object created successfully", "Created", 201, resp);
+  }
+
+  protected Json listByBucketHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto bucketId = BucketId(extractBucketIdFromPath(req.requestURI));
+    auto prefix = queryParam(req, "prefix");
+
+    StorageObject[] objects = prefix.length > 0
+      ? usecase.listObjects(tenantId, bucketId, prefix) : usecase.listObjects(tenantId, bucketId);
+
+    auto arr = objects.map!(o => o.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", objects.length)
+      .set("message", "Objects retrieved successfully");
+
+    return successResponse("Objects retrieved successfully", "OK", 200, resp);
   }
 
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
-      auto path = req.requestURI;
-      auto bucketId = extractBucketIdFromPath(path);
-      auto prefix = queryParam(req, "prefix");
-
-      StorageObject[] objects;
-      if (prefix.length > 0)
-        objects = usecase.listObjectsByPrefix(bucketId, prefix);
-      else
-        objects = usecase.listObjects(bucketId);
-
-      auto arr = objects.map!(o => o.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", objects.length)
-        .set("message", "Objects retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByBucketHandler(req);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      // Check if this is a versions request
-      if (id == "versions" || id == "copy")
-        return;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto obj = usecase.getObject(id);
-      if (obj.isNull || obj.isNull) {
-        writeError(res, 404, "Object not found");
-        return;
-      }
-      res.writeJsonBody(obj.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = req.getTenantId;
+    auto id = StorageObjectId(extractIdFromPath(req.requestURI));
+    // Check if this is a versions request
+    if (id == "versions" || id == "copy")
+      return errorResponse("Invalid object ID", 400);
+
+    auto obj = usecase.getObject(tenantId, id);
+    if (obj.isNull)
+      return errorResponse("Object not found", 404);
+
+    return successResponse("Object retrieved successfully", "Retrieved", 200, obj.toJson);
+  }
+
+  protected Json updateMetadataHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto id = BucketId(extractIdFromPath(req.requestURI));
+    auto j = req.json;
+    auto r = UpdateObjectMetadataRequest();
+    r.tenantId = tenantId;
+    r.bucketId = id;
+    r.contentType = j.getString("contentType");
+    r.metadata = j.getString("metadata");
+    r.storageClass = j.getString("storageClass");
+
+    auto result = usecase.updateObjectMetadata(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage == "Object not found" ? "Not Found" : "Bad Request", result
+          .errorMessage == "Object not found" ? 404 : 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Object metadata updated successfully", "Updated", 200, resp);
   }
 
   protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto j = req.json;
-      auto r = UpdateObjectMetadataRequest();
-      r.contentType = j.getString("contentType");
-      r.metadata = j.getString("metadata");
-      r.storageClass = j.getString("storageClass");
-
-      auto result = usecase.updateObjectMetadata(id, r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Object metadata updated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Object not found" ? 404 : 400, result.message);
-      }
+    try {
+      auto response = updateMetadataHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteObject(id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Object deleted successfully");
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = req.getTenantId;
+    auto id = extractIdFromPath(req.requestURI);
+
+    auto result = usecase.deleteObject(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.errorMessage == "Object not found" ? "Not Found" : "Bad Request", result
+          .errorMessage == "Object not found" ? 404 : 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Object deleted successfully");
+
+    return successResponse("Object deleted successfully", "Deleted", 200, resp);
+  }
+
+  protected Json copyHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto j = req.json;
+    auto r = CopyObjectRequest();
+    r.tenantId = tenantId;
+    r.sourceBucketId = j.getString("sourceBucketId");
+    r.sourceKey = j.getString("sourceKey");
+    r.destBucketId = j.getString("destBucketId");
+    r.destKey = j.getString("destKey");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.copyObject(r);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, "Bad Request", 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Object copied successfully");
+
+    return successResponse("Object copied successfully", "Created", 201, resp);
   }
 
   protected void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CopyObjectRequest();
-      r.tenantId = tenantId;
-      r.sourceBucketId = j.getString("sourceBucketId");
-      r.sourceKey = j.getString("sourceKey");
-      r.destBucketId = j.getString("destBucketId");
-      r.destKey = j.getString("destKey");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.copyObject(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Object copied successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = copyHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json listVersionsHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto objectId = extractObjectIdFromVersionsPath(req.requestURI);
+
+    auto versions = usecase.listVersions(tenantId, objectId);
+    auto arr = versions.map!(v => v.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", versions.length);
+
+    return successResponse("Object versions retrieved successfully", "OK", 200, resp);
   }
 
   protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      // /api/v1/objects/{objectId}/versions
-      auto path = req.requestURI;
-      auto objectId = extractObjectIdFromVersionsPath(path);
-
-      auto versions = usecase.listVersions(objectId);
-
-      auto arr = versions.map!(v => v.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", versions.length)
-        .set("message", "Object versions retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listVersionsHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeObject(StorageObject o) {
-    return Json.emptyObject
-      .set("id", o.id)
-      .set("tenantId", o.tenantId)
-      .set("bucketId", o.bucketId)
-      .set("key", o.key)
-      .set("contentType", o.contentType)
-      .set("size", o.size)
-      .set("etag", o.etag)
-      .set("metadata", o.metadata)
-      .set("storageClass", o.storageClass.to!string)
-      .set("status", o.status.to!string)
-      .set("currentVersionId", o.currentVersionId)
-      .set("createdBy", o.createdBy)
-      .set("createdAt", o.createdAt)
-      .set("updatedAt", o.updatedAt);
-  }
-
-  private static Json serializeVersion(ObjectVersion v) {
-    return Json.emptyObject
-      .set("id", v.id)
-      .set("objectId", v.objectId)
-      .set("versionTag", v.versionTag)
-      .set("size", v.size)
-      .set("etag", v.etag)
-      .set("contentType", v.contentType)
-      .set("isLatest", v.isLatest)
-      .set("isDeleteMarker", v.isDeleteMarker)
-      .set("createdBy", v.createdBy)
-      .set("createdAt", v.createdAt);
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects

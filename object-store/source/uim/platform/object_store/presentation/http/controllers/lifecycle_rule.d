@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
 
-
-
-
 // 
 
 // import uim.platform.object_store.application.usecases.manage.lifecycle_rules;
@@ -19,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class LifecycleRuleController : PlatformController {
+class LifecycleRuleController : ManageController {
   private ManageLifecycleRulesUseCase usecase;
 
   this(ManageLifecycleRulesUseCase usecase) {
@@ -36,133 +33,119 @@ class LifecycleRuleController : PlatformController {
     router.delete_("/api/v1/lifecycle-rules/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto request = CreateLifecycleRuleRequest();
-      request.tenantId = request.getTenantId;
-      request.bucketId = j.getString("bucketId");
-      request.name = j.getString("name");
-      request.prefix = j.getString("prefix");
-      request.status = j.getString("status");
-      request.expirationDays = j.getInteger("expirationDays");
-      request.transitionDays = j.getInteger("transitionDays");
-      request.transitionStorageClass = j.getString("transitionStorageClass");
-      request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
-      request.createdBy = UserId(req.headers.get("X-User-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createRule(request);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Lifecycle rule created successfully");
+    auto tenantId = req.getTenantId;
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto request = CreateLifecycleRuleRequest();
+    request.tenantId = tenantId;
+    request.bucketId = data.getString("bucketId");
+    request.name = data.getString("name");
+    request.prefix = data.getString("prefix");
+    request.status = data.getString("status");
+    request.expirationDays = data.getInteger("expirationDays");
+    request.transitionDays = data.getInteger("transitionDays");
+    request.transitionStorageClass = data.getString("transitionStorageClass");
+    request.abortIncompleteUploadDays = data.getInteger("abortIncompleteUploadDays");
+    request.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createRule(request);
+    if (result.hasError)
+      return errorResponse(result.message);
+
+    return successResponse("Lifecycle rule created successfully", 201, Json.emptyObject.set("id", result
+        .id));
+  }
+
+  protected Json listByBucketHandler(HTTPServerRequest req) {
+    auto precheck = super.precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto bucketId = BucketId(extractBucketIdFromRulesPath(req.requestURI));
+    if (bucketId.isNull)
+      return errorResponse("Invalid bucket ID");
+
+    auto rules = usecase.listRules(tenantId, bucketId);
+    auto arr = rules.map!(r => r.toJson).array.toJson;
+
+    return successResponse("Lifecycle rules retrieved successfully", 200, Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length));
   }
 
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto bucketId = extractBucketIdFromRulesPath(req.requestURI);
-      auto rules = usecase.listRules(bucketId);
-
-      auto arr = rules.map!(r => r.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", rules.length)
-        .set("message", "Lifecycle rules retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByBucketHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto rule = usecase.getRule(id);
-      if (rule.isNull) {
-        writeError(res, 404, "Lifecycle rule not found");
-        return;
-      }
-      res.writeJsonBody(rule.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto id = LifecycleRuleId(precheck.getString("id"));
+    if (id.isNull)
+      return errorResponse("Invalid lifecycle rule ID");
+
+    auto rule = usecase.getRule(tenantId, id);
+    if (rule.isNull)
+      return errorResponse("Lifecycle rule not found");
+
+    return successResponse("Lifecycle rule retrieved successfully", 200, rule.toJson);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto j = req.json;
-      auto request = UpdateLifecycleRuleRequest();
-      request.name = j.getString("name");
-      request.prefix = j.getString("prefix");
-      request.status = j.getString("status");
-      request.expirationDays = j.getInteger("expirationDays");
-      request.transitionDays = j.getInteger("transitionDays");
-      request.transitionStorageClass = j.getString("transitionStorageClass");
-      request.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateRule(id, request);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Lifecycle rule updated successfully");
+    auto tenantId = precheck.getTenantId;
+    auto id = LifecycleRuleId(precheck.getString("id"));
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Rule not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    UpdateLifecycleRuleRequest request;
+    request.tenantId = tenantId;
+    request.lifecycleRuleId = id;
+    request.name = data.getString("name");
+    request.prefix = data.getString("prefix");
+    request.status = data.getString("status");
+    request.expirationDays = data.getInteger("expirationDays");
+    request.transitionDays = data.getInteger("transitionDays");
+    request.transitionStorageClass = data.getString("transitionStorageClass");
+    request.abortIncompleteUploadDays = data.getInteger("abortIncompleteUploadDays");
+
+    auto result = usecase.updateRule(id, request);
+    if (result.hasError)
+      return errorResponse(result.message);
+
+    return successResponse("Lifecycle rule updated successfully", 200, Json.emptyObject.set("id", result
+        .id));
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteRule(id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Lifecycle rule deleted successfully");
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = precheck.getTenantId;
+    auto id = LifecycleRuleId(precheck.getString("id"));
 
-  private static Json serializeRule(LifecycleRule r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("bucketId", r.bucketId)
-      .set("name", r.name)
-      .set("prefix", r.prefix)
-      .set("status", r.status.to!string)
-      .set("expirationDays", r.expirationDays)
-      .set("transitionDays", r.transitionDays)
-      .set("transitionStorageClass", r.transitionStorageClass.to!string)
-      .set("abortIncompleteUploadDays", r.abortIncompleteUploadDays)
-      .set("createdBy", r.createdBy)
-      .set("createdAt", r.createdAt)
-      .set("updatedAt", r.updatedAt);
+    auto result = usecase.deleteRule(tenantId, id);
+    if (!result.success)
+      return errorResponse(result.message);
+
+    return successResponse("Lifecycle rule deleted successfully", 200, Json.emptyObject.set("id", id));
   }
 
   private static string extractBucketIdFromRulesPath(string uri) {

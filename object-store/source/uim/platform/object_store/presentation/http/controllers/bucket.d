@@ -60,24 +60,41 @@ class BucketController : ManageController {
     return successResponse("Bucket created successfully", 201, Json.emptyObject.set("id", result.id));
   }
 
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (!precheck.isNull)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto id = BucketId(extractIdFromPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid bucket ID", 400);
+
+    auto bucket = usecase.getBucket(tenantId, id);
+    if (bucket.isNull)
+      return errorResponse("Bucket not found", 404);
+
+    return successResponse("Bucket retrieved successfully", 200, serializeBucket(bucket));
+  }
+
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
     if (!precheck.isNull)
       return precheck;
-      
+
     auto tenantId = precheck.getTenantId;
     auto id = BucketId(precheck.getString("id"));
-     if (id.isNull)
+    if (id.isNull)
       return errorResponse("Invalid bucket ID", 400);
 
     auto data = precheck["data"];
 
-    auto r = UpdateBucketRequest();
+    UpdateBucketRequest r;
     r.tenantId = tenantId;
     r.bucketId = id;
-    r.storageClass = data.getString("storageClass").to!StorageClass;
+    r.storageClass = data.getString("storageClass");
     r.versioningEnabled = data.getBoolean("versioningEnabled");
-    r.encryptionType = data.getString("encryptionType").to!EncryptionType;
+    r.encryptionType = data.getString("encryptionType");
     r.encryptionKeyId = data.getString("encryptionKeyId");
     r.quotaBytes = jsonLong(data, "quotaBytes");
 
@@ -88,93 +105,25 @@ class BucketController : ManageController {
     return successResponse("Bucket updated successfully", 200, Json.emptyObject.set("id", result.id));
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BucketId(extractIdFromPath(req.requestURI));
-      if (id.isNull) {
-        writeError(res, 400, "Invalid bucket ID");
-        return;
-      }
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (!precheck.isNull)
+      return precheck;
 
-      auto bucket = usecase.getBucket(tenantId, id);
-      if (bucket.isNull) {
-        writeError(res, 404, "Bucket not found");
-        return;
-      }
+    auto tenantId = req.getTenantId;
+    auto id = BucketId(extractIdFromPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid bucket ID", 400);
 
-      res.writeJsonBody(bucket.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteBucket(tenantId, id);
+    if (result.hasError) {
+      auto code = result.message == "Bucket not found" ? 404 : 409;
+      return errorResponse(result.message, code);
     }
-  }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto j = req.json;
-      auto r = UpdateBucketRequest();
-      r.tenantId = tenantId;
-      r.bucketId = id;
-      r.storageClass = j.getString("storageClass");
-      r.versioningEnabled = j.getBoolean("versioningEnabled");
-      r.encryptionType = j.getString("encryptionType");
-      r.encryptionKeyId = j.getString("encryptionKeyId");
-      r.quotaBytes = jsonLong(j, "quotaBytes");
+    auto resp = Json.emptyObject
+      .set("deleted", true);
 
-      auto result = usecase.updateBucket(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Bucket updated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Bucket not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteBucket(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("id", result.id)
-          .set("message", "Bucket deleted successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        auto code = result.message == "Bucket not found" ? 404 : 409;
-        writeError(res, code, result.message);
-      }
-    } catch (Exception e) { 
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeBucket(Bucket b) {
-    return Json.emptyObject
-      .set("id", b.id)
-      .set("tenantId", b.tenantId)
-      .set("name", b.name)
-      .set("region", b.region)
-      .set("storageClass", b.storageClass.to!string)
-      .set("versioningEnabled", b.versioningEnabled)
-      .set("encryptionType", b.encryptionType.to!string)
-      .set("encryptionKeyId", b.encryptionKeyId)
-      .set("status", b.status.to!string)
-      .set("quotaBytes", b.quotaBytes)
-      .set("usedBytes", b.usedBytes)
-      .set("objectCount", b.objectCount)
-      .set("createdBy", b.createdBy)
-      .set("createdAt", b.createdAt)
-      .set("updatedAt", b.updatedAt);
+    return successResponse("Bucket deleted successfully", "Deleted", 200, resp);
   }
 }
