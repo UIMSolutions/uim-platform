@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 interface IngestionTokenRepository : ITenantRepository!(IngestionToken, IngestionTokenId) {
 
-  bool existsByHash(string tokenHash);
-  IngestionToken findByHash(string tokenHash);
-  void removeByHash(string tokenHash);
+  bool existsByHash(TenantId tenantId, string tokenHash);
+  IngestionToken findByHash(TenantId tenantId, string tokenHash);
+  void removeByHash(TenantId tenantId, string tokenHash);
 
 }

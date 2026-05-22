@@ -14,18 +14,18 @@ mixin(ShowModule!());
 @safe:
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
 
-  bool existsByHash(string tokenHash) {
+  bool existsByHash(TenantId tenantId, string tokenHash) {
     return findByTenant(tenantId).any!(t => t.tokenHash == tokenHash);
   }
 
-  IngestionToken findByHash(string tokenHash) {
-    foreach (t; findAll)
+  IngestionToken findByHash(TenantId tenantId, string tokenHash) {
+    foreach (t; findByTenant(tenantId))
       if (t.tokenHash == tokenHash)
         return t;
     return IngestionToken.init;
   }
   
-  void removeByHash(string tokenHash) {
-    remove(findByHash(tokenHash));
+  void removeByHash(TenantId tenantId, string tokenHash) {
+    remove(findByHash(tenantId, tokenHash));
   }
 }
