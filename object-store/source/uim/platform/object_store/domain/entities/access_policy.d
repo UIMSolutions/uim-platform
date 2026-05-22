@@ -22,14 +22,12 @@ struct AccessPolicy {
   string resources; // JSON array of key patterns, e.g. '["images/*"]'
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("bucketId", bucketId.value)
       .set("name", name)
       .set("effect", effect.to!string())
       .set("principal", principal)
       .set("actions", actions)
       .set("resources", resources);
-
-    return j;
   }
 }

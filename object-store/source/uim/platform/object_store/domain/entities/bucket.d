@@ -31,9 +31,9 @@ struct Bucket {
       .set("region", region)
       .set("storageClass", storageClass.to!string())
       .set("versioningEnabled", versioningEnabled)
-      .set("encryptionType", encryptionType.toString())
+      .set("encryptionType", encryptionType.to!string())
       .set("encryptionKeyId", encryptionKeyId)
-      .set("status", status.toString())
+      .set("status", status.to!string())
       .set("quotaBytes", quotaBytes)
       .set("usedBytes", usedBytes)
       .set("objectCount", objectCount);

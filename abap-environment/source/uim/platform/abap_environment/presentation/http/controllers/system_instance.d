@@ -16,7 +16,7 @@ import uim.platform.abap_environment;
 
 mixin(ShowModule!());
 @safe:
-class SystemInstanceController : PlatformController {
+class SystemInstanceController : ManageController {
   private ManageSystemInstancesUseCase usecase;
 
   this(ManageSystemInstancesUseCase usecase) {
@@ -33,118 +33,114 @@ class SystemInstanceController : PlatformController {
     router.delete_("/api/v1/systems/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      CreateSystemInstanceRequest request;
-      request.tenantId = tenantId;
-      request.subaccountId = j.getString("subaccountId");
-      request.name = j.getString("name");
-      request.description = j.getString("description");
-      request.plan = j.getString("plan");
-      request.region = j.getString("region");
-      request.sapSystemId = j.getString("sapSystemId");
-      request.adminEmail = j.getString("adminEmail");
-      request.abapRuntimeSize = getUshort(j, "abapRuntimeSize");
-      request.hanaMemorySize = getUshort(j, "hanaMemorySize");
-      request.softwareVersion = j.getString("softwareVersion");
-      request.stackVersion = j.getString("stackVersion");
+  override protected Json createHandler(HTTPServerRequest req) {
+    autp precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createInstance(request);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "System instance creation initiated");
+    auto tenantId = precheck.getTenantId;
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    CreateSystemInstanceRequest request;
+    request.tenantId = tenantId;
+    request.subaccountId = data.getString("subaccountId");
+    request.name = data.getString("name");
+    request.description = data.getString("description");
+    request.plan = data.getString("plan");
+    request.region = data.getString("region");
+    request.sapSystemId = data.getString("sapSystemId");
+    request.adminEmail = data.getString("adminEmail");
+    request.abapRuntimeSize = getUshort(data, "abapRuntimeSize");
+    request.hanaMemorySize = getUshort(data, "hanaMemorySize");
+    request.softwareVersion = data.getString("softwareVersion");
+    request.stackVersion = data.getString("stackVersion");
+
+    auto result = usecase.createInstance(request);
+    if (result.hasError())
+      return errorResponse(result.message);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("System instance created", "Created", 201, responseData);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto instances = usecase.listInstances(tenantId);
-      auto arr = instances.map!(inst => inst.toJson).array.toJson;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", instances.length)
-        .set("message", "System instances retrieved successfully");
+    auto tenantId = getTenantId(precheck);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto instances = usecase.listInstances(tenantId);
+    auto arr = instances.map!(inst => inst.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", instances.length);
+
+    return successResponse("System instances retrieved", "Retrieved", 200, responseData);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto inst = usecase.getInstance(tenantId, id);
-      if (inst.isNull) {
-        writeError(res, 404, "System instance not found");
-        return;
-      }
-      res.writeJsonBody(inst.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = getTenantId(precheck);
+    auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid system instance id", 400);
+
+    auto inst = usecase.getInstance(tenantId, id);
+    if (inst.isNull)
+      return errorResponse("System instance not found", 404);
+
+    return successResponse("System instance retrieved", "Retrieved", 200, inst.toJson);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UpdateSystemInstanceRequest r;
-      r.tenantId = tenantId;
-      r.systemInstanceId = id;
-      r.description = j.getString("description");
-      r.status = j.getString("status");
-      r.abapRuntimeSize = getUshort(j, "abapRuntimeSize");
-      r.hanaMemorySize = getUshort(j, "hanaMemorySize");
-      r.softwareVersion = j.getString("softwareVersion");
+    auto tenantId = getTenantId(precheck);
+    auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid system instance id", 400);
 
-      auto result = usecase.updateInstance(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "System instance updated");
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    UpdateSystemInstanceRequest request;
+    request.tenantId = tenantId;
+    request.systemInstanceId = id;
+    request.description = data.getString("description");
+    request.status = data.getString("status");
+    request.abapRuntimeSize = getUshort(data, "abapRuntimeSize");
+    request.hanaMemorySize = getUshort(data, "hanaMemorySize");
+    request.softwareVersion = data.getString("softwareVersion");
+
+    auto result = usecase.updateInstance(request);
+    if (result.hasError())
+      return errorResponse(result.message);
+
+    return successResponse("System instance updated", "Updated", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteInstance(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleting")
-          .set("message", "System instance deletion initiated");
+    auto tenantId = getTenantId(precheck);
+    auto id = SystemInstanceId(precheck.getString("id"));
+    if (id.isNull)
+      return errorResponse("Invalid system instance id", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteInstance(tenantId, id);
+    if (result.hasError())
+      return errorResponse(result.message);
+
+    return successResponse("System instance deleted", "Deleted", 200);
   }
 }

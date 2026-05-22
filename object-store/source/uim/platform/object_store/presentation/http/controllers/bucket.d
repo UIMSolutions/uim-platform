@@ -117,9 +117,9 @@ class BucketController : ManageController {
       auto r = UpdateBucketRequest();
       r.tenantId = tenantId;
       r.bucketId = id;
-      r.storageClass = j.getString("storageClass").to!StorageClass;
+      r.storageClass = j.getString("storageClass");
       r.versioningEnabled = j.getBoolean("versioningEnabled");
-      r.encryptionType = j.getString("encryptionType").to!EncryptionType;
+      r.encryptionType = j.getString("encryptionType");
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");
 

@@ -24,40 +24,56 @@ class JobController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get    ("/api/v1/abap/jobs",  &handleList);
-        router.get    ("/api/v1/abap/jobs/*",&handleGet);
-        router.delete_("/api/v1/abap/jobs/*",&handleDelete);
+        router.get("/api/v1/abap/jobs", &handleList);
+        router.get("/api/v1/abap/jobs/*", &handleGet);
+        router.delete_("/api/v1/abap/jobs/*", &handleDelete);
     }
 
     protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto jobs     = usecase.listJobs(tenantId);
-            auto jarr     = Json.emptyArray;
-            foreach (j; jobs) jarr ~= j.toJson();
-            res.writeJsonBody(Json.emptyObject.set("count", cast(long) jobs.length).set("items", jarr), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            auto jobs = usecase.listJobs(tenantId);
+            auto jarr = Json.emptyArray;
+            foreach (j; jobs)
+                jarr ~= j.toJson();
+            res.writeJsonBody(Json.emptyObject.set("count", cast(long)jobs.length).set("items", jarr), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 
     protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
-            auto job      = usecase.getJob(tenantId, id);
-            if (job.isNull) { writeError(res, 404, "Job not found"); return; }
+            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto job = usecase.getJob(tenantId, id);
+            if (job.isNull) {
+                writeError(res, 404, "Job not found");
+                return;
+            }
             res.writeJsonBody(job.toJson(), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    protected Json deleteHandler(HTTPServerRequest req) {
+        auto tenantId = req.getTenantId;
+        auto id = extractIdFromPath(req.requestURI.to!string);
+        auto result = usecase.deleteJob(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        return successResponse("Job deleted successfully", 200, 
+            Json.emptyObject.set("id", result.id));
     }
 
     protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
-            auto result   = usecase.deleteJob(tenantId, id);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Job deleted"), 200);
-            else
-                writeError(res, 404, result.message);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            auto response = deleteHandler(req);
+            res.writeJsonBody(response, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

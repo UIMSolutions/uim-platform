@@ -47,7 +47,7 @@ struct CreateObjectRequest {
   string contentType;
   long size;
   string metadata; // JSON key-value pairs
-  StorageClass storageClass;
+  string storageClass;
   UserId createdBy;
 }
 

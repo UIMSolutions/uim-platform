@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class AccessPolicyController : PlatformController {
+class AccessPolicyController : ManageController {
   private ManageAccessPoliciesUseCase usecase;
 
   this(ManageAccessPoliciesUseCase usecase) {
@@ -33,131 +33,122 @@ class AccessPolicyController : PlatformController {
     router.delete_("/api/v1/access-policies/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      
-      auto r = CreateAccessPolicyRequest();
-      r.tenantId = tenantId;
-      r.bucketId = j.getString("bucketId");
-      r.name = j.getString("name");
-      r.effect = j.getString("effect");
-      r.principal = j.getString("principal");
-      r.actions = j.getString("actions");
-      r.resources = j.getString("resources");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createPolicy(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Access policy created successfully");
+    auto tenantId = req.getTenantId;
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto r = CreateAccessPolicyRequest();
+    r.tenantId = tenantId;
+    r.bucketId = data.getString("bucketId");
+    r.name = data.getString("name");
+    r.effect = data.getString("effect");
+    r.principal = data.getString("principal");
+    r.actions = data.getString("actions");
+    r.resources = data.getString("resources");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createPolicy(r);
+    if (result.hasError)
+      return errorResponse(result.message);
+
+    return successResponse("Access policy created successfully", "Created", 201, Json.emptyObject.set("id", result
+        .id));
+  }
+
+  protected Json listByBucketHandler(HTTPServerRequest req) {
+    auto precheck = super.precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto bucketId = BucketId(extractBucketIdFromPoliciesPath(req.requestURI));
+    if (bucketId.isNull)
+      return errorResponse("Invalid bucket ID", 400);
+
+    auto policies = usecase.listPolicies(tenantId, bucketId);
+    auto arr = policies.map!(p => p.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", policies.length);
+
+    return successResponse("Access policies retrieved successfully", "Retrieved", 200, responseData);
   }
 
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
-      auto policies = usecase.listPolicies(tenantId, bucketId);
-
-      auto arr = policies.map!(p => p.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", policies.length)
-        .set("message", "Access policies retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByBucketHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
-      auto policy = usecase.getPolicy(tenantId, id);
-      if (policy.isNull) {
-        writeError(res, 404, "Access policy not found");
-        return;
-      }
-      res.writeJsonBody(policy.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto id = AccessPolicyId(precheck.getString("id"));
+    if (id.isNull)
+      return errorResponse("Invalid access policy ID", 400);
+
+    auto policy = usecase.getPolicy(tenantId, id);
+    if (policy.isNull)
+      return errorResponse("Policy not found", 404);
+
+    return successResponse("Access policy retrieved successfully", "Retrieved", 200, policy.toJson);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UpdateAccessPolicyRequest r;
-      r.tenantId = tenantId;
-      r.accessPolicyId = id;
-      r.name = j.getString("name");
-      r.effect = j.getString("effect");
-      r.principal = j.getString("principal");
-      r.actions = j.getString("actions");
-      r.resources = j.getString("resources");
+    auto tenantId = req.getTenantId;
+    auto id = AccessPolicyId(precheck.getString("id"));
+    if (id.isNull)
+      return errorResponse("Invalid access policy ID", 400);
 
-      auto result = usecase.updatePolicy(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Access policy updated successfully");
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Policy not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto r = UpdateAccessPolicyRequest();
+    r.tenantId = tenantId;
+    r.accessPolicyId = id;
+    r.name = data.getString("name");
+    r.effect = data.getString("effect");
+    r.principal = data.getString("principal");
+    r.actions = data.getString("actions");
+    r.resources = data.getString("resources");
+
+    auto result = usecase.updatePolicy(r);
+    if (result.hasError)
+      return errorResponse(result.message, result.message == "Policy not found" ? 404 : 400);
+
+    return successResponse("Access policy updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+        .id));
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = AccessPolicyId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deletePolicy(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Access policy deleted successfully");
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = req.getTenantId;
+    auto id = AccessPolicyId(precheck.getString("id"));
+    if (id.isNull)
+      return errorResponse("Invalid access policy ID", 400);
 
-  private static Json serializePolicy(AccessPolicy p) {
-    return Json.emptyObject
-      .set("id", p.id)
-      .set("tenantId", p.tenantId)
-      .set("bucketId", p.bucketId)
-      .set("name", p.name)
-      .set("effect", p.effect.to!string)
-      .set("principal", p.principal)
-      .set("actions", p.actions)
-      .set("resources", p.resources)
-      .set("createdBy", p.createdBy)
-      .set("createdAt", p.createdAt)
-      .set("updatedAt", p.updatedAt);
+    auto result = usecase.deletePolicy(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, result.message == "Policy not found" ? 404 : 400);
+
+    return successResponse("Access policy deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/access-policies

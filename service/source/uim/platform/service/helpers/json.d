@@ -93,6 +93,14 @@ unittest {
     assert(response["data"].getString("name") == "Test");
 }
 
+Json successResponse(string message, string status, int code = 200, Json data) {
+    return Json.emptyObject
+        .set("status", status)
+        .set("message", message)
+        .set("code", code)
+        .set("data", data);
+}
+
 Json successResponse(Json json, string message = "Success", int code = 200) {
     return json.isObject ? json
         .set("status", "success")

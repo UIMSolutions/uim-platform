@@ -46,7 +46,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     // Quota check
     auto quotaResult = QuotaValidator.validate(bucket, req.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaresult.message);
+      return CommandResult(false, "", quotaResult.message);
 
     StorageObject obj;
     obj.initEntity(req.tenantId, req.createdBy);
@@ -55,9 +55,9 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     obj.key = req.key;
     obj.contentType = req.contentType.length > 0 ? req.contentType : "application/octet-stream";
     obj.size = req.size;
-    obj.etag = generateEtag(obj.id);
+    obj.etag = generateEtag(obj.id.value);
     obj.metadata = req.metadata;
-    obj.storageClass = req.storageClass;
+    obj.storageClass = req.storageClass.to!StorageClass;
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
@@ -72,7 +72,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
       ver.isLatest = true;
       ver.isDeleteMarker = false;
 
-      obj.currentVersionId = ver.id;
+      obj.currentVersionId = ver.id.value;
       versionRepo.save(ver);
     }
 
@@ -131,13 +131,13 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     auto bucket = bucketRepo.findById(tenantId, obj.bucketId);
 
     // If versioning enabled, add a delete marker instead of removing
-    if (bucket !is null && bucket.versioningEnabled) {
-     
+    if (!bucket.isNull && bucket.versioningEnabled) {
+
       auto versionId = randomUUID();
       auto ts = currentTimestamp();
 
       // Mark current latest as not latest
-      auto currentLatest = versionRepo.findLatest(obj.id);
+      auto currentLatest = versionRepo.findLatest(tenanatId, obj.id);
       if (currentLatest !is null && currentLatest.id.length > 0) {
         currentLatest.isLatest = false;
         versionRepo.save(currentLatest);
@@ -186,9 +186,9 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaresult.message);
+      return CommandResult(false, "", quotaResult.message);
 
-    auto copy = new StorageObject();
+    StorageObject copy;
     copy.initEntity(req.tenantId);
     copy.bucketId = req.destBucketId;
     copy.key = req.destKey;
@@ -216,4 +216,3 @@ private string generateEtag(string id) {
   auto hash = md5Of(id.representation);
   return toHexString(hash).idup;
 }
-

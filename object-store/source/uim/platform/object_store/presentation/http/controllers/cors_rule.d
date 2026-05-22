@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.cors_rule;
 
-
-
-
-
-
 // import uim.platform.object_store.application.usecases.manage.cors_rules;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.cors_rule;
@@ -19,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CorsRuleController : PlatformController {
+class CorsRuleController : ManageController {
   private ManageCorsRulesUseCase usecase;
 
   this(ManageCorsRulesUseCase usecase) {
@@ -36,102 +31,115 @@ class CorsRuleController : PlatformController {
     router.delete_("/api/v1/cors-rules/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CreateCorsRuleRequest();
-      r.tenantId = tenantId;
-      r.bucketId = j.getString("bucketId");
-      r.allowedOrigins = j.getString("allowedOrigins");
-      r.allowedMethods = j.getString("allowedMethods");
-      r.allowedHeaders = j.getString("allowedHeaders");
-      r.exposedHeaders = j.getString("exposedHeaders");
-      r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createRule(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "CORS rule created");
+    auto tenantId = precheck.getTenantId;
+    auto data = precheck["data"];
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto r = CreateCorsRuleRequest();
+    r.tenantId = tenantId;
+    r.bucketId = data.getString("bucketId");
+    r.allowedOrigins = data.getString("allowedOrigins");
+    r.allowedMethods = data.getString("allowedMethods");
+    r.allowedHeaders = data.getString("allowedHeaders");
+    r.exposedHeaders = data.getString("exposedHeaders");
+    r.maxAgeSeconds = data.getInteger("maxAgeSeconds");
+
+    auto result = usecase.createRule(r);
+    if (result.hasError)
+      return errorResponse(result.message);
+
+    return successResponse("CORS rule created successfully", 201, Json.emptyObject.set("id", result
+        .id));
+  }
+
+  protected Json listByBucket(HTTPServerRequest req) {
+    auto precheck = super.precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto bucketId = Bucketid(extractBucketIdFromCorsPath(req.requestURI));
+    if (bucketId.isEmpty)
+      return errorResponse("Invalid bucket ID in path");
+
+    auto rules = usecase.listRules(tenantId, bucketId);
+    auto arr = rules.map!(r => r.toJson).array.toJson;
+
+    return successResponse(
+      "CORS rules retrieved successfully", 200, Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length));
   }
 
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
-      auto rules = usecase.listRules(bucketId);
-
-      auto arr = rules.map!(r => r.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", rules.length)
-        .set("message", "CORS rules retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
+      auto response = listByBucket(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto rule = usecase.getRule(id);
-      if (rule.isNull || rule.isNull) {
-        writeError(res, 404, "CORS rule not found");
-        return;
-      }
-      res.writeJsonBody(rule.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.getTenantId;
+    auto id = CorsRuleId(precheck.getString("id"));
+    if (id.isEmpty)
+      return errorResponse("Invalid CORS rule ID");
+
+    auto rule = usecase.getRule(tenantId, id);
+    if (rule.hasError)
+      return errorResponse("CORS rule not found");
+
+    return successResponse("CORS rule retrieved successfully", 200, rule.toJson);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto j = req.json;
-      auto r = UpdateCorsRuleRequest();
-      r.allowedOrigins = j.getString("allowedOrigins");
-      r.allowedMethods = j.getString("allowedMethods");
-      r.allowedHeaders = j.getString("allowedHeaders");
-      r.exposedHeaders = j.getString("exposedHeaders");
-      r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateRule(id, r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto tenantId = precheck.getTenantId;
+    auto id = CorsRuleId(precheck.getString("id"));
+    if (id.isEmpty)
+      return errorResponse("Invalid CORS rule ID");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "CORS rule not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck["data"];
+
+    auto r = UpdateCorsRuleRequest();
+    r.tenantId = tenantId;
+    r.corsRuleId = id;
+    r.allowedOrigins = data.getString("allowedOrigins");
+    r.allowedMethods = data.getString("allowedMethods");
+    r.allowedHeaders = data.getString("allowedHeaders");
+    r.exposedHeaders = data.getString("exposedHeaders");
+    r.maxAgeSeconds = data.getInteger("maxAgeSeconds");
+
+    auto result = usecase.updateRule(r);
+    if (result.hasError)
+      return errorResponse(result.message == "CORS rule not found" ? 404 : 400, result
+          .message);
+
+    return successResponse("CORS rule updated successfully", 200, Json.emptyObject.set("id", result
+        .id));
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteRule(id);
+      auto id = extractIdFromPath(
+        req.requestURI);
+      auto result = usecase.deleteRule(tenantId, id);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("deleted", true);
-
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.message);
@@ -141,26 +149,11 @@ class CorsRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(CorsRule r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("bucketId", r.bucketId)
-      .set("allowedOrigins", r.allowedOrigins)
-      .set("allowedMethods", r.allowedMethods)
-      .set("allowedHeaders", r.allowedHeaders)
-      .set("exposedHeaders", r.exposedHeaders)
-      .set("maxAgeSeconds", r.maxAgeSeconds)
-      .set("createdAt", r.createdAt)
-      .set("updatedAt", r.updatedAt);
-  }
-
   private static string extractBucketIdFromCorsPath(string uri) {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;
-
     auto bucketsPos = path.indexOf("buckets/");
     if (bucketsPos < 0)
       return "";

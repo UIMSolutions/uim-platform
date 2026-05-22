@@ -22,14 +22,12 @@ struct CorsRule {
   int maxAgeSeconds = 3600;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("bucketId", bucketId.value)
       .set("allowedOrigins", allowedOrigins)
       .set("allowedMethods", allowedMethods)
       .set("allowedHeaders", allowedHeaders)
       .set("exposedHeaders", exposedHeaders)
       .set("maxAgeSeconds", maxAgeSeconds);
-
-    return j;
   }
 }

@@ -24,7 +24,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createAccessPolicy(CreateAccessPolicyRequest req) {
+  CommandResult createPolicy(CreateAccessPolicyRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Policy name is required");
 
@@ -48,7 +48,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "");
   }
 
-  CommandResult updateAccessPolicy(UpdateAccessPolicyRequest req) {
+  CommandResult updatePolicy(UpdateAccessPolicyRequest req) {
     auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
     if (policy.isNull)
       return CommandResult(false, "", "Policy not found");
@@ -69,15 +69,15 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "");
   }
 
-  AccessPolicy getAccessPolicy(TenantId tenantId, AccessPolicyId id) {
+  AccessPolicy getPolicy(TenantId tenantId, AccessPolicyId id) {
     return policyRepo.findById(tenantId, id);
   }
 
-  AccessPolicy[] listAccessPolicies(TenantId tenantId, BucketId bucketId) {
+  AccessPolicy[] listPolicies(TenantId tenantId, BucketId bucketId) {
     return policyRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deleteAccessPolicy(UpdateAccessPolicyRequest req) {
+  CommandResult deletePolicy(UpdateAccessPolicyRequest req) {
     auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
     if (policy.isNull)
       return CommandResult(false, "", "Access policy not found");
