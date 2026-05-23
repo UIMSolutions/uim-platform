@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface DataSubjectRequestRepository : ITenantRepository!(DataSubjectRequest, DataSubjectRequestId) {
 
-    size_t countByDataSubject(DataSubjectId dataSubjectId);
-    DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId);
-    void removeByDataSubject(DataSubjectId dataSubjectId);
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    DataSubjectRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-    size_t countByStatus(RequestStatus status);
-    DataSubjectRequest[] findByStatus(RequestStatus status);
-    void removeByStatus(RequestStatus status);
+    size_t countByStatus(TenantId tenantId, RequestStatus status);
+    DataSubjectRequest[] findByStatus(TenantId tenantId, RequestStatus status);
+    void removeByStatus(TenantId tenantId, RequestStatus status);
 
-    size_t countByAssignee(string assignedTo);
-    DataSubjectRequest[] findByAssignee(string assignedTo);
-    void removeByAssignee(string assignedTo);
+    size_t countByAssignee(TenantId tenantId, string assignedTo);
+    DataSubjectRequest[] findByAssignee(TenantId tenantId, string assignedTo);
+    void removeByAssignee(TenantId tenantId, string assignedTo);
 
 }

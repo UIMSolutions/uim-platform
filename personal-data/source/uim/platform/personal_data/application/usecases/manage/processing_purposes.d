@@ -23,8 +23,6 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0) return CommandResult(false, "", "Purpose name is required");
         if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
 
-        
-
         ProcessingPurpose p;
         p.id = r.id;
         p.tenantId = r.tenantId;
@@ -44,7 +42,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, p.id.value, "");
     }
 
-    ProcessingPurpose getProcessingPurpose(ProcessingPurposeId id) {
+    ProcessingPurpose getProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -53,7 +51,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProcessingPurpose(UpdateProcessingPurposeRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Processing purpose not found");
 
@@ -72,7 +70,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProcessingPurpose(ProcessingPurposeId id) {
+    CommandResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
         auto purpose = repo.findById(tenantId, id);
         if (purpose.isNull)
             return CommandResult(false, "", "Processing purpose not found");

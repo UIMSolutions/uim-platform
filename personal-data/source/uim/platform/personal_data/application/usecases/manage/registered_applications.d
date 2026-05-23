@@ -18,7 +18,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createRegisteredApplication(CreateRegisteredApplicationRequest r) {
+    CommandResult createApplication(CreateRegisteredApplicationRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Application name is required");
 
@@ -41,15 +41,15 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    RegisteredApplication getRegisteredApplication(RegisteredApplicationId id) {
+    RegisteredApplication getApplication(RegisteredApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
-    RegisteredApplication[] listRegisteredApplications(TenantId tenantId) {
+    RegisteredApplication[] listApplications(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateRegisteredApplication(UpdateRegisteredApplicationRequest r) {
+    CommandResult updateApplication(UpdateRegisteredApplicationRequest r) {
         auto existing = repo.findById(r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
@@ -67,7 +67,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult activateRegisteredApplication(RegisteredApplicationId id) {
+    CommandResult activateApplication(RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
@@ -77,7 +77,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult suspendRegisteredApplication(RegisteredApplicationId id) {
+    CommandResult suspendApplication(RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
@@ -87,7 +87,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRegisteredApplication(RegisteredApplicationId id) {
+    CommandResult deleteApplication(RegisteredApplicationId id) {
         auto application = repo.findById(tenantId, id);
         if (application.isNull)
             return CommandResult(false, "", "Application not found");

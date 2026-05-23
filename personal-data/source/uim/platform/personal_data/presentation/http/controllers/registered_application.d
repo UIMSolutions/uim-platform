@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RegisteredApplicationController : PlatformController {
+class RegisteredApplicationController : ManageController {
     private ManageRegisteredApplicationsUseCase usecase;
 
     this(ManageRegisteredApplicationsUseCase usecase) {
@@ -20,7 +20,7 @@ class RegisteredApplicationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/personal-data/applications", &handleList);
         router.get("/api/v1/personal-data/applications/*", &handleGet);
         router.post("/api/v1/personal-data/applications", &handleCreate);
@@ -30,180 +30,191 @@ class RegisteredApplicationController : PlatformController {
         router.delete_("/api/v1/personal-data/applications/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            CreateRegisteredApplicationRequest r;
-            r.tenantId = tenantId;
-            r.id = j.getString("id");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.endpointUrl = j.getString("endpointUrl");
-            r.apiVersion = j.getString("apiVersion");
-            r.contactEmail = j.getString("contactEmail");
-            r.contactName = j.getString("contactName");
-            r.createdBy = UserId(j.getString("createdBy"));
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.create(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application registered");
+        auto tenantId = req.getTenantId;
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto apps = usecase.listApplications(tenantId);
+        auto jarr = apps.map!(a => appToJson(a)).array.toJson;
+
+        return successResponse("Applications retrieved", "Retrieved", 200, Json.emptyObject
+                .set("count", apps.length)
+                .set("resources", jarr));
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto apps = usecase.list(tenantId);
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto jarr = apps.map!(a => appToJson(a)).array.toJson; {
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        auto id = data.getString("id");
 
-            auto resp = Json.emptyObject
-              .set("count", apps.length)
-              .set("resources", jarr);
+        CreateRegisteredApplicationRequest r;
+        r.tenantId = tenantId;
+        r.id = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.endpointUrl = data.getString("endpointUrl");
+        r.apiVersion = data.getString("apiVersion");
+        r.contactEmail = data.getString("contactEmail");
+        r.contactName = data.getString("contactName");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.createApplication(r);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Application registered", "Registered", 201, resp);
+
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto path = req.requestURI.to!string;
-            if (path.length > 9 && path[$ - 9 .. $] == "/activate") return;
-            if (path.length > 8 && path[$ - 8 .. $] == "/suspend") return;
+        auto tenantId = precheck.tenantId;
+        auto path = req.requestURI.to!string;
+        if (path.length > 9 && path[$ - 9 .. $] == "/activate")
+            return errorResponse("Use the activate endpoint to activate the application");
 
-            auto id = extractIdFromPath(path);
-            auto a = usecase.getById(tenantId, id);
-            if (a.isNull) {
-                writeError(res, 404, "Application not found");
-                return;
-            }
-            res.writeJsonBody(toJson(a), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        if (path.length > 8 && path[$ - 8 .. $] == "/suspend")
+            return errorResponse("Use the suspend endpoint to suspend the application");
+
+        auto id = RegisteredApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid application ID");
+
+        auto a = usecase.getApplication(tenantId, id);
+        if (a.isNull)
+            return errorResponse("Application not found");
+
+        return successResponse("Application retrieved", "Retrieved", 200, a.toJson);
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto j = req.json;
-            UpdateRegisteredApplicationRequest r;
-            r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.endpointUrl = j.getString("endpointUrl");
-            r.apiVersion = j.getString("apiVersion");
-            r.contactEmail = j.getString("contactEmail");
-            r.contactName = j.getString("contactName");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        auto id = RegisteredApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid application ID");
 
-            auto result = usecase.update(r);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application updated");
+        UpdateRegisteredApplicationRequest r;
+        r.tenantId = tenantId;
+        r.applicationId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.endpointUrl = data.getString("endpointUrl");
+        r.apiVersion = data.getString("apiVersion");
+        r.contactEmail = data.getString("contactEmail");
+        r.contactName = data.getString("contactName");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.updateApplication(r);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Application updated");
+
+        return successResponse("Application updated", "Updated", 200, resp);
+    }
+
+    protected Json activateHandler(HTTPServerRequest req) {
+        auto precheck = precheckHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 9]; // remove "/activate"
+        auto id = RegisteredApplicationId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid application ID");
+
+        auto result = usecase.activateApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Application activated");
+
+        return successResponse("Application activated", "Activated", 200, resp);
     }
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = extractIdFromPath(stripped);
-
-            auto result = usecase.activate(id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application activated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = activateHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
+    }
+
+    protected Json suspendHandler(HTTPServerRequest req) {
+        auto precheck = precheckHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = req.requestURI.to!string;
+        auto stripped = path[0 .. $ - 8]; // remove "/suspend"
+        auto id = RegisteredApplicationId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid application ID");
+
+        auto result = usecase.suspendApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Application suspended");
+
+        return successResponse("Application suspended", "Suspended", 200, resp);
     }
 
     protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 8]; // remove "/suspend"
-            auto id = extractIdFromPath(stripped);
-
-            auto result = usecase.suspend(id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application suspended");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = suspendHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto result = usecase.deleteRegisteredApplication(id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Application deleted");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+        auto tenantId = precheck.tenantId;
+        auto id = RegisteredApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid application ID");
 
-    private Json appToJson(RegisteredApplication a) {
-        return Json.emptyObject
-        .set("id", a.id)
-        .set("name", a.name)
-        .set("description", a.description)
-        .set("status", a.status.to!string)
-        .set("endpointUrl", a.endpointUrl)
-        .set("apiVersion", a.apiVersion)
-        .set("contactEmail", a.contactEmail)
-        .set("contactName", a.contactName)
-        .set("createdBy", a.createdBy)
-        .set("createdAt", a.createdAt);
+        auto result = usecase.deleteApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Application deleted");
+
+        return successResponse("Application deleted", "Deleted", 200, resp);
     }
 }

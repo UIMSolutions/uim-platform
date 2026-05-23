@@ -13,17 +13,17 @@ mixin(ShowModule!());
 
 class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
 
-    bool existsByName(string name) {
+    bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(v => v.name == name);
     }
-    RegisteredApplication findByName(string name) {
-        foreach (v; findAll)
+    RegisteredApplication findByName(TenantId tenantId, string name) {
+        foreach (v; findByTenant(tenantId))
             if (v.name == name)
                 return v;
         return RegisteredApplication.init;
     }
 
-    size_t countByStatus(ApplicationStatus status) {
+    size_t countByStatus(TenantId tenantId, ApplicationStatus status) {
         return findByTenant(tenantId).count!(v => v.status == status);
     }
     RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, size_t offset = 0, size_t limit = 0) {
@@ -31,11 +31,11 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
             ? applications.filter!(v => v.status == status).skip(offset).array
             : applications.filter!(v => v.status == status).skip(offset).take(limit).array;
     }
-    RegisteredApplication[] findByStatus(ApplicationStatus status) {
+    RegisteredApplication[] findByStatus(TenantId tenantId, ApplicationStatus status) {
         return filterByStatus(findByTenant(tenantId), status, 0, 0);
     }
-    void removeByStatus(ApplicationStatus status) {
-        findByStatus(status).each!(v => remove(v.id));
+    void removeByStatus(TenantId tenantId, ApplicationStatus status) {
+        findByStatus(tenantId, status).each!(v => remove(v.id));
     }
 
 }

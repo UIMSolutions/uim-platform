@@ -21,7 +21,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
   }
 
   DeviceRegistration findByDeviceToken(TenantId tenantId, string deviceToken) {
-    foreach (r; findAll) {
+    foreach (r; findByTenant(tenantId)) {
       if (r.deviceToken == deviceToken)
         return r;
     }

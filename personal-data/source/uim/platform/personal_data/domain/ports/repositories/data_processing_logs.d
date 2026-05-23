@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface DataProcessingLogRepository : ITenantRepository!(DataProcessingLog, DataProcessingLogId) {
 
-    size_t countByDataSubject(DataSubjectId dataSubjectId);
-    DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId);
-    void removeByDataSubject(DataSubjectId dataSubjectId);
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    DataProcessingLog[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-    size_t countByRequest(DataSubjectRequestId requestId);
-    DataProcessingLog[] findByRequest(DataSubjectRequestId requestId);
-    void removeByRequest(DataSubjectRequestId requestId);
+    size_t countByRequest(TenantId tenantId, DataSubjectRequestId requestId);
+    DataProcessingLog[] findByRequest(TenantId tenantId, DataSubjectRequestId requestId);
+    void removeByRequest(TenantId tenantId, DataSubjectRequestId requestId);
 
-    size_t countByApplication(string applicationId);
-    DataProcessingLog[] findByApplication(string applicationId);
-    void removeByApplication(string applicationId);
+    size_t countByApplication(TenantId tenantId, string applicationId);
+    DataProcessingLog[] findByApplication(TenantId tenantId, string applicationId);
+    void removeByApplication(TenantId tenantId, string applicationId);
     
 }

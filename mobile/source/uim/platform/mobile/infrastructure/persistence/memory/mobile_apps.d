@@ -21,7 +21,7 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     return findByBundleId(tenantId, bundleId).id != MobileAppId.init;
   }
   MobileApp findByBundleId(TenantId tenantId, string bundleId) {
-    foreach (a; findAll) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.bundleId == bundleId)
         return a;
     }

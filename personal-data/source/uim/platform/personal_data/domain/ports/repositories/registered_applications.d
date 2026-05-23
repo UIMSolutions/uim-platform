@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface RegisteredApplicationRepository : ITenantRepository!(RegisteredApplication, RegisteredApplicationId) {
 
-    bool existsByName(string name);
-    RegisteredApplication findByName(string name);
-    void removeByName(string name);
+    bool existsByName(TenantId tenantId, string name);
+    RegisteredApplication findByName(TenantId tenantId, string name);
+    void removeByName(TenantId tenantId, string name);
 
-    size_t countByStatus(ApplicationStatus status);
-    RegisteredApplication[] findByStatus(ApplicationStatus status, size_t offset = 0, size_t limit = 100);
-    void removeByStatus(ApplicationStatus status);
+    size_t countByStatus(TenantId tenantId, ApplicationStatus status);
+    RegisteredApplication[] findByStatus(TenantId tenantId, ApplicationStatus status, size_t offset = 0, size_t limit = 100);
+    void removeByStatus(TenantId tenantId, ApplicationStatus status);
 
 }

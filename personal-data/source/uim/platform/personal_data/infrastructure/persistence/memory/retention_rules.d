@@ -13,31 +13,34 @@ mixin(ShowModule!());
 
 class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
-    size_t countByApplication(RegisteredApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
-    RetentionRule[] findByApplication(RegisteredApplicationId applicationId) {
+    RetentionRule[] filterByApplication(RetentionRule[] rules, RegisteredApplicationId applicationId) {
+        return rules.filter!(v => v.applicationIds.canFind(applicationId)).array;
+    }   
+    RetentionRule[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         RetentionRule[] result;
-        foreach (v; findAll)
+        foreach (v; findByTenant(tenantId))
             if (v.applicationIds.canFind(applicationId)) result ~= v;
         return result;
     }
-    void removeByApplication(RegisteredApplicationId applicationId) {
-        findByApplication(applicationId).each!(v => store.remove(v));
+    void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(v => store.remove(v));
     }
 
-    size_t countByStatus(RetentionRuleStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, RetentionRuleStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    RetentionRule[] findByStatus(RetentionRuleStatus status) {
-        RetentionRule[] result;
-        foreach (v; findAll)
-            if (v.status == status) result ~= v;
-        return result;
+    RetentionRule[] filterByStatus(RetentionRule[] rules, RetentionRuleStatus status) {
+        return rules.filter!(v => v.status == status).array;
     }
-    void removeByStatus(RetentionRuleStatus status) {
-        findByStatus(status).each!(v => store.remove(v));
+    RetentionRule[] findByStatus(TenantId tenantId, RetentionRuleStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, RetentionRuleStatus status) {
+        findByStatus(tenantId,status).each!(v => store.remove(v));
     }
 
 }

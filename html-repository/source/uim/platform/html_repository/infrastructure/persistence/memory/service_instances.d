@@ -12,14 +12,14 @@ import uim.platform.html_repository.domain.types;
 class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.name == name) return true;
     }
     return false;
   }
 
   ServiceInstance findByName(TenantId tenantId, string name) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.name == name) return e;
     }
     return ServiceInstance.init;

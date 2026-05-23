@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface PersonalDataRecordRepository : ITenantRepository!(PersonalDataRecord, PersonalDataRecordId) {
 
-    size_t countByDataSubject(DataSubjectId dataSubjectId);
-    PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId);
-    void removeByDataSubject(DataSubjectId dataSubjectId);
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    PersonalDataRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-    size_t countByApplication(RegisteredApplicationId applicationId);
-    PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId);
-    void removeByApplication(RegisteredApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    PersonalDataRecord[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
 
-    size_t countByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
-    PersonalDataRecord[] findByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
-    void removeByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
+    size_t countByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
+    PersonalDataRecord[] findByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
+    void removeByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId);
     
 }

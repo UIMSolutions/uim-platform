@@ -17,14 +17,14 @@ mixin(ShowModule!());
 class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), InferenceResultRepository {
 
   bool existsByRequest(TenantId tenantId, InferenceRequestId requestId) {
-    foreach (e; findAll)
+    foreach (e; findByTenant(tenantId))
       if (e.requestId == requestId && e.tenantId == tenantId)
         return true;
     return false;
   }
 
   InferenceResult findByRequest(TenantId tenantId, InferenceRequestId requestId) {
-    foreach (e; findAll)
+    foreach (e; findByTenant(tenantId))
       if (e.requestId == requestId && e.tenantId == tenantId)
         return e;
     return InferenceResult.init;

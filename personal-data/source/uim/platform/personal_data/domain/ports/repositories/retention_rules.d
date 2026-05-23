@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
 
-    size_t countByApplication(RegisteredApplicationId applicationId);
-    RetentionRule[] findByApplication(RegisteredApplicationId applicationId);
-    void removeByApplication(RegisteredApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    RetentionRule[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
 
-    size_t countByStatus(RetentionRuleStatus status);
-    RetentionRule[] findByStatus(RetentionRuleStatus status);
-    void removeByStatus(RetentionRuleStatus status);
+    size_t countByStatus(TenantId tenantId, RetentionRuleStatus status);
+    RetentionRule[] findByStatus(TenantId tenantId, RetentionRuleStatus status);
+    void removeByStatus(TenantId tenantId, RetentionRuleStatus status);
 
 }

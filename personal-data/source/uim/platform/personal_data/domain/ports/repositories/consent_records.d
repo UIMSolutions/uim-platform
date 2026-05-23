@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
 
-    size_t countByDataSubject(DataSubjectId dataSubjectId);
-    ConsentRecord[] findByDataSubject(DataSubjectId dataSubjectId);
-    void removeByDataSubject(DataSubjectId dataSubjectId);
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
 
-    size_t countByPurpose(ProcessingPurposeId purposeId);
-    ConsentRecord[] findByPurpose(ProcessingPurposeId purposeId);
-    void removeByPurpose(ProcessingPurposeId purposeId);
+    size_t countByPurpose(TenantId tenantId, ProcessingPurposeId purposeId);
+    ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurposeId purposeId);
+    void removeByPurpose(TenantId tenantId, ProcessingPurposeId purposeId);
 
-    ConsentRecord findByDataSubjectAndPurpose(DataSubjectId dataSubjectId, ProcessingPurposeId purposeId);
+    ConsentRecord findByDataSubjectAndPurpose(TenantId tenantId, DataSubjectId dataSubjectId, ProcessingPurposeId purposeId);
     
 }

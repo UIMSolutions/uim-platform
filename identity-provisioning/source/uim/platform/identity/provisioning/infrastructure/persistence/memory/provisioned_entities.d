@@ -16,14 +16,14 @@ mixin(ShowModule!());
 class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
 
   bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
-    foreach (e; findAll)
+    foreach (e; findByTenant(tenantId))
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return true;
     return false;
   }
 
   ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
-    foreach (e; findAll)
+    foreach (e; findByTenant(tenantId))
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return e;
     return ProvisionedEntity.init;

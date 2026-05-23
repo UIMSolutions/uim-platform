@@ -46,7 +46,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ds.id.value, "");
     }
 
-    DataSubject getDataSubject(DataSubjectId id) {
+    DataSubject getDataSubject(TenantId tenantId, DataSubjectId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -54,16 +54,16 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    DataSubject[] searchDataSubjectsByName(string firstName, string lastName) {
-        return repo.findByName(firstName, lastName);
+    DataSubject[] searchDataSubjectsByName(TenantId tenantId, string firstName, string lastName) {
+        return repo.findByName(tenantId, firstName, lastName);
     }
 
-    DataSubject findDataSubjectByEmail(string email) {
-        return repo.findByEmail(email);
+    DataSubject findDataSubjectByEmail(TenantId tenantId, string email) {
+        return repo.findByEmail(tenantId, email);
     }
 
     CommandResult updateDataSubject(UpdateDataSubjectRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.subjectId);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
@@ -79,7 +79,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult blockDataSubject(DataSubjectId id) {
+    CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
@@ -90,7 +90,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult eraseDataSubject(DataSubjectId id) {
+    CommandResult eraseDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
@@ -106,7 +106,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDataSubject(DataSubjectId id) {
+    CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");

@@ -19,7 +19,7 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     }
     DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId) {
         DataProcessingLog[] result;
-        foreach (v; findAll)
+        foreach (v; findByTenant(tenantId))
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
@@ -34,7 +34,7 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     }
     DataProcessingLog[] findByRequest(DataSubjectRequestId requestId) {
         DataProcessingLog[] result;
-        foreach (v; findAll)
+        foreach (v; findByTenant(tenantId))
             if (v.requestId == requestId) result ~= v;
         return result;
     }
@@ -49,7 +49,7 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     }
     DataProcessingLog[] findByApplication(string applicationId) {
         DataProcessingLog[] result;
-        foreach (v; findAll)
+        foreach (v; findByTenant(tenantId))
             if (v.applicationId == applicationId) result ~= v;
         return result;
     }

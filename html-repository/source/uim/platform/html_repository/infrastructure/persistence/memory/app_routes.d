@@ -15,7 +15,7 @@ mixin(ShowModule!());
 class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
 
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.pathPrefix == pathPrefix) return e;
     }
     return AppRoute.init;

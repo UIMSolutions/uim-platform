@@ -21,7 +21,7 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
   }
 
   PushRegistration findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId) {
-    foreach (r; findAll) {
+    foreach (r; findByTenant(tenantId)) {
       if (r.deviceId == deviceId && r.appId == appId)
         return r;
     }

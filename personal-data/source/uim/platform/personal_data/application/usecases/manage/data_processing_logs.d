@@ -42,11 +42,11 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    bool hasDataProcessingLog(DataProcessingLogId id) {
-        return repo.existsById(id);
+    bool hasDataProcessingLog(TenantId tenantId, DataProcessingLogId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    DataProcessingLog getDataProcessingLogById(DataProcessingLogId id) {
+    DataProcessingLog getDataProcessingLogById(TenantId tenantId, DataProcessingLogId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -55,18 +55,18 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     }
 
     DataProcessingLog[] listDataProcessingLogsByTenant(TenantId tenantId) {
-        return listDataProcessingLogsByTenant(TenantId(tenantId));
+        return listDataProcessingLogsByTenant(tenantId);
     }
 
-    DataProcessingLog[] listDataProcessingLogsByDataSubject(DataSubjectId dataSubjectId) {
-        return repo.findByDataSubject(dataSubjectId);
+    DataProcessingLog[] listDataProcessingLogsByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        return repo.findByDataSubject(tenantId, dataSubjectId);
     }
 
-    DataProcessingLog[] listDataProcessingLogsByRequest(DataSubjectRequestId requestId) {
-        return repo.findByRequest(requestId);
+    DataProcessingLog[] listDataProcessingLogsByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
+        return repo.findByRequest(tenantId, requestId);
     }
 
-    CommandResult deleteDataProcessingLog(DataProcessingLogId id) {
+    CommandResult deleteDataProcessingLog(TenantId tenantId, DataProcessingLogId id) {
         auto log = repo.findById(tenantId, id);
         if (log.isNull)
             return CommandResult(false, "", "Log entry not found");

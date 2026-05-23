@@ -12,13 +12,13 @@ import uim.platform.html_repository.domain.types;
 class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), ContentCacheRepository {
 
   bool existsByFileId(AppFileId fileId) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.fileId == fileId) return true;
     }
     return false;
   }
   ContentCache findByFileId(AppFileId fileId) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.fileId == fileId) return e;
     }
     return ContentCache.init;
@@ -52,7 +52,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
 
   long totalSizeByTenant(TenantId tenantId) {
     long total = 0;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId) total += e.sizeBytes;
     }
     return total;

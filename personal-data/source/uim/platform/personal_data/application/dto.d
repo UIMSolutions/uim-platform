@@ -101,7 +101,8 @@ struct CreateRegisteredApplicationRequest {
 
 struct UpdateRegisteredApplicationRequest {
     TenantId tenantId;
-    string id;
+    RegisteredApplicationId applicationId;
+
     string name;
     string description;
     string endpointUrl;
@@ -114,7 +115,8 @@ struct UpdateRegisteredApplicationRequest {
 // --- Processing Purpose ---
 struct CreateProcessingPurposeRequest {
     TenantId tenantId;
-    string id;
+    ProcessingPurposeId purposeId;
+
     string name;
     string description;
     string legalBasis;
@@ -128,7 +130,8 @@ struct CreateProcessingPurposeRequest {
 
 struct UpdateProcessingPurposeRequest {
     TenantId tenantId;
-    string id;
+    ProcessingPurposeId purposeId;
+
     string name;
     string description;
     string legalBasis;
@@ -141,7 +144,8 @@ struct UpdateProcessingPurposeRequest {
 // --- Consent Record ---
 struct CreateConsentRecordRequest {
     TenantId tenantId;
-    string id;
+    ConsentRecordId recordId;
+
     string dataSubjectId;
     string purposeId;
     string consentText;
@@ -155,14 +159,14 @@ struct CreateConsentRecordRequest {
 
 struct WithdrawConsentRequest {
     TenantId tenantId;
-    string id;
+    ConsentRecordId recordId;
     UserId withdrawnBy;
 }
 
 // --- Retention Rule ---
 struct CreateRetentionRuleRequest {
     TenantId tenantId;
-    string id;
+    RetentionRuleId ruleId;
     string name;
     string description;
     int retentionPeriod;
@@ -178,7 +182,7 @@ struct CreateRetentionRuleRequest {
 
 struct UpdateRetentionRuleRequest {
     TenantId tenantId;
-    string id;
+    RetentionRuleId ruleId;
     string name;
     string description;
     int retentionPeriod;
@@ -192,7 +196,7 @@ struct UpdateRetentionRuleRequest {
 // --- Data Processing Log ---
 struct CreateDataProcessingLogRequest {
     TenantId tenantId;
-    string id;
+    DataProcessingLogId logId;
     string entryType;
     string severity;
     string dataSubjectId;

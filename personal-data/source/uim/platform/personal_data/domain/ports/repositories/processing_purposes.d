@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ProcessingPurposeRepository : ITenantRepository!(ProcessingPurpose, ProcessingPurposeId) {
 
-    size_t countByLegalBasis(LegalBasis basis);
-    ProcessingPurpose[] findByLegalBasis(LegalBasis basis);
-    void removeByLegalBasis(LegalBasis basis);
+    size_t countByLegalBasis(TenantId tenantId, LegalBasis basis);
+    ProcessingPurpose[] findByLegalBasis(TenantId tenantId, LegalBasis basis);
+    void removeByLegalBasis(TenantId tenantId, LegalBasis basis);
 
-    size_t countByApplication(RegisteredApplicationId applicationId);
-    ProcessingPurpose[] findByApplication(RegisteredApplicationId applicationId);
-    void removeByApplication(RegisteredApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    ProcessingPurpose[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
     
 }

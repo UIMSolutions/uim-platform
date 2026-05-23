@@ -15,14 +15,14 @@ mixin(ShowModule!());
 class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRepository {
 
   bool existsByPath(AppVersionId versionId, string filePath) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId && e.filePath == filePath) return true;
     }
     return false;
   }
 
   AppFile findByPath(AppVersionId versionId, string filePath) {
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId && e.filePath == filePath) return e;
     }
     return AppFile.init;
@@ -31,7 +31,7 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
 
   size_t countByVersion(AppVersionId versionId) {
     size_t count = 0;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId) count++;
     }
     return count;
@@ -41,14 +41,14 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
   }
   AppFile[] findByVersion(AppVersionId versionId) {
     AppFile[] result;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId) result ~= e;
     }
     return result;
   }
   void removeByVersion(AppVersionId versionId) {
     AppFile[] result;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId != versionId) result ~= e;
     }
     store = result;
@@ -56,7 +56,7 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
 
   size_t countByCategory(AppVersionId versionId, FileCategory category) {
     size_t count = 0;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId && e.category == category) count++;
     }
     return count;
@@ -66,14 +66,14 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
   }
   AppFile[] findByCategory(AppVersionId versionId, FileCategory category) {
     AppFile[] result;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId && e.category == category) result ~= e;
     }
     return result;
   }
   void removeByCategory(AppVersionId versionId, FileCategory category) {
     AppFile[] result;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId != versionId || e.category != category) result ~= e;
     }
     store = result;
@@ -81,7 +81,7 @@ class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), AppFileRe
 
   long totalSizeByVersion(AppVersionId versionId) {
     long total = 0;
-    foreach (e; findAll) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId) total += e.sizeBytes;
     }
     return total;

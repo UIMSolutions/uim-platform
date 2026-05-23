@@ -144,6 +144,13 @@ int code(Json response) {
     return response.getInteger("code");
 }
 
+string path(Json response) {
+    if (response.isNull || !response.hasKey("path")) {
+        return "/"; // Default to root path if no path is provided
+    }
+    return response.getString("path");
+}
+
 string statusMessage(Json response) {
     if (response.isNull || !response.hasKey("message")) {
         return "Internal Server Error"; // Default message
