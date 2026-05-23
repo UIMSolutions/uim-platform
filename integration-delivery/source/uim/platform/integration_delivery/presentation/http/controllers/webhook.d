@@ -65,7 +65,7 @@ class WebhookController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         WebhookDTO dto;
         dto.webhookId = WebhookId(data.getString("webhookId", ""));
@@ -87,7 +87,7 @@ class WebhookController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);

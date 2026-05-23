@@ -39,7 +39,7 @@ class LifecycleRuleController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     auto request = CreateLifecycleRuleRequest();
     request.tenantId = tenantId;
@@ -66,7 +66,7 @@ class LifecycleRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto bucketId = BucketId(extractBucketIdFromRulesPath(req.requestURI));
     if (bucketId.isNull)
       return errorResponse("Invalid bucket ID");
@@ -93,7 +93,7 @@ class LifecycleRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = LifecycleRuleId(precheck.getString("id"));
     if (id.isNull)
       return errorResponse("Invalid lifecycle rule ID");
@@ -110,9 +110,9 @@ class LifecycleRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = LifecycleRuleId(precheck.getString("id"));
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     UpdateLifecycleRuleRequest request;
     request.tenantId = tenantId;
@@ -138,7 +138,7 @@ class LifecycleRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = LifecycleRuleId(precheck.getString("id"));
 
     auto result = usecase.deleteRule(tenantId, id);

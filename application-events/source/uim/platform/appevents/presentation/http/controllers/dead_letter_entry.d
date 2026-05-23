@@ -71,7 +71,7 @@ class DeadLetterEntryController : ManageController {
             return errorResponse(precheck.error, 400);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         
         auto id = DeadLetterEntryId(data.getString("entryId"));
         if (id.isNull)

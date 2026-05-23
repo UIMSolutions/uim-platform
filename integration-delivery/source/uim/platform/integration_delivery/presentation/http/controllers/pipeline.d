@@ -65,7 +65,7 @@ class PipelineController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         PipelineDTO dto;
         dto.pipelineId = PipelineId(data.getString("pipelineId", ""));
@@ -89,7 +89,7 @@ class PipelineController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);

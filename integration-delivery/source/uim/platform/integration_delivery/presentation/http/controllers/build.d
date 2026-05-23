@@ -65,7 +65,7 @@ class BuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         BuildDTO dto;
         dto.buildId = BuildId(data.getString("buildId", ""));
@@ -90,7 +90,7 @@ class BuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);

@@ -49,7 +49,7 @@ class BusinessRoleController : ManageController {
       return precheck;
     }
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
 
     CreateBusinessRoleRequest r;
@@ -149,7 +149,7 @@ class BusinessRoleController : ManageController {
         .set("statusCode", 400);
     }
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
 
     UpdateBusinessRoleRequest r;
@@ -187,7 +187,7 @@ class BusinessRoleController : ManageController {
         .set("statusCode", 400);
     }
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
     auto result = usecase.deleteBusinessRole(tenantId, id);
     if (result.hasError()) {

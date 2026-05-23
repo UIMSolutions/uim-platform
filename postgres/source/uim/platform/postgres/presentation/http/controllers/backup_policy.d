@@ -52,7 +52,7 @@ class BackupPolicyController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(data.getString("backupPolicyId", ""));
         dto.tenantId        = tenantId;
@@ -70,7 +70,7 @@ class BackupPolicyController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId        = tenantId;

@@ -63,7 +63,7 @@ class CertificateController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"]; // Consistent with other createHandler implementations
+        auto data = precheck.data; // Consistent with other createHandler implementations
         auto id = CertificateId(data.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);

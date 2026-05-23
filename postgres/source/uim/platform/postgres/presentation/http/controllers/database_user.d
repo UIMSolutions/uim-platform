@@ -52,7 +52,7 @@ class DatabaseUserController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         DatabaseUserDTO dto;
         dto.databaseUserId = DatabaseUserId(data.getString("databaseUserId", ""));
         dto.tenantId       = tenantId;
@@ -69,7 +69,7 @@ class DatabaseUserController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         DatabaseUserDTO dto;
         dto.databaseUserId = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId       = tenantId;

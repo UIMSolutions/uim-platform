@@ -65,7 +65,7 @@ class BackupPolicyController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(data.getString("backupPolicyId", ""));
@@ -94,7 +94,7 @@ class BackupPolicyController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));

@@ -54,7 +54,7 @@ class ApplicationController : ManageController {
         }
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = ApplicationId(data.getString("id"));
         if (id.isNull) {
             return Json.emptyObject
@@ -138,7 +138,7 @@ class ApplicationController : ManageController {
                 .set("status", "error")
                 .set("statusCode", 400);
         }
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ApplicationDTO dto;
         dto.applicationId = id;

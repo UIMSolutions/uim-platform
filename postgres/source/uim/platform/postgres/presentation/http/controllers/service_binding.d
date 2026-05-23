@@ -51,7 +51,7 @@ class ServiceBindingController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         ServiceBindingDTO dto;
         dto.serviceBindingId = ServiceBindingId(data.getString("serviceBindingId", ""));
         dto.tenantId         = tenantId;

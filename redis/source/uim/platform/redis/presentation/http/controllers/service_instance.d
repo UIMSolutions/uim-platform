@@ -65,7 +65,7 @@ class ServiceInstanceController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId", ""));
@@ -97,7 +97,7 @@ class ServiceInstanceController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));

@@ -41,6 +41,15 @@ TenantId toTenantId(string s) {
     return TenantId(s);
 }
 
-TenantId getTenantId(Json data) {
+TenantId tenantId(Json data) {
     return TenantId(data.getString("tenantId"));
+}
+
+string id(Json data) {
+    return data.getString("id");
+}
+
+Json data(Json data) {
+  return "data" in data && data["data"].isObject 
+    ? data["data"] : Json.emptyObject;
 }

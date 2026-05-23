@@ -58,7 +58,7 @@ class EventFilterController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventFilterDTO dto;
         dto.filterId       = EventFilterId(data.getString("filterId", ""));
         dto.tenantId       = tenantId;
@@ -78,7 +78,7 @@ class EventFilterController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventFilterDTO dto;
         dto.filterId       = EventFilterId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId       = tenantId;

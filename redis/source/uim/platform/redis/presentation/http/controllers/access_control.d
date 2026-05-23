@@ -65,7 +65,7 @@ class AccessControlController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         AccessControlDTO dto;
         dto.accessControlId = AccessControlId(data.getString("accessControlId", ""));
@@ -92,7 +92,7 @@ class AccessControlController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         AccessControlDTO dto;
         dto.accessControlId = AccessControlId(extractIdFromPath(req.requestURI.to!string));

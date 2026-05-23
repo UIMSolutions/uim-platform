@@ -124,7 +124,7 @@ class AppBuildController : ManageController {
                 .set("statusCode", 400);
         }
 
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         AppBuildDTO dto;
         dto.appBuildId = id;

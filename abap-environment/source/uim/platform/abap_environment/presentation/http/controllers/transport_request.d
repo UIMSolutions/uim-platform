@@ -57,7 +57,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = getTenantId(precheck);
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     CreateTransportRequestRequest r;
     r.tenantId = tenantId;
@@ -102,7 +102,7 @@ class TransportRequestController : ManageController {
     if (requestId.isNull)
       return errorResponse("Invalid transport request id", 400);
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     AddTransportTaskRequest r;
     r.transportRequestId = requestId;

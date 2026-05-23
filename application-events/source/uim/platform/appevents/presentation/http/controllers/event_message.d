@@ -55,7 +55,7 @@ class EventMessageController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventMessageDTO dto;
         dto.messageId      = EventMessageId(data.getString("messageId", ""));
         dto.tenantId       = tenantId;

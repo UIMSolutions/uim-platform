@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class AccessRuleController : PlatformController {
+class AccessRuleController : ManageController {
   private ManageAccessRulesUseCase usecase;
 
   this(ManageAccessRulesUseCase usecase) {
@@ -29,116 +29,117 @@ class AccessRuleController : PlatformController {
     router.delete_("/api/v1/access-rules/*", &handleDelete);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto rules = usecase.listAccessRules(tenantId);
-      auto arr = rules.map!(r => r.toJson).array.toJson;
+    auto tenantId = precheck.tenantId;
+    auto rules = usecase.listAccessRules(tenantId);
+    auto arr = rules.map!(r => r.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(rules.length))
-        .set("message", "Access rules retrieved successfully");
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", rules.length);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-  
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-
-      auto j = req.json;
-      auto r = CreateAccessRuleRequest();
-      r.connectorId = j.getString("connectorId");
-      r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.protocol = j.getString("protocol");
-      r.virtualHost = j.getString("virtualHost");
-      r.virtualPort = getUshort(j, "virtualPort");
-      r.urlPathPrefix = j.getString("urlPathPrefix");
-      r.policy = j.getString("policy");
-      r.principalPropagation = j.getBoolean("principalPropagation");
-
-      auto result = usecase.createAccessRule(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Access rule created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Access rules retrieved successfully", "Retrieved", 200, resp);
   }
 
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = RuleId(extractIdFromPath(req.requestURI));
-      
-      auto rule = usecase.getAccessRule(tenantId, id);
-      if (rule.isNull) {
-        writeError(res, 404, "Access rule not found");
-        return;
-      }
-      res.writeJsonBody(rule.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    CreateAccessRuleRequest r;
+    r.connectorId = data.getString("connectorId");
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.protocol = data.getString("protocol");
+    r.virtualHost = data.getString("virtualHost");
+    r.virtualPort = getUshort(data, "virtualPort");
+    r.urlPathPrefix = data.getString("urlPathPrefix");
+    r.policy = data.getString("policy");
+    r.principalPropagation = data.getBoolean("principalPropagation");
+
+    auto result = usecase.createAccessRule(r);
+    if (result.hasError)
+      return errorResponse(result.message);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Access rule created successfully", 201, responseData);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
-      auto r = UpdateAccessRuleRequest();
-      r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.urlPathPrefix = j.getString("urlPathPrefix");
-      r.policy = j.getString("policy");
-      r.principalPropagation = j.getBoolean("principalPropagation");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateAccessRule(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Access rule updated");
+    auto tenantId = precheck.tenantId;
+    auto id = RuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid access rule ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Access rule not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto rule = usecase.getAccessRule(tenantId, id);
+    return rule.isNull
+      ? errorResponse("Access rule not found", 404)
+      : successResponse("Access rule retrieved successfully", 200, rule.toJson);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = RuleId(extractIdFromPath(req.requestURI));
-      auto result = usecase.deleteAccessRule(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Access rule deleted");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = RuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid access rule ID", 400);
+
+    auto data = precheck.data;
+
+    UpdateAccessRuleRequest r;
+    r.ruleId = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.urlPathPrefix = data.getString("urlPathPrefix");
+    r.policy = data.getString("policy");
+    r.protocol = data.getString("protocol");
+    r.virtualHost = data.getString("virtualHost");
+    r.virtualPort = getUshort(data, "virtualPort");
+    r.principalPropagation = data.getBoolean("principalPropagation");
+
+    auto result = usecase.updateAccessRule(r);
+    if (result.hasError)
+      return errorResponse(result.message, result.message == "Access rule not found" ? 404 : 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Access rule updated successfully", 200, responseData);
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = RuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid access rule ID", 400);
+
+    auto result = usecase.deleteAccessRule(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, result.message == "Access rule not found" ? 404 : 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Access rule deleted successfully", 200, responseData);
   }
 }

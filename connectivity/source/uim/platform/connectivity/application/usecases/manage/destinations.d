@@ -45,9 +45,9 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     dest.name = req.name;
     dest.description = req.description;
     dest.url = req.url;
-    dest.destinationType = parseDestinationType(req.destinationType);
-    dest.authType = parseAuthType(req.authType);
-    dest.proxyType = parseProxyType(req.proxyType);
+    dest.destinationType = req.destinationType.to!DestinationType;
+    dest.authType = req.authType.to!AuthenticationType;
+    dest.proxyType = req.proxyType.to!ProxyType;
     dest.user = req.user;
     dest.password = req.password;
     dest.clientId = req.clientId;
@@ -64,10 +64,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     auto authResult = AuthFlowResolver.validate(dest);
     if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authresult.messages) {
+      foreach (i, error; authResult.errors) {
         if (i > 0)
           msg ~= "; ";
-        msg ~= e;
+        msg ~= error;
       }
       return CommandResult(false, "", msg);
     }
@@ -86,9 +86,9 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.url.length > 0)
       dest.url = req.url;
     if (req.authType.length > 0)
-      dest.authType = parseAuthType(req.authType);
+      dest.authType = req.authType.to!AuthenticationType;
     if (req.proxyType.length > 0)
-      dest.proxyType = parseProxyType(req.proxyType);
+      dest.proxyType = req.proxyType.to!ProxyType;
     if (req.user.length > 0)
       dest.user = req.user;
     if (req.password.length > 0)
@@ -115,10 +115,10 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     auto authResult = AuthFlowResolver.validate(dest);
     if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authresult.messages) {
+      foreach (i, error; authResult.errors) {
         if (i > 0)
           msg ~= "; ";
-        msg ~= e;
+        msg ~= error;
       }
       return CommandResult(false, "", msg);
     }
@@ -146,62 +146,5 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     destinations.remove(dest);
     return CommandResult(true, dest.id.value, "");
-  }
-}
-
-private DestinationType parseDestinationType(string s) {
-  switch (s) {
-  case "http":
-    return DestinationType.http;
-  case "rfc":
-    return DestinationType.rfc;
-  case "mail":
-    return DestinationType.mail;
-  case "ldap":
-    return DestinationType.ldap;
-  default:
-    return DestinationType.http;
-  }
-}
-
-private AuthenticationType parseAuthType(string s) {
-  switch (s) {
-  case "noAuthentication":
-    return AuthenticationType.noAuthentication;
-  case "basicAuthentication":
-    return AuthenticationType.basicAuthentication;
-  case "oauth2ClientCredentials":
-    return AuthenticationType.oauth2ClientCredentials;
-  case "oauth2SAMLBearerAssertion":
-    return AuthenticationType.oauth2SAMLBearerAssertion;
-  case "oauth2UserTokenExchange":
-    return AuthenticationType.oauth2UserTokenExchange;
-  case "oauth2JWTBearer":
-    return AuthenticationType.oauth2JWTBearer;
-  case "oauth2Password":
-    return AuthenticationType.oauth2Password;
-  case "oauth2AuthorizationCode":
-    return AuthenticationType.oauth2AuthorizationCode;
-  case "clientCertificateAuthentication":
-    return AuthenticationType.clientCertificateAuthentication;
-  case "principalPropagation":
-    return AuthenticationType.principalPropagation;
-  case "samlAssertion":
-    return AuthenticationType.samlAssertion;
-  default:
-    return AuthenticationType.noAuthentication;
-  }
-}
-
-private ProxyType parseProxyType(string s) {
-  switch (s) {
-  case "internet":
-    return ProxyType.internet;
-  case "onPremise":
-    return ProxyType.onPremise;
-  case "privateLink":
-    return ProxyType.privateLink;
-  default:
-    return ProxyType.internet;
   }
 }

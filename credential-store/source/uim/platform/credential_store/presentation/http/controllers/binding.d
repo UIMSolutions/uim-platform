@@ -62,7 +62,7 @@ class BindingController : ManageController {
       return precheck;
 
     auto tenantId = getTenantId(precheck);
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     CreateServiceBindingRequest r;
     r.tenantId = tenantId;
@@ -132,7 +132,7 @@ class BindingController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     UpdateServiceBindingRequest r;
     r.serviceBindingId = id;

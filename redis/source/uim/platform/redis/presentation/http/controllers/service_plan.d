@@ -65,7 +65,7 @@ class ServicePlanController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ServicePlanDTO dto;
         dto.servicePlanId       = ServicePlanId(data.getString("servicePlanId", ""));
@@ -98,7 +98,7 @@ class ServicePlanController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ServicePlanDTO dto;
         dto.servicePlanId  = ServicePlanId(extractIdFromPath(req.requestURI.to!string));

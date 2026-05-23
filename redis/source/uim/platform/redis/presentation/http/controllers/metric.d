@@ -64,7 +64,7 @@ class MetricController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         MetricDTO dto;
         dto.metricId                = MetricId(data.getString("metricId", ""));

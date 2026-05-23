@@ -118,7 +118,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = BucketId(extractIdFromPath(req.requestURI));
     auto j = req.json;
     auto r = UpdateObjectMetadataRequest();
@@ -208,7 +208,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto objectId = extractObjectIdFromVersionsPath(req.requestURI);
 
     auto versions = usecase.listVersions(tenantId, objectId);

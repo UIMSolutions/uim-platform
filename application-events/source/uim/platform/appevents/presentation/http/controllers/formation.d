@@ -57,7 +57,7 @@ class FormationController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         FormationDTO dto;
         dto.formationId    = FormationId(data.getString("formationId", ""));
         dto.tenantId       = tenantId;
@@ -74,7 +74,7 @@ class FormationController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         FormationDTO dto;
         dto.formationId    = FormationId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId       = tenantId;

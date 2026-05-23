@@ -38,7 +38,7 @@ class RetentionController : ManageController {
     if (precheck.hasError) 
       return precheck; // Return error response from super if tenant ID is missing or invalid
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto policies = useCase.listPolicies(tenantId);
     auto arr = policies.map!(p => p.toJson).array.toJson;
 
@@ -53,8 +53,8 @@ class RetentionController : ManageController {
     if (precheck.hasError) 
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
-    auto data = precheck["data"];
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     CreateRetentionPolicyRequest policyRequest;
     policyRequest.tenantId = tenantId;
@@ -79,7 +79,7 @@ class RetentionController : ManageController {
     if (precheck.hasError) 
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto policy = useCase.getPolicy(tenantId, policyId);
     if (policy.isNull) {
@@ -93,8 +93,8 @@ class RetentionController : ManageController {
     if (precheck.hasError) 
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
-    auto data = precheck["data"];
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     UpdateRetentionPolicyRequest policyRequest;
     policyRequest.retentionPolicyId = RetentionPolicyId(precheck.getString("id"));
@@ -123,7 +123,7 @@ class RetentionController : ManageController {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError) return precheck;
 
-    useCase.deletePolicy(precheck.getTenantId, RetentionPolicyId(precheck.getString("id")));
+    useCase.deletePolicy(precheck.tenantId, RetentionPolicyId(precheck.getString("id")));
     return successResponse("Retention policy deleted successfully", 200, 
       Json.emptyObject.set("status", "deleted"));
   }

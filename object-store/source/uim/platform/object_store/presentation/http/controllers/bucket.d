@@ -39,8 +39,8 @@ class BucketController : ManageController {
     if (!precheck.isNull)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
-    auto data = precheck["data"];
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     auto r = CreateBucketRequest();
     r.tenantId = tenantId;
@@ -82,12 +82,12 @@ class BucketController : ManageController {
     if (!precheck.isNull)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = BucketId(precheck.getString("id"));
     if (id.isNull)
       return errorResponse("Invalid bucket ID", 400);
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     UpdateBucketRequest r;
     r.tenantId = tenantId;

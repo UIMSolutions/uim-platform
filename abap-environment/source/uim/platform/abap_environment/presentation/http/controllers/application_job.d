@@ -38,7 +38,7 @@ class ApplicationJobController : ManageController {
       return precheck;
     }
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
     auto tenantId = getTenantId(precheck);
     auto systemId = SystemInstanceId(data.getString("systemInstanceId"));
 
@@ -59,7 +59,7 @@ class ApplicationJobController : ManageController {
     }
 
     auto tenantId = getTenantId(precheck);
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     CreateApplicationJobRequest r;
     r.tenantId = tenantId;

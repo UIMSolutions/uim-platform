@@ -65,7 +65,7 @@ class CacheEntryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         CacheEntryDTO dto;
         dto.cacheEntryId = CacheEntryId(data.getString("cacheEntryId", ""));
@@ -93,7 +93,7 @@ class CacheEntryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         CacheEntryDTO dto;
         dto.cacheEntryId = CacheEntryId(extractIdFromPath(req.requestURI.to!string));

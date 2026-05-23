@@ -57,7 +57,7 @@ class PrivateKeyController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = PrivateKeyId(data.getString("id"));
         if (id.isNull)
             return errorResponse("Private key ID is required", 400);

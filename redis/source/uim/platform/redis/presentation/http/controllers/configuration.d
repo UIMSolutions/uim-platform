@@ -65,7 +65,7 @@ class ConfigurationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ConfigurationDTO dto;
         dto.configurationId         = ConfigurationId(data.getString("configurationId", ""));
@@ -96,7 +96,7 @@ class ConfigurationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         ConfigurationDTO dto;
         dto.configurationId      = ConfigurationId(extractIdFromPath(req.requestURI.to!string));

@@ -59,7 +59,7 @@ class EventChannelController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventChannelDTO dto;
         dto.channelId    = EventChannelId(data.getString("channelId", ""));
         dto.tenantId     = tenantId;
@@ -79,7 +79,7 @@ class EventChannelController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventChannelDTO dto;
         dto.channelId    = EventChannelId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId     = tenantId;

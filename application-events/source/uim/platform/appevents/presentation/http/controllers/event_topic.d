@@ -56,7 +56,7 @@ class EventTopicController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventTopicDTO dto;
         dto.topicId     = EventTopicId(data.getString("topicId", ""));
         dto.tenantId    = tenantId;
@@ -76,7 +76,7 @@ class EventTopicController : ManageController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         EventTopicDTO dto;
         dto.topicId     = EventTopicId(extractIdFromPath(req.requestURI.to!string));
         dto.tenantId    = tenantId;

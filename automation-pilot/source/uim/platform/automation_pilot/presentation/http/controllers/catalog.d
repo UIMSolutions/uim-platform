@@ -52,7 +52,7 @@ class CatalogController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = CatalogId(data.getString("catalogId", ""));
         if (id.isNull)
             return errorResponse("Missing or invalid catalog ID", 400);
@@ -98,7 +98,7 @@ class CatalogController : ManageController {
             return precheck;
 
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
@@ -124,7 +124,7 @@ class CatalogController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = precheck.getTenantId;
+        auto tenantId = precheck.tenantId;
         auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);

@@ -37,7 +37,7 @@ class AlertController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto alerts = usecase.list(tenantId);
     auto jarr = Json.emptyArray;
@@ -63,7 +63,7 @@ class AlertController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.getString("id"));
     auto a = usecase.getById(tenantId, id);
     if (a.isNull)
@@ -91,7 +91,7 @@ class AlertController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     AcknowledgeAlertRequest r;
     r.tenantId = tenantId;
@@ -123,7 +123,7 @@ class AlertController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     ResolveAlertRequest r;
     r.tenantId = tenantId;
@@ -154,7 +154,7 @@ class AlertController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.getString("id"));
 
     auto result = usecase.deleteAlert(tenantId, id);

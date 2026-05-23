@@ -51,7 +51,7 @@ class DatabaseExtensionController : ManageController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = getTenantId(precheck);
-        auto data = precheck["data"];
+        auto data = precheck.data;
         DatabaseExtensionDTO dto;
         dto.databaseExtensionId = DatabaseExtensionId(data.getString("databaseExtensionId", ""));
         dto.tenantId            = tenantId;

@@ -38,8 +38,8 @@ class SystemInstanceController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
-    auto data = precheck["data"];
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     CreateSystemInstanceRequest request;
     request.tenantId = tenantId;
@@ -109,7 +109,7 @@ class SystemInstanceController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid system instance id", 400);
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     UpdateSystemInstanceRequest request;
     request.tenantId = tenantId;

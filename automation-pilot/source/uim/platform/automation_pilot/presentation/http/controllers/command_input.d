@@ -125,7 +125,7 @@ class CommandInputController : PlatformController {
                 .set("statusCode", 400);
         }
 
-        auto data = precheck["data"];
+        auto data = precheck.data;
 
         CommandInputDTO dto;
         dto.tenantId = tenantId;

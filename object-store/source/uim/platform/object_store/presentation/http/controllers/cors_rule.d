@@ -36,8 +36,8 @@ class CorsRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
-    auto data = precheck["data"];
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     auto r = CreateCorsRuleRequest();
     r.tenantId = tenantId;
@@ -61,7 +61,7 @@ class CorsRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto bucketId = Bucketid(extractBucketIdFromCorsPath(req.requestURI));
     if (bucketId.isEmpty)
       return errorResponse("Invalid bucket ID in path");
@@ -89,7 +89,7 @@ class CorsRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = CorsRuleId(precheck.getString("id"));
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
@@ -106,12 +106,12 @@ class CorsRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = CorsRuleId(precheck.getString("id"));
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
 
-    auto data = precheck["data"];
+    auto data = precheck.data;
 
     auto r = UpdateCorsRuleRequest();
     r.tenantId = tenantId;
@@ -136,7 +136,7 @@ class CorsRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = CorsRuleId(precheck.getString("id"));
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
