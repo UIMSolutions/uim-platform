@@ -29,13 +29,12 @@ class ManageKeyEntriesUseCase {
     if (r.content.length == 0)
       return CommandResult(false, "", "Content is required");
 
-    auto keystoreId = KeystoreId(r.keystoreId);
-    if (repo.existsByAlias(r.tenantId, keystoreId, r.alias_))
+    if (repo.existsByAlias(r.tenantId, r.keystoreId, r.alias_))
       return CommandResult(false, "", "An entry with this alias already exists in the keystore");
 
     KeyEntry entry;
     entry.id = randomUUID();
-    entry.keystoreId = keystoreId;
+    entry.keystoreId = r.keystoreId;
     entry.alias_ = r.alias_;
     entry.entryType = r.entryType.to!KeyEntryType;
     entry.content = r.content;

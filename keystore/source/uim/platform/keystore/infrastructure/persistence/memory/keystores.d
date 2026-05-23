@@ -17,16 +17,23 @@ mixin(ShowModule!());
 class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), KeystoreRepository {
 
   bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
-    return findByName(tenantId, accountId, applicationId, level, name).id.length > 0;
+    return findByApplication(tenantId, accountId, applicationId).any!(ks => ks.level == level && ks.name == name);        
   }
 
   Keystore findByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
-    foreach (ks; findAll) {
-      if (ks.accountId == accountId && ks.applicationId == applicationId &&
-        ks.level == level && ks.name == name)
+    foreach (ks; findByApplication(tenantId, accountId, applicationId)) {
+      if (ks.level == level && ks.name == name)
         return ks;
     }
     return Keystore.init;
+  }
+  void removeByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
+    foreach (ks; findByApplication(tenantId, accountId, applicationId)) {
+      if (ks.level == level && ks.name == name) {
+        remove(ks);
+        return;
+      }
+    }
   }
 
   // #region ByAccount

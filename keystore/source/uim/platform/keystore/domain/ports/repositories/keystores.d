@@ -15,6 +15,10 @@ mixin(ShowModule!());
 
 interface KeystoreRepository : ITenantRepository!(Keystore, KeystoreId) {
 
+  bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);
+  Keystore findByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);
+  void removeByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);
+  
   size_t countByAccount(TenantId tenantId, string accountId);
   Keystore[] findByAccount(TenantId tenantId, string accountId);
   void removeByAccount(TenantId tenantId, string accountId);

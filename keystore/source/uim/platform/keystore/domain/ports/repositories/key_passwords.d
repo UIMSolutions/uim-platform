@@ -17,6 +17,7 @@ interface KeyPasswordRepository : ITenantRepository!(KeyPassword, KeyPasswordId)
 
   bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
   KeyPassword findByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
+  void removeByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
 
   size_t countByApplication(TenantId tenantId, string accountId, string applicationId);
   KeyPassword[] findByApplication(TenantId tenantId, string accountId, string applicationId);

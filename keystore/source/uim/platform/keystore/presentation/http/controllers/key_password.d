@@ -30,7 +30,7 @@ class KeyPasswordController : PlatformController {
   // PUT /api/v1/passwords/{alias}  (set or overwrite a password)
   protected void handleSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto alias_ = extractIdFromPath(req);
+      auto alias_ = extractIdFromPath(req.requestURI.to!string);
       auto j      = req.json;
       SetPasswordRequest r;
       r.accountId     = j.getString("accountId");
@@ -53,11 +53,12 @@ class KeyPasswordController : PlatformController {
   // GET /api/v1/passwords/{alias}?accountId=...&applicationId=...
   protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto alias_       = extractIdFromPath(req);
+      auto tenantId      = req.getTenantId;
+      auto alias_       = extractIdFromPath(req.requestURI.to!string);
       auto accountId    = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      auto kp = usecase.getPassword(accountId, applicationId, alias_);
+      auto kp = usecase.getPassword(tenantId, accountId, applicationId, alias_);
       if (kp.isNull) {
         writeError(res, 404, "Password not found");
         return;
@@ -80,11 +81,12 @@ class KeyPasswordController : PlatformController {
   // DELETE /api/v1/passwords/{alias}?accountId=...&applicationId=...
   protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto alias_        = extractIdFromPath(req);
+      auto tenantId      = req.getTenantId;
+      auto alias_        = extractIdFromPath(req.requestURI.to!string);
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      auto result = usecase.deletePassword(accountId, applicationId, alias_);
+      auto result = usecase.deletePassword(tenantId, accountId, applicationId, alias_);
       if (result.success) {
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {
@@ -98,9 +100,10 @@ class KeyPasswordController : PlatformController {
   // GET /api/v1/passwords?accountId=...&applicationId=...
   protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto tenantId      = req.getTenantId;
       auto accountId     = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
-      auto passwords     = usecase.listByApplication(accountId, applicationId);
+      auto passwords     = usecase.listByApplication(tenantId, accountId, applicationId);
 
       auto jarr = Json.emptyArray;
       foreach (kp; passwords) {

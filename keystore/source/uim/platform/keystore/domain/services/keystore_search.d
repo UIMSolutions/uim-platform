@@ -24,22 +24,22 @@ class KeystoreSearchService {
 
   /// Find a keystore by name, respecting the three-level search order.
   /// Returns Keystore.init when not found at any level.
-  Keystore findByName(string accountId, string applicationId, string subscriptionId, string name) {
+  Keystore findByName(TenantId tenantId, string accountId, string applicationId, string subscriptionId, string name) {
     // 1. Subscription level (most specific)
     if (subscriptionId.length > 0) {
-      auto ks = repo.findByName(accountId, subscriptionId, KeystoreLevel.subscription, name);
-      if (ks.id.length > 0)
+      auto ks = repo.findByName(tenantId, accountId, subscriptionId, KeystoreLevel.subscription, name);
+      if (!ks.isNull)
         return ks;
     }
 
     // 2. Application level
     if (applicationId.length > 0) {
-      auto ks = repo.findByName(accountId, applicationId, KeystoreLevel.application, name);
-      if (ks.id.length > 0)
+      auto ks = repo.findByName(tenantId, accountId, applicationId, KeystoreLevel.application, name);
+      if (!ks.isNull)
         return ks;
     }
 
     // 3. Account level (least specific, shared across all applications)
-    return repo.findByName(accountId, "", KeystoreLevel.account, name);
+    return repo.findByName(tenantId, accountId, "", KeystoreLevel.account, name);
   }
 }

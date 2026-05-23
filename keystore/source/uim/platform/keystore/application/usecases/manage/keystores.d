@@ -15,7 +15,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
 class ManageKeystoresUseCase {
   private KeystoreRepository repo;
 
@@ -32,23 +31,23 @@ class ManageKeystoresUseCase {
 
     auto level = parseKeystoreLevel(r.level);
 
-    if (repo.existsByName(r.accountId, r.applicationId, level, r.name))
+    if (repo.existsByName(r.tenantId, r.accountId, r.applicationId, level, r.name))
       return CommandResult(false, "", "A keystore with this name already exists at the specified level");
 
     Keystore ks;
-    ks.id            = randomUUID().toString();
-    ks.name          = r.name;
-    ks.description   = r.description;
-    ks.format        = parseKeystoreFormat(r.format);
-    ks.level         = level;
-    ks.content       = r.content;
-    ks.accountId     = r.accountId;
+    ks.id = randomUUID().toString();
+    ks.name = r.name;
+    ks.description = r.description;
+    ks.format = parseKeystoreFormat(r.format);
+    ks.level = level;
+    ks.content = r.content;
+    ks.accountId = r.accountId;
     ks.applicationId = r.applicationId;
     ks.subscriptionId = r.subscriptionId;
-    ks.createdBy     = r.createdBy;
-    ks.updatedBy    = r.createdBy;
-    ks.createdAt     = currentTimestamp();
-    ks.updatedAt     = ks.createdAt;
+    ks.createdBy = r.createdBy;
+    ks.updatedBy = r.createdBy;
+    ks.createdAt = currentTimestamp();
+    ks.updatedAt = ks.createdAt;
 
     repo.save(ks);
     return CommandResult(true, ks.id.value, "");
@@ -56,7 +55,7 @@ class ManageKeystoresUseCase {
 
   // Update description and/or content of an existing keystore.
   CommandResult updateKeystore(UpdateKeystoreRequest r) {
-    auto ks = repo.findById(r.tenantId, r.id);
+    auto ks = repo.findById(r.tenantId, r.keystoreId);
     if (ks.isNull)
       return CommandResult(false, "", "Keystore not found");
 
@@ -65,7 +64,7 @@ class ManageKeystoresUseCase {
     if (r.content.length > 0)
       ks.content = r.content;
     ks.updatedBy = r.updatedBy;
-    ks.updatedAt  = currentTimestamp();
+    ks.updatedAt = currentTimestamp();
 
     repo.update(ks);
     return CommandResult(true, ks.id.value, "");
@@ -99,11 +98,11 @@ class ManageKeystoresUseCase {
 
   // Delete by name + scope (console-style delete-keystore command)
   CommandResult deleteKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
-    auto ks = repo.findByName(tenantId, accountId, applicationId, parseKeystoreLevel(level), name);
+    auto ks = repo.findByName(tenantId, accountId, applicationId, level.to!KeystoreLevel, name);
     if (ks.isNull)
       return CommandResult(false, "", "Keystore not found");
-      
-    repo.removeByName(tenantId, accountId, applicationId, level.to!KeystoreLevel, name);
+
+    repo.remove(ks);
     return CommandResult(true, ks.id.value, "");
   }
 }

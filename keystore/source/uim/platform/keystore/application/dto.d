@@ -28,6 +28,7 @@ struct UploadKeystoreRequest {
 
 struct UpdateKeystoreRequest {
   TenantId tenantId;
+  KeystoreId keystoreId;
 
   string description;
   string content;         // base64-encoded replacement content (optional)
@@ -38,8 +39,8 @@ struct UpdateKeystoreRequest {
 // ---------------------------------------------------------------------------
 struct ImportKeyEntryRequest {
   TenantId tenantId;
+  KeystoreId keystoreId;
 
-  string keystoreId;
   string alias_;
   string entryType;       // "privateKey" | "certificate" | "secretKey" | "trustedCertificate"
   string content;         // base64-encoded key/cert DER bytes
@@ -55,6 +56,7 @@ struct ImportKeyEntryRequest {
 // ---------------------------------------------------------------------------
 struct SetPasswordRequest {
   TenantId tenantId;
+  KeystoreId keystoreId;
   
   string accountId;
   string applicationId;

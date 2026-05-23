@@ -92,9 +92,9 @@ class KeystoreController : PlatformController {
       auto accountId = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
 
-      KeystoreEntity[] keystores = applicationId.isEmpty
-        ? usecase.listByAccount(tenantId, accountId) 
-        : usecase.listByApplication(tenantId, accountId, applicationId);
+      Keystore[] keystores = applicationId.isEmpty
+        ? usecase.listKeystores(tenantId, accountId) 
+        : usecase.listKeystores(tenantId, accountId, applicationId);
 
       auto jarr = Json.emptyArray;
       foreach (ks; keystores) {
@@ -125,9 +125,9 @@ class KeystoreController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req));
+      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
 
-      auto ks = usecase.getById(tenantId, id);
+      auto ks = usecase.getKeystore(tenantId, id);
       if (ks.isNull) {
         writeError(res, 404, "Keystore not found");
         return;
@@ -156,16 +156,17 @@ class KeystoreController : PlatformController {
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req));
+      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
 
       auto j = req.json;
       UpdateKeystoreRequest r;
       r.tenantId = tenantId;
+      r.keystoreId = id;
       r.description = j.getString("description");
       r.content = j.getString("content");
       r.updatedBy = UserId(j.getString("updatedBy"));
 
-      auto result = usecase.update(id, r);
+      auto result = usecase.updateKeystore(r);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
@@ -180,7 +181,7 @@ class KeystoreController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req));
+      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteKeystore(tenantId, id);
       if (result.success) {
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");

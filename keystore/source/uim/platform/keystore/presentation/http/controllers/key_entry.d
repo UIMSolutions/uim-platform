@@ -65,7 +65,7 @@ class KeyEntryController : PlatformController {
   protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto path = req.requestPath.to!string;
-    auto keystoreId = extractSegment(path, 4); // /api/v1/keystores/{id}/entries
+    auto keystoreId = KeystoreId(extractSegment(path, 4)); // /api/v1/keystores/{id}/entries
     auto entries = usecase.listByKeystore(tenantId, keystoreId);
 
     auto jarr = Json.emptyArray;
@@ -103,7 +103,7 @@ class KeyEntryController : PlatformController {
   protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
     auto path = req.requestPath.to!string;
-    auto id = extractSegment(path, 6); // /api/v1/keystores/{id}/entries/{entryId}
+    auto id = KeyEntryId(extractSegment(path, 6)); // /api/v1/keystores/{id}/entries/{entryId}
     auto entry = usecase.getById(tenantId, id);
     if (entry.isNull)
       return errorResponse("Key entry not found", 404);

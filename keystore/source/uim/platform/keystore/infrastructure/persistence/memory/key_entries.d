@@ -21,7 +21,11 @@ class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), KeyEnt
   }
 
   KeyEntry findByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
-    return findByKeystore(tenantId, keystoreId).array!(e => e.alias_ == alias_);
+    foreach(ks; findByKeystore(tenantId, keystoreId)) {
+      if (ks.alias_ == alias_)
+        return ks;
+    }
+    return KeyEntry.init;
   }
 
   size_t countByKeystore(TenantId tenantId, KeystoreId keystoreId) {
