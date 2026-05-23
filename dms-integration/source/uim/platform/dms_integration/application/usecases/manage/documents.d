@@ -126,7 +126,7 @@ class ManageDocumentsUseCase {
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = isMajor ? VersioningState.major : VersioningState.minor;
         existing.checkedOutBy = UserId("");
-        existing.checkedOutAt = "";
+        existing.checkedOutAt = 0;
         existing.isMajorVersion = isMajor;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
@@ -141,7 +141,7 @@ class ManageDocumentsUseCase {
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = VersioningState.none;
         existing.checkedOutBy = UserId("");
-        existing.checkedOutAt = "";
+        existing.checkedOutAt = 0;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

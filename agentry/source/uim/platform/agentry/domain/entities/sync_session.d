@@ -19,8 +19,8 @@ struct SyncSession {
     BackendConnectionId backendConnectionId;
     SyncStatus status = SyncStatus.pending;
     SyncDirection direction = SyncDirection.bidirectional;
-    string startedAt;
-    string completedAt;
+    long startedAt;
+    long completedAt;
     long bytesSent;
     long bytesReceived;
     long recordsSent;

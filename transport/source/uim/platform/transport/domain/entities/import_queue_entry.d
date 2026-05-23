@@ -21,7 +21,7 @@ struct ImportQueueEntry {
     ImportStatus status = ImportStatus.initial;
     int queuePosition = 0;
     string queuedAt;
-    string startedAt;
+    long startedAt;
     long completedAt;
     string errorMessage;
     string importLog;

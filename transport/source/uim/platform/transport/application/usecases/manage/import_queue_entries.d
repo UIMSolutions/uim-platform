@@ -40,8 +40,8 @@ class ManageImportQueueEntriesUseCase {
 
     CommandResult enqueue(ImportQueueEntryDTO dto) {
         ImportQueueEntry entry;
-        entry.id = dto.entryId;
         entry.tenantId = dto.tenantId;
+        entry.id = dto.entryId;
         entry.nodeId = TransportNodeId(dto.nodeId);
         entry.requestId = TransportRequestId(dto.requestId);
         entry.queuePosition = dto.queuePosition;
@@ -51,6 +51,7 @@ class ManageImportQueueEntriesUseCase {
         entry.status = ImportStatus.initial;
         if (!TransportValidator.isValidQueueEntry(entry))
             return CommandResult(false, "", "Invalid queue entry: nodeId and requestId are required");
+
         repo.save(entry);
         return CommandResult(true, entry.id.value, "");
     }
@@ -61,6 +62,7 @@ class ManageImportQueueEntriesUseCase {
             return CommandResult(false, "", "Import queue entry not found");
         existing.status = status;
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;
+        
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
@@ -71,8 +73,8 @@ class ManageImportQueueEntriesUseCase {
             return CommandResult(false, "", "Import queue entry not found");
         existing.status = ImportStatus.initial;
         existing.errorMessage = "";
-        existing.startedAt = "";
-        existing.completedAt = "";
+        existing.startedAt = 0;
+        existing.completedAt = 0;
         existing.importLog = "";
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
@@ -82,7 +84,8 @@ class ManageImportQueueEntriesUseCase {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Import queue entry not found");
+
         repo.remove(existing);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 }

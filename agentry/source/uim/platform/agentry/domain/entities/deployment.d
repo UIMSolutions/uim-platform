@@ -21,8 +21,8 @@ struct Deployment {
     string targetDeviceId;
     string targetGroupName;
     string scheduledAt;
-    string startedAt;
-    string completedAt;
+    long startedAt;
+    long completedAt;
     string rollbackVersionId;
     string deployedBy;
     string notes;

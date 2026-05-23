@@ -21,7 +21,7 @@ struct Replication {
     ReplicationStatus status = ReplicationStatus.pending;
     UserId triggeredBy;
     long scheduledAt;
-    string startedAt;
+    long startedAt;
     long completedAt;
     string errorMessage;
     string replicatedFields;
