@@ -57,17 +57,17 @@ class SitePolicyController : PlatformController {
         dto.name = j.getString("name");
         dto.description = j.getString("description");
         dto.policyType = j.getString("policyType");
-        dto.passwordMinLength = j.getInt("passwordMinLength");
+        dto.passwordMinLength = j.getInteger("passwordMinLength");
         dto.passwordComplexity = j.getString("passwordComplexity");
         dto.passwordRequirements = j.getString("passwordRequirements");
-        dto.sessionTimeoutSeconds = j.getInt("sessionTimeoutSeconds");
+        dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBool("mfaRequired");
         dto.mfaMethod = j.getString("mfaMethod");
         dto.captchaEnabled = j.getBool("captchaEnabled");
         dto.socialLoginEnabled = j.getBool("socialLoginEnabled");
         dto.progressiveProfilingEnabled = j.getBool("progressiveProfilingEnabled");
-        dto.maxLoginAttempts = j.getInt("maxLoginAttempts");
-        dto.lockoutDurationSeconds = j.getInt("lockoutDurationSeconds");
+        dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
+        dto.lockoutDurationSeconds = j.getInteger("lockoutDurationSeconds");
         dto.emailVerificationRequired = j.getBool("emailVerificationRequired");
         dto.version_ = j.getString("version");
         dto.createdBy = UserId(j.getString("createdBy"));
@@ -113,12 +113,12 @@ class SitePolicyController : PlatformController {
         dto.tenantId = tenantId;
         dto.name = j.getString("name");
         dto.description = j.getString("description");
-        dto.passwordMinLength = j.getInt("passwordMinLength");
-        dto.sessionTimeoutSeconds = j.getInt("sessionTimeoutSeconds");
+        dto.passwordMinLength = j.getInteger("passwordMinLength");
+        dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBool("mfaRequired");
         dto.captchaEnabled = j.getBool("captchaEnabled");
         dto.socialLoginEnabled = j.getBool("socialLoginEnabled");
-        dto.maxLoginAttempts = j.getInt("maxLoginAttempts");
+        dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
         dto.updatedBy = UserId(j.getString("updatedBy"));
 
         auto result = sitePolicies.updateSitePolicy(dto);

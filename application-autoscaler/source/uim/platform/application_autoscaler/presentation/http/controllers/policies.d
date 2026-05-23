@@ -34,8 +34,8 @@ class ScalingPolicyController : PlatformController {
       CreateScalingPolicyRequest r;
       r.appId            = j.getString("app_id");
       r.tenantId         = j.getString("tenant_id");
-      r.instanceMinCount = j.getInt("instance_min_count");
-      r.instanceMaxCount = j.getInt("instance_max_count");
+      r.instanceMinCount = j.getInteger("instance_min_count");
+      r.instanceMaxCount = j.getInteger("instance_max_count");
       r.timezone         = j.getString("timezone");
       r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
 
@@ -45,10 +45,10 @@ class ScalingPolicyController : PlatformController {
           ScalingRuleRequest rr;
           rr.metricType         = rj.getString("metric_type");
           rr.customMetricName   = rj.getString("custom_metric_name");
-          rr.threshold          = rj.getInt("threshold");
+          rr.threshold          = rj.getInteger("threshold");
           rr.operator           = rj.getString("operator");
-          rr.breachDurationSecs = rj.getInt("breach_duration_secs");
-          rr.coolDownSecs       = rj.getInt("cool_down_secs");
+          rr.breachDurationSecs = rj.getInteger("breach_duration_secs");
+          rr.coolDownSecs       = rj.getInteger("cool_down_secs");
           rr.adjustment         = rj.getString("adjustment");
           r.scalingRules       ~= rr;
         }
@@ -61,9 +61,9 @@ class ScalingPolicyController : PlatformController {
           rs.endTime                 = sj.getString("end_time");
           rs.startDate               = sj.getString("start_date");
           rs.endDate                 = sj.getString("end_date");
-          rs.instanceMinCount        = sj.getInt("instance_min_count");
-          rs.instanceMaxCount        = sj.getInt("instance_max_count");
-          rs.initialMinInstanceCount = sj.getInt("initial_min_instance_count");
+          rs.instanceMinCount        = sj.getInteger("instance_min_count");
+          rs.instanceMaxCount        = sj.getInteger("instance_max_count");
+          rs.initialMinInstanceCount = sj.getInteger("initial_min_instance_count");
           auto dwJ = sj["days_of_week"];
           if (dwJ.type == Json.Type.array)
             foreach (d; dwJ.byValue) rs.daysOfWeek ~= d.get!int;
@@ -79,9 +79,9 @@ class ScalingPolicyController : PlatformController {
           SpecificDateScheduleRequest sd;
           sd.startDateTime           = sj.getString("start_date_time");
           sd.endDateTime             = sj.getString("end_date_time");
-          sd.instanceMinCount        = sj.getInt("instance_min_count");
-          sd.instanceMaxCount        = sj.getInt("instance_max_count");
-          sd.initialMinInstanceCount = sj.getInt("initial_min_instance_count");
+          sd.instanceMinCount        = sj.getInteger("instance_min_count");
+          sd.instanceMaxCount        = sj.getInteger("instance_max_count");
+          sd.initialMinInstanceCount = sj.getInteger("initial_min_instance_count");
           r.specificDateSchedules   ~= sd;
         }
 
@@ -139,8 +139,8 @@ class ScalingPolicyController : PlatformController {
 
       UpdateScalingPolicyRequest r;
       r.scalingPolicyId    = id;
-      r.instanceMinCount = j.getInt("instance_min_count");
-      r.instanceMaxCount = j.getInt("instance_max_count");
+      r.instanceMinCount = j.getInteger("instance_min_count");
+      r.instanceMaxCount = j.getInteger("instance_max_count");
       r.timezone         = j.getString("timezone");
       r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
 
@@ -150,10 +150,10 @@ class ScalingPolicyController : PlatformController {
           ScalingRuleRequest rr;
           rr.metricType         = rj.getString("metric_type");
           rr.customMetricName   = rj.getString("custom_metric_name");
-          rr.threshold          = rj.getInt("threshold");
+          rr.threshold          = rj.getInteger("threshold");
           rr.operator           = rj.getString("operator");
-          rr.breachDurationSecs = rj.getInt("breach_duration_secs");
-          rr.coolDownSecs       = rj.getInt("cool_down_secs");
+          rr.breachDurationSecs = rj.getInteger("breach_duration_secs");
+          rr.coolDownSecs       = rj.getInteger("cool_down_secs");
           rr.adjustment         = rj.getString("adjustment");
           r.scalingRules       ~= rr;
         }

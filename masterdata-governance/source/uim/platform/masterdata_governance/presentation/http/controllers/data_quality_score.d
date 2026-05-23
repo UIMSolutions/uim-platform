@@ -63,11 +63,11 @@ class DataQualityScoreController : PlatformController {
             dto.scoreId = DataQualityScoreId(j.getString("id"));
             dto.tenantId = tenantId;
             dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
-            dto.overallScore = j.getInt("overallScore");
-            dto.completenessScore = j.getInt("completenessScore");
-            dto.consistencyScore = j.getInt("consistencyScore");
-            dto.accuracyScore = j.getInt("accuracyScore");
-            dto.uniquenessScore = j.getInt("uniquenessScore");
+            dto.overallScore = j.getInteger("overallScore");
+            dto.completenessScore = j.getInteger("completenessScore");
+            dto.consistencyScore = j.getInteger("consistencyScore");
+            dto.accuracyScore = j.getInteger("accuracyScore");
+            dto.uniquenessScore = j.getInteger("uniquenessScore");
             dto.evaluationDetails = j.getString("evaluationDetails");
             dto.createdBy = UserId(j.getString("createdBy"));
 
@@ -92,11 +92,11 @@ class DataQualityScoreController : PlatformController {
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(extractIdFromPath(path));
             dto.tenantId = tenantId;
-            dto.overallScore = j.getInt("overallScore");
-            dto.completenessScore = j.getInt("completenessScore");
-            dto.consistencyScore = j.getInt("consistencyScore");
-            dto.accuracyScore = j.getInt("accuracyScore");
-            dto.uniquenessScore = j.getInt("uniquenessScore");
+            dto.overallScore = j.getInteger("overallScore");
+            dto.completenessScore = j.getInteger("completenessScore");
+            dto.consistencyScore = j.getInteger("consistencyScore");
+            dto.accuracyScore = j.getInteger("accuracyScore");
+            dto.uniquenessScore = j.getInteger("uniquenessScore");
             dto.evaluationDetails = j.getString("evaluationDetails");
             dto.updatedBy = UserId(j.getString("updatedBy"));
 

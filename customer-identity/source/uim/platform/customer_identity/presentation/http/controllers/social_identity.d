@@ -61,7 +61,7 @@ class SocialIdentityController : PlatformController {
         dto.displayName = j.getString("displayName");
         dto.accessToken = j.getString("accessToken");
         dto.refreshToken = j.getString("refreshToken");
-        dto.tokenExpiresAt = j.getInt("tokenExpiresAt");
+        dto.tokenExpiresAt = j.getInteger("tokenExpiresAt");
         dto.profileData = j.getString("profileData");
         dto.createdBy = UserId(j.getString("createdBy"));
 

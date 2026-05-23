@@ -4,10 +4,42 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.types;
+
+import uim.platform.keystore;
+
+mixin(ShowModule!());
+
+@safe:
 // ID types
-alias KeystoreId = string;
-alias KeyEntryId = string;
-alias KeyPasswordId = string;
+struct KeystoreId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct KeyEntryId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct KeyPasswordId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+
 // Keystore format
 enum KeystoreFormat {
   jks,

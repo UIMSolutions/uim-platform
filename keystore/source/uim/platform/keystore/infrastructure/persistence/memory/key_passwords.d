@@ -16,42 +16,46 @@ mixin(ShowModule!());
 
 class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), KeyPasswordRepository {
 
-  bool existsByAlias(TenantId tenantId, string applicationId, string alias_) {
-    return findByTenant(tenantId).any!(kp => kp.applicationId == applicationId && kp.alias_ == alias_);
+  bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_) {
+    return findByApplication(tenantId, accountId, applicationId).any!(kp => kp.alias_ == alias_);
   }
 
-  KeyPassword findByAlias(TenantId tenantId, string applicationId, string alias_) {
-    foreach (kp; findByTenant(tenantId)) {
-      if (kp.applicationId == applicationId && kp.alias_ == alias_)
+  KeyPassword findByAlias(TenantId tenantId, string accountId, string applicationId, string alias_) {
+    foreach (kp; findByApplication(tenantId, accountId, applicationId)) {
+      if (kp.alias_ == alias_)
         return kp;
     }
     return KeyPassword.init;
   }
 
-  void removeByAlias(TenantId tenantId, string applicationId, string alias_) {
-    foreach (kp; findByTenant(tenantId)) {
-      if (kp.applicationId == applicationId && kp.alias_ == alias_) {
+  void removeByAlias(TenantId tenantId, string accountId, string applicationId, string alias_) {
+    foreach (kp; findByApplication(tenantId, accountId, applicationId)) {
+      if (kp.alias_ == alias_) {
         remove(kp);
         return;
       }
     }
   }
 
+  KeyPassword[] filterByAccount(KeyPassword[] passwords, string accountId) {
+    return passwords.filter!(kp => kp.accountId == accountId).array;
+  }
+
   // #region ByApplication
-  size_t countByApplication(TenantId tenantId, string applicationId) {
-    return findByApplication(tenantId, applicationId).length;
+  size_t countByApplication(TenantId tenantId, string accountId, string applicationId) {
+    return findByApplication(tenantId, accountId, applicationId).length;
   }
 
   KeyPassword[] filterByApplication(KeyPassword[] passwords, string applicationId) {
     return passwords.filter!(kp => kp.applicationId == applicationId).array;
   }
 
-  KeyPassword[] findByApplication(TenantId tenantId, string applicationId) {
-    return filterByApplication(findByTenant(tenantId), applicationId);
+  KeyPassword[] findByApplication(TenantId tenantId, string accountId, string applicationId) {
+    return filterByApplication(filterByAccount(findByTenant(tenantId), accountId), applicationId);
   }
 
-  void removeByApplication(TenantId tenantId, string applicationId) {
-    findByApplication(tenantId, applicationId).each!(kp => remove(kp));
+  void removeByApplication(TenantId tenantId, string accountId, string applicationId) {
+    findByApplication(tenantId, accountId, applicationId).each!(kp => remove(kp));
   }
   // #endregion ByApplication
 

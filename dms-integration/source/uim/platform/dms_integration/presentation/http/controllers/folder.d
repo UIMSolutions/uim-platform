@@ -73,7 +73,7 @@ class FolderController : PlatformController {
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.path = j.getString("path");
-            dto.depth = j.getInt("depth");
+            dto.depth = j.getInteger("depth");
             dto.folderType = j.getString("folderType");
             dto.isSystemFolder = j.getBool("isSystemFolder");
             dto.allowedDocumentTypes = j.getString("allowedDocumentTypes");

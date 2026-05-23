@@ -72,7 +72,7 @@ class DataQualityRuleController : PlatformController {
             dto.errorMessage = j.getString("errorMessage");
             dto.bpCategory = j.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
-            dto.weight = j.getInt("weight");
+            dto.weight = j.getInteger("weight");
             dto.validValues = j.getString("validValues");
             dto.regexPattern = j.getString("regexPattern");
             dto.minValue = j.getString("minValue");
@@ -106,7 +106,7 @@ class DataQualityRuleController : PlatformController {
             dto.errorMessage = j.getString("errorMessage");
             dto.bpCategory = j.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
-            dto.weight = j.getInt("weight");
+            dto.weight = j.getInteger("weight");
             dto.validValues = j.getString("validValues");
             dto.regexPattern = j.getString("regexPattern");
             dto.minValue = j.getString("minValue");

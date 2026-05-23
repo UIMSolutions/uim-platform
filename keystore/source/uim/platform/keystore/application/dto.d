@@ -13,6 +13,8 @@ mixin(ShowModule!());
 // Keystore DTOs
 // ---------------------------------------------------------------------------
 struct UploadKeystoreRequest {
+  TenantId tenantId;
+
   string accountId;
   string applicationId;   // empty = account-level
   string subscriptionId;  // non-empty = subscription-level
@@ -25,6 +27,8 @@ struct UploadKeystoreRequest {
 }
 
 struct UpdateKeystoreRequest {
+  TenantId tenantId;
+
   string description;
   string content;         // base64-encoded replacement content (optional)
   UserId updatedBy;
@@ -33,6 +37,8 @@ struct UpdateKeystoreRequest {
 // KeyEntry DTOs
 // ---------------------------------------------------------------------------
 struct ImportKeyEntryRequest {
+  TenantId tenantId;
+
   string keystoreId;
   string alias_;
   string entryType;       // "privateKey" | "certificate" | "secretKey" | "trustedCertificate"
@@ -48,20 +54,23 @@ struct ImportKeyEntryRequest {
 // KeyPassword DTOs
 // ---------------------------------------------------------------------------
 struct SetPasswordRequest {
+  TenantId tenantId;
+  
   string accountId;
   string applicationId;
-  TenantId tenantId;
   string alias_;
   string passwordValue;
 }
 
 struct GetPasswordRequest {
+  TenantId tenantId;
   string accountId;
   string applicationId;
   string alias_;
 }
 
 struct DeletePasswordRequest {
+  TenantId tenantId;
   string accountId;
   string applicationId;
   string alias_;

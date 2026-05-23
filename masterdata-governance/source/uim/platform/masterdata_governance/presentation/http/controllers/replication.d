@@ -68,7 +68,7 @@ class ReplicationController : PlatformController {
             dto.replicationType = j.getString("replicationType");
             dto.scheduledAt = j.getLong("scheduledAt");
             dto.replicatedFields = j.getString("replicatedFields");
-            dto.maxRetries = j.getInt("maxRetries");
+            dto.maxRetries = j.getInteger("maxRetries");
             dto.correlationId = j.getString("correlationId");
             dto.batchId = j.getString("batchId");
             dto.triggeredBy = UserId(j.getString("triggeredBy"));

@@ -15,7 +15,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
 class ManageKeyPasswordsUseCase {
   private KeyPasswordRepository repo;
 
@@ -32,44 +31,44 @@ class ManageKeyPasswordsUseCase {
 
     auto now = currentTimestamp();
 
-    auto existing = repo.findByAlias(r.accountId, r.applicationId, r.alias_);
+    auto existing = repo.findByAlias(r.tenantId, r.accountId, r.applicationId, r.alias_);
     if (!existing.isNull) {
       existing.passwordValue = r.passwordValue;
-      existing.updatedAt     = now;
+      existing.updatedAt = now;
       repo.update(existing);
       return CommandResult(true, existing.id.value, "");
     }
 
     KeyPassword kp;
-    kp.id            = randomUUID().toString();
-    kp.alias_        = r.alias_;
+    kp.id = randomUUID();
+    kp.alias_ = r.alias_;
     kp.passwordValue = r.passwordValue;
-    kp.accountId     = r.accountId;
+    kp.accountId = r.accountId;
     kp.applicationId = r.applicationId;
-    kp.tenantId      = r.tenantId;
-    kp.createdAt     = now;
-    kp.updatedAt     = now;
+    kp.tenantId = r.tenantId;
+    kp.createdAt = now;
+    kp.updatedAt = now;
 
     repo.save(kp);
     return CommandResult(true, kp.id.value, "");
   }
 
   // Retrieve a password by alias. Returns KeyPassword.init when not found.
-  KeyPassword getPassword(string accountId, string applicationId, string alias_) {
-    return repo.findByAlias(accountId, applicationId, alias_);
+  KeyPassword getPassword(TenantId tenantId, string accountId, string applicationId, string alias_) {
+    return repo.findByAlias(tenantId, accountId, applicationId, alias_);
   }
 
-  KeyPassword[] listByApplication(string accountId, string applicationId) {
-    return repo.findByApplication(accountId, applicationId);
+  KeyPassword[] listByApplication(TenantId tenantId, string accountId, string applicationId) {
+    return repo.findByApplication(tenantId, accountId, applicationId);
   }
 
   // Delete a stored password by alias.
-  CommandResult deletePassword(string accountId, string applicationId, string alias_) {
-    auto kp = repo.findByAlias(accountId, applicationId, alias_);
+  CommandResult deletePassword(TenantId tenantId, string accountId, string applicationId, string alias_) {
+    auto kp = repo.findByAlias(tenantId, accountId, applicationId, alias_);
     if (kp.isNull)
       return CommandResult(false, "", "Password not found");
-      
-    repo.removeByAlias(accountId, applicationId, alias_);
+
+    repo.removeByAlias(tenantId, accountId, applicationId, alias_);
     return CommandResult(true, kp.id.value, "");
   }
 }

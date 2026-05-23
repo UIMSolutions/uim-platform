@@ -41,8 +41,8 @@ class KeyEntryController : PlatformController {
     r.subject = j.getString("subject");
     r.issuer = j.getString("issuer");
     r.serialNumber = j.getString("serialNumber");
-    r.notBefore = j.getInt("notBefore");
-    r.notAfter = j.getInt("notAfter");
+    r.notBefore = j.getInteger("notBefore");
+    r.notAfter = j.getInteger("notAfter");
 
     auto result = usecase.importEntry(r);
     if (result.hasError)

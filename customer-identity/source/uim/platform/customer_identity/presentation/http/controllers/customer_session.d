@@ -58,7 +58,7 @@ class CustomerSessionController : PlatformController {
         dto.deviceInfo = j.getString("deviceInfo");
         dto.ipAddress = j.getString("ipAddress");
         dto.userAgent = j.getString("userAgent");
-        dto.expiresAt = j.getInt("expiresAt");
+        dto.expiresAt = j.getInteger("expiresAt");
         dto.createdBy = UserId(j.getString("createdBy"));
 
         auto result = sessions.createSession(dto);
