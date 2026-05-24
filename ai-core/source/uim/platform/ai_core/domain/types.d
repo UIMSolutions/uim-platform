@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.domain.types;
+
 import uim.platform.ai_core;
 
 mixin(ShowModule!()); 
@@ -116,58 +117,4 @@ struct ScheduleId {
   }
 
   mixin DomainId;
-}
-// Executable types: workflow (batch), serving (inference)
-enum ExecutableType {
-  workflow,
-  serving,
-}
-// Execution lifecycle states
-enum ExecutionStatus {
-  pending,
-  running,
-  completed,
-  failed,
-  stopped,
-  dead,
-  unknown,
-}
-// Deployment lifecycle states
-enum DeploymentStatus {
-  pending,
-  running,
-  stopped,
-  dead,
-  unknown,
-}
-// Artifact categories
-enum ArtifactKind {
-  model,
-  dataset,
-  resultset,
-  other,
-}
-// Target state for PATCH operations
-enum TargetStatus {
-  running,
-  stopped,
-  deleted_,
-  completed,
-}
-// Metric value types
-enum MetricValueType {
-  float_,
-  int_,
-  string_,
-}
-// Log severity levels
-enum LogSeverity {
-  info,
-  warn,
-  error,
-}
-// Schedule status
-enum ScheduleStatus {
-  active,
-  inactive,
 }

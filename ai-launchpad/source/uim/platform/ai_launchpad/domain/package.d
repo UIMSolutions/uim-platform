@@ -6,6 +6,7 @@
 module uim.platform.ai_launchpad.domain;
 
 public {
+  import uim.platform.ai_launchpad.domain.enumerations;
   import uim.platform.ai_launchpad.domain.types;
   import uim.platform.ai_launchpad.domain.entities;
   import uim.platform.ai_launchpad.domain.ports;

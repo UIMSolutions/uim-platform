@@ -10,6 +10,27 @@ enum SsoProtocol {
   saml,
   oidc,
 }
+SsoProtocol toSsoProtocol(string s) {
+  switch(s) {
+    case "saml": return SsoProtocol.saml;
+    case "oidc": return SsoProtocol.oidc;
+    default: return SsoProtocol.saml; // Default case
+  }
+}
+/// 
+unittest {
+  assert(SsoProtocol.saml.to!string == "saml");
+  assert(SsoProtocol.oidc.to!string == "oidc");
+
+  assert("saml".to!SsoProtocol == SsoProtocol.saml);
+  assert("oidc".to!SsoProtocol == SsoProtocol.oidc);
+
+  assert("saml".toSsoProtocol == SsoProtocol.saml);
+  assert("oidc".toSsoProtocol == SsoProtocol.oidc);
+  assert("noexists".toSsoProtocol == SsoProtocol.saml); // Default case
+  assert("".toSsoProtocol == SsoProtocol.saml); // Default case
+}
+
 /// Authentication method supported by the platform.
 enum AuthMethod {
   form,
@@ -20,3 +41,79 @@ enum AuthMethod {
   oidc,
   apiKey,
 }
+AuthMethod toAuthMethod(string s) {
+  switch(s) {
+    case "form": return AuthMethod.form;
+    case "spnego": return AuthMethod.spnego;
+    case "social": return AuthMethod.social;
+    case "certificate": return AuthMethod.certificate;
+    case "saml": return AuthMethod.saml;
+    case "oidc": return AuthMethod.oidc;
+    case "apiKey": return AuthMethod.apiKey;
+    default: return AuthMethod.form; // Default case);
+  }
+}
+///
+unittest {
+  assert(AuthMethod.form.to!string == "form");
+  assert(AuthMethod.spnego.to!string == "spnego");
+  assert(AuthMethod.social.to!string == "social");
+  assert(AuthMethod.certificate.to!string == "certificate");
+  assert(AuthMethod.saml.to!string == "saml");
+  assert(AuthMethod.oidc.to!string == "oidc");
+  assert(AuthMethod.apiKey.to!string == "apiKey");
+
+  assert("form".to!AuthMethod == AuthMethod.form);
+  assert("spnego".to!AuthMethod == AuthMethod.spnego);
+  assert("social".to!AuthMethod == AuthMethod.social);
+  assert("certificate".to!AuthMethod == AuthMethod.certificate);
+  assert("saml".to!AuthMethod == AuthMethod.saml);
+  assert("oidc".to!AuthMethod == AuthMethod.oidc);
+  assert("apiKey".to!AuthMethod == AuthMethod.apiKey);
+
+  assert("form".toAuthMethod == AuthMethod.form);
+  assert("spnego".toAuthMethod == AuthMethod.spnego);
+  assert("social".toAuthMethod == AuthMethod.social);
+  assert("certificate".toAuthMethod == AuthMethod.certificate);
+  assert("saml".toAuthMethod == AuthMethod.saml);
+  assert("oidc".toAuthMethod == AuthMethod.oidc);
+  assert("apiKey".toAuthMethod == AuthMethod.apiKey);
+  assert("noexists".toAuthMethod == AuthMethod.form); // Default case
+  assert("".toAuthMethod == AuthMethod.form); // Default case
+}
+
+enum PersistenceType {
+  memory,
+  sql,
+  nosql,
+  file,
+}
+PersistenceType toPersistenceType(string s) {
+  switch(s) {
+    case "sql": return PersistenceType.sql;
+    case "nosql": return PersistenceType.nosql;
+    case "memory": return PersistenceType.memory;
+    case "file": return PersistenceType.file;
+    default: return PersistenceType.memory; // Default case
+  }
+}
+///
+unittest {
+  assert(PersistenceType.sql.to!string == "sql");
+  assert(PersistenceType.nosql.to!string == "nosql");
+  assert(PersistenceType.memory.to!string == "memory");
+  assert(PersistenceType.file.to!string == "file");
+
+  assert("sql".to!PersistenceType == PersistenceType.sql);
+  assert("nosql".to!PersistenceType == PersistenceType.nosql);
+  assert("memory".to!PersistenceType == PersistenceType.memory);
+  assert("file".to!PersistenceType == PersistenceType.file);
+
+  assert("sql".toPersistenceType == PersistenceType.sql);
+  assert("nosql".toPersistenceType == PersistenceType.nosql);
+  assert("memory".toPersistenceType == PersistenceType.memory);
+  assert("file".toPersistenceType == PersistenceType.file);
+  assert("noexists".toPersistenceType == PersistenceType.memory); // Default case
+  assert("".toPersistenceType == PersistenceType.memory); // Default case
+}
+

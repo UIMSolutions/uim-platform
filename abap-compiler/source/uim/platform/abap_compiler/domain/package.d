@@ -7,6 +7,7 @@ module uim.platform.abap_compiler.domain;
 
 public {
     import uim.platform.abap_compiler.domain.types;
+    import uim.platform.abap_compiler.domain.enumerations;
     import uim.platform.abap_compiler.domain.entities;
     import uim.platform.abap_compiler.domain.ports;
     import uim.platform.abap_compiler.domain.services;
