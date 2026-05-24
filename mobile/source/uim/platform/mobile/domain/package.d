@@ -6,9 +6,10 @@
 module uim.platform.mobile.domain;
 
 public {
+  import uim.platform.mobile.domain.enumerations;
   import uim.platform.mobile.domain.types;
-  }
-  
+}
+
 public {
   import uim.platform.mobile.domain.entities;
   import uim.platform.mobile.domain.ports;

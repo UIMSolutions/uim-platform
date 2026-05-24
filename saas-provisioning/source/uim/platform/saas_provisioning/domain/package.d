@@ -6,6 +6,7 @@
 module uim.platform.saas_provisioning.domain;
 
 public {
+    import uim.platform.saas_provisioning.domain.enumerations;
     import uim.platform.saas_provisioning.domain.types;
     import uim.platform.saas_provisioning.domain.entities;
     import uim.platform.saas_provisioning.domain.ports;

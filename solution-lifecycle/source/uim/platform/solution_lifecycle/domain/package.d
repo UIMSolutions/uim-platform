@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.domain;
 
 public {
+    import uim.platform.solution_lifecycle.domain.enumerations;
     import uim.platform.solution_lifecycle.domain.types;
     import uim.platform.solution_lifecycle.domain.entities;
     import uim.platform.solution_lifecycle.domain.ports;

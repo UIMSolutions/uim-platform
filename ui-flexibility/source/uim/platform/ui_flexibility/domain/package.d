@@ -6,6 +6,7 @@
 module uim.platform.ui_flexibility.domain;
 
 public {
+  import uim.platform.ui_flexibility.domain.enumerations;
   import uim.platform.ui_flexibility.domain.types;
   import uim.platform.ui_flexibility.domain.entities;
   import uim.platform.ui_flexibility.domain.ports;
