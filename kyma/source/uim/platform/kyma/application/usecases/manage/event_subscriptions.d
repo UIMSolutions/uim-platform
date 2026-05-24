@@ -42,7 +42,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     sub.status = SubscriptionStatus.pending;
     sub.source = req.source;
     sub.eventTypes = req.eventTypes;
-    sub.typeEncoding = parseTypeEncoding(req.typeEncoding);
+    sub.typeEncoding = req.typeEncoding.toTypeEncoding;
     sub.sinkUrl = req.sinkUrl;
     sub.sinkServiceName = req.sinkServiceName;
     sub.sinkServicePort = req.sinkServicePort;
@@ -55,11 +55,11 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, sub.id.value, "");
   }
 
-  CommandResult updateEventSubscription(UpdateEventSubscriptionRequest request) {
-    if (!subscriptionRepository.existsById(subscriptionId))
+  CommandResult updateEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
+    if (!subscriptionRepository.existsById(tenantId, subscriptionId))
       return CommandResult(false, "", "Subscription not found");
 
-    auto sub = subscriptionRepository.findById(subscriptionId);
+    auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (request.description.length > 0)
       sub.description = request.description;
     if (request.eventTypes.length > 0)
@@ -84,7 +84,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult pauseEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
-    auto sub = subscriptionRepository.findById(subscriptionId);
+    auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (sub.isNull)
       return CommandResult(false, "", "Subscription not found");
 
@@ -95,7 +95,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult resumeEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
-    auto sub = subscriptionRepository.findById(subscriptionId);
+    auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (sub.isNull)
       return CommandResult(false, "", "Subscription not found");
 
@@ -105,12 +105,12 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, subscriptionId.value, "");
   }
 
-  bool hasSubscription(EventSubscriptionId subscriptionId) {
-    return subscriptionRepository.existsById(subscriptionId);
+  bool hasSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+    return subscriptionRepository.existsById(tenantId, subscriptionId);
   }
 
-  EventSubscription getSubscription(EventSubscriptionId subscriptionId) {
-    return subscriptionRepository.findById(subscriptionId);
+  EventSubscription getSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+    return subscriptionRepository.findById(tenantId, subscriptionId);
   }
 
   EventSubscription[] listByNamespace(TenantId tenantId, NamespaceId namespaceId) {

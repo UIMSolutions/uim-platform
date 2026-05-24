@@ -31,7 +31,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     if (request.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
-    auto existing = moduleRepository.findByName(request.environmentId, request.name);
+    auto existing = moduleRepository.findByName(request.tenantId, request.environmentId, request.name);
     if (existing.id.value.length > 0 && existing.status == ModuleStatus
       .enabled)
       return CommandResult(false, "", "Module '" ~ request.name ~ "' is already enabled");
@@ -56,7 +56,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     mod.requiredModules = getKnownDependencies(mod.moduleType);
 
     // Check dependencies
-    auto allModules = moduleRepository.findByEnvironment(request.environmentId);
+    auto allModules = moduleRepository.findByEnvironment(request.tenantId, request.environmentId);
     if (!depResolver.canEnable(mod, allModules)) {
       auto missing = depResolver.getUnsatisfiedDependencies(mod, allModules);
       // import std.array : join;
@@ -70,20 +70,16 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, mod.id.value, "");
   }
 
-  CommandResult disableModule(string moduleId) {
-    return disableModule(KymaModuleId(moduleId));
-  }
-
-  CommandResult disableModule(KymaModuleId moduleId) {
-    if (!moduleRepository.existsById(moduleId))
+  CommandResult disableModule(TenantId tenantId, KymaModuleId moduleId) {
+    if (!moduleRepository.existsById(tenantId, moduleId))
       return CommandResult(false, "", "Module not found");
 
-    auto mod = moduleRepository.findById(moduleId);
+    auto mod = moduleRepository.findById(tenantId, moduleId);
     if (mod.status == ModuleStatus.disabled)
       return CommandResult(false, "", "Module is already disabled");
 
     // Check for dependents
-    auto allModules = moduleRepository.findByEnvironment(mod.environmentId);
+    auto allModules = moduleRepository.findByEnvironment(tenantId, mod.environmentId);
     auto dependents = depResolver.findDependents(mod.name, allModules);
     if (dependents.length > 0) {
       // import std.array : join;
@@ -97,15 +93,11 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, mod.id.value, "");
   }
 
-  CommandResult updateModule(string moduleId, UpdateModuleRequest request) {
-    return updateModule(KymaModuleId(moduleId), request);
-  }
-
-  CommandResult updateModule(KymaModuleId moduleId, UpdateModuleRequest request) {
-    if (!moduleRepository.existsById(moduleId))
+  CommandResult updateModule(UpdateModuleRequest request) {
+    auto mod = moduleRepository.findById(request.tenantId, request.moduleId);
+    if (mod.isNull)
       return CommandResult(false, "", "Module not found");
 
-    auto mod = moduleRepository.findById(moduleId);
     if (request.version_.length > 0)
       mod.version_ = request.version_;
     if (request.channel.length > 0)
@@ -117,42 +109,27 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
     mod.updatedAt = clockSeconds();
 
     moduleRepository.update(mod);
-    return CommandResult(true, moduleid.value, "");
+    return CommandResult(true, mod.id.value, "");
   }
 
-  bool hasModule(string moduleId) {
-    return hasModule(KymaModuleId(moduleId));
+  bool hasModule(TenantId tenantId, KymaModuleId moduleId) {
+    return moduleRepository.existsById(tenantId, moduleId);
   }
 
-  bool hasModule(KymaModuleId moduleId) {
-    return moduleRepository.existsById(moduleId);
+  KymaModule getModule(TenantId tenantId, KymaModuleId moduleId) {
+    return moduleRepository.findById(tenantId, moduleId);
   }
 
-  KymaModule getModule(string moduleId) {
-    return getModule(KymaModuleId(moduleId));
+  KymaModule[] listByEnvironment(TenantId tenantId, KymaEnvironmentId environmentId) {
+    return moduleRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  KymaModule getModule(KymaModuleId moduleId) {
-    return moduleRepository.findById(moduleId);
-  }
-
-  KymaModule[] listByEnvironment(string environmentId) {
-    return listByEnvironment(KymaEnvironmentId(environmentId));
-  }
-
-  KymaModule[] listByEnvironment(KymaEnvironmentId environmentId) {
-    return moduleRepository.findByEnvironment(environmentId);
-  }
-
-  CommandResult deleteModule(string moduleId) {
-    return deleteModule(KymaModuleId(moduleId));
-  }
-
-  CommandResult deleteModule(KymaModuleId moduleId) {
-    if (!moduleRepository.existsById(moduleId))
+  CommandResult deleteModule(TenantId tenantId, KymaModuleId moduleId) {
+    auto mod = moduleRepository.findById(tenantId, moduleId);
+    if (mod.isNull)
       return CommandResult(false, "", "Module not found");
 
-    moduleRepository.remove(moduleId);
-    return CommandResult(true, moduleId.value, "");
+    moduleRepository.remove(mod);
+    return CommandResult(true, mod.id.value, "");
   }
 }

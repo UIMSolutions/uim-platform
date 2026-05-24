@@ -82,3 +82,29 @@ enum HealthCheckType {
   process,
 }
 
+HealthCheckType toHealthCheckType(string s) {
+  import std.uni : toLower;
+  switch (s.toLower()) {
+    case "http":    return HealthCheckType.http;
+    case "port":    return HealthCheckType.port;
+    case "process": return HealthCheckType.process;
+    default:        return HealthCheckType.http;
+  }
+}
+
+string toString(HealthCheckType t) {
+  final switch (t) {
+    case HealthCheckType.http:    return "http";
+    case HealthCheckType.port:    return "port";
+    case HealthCheckType.process: return "process";
+  }
+}
+
+/// Application log message severity level.
+// enum LogLevel {
+//   debug_,
+//   info,
+//   warning,
+//   error,
+// }
+

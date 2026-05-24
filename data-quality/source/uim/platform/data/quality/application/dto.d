@@ -23,8 +23,8 @@ struct CreateValidationRuleRequest {
   string description;
   string datasetPattern;
   string fieldName;
-  RuleType ruleType;
-  RuleSeverity severity;
+  string ruleType;
+  string severity;
 
   string pattern;
   string minValue;
@@ -45,9 +45,9 @@ struct UpdateValidationRuleRequest {
   string description;
   string datasetPattern;
   string fieldName;
-  RuleType ruleType;
-  RuleSeverity severity;
-  RuleStatus status;
+  string ruleType;
+  string severity;
+  string status;
 
   string pattern;
   string minValue;
@@ -138,7 +138,7 @@ struct CreateCleansingRuleRequest {
   string description;
   string datasetPattern;
   string fieldName;
-  CleansingAction action;
+  string action;
 
   string findPattern;
   string replaceWith;
@@ -161,8 +161,8 @@ struct UpdateCleansingRuleRequest {
   string description;
   string datasetPattern;
   string fieldName;
-  CleansingAction action;
-  RuleStatus status;
+  string action;
+  string status;
 
   string findPattern;
   string replaceWith;

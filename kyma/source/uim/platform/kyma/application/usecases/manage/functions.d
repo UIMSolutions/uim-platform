@@ -45,7 +45,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     serverlessFunction.sourceCode = request.sourceCode;
     serverlessFunction.handler = request.handler;
     serverlessFunction.dependencies = request.dependencies;
-    serverlessFunction.scalingType = parseScalingType(request.scalingType);
+    serverlessFunction.scalingType = request.scalingType.toScalingType;
     serverlessFunction.minReplicas = request.minReplicas > 0 ? request.minReplicas : 1;
     serverlessFunction.maxReplicas = request.maxReplicas > 0 ? request.maxReplicas : 5;
     serverlessFunction.cpuRequest = request.cpuRequest;
@@ -65,11 +65,11 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, serverlessFunction.id.value, "");
   }
 
-  CommandResult updateFunction(ServerlessFunctionId functionId, UpdateFunctionRequest req) {
-    if (!functionRepository.existsById(functionId))
+  CommandResult updateFunction(UpdateFunctionRequest req) {
+    auto fn = functionRepository.findById(req.tenantId, req.functionId);
+    if (fn.isNull)
       return CommandResult(false, "", "Function not found");
 
-    auto fn = functionRepository.findById(functionId);
     if (req.description.length > 0)
       fn.description = req.description;
     if (req.sourceCode.length > 0)
@@ -79,7 +79,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     if (req.dependencies.length > 0)
       fn.dependencies = req.dependencies;
     if (req.scalingType.length > 0)
-      fn.scalingType = parseScalingType(req.scalingType);
+      fn.scalingType = req.scalingType.toScalingType();
     if (req.minReplicas > 0)
       fn.minReplicas = req.minReplicas;
     if (req.maxReplicas > 0)
@@ -109,40 +109,29 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, fn.id.value, "");
   }
   
-  bool hasFunction(ServerlessFunctionId functionId) {
-    return functionRepository.existsById(functionId);
+  bool hasFunction(TenantId tenantId, ServerlessFunctionId functionId) {
+    return functionRepository.existsById(tenantId, functionId);
   }
   
-  ServerlessFunction getFunction(ServerlessFunctionId functionId) {
-    return functionRepository.findById(functionId);
+  ServerlessFunction getFunction(TenantId tenantId, ServerlessFunctionId functionId) {
+    return functionRepository.findById(tenantId, functionId);
   }
 
-  ServerlessFunction[] listByNamespace(NamespaceId nsId) {
-    return functionRepository.findByNamespace(nsId);
+  ServerlessFunction[] listByNamespace(TenantId tenantId, NamespaceId nsId) {
+    return functionRepository.findByNamespace(tenantId, nsId);
   }
 
-  ServerlessFunction[] listByEnvironment(KymaEnvironmentId environmentId) {
-    return functionRepository.findByEnvironment(environmentId);
+  ServerlessFunction[] listByEnvironment(TenantId tenantId, KymaEnvironmentId environmentId) {
+    return functionRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  CommandResult deleteFunction(ServerlessFunctionId functionId) {
-    if (!functionRepository.existsById(functionId))
+  CommandResult deleteFunction(TenantId tenantId, ServerlessFunctionId functionId) {
+    auto fn = functionRepository.findById(tenantId, functionId);
+    if (fn.isNull)
       return CommandResult(false, "", "Function not found");
 
-    auto fn = functionRepository.findById(functionId);
-    functionRepository.remove(functionId);
+    functionRepository.remove(fn);
     return CommandResult(true, fn.id.value, "");
-  }
-
-  private ScalingType parseScalingType(string scalingTypeName) {
-    switch (scalingTypeName) {
-    case "fixed":
-      return ScalingType.fixed;
-    case "auto":
-      return ScalingType.auto_;
-    default:
-      return ScalingType.auto_;
-    }
   }
 }
 

@@ -44,7 +44,7 @@ class CleansingRuleController : PlatformController {
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
       r.fieldName = j.getString("fieldName");
-      r.action = parseCleansingAction(j.getString("action"));
+      r.action = j.getString("action");
       r.findPattern = j.getString("findPattern");
       r.replaceWith = j.getString("replaceWith");
       r.defaultValue = j.getString("defaultValue");
@@ -115,8 +115,8 @@ class CleansingRuleController : PlatformController {
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
       r.fieldName = j.getString("fieldName");
-      r.action = parseCleansingAction(j.getString("action"));
-      r.status = parseRuleStatus(j.getString("status"));
+      r.action = j.getString("action");
+      r.status = j.getString("status");
       r.findPattern = j.getString("findPattern");
       r.replaceWith = j.getString("replaceWith");
       r.defaultValue = j.getString("defaultValue");

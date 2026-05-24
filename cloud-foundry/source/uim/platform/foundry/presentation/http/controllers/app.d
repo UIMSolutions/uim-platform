@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.presentation.http.controllers.app;
 
-
-
-
-
-
 // import uim.platform.foundry.application.usecases.manage.apps;
 // import uim.platform.foundry.application.dto;
 // import uim.platform.foundry.domain.types;
@@ -45,7 +40,7 @@ class AppController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateAppRequest();
@@ -58,7 +53,7 @@ class AppController : PlatformController {
       r.buildpackId = j.getString("buildpackId");
       r.stack = j.getString("stack");
       r.command = j.getString("command");
-      r.healthCheckType = parseHealthCheckType(j.getString("healthCheckType"));
+      r.healthCheckType = j.getString("healthCheckType");
       r.healthCheckEndpoint = j.getString("healthCheckEndpoint");
       r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
       r.environmentVariables = j.getString("environmentVariables");
@@ -87,8 +82,8 @@ class AppController : PlatformController {
       auto arr = apps.map!(a => a.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", apps.length);
+        .set("items", arr)
+        .set("totalCount", apps.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -172,7 +167,7 @@ class AppController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.message);
@@ -212,7 +207,7 @@ class AppController : PlatformController {
       auto result = useCase.scaleApp(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-        .set("id", result.id);
+          .set("id", result.id);
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.message);
@@ -222,15 +217,15 @@ class AppController : PlatformController {
   }
 
   protected void handleEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(tenantId, id);
 
       auto resp = Json.emptyObject
-      .set("appId", id)
-      .set("environmentVariables", env);
+        .set("appId", id)
+        .set("environmentVariables", env);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -239,7 +234,7 @@ class AppController : PlatformController {
   }
 
   protected void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;
@@ -260,7 +255,7 @@ class AppController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = AppId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

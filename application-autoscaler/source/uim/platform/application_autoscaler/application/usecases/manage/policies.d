@@ -39,10 +39,10 @@ class ManageScalingPoliciesUseCase {
     foreach (rr; r.scalingRules) {
       ScalingRuleEntity rule;
       rule.id                = generateId();
-      rule.metricType        = parseMetricType(rr.metricType);
+      rule.metricType        = toMetricType(rr.metricType);
       rule.customMetricName  = rr.customMetricName;
       rule.threshold         = rr.threshold;
-      rule.operator          = parseScalingOperator(rr.operator);
+      rule.operator          = toScalingOperator(rr.operator);
       rule.breachDurationSecs= rr.breachDurationSecs > 0 ? rr.breachDurationSecs : 120;
       rule.coolDownSecs      = rr.coolDownSecs > 0 ? rr.coolDownSecs : 300;
       rule.adjustment        = rr.adjustment;
@@ -98,10 +98,10 @@ class ManageScalingPoliciesUseCase {
     foreach (rr; r.scalingRules) {
       ScalingRuleEntity rule;
       rule.id                = generateId();
-      rule.metricType        = parseMetricType(rr.metricType);
+      rule.metricType        = toMetricType(rr.metricType);
       rule.customMetricName  = rr.customMetricName;
       rule.threshold         = rr.threshold;
-      rule.operator          = parseScalingOperator(rr.operator);
+      rule.operator          = toScalingOperator(rr.operator);
       rule.breachDurationSecs= rr.breachDurationSecs > 0 ? rr.breachDurationSecs : 120;
       rule.coolDownSecs      = rr.coolDownSecs > 0 ? rr.coolDownSecs : 300;
       rule.adjustment        = rr.adjustment;

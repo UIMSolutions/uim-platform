@@ -8,6 +8,8 @@ mixin(ShowModule!());
 struct CreateAppRequest {
   SpaceId spaceId;
   TenantId tenantId;
+  UserId createdBy;
+
   string name;
   int instances;
   int memoryMb;
@@ -15,12 +17,11 @@ struct CreateAppRequest {
   string buildpackId;
   string stack;
   string command;
-  HealthCheckType healthCheckType;
+  string healthCheckType;
   string healthCheckEndpoint;
   int healthCheckTimeoutSec;
   string environmentVariables;
   string dockerImage;
-  UserId createdBy;
 }
 
 struct UpdateAppRequest {
@@ -33,7 +34,7 @@ struct UpdateAppRequest {
   string buildpackId;
   string stack;
   string command;
-  HealthCheckType healthCheckType;
+  string healthCheckType;
   string healthCheckEndpoint;
   int healthCheckTimeoutSec;
   string environmentVariables;
@@ -43,6 +44,7 @@ struct UpdateAppRequest {
 struct ScaleAppRequest {
   AppId id;
   TenantId tenantId;
+  
   int instances;
   int memoryMb;
   int diskMb;

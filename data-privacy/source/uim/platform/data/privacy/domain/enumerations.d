@@ -11,7 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
 /// Type of data subject whose personal data is processed.
 enum DataSubjectType {
   naturalPerson,
@@ -58,6 +57,32 @@ enum ProcessingPurpose {
   security,
   research,
 }
+
+ProcessingPurpose toProcessingPurpose(string str) {
+  switch (str.toLower) {
+  case "servicedelivery":
+    return ProcessingPurpose.serviceDelivery;
+  case "marketing":
+    return ProcessingPurpose.marketing;
+  case "analytics":
+    return ProcessingPurpose.analytics;
+  case "compliance":
+    return ProcessingPurpose.compliance;
+  case "humanresources":
+    return ProcessingPurpose.humanResources;
+  case "customersupport":
+    return ProcessingPurpose.customerSupport;
+  case "billing":
+    return ProcessingPurpose.billing;
+  case "security":
+    return ProcessingPurpose.security;
+  case "research":
+    return ProcessingPurpose.research;
+  default:
+    return ProcessingPurpose.serviceDelivery; // default
+  }
+}
+
 /// Status of a consent record.
 enum ConsentStatus {
   pending,
@@ -107,6 +132,18 @@ enum RetentionRuleStatus {
   inactive,
   expired,
 }
+
+RetentionRuleStatus toRetentionRuleStatus(string value) {
+  switch (value.toLower) {
+  case "inactive":
+    return RetentionRuleStatus.inactive;
+  case "expired":
+    return RetentionRuleStatus.expired;
+  default:
+    return RetentionRuleStatus.active; // default
+  }
+}
+
 /// Status of a correction request (GDPR Art. 16).
 enum CorrectionStatus {
   requested,

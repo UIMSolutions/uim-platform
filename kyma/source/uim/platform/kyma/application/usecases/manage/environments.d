@@ -53,11 +53,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, env.id.value, "");
   }
 
-  CommandResult updateEnvironment(string id, UpdateEnvironmentRequest req) {
-    return updateEnvironment(KymaEnvironmentId(id), req);
-  }
-
-  CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req) {
+  CommandResult updateEnvironment(TenantId tenantId, KymaEnvironmentId id, UpdateEnvironmentRequest req) {
     auto env = repo.findById(tenantId, id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");
@@ -84,28 +80,23 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, env.id.value, "");
   }
 
-  bool hasEnvironment(KymaEnvironmentId id) {
-    return repo.existsById(id);
+  bool hasEnvironment(TenantId tenantId, KymaEnvironmentId id) {
+    return repo.existsById(tenantId, id);
   }
 
-  KymaEnvironment getEnvironment(KymaEnvironmentId id) {
+  KymaEnvironment getEnvironment(TenantId tenantId, KymaEnvironmentId id) {
     return repo.findById(tenantId, id);
-  }
-
-  KymaEnvironment[] listEnvironments(TenantId tenantId) {
-    return listEnvironments(TenantId(tenantId));
   }
 
   KymaEnvironment[] listEnvironments(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-
   KymaEnvironment[] listEnvironments(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
   }
 
-  CommandResult deleteEnvironment(KymaEnvironmentId id) {
+  CommandResult deleteEnvironment(TenantId tenantId, KymaEnvironmentId id) {
     auto env = repo.findById(tenantId, id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");

@@ -111,14 +111,16 @@ class ObservationController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
+      
       UpdateObservationRequest r;
       r.tenantId      = tenantId;
       r.observationId = id;
-      r.status_       = parseStatus(j.getString("status"));
+      r.status_       = j.getString("status");
       r.effectiveDateTime_ = j.getString("effectiveDateTime");
       r.note_         = j.getString("note");
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+      
       auto result = usecase.updateObservation(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation").set("id", result.id), 200);

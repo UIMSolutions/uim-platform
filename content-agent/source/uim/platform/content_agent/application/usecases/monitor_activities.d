@@ -31,8 +31,7 @@ class MonitorActivitiesUseCase { // TODO: UIMUseCase {
   }
 
   ContentActivity[] listByType(TenantId tenantId, string activityTypeStr) {
-    auto actType = parseActivityType(activityTypeStr);
-    return activityRepo.findByType(tenantId, actType);
+    return activityRepo.findByType(tenantId, activityTypeStr.toActivityType);
   }
 
   /// Produce a summary of recent activities by type.
@@ -57,47 +56,6 @@ class MonitorActivitiesUseCase { // TODO: UIMUseCase {
     }
 
     return summary;
-  }
-
-  private static ActivityType parseActivityType(string s) {
-    switch (s) {
-    case "packageCreated":
-      return ActivityType.packageCreated;
-    case "packageAssembled":
-      return ActivityType.packageAssembled;
-    case "packageExported":
-      return ActivityType.packageExported;
-    case "packageImported":
-      return ActivityType.packageImported;
-    case "packageDeleted":
-      return ActivityType.packageDeleted;
-    case "providerRegistered":
-      return ActivityType.providerRegistered;
-    case "providerDeregistered":
-      return ActivityType.providerDeregistered;
-    case "transportCreated":
-      return ActivityType.transportCreated;
-    case "transportReleased":
-      return ActivityType.transportReleased;
-    case "transportFailed":
-      return ActivityType.transportFailed;
-    case "exportStarted":
-      return ActivityType.exportStarted;
-    case "exportCompleted":
-      return ActivityType.exportCompleted;
-    case "exportFailed":
-      return ActivityType.exportFailed;
-    case "importStarted":
-      return ActivityType.importStarted;
-    case "importCompleted":
-      return ActivityType.importCompleted;
-    case "importFailed":
-      return ActivityType.importFailed;
-    case "queueConfigured":
-      return ActivityType.queueConfigured;
-    default:
-      return ActivityType.packageCreated;
-    }
   }
 }
 

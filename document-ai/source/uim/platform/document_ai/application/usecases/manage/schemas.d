@@ -45,7 +45,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
         SchemaField f;
         f.name = pair[0];
         f.label = pair[1];
-        f.type = parseFieldType(pair[2]);
+        f.type = toFieldType(pair[2]);
         f.required = pair.length >= 4 && pair[3] == "true";
         hFields ~= f;
       }

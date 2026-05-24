@@ -123,7 +123,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   ContentPackage[] listByStatus(TenantId tenantId, string statusStr) {
-    auto status = parsePackageStatus(statusStr);
+    auto status = toPackageStatus(statusStr);
     return packages.findByStatus(tenantId, status);
   }
 

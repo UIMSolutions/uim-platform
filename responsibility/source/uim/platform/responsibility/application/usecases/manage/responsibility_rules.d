@@ -14,7 +14,9 @@ mixin(ShowModule!());
 class ManageResponsibilityRulesUseCase {
     private ResponsibilityRuleRepository repo;
 
-    this(ResponsibilityRuleRepository repo) { this.repo = repo; }
+    this(ResponsibilityRuleRepository repo) {
+        this.repo = repo;
+    }
 
     ResponsibilityRule getRule(TenantId tenantId, ResponsibilityRuleId id) {
         return repo.findById(tenantId, id);
@@ -31,15 +33,15 @@ class ManageResponsibilityRulesUseCase {
     CommandResult createRule(ResponsibilityRuleDTO dto) {
         ResponsibilityRule r;
         r.initEntity(dto.tenantId, dto.createdBy);
-        r.id          = dto.ruleId;
-        r.name        = dto.name;
+        r.id = dto.ruleId;
+        r.name = dto.name;
         r.description = dto.description;
-        r.ruleType    = parseRuleType(dto.ruleType);
-        r.status      = parseRuleStatus(dto.status);
-        r.expression  = dto.expression;
-        r.priority    = dto.priority;
-        r.contextId   = dto.contextId;
-        r.teamId      = dto.teamId;
+        r.ruleType = toRuleType(dto.ruleType);
+        r.status = toRuleStatus(dto.status);
+        r.expression = dto.expression;
+        r.priority = dto.priority;
+        r.contextId = dto.contextId;
+        r.teamId = dto.teamId;
 
         if (r.name.length == 0)
             return CommandResult(false, "", "Rule name is required");
@@ -51,11 +53,16 @@ class ManageResponsibilityRulesUseCase {
         auto existing = repo.findById(dto.tenantId, dto.ruleId);
         if (existing.isNull)
             return CommandResult(false, "", "Rule not found");
-        if (dto.name.length > 0)        existing.name        = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.expression.length > 0)  existing.expression  = dto.expression;
-        if (dto.teamId.length > 0)      existing.teamId      = dto.teamId;
-        if (!dto.updatedBy.isNull)      existing.updatedBy   = dto.updatedBy;
+        if (dto.name.length > 0)
+            existing.name = dto.name;
+        if (dto.description.length > 0)
+            existing.description = dto.description;
+        if (dto.expression.length > 0)
+            existing.expression = dto.expression;
+        if (dto.teamId.length > 0)
+            existing.teamId = dto.teamId;
+        if (!dto.updatedBy.isNull)
+            existing.updatedBy = dto.updatedBy;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
@@ -68,13 +75,13 @@ class ManageResponsibilityRulesUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    private static RuleType parseRuleType(string s) {
-        import std.conv : to;
-        try { return s.to!RuleType; } catch (Exception) { return RuleType.directAssignment; }
-    }
-
     private static RuleStatus parseRuleStatus(string s) {
         import std.conv : to;
-        try { return s.to!RuleStatus; } catch (Exception) { return RuleStatus.active; }
+
+        try {
+            return s.to!RuleStatus;
+        } catch (Exception) {
+            return RuleStatus.active;
+        }
     }
 }

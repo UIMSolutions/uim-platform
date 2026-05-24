@@ -42,7 +42,7 @@ class ConsentController : PlatformController {
       CreateConsentRecordRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
-      r.purpose = parsePurpose(j.getString("purpose"));
+      r.purpose = j.getString("purpose");
       r.channel = j.getString("channel");
       r.consentText = j.getString("consentText");
       r.version_ = j.getString("version");
@@ -159,30 +159,5 @@ class ConsentController : PlatformController {
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static ProcessingPurpose parsePurpose(string purpose) {
-    switch (purpose) {
-    case "serviceDelivery":
-      return ProcessingPurpose.serviceDelivery;
-    case "marketing":
-      return ProcessingPurpose.marketing;
-    case "analytics":
-      return ProcessingPurpose.analytics;
-    case "compliance":
-      return ProcessingPurpose.compliance;
-    case "humanResources":
-      return ProcessingPurpose.humanResources;
-    case "customerSupport":
-      return ProcessingPurpose.customerSupport;
-    case "billing":
-      return ProcessingPurpose.billing;
-    case "security":
-      return ProcessingPurpose.security;
-    case "research":
-      return ProcessingPurpose.research;
-    default:
-      return ProcessingPurpose.serviceDelivery;
-    }
   }
 }

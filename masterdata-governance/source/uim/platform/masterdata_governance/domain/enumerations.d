@@ -1,6 +1,10 @@
 module uim.platform.masterdata_governance.domain.enumerations;
 // --- Enumerations ---
+import uim.platform.masterdata_governance;
 
+mixin(ShowModule!());
+
+@safe:
 enum BPCategory {
     organization,
     person,
@@ -57,6 +61,18 @@ enum RuleType {
     uniqueness,
     consistency,
     referentialIntegrity
+}
+
+RuleType toRuleType(string s) {
+    switch (s.toLower) {
+        case "required": return RuleType.required;
+        case "format": return RuleType.format;
+        case "range": return RuleType.range;
+        case "uniqueness": return RuleType.uniqueness;
+        case "consistency": return RuleType.consistency;
+        case "referentialintegrity": return RuleType.referentialIntegrity;
+        default: return RuleType.required; // default
+    }
 }
 
 enum RuleSeverity {

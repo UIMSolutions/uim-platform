@@ -42,7 +42,7 @@ class RetentionRuleController : PlatformController {
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purpose = parsePurpose(j.getString("purpose"));
+      r.purpose = j.getString("purpose");
       r.retentionDays = j.getInteger("retentionDays");
       r.legalReference = j.getString("legalReference");
       r.isDefault = j.getBoolean("isDefault");
@@ -65,11 +65,9 @@ class RetentionRuleController : PlatformController {
       auto tenantId = req.getTenantId;
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
-      RetentionRule[] items;
-      if (purposeParam.length > 0)
-        items = usecase.listByPurpose(tenantId, parsePurpose(purposeParam));
-      else
-        items = usecase.listRules(tenantId);
+      RetentionRule[] items = purposeParam.length > 0 
+        ? usecase.listByPurpose(tenantId, purposeParam)
+        : usecase.listRules(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
 
@@ -109,7 +107,7 @@ class RetentionRuleController : PlatformController {
       r.description = j.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
       r.legalReference = j.getString("legalReference");
-      r.status = parseRuleStatus(j.getString("status"));
+      r.status = j.getString("status");
 
       auto result = usecase.updateRule(r);
       if (result.isSuccess()) {
@@ -153,39 +151,4 @@ class RetentionRuleController : PlatformController {
       .set("categories", cats);
   }
 
-  private static ProcessingPurpose parsePurpose(string purpose) {
-    switch (purpose) {
-    case "serviceDelivery":
-      return ProcessingPurpose.serviceDelivery;
-    case "marketing":
-      return ProcessingPurpose.marketing;
-    case "analytics":
-      return ProcessingPurpose.analytics;
-    case "compliance":
-      return ProcessingPurpose.compliance;
-    case "humanResources":
-      return ProcessingPurpose.humanResources;
-    case "customerSupport":
-      return ProcessingPurpose.customerSupport;
-    case "billing":
-      return ProcessingPurpose.billing;
-    case "security":
-      return ProcessingPurpose.security;
-    case "research":
-      return ProcessingPurpose.research;
-    default:
-      return ProcessingPurpose.serviceDelivery;
-    }
-  }
-
-  private static RetentionRuleStatus parseRuleStatus(string s) {
-    switch (s) {
-    case "inactive":
-      return RetentionRuleStatus.inactive;
-    case "expired":
-      return RetentionRuleStatus.expired;
-    default:
-      return RetentionRuleStatus.active;
-    }
-  }
 }

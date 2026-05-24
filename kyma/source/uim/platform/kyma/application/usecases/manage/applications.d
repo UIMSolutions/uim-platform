@@ -80,11 +80,11 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return updateApplication(ApplicationId(appId), req);
   }
 
-  CommandResult updateApplication(ApplicationId appId, UpdateApplicationRequest req) {
-    if (!appRepository.existsById(appId))
+  CommandResult updateApplication(TenantId tenantId, ApplicationId appId, UpdateApplicationRequest req) {
+    if (!appRepository.existsById(tenantId, appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(appId);
+    auto app = appRepository.findById(tenantId, appId);
     if (req.description.length > 0)
       app.description = req.description;
     if (req.connectorUrl.length > 0)
@@ -125,12 +125,8 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "");
   }
 
-  CommandResult connectApplication(string appId) {
-    return connectApplication(ApplicationId(appId));
-  }
-
-  CommandResult connectApplication(ApplicationId appId) {
-    auto app = appRepository.findById(appId);
+  CommandResult connectApplication(TenantId tenantId, ApplicationId appId) {
+    auto app = appRepository.findById(tenantId, appId);
     if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
@@ -140,15 +136,11 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "");
   }
 
-  CommandResult disconnectApplication(string appId) {
-    return disconnectApplication(ApplicationId(appId));
-  }
-
-  CommandResult disconnectApplication(ApplicationId appId) {
-    if (!appRepository.existsById(appId))
+  CommandResult disconnectApplication(TenantId tenantId, ApplicationId appId) {
+    if (!appRepository.existsById(tenantId, appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(appId);
+    auto app = appRepository.findById(tenantId, appId);
     app.status = AppConnectivityStatus.disconnected;
     app.updatedAt = clockSeconds();
     
@@ -156,62 +148,33 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "");
   }
 
-  bool hasApplication(string appId) {
-    return hasApplication(ApplicationId(appId));
+  bool hasApplication(TenantId tenantId, ApplicationId appId) {
+    return appRepository.existsById(tenantId, appId);
   }
 
-  bool hasApplication(ApplicationId appId) {
-    return appRepository.existsById(appId);
+  Application getApplication(TenantId tenantId, ApplicationId appId) {
+    return appRepository.findById(tenantId, appId);
   }
 
-  Application getApplication(string appId) {
-    return getApplication(ApplicationId(appId));
-  }
-
-  Application getApplication(ApplicationId appId) {
-    return appRepository.findById(appId);
-  }
-
-  Application[] listByEnvironment(string envId) {
-    return listByEnvironment(KymaEnvironmentId(envId));
-  }
-
-  Application[] listByEnvironment(KymaEnvironmentId envId) {
-    return appRepository.findByEnvironment(envId);
-  }
-
-  Application[] listByTenant(TenantId tenantId) {
-    return listByTenant(TenantId(tenantId));
+  Application[] listByEnvironment(TenantId tenantId, KymaEnvironmentId envId) {
+    return appRepository.findByEnvironment(tenantId, envId);
   }
 
   Application[] listByTenant(TenantId tenantId) {
     return appRepository.findByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(string appId) {
-    return deleteApplication(ApplicationId(appId));
+  CommandResult deleteApplication(TenantId tenantId, string appId) {
+    return deleteApplication(tenantId, ApplicationId(appId));
   }
 
-  CommandResult deleteApplication(ApplicationId appId) {
-    auto app = appRepository.findById(appId);
+  CommandResult deleteApplication(TenantId tenantId, ApplicationId appId) {
+    auto app = appRepository.findById(tenantId, appId);
     if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
     appRepository.remove(app);
     return CommandResult(true, app.id.value, "");
-  }
-
-  private AppRegistrationType parseRegistrationType(string type) {
-    switch (type) {
-    case "api":
-      return AppRegistrationType.api;
-    case "events":
-      return AppRegistrationType.events;
-    case "apiAndEvents":
-      return AppRegistrationType.apiAndEvents;
-    default:
-      return AppRegistrationType.apiAndEvents;
-    }
   }
 }
 

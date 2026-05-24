@@ -23,6 +23,16 @@ enum RuleStatus {
   inactive,
   draft,
 }
+
+RuleStatus toRuleStatus(string s) {
+  switch (s.toLower) {
+    case "active": return RuleStatus.active;
+    case "inactive": return RuleStatus.inactive;
+    case "draft": return RuleStatus.draft;
+    default: return RuleStatus.draft; // default
+  }
+}
+
 /// Overall quality score rating.
 enum QualityRating {
   excellent, // >= 95%
@@ -93,6 +103,22 @@ enum CleansingAction {
   removed,
   defaulted,
 }
+
+CleansingAction toCleansingAction(string s) {
+  import std.uni : toLower;
+  switch (s.toLower()) {
+    case "none":         return CleansingAction.none;
+    case "trimmed":      return CleansingAction.trimmed;
+    case "normalized":   return CleansingAction.normalized;
+    case "corrected":    return CleansingAction.corrected;
+    case "standardized": return CleansingAction.standardized;
+    case "enriched":     return CleansingAction.enriched;
+    case "removed":      return CleansingAction.removed;
+    case "defaulted":    return CleansingAction.defaulted;
+    default:            return CleansingAction.none; // default
+  }
+}
+
 /// Geocoding precision level.
 enum GeocodePrecision {
   rooftop, // exact building
