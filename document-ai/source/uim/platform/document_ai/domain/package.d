@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain;
 
-public {
-  import uim.platform.document_ai.domain.types;
+public { // Packages
   import uim.platform.document_ai.domain.entities;
   import uim.platform.document_ai.domain.ports;
   import uim.platform.document_ai.domain.services;
+}
+
+public { // Modules
+  import uim.platform.document_ai.domain.enumerations;
+  import uim.platform.document_ai.domain.types;
 }

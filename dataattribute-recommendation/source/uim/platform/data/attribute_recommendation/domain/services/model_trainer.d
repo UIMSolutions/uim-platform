@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 
-
-
 // import uim.platform.data.attribute_recommendation.domain.types;
 // import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 // import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
@@ -19,7 +17,9 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 
-@safe:/// Domain service that orchestrates the training lifecycle:
+@safe:
+
+/// Domain service that orchestrates the training lifecycle:
 /// validates dataset readiness, creates training jobs, and
 /// simulates training with quality metrics.
 class ModelTrainer {

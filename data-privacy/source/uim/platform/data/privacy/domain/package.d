@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain;
 
-public {
+public { // Packages
     import uim.platform.data.privacy.domain.entities;
     import uim.platform.data.privacy.domain.ports;
     import uim.platform.data.privacy.domain.services;
+}
+
+public { // Modules
+    import uim.platform.data.privacy.domain.enumerations;
     import uim.platform.data.privacy.domain.types;
 }

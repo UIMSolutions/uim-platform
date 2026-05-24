@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.authorization_trust.domain.types;
+
 import uim.platform.authorization_trust;
 
 mixin(ShowModule!());

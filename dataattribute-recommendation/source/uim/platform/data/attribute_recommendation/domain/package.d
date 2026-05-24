@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.domain;
 
-public {
+public { // Packages
   import uim.platform.data.attribute_recommendation.domain.entities;
   import uim.platform.data.attribute_recommendation.domain.ports;
   import uim.platform.data.attribute_recommendation.domain.services;
+}
+
+public { // Modules
+  import uim.platform.data.attribute_recommendation.domain.enumerations;
   import uim.platform.data.attribute_recommendation.domain.types;
 }

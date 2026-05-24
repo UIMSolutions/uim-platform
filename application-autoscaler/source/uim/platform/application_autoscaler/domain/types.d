@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_autoscaler.domain.types;
+
 import uim.platform.application_autoscaler;
 
 mixin(ShowModule!());

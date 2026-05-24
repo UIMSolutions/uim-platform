@@ -5,8 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.rfc.domain;
 
-public import uim.platform.rfc.domain.types;
-public import uim.platform.rfc.domain.enumerations;
-public import uim.platform.rfc.domain.entities;
-public import uim.platform.rfc.domain.ports;
-public import uim.platform.rfc.domain.services;
+public {
+    import uim.platform.rfc.domain.types;
+    import uim.platform.rfc.domain.enumerations;
+    import uim.platform.rfc.domain.entities;
+    import uim.platform.rfc.domain.ports;
+    import uim.platform.rfc.domain.services;
+}
