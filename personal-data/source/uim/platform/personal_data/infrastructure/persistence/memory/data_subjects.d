@@ -16,14 +16,18 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     // #region ByEmail
     bool existsByEmail(TenantId tenantId, string email) {
         foreach (v; findByTenant(tenantId))
-            if (v.email == email) return true;
+            if (v.email == email)
+                return true;
         return false;
     }
+
     DataSubject findByEmail(TenantId tenantId, string email) {
         foreach (v; findByTenant(tenantId))
-            if (v.email == email) return v;
+            if (v.email == email)
+                return v;
         return DataSubject.init;
     }
+
     void removeByEmail(TenantId tenantId, string email) {
         foreach (v; findByTenant(tenantId))
             if (v.email == email) {
@@ -37,18 +41,26 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     size_t countByName(TenantId tenantId, string firstName, string lastName) {
         return findByName(tenantId, firstName, lastName).length;
     }
-    DataSubject[] findByName(TenantId tenantId, string firstName, string lastName) {
+
+    DataSubject[] filterByName(DataSubject[] subjects, string firstName, string lastName) {
         DataSubject[] result;
-        foreach (v; findByTenant(tenantId)) {
+        foreach (v; subjects) {
             bool match = true;
-            if (firstName.length > 0 && v.firstName != firstName) match = false;
-            if (lastName.length > 0 && v.lastName != lastName) match = false;
-            if (match) result ~= v;
+            if (firstName.length > 0 && v.firstName != firstName)
+                match = false;
+            if (lastName.length > 0 && v.lastName != lastName)
+                match = false;
+            if (match)
+                result ~= v;
         }
         return result;
     }
-    size_t countByOrganization(TenantId tenantId, string organizationId) {
-        return findByOrganization(tenantId, organizationId).length;
+
+    DataSubject[] findByName(TenantId tenantId, string firstName, string lastName) {
+        return filterByName(findByTenant(tenantId), firstName, lastName);
+    }
+    void removeByName(TenantId tenantId, string firstName, string lastName) {
+        findByName(tenantId, firstName, lastName).each!(v => store.remove(v.id));
     }
     // #endregion ByName
 
@@ -56,12 +68,15 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     size_t countByOrganization(TenantId tenantId, string organizationId) {
         return findByOrganization(tenantId, organizationId).length;
     }
-    DataSubject[] findByOrganization(TenantId tenantId, string organizationId) {
-        DataSubject[] result;
-        foreach (v; findByTenant(tenantId))
-            if (v.organizationId == organizationId) result ~= v;
-        return result;
+
+    DataSubject[] filterByOrganization(DataSubject[] subjects, string organizationId) {
+        return subjects.filter!(v => v.organizationId == organizationId).array;
     }
+
+    DataSubject[] findByOrganization(TenantId tenantId, string organizationId) {
+        return filterByOrganization(findByTenant(tenantId), organizationId);
+    }
+
     void removeByOrganization(TenantId tenantId, string organizationId) {
         findByOrganization(tenantId, organizationId).each!(v => store.remove(v.id));
     }

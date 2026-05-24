@@ -44,11 +44,11 @@ class DataProcessingLogController : PlatformController {
             r.ipAddress = j.getString("ipAddress");
             r.createdBy = UserId(j.getString("createdBy"));
 
-            auto result = usecase.create(r);
+            auto result = usecase.createProcessingLog(r);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)
-                  .set("message", "Processing log entry created");
+                  .set("message", "Data Processing log entry created");
 
                 res.writeJsonBody(resp, 201);
             } else {
@@ -68,11 +68,11 @@ class DataProcessingLogController : PlatformController {
 
             DataProcessingLog[] logs;
             if (!dataSubjectId.isEmpty) {
-                logs = usecase.listDataProcessingLogs(tenantId, dataSubjectId);
+                logs = usecase.listProcessingLogs(tenantId, dataSubjectId);
             } else if (!requestId.isEmpty) {
-                logs = usecase.listDataProcessingLogs(tenantId, requestId);
+                logs = usecase.listProcessingLogs(tenantId, requestId);
             } else {
-                logs = usecase.listDataProcessingLogs(tenantId);
+                logs = usecase.listProcessingLogs(tenantId);
             }
 
             auto jarr = logs.map!(l => logToJson(l)).array.toJson;
@@ -80,7 +80,7 @@ class DataProcessingLogController : PlatformController {
             auto resp = Json.emptyObject
               .set("count", logs.length)
               .set("resources", jarr)
-              .set("message", "Processing log list retrieved successfully") ;
+              .set("message", "Data Processing log list retrieved successfully") ;
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -92,7 +92,7 @@ class DataProcessingLogController : PlatformController {
         try {
             auto tenantId = req.getTenantId;
             auto id = DataProcessingLogId(extractIdFromPath(req.requestURI.to!string));
-            auto l = usecase.getDataProcessingLog(tenantId, id);
+            auto l = usecase.getProcessingLog(tenantId, id);
             if (l.isNull) {
                 writeError(res, 404, "Processing log entry not found");
                 return;
@@ -108,7 +108,7 @@ class DataProcessingLogController : PlatformController {
             auto tenantId = req.getTenantId;
             auto id = DataProcessingLogId(extractIdFromPath(req.requestURI.to!string));
 
-            auto result = usecase.deleteDataProcessingLog(tenantId, id);
+            auto result = usecase.deleteProcessingLog(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject
                   .set("id", result.id)

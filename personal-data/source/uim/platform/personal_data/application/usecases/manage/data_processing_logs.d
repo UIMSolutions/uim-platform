@@ -18,7 +18,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataProcessingLog(CreateDataProcessingLogRequest r) {
+    CommandResult createProcessingLog(CreateDataProcessingLogRequest r) {
         if (r.isNull)
             return CommandResult(false, "", "ID is required");
 
@@ -42,31 +42,27 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    bool hasDataProcessingLog(TenantId tenantId, DataProcessingLogId id) {
+    bool hasProcessingLog(TenantId tenantId, DataProcessingLogId id) {
         return repo.existsById(tenantId, id);
     }
 
-    DataProcessingLog getDataProcessingLogById(TenantId tenantId, DataProcessingLogId id) {
+    DataProcessingLog getProcessingLog(TenantId tenantId, DataProcessingLogId id) {
         return repo.findById(tenantId, id);
     }
 
-    DataProcessingLog[] listDataProcessingLogsByTenant(TenantId tenantId) {
+    DataProcessingLog[] listProcessingLogs(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DataProcessingLog[] listDataProcessingLogsByTenant(TenantId tenantId) {
-        return listDataProcessingLogsByTenant(tenantId);
-    }
-
-    DataProcessingLog[] listDataProcessingLogsByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectId dataSubjectId) {
         return repo.findByDataSubject(tenantId, dataSubjectId);
     }
 
-    DataProcessingLog[] listDataProcessingLogsByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
+    DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectRequestId requestId) {
         return repo.findByRequest(tenantId, requestId);
     }
 
-    CommandResult deleteDataProcessingLog(TenantId tenantId, DataProcessingLogId id) {
+    CommandResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id) {
         auto log = repo.findById(tenantId, id);
         if (log.isNull)
             return CommandResult(false, "", "Log entry not found");

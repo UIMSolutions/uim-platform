@@ -13,43 +13,44 @@ mixin(ShowModule!());
 
 class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
     
-    size_t countByDataSubject(DataSubjectId dataSubjectId) {
-        return findByDataSubject(dataSubjectId).length;
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        return findByDataSubject(tenantId, dataSubjectId).length;
     }
-    DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId) {
+    DataSubjectRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         DataSubjectRequest[] result;
         foreach (v; findByTenant(tenantId))
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
-    void removeByDataSubject(DataSubjectId dataSubjectId) {
-        findByDataSubject(dataSubjectId).each!(v => store.remove(v));
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        findByDataSubject(tenantId, dataSubjectId).each!(v => store.remove(v));
     }
 
-    size_t countByStatus(RequestStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, RequestStatus status) {
+        return findByStatus(tenantId, status).length;
     }
-    DataSubjectRequest[] findByStatus(RequestStatus status) {
-        DataSubjectRequest[] result;
-        foreach (v; findByTenant(tenantId))
-            if (v.status == status) result ~= v;
-        return result;
+    DataSubjectRequest[] filterByStatus(DataSubjectRequest[] requests, RequestStatus status) {
+        return requests.filter!(v => v.status == status).array;
     }
-    void removeByStatus(RequestStatus status) {
-        findByStatus(status).each!(v => store.remove(v));
+    DataSubjectRequest[] findByStatus(TenantId tenantId, RequestStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
-    size_t countByAssignee(string assignedTo) {
-        return findByAssignee(assignedTo).length;
+    void removeByStatus(TenantId tenantId, RequestStatus status) {
+        findByStatus(tenantId, status).each!(v => store.remove(v));
     }
-    DataSubjectRequest[] findByAssignee(string assignedTo) {
+
+    size_t countByAssignee(TenantId tenantId, string assignedTo) {
+        return findByAssignee(tenantId, assignedTo).length;
+    }
+    DataSubjectRequest[] findByAssignee(TenantId tenantId, string assignedTo) {
         DataSubjectRequest[] result;
         foreach (v; findByTenant(tenantId))
             if (v.assignedTo == assignedTo) result ~= v;
         return result;
     }
-    void removeByAssignee(string assignedTo) {
-        findByAssignee(assignedTo).each!(v => store.remove(v));
+    void removeByAssignee(TenantId tenantId, string assignedTo) {
+        findByAssignee(tenantId, assignedTo).each!(v => store.remove(v));
     }
 
 }

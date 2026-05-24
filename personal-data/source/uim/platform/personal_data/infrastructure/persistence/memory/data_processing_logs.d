@@ -14,47 +14,47 @@ mixin(ShowModule!());
 class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, DataProcessingLogId), DataProcessingLogRepository {
 
     // #region ByDataSubject
-    size_t countByDataSubject(DataSubjectId dataSubjectId) {
-        return findByDataSubject(dataSubjectId).length;
+    size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        return findByDataSubject(tenantId, dataSubjectId).length;
     }
-    DataProcessingLog[] findByDataSubject(DataSubjectId dataSubjectId) {
+    DataProcessingLog[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         DataProcessingLog[] result;
         foreach (v; findByTenant(tenantId))
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
-    void removeByDataSubject(DataSubjectId dataSubjectId) {
-        findByDataSubject(dataSubjectId).each!(v => store.remove(v));
+    void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        findByDataSubject(tenantId, dataSubjectId).each!(v => store.remove(v));
     }
     // #endregion ByDataSubject
 
     // #region ByRequest
-    size_t countByRequest(DataSubjectRequestId requestId) {
-        return findByRequest(requestId).length;
+    size_t countByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
+        return findByRequest(tenantId, requestId).length;
     }
-    DataProcessingLog[] findByRequest(DataSubjectRequestId requestId) {
+    DataProcessingLog[] findByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
         DataProcessingLog[] result;
         foreach (v; findByTenant(tenantId))
             if (v.requestId == requestId) result ~= v;
         return result;
     }
-    void removeByRequest(DataSubjectRequestId requestId) {
-        findByRequest(requestId).each!(v => store.remove(v));
+    void removeByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
+        findByRequest(tenantId, requestId).each!(v => store.remove(v));
     }
     // #endregion ByRequest
 
     // #region ByApplication
-    size_t countByApplication(string applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, string applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
-    DataProcessingLog[] findByApplication(string applicationId) {
+    DataProcessingLog[] findByApplication(TenantId tenantId, string applicationId) {
         DataProcessingLog[] result;
         foreach (v; findByTenant(tenantId))
             if (v.applicationId == applicationId) result ~= v;
         return result;
     }
-    void removeByApplication(string applicationId) {
-        findByApplication(applicationId).each!(v => store.remove(v));
+    void removeByApplication(TenantId tenantId, string applicationId) {
+        findByApplication(tenantId, applicationId).each!(v => store.remove(v));
     }
     // #endregion ByApplication
 }

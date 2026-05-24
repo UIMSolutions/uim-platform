@@ -16,13 +16,11 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
     size_t countByLegalBasis(TenantId tenantId, LegalBasis basis) {
         return findByLegalBasis(tenantId, basis).length;
     }
-    ProcessingPurpose[] filterByLegalBasis(ProcessingPurpose[] purposes, LegalBasis basis, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0)
-            ? purposes.filter!(v => v.legalBasis == basis).skip(offset).array
-            : purposes.filter!(v => v.legalBasis == basis).skip(offset).take(limit).array;
+    ProcessingPurpose[] filterByLegalBasis(ProcessingPurpose[] purposes, LegalBasis basis) {
+        return purposes.filter!(v => v.legalBasis == basis).array;
     }
     ProcessingPurpose[] findByLegalBasis(TenantId tenantId, LegalBasis basis) {
-        return findByTenant(tenantId).filter!(v => v.legalBasis == basis).array;
+        return filterByLegalBasis(findByTenant(tenantId), basis);
     }
     void removeByLegalBasis(TenantId tenantId, LegalBasis basis) {
         findByLegalBasis(tenantId, basis).each!(v => remove(v.id));
@@ -31,13 +29,11 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
     size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;
     }
-    ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0)
-            ? purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).array
-            : purposes.filter!(v => v.applicationIds.canFind(applicationId)).skip(offset).take(limit).array;
+    ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId) {
+        return purposes.filter!(v => v.applicationIds.canFind(applicationId)).array;
     }
     ProcessingPurpose[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        return findByTenant(tenantId).filter!(v => v.applicationIds.canFind(applicationId)).array;
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         findByApplication(applicationId).each!(v => remove(v.id));

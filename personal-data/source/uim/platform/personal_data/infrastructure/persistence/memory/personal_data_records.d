@@ -60,7 +60,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).length;
     }
 
-    PersonalDataRecord[] filterByDataSubjectAndApplication(PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
+    PersonalDataRecord[] filterByDataSubjectAndApplication(TenantId tenantId, PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
         return (limit == 0)
             ? records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
             .array

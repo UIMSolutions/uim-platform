@@ -16,24 +16,33 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(v => v.name == name);
     }
+
     RegisteredApplication findByName(TenantId tenantId, string name) {
         foreach (v; findByTenant(tenantId))
             if (v.name == name)
                 return v;
         return RegisteredApplication.init;
     }
+    void removeByName(TenantId tenantId, string name) {
+        foreach (v; findByTenant(tenantId))
+            if (v.name == name) {
+                store.remove(v.id);
+                return;
+            }
+    }
 
     size_t countByStatus(TenantId tenantId, ApplicationStatus status) {
         return findByTenant(tenantId).count!(v => v.status == status);
     }
-    RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0) 
-            ? applications.filter!(v => v.status == status).skip(offset).array
-            : applications.filter!(v => v.status == status).skip(offset).take(limit).array;
+
+    RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status) {
+        return applications.filter!(v => v.status == status).array;
     }
+
     RegisteredApplication[] findByStatus(TenantId tenantId, ApplicationStatus status) {
-        return filterByStatus(findByTenant(tenantId), status, 0, 0);
+        return filterByStatus(findByTenant(tenantId), status);
     }
+
     void removeByStatus(TenantId tenantId, ApplicationStatus status) {
         findByStatus(tenantId, status).each!(v => remove(v.id));
     }
