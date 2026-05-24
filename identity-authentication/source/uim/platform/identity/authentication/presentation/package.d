@@ -7,4 +7,12 @@ module uim.platform.identity.authentication.presentation;
 
 public {
   import uim.platform.identity.authentication.presentation.http;
+  import uim.platform.identity.authentication.presentation.web;
+  import uim.platform.identity.authentication.presentation.api;
+  import uim.platform.identity.authentication.presentation.gui;
+    // import uim.platform.identity.authentication.presentation.components;
+    // import uim.platform.identity.authentication.presentation.pages;
+    // import uim.platform.identity.authentication.presentation.routes;
+    // import uim.platform.identity.authentication.presentation.layouts;
+    // import uim.platform.identity.authentication.presentation.widgets;
 }

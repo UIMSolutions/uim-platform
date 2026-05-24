@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.domain.types;
 /// Unique identifier type alias for type safety.
+import uim.platform.identity.authentication;
 
+mixin(ShowModule!());
+
+@safe:
 
 struct GroupId {
   string value;
@@ -16,7 +20,6 @@ struct GroupId {
 
   mixin DomainId;
 }
-
 
 
 struct ApplicationId {
@@ -59,49 +62,3 @@ struct TokenId {
   mixin DomainId;
 }
 
-
-/// Multi-factor authentication type.
-enum MfaType {
-  none,
-  totp,
-  sms,
-  email,
-}
-
-
-/// User status in the identity directory.
-enum UserStatus {
-  active,
-  inactive,
-  locked,
-  pendingVerification,
-}
-/// Risk level determined by risk-based authentication.
-enum RiskLevel {
-  low,
-  medium,
-  high,
-  critical,
-}
-/// Token type.
-enum TokenType {
-  access,
-  refresh,
-  idToken,
-  samlAssertion,
-}
-/// Provisioning job status.
-enum JobStatus {
-  pending,
-  running,
-  completed,
-  failed,
-}
-/// Identity provider type for delegation.
-enum IdpType {
-  local,
-  saml,
-  oidc,
-  ldap,
-  corporate,
-}

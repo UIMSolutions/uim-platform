@@ -6,9 +6,8 @@
 module uim.platform.identity.authentication.domain;
 
 public {
-  import uim.platform.service;
-
   import uim.platform.identity.authentication.domain.entities;
+  import uim.platform.identity.authentication.domain.enumerations;
   import uim.platform.identity.authentication.domain.types;
   import uim.platform.identity.authentication.domain.ports;
   import uim.platform.identity.authentication.domain.services;
