@@ -10,4 +10,5 @@ public {
     import uim.platform.alert_notification.domain.ports;
     import uim.platform.alert_notification.domain.services;
     import uim.platform.alert_notification.domain.types;
+    import uim.platform.alert_notification.domain.enumerations;
 }

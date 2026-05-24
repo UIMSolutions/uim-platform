@@ -5,4 +5,5 @@ public {
     import uim.platform.workzone.domain.services;
     import uim.platform.workzone.domain.ports;
     import uim.platform.workzone.domain.types;
+    import uim.platform.workzone.domain.enumerations;
 }
