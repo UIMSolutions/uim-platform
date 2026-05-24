@@ -60,7 +60,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     return labels.findByResource(tenantId, resourceType.to!LabeledResourceType, resourceId);
   }
 
-  Label[] listLabels(TenantId tenantId, string resourceType, string key) {
+  Label[] listLabelsByKey(TenantId tenantId, string resourceType, string key) {
     return labels.findByKey(tenantId, resourceType.to!LabeledResourceType, key);
   }
 

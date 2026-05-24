@@ -15,60 +15,60 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryServicePlanRepository : IdRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
+class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
   // TODO: mixin TenantRepositoryTemplate!(MemoryServicePlanRepository, ServicePlan, ServicePlanId);
 
   // #region ByService
-  size_t countByService(string serviceName) {
-    return findByService(serviceName).length;
+  size_t countByService(TenantId tenantId, string serviceName) {
+    return findByService(tenantId, serviceName).length;
   }
 
   ServicePlan[] filterByService(ServicePlan[] items, string serviceName) {
     return items.filter!(e => e.serviceName == serviceName).array;
   }
 
-  ServicePlan[] findByService(string serviceName) {
+  ServicePlan[] findByService(TenantId tenantId, string serviceName) {
     return filterByService(findByTenant(tenantId), serviceName);
   }
 
-  void removeByService(string serviceName) {
-    findByService(serviceName).each!(e => remove(e));
+  void removeByService(TenantId tenantId, string serviceName) {
+    findByService(tenantId, serviceName).each!(e => remove(e));
   }
   // #endregion ByService
 
   // #region ByCategory
-  size_t countByCategory(ServicePlanCategory category) {
-    return findByCategory(category).length;
+  size_t countByCategory(TenantId tenantId, ServicePlanCategory category) {
+    return findByCategory(tenantId, category).length;
   }
 
   ServicePlan[] filterByCategory(ServicePlan[] items, ServicePlanCategory category) {
     return items.filter!(e => e.category == category).array;
   }
 
-  ServicePlan[] findByCategory(ServicePlanCategory category) {
+  ServicePlan[] findByCategory(TenantId tenantId, ServicePlanCategory category) {
     return filterByCategory(findByTenant(tenantId), category);
   }
 
-  void removeByCategory(ServicePlanCategory category) {
-    findByCategory(category).each!(e => remove(e));
+  void removeByCategory(TenantId tenantId, ServicePlanCategory category) {
+    findByCategory(tenantId, category).each!(e => remove(e));
   }
   // #endregion ByCategory
 
   // #region ByRegion
-  size_t countByRegion(string region) {
-    return findByRegion(region).length;
+  size_t countByRegion(TenantId tenantId, string region) {
+    return findByRegion(tenantId, region).length;
   }
 
   ServicePlan[] filterByRegion(ServicePlan[] items, string region) {
     return items.filter!(e => e.availableRegions.canFind(region)).array;
   }
 
-  ServicePlan[] findByRegion(string region) {
+  ServicePlan[] findByRegion(TenantId tenantId, string region) {
     return filterByRegion(findByTenant(tenantId), region);
   }
 
-  void removeByRegion(string region) {
-    findByRegion(region).each!(e => remove(e));
+  void removeByRegion(TenantId tenantId, string region) {
+    findByRegion(tenantId, region).each!(e => remove(e));
   }
   // #endregion ByRegion
 

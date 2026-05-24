@@ -15,78 +15,78 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEntitlementRepository : IdRepository!(Entitlement, EntitlementId), EntitlementRepository {
+class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId), EntitlementRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
 
   // #region ByGlobalAccount
-  size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findByGlobalAccount(globalAccountId).length;
+  size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+    return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 
   Entitlement[] filterByGlobalAccount(Entitlement[] items, GlobalAccountId globalAccountId) {
     return items.filter!(e => e.globalAccountId == globalAccountId).array;
   }
 
-  Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
+  Entitlement[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
-  void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).each!(e => remove(e));
+  void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+    findByGlobalAccount(tenantId, globalAccountId).each!(e => remove(e));
   }
   // #endregion ByGlobalAccount
 
   // #region BySubaccount
-  size_t countBySubaccount(SubaccountId subaccountId) {
-    return findBySubaccount(subaccountId).length;
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
   }
 
   Entitlement[] filterBySubaccount(Entitlement[] items, SubaccountId subaccountId) {
     return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  Entitlement[] findBySubaccount(SubaccountId subaccountId) {
+  Entitlement[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
-  void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e));
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
   // #endregion BySubaccount
 
   // #region ByDirectory
-  size_t countByDirectory(DirectoryId directoryId) {
-    return findByDirectory(directoryId).length;
+  size_t countByDirectory(TenantId tenantId, DirectoryId directoryId) {
+    return findByDirectory(tenantId, directoryId).length;
   } 
 
 Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
     return items.filter!(e => e.directoryId == directoryId).array;
   }
 
-  Entitlement[] findByDirectory(DirectoryId directoryId) {
+  Entitlement[] findByDirectory(TenantId tenantId, DirectoryId directoryId) {
     return filterByDirectory(findByTenant(tenantId), directoryId);
   }
 
-  void removeByDirectory(DirectoryId directoryId) {
-    findByDirectory(directoryId).each!(e => remove(e));
+  void removeByDirectory(TenantId tenantId, DirectoryId directoryId) {
+    findByDirectory(tenantId, directoryId).each!(e => remove(e));
   }
   // #endregion ByDirectory
 
   // #region ByServicePlan
-  size_t countByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return findByServicePlan(globalAccountId, planId).length;
+  size_t countByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId) {
+    return findByServicePlan(tenantId, globalAccountId, planId).length;
   }
 
-  Entitlement[] filterByServicePlan(Entitlement[] items, GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return items.filter!(e => e.globalAccountId == globalAccountId && e.servicePlanId == planId).array;
+  Entitlement[] filterByServicePlan(Entitlement[] items, ServicePlanId planId) {
+    return items.filter!(e => e.servicePlanId == planId).array;
   }
 
-  Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return filterByServicePlan(findByTenant(tenantId), globalAccountId, planId);
+  Entitlement[] findByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId) {
+    return filterByServicePlan(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), planId);
   }
 
-  void removeByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    findByServicePlan(globalAccountId, planId).each!(e => remove(e));
+  void removeByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId) {
+    findByServicePlan(tenantId, globalAccountId, planId).each!(e => remove(e));
   }
   // #region ByServicePlan
 

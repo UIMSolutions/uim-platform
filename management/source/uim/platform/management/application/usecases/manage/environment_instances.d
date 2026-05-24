@@ -76,7 +76,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateEnvironmentInstance(UpdateEnvironmentInstanceRequest req) {
-    auto instance = repo.findById(req.tenantId, req.id);
+    auto instance = repo.findById(req.tenantId, req.instanceId);
     if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
 

@@ -14,60 +14,56 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDirectoryRepository : IdRepository!(Directory, DirectoryId), DirectoryRepository {
+class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), DirectoryRepository {
 
   // #region ByGlobalAccount
-  size_t countByGlobalAccount(GlobalAccountId globalAccountId) {
-    return findByGlobalAccount(globalAccountId).length;
+  size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+    return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 
-  Directory[] filterByGlobalAccount(Directory[] dirs, GlobalAccountId globalAccountId) {
-    return dirs.filter!(d => d.globalAccountId == globalAccountId).array;
-  }
-
-  Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {
+  Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
-  void removeByGlobalAccount(GlobalAccountId globalAccountId) {
-    findByGlobalAccount(globalAccountId).each!(d => remove(d));
+  void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+    findByGlobalAccount(tenantId, globalAccountId).each!(d => remove(d));
   }
   // #endregion ByGlobalAccount
 
   // #region ByParent
-  size_t countByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    return findByParent(globalAccountId, parentDirectoryId).length;
+  size_t countByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    return findByParent(tenantId, globalAccountId, parentDirectoryId).length;
   }
 
   Directory[] filterByParent(Directory[] dirs, DirectoryId parentDirectoryId) {
     return dirs.filter!(d => d.parentDirectoryId == parentDirectoryId).array;
   }
 
-  Directory[] findByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    return filterByParent(findByGlobalAccount(globalAccountId), parentDirectoryId);
+  Directory[] findByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    return filterByParent(findByGlobalAccount(tenantId, globalAccountId), parentDirectoryId);
   }
 
-  void removeByParent(GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    findByParent(globalAccountId, parentDirectoryId).each!(d => remove(d));
+  void removeByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
+    findByParent(tenantId, globalAccountId, parentDirectoryId).each!(d => remove(d));
   }
 
   // #endregion ByParent
 
   // #region ByStatus
-  size_t countByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return findByStatus(globalAccountId, status).length;
+  size_t countByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status) {
+    return findByStatus(tenantId, globalAccountId, status).length;
   }
 
   Directory[] filterByStatus(Directory[] dirs, DirectoryStatus status) {
     return dirs.filter!(d => d.status == status).array;
   }
 
-  Directory[] findByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    return filterByStatus(findByGlobalAccount(globalAccountId), status);
+  Directory[] findByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status) {
+    return filterByStatus(findByGlobalAccount(tenantId, globalAccountId), status);
   }
 
-  void removeByStatus(GlobalAccountId globalAccountId, DirectoryStatus status) {
-    findByStatus(globalAccountId, status).each!(d => remove(d));
+  void removeByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status) {
+    findByStatus(tenantId, globalAccountId, status).each!(d => remove(d));
   }
   // #endregion ByStatus
 

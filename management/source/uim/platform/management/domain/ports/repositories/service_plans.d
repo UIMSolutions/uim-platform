@@ -12,21 +12,21 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service plan catalog persistence.
-interface ServicePlanRepository : IIdRepository!(ServicePlan, ServicePlanId) {
+interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
 
-  size_t countByService(string serviceName);
-  ServicePlan[] filterByService(ServicePlan[] items, string serviceName);
-  ServicePlan[] findByService(string serviceName);
-  void removeByService(string serviceName);
+  size_t countByService(TenantId tenantId, string serviceName);
+  ServicePlan[] filterByService(ServicePlan[] items, TenantId tenantId, string serviceName);
+  ServicePlan[] findByService(TenantId tenantId, string serviceName);
+  void removeByService(TenantId tenantId, string serviceName);
 
-  size_t countByCategory(ServicePlanCategory category);
-  ServicePlan[] filterByCategory(ServicePlan[] items, ServicePlanCategory category);  
-  ServicePlan[] findByCategory(ServicePlanCategory category);
-  void removeByCategory(ServicePlanCategory category);
+  size_t countByCategory(TenantId tenantId, ServicePlanCategory category);
+  ServicePlan[] filterByCategory(ServicePlan[] items, TenantId tenantId, ServicePlanCategory category);  
+  ServicePlan[] findByCategory(TenantId tenantId, ServicePlanCategory category);
+  void removeByCategory(TenantId tenantId, ServicePlanCategory category);
 
-  size_t countByRegion(string region);
-  ServicePlan[] filterByRegion(ServicePlan[] items, string region);
-  ServicePlan[] findByRegion(string region);
-  void removeByRegion(string region);
+  size_t countByRegion(TenantId tenantId, string region);
+  ServicePlan[] filterByRegion(ServicePlan[] items, TenantId tenantId, string region);
+  ServicePlan[] findByRegion(TenantId tenantId, string region);
+  void removeByRegion(TenantId tenantId, string region);
   
 }

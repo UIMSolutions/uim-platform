@@ -15,55 +15,55 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentInstanceRepository : IdRepository!(EnvironmentInstance, EnvironmentInstanceId), EnvironmentInstanceRepository {
+class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstance, EnvironmentInstanceId), EnvironmentInstanceRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentInstanceRepository, EnvironmentInstance, EnvironmentInstanceId);
 
-  size_t countBySubaccount(SubaccountId subaccountId) {
-    return findBySubaccount(subaccountId).length;
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
   }
 
   EnvironmentInstance[] filterBySubaccount(EnvironmentInstance[] items, SubaccountId subaccountId) {
     return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId) {
+  EnvironmentInstance[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
-  void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e));
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
 
-  size_t countByType(SubaccountId subaccountId, EnvironmentType envType) {
-    return findByType(subaccountId, envType).length;
+  size_t countByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
+    return findByType(tenantId, subaccountId, envType).length;
   }
 
   EnvironmentInstance[] filterByType(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentType envType) {
     return items.filter!(e => e.subaccountId == subaccountId && e.environmentType == envType).array;
   }
   
-  EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType) {
+  EnvironmentInstance[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
     return filterByType(findByTenant(tenantId), subaccountId, envType);
   }
 
-  void removeByType(SubaccountId subaccountId, EnvironmentType envType) {
-    findByType(subaccountId, envType).each!(e => remove(e));
+  void removeByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
+    findByType(tenantId, subaccountId, envType).each!(e => remove(e));
   }
 
-  size_t countByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
-    return findByStatus(subaccountId, status).length;
+  size_t countByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
+    return findByStatus(tenantId, subaccountId, status).length;
   }
 
   EnvironmentInstance[] filterByStatus(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentStatus status) {
     return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
-  EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
+  EnvironmentInstance[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
     return filterByStatus(findByTenant(tenantId), subaccountId, status);
   }
 
-  void removeByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
-    findByStatus(subaccountId, status).each!(e => remove(e));
+  void removeByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
+    findByStatus(tenantId, subaccountId, status).each!(e => remove(e));
   }
 
 }

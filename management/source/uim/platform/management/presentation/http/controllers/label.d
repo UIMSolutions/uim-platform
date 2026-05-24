@@ -68,7 +68,7 @@ class LabelController : PlatformController {
       if (resourceType.length > 0 && !resourceId.isEmpty)
         items = usecase.listLabels(tenantId, resourceType, resourceId);
       else if (resourceType.length > 0 && key.length > 0)
-        items = usecase.listLabels(tenantId, resourceType, key);
+        items = usecase.listLabelsByKey(tenantId, resourceType, key);
 
       auto arr = items.map!(l => l.toJson).array.toJson;
 

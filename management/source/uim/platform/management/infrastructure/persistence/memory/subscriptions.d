@@ -15,55 +15,55 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubscriptionRepository : IdRepository!(Subscription, SubscriptionId), SubscriptionRepository {
+class MemorySubscriptionRepository : TenantRepository!(Subscription, SubscriptionId), SubscriptionRepository {
   // TODO: mixin IdRepositoryTemplate!(MemorySubscriptionRepository, Subscription, SubscriptionId);
 
-  size_t countBySubaccount(SubaccountId subaccountId) {
-    return findBySubaccount(subaccountId).length;
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    return findBySubaccount(tenantId, subaccountId).length;
   }
 
   Subscription[] filterBySubaccount(Subscription[] items, SubaccountId subaccountId) {
     return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  Subscription[] findBySubaccount(SubaccountId subaccountId) {
+  Subscription[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
-  void removeBySubaccount(SubaccountId subaccountId) {
-    findBySubaccount(subaccountId).each!(e => remove(e));
+  void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+    findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
   }
 
-  size_t countByApp(SubaccountId subaccountId, string appName) {
-    return findByApp(subaccountId, appName).length;
+  size_t countByApp(TenantId tenantId, SubaccountId subaccountId, string appName) {
+    return findByApp(tenantId, subaccountId, appName).length;
   }
 
   Subscription[] filterByApp(Subscription[] items, SubaccountId subaccountId, string appName) {
     return items.filter!(e => e.subaccountId == subaccountId && e.appName == appName).array;
   }
 
-  Subscription[] findByApp(SubaccountId subaccountId, string appName) {
-    return filterByApp(findByTenant(tenantId), subaccountId, appName);
+  Subscription[] findByApp(TenantId tenantId, SubaccountId subaccountId, string appName) {
+    return filterByApp(findBySubaccount(tenantId, subaccountId), appName);
   }
 
-  void removeByApp(SubaccountId subaccountId, string appName) {
-    findByApp(subaccountId, appName).each!(e => remove(e));
+  void removeByApp(TenantId tenantId, SubaccountId subaccountId, string appName) {
+    findByApp(tenantId, subaccountId, appName).each!(e => remove(e));
   }
 
-  size_t countByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    return findByStatus(subaccountId, status).length;
+  size_t countByStatus(TenantId tenantId, SubaccountId subaccountId, SubscriptionStatus status) {
+    return findByStatus(tenantId, subaccountId, status).length;
   }
 
   Subscription[] filterByStatus(Subscription[] items, SubaccountId subaccountId, SubscriptionStatus status) {
     return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
-  Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
+  Subscription[] findByStatus(TenantId tenantId, SubaccountId subaccountId, SubscriptionStatus status) {
     return filterByStatus(findByTenant(tenantId), subaccountId, status);
   }
 
-  void removeByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    findByStatus(subaccountId, status).each!(e => remove(e));
+  void removeByStatus(TenantId tenantId, SubaccountId subaccountId, SubscriptionStatus status) {
+    findByStatus(tenantId,  subaccountId, status).each!(e => remove(e));
   }
 
 }

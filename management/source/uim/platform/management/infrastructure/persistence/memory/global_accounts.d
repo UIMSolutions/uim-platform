@@ -15,23 +15,23 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryGlobalAccountRepository : IdRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {
+class MemoryGlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryGlobalAccountRepository, GlobalAccount, GlobalAccountId);
 
-  size_t countByStatus(GlobalAccountStatus status) {
-    return findByStatus(status).length;
+  size_t countByStatus(TenantId tenantId, GlobalAccountStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
   GlobalAccount[] filterByStatus(GlobalAccount[] items, GlobalAccountStatus status) {
     return items.filter!(e => e.status == status).array;
   }
 
-  GlobalAccount[] findByStatus(GlobalAccountStatus status) {
+  GlobalAccount[] findByStatus(TenantId tenantId, GlobalAccountStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
   }
 
-  void removeByStatus(GlobalAccountStatus status) {
-    findByStatus(status).each!(e => remove(e));
+  void removeByStatus(TenantId tenantId, GlobalAccountStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
 }

@@ -12,21 +12,18 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — label/tag persistence.
-interface LabelRepository : IIdRepository!(Label, LabelId) {
+interface LabelRepository : ITenantRepository!(Label, LabelId) {
 
-  size_t countByResource(LabeledResourceType resourceType, string resourceId);
-  Label[] filterByResource(Label[] items, LabeledResourceType resourceType, string resourceId);
-  Label[] findByResource(LabeledResourceType resourceType, string resourceId);
-  void removeByResource(LabeledResourceType resourceType, string resourceId);
+  size_t countByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId);
+  Label[] findByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId);
+  void removeByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId);
 
-  size_t countByKey(LabeledResourceType resourceType, string key);  
-  Label[] filterByKey(Label[] items, LabeledResourceType resourceType, string key);
-  Label[] findByKey(LabeledResourceType resourceType, string key);
-  void removeByKey(LabeledResourceType resourceType, string key);
+  size_t countByKey(TenantId tenantId, LabeledResourceType resourceType, string key);  
+  Label[] findByKey(TenantId tenantId, LabeledResourceType resourceType, string key);
+  void removeByKey(TenantId tenantId, LabeledResourceType resourceType, string key);
 
-  size_t countByKeyValue(LabeledResourceType resourceType, string key, string value);
-  Label[] filterByKeyValue(Label[] items, LabeledResourceType resourceType, string key, string value);
-  Label[] findByKeyValue(LabeledResourceType resourceType, string key, string value);
-  void removeByKeyValue(LabeledResourceType resourceType, string key, string value);  
+  size_t countByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value);
+  Label[] findByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value);
+  void removeByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value);  
 
 }

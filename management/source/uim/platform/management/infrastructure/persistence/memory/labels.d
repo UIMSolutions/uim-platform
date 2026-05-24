@@ -15,78 +15,78 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryLabelRepository : IdRepository!(Label, LabelId), LabelRepository {
+class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryLabelRepository, Label, LabelId);
 
   // #region ByResourceType
-  size_t countByResourceType(LabeledResourceType resourceType) {
-    return findByResourceType(resourceType).length;
+  size_t countByResourceType(TenantId tenantId, LabeledResourceType resourceType) {
+    return findByResourceType(tenantId, resourceType).length;
   }
 
   Label[] filterByResourceType(Label[] items, LabeledResourceType resourceType) {
     return items.filter!(e => e.resourceType == resourceType).array;
   }
 
-  Label[] findByResourceType(LabeledResourceType resourceType) {
+  Label[] findByResourceType(TenantId tenantId, LabeledResourceType resourceType) {
     return filterByResourceType(findByTenant(tenantId), resourceType);
   }
 
-  void removeByResourceType(LabeledResourceType resourceType) {
-    findByResourceType(resourceType).each!(e => remove(e));
+  void removeByResourceType(TenantId tenantId, LabeledResourceType resourceType) {
+    findByResourceType(tenantId, resourceType).each!(e => remove(e));
   }
   // #endregion ByResourceType
 
   // #region ByResource
-  size_t countByResource(LabeledResourceType resourceType, string resourceId) {
-    return findByResource(resourceType, resourceId).length;
+  size_t countByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId) {
+    return findByResource(tenantId, resourceType, resourceId).length;
   }
 
   Label[] filterByResource(Label[] items, LabeledResourceType resourceType, string resourceId) {
     return filterByResourceType(items, resourceType).filter!(e => e.resourceId == resourceId).array;
   }
 
-  Label[] findByResource(LabeledResourceType resourceType, string resourceId) {
+  Label[] findByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId) {
     return filterByResource(findByTenant(tenantId), resourceType, resourceId);
   }
 
-  void removeByResource(LabeledResourceType resourceType, string resourceId) {
-    findByResource(resourceType, resourceId).each!(e => remove(e));
+  void removeByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId) {
+    findByResource(tenantId, resourceType, resourceId).each!(e => remove(e));
   }
   // #endregion ByResource
 
   // #region ByKey
-  size_t countByKey(LabeledResourceType resourceType, string key) {
-    return findByKey(resourceType, key).length;
+  size_t countByKey(TenantId tenantId, LabeledResourceType resourceType, string key) {
+    return findByKey(tenantId, resourceType, key).length;
   }
 
   Label[] filterByKey(Label[] items, LabeledResourceType resourceType, string key) {
     return filterByResourceType(items, resourceType).filter!(e => e.key == key).array;
   }
 
-  Label[] findByKey(LabeledResourceType resourceType, string key) {
+  Label[] findByKey(TenantId tenantId, LabeledResourceType resourceType, string key) {
     return filterByResourceType(findByTenant(tenantId), resourceType).filter!(e => e.key == key).array;
   }
 
-  void removeByKey(LabeledResourceType resourceType, string key) {
-    findByKey(resourceType, key).each!(e => remove(e));
+  void removeByKey(TenantId tenantId, LabeledResourceType resourceType, string key) {
+    findByKey(tenantId, resourceType, key).each!(e => remove(e));
   } 
   // #endregion ByKey
 
   // #region ByKeyValue
-  size_t countByKeyValue(LabeledResourceType resourceType, string key, string value) {
-    return findByKeyValue(resourceType, key, value).length;
+  size_t countByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value) {
+    return findByKeyValue(tenantId, resourceType, key, value).length;
   }
 
   Label[] filterByKeyValue(Label[] items, LabeledResourceType resourceType, string key, string value) {
     return filterByResourceType(items, resourceType).filter!(e => e.key == key && e.values.canFind(value)).array;
   }
   
-  Label[] findByKeyValue(LabeledResourceType resourceType, string key, string value) {
+  Label[] findByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value) {
     return filterByKeyValue(findByTenant(tenantId), resourceType, key, value);
   }
 
-  void removeByKeyValue(LabeledResourceType resourceType, string key, string value) {
-    findByKeyValue(resourceType, key, value).each!(e => remove(e));
+  void removeByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value) {
+    findByKeyValue(tenantId, resourceType, key, value).each!(e => remove(e));
   }
   // #endregion ByKeyValue
 

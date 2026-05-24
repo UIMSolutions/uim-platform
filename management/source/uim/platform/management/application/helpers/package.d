@@ -15,7 +15,7 @@ void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, Subaccoun
  
 
   PlatformEvent event;
-  event.initEntity(gaId, subId, initiatedBy);
+  event.initEntity();
   
   event.globalAccountId = gaId;
   event.subaccountId = subId;

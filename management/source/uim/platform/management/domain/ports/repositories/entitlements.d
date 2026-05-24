@@ -12,11 +12,11 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — entitlement persistence.
-interface EntitlementRepository : IIdRepository!(Entitlement, EntitlementId) {
+interface EntitlementRepository : ITenantRepository!(Entitlement, EntitlementId) {
 
-  Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId);
-  Entitlement[] findBySubaccount(SubaccountId subaccountId);
-  Entitlement[] findByDirectory(DirectoryId directoryId);
-  Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId);
+  Entitlement[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
+  Entitlement[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+  Entitlement[] findByDirectory(TenantId tenantId, DirectoryId directoryId);
+  Entitlement[] findByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId);
   
 }

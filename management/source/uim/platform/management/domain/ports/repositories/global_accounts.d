@@ -12,8 +12,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — global account persistence.
-interface GlobalAccountRepository : IIdRepository!(GlobalAccount, GlobalAccountId) {
+interface GlobalAccountRepository : ITenantRepository!(GlobalAccount, GlobalAccountId) {
 
-  GlobalAccount[] findByStatus(GlobalAccountStatus status);
+  GlobalAccount[] findByStatus(TenantId tenantId, GlobalAccountStatus status);
   
 }

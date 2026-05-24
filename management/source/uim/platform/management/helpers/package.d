@@ -5,3 +5,4 @@
 *****************************************************************************************************************/
 module uim.platform.management.helpers;
 
+public import uim.platform.management.helpers.filter;
