@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.domain.types;
+
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -81,7 +82,6 @@ struct ContentCacheId {
 }
 
 
-
 struct SpaceId {
   string value;
 
@@ -90,68 +90,4 @@ struct SpaceId {
   }
 
   mixin DomainId;
-}
-// Application visibility
-enum AppVisibility {
-  private_,   // accessible only within same space
-  public_,    // shared across spaces
-}
-// Application status
-enum AppStatus {
-  active,
-  inactive,
-  deleted_,
-}
-// Version status
-enum VersionStatus {
-  active,
-  superseded,
-  archived,
-}
-// Deployment status
-enum DeploymentStatus {
-  pending,
-  inProgress,
-  completed,
-  failed,
-  rolledBack,
-}
-// Deployment operation type
-enum DeploymentOperation {
-  deploy,
-  undeploy,
-  redeploy,
-}
-// Service plan type
-enum ServicePlan {
-  appHost,     // for deploying HTML5 apps
-  appRuntime,  // for accessing HTML5 apps at runtime
-}
-// Service instance status
-enum InstanceStatus {
-  active,
-  suspended,
-  deleted_,
-}
-// Cache status
-enum CacheStatus {
-  valid,
-  stale,
-  expired,
-}
-// Content type category (for file classification)
-enum FileCategory {
-  html,
-  css,
-  javascript,
-  image,
-  font,
-  json,
-  xml,
-  other,
-}
-// Route status
-enum RouteStatus {
-  active,
-  inactive,
 }

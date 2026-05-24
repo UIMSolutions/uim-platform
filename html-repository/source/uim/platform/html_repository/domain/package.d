@@ -6,6 +6,7 @@
 module uim.platform.html_repository.domain;
 
 public {
+  import uim.platform.html_repository.domain.enumerations;
   import uim.platform.html_repository.domain.types;
   import uim.platform.html_repository.domain.entities;
   import uim.platform.html_repository.domain.ports;

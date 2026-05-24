@@ -6,6 +6,7 @@
 module uim.platform.health_fhir.domain;
 
 public {
+  import uim.platform.health_fhir.domain.enumerations;
   import uim.platform.health_fhir.domain.types;
   import uim.platform.health_fhir.domain.entities;
   import uim.platform.health_fhir.domain.ports;
