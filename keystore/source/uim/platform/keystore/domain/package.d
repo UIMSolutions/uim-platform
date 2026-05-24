@@ -5,9 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.keystore.domain;
 
-public {
-  import uim.platform.keystore.domain.types;
+public { // Packages
   import uim.platform.keystore.domain.entities;
   import uim.platform.keystore.domain.ports;
   import uim.platform.keystore.domain.services;
 }
+
+public { // Modules
+  import uim.platform.keystore.domain.enumerations;
+  import uim.platform.keystore.domain.types;
+}
+
