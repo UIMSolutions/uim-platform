@@ -6,6 +6,7 @@
 module uim.platform.rfc.domain;
 
 public import uim.platform.rfc.domain.types;
+public import uim.platform.rfc.domain.enumerations;
 public import uim.platform.rfc.domain.entities;
 public import uim.platform.rfc.domain.ports;
 public import uim.platform.rfc.domain.services;
