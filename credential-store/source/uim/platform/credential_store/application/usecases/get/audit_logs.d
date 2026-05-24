@@ -29,7 +29,7 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   AuditLogEntry[] listLogs(TenantId tenantId, string resourceType) {
-    return repo.findByResourceType(tenantId, parseResourceType(resourceType));
+    return repo.findByResourceType(tenantId, toResourceType(resourceType));
   }
 
   AuditLogEntry[] listLogs(TenantId tenantId, long startTime, long endTime) {
@@ -44,24 +44,4 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
     return repo.countByTenant(tenantId);
   }
 
-  private static ResourceType parseResourceType(string rt) {
-    switch (rt) {
-    case "namespace":
-      return ResourceType.namespace;
-    case "password":
-      return ResourceType.password;
-    case "key":
-      return ResourceType.key;
-    case "keyring":
-      return ResourceType.keyring;
-    case "keyringVersion":
-      return ResourceType.keyringVersion;
-    case "serviceBinding":
-      return ResourceType.serviceBinding;
-    case "dek":
-      return ResourceType.dek;
-    default:
-      return ResourceType.namespace;
-    }
-  }
 }
