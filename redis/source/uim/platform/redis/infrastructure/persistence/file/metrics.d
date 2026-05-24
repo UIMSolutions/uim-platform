@@ -39,7 +39,7 @@ class FileMetricRepository
         auto path = filePath(tenantId);
         if (!exists(path)) return;
         auto arr = parseJson(readText(path));
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             Metric m;
             m.id         = MetricId(j.getString("id", ""));

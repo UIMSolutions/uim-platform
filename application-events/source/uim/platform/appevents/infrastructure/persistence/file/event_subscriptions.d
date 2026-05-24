@@ -46,7 +46,7 @@ class FileEventSubscriptionRepository : MemoryEventSubscriptionRepository, Event
             return;
         auto text = readText(fp);
         auto arr = parseJsonString(text);
-        if (arr.type != Json.Type.array)
+        if (!arr.isArray)
             return;
         foreach (jitem; arr.get!(Json[])) {
             EventSubscription sub;

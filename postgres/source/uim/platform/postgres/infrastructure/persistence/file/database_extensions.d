@@ -40,7 +40,7 @@ class FileDatabaseExtensionRepository
         auto path = filePath(t);
         if (!exists(path)) return;
         auto arr = parseJson(readText(path));
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             DatabaseExtension e;
             e.id               = DatabaseExtensionId(j.getString("id", ""));

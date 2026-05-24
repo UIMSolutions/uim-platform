@@ -44,7 +44,7 @@ class FileEventFilterRepository
         if (!exists(fp)) return;
         auto text = readText(fp);
         auto arr = parseJsonString(text);
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (jitem; arr.get!(Json[])) {
             EventFilter f;
             f.id             = EventFilterId(jitem["id"].get!string);

@@ -45,7 +45,7 @@ class FileEventChannelRepository
         if (!exists(fp)) return;
         auto text = readText(fp);
         auto arr = parseJsonString(text);
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (jitem; arr.get!(Json[])) {
             EventChannel ch;
             ch.id           = EventChannelId(jitem["id"].get!string);

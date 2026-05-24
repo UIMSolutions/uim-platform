@@ -43,7 +43,7 @@ class FileFormationRepository
         if (!exists(fp)) return;
         auto text = readText(fp);
         auto arr = parseJsonString(text);
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (jitem; arr.get!(Json[])) {
             Formation f;
             f.id              = FormationId(jitem["id"].get!string);

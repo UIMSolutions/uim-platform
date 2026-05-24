@@ -46,7 +46,7 @@ class FileServiceInstanceRepository
         if (!exists(path)) return;
         auto text = readText(path);
         auto arr  = parseJson(text);
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServiceInstance inst;
             inst.id          = ServiceInstanceId(j.getString("id", ""));

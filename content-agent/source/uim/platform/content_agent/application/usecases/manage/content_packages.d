@@ -47,7 +47,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.name = req.name;
     pkg.description = req.description;
     pkg.version_ = req.version_;
-    pkg.format = parseContentFormat(req.format);
+    pkg.format = req.format.to!PackageFormat;
     pkg.items = req.items;
     pkg.tags = req.tags;
     pkg.status = PackageStatus.draft;

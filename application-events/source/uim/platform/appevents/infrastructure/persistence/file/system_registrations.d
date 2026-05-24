@@ -44,7 +44,7 @@ class FileSystemRegistrationRepository
         if (!exists(fp)) return;
         auto text = readText(fp);
         auto arr = parseJsonString(text);
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (jitem; arr.get!(Json[])) {
             SystemRegistration r;
             r.id           = SystemRegistrationId(jitem["id"].get!string);

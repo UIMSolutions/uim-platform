@@ -40,7 +40,7 @@ class FileDatabaseUserRepository
         auto path = filePath(t);
         if (!exists(path)) return;
         auto arr = parseJson(readText(path));
-        if (arr.type != Json.Type.array) return;
+        if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             DatabaseUser e;
             e.id         = DatabaseUserId(j.getString("id", ""));
