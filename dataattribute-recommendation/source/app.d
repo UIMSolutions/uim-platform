@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-// import vibe.core.core : runApplication;
+
 
 // import uim.platform.data.attribute_recommendation.infrastructure.config;
 // import uim.platform.data.attribute_recommendation.infrastructure.container;

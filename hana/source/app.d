@@ -10,7 +10,7 @@ module app;
 // import vibe.http.router : URLRouter;
 // import vibe.http.server : HTTPServerSettings;
 // import vibe.http.server : listenHTTP;
-// import vibe.core.core : runApplication;
+
 import uim.platform.hana;
 
 mixin(ShowModule!());

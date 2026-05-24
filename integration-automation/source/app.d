@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-// import vibe.core.core : runApplication;
+
 // import uim.platform.integration.automation.infrastructure.config;
 // import uim.platform.integration.automation.infrastructure.container;
 import uim.platform.integration.automation;

@@ -7,7 +7,7 @@ moduleule app;
 
 
 
-// import vibe.core.core : runApplication;
+
 
 // import uim.platform.master_data_integration.infrastructure.config;
 // import uim.platform.master_data_integration.infrastructure.container;
