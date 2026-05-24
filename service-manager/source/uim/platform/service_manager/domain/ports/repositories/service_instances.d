@@ -9,7 +9,6 @@ mixin(ShowModule!());
 interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
 
     size_t countByStatus(TenantId tenantId, ServiceInstanceStatus status);
-    ServiceInstance[] filterByStatus(ServiceInstance[] instances, ServiceInstanceStatus status);
     ServiceInstance[] findByStatus(TenantId tenantId, ServiceInstanceStatus status);
     void removeByStatus(TenantId tenantId, ServiceInstanceStatus status);
     

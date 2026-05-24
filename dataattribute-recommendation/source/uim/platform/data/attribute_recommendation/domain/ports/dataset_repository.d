@@ -19,12 +19,10 @@ interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
   void removeByName(TenantId tenantId, string name);
 
   size_t countByStatus(TenantId tenantId, DatasetStatus status);
-  Dataset[] filterByStatus(Dataset[] datasets, DatasetStatus status);
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status);
   void removeByStatus(TenantId tenantId, DatasetStatus status);
 
   size_t countByDataType(TenantId tenantId, DataType dataType);
-  Dataset[] filterByDataType(Dataset[] datasets, DataType dataType);
   Dataset[] findByDataType(TenantId tenantId, DataType dataType);
   void removeByDataType(TenantId tenantId, DataType dataType);
 

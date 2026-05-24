@@ -14,7 +14,6 @@ interface ITenantRepository(TEntity, TId) : IBaseRepository!TEntity /* : IIdRepo
   TenantId[] findAllTenants();
   bool existsByTenant(TenantId tenantId);
   size_t countByTenant(TenantId tenantId);
-  TEntity[] filterByTenant(TEntity[] items, TenantId tenantId);
   TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0);
   void removeByTenant(TenantId tenantId);  
   // #endregion byTenant

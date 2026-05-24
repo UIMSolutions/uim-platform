@@ -15,12 +15,10 @@ mixin(ShowModule!());
 interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
 
   size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);
-  TrainingJob[] filterByModelConfig(TrainingJob[] jobs, ModelConfigId configId);
   TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId);
   void removeByModelConfig(TenantId tenantId, ModelConfigId configId);
   
   size_t countByStatus(TenantId tenantId, JobStatus status);
-  TrainingJob[] filterByStatus(TrainingJob[] jobs, JobStatus status);
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status);
   void removeByStatus(TenantId tenantId, JobStatus status);
 

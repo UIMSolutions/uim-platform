@@ -9,7 +9,6 @@ mixin(ShowModule!());
 interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
     
     size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing);
-    ServicePlan[] filterByPricing(ServicePlan[] plans, ServicePlanPricing pricing);
     ServicePlan[] findByPricing(TenantId tenantId, ServicePlanPricing pricing);
     void removeByPricing(TenantId tenantId, ServicePlanPricing pricing);
     

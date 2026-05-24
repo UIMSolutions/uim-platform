@@ -15,7 +15,6 @@ mixin(ShowModule!());
 interface InferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {
 
   size_t countByPredictions(TenantId tenantId, string predictions);
-  InferenceResult[] filterByPredictions(InferenceResult[] results, string predictions);
   InferenceResult[] findByPredictions(TenantId tenantId, string predictions);
   void removeByPredictions(TenantId tenantId, string predictions);
 

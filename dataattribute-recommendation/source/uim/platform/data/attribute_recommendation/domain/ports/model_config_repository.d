@@ -19,12 +19,10 @@ interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelCo
   void removeByName(TenantId tenantId, string name);
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
-  ModelConfiguration[] filterByDataset(ModelConfiguration[] configs, DatasetId datasetId);
   ModelConfiguration[] findByDataset(TenantId tenantId, DatasetId datasetId);
   void removeByDataset(TenantId tenantId, DatasetId datasetId);
 
   size_t countByStatus(TenantId tenantId, ModelConfigStatus status);
-  ModelConfiguration[] filterByStatus(ModelConfiguration[] configs, ModelConfigStatus status);
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status);
   void removeByStatus(TenantId tenantId, ModelConfigStatus status);
 

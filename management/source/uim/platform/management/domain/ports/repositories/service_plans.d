@@ -15,17 +15,14 @@ mixin(ShowModule!());
 interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
 
   size_t countByService(TenantId tenantId, string serviceName);
-  ServicePlan[] filterByService(ServicePlan[] items, TenantId tenantId, string serviceName);
   ServicePlan[] findByService(TenantId tenantId, string serviceName);
   void removeByService(TenantId tenantId, string serviceName);
 
   size_t countByCategory(TenantId tenantId, ServicePlanCategory category);
-  ServicePlan[] filterByCategory(ServicePlan[] items, TenantId tenantId, ServicePlanCategory category);  
   ServicePlan[] findByCategory(TenantId tenantId, ServicePlanCategory category);
   void removeByCategory(TenantId tenantId, ServicePlanCategory category);
 
   size_t countByRegion(TenantId tenantId, string region);
-  ServicePlan[] filterByRegion(ServicePlan[] items, TenantId tenantId, string region);
   ServicePlan[] findByRegion(TenantId tenantId, string region);
   void removeByRegion(TenantId tenantId, string region);
   

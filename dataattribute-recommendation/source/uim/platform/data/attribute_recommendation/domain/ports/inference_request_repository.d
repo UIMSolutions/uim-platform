@@ -15,12 +15,10 @@ mixin(ShowModule!());
 interface InferenceRequestRepository : ITenantRepository!(InferenceRequest, InferenceRequestId) {
 
   size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId);
-  InferenceRequest[] filterByDeployment(InferenceRequest[] requests, DeploymentId deploymentId);
   InferenceRequest[] findByDeployment(TenantId tenantId, DeploymentId deploymentId);
   void removeByDeployment(TenantId tenantId, DeploymentId deploymentId);
 
   size_t countByStatus(TenantId tenantId, InferenceStatus status);
-  InferenceRequest[] filterByStatus(InferenceRequest[] requests, InferenceStatus status);
   InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status);
   void removeByStatus(TenantId tenantId, InferenceStatus status);
 
