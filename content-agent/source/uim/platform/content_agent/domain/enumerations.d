@@ -34,24 +34,21 @@ PackageStatus toPackageStatus(string status) {
   }
 }
 
-string toString(PackageStatus status) {
-  switch (status) {
-    case PackageStatus.draft: return "draft";
-    case PackageStatus.assembled: return "assembled";
-    case PackageStatus.exported: return "exported";
-    case PackageStatus.inTransport: return "inTransport";
-    case PackageStatus.delivered: return "delivered";
-    case PackageStatus.error: return "error";
-    default: return "draft"; // default
-  }
-}
-
 /// Content format for package assembly.
 enum ContentFormat {
   mtar,
   zip,
   json,
 }
+ContentFormat toContentFormat(string format) {
+  switch (format) {
+    case "mtar": return ContentFormat.mtar;
+    case "zip": return ContentFormat.zip;
+    case "json": return ContentFormat.json;
+    default: return ContentFormat.mtar; // default
+  }
+}
+
 /// Status of a content provider.
 enum ProviderStatus {
   active,
@@ -59,6 +56,16 @@ enum ProviderStatus {
   error,
   deregistered,
 }
+ProviderStatus toProviderStatus(string status) {
+  switch (status) {
+    case "active": return ProviderStatus.active;
+    case "inactive": return ProviderStatus.inactive;
+    case "error": return ProviderStatus.error;
+    case "deregistered": return ProviderStatus.deregistered;
+    default: return ProviderStatus.inactive; // default
+  }
+}
+
 /// Content category provided by a content provider.
 enum ContentCategory {
   custom,
@@ -80,6 +87,30 @@ enum ContentCategory {
   certificateToUserMapping,
   accessPolicy,
   functionLibrary,
+}
+ContentCategory toContentCategory(string s) {
+  switch (s.toLower()) {
+    case "custom": return ContentCategory.custom;
+    case "integrationflow": return ContentCategory.integrationFlow;
+    case "destination": return ContentCategory.destination;
+    case "apiproxy": return ContentCategory.apiProxy;
+    case "valuemapping": return ContentCategory.valueMapping;
+    case "securityartifact": return ContentCategory.securityArtifact;
+    case "messagemapping": return ContentCategory.messageMapping;
+    case "scriptcollection": return ContentCategory.scriptCollection;
+    case "datatype": return ContentCategory.dataType;
+    case "messagetype": return ContentCategory.messageType;
+    case "numberrange": return ContentCategory.numberRange;
+    case "customform": return ContentCategory.customForm;
+    case "workflow": return ContentCategory.workflow;
+    case "businessrule": return ContentCategory.businessRule;
+    case "keyvaluemap": return ContentCategory.keyValueMap;
+    case "oauthcredential": return ContentCategory.oauthCredential;
+    case "certificatetousermapping": return ContentCategory.certificateToUserMapping;
+    case "accesspolicy": return ContentCategory.accessPolicy;
+    case "functionlibrary": return ContentCategory.functionLibrary;
+    default: return ContentCategory.custom; // default
+  }
 }
 /// Status of a transport request.
 enum TransportStatus {

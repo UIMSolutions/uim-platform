@@ -32,31 +32,6 @@ class FlexChangesController : PlatformController {
     res.writeJsonBody(Json.emptyObject.set("error", msg).set("status", status), status);
   }
 
-  private static ChangeLayer parseLayer(string s) {
-    switch (s) {
-      case "vendor":   return ChangeLayer.vendor_;
-      case "user":     return ChangeLayer.user_;
-      default:         return ChangeLayer.customer_;
-    }
-  }
-
-  private static ChangeType parseChangeType(string s) {
-    switch (s) {
-      case "move":             return ChangeType.move_;
-      case "rename":           return ChangeType.rename_;
-      case "addField":         return ChangeType.addField_;
-      case "hideControl":      return ChangeType.hideControl_;
-      case "unhideControl":    return ChangeType.unhideControl_;
-      case "addXML":           return ChangeType.addXML_;
-      case "setTitle":         return ChangeType.setTitle_;
-      case "stashControl":     return ChangeType.stashControl_;
-      case "unstashControl":   return ChangeType.unstashControl_;
-      case "bindProperty":     return ChangeType.bindProperty_;
-      case "unbindProperty":   return ChangeType.unbindProperty_;
-      default:                 return ChangeType.customAdd_;
-    }
-  }
-
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
@@ -66,8 +41,8 @@ class FlexChangesController : PlatformController {
       r.changeId   = FlexChangeId(j.getString("id"));
       r.appId      = j.getString("appId");
       r.namespace_ = j.getString("namespace");
-      r.layer_     = parseLayer(j.getString("layer"));
-      r.changeType_ = parseChangeType(j.getString("changeType"));
+      r.layer_     = toChangeLayer(j.getString("layer"));
+      r.changeType_ = j.getString("changeType");
       r.selector_   = j.getString("selector");
       r.content_    = j.getString("content");
       r.reference_  = j.getString("reference");

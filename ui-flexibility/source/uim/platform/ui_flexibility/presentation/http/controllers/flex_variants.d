@@ -31,32 +31,22 @@ class FlexVariantsController : PlatformController {
     res.writeJsonBody(Json.emptyObject.set("error", msg).set("status", status), status);
   }
 
-  private static VariantType parseVariantType(string s) {
-    switch (s) {
-      case "table":    return VariantType.table_;
-      case "chart":    return VariantType.chart_;
-      case "dialog":   return VariantType.dialog_;
-      case "page":     return VariantType.page_;
-      default:         return VariantType.filterBar_;
-    }
-  }
-
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      CreateFlexVariantRequest r;
-      r.tenantId    = tenantId;
-      r.variantId   = FlexVariantId(j.getString("id"));
-      r.appId       = j.getString("appId");
-      r.variantType_ = parseVariantType(j.getString("variantType"));
-      r.variantName_ = j.getString("variantName");
-      r.content_     = j.getString("content");
-      r.isDefault_   = j.get("isDefault", Json(false)).get!bool;
-      r.isPublic_    = j.get("isPublic", Json(false)).get!bool;
-      r.layer_       = j.getString("layer") == "user" ? ChangeLayer.user_ : ChangeLayer.customer_;
-      r.author_      = j.getString("author");
-      auto result = usecase.createVariant(r);
+      CreateFlexVariantRequest request;
+      request.tenantId    = tenantId;
+      request.variantId   = FlexVariantId(j.getString("id"));
+      request.appId       = j.getString("appId");
+      request.variantType_ = j.getString("variantType");
+      request.variantName_ = j.getString("variantName");
+      request.content_     = j.getString("content");
+      request.isDefault_   = j.get("isDefault", Json(false)).get!bool;
+      request.isPublic_    = j.get("isPublic", Json(false)).get!bool;
+      request.layer_       = j.getString("layer") == "user" ? ChangeLayer.user_ : ChangeLayer.customer_;
+      request.author_      = j.getString("author");
+      auto result = usecase.createVariant(request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
       else
@@ -103,14 +93,15 @@ class FlexVariantsController : PlatformController {
       auto tenantId = req.getTenantId;
       auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
-      UpdateFlexVariantRequest r;
-      r.tenantId    = tenantId;
-      r.variantId   = id;
-      r.variantName_ = j.getString("variantName");
-      r.content_     = j.getString("content");
-      r.isDefault_   = j.get("isDefault", Json(false)).get!bool;
-      r.isPublic_    = j.get("isPublic", Json(false)).get!bool;
-      auto result = usecase.updateVariant(r);
+      
+      UpdateFlexVariantRequest request;
+      request.tenantId    = tenantId;
+      request.variantId   = id;
+      request.variantName_ = j.getString("variantName");
+      request.content_     = j.getString("content");
+      request.isDefault_   = j.get("isDefault", Json(false)).get!bool;
+      request.isPublic_    = j.get("isPublic", Json(false)).get!bool;
+      auto result = usecase.updateVariant(request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       else

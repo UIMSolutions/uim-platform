@@ -48,7 +48,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.description = req.description;
     subaccount.subdomain = req.subdomain;
     subaccount.region = req.region;
-    subaccount.usage = parseUsage(req.usage);
+    subaccount.usage = toSubaccountUsage(req.usage);
     subaccount.betaEnabled = req.betaEnabled;
     subaccount.usedForProduction = req.usedForProduction;
     subaccount.status = SubaccountStatus.creating;
@@ -77,7 +77,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       subaccount.description = req.description;
     if (req.usage.length > 0)
-      subaccount.usage = parseUsage(req.usage);
+      subaccount.usage = toSubaccountUsage(req.usage);
     subaccount.betaEnabled = req.betaEnabled;
     subaccount.usedForProduction = req.usedForProduction;
     if (req.labels.length > 0)
@@ -184,22 +184,5 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     event.timestamp = event.createdAt;
     
     eventRepo.save(event);
-  }
-
-  private SubaccountUsage parseUsage(string usage) {
-    switch (usage) {
-    case "production":
-      return SubaccountUsage.production;
-    case "development":
-      return SubaccountUsage.development;
-    case "test":
-      return SubaccountUsage.test;
-    case "staging":
-      return SubaccountUsage.staging;
-    case "demo":
-      return SubaccountUsage.demo;
-    default:
-      return SubaccountUsage.unset;
-    }
   }
 }

@@ -10,11 +10,16 @@ enum SsoProtocol {
   saml,
   oidc,
 }
+
 SsoProtocol toSsoProtocol(string s) {
-  switch(s) {
-    case "saml": return SsoProtocol.saml;
-    case "oidc": return SsoProtocol.oidc;
-    default: return SsoProtocol.saml; // Default case
+  switch (s.toLower) {
+    // The compiler generates all cases here at compile time!
+    static foreach (member; EnumMembers!SsoProtocol) {
+  case __traits(identifier, member):
+      return member;
+    }
+  default:
+    return SsoProtocol.saml; // Default case
   }
 }
 /// 
@@ -41,16 +46,25 @@ enum AuthMethod {
   oidc,
   apiKey,
 }
+
 AuthMethod toAuthMethod(string s) {
-  switch(s) {
-    case "form": return AuthMethod.form;
-    case "spnego": return AuthMethod.spnego;
-    case "social": return AuthMethod.social;
-    case "certificate": return AuthMethod.certificate;
-    case "saml": return AuthMethod.saml;
-    case "oidc": return AuthMethod.oidc;
-    case "apiKey": return AuthMethod.apiKey;
-    default: return AuthMethod.form; // Default case);
+  switch (s.toLower) {
+  case "form":
+    return AuthMethod.form;
+  case "spnego":
+    return AuthMethod.spnego;
+  case "social":
+    return AuthMethod.social;
+  case "certificate":
+    return AuthMethod.certificate;
+  case "saml":
+    return AuthMethod.saml;
+  case "oidc":
+    return AuthMethod.oidc;
+  case "apikey":
+    return AuthMethod.apiKey;
+  default:
+    return AuthMethod.form; // Default case);
   }
 }
 ///
@@ -88,13 +102,19 @@ enum PersistenceType {
   nosql,
   file,
 }
+
 PersistenceType toPersistenceType(string s) {
-  switch(s) {
-    case "sql": return PersistenceType.sql;
-    case "nosql": return PersistenceType.nosql;
-    case "memory": return PersistenceType.memory;
-    case "file": return PersistenceType.file;
-    default: return PersistenceType.memory; // Default case
+  switch (s.toLower()) {
+  case "sql":
+    return PersistenceType.sql;
+  case "nosql":
+    return PersistenceType.nosql;
+  case "memory":
+    return PersistenceType.memory;
+  case "file":
+    return PersistenceType.file;
+  default:
+    return PersistenceType.memory; // Default case
   }
 }
 ///
@@ -117,3 +137,26 @@ unittest {
   assert("".toPersistenceType == PersistenceType.memory); // Default case
 }
 
+import std.traits : EnumMembers;
+
+PersistenceType toPersistenceType2(string s) {
+  switch (s.toLower) {
+    // The compiler generates all cases here at compile time!
+    static foreach (member; EnumMembers!PersistenceType) {
+  case __traits(identifier, member):
+      return member;
+    }
+  default:
+    return PersistenceType.memory; // Default case
+  }
+}
+
+unittest {
+  // Test toPersistenceType
+  assert("sql".toPersistenceType2 == PersistenceType.sql);
+  assert("nosql".toPersistenceType2 == PersistenceType.nosql);
+  assert("memory".toPersistenceType2 == PersistenceType.memory);
+  assert("file".toPersistenceType2 == PersistenceType.file);
+  assert("noexists".toPersistenceType2 == PersistenceType.memory); // Default case
+  assert("".toPersistenceType2 == PersistenceType.memory); // Default case
+}

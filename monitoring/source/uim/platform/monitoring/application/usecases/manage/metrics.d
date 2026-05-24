@@ -41,9 +41,9 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     definition.name = req.name;
     definition.displayName = req.displayName.length > 0 ? req.displayName : req.name;
     definition.description = req.description;
-    definition.category = parseCategory(req.category);
-    definition.unit = parseUnit(req.unit);
-    definition.aggregation = parseAggregation(req.aggregation);
+    definition.category = toMetricCategory(req.category);
+    definition.unit = toMetricUnit(req.unit);
+    definition.aggregation = toAggregationMethod(req.aggregation);
     definition.isCustom = true;
     definition.isEnabled = true;
 
@@ -61,7 +61,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       def.description = req.description;
     if (req.aggregation.length > 0)
-      def.aggregation = parseAggregation(req.aggregation);
+      def.aggregation = toAggregationMethod(req.aggregation);
     def.isEnabled = req.isEnabled;
 
     definitions.update(def);
@@ -99,8 +99,8 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     m.resourceId = req.resourceId;
     m.name = req.name;
     m.value_ = req.value_;
-    m.unit = parseUnit(req.unit);
-    m.category = parseCategory(req.category);
+    m.unit = toMetricUnit(req.unit);
+    m.category = toMetricCategory(req.category);
     m.labels = req.labels;
     m.timestamp = m.createdAt; // use server time for consistency
 
@@ -117,8 +117,8 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       m.resourceId = r.resourceId;
       m.name = r.name;
       m.value_ = r.value_;
-      m.unit = parseUnit(r.unit);
-      m.category = parseCategory(r.category);
+      m.unit = toMetricUnit(r.unit);
+      m.category = toMetricCategory(r.category);
       m.labels = r.labels;
       m.timestamp = clockSeconds();
       metrics ~= m;
@@ -170,76 +170,5 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     s.sumValue = sum;
     s.avgValue = sum / cast(double)metrics.length;
     return s;
-  }
-
-  private static MetricCategory parseCategory(string s) {
-    switch (s) {
-    case "cpu":
-      return MetricCategory.cpu;
-    case "memory":
-      return MetricCategory.memory;
-    case "disk":
-      return MetricCategory.disk;
-    case "network":
-      return MetricCategory.network;
-    case "requests":
-      return MetricCategory.requests;
-    case "responseTime":
-      return MetricCategory.responseTime;
-    case "availability":
-      return MetricCategory.availability;
-    case "jmx":
-      return MetricCategory.jmx;
-    case "database":
-      return MetricCategory.database;
-    case "certificate":
-      return MetricCategory.certificate;
-    default:
-      return MetricCategory.custom;
-    }
-  }
-
-  private static MetricUnit parseUnit(string unit) {
-    switch (unit) {
-    case "percent":
-      return MetricUnit.percent;
-    case "bytes":
-      return MetricUnit.bytes_;
-    case "kilobytes":
-      return MetricUnit.kilobytes;
-    case "megabytes":
-      return MetricUnit.megabytes;
-    case "gigabytes":
-      return MetricUnit.gigabytes;
-    case "milliseconds":
-      return MetricUnit.milliseconds;
-    case "seconds":
-      return MetricUnit.seconds;
-    case "count":
-      return MetricUnit.count;
-    case "countPerSecond":
-      return MetricUnit.countPerSecond;
-    case "boolean":
-      return MetricUnit.boolean_;
-    default:
-      return MetricUnit.none;
-    }
-  }
-
-  private static AggregationMethod parseAggregation(string method) {
-    switch (method) {
-    case "sum":
-      return AggregationMethod.sum;
-    case "min":
-      return AggregationMethod.min;
-    case "max":
-      return AggregationMethod.max;
-    case "last":
-      return AggregationMethod.last;
-    case "count":
-      return AggregationMethod.count;
-    default:
-      return AggregationMethod.average;
-    }
   }
 }
