@@ -47,7 +47,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     request.requestType = RequestType.deletion;
     request.status = DeletionStatus.requested;
     request.targetSystems = req.targetSystems;
-    request.categories = req.categories;
+    request.categories = req.categories.map!(c => c.to!PersonalDataCategory).array;
     request.reason = req.reason;
     request.requestedAt = now;
     request.deadline = deadline;
@@ -73,14 +73,14 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateDeletionStatusRequest req) {
-    auto request = repo.findById(req.tenantId, req.id);
+    auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
       return CommandResult(false, "", "Deletion request not found");
 
-    request.status = req.status;
+    request.status = req.status.to!DeletionStatus;
     if (req.blockerReason.length > 0)
       request.blockerReason = req.blockerReason;
-    if (req.status == DeletionStatus.completed)
+    if (request.status == DeletionStatus.completed)
       request.completedAt = currentTimestamp();
 
     repo.update(request);

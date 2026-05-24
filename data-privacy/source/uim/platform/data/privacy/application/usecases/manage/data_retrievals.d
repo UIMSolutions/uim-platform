@@ -50,9 +50,9 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     request.requestType = RequestType.access;
     request.status = RetrievalStatus.requested;
     request.targetSystems = req.targetSystems;
-    request.categories = req.categories;
+    request.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     request.reason = req.reason;
-    request.requestedAt = now;
+    request.requestedAt = request.createdAt;
     request.deadline = deadline;
 
     // Simulate retrieval: count matching personal data fields
@@ -97,12 +97,12 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 
-    request.status = req.status;
+    request.status = req.status.toRetrievalStatus;
     if (req.downloadUrl.length > 0)
       request.downloadUrl = req.downloadUrl;
     if (req.totalFields > 0)
       request.totalFields = req.totalFields;
-    if (req.status == RetrievalStatus.completed)
+    if (request.status == RetrievalStatus.completed)
       request.completedAt = currentTimestamp();
 
     repo.update(request);

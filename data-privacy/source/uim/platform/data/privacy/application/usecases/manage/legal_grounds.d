@@ -39,7 +39,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     ground.purpose = req.purpose;
     ground.description = req.description;
     ground.legalReference = req.legalReference;
-    ground.categories = req.categories;
+    ground.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     ground.isActive = true;
     ground.validFrom = req.validFrom > 0 ? req.validFrom : now;
     ground.validUntil = req.validUntil;
@@ -79,7 +79,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.legalReference.length > 0)
       ground.legalReference = req.legalReference;
     if (req.categories.length > 0)
-      ground.categories = req.categories;
+      ground.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     ground.isActive = req.isActive;
     if (req.validUntil > 0)
       ground.validUntil = req.validUntil;

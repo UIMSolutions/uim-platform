@@ -58,23 +58,23 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateDestructionStatusRequest req) {
-    auto request = repo.findById(req.tenantId, req.id);
+    auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
       return CommandResult(false, "", "Destruction request not found");
 
-    request.status = req.status;
+    request.status = req.status.toDestructionStatus;
     auto now = currentTimestamp();
-    if (req.status == DestructionStatus.inProgress)
+    if (request.status == DestructionStatus.inProgress)
       request.startedAt = now;
-    if (req.status == DestructionStatus.completed)
+    if (request.status == DestructionStatus.completed)
       request.completedAt = now;
 
     repo.update(request);
     return CommandResult(true, request.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, DestructionRequestId id) {
-    auto request = repo.findById(tenantId, id);
+  CommandResult deleteRequest(TenantId tenantId, DestructionRequestId requestId) {
+    auto request = repo.findById(tenantId, requestId);
     if (request.isNull)
       return CommandResult(false, "", "Destruction request not found");
 

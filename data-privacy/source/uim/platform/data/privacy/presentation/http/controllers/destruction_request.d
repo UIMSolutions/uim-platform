@@ -34,13 +34,14 @@ class DestructionRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateDestructionRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
-      r.archiveRequestId = ArchiveRequestId(j.getString("archiveRequestId"));
-      r.blockingRequestId = BlockingRequestId(j.getString("blockingRequestId"));
+      r.archiveRequestId = j.getString("archiveRequestId");
+      r.blockingRequestId = j.getString("blockingRequestId");
       r.reason = j.getString("reason");
       r.scheduledAt = jsonLong(j, "scheduledAt");
 
@@ -92,10 +93,11 @@ class DestructionRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateDestructionStatusRequest r;
-      r.id = extractIdFromPath(req.requestURI);
+      r.requestId = DestructionRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseDestructionStatus(j.getString("status"));
+      r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

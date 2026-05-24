@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.personal_data_models;
 
-
 // import uim.platform.data.privacy.domain.types;
 // import uim.platform.data.privacy.domain.entities.personal_data_model;
 // import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
@@ -33,13 +32,14 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     auto now = currentTimestamp();
     PersonalDataModel model;
     model.initEntity(req.tenantId);
+    
     model.fieldName = req.fieldName;
     model.fieldDescription = req.fieldDescription;
-    model.category = req.category;
-    model.sensitivity = req.sensitivity;
+    model.category = req.category.toPersonalDataCategory;
+    model.sensitivity = req.sensitivity.toDataSensitivity;
     model.sourceSystem = req.sourceSystem;
     model.sourceEntity = req.sourceEntity;
-    model.subjectType = req.subjectType;
+    model.subjectType = req.subjectType.toDataSubjectType;
     model.isSpecialCategory = req.isSpecialCategory;
     model.legalReference = req.legalReference;
 
@@ -72,8 +72,10 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
       model.fieldName = req.fieldName;
     if (req.fieldDescription.length > 0)
       model.fieldDescription = req.fieldDescription;
-    model.category = req.category;
-    model.sensitivity = req.sensitivity;
+    if (req.category.length > 0)
+      model.category = req.category.toPersonalDataCategory;
+    if (req.sensitivity.length > 0)
+      model.sensitivity = req.sensitivity.toDataSensitivity;
     if (req.sourceSystem.length > 0)
       model.sourceSystem = req.sourceSystem;
     if (req.sourceEntity.length > 0)

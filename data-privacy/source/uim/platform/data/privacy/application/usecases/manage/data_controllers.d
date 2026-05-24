@@ -50,19 +50,28 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateController(UpdateDataControllerRequest req) {
-    auto c = repo.findById(req.tenantId, req.id);
+    auto c = repo.findById(req.tenantId, req.controllerId);
     if (c.isNull)
       return CommandResult(false, "", "Data controller not found");
 
-    if (req.name.length > 0) c.name = req.name;
-    if (req.description.length > 0) c.description = req.description;
-    if (req.legalEntityName.length > 0) c.legalEntityName = req.legalEntityName;
-    if (req.contactEmail.length > 0) c.contactEmail = req.contactEmail;
-    if (req.contactPhone.length > 0) c.contactPhone = req.contactPhone;
-    if (req.address.length > 0) c.address = req.address;
-    if (req.country.length > 0) c.country = req.country;
-    if (req.dpoName.length > 0) c.dpoName = req.dpoName;
-    if (req.dpoEmail.length > 0) c.dpoEmail = req.dpoEmail;
+    if (req.name.length > 0)
+      c.name = req.name;
+    if (req.description.length > 0)
+      c.description = req.description;
+    if (req.legalEntityName.length > 0)
+      c.legalEntityName = req.legalEntityName;
+    if (req.contactEmail.length > 0)
+      c.contactEmail = req.contactEmail;
+    if (req.contactPhone.length > 0)
+      c.contactPhone = req.contactPhone;
+    if (req.address.length > 0)
+      c.address = req.address;
+    if (req.country.length > 0)
+      c.country = req.country;
+    if (req.dpoName.length > 0)
+      c.dpoName = req.dpoName;
+    if (req.dpoEmail.length > 0)
+      c.dpoEmail = req.dpoEmail;
     c.updatedAt = currentTimestamp();
 
     repo.update(c);

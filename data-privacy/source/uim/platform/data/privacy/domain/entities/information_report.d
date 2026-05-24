@@ -36,7 +36,7 @@ struct InformationReport {
       .set("status", status.to!string)
       .set("format", format.to!string)
       .set("targetSystems", targetSystems.toJson)
-      .set("categories", categories.toJson)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
       .set("downloadUrl", downloadUrl)
       .set("totalRecords", totalRecords)
       .set("reason", reason)

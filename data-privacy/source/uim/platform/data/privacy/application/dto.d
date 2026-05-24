@@ -38,11 +38,11 @@ struct CreatePersonalDataModelRequest {
   TenantId tenantId;
   string fieldName;
   string fieldDescription;
-  PersonalDataCategory category;
-  DataSensitivity sensitivity;
+  string category;
+  string sensitivity;
   string sourceSystem;
   string sourceEntity;
-  DataSubjectType subjectType;
+  string subjectType;
   bool isSpecialCategory;
   string legalReference;
 }
@@ -52,8 +52,8 @@ struct UpdatePersonalDataModelRequest {
   TenantId tenantId;
   string fieldName;
   string fieldDescription;
-  PersonalDataCategory category;
-  DataSensitivity sensitivity;
+  string category;
+  string sensitivity;
   string sourceSystem;
   string sourceEntity;
   bool isSpecialCategory;
@@ -65,15 +65,17 @@ struct CreateDeletionRequest {
   TenantId tenantId;
   DataSubjectId dataSubjectId;
   UserId requestedBy;
+
   string[] targetSystems;
-  PersonalDataCategory[] categories;
+  string blockerReason;
+  string[] categories;
   string reason;
 }
 
 struct UpdateDeletionStatusRequest {
-  DeletionRequestId id;
+  DeletionRequestId requestId;
   TenantId tenantId;
-  DeletionStatus status;
+  string status;
   string blockerReason;
 }
 // ──────────────── Blocking Request DTOs ────────────────
@@ -83,14 +85,14 @@ struct CreateBlockingRequest {
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   string[] targetSystems;
-  PersonalDataCategory[] categories;
+  string[] categories;
   string reason;
 }
 
 struct UpdateBlockingStatusRequest {
   BlockingRequestId id;
   TenantId tenantId;
-  BlockingStatus status;
+  string status;
 }
 // ──────────────── Legal Ground DTOs ────────────────
 
@@ -101,7 +103,7 @@ struct CreateLegalGroundRequest {
   ProcessingPurpose purpose;
   string description;
   string legalReference;
-  PersonalDataCategory[] categories;
+  string[] categories;
   long validFrom;
   long validUntil;
 }
@@ -111,7 +113,7 @@ struct UpdateLegalGroundRequest {
   TenantId tenantId;
   string description;
   string legalReference;
-  PersonalDataCategory[] categories;
+  string[] categories;
   bool isActive;
   long validUntil;
 }
@@ -121,8 +123,8 @@ struct CreateRetentionRuleRequest {
   TenantId tenantId;
   string name;
   string description;
-  ProcessingPurpose purpose;
-  PersonalDataCategory[] categories;
+  string purpose;
+  string[] categories;
   int retentionDays;
   string legalReference;
   bool isDefault;
@@ -134,17 +136,18 @@ struct UpdateRetentionRuleRequest {
   string name;
   string description;
   int retentionDays;
-  PersonalDataCategory[] categories;
+  string[] categories;
   string legalReference;
-  RetentionRuleStatus status;
+  string status;
 }
 // ──────────────── Consent Record DTOs ────────────────
 
 struct CreateConsentRecordRequest {
   TenantId tenantId;
   DataSubjectId dataSubjectId;
-  ProcessingPurpose purpose;
-  PersonalDataCategory[] categories;
+
+  string purpose;
+  string[] categories;
   string channel;
   string consentText;
   string version_;
@@ -163,14 +166,14 @@ struct CreateDataRetrievalRequest {
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   string[] targetSystems;
-  PersonalDataCategory[] categories;
+  string[] categories;
   string reason;
 }
 
 struct UpdateRetrievalStatusRequest {
   DataRetrievalRequestId id;
   TenantId tenantId;
-  RetrievalStatus status;
+  string status;
   string downloadUrl;
   long totalFields;
 }
@@ -192,7 +195,7 @@ struct CreateDataControllerRequest {
 }
 
 struct UpdateDataControllerRequest {
-  DataControllerId id;
+  DataControllerId controllerId;
   TenantId tenantId;
   string name;
   string description;
@@ -215,7 +218,7 @@ struct CreateDataControllerGroupRequest {
 }
 
 struct UpdateDataControllerGroupRequest {
-  DataControllerGroupId id;
+  DataControllerGroupId groupId;
   TenantId tenantId;
   string name;
   string description;
@@ -229,25 +232,25 @@ struct CreateBusinessContextRequest {
   string name;
   string description;
   DataControllerGroupId controllerGroupId;
-  PersonalDataCategory[] dataCategories;
-  ProcessingPurpose[] purposes;
+  string[] dataCategories;
+  string[] purposes;
   string[] dataCategoryAttributes;
   bool isCrossRoleEnabled;
 }
 
 struct UpdateBusinessContextRequest {
-  BusinessContextId id;
+  BusinessContextId contextId;
   TenantId tenantId;
   string name;
   string description;
-  PersonalDataCategory[] dataCategories;
-  ProcessingPurpose[] purposes;
+  string[] dataCategories;
+  string[] purposes;
   string[] dataCategoryAttributes;
   bool isCrossRoleEnabled;
 }
 
 struct ActivateBusinessContextRequest {
-  BusinessContextId id;
+  BusinessContextId contextId;
   TenantId tenantId;
 }
 // ──────────────── Business Process DTOs ────────────────
@@ -257,18 +260,18 @@ struct CreateBusinessProcessRequest {
   string name;
   string description;
   DataControllerId controllerId;
-  ProcessingPurpose[] purposes;
-  LegalBasis[] legalBases;
+  string[] purposes;
+  string[] legalBases;
   string owner;
 }
 
 struct UpdateBusinessProcessRequest {
-  BusinessProcessId id;
+  BusinessProcessId processId;
   TenantId tenantId;
   string name;
   string description;
-  ProcessingPurpose[] purposes;
-  LegalBasis[] legalBases;
+  string[] purposes;
+  string[] legalBases;
   string owner;
   bool isActive;
 }
@@ -280,18 +283,18 @@ struct CreateBusinessSubprocessRequest {
   
   string name;
   string description;
-  ProcessingPurpose[] purposes;
-  PersonalDataCategory[] dataCategories;
+  string[] purposes;
+  string[] dataCategories;
   string owner;
 }
 
 struct UpdateBusinessSubprocessRequest {
-  BusinessSubprocessId id;
+  BusinessSubprocessId subprocessId;
   TenantId tenantId;
   string name;
   string description;
-  ProcessingPurpose[] purposes;
-  PersonalDataCategory[] dataCategories;
+  string[] purposes;
+  string[] dataCategories;
   string owner;
   bool isActive;
 }
@@ -299,7 +302,7 @@ struct UpdateBusinessSubprocessRequest {
 
 struct CreateCorrectionRequest {
   TenantId tenantId;
-  DataSubjectId dataSubjectId;
+  DataSubjectId subjectId;
   UserId requestedBy;
   string[] targetSystems;
   string fieldName;
@@ -309,18 +312,18 @@ struct CreateCorrectionRequest {
 }
 
 struct UpdateCorrectionStatusRequest {
-  CorrectionRequestId id;
+  CorrectionRequestId requestId;
   TenantId tenantId;
-  CorrectionStatus status;
+  string status;
 }
 // ──────────────── Archive Request DTOs ────────────────
 
 struct CreateArchiveRequest {
   TenantId tenantId;
-  DataSubjectId dataSubjectId;
+  DataSubjectId subjectId;
   UserId requestedBy;
   string[] targetSystems;
-  PersonalDataCategory[] categories;
+  string[] categories;
   string archiveLocation;
   string reason;
   bool isTestMode;
@@ -328,9 +331,9 @@ struct CreateArchiveRequest {
 }
 
 struct UpdateArchiveStatusRequest {
-  ArchiveRequestId id;
+  ArchiveRequestId requestId;
   TenantId tenantId;
-  ArchiveStatus status;
+  string status;
 }
 // ──────────────── Destruction Request DTOs ────────────────
 
@@ -339,25 +342,25 @@ struct CreateDestructionRequest {
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   string[] targetSystems;
-  ArchiveRequestId archiveRequestId;
-  BlockingRequestId blockingRequestId;
+  string archiveRequestId;
+  string blockingRequestId;
   string reason;
   long scheduledAt;
 }
 
 struct UpdateDestructionStatusRequest {
-  DestructionRequestId id;
+  DestructionRequestId requestId;
   TenantId tenantId;
-  DestructionStatus status;
+  string status;
 }
 // ──────────────── Purpose Record DTOs ────────────────
 
 struct CreatePurposeRecordRequest {
   TenantId tenantId;
-  DataSubjectId dataSubjectId;
-  BusinessContextId businessContextId;
-  ProcessingPurpose purpose;
-  LegalBasis legalBasis;
+  DataSubjectId subjectId;
+  BusinessContextId contextId;
+  string purpose;
+  string legalBasis;
   int residenceDays;
   int retentionDays;
   long validFrom;
@@ -365,7 +368,7 @@ struct CreatePurposeRecordRequest {
 }
 
 struct DeactivatePurposeRecordRequest {
-  PurposeRecordId id;
+  PurposeRecordId recordId;
   TenantId tenantId;
 }
 // ──────────────── Consent Purpose DTOs ────────────────
@@ -375,8 +378,8 @@ struct CreateConsentPurposeRequest {
   DataControllerId controllerId;
   string name;
   string description;
-  ProcessingPurpose purpose;
-  PersonalDataCategory[] dataCategories;
+  string purpose;
+  string[] dataCategories;
   string consentFormTemplate;
   string version_;
   bool requiresExplicitConsent;
@@ -385,20 +388,20 @@ struct CreateConsentPurposeRequest {
 }
 
 struct UpdateConsentPurposeRequest {
-  ConsentPurposeId id;
+  ConsentPurposeId purposeId;
   TenantId tenantId;
   string name;
   string description;
   string consentFormTemplate;
   string version_;
   bool requiresExplicitConsent;
-  ConsentPurposeStatus status;
+  string status;
 }
 // ──────────────── Rule Set DTOs ────────────────
 
 struct CreateRuleSetRequest {
   TenantId tenantId;
-  BusinessContextId businessContextId;
+  BusinessContextId contextId;
   string name;
   string description;
   string conditionsJson; // serialized RuleCondition array
@@ -407,31 +410,31 @@ struct CreateRuleSetRequest {
 }
 
 struct UpdateRuleSetRequest {
-  RuleSetId id;
+  RuleSetId setId;
   TenantId tenantId;
   string name;
   string description;
   string conditionsJson;
   string resultPurposesJson;
   int priority;
-  RuleSetStatus status;
+  string status;
 }
 // ──────────────── Information Report DTOs ────────────────
 
 struct CreateInformationReportRequest {
   TenantId tenantId;
-  DataSubjectId dataSubjectId;
+  DataSubjectId subjectId;
   UserId requestedBy;
   string format; // pdf, json, xml, csv
   string[] targetSystems;
-  PersonalDataCategory[] categories;
+  string[] categories;
   string reason;
 }
 
 struct UpdateInformationReportStatusRequest {
-  InformationReportId id;
+  InformationReportId reportId;
   TenantId tenantId;
-  InformationReportStatus status;
+  string status;
   string downloadUrl;
   long totalRecords;
 }
@@ -447,12 +450,12 @@ struct CreateAnonymizationConfigRequest {
 }
 
 struct UpdateAnonymizationConfigRequest {
-  AnonymizationConfigId id;
+  AnonymizationConfigId configId;
   TenantId tenantId;
   string name;
   string description;
   string rulesJson;
   bool isReversible;
   string[] targetSystems;
-  AnonymizationConfigStatus status;
+  string status;
 }

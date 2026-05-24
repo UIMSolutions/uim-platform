@@ -99,7 +99,7 @@ class BlockingController : PlatformController {
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseBlockingStatus(j.getString("status"));
+      r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

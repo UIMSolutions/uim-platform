@@ -26,18 +26,18 @@ struct DataController {
   bool isActive = true;
 
   Json toJson() const {
-      return entityToJson
-          .set("name", name)
-          .set("description", description)
-          .set("legalEntityName", legalEntityName)
-          .set("contactEmail", contactEmail)
-          .set("contactPhone", contactPhone)
-          .set("address", address)
-          .set("country", country)
-          .set("dpoName", dpoName)
-          .set("dpoEmail", dpoEmail)
-          .set("isActive", isActive)
-          .set("createdAt", createdAt)
-          .set("updatedAt", updatedAt);
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("legalEntityName", legalEntityName)
+      .set("contactEmail", contactEmail)
+      .set("contactPhone", contactPhone)
+      .set("address", address)
+      .set("country", country)
+      .set("dpoName", dpoName)
+      .set("dpoEmail", dpoEmail)
+      .set("isActive", isActive)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
   }
 }

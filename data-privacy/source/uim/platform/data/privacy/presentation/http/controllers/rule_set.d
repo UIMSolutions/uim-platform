@@ -37,7 +37,7 @@ class RuleSetController : PlatformController {
       auto j = req.json;
       CreateRuleSetRequest r;
       r.tenantId = tenantId;
-      r.businessContextId = j.getString("businessContextId");
+      r.contextId = j.getString("businessContextId");
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = cast(int)jsonLong(j, "priority");
@@ -91,12 +91,13 @@ class RuleSetController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateRuleSetRequest r;
-      r.id = extractIdFromPath(req.requestURI);
       r.tenantId = tenantId;
+      r.setId = RuleSetId(extractIdFromPath(req.requestURI));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.priority = cast(int)jsonLong(j, "priority");
+      r.priority = j.getInteger("priority");
 
       auto result = usecase.updateRuleSet(r);
       if (result.isSuccess()) {

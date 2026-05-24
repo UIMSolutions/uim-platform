@@ -28,8 +28,8 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
     cp.controllerId = req.controllerId;
     cp.name = req.name;
     cp.description = req.description;
-    cp.purpose = req.purpose;
-    cp.dataCategories = req.dataCategories;
+    cp.purpose = req.purpose.to!ProcessingPurpose;
+    cp.dataCategories = req.dataCategories.map!(c => c.to!PersonalDataCategory).array;
     cp.status = ConsentPurposeStatus.draft;
     cp.consentFormTemplate = req.consentFormTemplate;
     cp.version_ = req.version_;
@@ -54,7 +54,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
-    auto cp = repo.findById(req.tenantId, req.id);
+    auto cp = repo.findById(req.tenantId, req.purposeId);
     if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 

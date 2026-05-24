@@ -92,7 +92,7 @@ class AnonymizationConfigController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
-      r.id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
+      r.configId = AnonymizationConfigId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");

@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.personal_data_model;
 
-
-
-
 // import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
 // import uim.platform.data.privacy.application.dto;
 // import uim.platform.data.privacy.domain.types;
@@ -39,15 +36,16 @@ class PersonalDataModelController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreatePersonalDataModelRequest r;
       r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
-      r.category = j.getString("category").to!PersonalDataCategory;
-      r.sensitivity = j.getString("sensitivity").to!DataSensitivity;
+      r.category = j.getString("category");
+      r.sensitivity = j.getString("sensitivity");
       r.sourceSystem = j.getString("sourceSystem");
       r.sourceEntity = j.getString("sourceEntity");
-      r.subjectType = j.getString("subjectType").to!DataSubjectType;
+      r.subjectType = j.getString("subjectType");
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
       r.legalReference = j.getString("legalReference");
 
@@ -132,8 +130,8 @@ class PersonalDataModelController : PlatformController {
       r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
-      r.category = j.getString("category").to!PersonalDataCategory;
-      r.sensitivity = j.getString("sensitivity").to!DataSensitivity;
+      r.category = j.getString("category");
+      r.sensitivity = j.getString("sensitivity");
       r.sourceSystem = j.getString("sourceSystem");
       r.sourceEntity = j.getString("sourceEntity");
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");

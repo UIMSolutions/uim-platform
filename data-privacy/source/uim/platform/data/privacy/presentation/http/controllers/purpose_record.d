@@ -35,13 +35,13 @@ class PurposeRecordController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      
+
       CreatePurposeRecordRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.businessContextId = BusinessContextId(j.getString("businessContextId"));
-      r.purpose = j.getString("purpose").to!ProcessingPurpose;
-      r.legalBasis = j.getString("legalBasis").to!LegalBasis;
+      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.contextId = BusinessContextId(j.getString("businessContextId"));
+      r.purpose = j.getString("purpose");
+      r.legalBasis = j.getString("legalBasis");
       r.residenceDays = j.getInteger("residenceDays");
       r.retentionDays = j.getInteger("retentionDays");
       r.validFrom = j.getLong("validFrom");
@@ -50,8 +50,8 @@ class PurposeRecordController : PlatformController {
       auto result = usecase.createRecord(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Purpose record created successfully");
+          .set("id", result.id)
+          .set("message", "Purpose record created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -68,9 +68,9 @@ class PurposeRecordController : PlatformController {
       auto arr = items.map!(record => record.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Purpose records retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Purpose records retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -80,9 +80,9 @@ class PurposeRecordController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
 
-      auto record = usecase.getRecord(tenantId, id);
+      auto record = usecase.getRecord(tenantId, recordId);
       if (record.isNull) {
         writeError(res, 404, "Purpose record not found");
         return;
@@ -96,14 +96,14 @@ class PurposeRecordController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       DeactivatePurposeRecordRequest r;
-      r.id = extractIdFromPath(req.requestURI);
       r.tenantId = tenantId;
+      r.recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deactivateRecord(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.message);
@@ -112,31 +112,13 @@ class PurposeRecordController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
-      auto id = PurposeRecordId(extractIdFromPath(req.requestURI));
+      auto recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
 
-      usecase.deleteRecord(tenantId, id);
+      usecase.deleteRecord(tenantId, recordId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const PurposeRecord e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("businessContextId", e.businessContextId)
-      .set("purpose", e.purpose.to!string)
-      .set("status", e.status.to!string)
-      .set("legalBasis", e.legalBasis)
-      .set("residenceDays", e.residenceDays)
-      .set("retentionDays", e.retentionDays)
-      .set("validFrom", e.validFrom)
-      .set("validUntil", e.validUntil)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("deactivatedAt", e.deactivatedAt);
   }
 }

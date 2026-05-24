@@ -35,8 +35,8 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
 
     rule.name = req.name;
     rule.description = req.description;
-    rule.purpose = req.purpose;
-    rule.categories = req.categories;
+    rule.purpose = req.purpose.toProcessingPurpose;
+    rule.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     rule.retentionDays = req.retentionDays;
     rule.legalReference = req.legalReference;
     rule.status = RetentionRuleStatus.active;
@@ -54,7 +54,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  RetentionRule[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+  RetentionRule[] listRules(TenantId tenantId, ProcessingPurpose purpose) {
     return repo.findByPurpose(tenantId, purpose);
   }
 
@@ -70,10 +70,10 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     if (req.retentionDays > 0)
       rule.retentionDays = req.retentionDays;
     if (req.categories.length > 0)
-      rule.categories = req.categories;
+      rule.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     if (req.legalReference.length > 0)
       rule.legalReference = req.legalReference;
-    rule.status = req.status;
+    rule.status = req.status.toRetentionRuleStatus;
     rule.updatedAt = currentTimestamp();
 
     repo.update(rule);

@@ -26,7 +26,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
     auto rs = RuleSet();
     rs.initEntity(req.tenantId);
 
-    rs.businessContextId = req.businessContextId;
+    rs.businessContextId = req.contextId;
     rs.name = req.name;
     rs.description = req.description;
     rs.status = RuleSetStatus.draft;
@@ -49,7 +49,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRuleSet(UpdateRuleSetRequest req) {
-    auto rs = repo.findById(req.tenantId, req.id);
+    auto rs = repo.findById(req.tenantId, req.setId);
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 

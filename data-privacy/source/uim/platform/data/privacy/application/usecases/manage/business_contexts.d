@@ -31,8 +31,8 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
     ctx.controllerGroupId = req.controllerGroupId;
     ctx.status = BusinessContextStatus.draft;
     ctx.version_ = 1;
-    ctx.dataCategories = req.dataCategories;
-    ctx.purposes = req.purposes;
+    ctx.dataCategories = req.dataCategories.map!(c => c.toPersonalDataCategory).array;
+    ctx.purposes = req.purposes.map!(p => p.toProcessingPurpose).array;
     ctx.dataCategoryAttributes = req.dataCategoryAttributes;
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
 
@@ -53,14 +53,14 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateContext(UpdateBusinessContextRequest req) {
-    auto ctx = businessContexts.findById(req.tenantId, req.id);
+    auto ctx = businessContexts.findById(req.tenantId, req.contextId);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 
     if (req.name.length > 0) ctx.name = req.name;
     if (req.description.length > 0) ctx.description = req.description;
-    if (req.dataCategories.length > 0) ctx.dataCategories = req.dataCategories;
-    if (req.purposes.length > 0) ctx.purposes = req.purposes;
+    if (req.dataCategories.length > 0) ctx.dataCategories = req.dataCategories.map!(c => c.toPersonalDataCategory).array;
+    if (req.purposes.length > 0) ctx.purposes = req.purposes.map!(p => p.toProcessingPurpose).array;
     if (req.dataCategoryAttributes.length > 0) ctx.dataCategoryAttributes = req.dataCategoryAttributes;
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
     ctx.updatedAt = currentTimestamp();
@@ -70,9 +70,10 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateContext(ActivateBusinessContextRequest req) {
-    auto ctx = businessContexts.findById(req.tenantId, req.id);
+    auto ctx = businessContexts.findById(req.tenantId, req.contextId);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
+
     if (ctx.status == BusinessContextStatus.active)
       return CommandResult(false, "", "Business context already active");
 

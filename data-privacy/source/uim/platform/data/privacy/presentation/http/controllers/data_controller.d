@@ -96,8 +96,8 @@ class DataControllerController : PlatformController {
       auto j = req.json;
       
       UpdateDataControllerRequest r;
-      r.id = DataControllerId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
+      r.controllerId = DataControllerId(extractIdFromPath(req.requestURI));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -124,29 +124,11 @@ class DataControllerController : PlatformController {
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataControllerId(extractIdFromPath(req.requestURI));
+      auto controllerId = DataControllerId(extractIdFromPath(req.requestURI));
 
-      usecase.deleteController(tenantId, id);
+      usecase.deleteController(tenantId, controllerId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const DataController e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("legalEntityName", e.legalEntityName)
-      .set("contactEmail", e.contactEmail)
-      .set("contactPhone", e.contactPhone)
-      .set("address", e.address)
-      .set("country", e.country)
-      .set("dpoName", e.dpoName)
-      .set("dpoEmail", e.dpoEmail)
-      .set("isActive", e.isActive)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt);
   }
 }

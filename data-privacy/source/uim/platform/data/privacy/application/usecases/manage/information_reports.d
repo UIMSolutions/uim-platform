@@ -22,60 +22,61 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
   CommandResult createReport(CreateInformationReportRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isEmpty)
+
+    if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
+    auto subject = subjectRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    InformationReport r;
-    r.initEntity(req.tenantId, req.requestedBy);
+    InformationReport report;
+    report.initEntity(req.tenantId, req.requestedBy);
 
-    r.dataSubjectId = req.dataSubjectId;
-    r.subjectRole = subject.subjectType;
-    r.status = InformationReportStatus.requested;
-    r.format = req.format.to!ExportFormat;
-    r.targetSystems = req.targetSystems;
-    r.categories = req.categories;
-    r.reason = req.reason;
-    r.requestedAt = r.createdAt;
+    report.dataSubjectId = req.subjectId;
+    report.subjectRole = subject.subjectType;
+    report.status = InformationReportStatus.requested;
+    report.format = req.format.to!ExportFormat;
+    report.targetSystems = req.targetSystems;
+    report.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
+    report.reason = req.reason;
+    report.requestedAt = report.createdAt;
 
-    repo.save(r);
-    return CommandResult(true, r.id.value, "");
+    repo.save(report);
+    return CommandResult(true, report.id.value, "");
   }
 
-  InformationReport getReport(TenantId tenantId, InformationReportId id ) {
-    return repo.findById(tenantId, id);
+  InformationReport getReport(TenantId tenantId, InformationReportId reportId ) {
+    return repo.findById(tenantId, reportId);
   }
 
   InformationReport[] listReports(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  InformationReport[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+  InformationReport[] listReports(TenantId tenantId, DataSubjectId subjectId) {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateInformationReportStatusRequest req) {
-    auto r = repo.findById(req.tenantId, req.id);
-    if (r.isNull)
+  CommandResult updateReportStatus(UpdateInformationReportStatusRequest req) {
+    auto report = repo.findById(req.tenantId, req.reportId);
+    if (report.isNull)
       return CommandResult(false, "", "Information report not found");
 
-    r.status = req.status;
-    if (req.downloadUrl.length > 0) r.downloadUrl = req.downloadUrl;
-    if (req.totalRecords > 0) r.totalRecords = req.totalRecords;
-    if (req.status == InformationReportStatus.completed) {
-      r.generatedAt = currentTimestamp();
-      r.expiresAt = r.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
+    report.status = req.status.toInformationReportStatus;
+    if (req.downloadUrl.length > 0) report.downloadUrl = req.downloadUrl;
+    if (req.totalRecords > 0) report.totalRecords = req.totalRecords;
+    if (report.status == InformationReportStatus.completed) {
+      report.generatedAt = currentTimestamp();
+      report.expiresAt = report.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
     }
 
-    repo.update(r);
-    return CommandResult(true, r.id.value, "");
+    repo.update(report);
+    return CommandResult(true, report.id.value, "");
   }
 
-  CommandResult deleteReport(TenantId tenantId, InformationReportId id) {
-    auto report = repo.findById(tenantId, id);
+  CommandResult deleteReport(TenantId tenantId, InformationReportId reportId) {
+    auto report = repo.findById(tenantId, reportId);
     if (report.isNull)
       return CommandResult(false, "", "Information report not found");
 

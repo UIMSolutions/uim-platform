@@ -34,13 +34,14 @@ class ConsentPurposeController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateConsentPurposeRequest r;
       r.tenantId = tenantId;
       r.controllerId = DataControllerId(j.getString("controllerId"));
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purpose = j.getString("purpose").to!ProcessingPurpose;
-      r.dataCategories = getStrings(j, "dataCategories").map!(c => c.to!PersonalDataCategory).array;
+      r.purpose = j.getString("purpose");
+      r.dataCategories = getStrings(j, "dataCategories");
       r.consentFormTemplate = j.getString("consentFormTemplate");
       r.version_ = j.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
@@ -97,8 +98,8 @@ class ConsentPurposeController : PlatformController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateConsentPurposeRequest r;
-      r.id = extractIdFromPath(req.requestURI);
       r.tenantId = tenantId;
+      r.purposeId = ConsentPurposeId(extractIdFromPath(req.requestURI));
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.consentFormTemplate = j.getString("consentFormTemplate");

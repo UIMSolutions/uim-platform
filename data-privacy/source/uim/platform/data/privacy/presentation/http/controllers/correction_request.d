@@ -36,7 +36,7 @@ class CorrectionRequestController : PlatformController {
       auto j = req.json;
       CreateCorrectionRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
       r.fieldName = j.getString("fieldName");
@@ -93,10 +93,11 @@ class CorrectionRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateCorrectionStatusRequest r;
-      r.id = CorrectionRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseCorrectionStatus(j.getString("status"));
+      r.requestId = CorrectionRequestId(extractIdFromPath(req.requestURI));
+      r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

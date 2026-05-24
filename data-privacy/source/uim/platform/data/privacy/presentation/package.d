@@ -6,5 +6,8 @@
 module uim.platform.data.privacy.presentation;
 
 public {
+    import uim.platform.data.privacy.presentation.cli;
+    import uim.platform.data.privacy.presentation.gui;
     import uim.platform.data.privacy.presentation.http;
+    import uim.platform.data.privacy.presentation.web;
 }

@@ -22,10 +22,10 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
   CommandResult createRequest(CreateArchiveRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isEmpty)
+    if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
+    auto subject = subjectRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -33,15 +33,15 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
     auto archiveRequest = ArchiveRequest();
     archiveRequest.createEntity(req.tenantId);
 
-    archiveRequest.dataSubjectId = req.dataSubjectId;
+    archiveRequest.dataSubjectId = req.subjectId;
     archiveRequest.requestedBy = req.requestedBy;
     archiveRequest.status = ArchiveStatus.scheduled;
     archiveRequest.targetSystems = req.targetSystems;
-    archiveRequest.categories = req.categories;
+    archiveRequest.categories = req.categories.map!(c => toPersonalDataCategory(c)).array;
     archiveRequest.archiveLocation = req.archiveLocation;
     archiveRequest.reason = req.reason;
     archiveRequest.isTestMode = req.isTestMode;
-    archiveRequest.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : now;
+    archiveRequest.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : archiveRequest.createdAt;
 
     repo.save(archiveRequest);
     return CommandResult(true, archiveRequest.id.value, "");
@@ -60,15 +60,15 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateArchiveStatusRequest req) {
-    auto archiveRequest = repo.findById(req.tenantId, req.id);
+    auto archiveRequest = repo.findById(req.tenantId, req.requestId);
     if (archiveRequest.isNull)
       return CommandResult(false, "", "Archive request not found");
 
-    archiveRequest.status = req.status;
+    archiveRequest.status = req.status.toArchiveStatus;
     auto now = currentTimestamp();
-    if (req.status == ArchiveStatus.inProgress)
+    if (archiveRequest.status == ArchiveStatus.inProgress)
       archiveRequest.startedAt = now;
-    if (req.status == ArchiveStatus.completed)
+    if (archiveRequest.status == ArchiveStatus.completed)
       archiveRequest.completedAt = now;
 
     repo.update(archiveRequest);

@@ -64,15 +64,15 @@ class LegalGroundController : PlatformController {
       auto tenantId = req.getTenantId;
       auto basisParam = req.headers.get("X-Basis-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
-      auto subjectParam = DataSubjectId(req.headers.get("X-Subject-Filter", ""));
+      auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       LegalGround[] items;
       if (basisParam.length > 0)
-        items = usecase.listByBasis(tenantId, basisParam.to!LegalBasis);
+        items = usecase.listGrounds(tenantId, basisParam.toLegalBasis);
       else if (purposeParam.length > 0)
-        items = usecase.listGrounds(tenantId, purposeParam.to!ProcessingPurpose);
+        items = usecase.listGrounds(tenantId, purposeParam.toProcessingPurpose);
       else if (subjectParam.length > 0)
-        items = usecase.listGrounds(tenantId, subjectParam);
+        items = usecase.listGrounds(tenantId, DataSubjectId(subjectParam));
       else
         items = usecase.listGrounds(tenantId);
 

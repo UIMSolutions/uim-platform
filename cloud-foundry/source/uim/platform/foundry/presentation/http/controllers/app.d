@@ -121,7 +121,7 @@ class AppController : PlatformController {
       r.buildpackId = j.getString("buildpackId");
       r.stack = j.getString("stack");
       r.command = j.getString("command");
-      r.healthCheckType = parseHealthCheckType(j.getString("healthCheckType"));
+      r.healthCheckType = j.getString("healthCheckType");
       r.healthCheckEndpoint = j.getString("healthCheckEndpoint");
       r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
       r.environmentVariables = j.getString("environmentVariables");

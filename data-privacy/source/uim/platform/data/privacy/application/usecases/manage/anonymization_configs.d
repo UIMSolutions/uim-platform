@@ -45,7 +45,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateConfig(UpdateAnonymizationConfigRequest req) {
-    auto c = repo.findById(req.tenantId, req.id);
+    auto c = repo.findById(req.tenantId, req.configId);
     if (c.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
@@ -59,8 +59,8 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId id) {
-    auto c = repo.findById(tenantId, id);
+  CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId configId) {
+    auto c = repo.findById(tenantId, configId);
     if (c.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
@@ -71,12 +71,12 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  CommandResult deleteConfig(TenantId tenantId, AnonymizationConfigId id) {
-    auto c = repo.findById(tenantId, id);
-    if (c.isNull)
+  CommandResult deleteConfig(TenantId tenantId, AnonymizationConfigId configId) {
+    auto config = repo.findById(tenantId, configId);
+    if (config.isNull)
       return CommandResult(false, "", "Anonymization config not found");
 
-    repo.remove(c);
-    return CommandResult(true, c.id.value, "");
+    repo.remove(config);
+    return CommandResult(true, config.id.value, "");
   }
 }

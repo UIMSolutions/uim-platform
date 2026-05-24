@@ -29,8 +29,8 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     p.name = req.name;
     p.description = req.description;
     p.controllerId = req.controllerId;
-    p.purposes = req.purposes;
-    p.legalBases = req.legalBases;
+    p.purposes = req.purposes.map!(p => p.toProcessingPurpose).array;
+    p.legalBases = req.legalBases.map!(b => b.toLegalBasis).array;
     p.owner = req.owner;
     p.isActive = true;
 
@@ -47,15 +47,20 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {
-    auto p = repo.findById(req.tenantId, req.id);
+    auto p = repo.findById(req.tenantId, req.processId);
     if (p.isNull)
       return CommandResult(false, "", "Business process not found");
 
-    if (req.name.length > 0) p.name = req.name;
-    if (req.description.length > 0) p.description = req.description;
-    if (req.purposes.length > 0) p.purposes = req.purposes;
-    if (req.legalBases.length > 0) p.legalBases = req.legalBases;
-    if (req.owner.length > 0) p.owner = req.owner;
+    if (req.name.length > 0)
+      p.name = req.name;
+    if (req.description.length > 0)
+      p.description = req.description;
+    if (req.purposes.length > 0)
+      p.purposes = req.purposes.map!(p => p.toProcessingPurpose).array;
+    if (req.legalBases.length > 0)
+      p.legalBases = req.legalBases.map!(b => b.toLegalBasis).array;
+    if (req.owner.length > 0)
+      p.owner = req.owner;
     p.updatedAt = currentTimestamp();
 
     repo.update(p);

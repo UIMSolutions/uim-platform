@@ -37,10 +37,10 @@ class ArchiveRequestController : PlatformController {
 
       CreateArchiveRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
+      r.subjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = j.getStrings("targetSystems");
-      r.categories = j.getStrings("categories").map!(c => c.to!PersonalDataCategory).array;
+      r.categories = j.getStrings("categories");
       r.archiveLocation = j.getString("archiveLocation");
       r.reason = j.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);
@@ -95,10 +95,11 @@ class ArchiveRequestController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateArchiveStatusRequest r;
-      r.id = ArchiveRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseArchiveStatus(j.getString("status"));
+      r.requestId = ArchiveRequestId(extractIdFromPath(req.requestURI));
+      r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

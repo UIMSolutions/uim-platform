@@ -31,16 +31,17 @@ class InformationReportController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       CreateInformationReportRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
+      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
       r.requestedBy = UserId(j.getString("requestedBy"));
       r.format = j.getString("format");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories").map!(s => s.to!PersonalDataCategory).array;
+      r.categories = getStrings(j, "categories");
       r.reason = j.getString("reason");
 
       auto result = usecase.createReport(r);
@@ -67,14 +68,14 @@ class InformationReportController : PlatformController {
         .set("items", arr)
         .set("totalCount", items.length)
         .set("message", "Information reports retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
 
@@ -92,21 +93,22 @@ class InformationReportController : PlatformController {
   }
 
   protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      UpdateInformationReportStatusRequest r;
-      r.id = InformationReportId(extractIdFromPath(req.requestURI));
-      r.tenantId = tenantId;
-      r.status = parseReportStatus(j.getString("status"));
-      r.downloadUrl = j.getString("downloadUrl");
-      r.totalRecords = jsonLong(j, "totalRecords");
 
-      auto result = usecase.updateStatus(r);
+      UpdateInformationReportStatusRequest r;
+      r.reportId = InformationReportId(extractIdFromPath(req.requestURI));
+      r.tenantId = tenantId;
+      r.status = j.getString("status");
+      r.downloadUrl = j.getString("downloadUrl");
+      r.totalRecords = j.getLong("totalRecords");
+
+      auto result = usecase.updateReportStatus(r);
       if (result.isSuccess()) {
         auto response = Json.emptyObject
           .set("id", result.id);
-          
+
         res.writeJsonBody(response, 200);
       } else
         writeError(res, 400, result.message);
@@ -115,43 +117,13 @@ class InformationReportController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = InformationReportId(extractIdFromPath(req.requestURI));
-      
+
       usecase.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const InformationReport e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("subjectRole", e.subjectRole)
-      .set("requestedBy", e.requestedBy)
-      .set("status", e.status.to!string)
-      .set("format", e.format.to!string)
-      .set("downloadUrl", e.downloadUrl)
-      .set("totalRecords", e.totalRecords)
-      .set("reason", e.reason)
-      .set("requestedAt", e.requestedAt)
-      .set("generatedAt", e.generatedAt)
-      .set("expiresAt", e.expiresAt);
-  }
-
-  private static InformationReportStatus parseReportStatus(string status) {
-    switch (status) {
-    case "generating":
-      return InformationReportStatus.generating;
-    case "completed":
-      return InformationReportStatus.completed;
-    case "failed":
-      return InformationReportStatus.failed;
-    default:
-      return InformationReportStatus.requested;
-    }
   }
 }

@@ -31,7 +31,7 @@ class DataControllerGroupController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       CreateDataControllerGroupRequest r;
@@ -43,8 +43,8 @@ class DataControllerGroupController : PlatformController {
       auto result = usecase.createGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data controller group created successfully");
+          .set("id", result.id)
+          .set("message", "Data controller group created successfully");
 
         res.writeJsonBody(resp, 201);
       } else
@@ -61,9 +61,9 @@ class DataControllerGroupController : PlatformController {
       auto arr = items.map!(e => e.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Data controller groups retrieved successfully");
+        .set("items", arr)
+        .set("totalCount", items.length)
+        .set("message", "Data controller groups retrieved successfully");
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
@@ -71,7 +71,7 @@ class DataControllerGroupController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
 
@@ -87,22 +87,23 @@ class DataControllerGroupController : PlatformController {
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        auto tenantId = req.getTenantId;
-        auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
+      auto tenantId = req.getTenantId;
+      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
       auto j = req.json;
+
       UpdateDataControllerGroupRequest r;
-      r.id = id;
+      r.groupId = id;
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
+      r.controllerIds = j.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.updateGroup(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data controller group updated successfully");
-            
+          .set("id", result.id)
+          .set("message", "Data controller group updated successfully");
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 400, result.message);
@@ -111,7 +112,7 @@ class DataControllerGroupController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
 

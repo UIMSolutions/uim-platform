@@ -100,10 +100,11 @@ class DeletionController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UpdateDeletionStatusRequest r;
-      r.id = DeletionRequestId(extractIdFromPath(req.requestURI));
+      r.requestId = DeletionRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseDeletionStatus(j.getString("status"));
+      r.status = j.getString("status");
       r.blockerReason = j.getString("blockerReason");
 
       auto result = usecase.updateStatus(r);

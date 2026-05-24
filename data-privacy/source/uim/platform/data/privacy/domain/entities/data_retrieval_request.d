@@ -28,18 +28,18 @@ struct DataRetrievalRequest {
   long deadline; // regulatory deadline (30 days)
 
   Json toJson() const {
-      return entityToJson
-          .set("dataSubjectId", dataSubjectId.value)
-          .set("requestedBy", requestedBy.value)
-          .set("requestType", requestType.to!string)
-          .set("status", status.to!string)
-          .set("targetSystems", targetSystems.toJson)
-          .set("categories", categories.toJson)
-          .set("downloadUrl", downloadUrl)
-          .set("totalFields", totalFields)
-          .set("reason", reason)
-          .set("requestedAt", requestedAt)
-          .set("completedAt", completedAt)
-          .set("deadline", deadline);
+    return entityToJson
+      .set("dataSubjectId", dataSubjectId.value)
+      .set("requestedBy", requestedBy.value)
+      .set("requestType", requestType.to!string)
+      .set("status", status.to!string)
+      .set("targetSystems", targetSystems.toJson)
+      .set("categories", categories.map!(c => c.to!string).array.toJson())
+      .set("downloadUrl", downloadUrl)
+      .set("totalFields", totalFields)
+      .set("reason", reason)
+      .set("requestedAt", requestedAt)
+      .set("completedAt", completedAt)
+      .set("deadline", deadline);
   }
 }

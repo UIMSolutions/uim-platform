@@ -43,7 +43,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     request.requestedBy = req.requestedBy;
     request.status = BlockingStatus.requested;
     request.targetSystems = req.targetSystems;
-    request.categories = req.categories;
+    request.categories = req.categories.map!(c => toPersonalDataCategory(c)).array;
     request.reason = req.reason;
     request.requestedAt = currentTimestamp();
 
@@ -68,10 +68,10 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     if (request.isNull)
       return CommandResult(false, "", "Blocking request not found");
 
-    request.status = req.status;
-    if (req.status == BlockingStatus.active)
+    request.status = req.status.toBlockingStatus;
+    if (request.status == BlockingStatus.active)
       request.activatedAt = currentTimestamp();
-    if (req.status == BlockingStatus.released)
+    if (request.status == BlockingStatus.released)
       request.releasedAt = currentTimestamp();
 
     blockingRequests.update(request);

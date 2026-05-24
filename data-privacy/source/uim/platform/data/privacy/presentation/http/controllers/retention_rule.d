@@ -66,7 +66,7 @@ class RetentionRuleController : PlatformController {
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       RetentionRule[] items = purposeParam.length > 0 
-        ? usecase.listByPurpose(tenantId, purposeParam)
+        ? usecase.listRules(tenantId, purposeParam.toProcessingPurpose)
         : usecase.listRules(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;

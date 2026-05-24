@@ -65,7 +65,7 @@ class DataRetrievalController : PlatformController {
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       DataRetrievalRequest[] items = statusParam.length > 0
-        ? usecase.listByStatus(tenantId, parseRetrievalStatus(statusParam))
+        ? usecase.listByStatus(tenantId, toRetrievalStatus(statusParam))
         : usecase.listRequests(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -101,7 +101,7 @@ class DataRetrievalController : PlatformController {
       UpdateRetrievalStatusRequest r;
       r.id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
       r.tenantId = tenantId;
-      r.status = parseRetrievalStatus(j.getString("status"));
+      r.status = j.getString("status");
       r.downloadUrl = j.getString("downloadUrl");
       r.totalFields = jsonLong(j, "totalFields");
 
@@ -151,18 +151,5 @@ class DataRetrievalController : PlatformController {
       .set("deadline", e.deadline)
       .set("targetSystems", systems)
       .set("categories", cats);
-  }
-
-  private static RetrievalStatus parseRetrievalStatus(string status) {
-    switch (status) {
-    case "inProgress":
-      return RetrievalStatus.inProgress;
-    case "completed":
-      return RetrievalStatus.completed;
-    case "failed":
-      return RetrievalStatus.failed;
-    default:
-      return RetrievalStatus.requested;
-    }
   }
 }

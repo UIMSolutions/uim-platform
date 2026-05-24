@@ -41,8 +41,8 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     ConsentRecord record;
     record.initEntity(req.tenantId);
     record.dataSubjectId = req.dataSubjectId;
-    record.purpose = req.purpose;
-    record.categories = req.categories;
+    record.purpose = req.purpose.toProcessingPurpose;
+    record.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     record.status = ConsentStatus.granted;
     record.channel = req.channel;
     record.consentText = req.consentText;

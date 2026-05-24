@@ -65,12 +65,12 @@ class ConsentController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto subjectParam = DataSubjectId(req.headers.get("X-Subject-Filter", ""));
+      auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       ConsentRecord[] items;
       if (subjectParam.length > 0)
-        items = usecase.listConsents(tenantId, subjectParam);
+        items = usecase.listConsents(tenantId, DataSubjectId(subjectParam));
       else if (purposeParam.length > 0)
         items = usecase.listConsents(tenantId, purposeParam.to!ProcessingPurpose);
       else

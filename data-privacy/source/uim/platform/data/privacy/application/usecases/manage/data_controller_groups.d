@@ -45,21 +45,24 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateGroup(UpdateDataControllerGroupRequest req) {
-    auto g = repo.findById(req.tenantId, req.id);
+    auto g = repo.findById(req.tenantId, req.groupId);
     if (g.isNull)
       return CommandResult(false, "", "Data controller group not found");
 
-    if (req.name.length > 0) g.name = req.name;
-    if (req.description.length > 0) g.description = req.description;
-    if (req.controllerIds.length > 0) g.controllerIds = req.controllerIds;
+    if (req.name.length > 0)
+      g.name = req.name;
+    if (req.description.length > 0)
+      g.description = req.description;
+    if (req.controllerIds.length > 0)
+      g.controllerIds = req.controllerIds;
     g.updatedAt = currentTimestamp();
 
     repo.update(g);
     return CommandResult(true, g.id.value, "");
   }
 
-  CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId id) {
-    auto entity = repo.findById(tenantId, id);
+  CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId groupId) {
+    auto entity = repo.findById(tenantId, groupId);
     if (entity.isNull)
       return CommandResult(false, "", "Data controller group not found");
 

@@ -22,19 +22,20 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   CommandResult createRequest(CreateCorrectionRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isEmpty)
+    if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    auto subject = dsRepo.findById(req.tenantId, req.dataSubjectId);
+    auto subject = dsRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
     auto now = currentTimestamp();
     CorrectionRequest request;
     request.initEntity(req.tenantId);
-    request.dataSubjectId = req.dataSubjectId;
+
+    request.dataSubjectId = req.subjectId;
     request.requestedBy = req.requestedBy;
     request.status = CorrectionStatus.requested;
     request.targetSystems = req.targetSystems;
@@ -42,8 +43,8 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     request.currentValue = req.currentValue;
     request.correctedValue = req.correctedValue;
     request.reason = req.reason;
-    request.requestedAt = now;
-    request.deadline = now + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
+    request.requestedAt = request.createdAt;
+    request.deadline = request.createdAt + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
 
     crRepo.save(request);
     return CommandResult(true,request.id.value, "");
@@ -62,12 +63,12 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateCorrectionStatusRequest req) {
-    auto correctionRequest = crRepo.findById(req.tenantId, req.id);
+    auto correctionRequest = crRepo.findById(req.tenantId, req.requestId);
     if (correctionRequest.isNull)
       return CommandResult(false, "", "Correction request not found");
 
-    correctionRequest.status = req.status;
-    if (req.status == CorrectionStatus.completed)
+    correctionRequest.status = req.status.toCorrectionStatus;
+    if (correctionRequest.status == CorrectionStatus.completed)
       correctionRequest.completedAt = currentTimestamp();
 
     crRepo.update(correctionRequest);

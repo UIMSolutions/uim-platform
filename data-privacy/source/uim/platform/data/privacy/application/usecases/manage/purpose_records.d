@@ -20,17 +20,17 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
   CommandResult createRecord(CreatePurposeRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isEmpty)
+    if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
     PurposeRecord r;
     r.initEntity(req.tenantId);
 
-    r.dataSubjectId = req.dataSubjectId;
-    r.businessContextId = req.businessContextId;
-    r.purpose = req.purpose;
+    r.dataSubjectId = req.subjectId;
+    r.businessContextId = req.contextId;
+    r.purpose = req.purpose.toProcessingPurpose;
     r.status = PurposeRecordStatus.active;
-    r.legalBasis = req.legalBasis;
+    r.legalBasis = req.legalBasis.toLegalBasis;
     r.residenceDays = req.residenceDays;
     r.retentionDays = req.retentionDays;
     r.validFrom = req.validFrom > 0 ? req.validFrom : currentTimestamp;
@@ -48,16 +48,16 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  PurposeRecord[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+  PurposeRecord[] listRecords(TenantId tenantId, DataSubjectId subjectId) {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  PurposeRecord[] listByStatus(TenantId tenantId, PurposeRecordStatus status) {
+  PurposeRecord[] listRecords(TenantId tenantId, PurposeRecordStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 
   CommandResult deactivateRecord(DeactivatePurposeRecordRequest req) {
-    auto r = repo.findById(req.tenantId, req.id);
+    auto r = repo.findById(req.tenantId, req.recordId);
     if (r.isNull)
       return CommandResult(false, "", "Purpose record not found");
     if (r.status == PurposeRecordStatus.deactivated)
@@ -71,8 +71,8 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, r.id.value, "");
   }
 
-  CommandResult deleteRecord(TenantId tenantId, PurposeRecordId id) {
-    auto r = repo.findById(tenantId, id);
+  CommandResult deleteRecord(TenantId tenantId, PurposeRecordId recordId) {
+    auto r = repo.findById(tenantId, recordId);
     if (r.isNull)
       return CommandResult(false, "", "Purpose record not found");
 
