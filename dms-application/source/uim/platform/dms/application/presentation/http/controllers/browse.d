@@ -37,7 +37,7 @@ class BrowseController : PlatformController {
     router.delete_("/api/v1/favorites/*", &handleDeleteFavorite);
   }
 
-  protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = FolderId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

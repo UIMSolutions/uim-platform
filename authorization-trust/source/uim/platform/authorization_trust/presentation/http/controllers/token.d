@@ -27,7 +27,7 @@ class TokenController : PlatformController {
 
   // POST /api/v1/oauth/token
   // Accepts form-encoded or JSON body with grant_type, client_id, client_secret, scope
-  protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       string grantType;

@@ -48,7 +48,7 @@ class ActivityController : PlatformController {
     }
   }
 
-  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getSummary(tenantId);

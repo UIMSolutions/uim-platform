@@ -132,7 +132,7 @@ class VersionController : ManageController {
     }
   }
 
-  protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

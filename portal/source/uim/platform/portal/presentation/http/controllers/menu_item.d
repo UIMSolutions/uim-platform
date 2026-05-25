@@ -73,7 +73,7 @@ class MenuItemController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = extractIdFromPath(req.requestURI);
       if (!useCase.existsMenuItem(menuItemId)) {

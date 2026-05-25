@@ -70,7 +70,7 @@ class SchemaController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto schema = useCase.getSchema(schemaId);

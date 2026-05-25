@@ -51,7 +51,7 @@ class KeyPasswordController : ManageController {
   }
 
   // GET /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId      = req.getTenantId;
       auto alias_       = extractIdFromPath(req.requestURI.to!string);

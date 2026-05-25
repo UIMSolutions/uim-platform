@@ -30,7 +30,7 @@ class ContentController : ManageController {
     router.get("/api/v1/content/*", &handleGet);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto path = AppFileId(extractIdFromPath(req.requestURI.to!string));

@@ -71,7 +71,7 @@ class ThemeController : ManageController {
     }
   }
 
-  protected void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto theme = useCase.getDefaultTheme(tenantId);
@@ -85,7 +85,7 @@ class ThemeController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto themeId = extractIdFromPath(req.requestURI);
       auto theme = useCase.getTheme(themeId);

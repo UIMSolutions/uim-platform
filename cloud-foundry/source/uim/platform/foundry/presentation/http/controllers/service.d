@@ -91,7 +91,7 @@ class ServiceController : ManageController {
     }
   }
 
-  protected void handleGetGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));

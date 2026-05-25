@@ -45,7 +45,7 @@ class CredentialController : ManageController {
     handleListCredentials(req, res, "password");
   }
 
-  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res, "");
   }
 
@@ -63,7 +63,7 @@ class CredentialController : ManageController {
     handleListCredentials(req, res, "key");
   }
 
-  protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res, "key");
   }
 
@@ -137,7 +137,7 @@ class CredentialController : ManageController {
     }
   }
 
-  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  override protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

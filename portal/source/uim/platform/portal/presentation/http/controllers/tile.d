@@ -89,7 +89,7 @@ class TileController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = extractIdFromPath(req.requestURI);
       auto tile = useCase.getTile(tileId);

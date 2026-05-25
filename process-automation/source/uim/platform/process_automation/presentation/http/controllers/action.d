@@ -94,7 +94,7 @@ class ActionController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
             auto tenantId = req.getTenantId;

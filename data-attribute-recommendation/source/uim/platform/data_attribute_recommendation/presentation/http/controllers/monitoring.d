@@ -83,7 +83,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto summary = usecase.getPipelineSummary(tenantId);

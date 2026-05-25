@@ -139,7 +139,7 @@ class ObjectController : ManageController {
     return successResponse("Object metadata updated successfully", "Updated", 200, resp);
   }
 
-  protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = updateMetadataHandler(req);
       res.writeJsonBody(response, response.code);

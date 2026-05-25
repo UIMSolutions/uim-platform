@@ -27,7 +27,7 @@ class StatisticsController : PlatformController {
     router.get("/api/v1/statistics", &handleGet);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));

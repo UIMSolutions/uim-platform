@@ -86,7 +86,7 @@ class KeystoreController : ManageController {
   }
 
   // GET /api/v1/keystores?accountId=...&applicationId=...
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
@@ -123,7 +123,7 @@ class KeystoreController : ManageController {
   }
 
   // GET /api/v1/keystores/{id}
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
@@ -154,7 +154,7 @@ class KeystoreController : ManageController {
   }
 
   // PUT /api/v1/keystores/{id}
-  override override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));

@@ -76,7 +76,7 @@ class BlockingController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));

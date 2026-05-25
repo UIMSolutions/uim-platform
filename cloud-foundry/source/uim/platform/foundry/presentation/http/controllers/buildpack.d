@@ -76,7 +76,7 @@ class BuildpackController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

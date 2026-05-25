@@ -85,7 +85,7 @@ class DashboardController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));

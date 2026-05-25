@@ -99,7 +99,7 @@ class PasswordPolicyController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto policyId = extractIdFromPath(req.requestURI);
       auto policy = useCase.getPolicy(policyId);

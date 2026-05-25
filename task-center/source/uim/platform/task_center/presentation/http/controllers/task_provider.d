@@ -80,7 +80,7 @@ class TaskProviderController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             import std.algorithm : endsWith;

@@ -44,7 +44,7 @@ class OAuthScopeController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;

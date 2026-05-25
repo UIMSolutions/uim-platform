@@ -103,7 +103,7 @@ class JobController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = JobId(extractIdFromPath(req.requestURI.to!string));

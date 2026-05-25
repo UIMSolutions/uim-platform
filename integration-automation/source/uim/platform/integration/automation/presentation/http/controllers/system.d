@@ -86,7 +86,7 @@ class SystemController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -156,7 +156,7 @@ class SystemController : ManageController {
     }
   }
 
-  protected void handleGetTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

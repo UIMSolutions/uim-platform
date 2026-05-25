@@ -70,7 +70,7 @@ class CatalogController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       if (!useCase.existsCatalog(catalogId)) {

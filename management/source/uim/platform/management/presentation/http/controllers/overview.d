@@ -26,7 +26,7 @@ class OverviewController : PlatformController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto gaId = req.params.get("globalAccountId");
       if (gaId.isEmpty) {

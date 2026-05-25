@@ -81,7 +81,7 @@ class TaskDefinitionController : PlatformController {
         }
     }
 
-    protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.algorithm : endsWith;
             auto path = req.requestURI.to!string;

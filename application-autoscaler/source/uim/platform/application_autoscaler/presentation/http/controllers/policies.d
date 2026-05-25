@@ -115,7 +115,7 @@ class ScalingPolicyController : ManageController {
   }
 
   // GET /api/v1/policies/{id}
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));

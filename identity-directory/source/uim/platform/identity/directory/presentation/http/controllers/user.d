@@ -83,7 +83,7 @@ class UserController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto user = useCase.getUser(userId);

@@ -71,7 +71,7 @@ class SiteController : ManageController {
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto site = useCase.getSite(siteId);
