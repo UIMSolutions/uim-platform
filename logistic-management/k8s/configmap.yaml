@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logistic-management-config
+  namespace: uim-platform
+  labels:
+    app: logistic-management
+data:
+  LOGMGMT_HOST: "0.0.0.0"
+  LOGMGMT_PORT: "8086"
+  LOGMGMT_MONGO_URI: ""
+  LOGMGMT_DATA_DIR: ""

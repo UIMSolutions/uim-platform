@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logistic-management
+  namespace: uim-platform
+  labels:
+    app: logistic-management
+spec:
+  type: ClusterIP
+  selector:
+    app: logistic-management
+  ports:
+  - name: http
+    port: 8086
+    targetPort: 8086
+    protocol: TCP

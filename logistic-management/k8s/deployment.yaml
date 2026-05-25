@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logistic-management
+  namespace: uim-platform
+  labels:
+    app: logistic-management
+    tier: backend
+    version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logistic-management
+  template:
+    metadata:
+      labels:
+        app: logistic-management
+    spec:
+      containers:
+      - name: logistic-management
+        image: uim-platform/logistic-management:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8086
+          protocol: TCP
+        env:
+        - name: LOGMGMT_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: logistic-management-config
+              key: LOGMGMT_HOST
+        - name: LOGMGMT_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: logistic-management-config
+              key: LOGMGMT_PORT
+        - name: LOGMGMT_MONGO_URI
+          valueFrom:
+            configMapKeyRef:
+              name: logistic-management-config
+              key: LOGMGMT_MONGO_URI
+        - name: LOGMGMT_DATA_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: logistic-management-config
+              key: LOGMGMT_DATA_DIR
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8086
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8086
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001

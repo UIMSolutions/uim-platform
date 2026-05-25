@@ -27,60 +27,71 @@ class DeploymentController : ManageController {
         router.delete_("/api/v1/agentry/deployments/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto items = usecase.listDeployments(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Deployment list retrieved successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto items = usecase.listDeployments(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Deployment list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DeploymentId(extractIdFromPath(path));
-            auto e = usecase.getDeployment(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Deployment not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        DeploymentDTO dto;
+        dto.deploymentId = DeploymentId(j.getString("id"));
+        dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
+        dto.appVersionId = AppVersionId(j.getString("appVersionId"));
+        dto.tenantId = tenantId;
+        dto.scope_ = j.getString("scope");
+        dto.targetDeviceId = j.getString("targetDeviceId");
+        dto.targetGroupName = j.getString("targetGroupName");
+        dto.scheduledAt = j.getString("scheduledAt");
+        dto.deployedBy = j.getString("deployedBy");
+        dto.notes = j.getString("notes");
+
+        auto result = usecase.createDeployment(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Deployment created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            DeploymentDTO dto;
-            dto.deploymentId = DeploymentId(j.getString("id"));
-            dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
-            dto.appVersionId = AppVersionId(j.getString("appVersionId"));
-            dto.tenantId = tenantId;
-            dto.scope_ = j.getString("scope");
-            dto.targetDeviceId = j.getString("targetDeviceId");
-            dto.targetGroupName = j.getString("targetGroupName");
-            dto.scheduledAt = j.getString("scheduledAt");
-            dto.deployedBy = j.getString("deployedBy");
-            dto.notes = j.getString("notes");
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createDeployment(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Deployment created successfully");
-            res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = DeploymentId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid deployment ID", 400);
+
+        auto e = usecase.getDeployment(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Deployment not found", 404);
+
+        auto responseData = job.toJson();
+
+        return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -95,7 +106,10 @@ class DeploymentController : ManageController {
             dto.scheduledAt = j.getString("scheduledAt");
 
             auto result = usecase.updateDeployment(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+            if (!result.success) {
+                writeError(res, 404, result.message);
+                return;
+            }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -112,7 +126,10 @@ class DeploymentController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = DeploymentId(extractIdFromPath(path));
             auto result = usecase.deleteDeployment(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+            if (!result.success) {
+                writeError(res, 404, result.message);
+                return;
+            }
             res.writeJsonBody(Json.emptyObject.set("message", "Deployment deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

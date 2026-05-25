@@ -27,19 +27,20 @@ class BackendConnectionController : ManageController {
         router.delete_("/api/v1/agentry/backend-connections/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+   override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             auto items = usecase.listBackendConnections(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             auto resp = Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Backend connection list retrieved successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                .set("resources", jarr);
+
+        return successResponse("Backend connection list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
