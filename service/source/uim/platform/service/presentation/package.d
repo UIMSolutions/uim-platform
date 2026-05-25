@@ -1,8 +1,6 @@
 module uim.platform.service.presentation;
 
+import uim.platform.service.mixins.imports;
 public {
-    import uim.platform.service.presentation.http;
-    import uim.platform.service.presentation.cli;
-    import uim.platform.service.presentation.gui;
-    import uim.platform.service.presentation.web;
+    mixin(GenerateImports!("uim.platform.service.presentation", ["http", "cli", "gui", "web"]));
 }

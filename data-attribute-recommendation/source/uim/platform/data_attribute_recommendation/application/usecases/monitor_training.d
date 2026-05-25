@@ -21,6 +21,7 @@ mixin(ShowModule!());
 @safe:
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
 struct TrainingJobSummary {
+  TenantId tenantId;
   TrainingJobId jobId;
   ModelConfigId modelConfigId;
   string modelName;

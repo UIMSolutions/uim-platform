@@ -45,7 +45,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
     // Check no active deployment exists for this job
     auto existingDep = repo.findByTrainingJob(req.tenantId, req.jobId);
-    if (existingDep !is null && existingDep.status == DeploymentStatus.active)
+    if (!existingDep.isNull && existingDep.status == DeploymentStatus.active)
       return CommandResult(false, "", "An active deployment already exists for this training job");
 
     auto now = currentTimestamp();
@@ -53,10 +53,10 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     dep.initEntity(req.tenantId, req.createdBy);
 
     dep.trainingJobId = req.jobId;
-    dep.modelConfigId = job.configId;
+    dep.modelConfigId = job.modelConfigId;
     dep.name = req.name.length > 0 ? req.name : "deployment-" ~ dep.id.value[0 .. 8];
     dep.status = DeploymentStatus.deploying;
-    dep.endpointUrl = "/api/v1/inference/" ~ dep.id;
+    dep.endpointUrl = "/api/v1/inference/" ~ dep.id.value;
     dep.version_ = "1.0";
     dep.replicas = req.replicas > 0 ? req.replicas : 1;
 

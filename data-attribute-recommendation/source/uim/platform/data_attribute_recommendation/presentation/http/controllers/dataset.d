@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.presentation.http.controllers.dataset;
 
-
 // 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.manage.datasets;
@@ -36,7 +35,7 @@ class DatasetController : PlatformController {
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = CreateDatasetRequest();
@@ -64,7 +63,7 @@ class DatasetController : PlatformController {
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      
+
       auto items = usecase.listDatasets(tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
@@ -80,10 +79,10 @@ class DatasetController : PlatformController {
   }
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+
       auto ds = usecase.getDataset(tenantId, id);
       if (ds.isNull) {
         writeError(res, 404, "Dataset not found");
@@ -96,13 +95,14 @@ class DatasetController : PlatformController {
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
+
       auto r = UpdateDatasetRequest();
-      r.id = id;
       r.tenantId = tenantId;
+      r.datasetId = id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.columnDefinitions = j.getString("columnDefinitions");
@@ -124,10 +124,10 @@ class DatasetController : PlatformController {
   }
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+
       auto result = usecase.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -146,10 +146,10 @@ class DatasetController : PlatformController {
   }
 
   protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+
       auto result = usecase.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -168,10 +168,10 @@ class DatasetController : PlatformController {
   }
 
   protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+
       auto result = usecase.deleteDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

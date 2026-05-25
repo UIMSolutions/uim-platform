@@ -55,7 +55,7 @@ class ModelTrainer {
   }
 
   /// Start a training job for the given model configuration.
-  TrainingJob* startTraining(TenantId tenantId, ModelConfigId configId, UserId userId) {
+  TrainingJob startTraining(TenantId tenantId, ModelConfigId configId, UserId userId) {
     if (!canTrain(tenantId, configId))
       return null;
 

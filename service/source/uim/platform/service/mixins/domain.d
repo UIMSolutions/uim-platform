@@ -3,6 +3,7 @@ module uim.platform.service.mixins.domain;
 import uim.platform.service;
 
 mixin(ShowModule!());
+
 @safe:
 
 mixin template DomainId() {

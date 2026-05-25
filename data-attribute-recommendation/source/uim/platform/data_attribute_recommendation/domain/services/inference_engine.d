@@ -41,7 +41,7 @@ class InferenceEngine {
   }
 
   /// Process an inference request: validate, run prediction, store result.
-  InferenceResult* predict(TenantId tenantId, InferenceRequestId requestId) {
+  InferenceResult predict(TenantId tenantId, InferenceRequestId requestId) {
     auto request = requestRepo.findById(tenantId, requestId);
     if (request.isNull)
       return null;
@@ -49,7 +49,7 @@ class InferenceEngine {
     if (!isDeploymentReady(tenantId, request.deploymentId)) {
       request.status = InferenceStatus.failed;
       requestRepo.update(request);
-      return null;
+      return InferenceResult.init; // Or throw an exception depending on error handling strategy
     }
 
     auto now = currentTimestamp();

@@ -123,12 +123,12 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
   /// Start training on a model configuration.
   CommandResult startTraining(StartTrainingRequest req) {
-    if (req.modelConfigId.isEmpty)
+    if (req.configId.isEmpty)
       return CommandResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto job = trainer.startTraining(req.tenantId, req.modelConfigId, req.createdBy);
+    auto job = trainer.startTraining(req.tenantId, req.configId, req.createdBy);
     if (job.isNull)
       return CommandResult(false, "", "Cannot start training - verify dataset is completed and config is ready");
 
