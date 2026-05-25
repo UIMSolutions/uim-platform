@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScopeController : PlatformController {
+class ScopeController : ManageController {
   private ManageScopesUseCase usecase;
 
   this(ManageScopesUseCase usecase) {
@@ -78,7 +78,7 @@ class ScopeController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScopeId(extractIdFromPath(req));
@@ -99,7 +99,7 @@ class ScopeController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScopeId(extractIdFromPath(req));

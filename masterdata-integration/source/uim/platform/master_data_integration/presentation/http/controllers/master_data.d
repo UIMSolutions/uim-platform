@@ -19,7 +19,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class MasterDataController : PlatformController {
+class MasterDataController : ManageController {
   private ManageMasterDataObjectsUseCase usecase;
 
   this(ManageMasterDataObjectsUseCase usecase) {
@@ -128,7 +128,7 @@ class MasterDataController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -150,7 +150,7 @@ class MasterDataController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

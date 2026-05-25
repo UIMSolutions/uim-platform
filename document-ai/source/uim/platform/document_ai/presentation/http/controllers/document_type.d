@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentTypeController : PlatformController {
+class DocumentTypeController : ManageController {
   private ManageDocumentTypesUseCase usecase;
 
   this(ManageDocumentTypesUseCase usecase) {
@@ -105,7 +105,7 @@ class DocumentTypeController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DocumentTypeId(extractIdFromPath(req.requestURI.to!string));
@@ -135,7 +135,7 @@ class DocumentTypeController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DocumentTypeId(extractIdFromPath(req.requestURI.to!string));

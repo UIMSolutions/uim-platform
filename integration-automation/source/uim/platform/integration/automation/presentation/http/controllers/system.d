@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class SystemController : PlatformController {
+class SystemController : ManageController {
   private ManageSystemsUseCase useCase;
 
   this(ManageSystemsUseCase useCase) {
@@ -102,7 +102,7 @@ class SystemController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -137,7 +137,7 @@ class SystemController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

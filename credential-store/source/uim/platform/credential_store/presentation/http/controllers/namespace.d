@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NamespaceController : PlatformController {
+class NamespaceController : ManageController {
   private ManageNamespacesUseCase usecase;
 
   this(ManageNamespacesUseCase usecase) {
@@ -107,7 +107,7 @@ class NamespaceController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
@@ -133,7 +133,7 @@ class NamespaceController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));

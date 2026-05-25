@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /keyuser/v2/drafts
-class FlexDraftsController : PlatformController {
+class FlexDraftsController : ManageController {
   private ManageFlexDraftsUseCase usecase;
 
   this(ManageFlexDraftsUseCase usecase) {
@@ -75,7 +75,7 @@ class FlexDraftsController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexDraftId(extractIdFromPath(req.requestURI.to!string));
@@ -96,7 +96,7 @@ class FlexDraftsController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexDraftId(extractIdFromPath(req.requestURI.to!string));

@@ -17,7 +17,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBindingController : PlatformController {
+class ServiceBindingController : ManageController {
   private ManageServiceBindingsUseCase usecase;
 
   this(ManageServiceBindingsUseCase usecase) {
@@ -108,7 +108,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));
@@ -132,7 +132,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RemoteTableController : PlatformController {
+class RemoteTableController : ManageController {
   private ManageRemoteTablesUseCase usecase;
 
   this(ManageRemoteTablesUseCase usecase) {
@@ -121,7 +121,7 @@ class RemoteTableController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));

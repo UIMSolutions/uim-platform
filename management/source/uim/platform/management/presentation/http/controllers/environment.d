@@ -15,7 +15,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EnvironmentController : PlatformController {
+class EnvironmentController : ManageController {
   private ManageEnvironmentInstancesUseCase usecase;
 
   this(ManageEnvironmentInstancesUseCase usecase) {
@@ -101,7 +101,7 @@ class EnvironmentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));

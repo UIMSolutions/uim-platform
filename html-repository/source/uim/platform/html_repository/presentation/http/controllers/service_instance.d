@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ServiceInstanceController : PlatformController {
+class ServiceInstanceController : ManageController {
   private ManageServiceInstancesUseCase usecase;
 
   this(ManageServiceInstancesUseCase usecase) {
@@ -110,7 +110,7 @@ class ServiceInstanceController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -138,7 +138,7 @@ class ServiceInstanceController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       if (id.isNull) {

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for password policy management.
-class PasswordPolicyController : PlatformController {
+class PasswordPolicyController : ManageController {
   private ManagePasswordPoliciesUseCase useCase;
 
   this(ManagePasswordPoliciesUseCase useCase) {

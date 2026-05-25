@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AutomationRuleController : PlatformController {
+class AutomationRuleController : ManageController {
   private ManageAutomationRulesUseCase usecase;
 
   this(ManageAutomationRulesUseCase usecase) {
@@ -125,7 +125,7 @@ class AutomationRuleController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -155,7 +155,7 @@ class AutomationRuleController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

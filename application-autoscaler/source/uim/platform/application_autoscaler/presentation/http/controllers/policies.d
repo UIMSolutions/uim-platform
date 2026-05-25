@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScalingPolicyController : PlatformController {
+class ScalingPolicyController : ManageController {
   private ManageScalingPoliciesUseCase usecase;
 
   this(ManageScalingPoliciesUseCase usecase) {
@@ -131,7 +131,7 @@ class ScalingPolicyController : PlatformController {
   }
 
   // PUT /api/v1/policies/{id}
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
@@ -169,7 +169,7 @@ class ScalingPolicyController : PlatformController {
   }
 
   // DELETE /api/v1/policies/{id}
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));

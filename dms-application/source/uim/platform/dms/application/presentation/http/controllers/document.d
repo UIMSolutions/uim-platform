@@ -17,7 +17,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class DocumentController : PlatformController {
+class DocumentController : ManageController {
   private ManageDocumentsUseCase usecase;
 
   this(ManageDocumentsUseCase usecase) {
@@ -130,7 +130,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));
@@ -202,7 +202,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DocumentId(extractIdFromPath(req.requestURI));

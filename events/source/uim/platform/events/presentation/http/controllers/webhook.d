@@ -78,7 +78,7 @@ class WebhookController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = req.getTenantId;
             auto webhookId = WebhookId(extractIdFromPath(req.requestURI.to!string));
@@ -99,7 +99,7 @@ class WebhookController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));

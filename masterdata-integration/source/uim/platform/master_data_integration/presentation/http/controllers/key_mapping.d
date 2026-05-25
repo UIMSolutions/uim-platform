@@ -19,7 +19,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class KeyMappingController : PlatformController {
+class KeyMappingController : ManageController {
   private ManageKeyMappingsUseCase usecase;
 
   this(ManageKeyMappingsUseCase usecase) {
@@ -135,7 +135,7 @@ class KeyMappingController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -153,7 +153,7 @@ class KeyMappingController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

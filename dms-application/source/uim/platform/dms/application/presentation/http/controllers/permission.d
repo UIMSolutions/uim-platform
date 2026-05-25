@@ -17,7 +17,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class PermissionController : PlatformController {
+class PermissionController : ManageController {
   private ManagePermissionsUseCase permissions;
 
   this(ManagePermissionsUseCase permissions) {
@@ -131,7 +131,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PermissionId(extractIdFromPath(req.requestURI));

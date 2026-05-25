@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseConnectionController : PlatformController {
+class DatabaseConnectionController : ManageController {
   private ManageDatabaseConnectionsUseCase usecase;
 
   this(ManageDatabaseConnectionsUseCase usecase) {
@@ -123,7 +123,7 @@ class DatabaseConnectionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -154,7 +154,7 @@ class DatabaseConnectionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DatabaseConnectionId(extractIdFromPath(req.requestURI.to!string));

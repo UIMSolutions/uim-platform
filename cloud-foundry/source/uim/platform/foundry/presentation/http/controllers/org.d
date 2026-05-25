@@ -16,7 +16,7 @@ module uim.platform.foundry.presentation.http.controllers.org;
 // import uim.platform.foundry.domain.entities.organization;
 import uim.platform.foundry;
 
-class OrgController : PlatformController {
+class OrgController : ManageController {
   private ManageOrgsUseCase useCase;
 
   this(ManageOrgsUseCase useCase) {
@@ -102,7 +102,7 @@ class OrgController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));
@@ -175,7 +175,7 @@ class OrgController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = OrgId(extractIdFromPath(req.requestURI));

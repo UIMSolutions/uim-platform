@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class PushRegistrationController : PlatformController {
+class PushRegistrationController : ManageController {
   private ManagePushRegistrationsUseCase usecase;
 
   this(ManagePushRegistrationsUseCase usecase) {
@@ -103,7 +103,7 @@ class PushRegistrationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PushRegistrationId(extractIdFromPath(req.requestURI.to!string));

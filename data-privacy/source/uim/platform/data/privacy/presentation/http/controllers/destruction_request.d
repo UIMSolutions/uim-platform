@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DestructionRequestController : PlatformController {
+class DestructionRequestController : ManageController {
   private ManageDestructionRequestsUseCase usecase;
 
   this(ManageDestructionRequestsUseCase usecase) {
@@ -89,7 +89,7 @@ class DestructionRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -112,7 +112,7 @@ class DestructionRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DestructionRequestId(extractIdFromPath(req.requestURI));

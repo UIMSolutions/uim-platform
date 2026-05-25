@@ -16,7 +16,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
-class ApplicationController : PlatformController {
+class ApplicationController : ManageController {
   private ManageApplicationsUseCase useCase;
 
   this(ManageApplicationsUseCase useCase) {
@@ -107,7 +107,7 @@ class ApplicationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
 

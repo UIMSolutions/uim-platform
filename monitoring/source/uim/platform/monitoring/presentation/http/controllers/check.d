@@ -14,7 +14,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class CheckController : PlatformController {
+class CheckController : ManageController {
   private ManageHealthChecksUseCase usecase;
 
   this(ManageHealthChecksUseCase usecase) {
@@ -104,7 +104,7 @@ class CheckController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class CheckController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));

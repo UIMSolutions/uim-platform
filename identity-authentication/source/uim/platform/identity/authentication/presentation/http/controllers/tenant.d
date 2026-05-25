@@ -17,7 +17,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for tenant management.
-class TenantController : PlatformController {
+class TenantController : ManageController {
   private ManageTenantsUseCase useCase;
 
   this(ManageTenantsUseCase useCase) {
@@ -95,7 +95,7 @@ class TenantController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
 

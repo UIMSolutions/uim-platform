@@ -117,7 +117,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 
@@ -137,7 +137,7 @@ class DataContextController : PlatformController {
         }
     }
 
-    protected void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

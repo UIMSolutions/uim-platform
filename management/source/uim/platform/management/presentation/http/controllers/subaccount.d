@@ -15,7 +15,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubaccountController : PlatformController {
+class SubaccountController : ManageController {
   private ManageSubaccountsUseCase usecase;
 
   this(ManageSubaccountsUseCase usecase) {
@@ -107,7 +107,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
@@ -178,7 +178,7 @@ class SubaccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));

@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MenuItemController : PlatformController {
+class MenuItemController : ManageController {
   private ManageMenuItemsUseCase useCase;
 
   this(ManageMenuItemsUseCase useCase) {
@@ -88,7 +88,7 @@ class MenuItemController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -108,7 +108,7 @@ class MenuItemController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = extractIdFromPath(req.requestURI);
       auto j = req.json;

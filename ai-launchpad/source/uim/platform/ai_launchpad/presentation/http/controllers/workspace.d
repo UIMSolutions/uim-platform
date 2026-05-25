@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class WorkspaceController : PlatformController {
+class WorkspaceController : ManageController {
   private ManageWorkspacesUseCase usecase;
 
   this(ManageWorkspacesUseCase usecase) {
@@ -115,7 +115,7 @@ class WorkspaceController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));

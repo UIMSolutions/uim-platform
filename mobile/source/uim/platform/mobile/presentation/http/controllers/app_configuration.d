@@ -13,7 +13,7 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-class AppConfigurationController : PlatformController {
+class AppConfigurationController : ManageController {
   private ManageAppConfigurationsUseCase usecase;
 
   this(ManageAppConfigurationsUseCase usecase) {
@@ -110,7 +110,7 @@ class AppConfigurationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -137,7 +137,7 @@ class AppConfigurationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AppConfigurationId(extractIdFromPath(req.requestURI.to!string));

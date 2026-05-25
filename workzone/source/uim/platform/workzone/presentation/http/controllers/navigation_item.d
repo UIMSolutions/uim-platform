@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class NavigationItemController : PlatformController {
+class NavigationItemController : ManageController {
   private ManageNavigationItemsUseCase useCase;
 
   this(ManageNavigationItemsUseCase useCase) {
@@ -98,7 +98,7 @@ class NavigationItemController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -122,7 +122,7 @@ class NavigationItemController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -18,7 +18,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class FolderController : PlatformController {
+class FolderController : ManageController {
   private ManageFoldersUseCase usecase;
 
   this(ManageFoldersUseCase usecase) {
@@ -100,7 +100,7 @@ class FolderController : PlatformController {
     * Handles updating folder metadata (name, description).
     * The folder ID is extracted from the URL path.
     */
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));
@@ -172,7 +172,7 @@ class FolderController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FolderId(extractIdFromPath(req.requestURI));

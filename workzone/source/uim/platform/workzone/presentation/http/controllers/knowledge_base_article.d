@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class KnowledgeBaseArticleController : PlatformController {
+class KnowledgeBaseArticleController : ManageController {
   private ManageKnowledgeBaseArticlesUseCase useCase;
 
   this(ManageKnowledgeBaseArticlesUseCase useCase) {
@@ -99,7 +99,7 @@ class KnowledgeBaseArticleController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -126,7 +126,7 @@ class KnowledgeBaseArticleController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

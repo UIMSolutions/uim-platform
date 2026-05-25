@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class HDIContainerController : PlatformController {
+class HDIContainerController : ManageController {
   private ManageHDIContainersUseCase usecase;
 
   this(ManageHDIContainersUseCase usecase) {
@@ -115,7 +115,7 @@ class HDIContainerController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -142,7 +142,7 @@ class HDIContainerController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));

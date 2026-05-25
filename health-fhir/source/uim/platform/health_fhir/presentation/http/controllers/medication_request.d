@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MedicationRequestController : PlatformController {
+class MedicationRequestController : ManageController {
   private ManageMedicationRequestsUseCase usecase;
 
   this(ManageMedicationRequestsUseCase usecase) {
@@ -106,7 +106,7 @@ class MedicationRequestController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MedicationRequestId(extractIdFromPath(req.requestURI.to!string));
@@ -129,7 +129,7 @@ class MedicationRequestController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MedicationRequestId(extractIdFromPath(req.requestURI.to!string));

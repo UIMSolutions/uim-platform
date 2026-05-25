@@ -83,7 +83,7 @@ class MtaController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto j = req.json;
             UpdateMtaRequest r;
@@ -109,7 +109,7 @@ class MtaController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             DeleteMtaRequest r;
             r.tenantId  = req.getTenantId;

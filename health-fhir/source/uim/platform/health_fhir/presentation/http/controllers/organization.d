@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OrganizationController : PlatformController {
+class OrganizationController : ManageController {
   private ManageOrganizationsUseCase usecase;
 
   this(ManageOrganizationsUseCase usecase) {
@@ -82,7 +82,7 @@ class OrganizationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = OrganizationId(extractIdFromPath(req.requestURI.to!string));
@@ -102,7 +102,7 @@ class OrganizationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = OrganizationId(extractIdFromPath(req.requestURI.to!string));

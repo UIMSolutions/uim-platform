@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AlertController : PlatformController {
+class AlertController : ManageController {
   private ManageAlertsUseCase usecase;
 
   this(ManageAlertsUseCase usecase) {
@@ -120,7 +120,7 @@ class AlertController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -184,7 +184,7 @@ class AlertController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));

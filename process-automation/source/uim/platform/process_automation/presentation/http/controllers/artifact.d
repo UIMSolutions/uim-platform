@@ -127,7 +127,7 @@ class ArtifactController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             auto tenantId = req.getTenantId;
@@ -156,7 +156,7 @@ class ArtifactController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             auto tenantId = req.getTenantId;

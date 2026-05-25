@@ -17,7 +17,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class ProviderController : PlatformController {
+class ProviderController : ManageController {
   private ManageContentProvidersUseCase usecase;
 
   this(ManageContentProvidersUseCase usecase) {
@@ -95,7 +95,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PromptCollectionController : PlatformController {
+class PromptCollectionController : ManageController {
   private ManagePromptCollectionsUseCase usecase;
 
   this(ManagePromptCollectionsUseCase usecase) {
@@ -123,7 +123,7 @@ class PromptCollectionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));

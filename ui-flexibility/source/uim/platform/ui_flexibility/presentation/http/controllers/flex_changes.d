@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 /// Handles SAPUI5 flexibility change records (key user adaptations).
 /// Routes: /keyuser/v2/changes
-class FlexChangesController : PlatformController {
+class FlexChangesController : ManageController {
   private ManageFlexChangesUseCase usecase;
 
   this(ManageFlexChangesUseCase usecase) {
@@ -88,7 +88,7 @@ class FlexChangesController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));
@@ -111,7 +111,7 @@ class FlexChangesController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));

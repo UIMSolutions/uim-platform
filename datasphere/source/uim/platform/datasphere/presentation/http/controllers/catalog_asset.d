@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CatalogAssetController : PlatformController {
+class CatalogAssetController : ManageController {
   private ManageCatalogAssetsUseCase assets;
 
   this(ManageCatalogAssetsUseCase assets) {
@@ -149,7 +149,7 @@ class CatalogAssetController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));

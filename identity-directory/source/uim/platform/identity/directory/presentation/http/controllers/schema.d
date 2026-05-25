@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for custom schema management.
-class SchemaController : PlatformController {
+class SchemaController : ManageController {
   private ManageSchemasUseCase useCase;
 
   this(ManageSchemasUseCase useCase) {
@@ -85,7 +85,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -107,7 +107,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSchema(schemaId);

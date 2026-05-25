@@ -15,7 +15,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class LabelController : PlatformController {
+class LabelController : ManageController {
   private ManageLabelsUseCase usecase;
 
   this(ManageLabelsUseCase usecase) {
@@ -96,7 +96,7 @@ class LabelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -114,7 +114,7 @@ class LabelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = LabelId(extractId(req.requestURI));

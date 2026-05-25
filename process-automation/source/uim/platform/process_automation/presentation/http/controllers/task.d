@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskController : PlatformController {
+class TaskController : ManageController {
   private ManageTasksUseCase taskUsecase;
 
   this(ManageTasksUseCase taskUsecase) {
@@ -132,7 +132,7 @@ class TaskController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto tenantId = req.getTenantId;
@@ -235,7 +235,7 @@ class TaskController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

@@ -15,7 +15,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class SiteController : PlatformController {
+class SiteController : ManageController {
   private ManageSitesUseCase useCase;
 
   this(ManageSitesUseCase useCase) {
@@ -85,7 +85,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -102,7 +102,7 @@ class SiteController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSite(siteId);

@@ -15,7 +15,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class AppVersionController : PlatformController {
+class AppVersionController : ManageController {
   private ManageAppVersionsUseCase usecase;
 
   this(ManageAppVersionsUseCase usecase) {
@@ -114,7 +114,7 @@ class AppVersionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -141,7 +141,7 @@ class AppVersionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = AppVersionId(extractIdFromPath(req.requestURI.to!string));

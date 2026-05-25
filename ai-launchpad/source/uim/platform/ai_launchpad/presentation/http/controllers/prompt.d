@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PromptController : PlatformController {
+class PromptController : ManageController {
   private ManagePromptsUseCase usecase;
 
   this(ManagePromptsUseCase usecase) {

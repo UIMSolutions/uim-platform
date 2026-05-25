@@ -16,7 +16,7 @@ module uim.platform.foundry.presentation.http.controllers.buildpack;
 // import uim.platform.foundry.domain.entities.buildpack;
 import uim.platform.foundry;
 
-class BuildpackController : PlatformController {
+class BuildpackController : ManageController {
   private ManageBuildpacksUseCase useCase;
 
   this(ManageBuildpacksUseCase useCase) {
@@ -91,7 +91,7 @@ class BuildpackController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       auto j = req.json;
@@ -119,7 +119,7 @@ class BuildpackController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConnectionController : PlatformController {
+class ConnectionController : ManageController {
   private ManageConnectionsUseCase usecase;
 
   this(ManageConnectionsUseCase usecase) {
@@ -122,7 +122,7 @@ class ConnectionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));

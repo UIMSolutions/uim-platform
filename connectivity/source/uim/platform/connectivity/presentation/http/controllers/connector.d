@@ -16,7 +16,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class ConnectorController : PlatformController {
+class ConnectorController : ManageController {
   private ManageConnectorsUseCase usecase;
 
   this(ManageConnectorsUseCase usecase) {

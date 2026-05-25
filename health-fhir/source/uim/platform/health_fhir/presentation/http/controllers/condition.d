@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConditionController : PlatformController {
+class ConditionController : ManageController {
   private ManageConditionsUseCase usecase;
 
   this(ManageConditionsUseCase usecase) {
@@ -90,7 +90,7 @@ class ConditionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));
@@ -113,7 +113,7 @@ class ConditionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));

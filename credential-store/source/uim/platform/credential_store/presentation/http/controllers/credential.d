@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CredentialController : PlatformController {
+class CredentialController : ManageController {
   private ManageCredentialsUseCase usecase;
 
   this(ManageCredentialsUseCase usecase) {
@@ -49,7 +49,7 @@ class CredentialController : PlatformController {
     handleGetCredential(req, res, "");
   }
 
-  protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res, "password");
   }
 
@@ -67,7 +67,7 @@ class CredentialController : PlatformController {
     handleGetCredential(req, res, "key");
   }
 
-  protected void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res, "key");
   }
 
@@ -180,7 +180,7 @@ class CredentialController : PlatformController {
     }
   }
 
-  protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  override protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

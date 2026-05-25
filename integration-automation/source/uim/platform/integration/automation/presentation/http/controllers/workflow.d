@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class WorkflowController : PlatformController {
+class WorkflowController : ManageController {
   private ManageWorkflowsUseCase useCase;
 
   this(ManageWorkflowsUseCase useCase) {
@@ -178,7 +178,7 @@ class WorkflowController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

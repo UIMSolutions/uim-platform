@@ -18,7 +18,7 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 @safe:
 
-class CommunicationArrangementController : PlatformController {
+class CommunicationArrangementController : ManageController {
   private ManageCommunicationArrangementsUseCase usecase;
 
   this(ManageCommunicationArrangementsUseCase usecase) {
@@ -109,7 +109,7 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));
@@ -142,7 +142,7 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CommunicationArrangementId(extractIdFromPath(req.requestURI));

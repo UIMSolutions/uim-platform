@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BackupController : PlatformController {
+class BackupController : ManageController {
   private ManageBackupsUseCase usecase;
 
   this(ManageBackupsUseCase usecase) {
@@ -115,7 +115,7 @@ class BackupController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -143,7 +143,7 @@ class BackupController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = BackupId(extractIdFromPath(req.requestURI.to!string));

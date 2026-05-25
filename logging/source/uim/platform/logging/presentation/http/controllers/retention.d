@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionController : PlatformController {
+class RetentionController : ManageController {
   private ManageRetentionPoliciesUseCase usecase;
 
   this(ManageRetentionPoliciesUseCase usecase) {
@@ -111,7 +111,7 @@ class RetentionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
@@ -141,7 +141,7 @@ class RetentionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));

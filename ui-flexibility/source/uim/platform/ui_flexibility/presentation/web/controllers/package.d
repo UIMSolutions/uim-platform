@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Web MVC controller serving HTML views for Flex Changes.
-class FlexChangesWebController : PlatformController {
+class FlexChangesWebController : ManageController {
   private ManageFlexChangesUseCase usecase;
 
   this(ManageFlexChangesUseCase usecase) {
@@ -36,7 +36,7 @@ class FlexChangesWebController : PlatformController {
 }
 
 /// Web MVC controller serving HTML views for Flex Variants.
-class FlexVariantsWebController : PlatformController {
+class FlexVariantsWebController : ManageController {
   private ManageFlexVariantsUseCase usecase;
 
   this(ManageFlexVariantsUseCase usecase) {

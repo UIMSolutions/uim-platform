@@ -15,7 +15,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class GlobalAccountController : PlatformController {
+class GlobalAccountController : ManageController {
   private ManageGlobalAccountsUseCase usecase;
 
   this(ManageGlobalAccountsUseCase usecase) {
@@ -100,7 +100,7 @@ class GlobalAccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
@@ -147,7 +147,7 @@ class GlobalAccountController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = GlobalAccountId(extractId(req.requestURI));

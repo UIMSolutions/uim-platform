@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ExecutionController : PlatformController {
+class ExecutionController : ManageController {
   private ManageExecutionsUseCase usecase;
 
   this(ManageExecutionsUseCase usecase) {
@@ -120,7 +120,7 @@ class ExecutionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));

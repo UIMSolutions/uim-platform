@@ -107,7 +107,7 @@ class PersonalDataRecordController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
 

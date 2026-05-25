@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SpaceController : PlatformController {
+class SpaceController : ManageController {
   private ManageSpacesUseCase usecase;
 
   this(ManageSpacesUseCase usecase) {
@@ -113,7 +113,7 @@ class SpaceController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -141,7 +141,7 @@ class SpaceController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));

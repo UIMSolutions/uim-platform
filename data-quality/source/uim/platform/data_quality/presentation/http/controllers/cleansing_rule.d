@@ -17,7 +17,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class CleansingRuleController : PlatformController {
+class CleansingRuleController : ManageController {
   private ManageCleansingRulesUseCase usecase;
 
   this(ManageCleansingRulesUseCase usecase) {
@@ -104,7 +104,7 @@ class CleansingRuleController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -144,7 +144,7 @@ class CleansingRuleController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

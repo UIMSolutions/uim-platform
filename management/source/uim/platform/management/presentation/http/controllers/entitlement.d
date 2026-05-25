@@ -15,7 +15,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EntitlementController : PlatformController {
+class EntitlementController : ManageController {
   private ManageEntitlementsUseCase usecase;
 
   this(ManageEntitlementsUseCase usecase) {
@@ -102,7 +102,7 @@ class EntitlementController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));
@@ -137,7 +137,7 @@ class EntitlementController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));

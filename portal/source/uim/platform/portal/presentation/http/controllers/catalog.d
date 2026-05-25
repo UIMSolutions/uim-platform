@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class CatalogController : PlatformController {
+class CatalogController : ManageController {
   private ManageCatalogsUseCase useCase;
 
   this(ManageCatalogsUseCase useCase) {
@@ -85,7 +85,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -103,7 +103,7 @@ class CatalogController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteCatalog(catalogId);

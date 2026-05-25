@@ -13,7 +13,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBindingController : PlatformController {
+class ServiceBindingController : ManageController {
   private ManageServiceBindingsUseCase usecase;
 
   this(ManageServiceBindingsUseCase usecase) {
@@ -124,7 +124,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

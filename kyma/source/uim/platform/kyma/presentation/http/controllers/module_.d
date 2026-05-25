@@ -18,7 +18,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ModuleController : PlatformController {
+class ModuleController : ManageController {
   private ManageModulesUseCase usecase;
 
   this(ManageModulesUseCase usecase) {
@@ -101,7 +101,7 @@ class ModuleController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -138,7 +138,7 @@ class ModuleController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

@@ -16,7 +16,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TranslationController : PlatformController {
+class TranslationController : ManageController {
   private ManageTranslationsUseCase useCase;
 
   this(ManageTranslationsUseCase useCase) {
@@ -91,7 +91,7 @@ class TranslationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto translationId = extractIdFromPath(req.requestURI);
@@ -108,7 +108,7 @@ class TranslationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto translationId = extractIdFromPath(req.requestURI);

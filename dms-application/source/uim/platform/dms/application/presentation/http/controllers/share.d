@@ -18,7 +18,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class ShareController : PlatformController {
+class ShareController : ManageController {
   private ManageSharesUseCase usecase;
 
   this(ManageSharesUseCase usecase) {
@@ -115,7 +115,7 @@ class ShareController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ShareId(extractIdFromPath(req.requestURI));

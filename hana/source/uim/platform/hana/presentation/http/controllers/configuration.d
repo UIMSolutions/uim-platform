@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConfigurationController : PlatformController {
+class ConfigurationController : ManageController {
   private ManageConfigurationsUseCase usecase;
 
   this(ManageConfigurationsUseCase usecase) {
@@ -115,7 +115,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -140,7 +140,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));

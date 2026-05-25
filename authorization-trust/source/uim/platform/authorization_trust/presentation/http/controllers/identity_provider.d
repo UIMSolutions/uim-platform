@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderController : PlatformController {
+class IdentityProviderController : ManageController {
   private ManageIdentityProvidersUseCase usecase;
 
   this(ManageIdentityProvidersUseCase usecase) {
@@ -92,7 +92,7 @@ class IdentityProviderController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = IdentityProviderId(extractIdFromPath(req));
@@ -121,7 +121,7 @@ class IdentityProviderController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = IdentityProviderId(extractIdFromPath(req));

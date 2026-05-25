@@ -17,7 +17,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class RepositoryController : PlatformController {
+class RepositoryController : ManageController {
   private ManageRepositoriesUseCase usecase;
 
   this(ManageRepositoriesUseCase usecase) {
@@ -96,7 +96,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));
@@ -164,7 +164,7 @@ class RepositoryController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = RepositoryId(extractIdFromPath(req.requestURI));

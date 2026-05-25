@@ -15,7 +15,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class UserSessionController : PlatformController {
+class UserSessionController : ManageController {
   private ManageUserSessionsUseCase usecase;
 
   this(ManageUserSessionsUseCase usecase) {
@@ -126,7 +126,7 @@ class UserSessionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = UserSessionId(extractIdFromPath(req.requestURI.to!string));

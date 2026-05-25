@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ReplicationTaskController : PlatformController {
+class ReplicationTaskController : ManageController {
   private ManageReplicationTasksUseCase usecase;
 
   this(ManageReplicationTasksUseCase usecase) {
@@ -121,7 +121,7 @@ class ReplicationTaskController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -149,7 +149,7 @@ class ReplicationTaskController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ReplicationTaskId(extractIdFromPath(req.requestURI.to!string));

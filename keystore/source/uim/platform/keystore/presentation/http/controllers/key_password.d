@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyPasswordController : PlatformController {
+class KeyPasswordController : ManageController {
   private ManageKeyPasswordsUseCase usecase;
 
   this(ManageKeyPasswordsUseCase usecase) {
@@ -79,7 +79,7 @@ class KeyPasswordController : PlatformController {
   }
 
   // DELETE /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId      = req.getTenantId;
       auto alias_        = extractIdFromPath(req.requestURI.to!string);

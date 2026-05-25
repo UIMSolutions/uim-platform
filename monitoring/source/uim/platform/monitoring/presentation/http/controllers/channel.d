@@ -17,7 +17,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class ChannelController : PlatformController {
+class ChannelController : ManageController {
   private ManageNotificationChannelsUseCase usecase;
 
   this(ManageNotificationChannelsUseCase usecase) {
@@ -100,7 +100,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
@@ -134,7 +134,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));

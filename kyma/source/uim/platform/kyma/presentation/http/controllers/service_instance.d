@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ServiceInstanceController : PlatformController {
+class ServiceInstanceController : ManageController {
   private ManageServiceInstancesUseCase usecase;
 
   this(ManageServiceInstancesUseCase usecase) {
@@ -103,7 +103,7 @@ class ServiceInstanceController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(tenantId, extractIdFromPath(
@@ -130,7 +130,7 @@ class ServiceInstanceController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(

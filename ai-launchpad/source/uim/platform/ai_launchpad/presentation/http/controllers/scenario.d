@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScenarioController : PlatformController {
+class ScenarioController : ManageController {
   private ManageScenariosUseCase usecase;
 
   this(ManageScenariosUseCase usecase) {
@@ -101,7 +101,7 @@ class ScenarioController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));

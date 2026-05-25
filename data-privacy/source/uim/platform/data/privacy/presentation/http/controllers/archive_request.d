@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ArchiveRequestController : PlatformController {
+class ArchiveRequestController : ManageController {
   private ManageArchiveRequestsUseCase usecase;
 
   this(ManageArchiveRequestsUseCase usecase) {
@@ -91,7 +91,7 @@ class ArchiveRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -114,7 +114,7 @@ class ArchiveRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));

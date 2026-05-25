@@ -17,7 +17,7 @@ import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class DeploymentController : PlatformController {
+class DeploymentController : ManageController {
   private ManageDeploymentsUseCase usecase;
 
   this(ManageDeploymentsUseCase usecase) {
@@ -148,7 +148,7 @@ class DeploymentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

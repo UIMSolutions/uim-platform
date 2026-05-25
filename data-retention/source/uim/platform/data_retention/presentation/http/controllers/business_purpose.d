@@ -97,7 +97,7 @@ class BusinessPurposeController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
@@ -160,7 +160,7 @@ class BusinessPurposeController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));

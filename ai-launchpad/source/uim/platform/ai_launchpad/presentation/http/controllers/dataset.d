@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatasetController : PlatformController {
+class DatasetController : ManageController {
   private ManageDatasetsUseCase usecase;
 
   this(ManageDatasetsUseCase usecase) {
@@ -134,7 +134,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));

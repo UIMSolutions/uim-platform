@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ContentController : PlatformController {
+class ContentController : ManageController {
   private ManageContentUseCase useCase;
 
   this(ManageContentUseCase useCase) {
@@ -118,7 +118,7 @@ class ContentController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -154,7 +154,7 @@ class ContentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

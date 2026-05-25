@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessProcessController : PlatformController {
+class BusinessProcessController : ManageController {
   private ManageBusinessProcessesUseCase usecase;
 
   this(ManageBusinessProcessesUseCase usecase) {
@@ -88,7 +88,7 @@ class BusinessProcessController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -115,7 +115,7 @@ class BusinessProcessController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BusinessProcessId(extractIdFromPath(req.requestURI));

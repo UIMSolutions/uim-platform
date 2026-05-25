@@ -17,7 +17,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class AlertRuleController : PlatformController {
+class AlertRuleController : ManageController {
   private ManageAlertRulesUseCase usecase;
 
   this(ManageAlertRulesUseCase usecase) {
@@ -102,7 +102,7 @@ class AlertRuleController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class AlertRuleController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /api/v2/applications
-class FlexApplicationsController : PlatformController {
+class FlexApplicationsController : ManageController {
   private ManageFlexApplicationsUseCase usecase;
 
   this(ManageFlexApplicationsUseCase usecase) {
@@ -85,7 +85,7 @@ class FlexApplicationsController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexApplicationId(extractIdFromPath(req.requestURI.to!string));
@@ -109,7 +109,7 @@ class FlexApplicationsController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexApplicationId(extractIdFromPath(req.requestURI.to!string));

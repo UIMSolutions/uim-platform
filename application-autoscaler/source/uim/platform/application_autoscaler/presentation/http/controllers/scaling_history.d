@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScalingHistoryController : PlatformController {
+class ScalingHistoryController : ManageController {
   private ManageScalingHistoryUseCase usecase;
 
   this(ManageScalingHistoryUseCase usecase) {

@@ -16,7 +16,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class ChannelController : PlatformController {
+class ChannelController : ManageController {
   private ManageChannelsUseCase usecase;
 
   this(ManageChannelsUseCase usecase) {
@@ -148,7 +148,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));

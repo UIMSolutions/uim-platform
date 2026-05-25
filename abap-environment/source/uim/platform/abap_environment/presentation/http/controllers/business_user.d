@@ -18,7 +18,7 @@ import uim.platform.abap_environment;
 mixin(ShowModule!());
 
 @safe:
-class BusinessUserController : PlatformController {
+class BusinessUserController : ManageController {
   private ManageBusinessUsersUseCase usecase;
 
   this(ManageBusinessUsersUseCase usecase) {
@@ -104,7 +104,7 @@ class BusinessUserController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));
@@ -134,7 +134,7 @@ class BusinessUserController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BusinessUserId(extractIdFromPath(req.requestURI));

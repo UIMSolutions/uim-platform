@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class DeviceRegistrationController : PlatformController {
+class DeviceRegistrationController : ManageController {
   private ManageDeviceRegistrationsUseCase usecase;
 
   this(ManageDeviceRegistrationsUseCase usecase) {
@@ -108,7 +108,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -128,7 +128,7 @@ class DeviceRegistrationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

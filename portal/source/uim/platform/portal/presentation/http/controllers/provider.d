@@ -15,7 +15,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ProviderController : PlatformController {
+class ProviderController : ManageController {
   private ManageProvidersUseCase useCase;
 
   this(ManageProvidersUseCase useCase) {
@@ -83,7 +83,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -101,7 +101,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteProvider(providerId);

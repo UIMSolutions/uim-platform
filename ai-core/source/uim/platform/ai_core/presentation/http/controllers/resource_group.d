@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ResourceGroupController : PlatformController {
+class ResourceGroupController : ManageController {
   private ManageResourceGroupsUseCase groups;
 
   this(ManageResourceGroupsUseCase groups) {
@@ -136,7 +136,7 @@ class ResourceGroupController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));

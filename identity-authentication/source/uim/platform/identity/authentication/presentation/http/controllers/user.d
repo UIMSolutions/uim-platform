@@ -16,7 +16,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
-class UserController : PlatformController {
+class UserController : ManageController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase) {
@@ -107,7 +107,7 @@ auto tenantId = req.getTenantId;
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto path = req.requestURI;

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ObservationController : PlatformController {
+class ObservationController : ManageController {
   private ManageObservationsUseCase usecase;
 
   this(ManageObservationsUseCase usecase) {
@@ -93,7 +93,7 @@ class ObservationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));
@@ -118,7 +118,7 @@ class ObservationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ObservationId(extractIdFromPath(req.requestURI.to!string));

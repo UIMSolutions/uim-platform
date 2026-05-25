@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class PageController : PlatformController {
+class PageController : ManageController {
   private ManagePagesUseCase useCase;
 
   this(ManagePagesUseCase useCase) {
@@ -91,7 +91,7 @@ class PageController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -110,7 +110,7 @@ class PageController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
       auto j = req.json;

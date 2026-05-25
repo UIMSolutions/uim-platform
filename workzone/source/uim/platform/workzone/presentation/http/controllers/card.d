@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class CardController : PlatformController {
+class CardController : ManageController {
   private ManageCardsUseCase useCase;
 
   this(ManageCardsUseCase useCase) {
@@ -96,7 +96,7 @@ class CardController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -126,7 +126,7 @@ class CardController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

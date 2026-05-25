@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskChainController : PlatformController {
+class TaskChainController : ManageController {
   private ManageTaskChainsUseCase usecase;
 
   this(ManageTaskChainsUseCase usecase) {
@@ -118,7 +118,7 @@ class TaskChainController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

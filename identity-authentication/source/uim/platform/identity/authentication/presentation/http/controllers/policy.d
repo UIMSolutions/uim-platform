@@ -16,7 +16,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authorization policy management.
-class PolicyController : PlatformController {
+class PolicyController : ManageController {
   private ManagePoliciesUseCase useCase;
 
   this(ManagePoliciesUseCase useCase) {

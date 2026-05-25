@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /keyuser/v2/variants
-class FlexVariantsController : PlatformController {
+class FlexVariantsController : ManageController {
   private ManageFlexVariantsUseCase usecase;
 
   this(ManageFlexVariantsUseCase usecase) {
@@ -88,7 +88,7 @@ class FlexVariantsController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));
@@ -111,7 +111,7 @@ class FlexVariantsController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = FlexVariantId(extractIdFromPath(req.requestURI.to!string));

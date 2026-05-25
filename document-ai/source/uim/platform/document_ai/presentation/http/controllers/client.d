@@ -14,7 +14,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class ClientController : PlatformController {
+class ClientController : ManageController {
   private ManageClientsUseCase usecase;
 
   this(ManageClientsUseCase usecase) {
@@ -121,7 +121,7 @@ class ClientController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

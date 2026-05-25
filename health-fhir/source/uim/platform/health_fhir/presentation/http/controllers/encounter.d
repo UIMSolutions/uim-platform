@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EncounterController : PlatformController {
+class EncounterController : ManageController {
   private ManageEncountersUseCase usecase;
 
   this(ManageEncountersUseCase usecase) {
@@ -105,7 +105,7 @@ class EncounterController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EncounterId(extractIdFromPath(req.requestURI.to!string));
@@ -129,7 +129,7 @@ class EncounterController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = EncounterId(extractIdFromPath(req.requestURI.to!string));

@@ -68,7 +68,7 @@ class JobController : PlatformController {
             Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto response = deleteHandler(req);
             res.writeJsonBody(response, response.code);

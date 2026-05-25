@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class DeploymentController : PlatformController {
+class DeploymentController : ManageController {
   private ManageDeploymentsUseCase usercase;
 
   this(ManageDeploymentsUseCase usercase) {
@@ -122,7 +122,7 @@ class DeploymentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

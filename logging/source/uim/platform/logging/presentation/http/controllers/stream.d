@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class StreamController : PlatformController {
+class StreamController : ManageController {
   private ManageLogStreamsUseCase usecase;
 
   this(ManageLogStreamsUseCase usecase) {
@@ -109,7 +109,7 @@ class StreamController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
@@ -136,7 +136,7 @@ class StreamController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto streamId = LogStreamId(extractIdFromPath(req.requestURI.to!string));

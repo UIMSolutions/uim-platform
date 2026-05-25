@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConfigurationController : PlatformController {
+class ConfigurationController : ManageController {
   private ManageConfigurationsUseCase configurations;
 
   this(ManageConfigurationsUseCase configurations) {
@@ -99,7 +99,7 @@ class ConfigurationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));

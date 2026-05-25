@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataAccessControlController : PlatformController {
+class DataAccessControlController : ManageController {
   private ManageDataAccessControlsUseCase usecase;
 
   this(ManageDataAccessControlsUseCase usecase) {
@@ -117,7 +117,7 @@ class DataAccessControlController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));

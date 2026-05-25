@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for SCIM 2.0 user management.
-class UserController : PlatformController {
+class UserController : ManageController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase) {
@@ -99,7 +99,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -128,7 +128,7 @@ class UserController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteUser(userId);

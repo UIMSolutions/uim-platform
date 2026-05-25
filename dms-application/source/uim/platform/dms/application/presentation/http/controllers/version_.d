@@ -18,7 +18,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class VersionController : PlatformController {
+class VersionController : ManageController {
   private ManageVersionsUseCase usecase;
 
   this(ManageVersionsUseCase usecase) {

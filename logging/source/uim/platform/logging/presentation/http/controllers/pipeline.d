@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PipelineController : PlatformController {
+class PipelineController : ManageController {
   private ManagePipelinesUseCase usecase;
 
   this(ManagePipelinesUseCase usecase) {
@@ -116,7 +116,7 @@ class PipelineController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
@@ -145,7 +145,7 @@ class PipelineController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto pipelineId = PipelineId(extractIdFromPath(req.requestURI.to!string));

@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerGroupController : PlatformController {
+class DataControllerGroupController : ManageController {
   private ManageDataControllerGroupsUseCase usecase;
 
   this(ManageDataControllerGroupsUseCase usecase) {
@@ -85,7 +85,7 @@ class DataControllerGroupController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
@@ -111,7 +111,7 @@ class DataControllerGroupController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));

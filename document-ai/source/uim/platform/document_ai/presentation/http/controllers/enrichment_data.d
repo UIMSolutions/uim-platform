@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EnrichmentDataController : PlatformController {
+class EnrichmentDataController : ManageController {
   private ManageEnrichmentDataUseCase usecase;
 
   this(ManageEnrichmentDataUseCase usecase) {
@@ -98,7 +98,7 @@ class EnrichmentDataController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -127,7 +127,7 @@ class EnrichmentDataController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TileController : PlatformController {
+class TileController : ManageController {
   private ManageTilesUseCase useCase;
 
   this(ManageTilesUseCase useCase) {
@@ -103,7 +103,7 @@ class TileController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -125,7 +125,7 @@ class TileController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteTile(tileId);

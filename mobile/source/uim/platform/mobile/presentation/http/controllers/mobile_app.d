@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class MobileAppController : PlatformController {
+class MobileAppController : ManageController {
   private ManageMobileAppsUseCase usecase;
 
   this(ManageMobileAppsUseCase usecase) {
@@ -114,7 +114,7 @@ class MobileAppController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -144,7 +144,7 @@ class MobileAppController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = MobileAppId(extractIdFromPath(req.requestURI.to!string));

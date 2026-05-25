@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ResourceGroupController : PlatformController {
+class ResourceGroupController : ManageController {
   private ManageResourceGroupsUseCase usecase;
 
   this(ManageResourceGroupsUseCase usecase) {
@@ -124,7 +124,7 @@ class ResourceGroupController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));

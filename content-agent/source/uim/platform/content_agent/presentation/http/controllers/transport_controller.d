@@ -17,7 +17,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class TransportController : PlatformController {
+class TransportController : ManageController {
   private ManageTransportRequestsUseCase usecase;
 
   this(ManageTransportRequestsUseCase usecase) {

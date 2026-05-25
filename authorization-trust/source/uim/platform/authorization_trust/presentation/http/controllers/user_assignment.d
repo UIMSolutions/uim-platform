@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UserAssignmentController : PlatformController {
+class UserAssignmentController : ManageController {
   private ManageUserAssignmentsUseCase usecase;
 
   this(ManageUserAssignmentsUseCase usecase) {
@@ -91,7 +91,7 @@ class UserAssignmentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = UserAssignmentId(extractIdFromPath(req));

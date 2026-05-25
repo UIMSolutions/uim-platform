@@ -21,7 +21,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RouteController : PlatformController {
+class RouteController : ManageController {
   private ManageRoutesUseCase useCase;
 
   this(ManageRoutesUseCase useCase) {
@@ -106,7 +106,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RouteId(extractIdFromPath(req.requestURI));
@@ -214,7 +214,7 @@ class RouteController : PlatformController {
     }
   }
 
-  protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DomainId(extractIdFromPath(req.requestURI));

@@ -15,7 +15,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class SectionController : PlatformController {
+class SectionController : ManageController {
   private ManageSectionsUseCase useCase;
 
   this(ManageSectionsUseCase useCase) {
@@ -80,7 +80,7 @@ class SectionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -97,7 +97,7 @@ class SectionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto j = req.json;

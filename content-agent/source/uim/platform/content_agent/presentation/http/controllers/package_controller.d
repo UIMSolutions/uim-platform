@@ -17,7 +17,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class PackageController : PlatformController {
+class PackageController : ManageController {
   private ManageContentPackagesUseCase usecase;
 
   this(ManageContentPackagesUseCase usecase) {
@@ -101,7 +101,7 @@ class PackageController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PackageId(extractIdFromPath(req.requestURI));
@@ -127,7 +127,7 @@ class PackageController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PackageId(extractIdFromPath(req.requestURI));

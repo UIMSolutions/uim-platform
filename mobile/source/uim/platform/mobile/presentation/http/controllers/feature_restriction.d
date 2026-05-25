@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class FeatureRestrictionController : PlatformController {
+class FeatureRestrictionController : ManageController {
   private ManageFeatureRestrictionsUseCase usecase;
 
   this(ManageFeatureRestrictionsUseCase usecase) {
@@ -114,7 +114,7 @@ class FeatureRestrictionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -143,7 +143,7 @@ class FeatureRestrictionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = FeatureRestrictionId(extractIdFromPath(req.requestURI.to!string));

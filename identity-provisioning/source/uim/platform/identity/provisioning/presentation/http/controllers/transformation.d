@@ -18,7 +18,7 @@ mixin(ShowModule!());
 
 @safe:
 import uim.platform.identity.provisioning;
-class TransformationController : PlatformController {
+class TransformationController : ManageController {
   private ManageTransformationsUseCase usecase;
 
   this(ManageTransformationsUseCase usecase) {
@@ -95,7 +95,7 @@ class TransformationController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
@@ -143,7 +143,7 @@ class TransformationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

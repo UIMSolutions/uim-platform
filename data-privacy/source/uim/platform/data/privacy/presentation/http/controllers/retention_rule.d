@@ -17,7 +17,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RetentionRuleController : PlatformController {
+class RetentionRuleController : ManageController {
   private ManageRetentionRulesUseCase usecase;
 
   this(ManageRetentionRulesUseCase usecase) {
@@ -96,7 +96,7 @@ class RetentionRuleController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -122,7 +122,7 @@ class RetentionRuleController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = RetentionRuleId(extractIdFromPath(req.requestURI));

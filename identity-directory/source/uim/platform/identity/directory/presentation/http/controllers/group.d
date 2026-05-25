@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for SCIM 2.0 group management.
-class GroupController : PlatformController {
+class GroupController : ManageController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {
@@ -92,7 +92,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto groupId = extractIdFromPath(req.requestURI);
@@ -112,7 +112,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto groupId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteGroup(groupId);
@@ -145,7 +145,7 @@ class GroupController : PlatformController {
     }
   }
 
-  protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

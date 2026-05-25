@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class OfflineStoreController : PlatformController {
+class OfflineStoreController : ManageController {
   private ManageOfflineStoresUseCase usecase;
 
   this(ManageOfflineStoresUseCase usecase) {
@@ -107,7 +107,7 @@ class OfflineStoreController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -134,7 +134,7 @@ class OfflineStoreController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = OfflineStoreId(extractIdFromPath(req.requestURI.to!string));

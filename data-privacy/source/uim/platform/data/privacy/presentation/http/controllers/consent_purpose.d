@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ConsentPurposeController : PlatformController {
+class ConsentPurposeController : ManageController {
   private ManageConsentPurposesUseCase usecase;
 
   this(ManageConsentPurposesUseCase usecase) {
@@ -93,7 +93,7 @@ class ConsentPurposeController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -118,7 +118,7 @@ class ConsentPurposeController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));

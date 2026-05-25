@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PurposeRecordController : PlatformController {
+class PurposeRecordController : ManageController {
   private ManagePurposeRecordsUseCase usecase;
 
   this(ManagePurposeRecordsUseCase usecase) {
@@ -111,7 +111,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto recordId = PurposeRecordId(extractIdFromPath(req.requestURI));

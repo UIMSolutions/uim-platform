@@ -21,7 +21,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceController : PlatformController {
+class ServiceController : ManageController {
   private ManageServicesUseCase useCase;
 
   this(ManageServicesUseCase useCase) {
@@ -110,7 +110,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -136,7 +136,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
@@ -201,7 +201,7 @@ class ServiceController : PlatformController {
     }
   }
 
-  protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = ServiceBindingId(extractIdFromPath(req.requestURI));

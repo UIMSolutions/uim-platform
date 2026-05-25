@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PractitionerController : PlatformController {
+class PractitionerController : ManageController {
   private ManagePractitionersUseCase usecase;
 
   this(ManagePractitionersUseCase usecase) {
@@ -83,7 +83,7 @@ class PractitionerController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PractitionerId(extractIdFromPath(req.requestURI.to!string));
@@ -103,7 +103,7 @@ class PractitionerController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = PractitionerId(extractIdFromPath(req.requestURI.to!string));

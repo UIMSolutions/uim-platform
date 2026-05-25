@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BlockingController : PlatformController {
+class BlockingController : ManageController {
   private ManageBlockingRequestsUseCase usecase;
 
   this(ManageBlockingRequestsUseCase usecase) {
@@ -91,7 +91,7 @@ class BlockingController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -114,7 +114,7 @@ class BlockingController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = BlockingRequestId(extractIdFromPath(req.requestURI));

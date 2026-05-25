@@ -16,7 +16,7 @@ import uim.platform.portal.application.usecases.manage;
 mixin(ShowModule!());
 
 @safe:
-class ThemeController : PlatformController {
+class ThemeController : ManageController {
   private ManageThemesUseCase useCase;
 
   this(ManageThemesUseCase useCase) {
@@ -99,7 +99,7 @@ class ThemeController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto themeId = extractIdFromPath(req.requestURI);
       auto j = req.json;
@@ -118,7 +118,7 @@ class ThemeController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto themeId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteTheme(themeId);

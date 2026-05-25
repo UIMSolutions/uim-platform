@@ -18,7 +18,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 
-class DataRecordController : PlatformController {
+class DataRecordController : ManageController {
   private ManageDataRecordsUseCase usecase;
 
   this(ManageDataRecordsUseCase usecase) {
@@ -145,7 +145,7 @@ class DataRecordController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));

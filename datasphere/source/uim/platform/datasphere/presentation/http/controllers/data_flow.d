@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataFlowController : PlatformController {
+class DataFlowController : ManageController {
   private ManageDataFlowsUseCase usecase;
 
   this(ManageDataFlowsUseCase usecase) {
@@ -113,7 +113,7 @@ class DataFlowController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataFlowId(extractIdFromPath(req.requestURI.to!string));

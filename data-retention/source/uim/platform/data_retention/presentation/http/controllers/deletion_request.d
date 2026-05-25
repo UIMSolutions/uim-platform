@@ -93,7 +93,7 @@ class DeletionRequestController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
                     .set("reason", dr.reason)
                     .set("requestedBy", dr.requestedBy)
@@ -103,7 +103,7 @@ class DeletionRequestController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DeletionRequestId(extractIdFromPath(req.requestURI.to!string));
@@ -126,7 +126,7 @@ class DeletionRequestController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = DeletionRequestId(extractIdFromPath(req.requestURI.to!string));

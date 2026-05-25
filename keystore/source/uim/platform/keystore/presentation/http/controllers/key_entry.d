@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyEntryController : PlatformController {
+class KeyEntryController : ManageController {
   private ManageKeyEntriesUseCase usecase;
 
   this(ManageKeyEntriesUseCase usecase) {
@@ -145,7 +145,7 @@ class KeyEntryController : PlatformController {
   }
 
   // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = deleteHandler(req);
       res.writeJsonBody(response, response.code);

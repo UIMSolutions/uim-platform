@@ -17,7 +17,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FragmentController : PlatformController {
+class FragmentController : ManageController {
   private ManageFragmentsUseCase usecase;
 
   this(ManageFragmentsUseCase usecase) {
@@ -106,7 +106,7 @@ class FragmentController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));
@@ -143,7 +143,7 @@ class FragmentController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));

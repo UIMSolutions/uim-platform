@@ -16,7 +16,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class NotificationController : PlatformController {
+class NotificationController : ManageController {
   private ManageNotificationsUseCase useCase;
 
   this(ManageNotificationsUseCase useCase) {
@@ -155,7 +155,7 @@ class NotificationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);

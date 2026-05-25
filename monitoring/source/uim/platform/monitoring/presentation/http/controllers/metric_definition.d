@@ -18,7 +18,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MetricDefinitionController : PlatformController {
+class MetricDefinitionController : ManageController {
   private ManageMetricsUseCase usecase;
 
   this(ManageMetricsUseCase usecase) {
@@ -98,7 +98,7 @@ class MetricDefinitionController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
@@ -127,7 +127,7 @@ class MetricDefinitionController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));

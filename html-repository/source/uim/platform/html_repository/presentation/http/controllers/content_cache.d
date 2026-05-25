@@ -14,7 +14,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ContentCacheController : PlatformController {
+class ContentCacheController : ManageController {
   private ManageContentCacheUseCase usecase;
 
   this(ManageContentCacheUseCase usecase) {
@@ -113,7 +113,7 @@ class ContentCacheController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

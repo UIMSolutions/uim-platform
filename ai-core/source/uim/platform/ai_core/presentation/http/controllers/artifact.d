@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ArtifactController : PlatformController {
+class ArtifactController : ManageController {
   private ManageArtifactsUseCase usecase;
 
   this(ManageArtifactsUseCase usecase) {
@@ -99,7 +99,7 @@ class ArtifactController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));

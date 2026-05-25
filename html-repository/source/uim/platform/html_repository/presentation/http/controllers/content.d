@@ -15,7 +15,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ContentController : PlatformController {
+class ContentController : ManageController {
   private ManageAppFilesUseCase fileUc;
   private ManageContentCacheUseCase cacheUc;
 

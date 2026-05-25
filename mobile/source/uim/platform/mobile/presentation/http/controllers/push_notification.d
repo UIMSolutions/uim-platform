@@ -14,7 +14,7 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-class PushNotificationController : PlatformController {
+class PushNotificationController : ManageController {
   private ManagePushNotificationsUseCase usecase;
 
   this(ManagePushNotificationsUseCase usecase) {
@@ -115,7 +115,7 @@ class PushNotificationController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));

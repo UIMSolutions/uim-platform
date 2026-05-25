@@ -100,7 +100,7 @@ class TaskDefinitionController : PlatformController {
         }
     }
 
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto id = TaskDefinitionId(extractIdFromPath(req.requestURI.to!string));
@@ -175,7 +175,7 @@ class TaskDefinitionController : PlatformController {
         }
     }
 
-    protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);

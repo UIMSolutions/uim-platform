@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AppBindingController : PlatformController {
+class AppBindingController : ManageController {
   private ManageAppBindingsUseCase usecase;
 
   this(ManageAppBindingsUseCase usecase) {
@@ -73,7 +73,7 @@ class AppBindingController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = AppBindingId(extractIdFromPath(req));

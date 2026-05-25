@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SchemaController : PlatformController {
+class SchemaController : ManageController {
   private ManageSchemasUseCase usecase;
 
   this(ManageSchemasUseCase usecase) {
@@ -99,7 +99,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
@@ -128,7 +128,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);

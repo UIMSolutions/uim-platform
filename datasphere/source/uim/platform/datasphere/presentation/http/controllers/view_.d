@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ViewController : PlatformController {
+class ViewController : ManageController {
   private ManageViewsUseCase usecase;
 
   this(ManageViewsUseCase usecase) {
@@ -122,7 +122,7 @@ class ViewController : PlatformController {
     }
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       
 
@@ -154,7 +154,7 @@ class ViewController : PlatformController {
     }
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
