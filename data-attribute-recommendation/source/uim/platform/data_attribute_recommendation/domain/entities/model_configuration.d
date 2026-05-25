@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 
-import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// Configuration for a machine-learning model that defines which dataset
 /// to train on, which columns are features/targets, and hyperparameters.
 struct ModelConfiguration {

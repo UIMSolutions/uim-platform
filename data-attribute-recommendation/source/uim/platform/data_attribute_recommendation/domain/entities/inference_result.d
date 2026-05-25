@@ -5,7 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 
-import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// The predicted attributes and confidence scores returned
 /// by the inference engine for a given request.
 struct InferenceResult {

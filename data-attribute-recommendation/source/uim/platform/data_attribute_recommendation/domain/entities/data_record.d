@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.entities.data_record;
 
-import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// An individual record within a dataset, holding attribute key-value pairs
 /// and optional ground-truth labels for supervised training.
 struct DataRecord {
-  mixin TenantEntity!(DataRecordId);
+  mixin TenantEntity!DataRecordId;
 
   DatasetId datasetId;
   string attributes; // JSON: key-value pairs of record attributes

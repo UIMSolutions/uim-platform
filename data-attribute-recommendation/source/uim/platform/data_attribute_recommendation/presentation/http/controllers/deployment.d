@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.presentation.http.controllers
-  .deployment_controller;
+  .deployment;
 
 
 // 

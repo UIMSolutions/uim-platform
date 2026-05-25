@@ -37,7 +37,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Attributes are required");
 
     // Verify dataset exists and is still mutable
-    auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
+    auto ds = datasetRepo.findById(req.tenantId, req.datasetId);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
@@ -61,7 +61,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   }
 
   DataRecord[] listDataRecords(TenantId tenantId, DatasetId datasetId) {
-    return repo.findByDataset(datasetId, tenantId);
+    return repo.findByDataset(tenantId, datasetId);
   }
 
   CommandResult validateDataRecord(TenantId tenantId, DataRecordId id) {

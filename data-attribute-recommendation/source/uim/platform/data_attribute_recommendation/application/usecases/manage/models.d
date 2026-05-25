@@ -39,7 +39,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Model name is required");
 
     // Verify dataset exists
-    auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
+    auto ds = datasetRepo.findById(req.tenantId, req.datasetId);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
@@ -53,7 +53,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     config.datasetId = req.datasetId;
     config.name = req.name;
     config.description = req.description;
-    config.modelType = req.modelType;
+    config.modelType = req.modelType.toModelType;
     config.targetColumns = req.targetColumns;
     config.featureColumns = req.featureColumns;
     config.hyperparameters = req.hyperparameters;
@@ -72,19 +72,19 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
-    if (req.isNull)
+    if (req.configId.isNull)
       return CommandResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.configId);
     if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");
 
     if (existing.status != ModelConfigStatus.draft)
       return CommandResult(false, "", "Only draft configurations can be updated");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)
@@ -95,7 +95,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       updated.featureColumns = req.featureColumns;
     if (req.hyperparameters.length > 0)
       updated.hyperparameters = req.hyperparameters;
-    updated.modelType = req.modelType;
+    updated.modelType = req.modelType.toModelType;
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
@@ -128,7 +128,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);
+    auto job = trainer.startTraining(req.tenantId, req.modelConfigId, req.createdBy);
     if (job.isNull)
       return CommandResult(false, "", "Cannot start training - verify dataset is completed and config is ready");
 

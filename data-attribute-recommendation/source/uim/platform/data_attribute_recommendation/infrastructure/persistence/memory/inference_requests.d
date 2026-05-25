@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, InferenceRequestId), InferenceRequestRepository {
   
   // #region ByDeployment
-  Size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId) {
+  size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId) {
     return findByDeployment(tenantId, deploymentId).length;
   }
   InferenceRequest[] filterByDeployment(InferenceRequest[] requests, DeploymentId deploymentId) {
@@ -28,7 +28,7 @@ class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, Inf
   void removeByDeployment(TenantId tenantId, DeploymentId deploymentId) {
     findByDeployment(tenantId, deploymentId).each!(e => remove(e));
   }
-  // #endregion BDeployment
+  // #endregion ByDeployment
 
   // #region ByStatus
   size_t countByStatus(TenantId tenantId, InferenceStatus status) {

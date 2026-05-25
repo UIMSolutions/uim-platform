@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.infrastructure.persistence
-  .memory.inference_result;
+  .memory.inference_results;
 
 // import uim.platform.data_attribute_recommendation.domain.types;
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
@@ -31,7 +31,23 @@ class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, Infer
   }
 
   void removeByRequest(TenantId tenantId, InferenceRequestId requestId) {
-    findByRequest(tenantId, requestId).remove;
+    remove(findByRequest(tenantId, requestId));
   }
-  
+
+  size_t countByPredictions(TenantId tenantId, string predictions) {
+    return findByPredictions(tenantId, predictions).length;
+  }
+
+  InferenceResult[] filterByPredictions(InferenceResult[] results, string predictions) {
+    return results.filter!(e => e.predictions == predictions).array;
+  }
+
+  InferenceResult[] findByPredictions(TenantId tenantId, string predictions) {
+    return filterByPredictions(findByTenant(tenantId), predictions);
+  }
+
+  void removeByPredictions(TenantId tenantId, string predictions) {
+    findByPredictions(tenantId, predictions).each!(e => remove(e));
+  }
+
 }

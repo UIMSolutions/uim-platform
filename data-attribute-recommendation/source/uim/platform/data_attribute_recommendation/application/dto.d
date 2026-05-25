@@ -5,20 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.dto;
 
-import uim.platform.data_attribute_recommendation.domain.types;
-// --- Dataset ---
+import uim.platform.data_attribute_recommendation;
 
+mixin(ShowModule!());
+
+@safe:
 struct CreateDatasetRequest {
   TenantId tenantId;
   string name;
   string description;
-  DataType dataType;
+  string dataType;
   string columnDefinitions; // JSON
   UserId createdBy;
 }
 
 struct UpdateDatasetRequest {
-  DatasetId id;
+  DatasetId datasetId;
   TenantId tenantId;
   string name;
   string description;
@@ -47,7 +49,7 @@ struct CreateModelConfigRequest {
   DatasetId datasetId;
   string name;
   string description;
-  ModelType modelType;
+  string modelType;
   string targetColumns; // JSON array
   string featureColumns; // JSON array
   string hyperparameters; // JSON
@@ -55,11 +57,11 @@ struct CreateModelConfigRequest {
 }
 
 struct UpdateModelConfigRequest {
-  ModelConfigId id;
+  ModelConfigId configId;
   TenantId tenantId;
   string name;
   string description;
-  ModelType modelType;
+  string modelType;
   string targetColumns;
   string featureColumns;
   string hyperparameters;
@@ -67,7 +69,7 @@ struct UpdateModelConfigRequest {
 // --- Training Job ---
 
 struct StartTrainingRequest {
-  ModelConfigId modelConfigId;
+  ModelConfigId configId;
   TenantId tenantId;
   UserId createdBy;
 }
@@ -75,7 +77,7 @@ struct StartTrainingRequest {
 
 struct CreateDeploymentRequest {
   TenantId tenantId;
-  TrainingJobId trainingJobId;
+  TrainingJobId jobId;
   string name;
   int replicas;
   UserId createdBy;

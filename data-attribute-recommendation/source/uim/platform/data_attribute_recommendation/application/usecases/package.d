@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases;
+
+public {
+    import uim.platform.data_attribute_recommendation.application.usecases.manage;
+    import uim.platform.data_attribute_recommendation.application.usecases.monitor_training;
+    import uim.platform.data_attribute_recommendation.application.usecases.process_inference;
+}

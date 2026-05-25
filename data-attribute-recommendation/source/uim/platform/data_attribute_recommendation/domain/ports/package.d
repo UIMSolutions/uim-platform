@@ -8,9 +8,9 @@ module uim.platform.data_attribute_recommendation.domain.ports;
 public {
   import uim.platform.data_attribute_recommendation.domain.ports.data_records;
   import uim.platform.data_attribute_recommendation.domain.ports.datasets;
+  import uim.platform.data_attribute_recommendation.domain.ports.deployments;
   import uim.platform.data_attribute_recommendation.domain.ports.inference_requests;
   import uim.platform.data_attribute_recommendation.domain.ports.inference_results;
   import uim.platform.data_attribute_recommendation.domain.ports.model_configs;
-  import uim.platform.data_attribute_recommendation.domain.ports.model_deployments;
   import uim.platform.data_attribute_recommendation.domain.ports.training_jobs;
 }

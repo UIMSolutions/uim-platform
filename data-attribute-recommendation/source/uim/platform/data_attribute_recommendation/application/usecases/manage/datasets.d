@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.manage.datasets;
 
-
-
 // import uim.platform.data_attribute_recommendation.domain.types;
 // import uim.platform.data_attribute_recommendation.domain.entities.dataset;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.datasets;
@@ -36,13 +34,12 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Dataset with this name already exists");
 
-    auto now = currentTimestamp();
     Dataset ds;
     ds.initEntity(req.tenantId, req.createdBy);
 
     ds.name = req.name;
     ds.description = req.description;
-    ds.dataType = req.dataType;
+    ds.dataType = req.dataType.toDataType;
     ds.columnDefinitions = req.columnDefinitions;
     ds.status = DatasetStatus.draft;
 
@@ -59,19 +56,20 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDataset(UpdateDatasetRequest req) {
-    if (req.isNull)
+    if (req.datasetId.isNull)
       return CommandResult(false, "", "Dataset ID is required");
+
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.datasetId);
     if (existing.isNull)
       return CommandResult(false, "", "Dataset not found");
 
     if (existing.status != DatasetStatus.draft)
       return CommandResult(false, "", "Only draft datasets can be updated");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)

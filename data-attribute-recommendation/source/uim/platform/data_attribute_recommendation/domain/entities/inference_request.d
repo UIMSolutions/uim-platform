@@ -5,22 +5,24 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 
-import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation;
+
+mixin(ShowModule!());
+
+@safe:
 /// A request to predict/recommend attributes for input data
 /// using a deployed model.
 struct InferenceRequest {
-  mixin TenantEntity!(InferenceRequestId);
+  mixin TenantEntity!InferenceRequestId;
 
   DeploymentId deploymentId; // ID of the model deployment to use for inference
   string inputData; // JSON: input attribute key-value pairs
   InferenceStatus status = InferenceStatus.pending; // pending, running, completed, failed
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("deploymentId", deploymentId)
       .set("inputData", inputData)
-      .set("status", status);
-
-    return j;
+      .set("status", status.to!string);
   }
 }

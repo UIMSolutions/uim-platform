@@ -26,6 +26,10 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
     return ModelDeployment.init;
   }
 
+  void removeByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
+    remove(findByTrainingJob(tenantId, jobId));
+  }
+
   size_t countByModelConfig(TenantId tenantId, ModelConfigId configId) {
     return findByModelConfig(tenantId, configId).length;
   }
@@ -35,11 +39,11 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
   }
 
   ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
-    return findByTenant(tenantId).filterByModelConfig!(configId);
+    return filterByModelConfig(findByTenant(tenantId), configId);
   }
 
   void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
-    findByModelConfig(tenantId, configId).removeAll;
+    findByModelConfig(tenantId, configId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, DeploymentStatus status) {
@@ -51,11 +55,11 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
   }
 
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-    return findByTenant(tenantId).filterByStatus!(status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, DeploymentStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
 }

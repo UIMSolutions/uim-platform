@@ -78,7 +78,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     auto job = jobRepo.findById(tenantId, id);
     if (job.isNull)
       return TrainingJobSummary.init;
-    return buildJobSummary(job, tenantId);
+    return buildJobSummary(job);
   }
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
@@ -115,9 +115,9 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     return s;
   }
 
-  private TrainingJobSummary buildJobSummary(TenantId tenantId, TrainingJob job) {
+  private TrainingJobSummary buildJobSummary(TrainingJob job) {
     TrainingJobSummary s;
-    s.tenantId = tenantId;
+    s.tenantId = job.tenantId;
     s.jobId = job.id;
     s.modelConfigId = job.modelConfigId;
     s.status = job.status;
@@ -127,7 +127,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     s.startedAt = job.startedAt;
     s.completedAt = job.completedAt;
 
-    auto config = configRepo.findById(job.modelConfigId.tenantId, job.modelConfigId.id);
+    auto config = configRepo.findById(job.tenantId, job.modelConfigId);
     if (!config.isNull)
       s.modelName = config.name;
 
@@ -142,7 +142,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     s.version_ = dep.version_;
     s.replicas = dep.replicas;
 
-    auto config = configRepo.findById(dep.modelConfigId.tenantId, dep.modelConfigId.id);
+    auto config = configRepo.findById(dep.tenantId, dep.modelConfigId);
     if (!config.isNull)
       s.modelName = config.name;
 

@@ -127,7 +127,7 @@ class DataRecordController : PlatformController {
         try {
       auto tenantId = req.getTenantId;
       auto id = DataRecordId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      
       auto result = usecase.rejectDataRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

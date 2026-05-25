@@ -39,11 +39,11 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, DatasetStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 
   size_t countByDataType(TenantId tenantId, DataType dataType) {
@@ -55,10 +55,10 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   Dataset[] findByDataType(TenantId tenantId, DataType dataType) {
-    return findByTenant(tenantId).filterByDataType(dataType);
+    return filterByDataType(findByTenant(tenantId), dataType);
   }
 
   void removeByDataType(TenantId tenantId, DataType dataType) {
-    findByDataType(tenantId, dataType).removeAll;
+    findByDataType(tenantId, dataType).each!(e => remove(e));
   }
 }

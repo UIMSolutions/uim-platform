@@ -18,6 +18,22 @@ enum DatasetStatus {
   completed,
   failed
 }
+DatasetStatus toDatasetStatus(string s) {
+  switch (s.lower) {
+  case "draft":
+    return DatasetStatus.draft;
+  case "ready":
+    return DatasetStatus.ready;
+  case "processing":
+    return DatasetStatus.processing;
+  case "completed":
+    return DatasetStatus.completed;
+  case "failed":
+    return DatasetStatus.failed;
+  default:
+    return DatasetStatus.draft;
+  }
+}
 
 enum DataType {
   product,
@@ -27,8 +43,8 @@ enum DataType {
   custom
 }
 
-DataType parseDataType(string s) {
-  switch (s) {
+DataType toDataType(string s) {
+  switch (s.lower) {
   case "product":
     return DataType.product;
   case "material":
@@ -48,6 +64,18 @@ enum RecordStatus {
   validated,
   rejected
 }
+RecordStatus toRecordStatus(string s) {
+  switch (s.lower) {
+  case "pending":
+    return RecordStatus.pending;
+  case "validated":
+    return RecordStatus.validated;
+  case "rejected":
+    return RecordStatus.rejected;
+  default:
+    return RecordStatus.pending;
+  }
+}
 
 enum ModelType {
   classification,
@@ -55,8 +83,8 @@ enum ModelType {
   recommendation
 }
 
-ModelType parseModelType(string s) {
-  switch (s) {
+ModelType toModelType(string s) {
+  switch (s.toLower()) {
   case "classification":
     return ModelType.classification;
   case "regression":
@@ -75,6 +103,22 @@ enum ModelConfigStatus {
   trained,
   failed
 }
+ModelConfigStatus toModelConfigStatus(string s) {
+  switch (s.toLower()) {
+  case "draft":
+    return ModelConfigStatus.draft;
+  case "ready":
+    return ModelConfigStatus.ready;
+  case "training":
+    return ModelConfigStatus.training;
+  case "trained":
+    return ModelConfigStatus.trained;
+  case "failed":
+    return ModelConfigStatus.failed;
+  default:
+    return ModelConfigStatus.draft;
+  }
+}
 
 enum JobStatus {
   queued,
@@ -84,6 +128,23 @@ enum JobStatus {
   cancelled
 }
 
+JobStatus toJobStatus(string s) {
+  switch (s.toLower()) {
+  case "queued":
+    return JobStatus.queued;
+  case "running":
+    return JobStatus.running;
+  case "completed":
+    return JobStatus.completed;
+  case "failed":
+    return JobStatus.failed;
+  case "cancelled":
+    return JobStatus.cancelled;
+  default:
+    return JobStatus.queued;
+  }
+}
+
 enum DeploymentStatus {
   deploying,
   active,
@@ -91,9 +152,39 @@ enum DeploymentStatus {
   failed
 }
 
+DeploymentStatus toDeploymentStatus(string s) {
+  switch (s.toLower()) {
+  case "deploying":
+    return DeploymentStatus.deploying;
+  case "active":
+    return DeploymentStatus.active;
+  case "inactive":
+    return DeploymentStatus.inactive;
+  case "failed":
+    return DeploymentStatus.failed;
+  default:
+    return DeploymentStatus.inactive;
+  }
+}
+
 enum InferenceStatus {
   pending,
   processing,
   completed,
   failed
+}
+
+InferenceStatus toInferenceStatus(string s) {
+  switch (s.toLower()) {
+  case "pending":
+    return InferenceStatus.pending;
+  case "processing":
+    return InferenceStatus.processing;
+  case "completed":
+    return InferenceStatus.completed;
+  case "failed":
+    return InferenceStatus.failed;
+  default:
+    return InferenceStatus.pending;
+  }
 }

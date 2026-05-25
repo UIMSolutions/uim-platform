@@ -52,7 +52,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
 
     requestRepo.save(request);
     // Process immediately
-    auto result = engine.predict(request.id, req.tenantId);
+    auto result = engine.predict(req.tenantId, request.id);
     if (result.isNull)
       return CommandResult(false, "", "Inference processing failed");
 
@@ -63,7 +63,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     return resultRepo.findById(tenantId, id);
   }
 
-  InferenceResult getResultByRequest(TenantId tenantId, InferenceRequestId requestId) {
+  InferenceResult getResult(TenantId tenantId, InferenceRequestId requestId) {
     return resultRepo.findByRequest(tenantId, requestId);
   }
 

@@ -13,60 +13,34 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataRecordRepository : DataRecordRepository {
-  private DataRecord[string] store;
+class MemoryDataRecordRepository : TenantRepository!(DataRecord, DataRecordId), DataRecordRepository {
 
-  void save(DataRecord entity) {
-    store[entity.id] = entity;
+  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
+    return findByDataset(tenantId, datasetId).length;
   }
 
-  void update(DataRecord entity) {
-    store[entity.id] = entity;
+  DataRecord[] filterByDataset(DataRecord[] records, DatasetId datasetId) {
+    return records.filter!(e => e.datasetId == datasetId).array;
   }
-
-  void remove(TenantId tenantId, DataRecordId id) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        removeById(id);
+  DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId) {
+    return filterByDataset(findByTenant(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    string[] toRemove;
-    foreach (e; findByTenant(tenantId))
-      if (e.datasetId == datasetId)
-        toRemove ~= e.id;
-    foreach (id; toRemove)
-      removeById(id);
+    findByDataset(tenantId, datasetId).each!(e => remove(e));
   }
 
-  DataRecord findById(TenantId tenantId, DataRecordId id) {
-    if (auto p = id in store)
-      if (p.tenantId == tenantId)
-        return p;
-    return null;
+  size_t countByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status) {
+    return findByStatus(tenantId, datasetId, status).length;
   }
-
-  DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    DataRecord[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.datasetId == datasetId)
-        result ~= e;
-    return result;
+  DataRecord[] filterByStatus(DataRecord[] records, RecordStatus status) {
+    return records.filter!(e => e.status == status).array;
   }
-
   DataRecord[] findByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status) {
-    DataRecord[] result;
-    foreach (e; findByTenant(tenantId))
-      if (e.datasetId == datasetId && e.status == status)
-        result ~= e;
-    return result;
+    return filterByStatus(findByDataset(tenantId, datasetId), status);
+  }
+  void removeByStatus(TenantId tenantId, DatasetId datasetId, RecordStatus status) {
+    findByStatus(tenantId, datasetId, status).each!(e => remove(e));
   }
 
-  size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
-    size_t count;
-    foreach (e; findByTenant(tenantId))
-      if (e.datasetId == datasetId)
-        count++;
-    return count;
-  }
 }

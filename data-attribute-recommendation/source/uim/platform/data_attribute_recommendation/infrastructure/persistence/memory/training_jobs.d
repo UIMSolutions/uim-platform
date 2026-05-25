@@ -24,11 +24,11 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
   }
 
   TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
-    return findByTenant(tenantId).filterByModelConfig!(configId);
+    return filterByModelConfig(findByTenant(tenantId), configId);
   }
 
   void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
-    findByModelConfig(tenantId, configId).removeAll;
+    findByModelConfig(tenantId, configId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, JobStatus status) {
@@ -40,10 +40,10 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
   }
   
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return findByTenant(tenantId).filterByStatus!(status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   
   void removeByStatus(TenantId tenantId, JobStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 }

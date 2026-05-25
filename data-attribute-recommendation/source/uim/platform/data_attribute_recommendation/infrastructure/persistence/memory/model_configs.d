@@ -23,6 +23,9 @@ class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelC
         return e;
     return ModelConfiguration.init;
   }
+  void removeByName(TenantId tenantId, string name) {
+    remove(findByName(tenantId, name));
+  }
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
     return findByDataset(tenantId, datasetId).length;
@@ -31,10 +34,10 @@ class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelC
     return configs.filter!(e => e.datasetId == datasetId).array;
   }
   ModelConfiguration[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findByTenant(tenantId).filterByDataset(datasetId);
+    return filterByDataset(findByTenant(tenantId), datasetId);
   }
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    findByDataset(tenantId, datasetId).removeAll;
+    findByDataset(tenantId, datasetId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, ModelConfigStatus status) {
@@ -44,9 +47,9 @@ class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelC
     return configs.filter!(e => e.status == status).array;
   }
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status) {
-    return findByTenant(tenantId).filterByStatus(status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, ModelConfigStatus status) {
-    findByStatus(tenantId, status).removeAll;
+    findByStatus(tenantId, status).each!(e => remove(e));
   }
 }

@@ -33,18 +33,18 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   CommandResult createDeployment(CreateDeploymentRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.trainingJobId.isEmpty)
+    if (req.jobId.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
     // Verify training job completed successfully
-    auto job = jobRepo.findById(req.trainingJobId, req.tenantId);
+    auto job = jobRepo.findById(req.tenantId, req.jobId);
     if (job.isNull)
       return CommandResult(false, "", "Training job not found");
     if (job.status != JobStatus.completed)
       return CommandResult(false, "", "Training job must be completed before deployment");
 
     // Check no active deployment exists for this job
-    auto existingDep = repo.findByTrainingJob(req.trainingJobId, req.tenantId);
+    auto existingDep = repo.findByTrainingJob(req.tenantId, req.jobId);
     if (existingDep !is null && existingDep.status == DeploymentStatus.active)
       return CommandResult(false, "", "An active deployment already exists for this training job");
 
@@ -52,9 +52,9 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     ModelDeployment dep;
     dep.initEntity(req.tenantId, req.createdBy);
 
-    dep.trainingJobId = req.trainingJobId;
-    dep.modelConfigId = job.modelConfigId;
-    dep.name = req.name.length > 0 ? req.name : "deployment-" ~ dep.id[0 .. 8];
+    dep.trainingJobId = req.jobId;
+    dep.modelConfigId = job.configId;
+    dep.name = req.name.length > 0 ? req.name : "deployment-" ~ dep.id.value[0 .. 8];
     dep.status = DeploymentStatus.deploying;
     dep.endpointUrl = "/api/v1/inference/" ~ dep.id;
     dep.version_ = "1.0";
@@ -63,7 +63,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     repo.save(dep);
 
     // Simulate immediate activation
-    activateDeployment(dep.id, req.tenantId);
+    activateDeployment(req.tenantId, dep.id);
 
     return CommandResult(true, dep.id.value, "");
   }

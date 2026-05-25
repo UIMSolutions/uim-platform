@@ -11,6 +11,6 @@ public {
   import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.inference_requests;
   import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.inference_results;
   import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.model_configs;
-  import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.model_deployments;
+  import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.deployments;
   import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.training_jobs;
 }
