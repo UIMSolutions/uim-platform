@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-snowflake-config
+data:
+  SNOWFLAKE_HOST: "0.0.0.0"
+  SNOWFLAKE_PORT: "8100"

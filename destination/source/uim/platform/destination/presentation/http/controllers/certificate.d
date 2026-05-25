@@ -67,32 +67,29 @@ class CertificateController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      auto typeFilter = req.params.get("type");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      Certificate[] certs;
-      if (typeFilter.length > 0)
-        certs = usecase.listByType(tenantId, subaccountId, typeFilter);
-      else
-        certs = usecase.listBySubaccount(tenantId, subaccountId);
+    auto tenantId = precheck.tenantId;
 
-      auto arr = certs.map!(c => c.toJson).array.toJson;
+    auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
+    auto typeFilter = req.params.get("type");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", certs.length)
-        .set("message", "Certificates retrieved");
+    Certificate[] certs = typeFilter.length > 0
+      ? usecase.listByType(tenantId, subaccountId, typeFilter) : usecase.listBySubaccount(tenantId, subaccountId);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto arr = certs.map!(c => c.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", certs.length);
+
+    return successResponse("Certificates retrieved successfully", 200, resp);
   }
 
-  override protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 
@@ -114,69 +111,73 @@ class CertificateController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto c = usecase.getCertificate(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Certificate not found");
-        return;
-      }
-      res.writeJsonBody(c.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = CertificateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid certificate ID", 400);
+
+    auto c = usecase.getCertificate(tenantId, id);
+    if (c.isNull)
+      return errorResponse("Certificate not found", 404);
+
+    return successResponse("Certificate retrieved successfully", 200, c.toJson);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
-      auto j = req.json;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UpdateCertificateRequest r;
-      r.tenantId = tenantId;
-      r.certificateId = id;
-      r.description = j.getString("description");
-      r.content = j.getString("content");
-      r.password = j.getString("password");
-      r.validFrom = jsonLong(j, "validFrom");
-      r.validTo = jsonLong(j, "validTo");
+    auto tenantId = precheck.tenantId;
+    auto id = CertificateId(extractIdFromPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid certificate ID", 400);
 
-      auto result = usecase.updateCertificate(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Certificate updated");
+    auto data = precheck.data;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Certificate not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    UpdateCertificateRequest r;
+    r.tenantId = tenantId;
+    r.certificateId = id;
+    r.description = data.getString("description");
+    r.content = data.getString("content");
+    r.password = data.getString("password");
+    r.validFrom = jsonLong(data, "validFrom");
+    r.validTo = jsonLong(data, "validTo");
+
+    auto result = usecase.updateCertificate(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Certificate updated successfully", 200, resp);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteCertificate(tenantId, id);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Certificate deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = CertificateId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid certificate ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteCertificate(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject
+      .set("id", id);
+
+    return successResponse("Certificate deleted successfully", 200, resp);
   }
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {

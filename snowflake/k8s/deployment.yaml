@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-snowflake
+  labels:
+    app: cloud-snowflake
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-snowflake
+  template:
+    metadata:
+      labels:
+        app: cloud-snowflake
+    spec:
+      containers:
+      - name: cloud-snowflake
+        image: cloud-snowflake:latest
+        ports:
+        - containerPort: 8100
+        envFrom:
+        - configMapRef:
+            name: cloud-snowflake-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8100
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8100
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      securityContext:
+        runAsNonRoot: true
