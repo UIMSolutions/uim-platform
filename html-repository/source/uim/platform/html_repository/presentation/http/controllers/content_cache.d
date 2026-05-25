@@ -31,7 +31,7 @@ class ContentCacheController : ManageController {
     router.post("/api/v1/cache/purge", &handlePurge);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

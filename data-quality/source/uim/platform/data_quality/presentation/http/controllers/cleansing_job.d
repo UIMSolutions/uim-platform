@@ -29,7 +29,7 @@ class CleansingJobController : ManageController {
     router.get("/api/v1/cleansing-jobs/*", &handleGet);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

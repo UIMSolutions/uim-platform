@@ -28,7 +28,7 @@ class ScalingPolicyController : ManageController {
   }
 
   // POST /api/v1/policies
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
       CreateScalingPolicyRequest r;

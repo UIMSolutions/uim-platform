@@ -26,7 +26,7 @@ class PatientController : ManageController {
     router.delete_("/fhir/R4/Patient/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

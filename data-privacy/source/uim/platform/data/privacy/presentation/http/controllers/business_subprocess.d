@@ -30,7 +30,7 @@ class BusinessSubprocessController : ManageController {
     router.delete_("/api/v1/business-subprocesses/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

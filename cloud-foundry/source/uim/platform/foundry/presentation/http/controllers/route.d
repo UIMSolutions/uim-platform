@@ -46,7 +46,7 @@ class RouteController : ManageController {
 
   // --- Routes ---
 
-  protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -170,7 +170,7 @@ class RouteController : ManageController {
 
   // --- Domains ---
 
-  protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

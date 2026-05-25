@@ -30,7 +30,7 @@ class TriggerController : PlatformController {
         router.delete_("/api/v1/process-automation/triggers/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

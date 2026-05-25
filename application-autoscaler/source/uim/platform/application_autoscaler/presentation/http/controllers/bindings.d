@@ -27,7 +27,7 @@ class AppBindingController : ManageController {
     router.post("/api/v1/bindings/*/policy", &handleAttachPolicy);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
       CreateAppBindingRequest r;

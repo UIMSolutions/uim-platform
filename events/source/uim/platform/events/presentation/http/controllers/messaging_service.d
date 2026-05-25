@@ -49,7 +49,7 @@ class MessagingServiceController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;

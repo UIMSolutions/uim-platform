@@ -33,7 +33,7 @@ class FeedController : PlatformController {
       router.delete_("/api/v1/feeds/*", &handleDelete);
     }
 
-    protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto j = req.json;
         auto r = CreateFeedEntryRequest();

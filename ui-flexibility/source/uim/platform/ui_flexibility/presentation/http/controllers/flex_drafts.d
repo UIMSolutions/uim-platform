@@ -31,7 +31,7 @@ class FlexDraftsController : ManageController {
     res.writeJsonBody(Json.emptyObject.set("error", msg).set("status", status), status);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

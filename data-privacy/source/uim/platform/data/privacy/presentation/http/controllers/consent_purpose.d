@@ -30,7 +30,7 @@ class ConsentPurposeController : ManageController {
     router.delete_("/api/v1/consent-purposes/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

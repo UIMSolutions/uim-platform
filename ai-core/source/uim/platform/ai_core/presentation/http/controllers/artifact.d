@@ -28,7 +28,7 @@ class ArtifactController : ManageController {
     router.delete_("/api/v2/lm/artifacts/*", &handleDelete);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

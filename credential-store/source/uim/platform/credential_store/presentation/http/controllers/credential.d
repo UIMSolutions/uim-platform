@@ -37,7 +37,7 @@ class CredentialController : ManageController {
 
   // --- Password endpoints ---
 
-  protected void handleCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "password");
   }
 
@@ -55,7 +55,7 @@ class CredentialController : ManageController {
 
   // --- Key endpoints ---
 
-  protected void handleCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "key");
   }
 
@@ -73,7 +73,7 @@ class CredentialController : ManageController {
 
   // --- Shared handlers ---
 
-  protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  override protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;

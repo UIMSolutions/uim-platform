@@ -116,7 +116,7 @@ class ManageController : PlatformController {
       .set("code", 200);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = updateHandler(req);
       res.writeJsonBody(response, 200);

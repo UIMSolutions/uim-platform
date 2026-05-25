@@ -45,7 +45,7 @@ class ServiceController : ManageController {
 
   // --- Service Instances ---
 
-  protected void handleCreate(Instance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(Instance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -157,7 +157,7 @@ class ServiceController : ManageController {
 
   // --- Service Bindings ---
 
-  protected void handleCreate(Binding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleCreate(Binding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
