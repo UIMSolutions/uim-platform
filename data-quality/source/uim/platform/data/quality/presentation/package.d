@@ -1,5 +1,5 @@
-module uim.platform.data.quality.presentation;
+module uim.platform.data_quality.presentation;
 
 public {
-    import uim.platform.data.quality.presentation.http;
+    import uim.platform.data_quality.presentation.http;
 }

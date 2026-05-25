@@ -1,4 +1,4 @@
-module uim.platform.data.quality.domain.enumerations;
+module uim.platform.data_quality.domain.enumerations;
 /// Data quality validation rule type.
 enum RuleType {
   required, // field must not be empty

@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.quality.infrastructure.config;
+module uim.platform.data_quality.infrastructure.config;
 
 import std.process : environment;
-import uim.platform.data.quality;
+import uim.platform.data_quality;
 
 mixin(ShowModule!());
 

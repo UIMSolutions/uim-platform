@@ -3,9 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.quality.application;
+module uim.platform.data_quality.application;
 
 public {
-    import uim.platform.data.quality.application.usecases;
-    import uim.platform.data.quality.application.dto;
+    import uim.platform.data_quality.application.usecases;
+    import uim.platform.data_quality.application.dto;
 }
