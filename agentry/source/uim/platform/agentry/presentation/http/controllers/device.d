@@ -106,40 +106,39 @@ class DeviceController : ManageController {
         DeviceDTO dto;
         dto.deviceId = DeviceId(extractIdFromPath(path));
         dto.tenantId = tenantId;
-        dto.osVersion = j.getString("osVersion");
-        dto.appVersionInstalled = j.getString("appVersionInstalled");
-        dto.groupName = j.getString("groupName");
-        dto.pushToken = j.getString("pushToken");
+        dto.osVersion = data.getString("osVersion");
+        dto.appVersionInstalled = data.getString("appVersionInstalled");
+        dto.groupName = data.getString("groupName");
+        dto.pushToken = data.getString("pushToken");
 
         auto result = usecase.updateDevice(dto);
-        if (!result.success) {
-            writeError(res, 404, result.message);
-            return;
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Device updated successfully");
-        res.writeJsonBody(resp, 200);
-    }
- catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-    }
-}
+            .set("id", result.id);
 
-override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-        auto tenantId = req.getTenantId;
-        auto path = req.requestURI.to!string;
-        auto id = DeviceId(extractIdFromPath(path));
-        auto result = usecase.removeDevice(tenantId, id);
-        if (!result.success) {
-            writeError(res, 404, result.message);
-            return;
-        }
-        res.writeJsonBody(Json.emptyObject.set("message", "Device removed successfully"), 200);
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
+        return successResponse("Device updated successfully", "Updated", 200, resp);
     }
-}
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = DeviceId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid device ID", 400);
+
+        auto result = usecase.removeDevice(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto resp = Json.emptyObject
+            .set("id", id);
+
+        return successResponse("Device removed successfully", "Deleted", 200, resp);
+    }
 }
