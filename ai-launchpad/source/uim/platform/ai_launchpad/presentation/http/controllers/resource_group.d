@@ -30,74 +30,73 @@ class ResourceGroupController : ManageController {
     router.delete_("/api/v1/admin/resource-groups/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateResourceGroupRequest r;
-      r.connectionId = connectionId;
-      r.resourceGroupId = j.getString("resourceGroupId");
-      r.labels = jsonPairArray(j, "labels");
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.createResourceGroup(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Resource group created");
+    auto groups = connectionId.isEmpty
+      ? usecase.listResourceGroups(tenantId) : usecase.listResourceGroups(tenantId, connectionId);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto jarr = groups.map!(g => g.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("count", groups.length)
+      .set("resources", jarr)
+      .set("message", "Resource groups retrieved");
+
+    return successResoponse("Resource groups retrieved successfully", "Retrieved", 200, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto groups = connectionId.isEmpty
-        ? usecase.listResourceGroups(tenantId)
-        : usecase.listResourceGroups(tenantId, connectionId);
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto jarr = groups.map!(g => g.toJson).array.toJson;
+    CreateResourceGroupRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.resourceGroupId = data.getString("resourceGroupId");
+    r.labels = jsonPairArray(data, "labels");
 
-      auto resp = Json.emptyObject
-        .set("count", groups.length)
-        .set("resources", jarr)
-        .set("message", "Resource groups retrieved");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.createResourceGroup(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Resource group created");
+
+    return successResponse("Resource group created successfully", "Created", 201, resp);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto g = usecase.getResourceGroup(tenantId, connectionId, id);
-      if (g.isNull) {
-        writeError(res, 404, "Resource group not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = ResourceGroupId(extractIdFromPath(path));
 
-      res.writeJsonBody(g.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto g = usecase.getResourceGroup(tenantId, connectionId, id);
+    if (g.isNull)
+      return errorResponse("Resource group not found", 404);
+
+    return successResponse("Resource group retrieved successfully", 200, g.toJson);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = req.getTenantId;
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
       auto j = req.json;
@@ -124,21 +123,28 @@ class ResourceGroupController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId;
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteResourceGroup(tenantId, connectionId, id);
-      if (result.success) {
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = ResourceGroupId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid resource group ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    if (connectionId.isNull)
+      return errorResponse("Invalid connection ID", 400);
+
+    auto result = usecase.deleteResourceGroup(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject
+      .set("id", id);
+
+    return successResponse("Resource group deleted successfully", "Deleted", 200, resp);
   }
-
 }
