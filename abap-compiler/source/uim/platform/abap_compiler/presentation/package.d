@@ -5,7 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.abap_compiler.presentation;
 
+import uim.platform.service.mixins.imports;
+mixin(ImportPresentation!("uim.platform.abap_compiler.presentation"));
+
 public {
     import uim.platform.abap_compiler.presentation.http;
-    import uim.platform.abap_compiler.presentation.cli;
 }

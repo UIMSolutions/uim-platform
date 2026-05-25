@@ -9,5 +9,4 @@ public {
     import uim.platform.abap_compiler.presentation.http.controllers.program;
     import uim.platform.abap_compiler.presentation.http.controllers.compile;
     import uim.platform.abap_compiler.presentation.http.controllers.job;
-    import uim.platform.abap_compiler.presentation.http.controllers.health;
 }

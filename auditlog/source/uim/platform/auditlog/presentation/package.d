@@ -5,6 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation;
 
+import uim.platform.service.mixins.imports;
+mixin(ImportPresentation!("uim.platform.auditlog.presentation"));
+
 public {
   import uim.platform.auditlog.presentation.http;
 }

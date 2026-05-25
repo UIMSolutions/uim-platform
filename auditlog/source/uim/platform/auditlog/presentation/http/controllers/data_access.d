@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation.http.controllers.data_access;
 
-
-// 
 // import uim.platform.auditlog.application.usecases.write.data_access_log;
 // import uim.platform.auditlog.application.dto;
 // import uim.platform.auditlog.domain.types;

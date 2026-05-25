@@ -35,7 +35,11 @@ class AuditLogController : PlatformController {
   }
 
   protected Json writeHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId();
+    auto precheck = precheckHandler(req);
+    if (!precheck.isNull)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
 
     auto r = WriteAuditLogRequest();
@@ -58,47 +62,18 @@ class AuditLogController : PlatformController {
     r.originApp = j.getString("originApp");
 
     auto result = writeUsecase.writeAuditLog(r);
-    if (result)
-    if (result.isSuccess()) {
-      res.writeJsonBody(successResponse("Audit log entry created successfully", 201,
-          Json.emptyObject.set("id", result.id)), 201);
-    } else {
-      writeError(res, 400, result.message);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Audit log entry created successfully", 201,
+      Json.emptyObject.set("id", result.id));
 
   }
 
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId();
-      auto j = req.json;
-
-      auto r = WriteAuditLogRequest();
-      r.tenantId = tenantId;
-      r.userId = j.getString("userId");
-      r.userName = j.getString("userName");
-      r.serviceId = j.getString("serviceId");
-      r.serviceName = j.getString("serviceName");
-      r.category = j.getString("category").to!AuditCategory;
-      r.severity = j.getString("severity").to!AuditSeverity;
-      r.action = j.getString("action").to!AuditAction;
-      r.outcome = j.getString("outcome").to!AuditOutcome;
-      r.objectType = j.getString("objectType");
-      r.objectId = j.getString("objectId");
-      r.message = j.getString("message");
-      r.attributes = parseAttributes(j);
-      r.ipAddress = j.getString("ipAddress");
-      r.userAgent = j.getString("userAgent");
-      r.correlationId = j.getString("correlationId");
-      r.originApp = j.getString("originApp");
-
-      auto result = writeUsecase.writeAuditLog(r);
-      if (result.isSuccess()) {
-        res.writeJsonBody(successResponse("Audit log entry created successfully", 201,
-            Json.emptyObject.set("id", result.id)), 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = writeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -156,7 +131,7 @@ class AuditLogController : PlatformController {
   private static AuditAttribute[] parseAttributes(Json j) {
     AuditAttribute[] result;
 
-    foreach (item; j.get("attributes", Json.emptyArray)) {
+    foreach (item; j.getArray("attributes")) {
       if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),
           item.getString("oldValue"), item.getString("newValue"));
