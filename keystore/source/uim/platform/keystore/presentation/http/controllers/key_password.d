@@ -40,7 +40,8 @@ class KeyPasswordController : ManageController {
       r.passwordValue = j.getString("passwordValue");
 
       auto result = usecase.setPassword(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
         writeError(res, 400, result.message);
@@ -87,7 +88,8 @@ class KeyPasswordController : ManageController {
       auto applicationId = req.params.get("applicationId", "");
 
       auto result = usecase.deletePassword(tenantId, accountId, applicationId, alias_);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       } else {
         writeError(res, 404, result.message);

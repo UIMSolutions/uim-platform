@@ -44,7 +44,8 @@ class AppConfigurationController : ManageController {
       r.platform = j.getString("platform");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App configuration created successfully");
@@ -88,7 +89,8 @@ class AppConfigurationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)
@@ -123,7 +125,8 @@ class AppConfigurationController : ManageController {
       r.platform = j.getString("platform");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App configuration updated successfully");
@@ -142,7 +145,8 @@ class AppConfigurationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = AppConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAppConfiguration(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App configuration deleted successfully");

@@ -41,7 +41,8 @@ class TrustedCertificateController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createCertificate(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trusted certificate created");
@@ -123,7 +124,8 @@ class TrustedCertificateController : ManageController {
             auto id = TrustedCertificateId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteCertificate(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trusted certificate deleted");

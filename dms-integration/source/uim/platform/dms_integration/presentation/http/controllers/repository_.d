@@ -77,7 +77,8 @@ class RepositoryController : ManageController {
             dto.fullTextSearchEnabled = j.getBool("fullTextSearchEnabled");
             dto.createdBy = UserId(j.getString("createdBy"));
             auto result = usecase.createRepository(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository created"), 201);
             } else {
                 writeError(res, 400, result.message);

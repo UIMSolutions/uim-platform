@@ -83,7 +83,8 @@ class DataEntityController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDataEntity(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data entity created");
@@ -112,7 +113,8 @@ class DataEntityController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateDataEntity(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data entity updated");
@@ -133,7 +135,8 @@ class DataEntityController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = DataEntityId(extractIdFromPath(path));
             auto result = usecase.deleteDataEntity(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Data entity deleted");
 

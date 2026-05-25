@@ -42,7 +42,8 @@ class ConfigurationController : ManageController {
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 
       auto result = configurations.createConfiguration(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Configuration created");
@@ -106,7 +107,8 @@ class ConfigurationController : ManageController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = configurations.deleteConfiguration(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Configuration deleted");
 

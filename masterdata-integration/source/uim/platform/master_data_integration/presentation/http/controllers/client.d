@@ -55,7 +55,8 @@ class ClientController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Client created successfully");
@@ -128,7 +129,8 @@ class ClientController : ManageController {
       r.certificateRef = j.getString("certificateRef");
 
       auto result = usecase.updateClient(id, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Client updated successfully");
         res.writeJsonBody(resp, 200);
@@ -144,7 +146,8 @@ class ClientController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteClient(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Client deleted successfully");
         res.writeJsonBody(resp, 204);

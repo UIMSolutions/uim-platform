@@ -82,7 +82,8 @@ class ActivityController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createActivity(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Activity created");
@@ -116,7 +117,8 @@ class ActivityController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateActivity(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Activity updated");
@@ -136,7 +138,8 @@ class ActivityController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = ActivityId(extractIdFromPath(path));
             auto result = usecase.deleteActivity(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Activity deleted");
 

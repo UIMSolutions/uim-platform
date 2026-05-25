@@ -76,7 +76,8 @@ class DevSpaceController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDevSpace(tenantId, dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Dev space created");
@@ -103,7 +104,8 @@ class DevSpaceController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateDevSpace(tenantId, dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Dev space updated");
@@ -123,7 +125,8 @@ class DevSpaceController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = DevSpaceId(extractIdFromPath(path));
             auto result = usecase.deleteDevSpace(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Dev space deleted");
                   

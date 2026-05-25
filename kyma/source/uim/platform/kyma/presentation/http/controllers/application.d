@@ -57,7 +57,8 @@ class ApplicationController : ManageController {
       }
 
       auto result = usecase.register(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 

@@ -39,7 +39,8 @@ class GeocodingController : ManageController {
       r.providerId = j.getString("providerId");
 
       auto result = usecase.geocodeAddress(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Geocoding result stored"), 201);
       } else {
         writeError(res, 400, result.message);
@@ -62,7 +63,8 @@ class GeocodingController : ManageController {
       r.providerId = j.getString("providerId");
 
       auto result = usecase.reverseGeocode(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Reverse geocoding result stored"), 201);
       } else {
         writeError(res, 400, result.message);
@@ -115,7 +117,8 @@ class GeocodingController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.remove(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
       } else {
         writeError(res, 404, result.message);

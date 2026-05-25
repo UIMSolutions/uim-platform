@@ -47,7 +47,8 @@ class ReplicationTaskController : ManageController {
       r.mappings = jsonKeyValuePairs(j, "mappings");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication task created");
@@ -135,7 +136,8 @@ class ReplicationTaskController : ManageController {
       r.scheduleExpression = j.getString("scheduleExpression");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication task updated");
@@ -154,7 +156,8 @@ class ReplicationTaskController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ReplicationTaskId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteReplicationTask(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

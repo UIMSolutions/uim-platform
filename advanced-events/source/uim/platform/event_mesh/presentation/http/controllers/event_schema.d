@@ -28,120 +28,117 @@ class EventSchemaController : ManageController {
         router.delete_("/api/v1/event-mesh/schemas/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listSchemas(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Event schema list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listSchemas(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Event schema list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = EventSchemaId(extractIdFromPath(path));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto schema = usecase.getSchema(tenantId, id);
-            if (schema.isNull) {
-                writeError(res, 404, "Event schema not found");
-                return;
-            }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            res.writeJsonBody(schema.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        EventSchemaDTO dto;
+        dto.schemaId = EventSchemaId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.version_ = data.getString("version");
+        dto.schemaContent = data.getString("schemaContent");
+        // TODO: dto.applicationDomainId = ApplicationDomainId(data.getString("applicationDomainId"));
+        dto.shared_ = data.getString("shared");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createSchema(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Event schema created successfully", "Created", 201, resp);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            EventSchemaDTO dto;
-            dto.schemaId = EventSchemaId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.schemaContent = j.getString("schemaContent");
-            // TODO: dto.applicationDomainId = ApplicationDomainId(j.getString("applicationDomainId"));
-            dto.shared_ = j.getString("shared");
-            dto.createdBy = UserId(j.getString("createdBy"));
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = EventSchemaId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid event schema ID", 400);
 
-            auto result = usecase.createSchema(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Event schema created");
+        auto schema = usecase.getSchema(tenantId, id);
+        if (schema.isNull)
+            return errorResponse("Event schema not found", 404);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Event schema retrieved successfully", "Retrieved", 200, schema
+                .toJson);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            EventSchemaDTO dto;
-            dto.schemaId = EventSchemaId(extractIdFromPath(path));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.schemaContent = j.getString("schemaContent");
-            dto.version_ = j.getString("version");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            auto result = usecase.updateSchema(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Event schema updated");
+        EventSchemaDTO dto;
+        dto.schemaId = EventSchemaId(extractIdFromPath(path));
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.schemaContent = data.getString("schemaContent");
+        dto.version_ = data.getString("version");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.updateSchema(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Event schema updated");
+
+        return successResponse("Event schema updated successfully", "Updated", 200, resp);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = EventSchemaId(extractIdFromPath(path));
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteSchema(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("message", "Event schema deleted");
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = EventSchemaId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid event schema ID", 400);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.deleteSchema(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto resp = Json.emptyObject
+            .set("id", id);
+
+        return successResponse("Event schema deleted successfully", "Deleted", 200, resp);
     }
 }

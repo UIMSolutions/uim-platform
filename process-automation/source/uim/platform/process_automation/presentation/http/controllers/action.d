@@ -51,7 +51,8 @@ class ActionController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = actionUsecase.createAction(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action created");
@@ -146,7 +147,8 @@ class ActionController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = actionUsecase.updateAction(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action updated");
@@ -166,7 +168,8 @@ class ActionController : ManageController {
 
             auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
             auto result = actionUsecase.deleteAction(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action deleted");

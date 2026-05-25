@@ -47,7 +47,8 @@ class DocumentTypeController : ManageController {
       r.supportedFileTypes = getStrings(j, "supportedFileTypes");
 
       auto result = usecase.createDocumentType(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Document type created");
@@ -121,7 +122,8 @@ class DocumentTypeController : ManageController {
       r.defaultSchemaId = j.getString("defaultSchemaId");
 
       auto result = usecase.updateDocumentType(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Document type updated");
@@ -142,7 +144,8 @@ class DocumentTypeController : ManageController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteDocumentType(tenantId, id, clientId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

@@ -43,7 +43,8 @@ class PromptCollectionController : ManageController {
       r.workspaceId = j.getString("workspaceId");
 
       auto result = usecase.createCollection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Prompt collection created");
@@ -109,7 +110,8 @@ class PromptCollectionController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.patchCollection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Prompt collection updated");
@@ -129,7 +131,8 @@ class PromptCollectionController : ManageController {
       auto id = PromptCollectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteCollection(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Prompt collection deleted");

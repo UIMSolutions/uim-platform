@@ -46,7 +46,8 @@ class ConnectionController : ManageController {
       r.user = j.getString("user");
 
       auto result = usecase.createConnection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Connection created");
@@ -127,7 +128,8 @@ class ConnectionController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteConnection(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

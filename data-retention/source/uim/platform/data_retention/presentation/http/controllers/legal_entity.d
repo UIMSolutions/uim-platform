@@ -34,7 +34,8 @@ class LegalEntityController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createLegalEntity(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -86,7 +87,8 @@ class LegalEntityController : ManageController {
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateLegalEntity(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

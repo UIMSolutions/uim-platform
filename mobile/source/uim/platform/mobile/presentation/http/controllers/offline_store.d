@@ -43,7 +43,8 @@ class OfflineStoreController : ManageController {
       r.syncPolicy = j.getString("syncPolicy");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Offline store created successfully");
@@ -85,7 +86,8 @@ class OfflineStoreController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
           .set("tenantId", Json(result.data.tenantId))
@@ -120,7 +122,8 @@ class OfflineStoreController : ManageController {
       r.status = j.getString("status");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Offline store updated successfully");
@@ -139,7 +142,8 @@ class OfflineStoreController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = OfflineStoreId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteOfflineStore(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

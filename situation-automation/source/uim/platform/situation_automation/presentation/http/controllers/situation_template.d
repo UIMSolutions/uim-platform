@@ -51,7 +51,8 @@ class SituationTemplateController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSituationTemplate(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation template created");
@@ -151,7 +152,8 @@ class SituationTemplateController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSituationTemplate(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation template updated");
@@ -171,7 +173,8 @@ class SituationTemplateController : ManageController {
 
             auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteSituationTemplate(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation template deleted");

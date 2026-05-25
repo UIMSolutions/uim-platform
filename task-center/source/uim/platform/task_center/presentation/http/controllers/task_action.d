@@ -41,7 +41,8 @@ class TaskActionController : ManageController {
             r.comment = j.getString("comment");
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action recorded");
@@ -98,7 +99,8 @@ class TaskActionController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = TaskActionId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteTaskAction(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action deleted");

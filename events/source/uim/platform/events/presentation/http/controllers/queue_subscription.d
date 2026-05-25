@@ -63,7 +63,8 @@ class QueueSubscriptionController : ManageController {
             dto.namespace      = j.getString("namespace");
             dto.createdBy      = UserId(j.getString("createdBy"));
             auto result = usecase.createSubscription(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -82,7 +83,8 @@ class QueueSubscriptionController : ManageController {
             dto.namespace      = j.getString("namespace");
             dto.updatedBy      = UserId(j.getString("updatedBy"));
             auto result = usecase.updateSubscription(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -93,7 +95,8 @@ class QueueSubscriptionController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = QueueSubscriptionId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteSubscription(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue subscription deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

@@ -45,7 +45,8 @@ class MtaArchiveController : ManageController {
                     r.targetPlatforms ~= p.get!string;
 
             auto result = usecase.uploadArchive(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject.set("id", result.id).set("message", "MTA archive registered"),
                     201
@@ -90,7 +91,8 @@ class MtaArchiveController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = MtaArchiveId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteArchive(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "MTA archive deleted"), 200);
             } else {
                 writeError(res, 404, result.message);

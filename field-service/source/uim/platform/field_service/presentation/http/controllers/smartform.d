@@ -76,7 +76,8 @@ class SmartformController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSmartform(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Smartform created");
@@ -108,7 +109,8 @@ class SmartformController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSmartform(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Smartform updated");
@@ -128,7 +130,8 @@ class SmartformController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = SmartformId(extractIdFromPath(path));
             auto result = usecase.deleteSmartform(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                 .set("message", "Smartform deleted");
                 

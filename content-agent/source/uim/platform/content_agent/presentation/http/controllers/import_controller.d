@@ -41,7 +41,8 @@ class ImportController : PlatformController {
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.startImport(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "completed")

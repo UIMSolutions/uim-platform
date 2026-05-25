@@ -65,7 +65,8 @@ class DataModelController : ManageController {
       r.fields = fields;
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Data model created successfully");

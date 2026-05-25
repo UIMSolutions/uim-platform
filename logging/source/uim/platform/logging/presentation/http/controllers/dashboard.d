@@ -57,7 +57,8 @@ class DashboardController : ManageController {
       }
 
       auto result = usecase.createDashboard(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Dashboard created successfully");
@@ -147,7 +148,8 @@ class DashboardController : ManageController {
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = usecase.updateDashboard(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Dashboard updated successfully");

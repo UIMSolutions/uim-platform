@@ -45,7 +45,8 @@ class ConfigurationController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Configuration created");
@@ -126,7 +127,8 @@ class ConfigurationController : ManageController {
       r.value = j.getString("value");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Configuration updated");
@@ -145,7 +147,8 @@ class ConfigurationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteConfiguration(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

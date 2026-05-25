@@ -52,7 +52,8 @@ class DistributionController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Distribution model created");
@@ -121,7 +122,8 @@ class DistributionController : ManageController {
       r.cronSchedule = j.getString("cronSchedule");
 
       auto result = usecase.updateModel(id, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Distribution model updated");
@@ -139,7 +141,8 @@ class DistributionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deleteModel(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Distribution model deleted");
@@ -157,7 +160,8 @@ class DistributionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.activate(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Distribution model activated");

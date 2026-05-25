@@ -39,7 +39,8 @@ class ApplicationGroupController : ManageController {
             }
 
             auto result = usecase.createApplicationGroup(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.message);
@@ -107,7 +108,8 @@ class ApplicationGroupController : ManageController {
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateApplicationGroup(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
                 writeError(res, 400, result.message);

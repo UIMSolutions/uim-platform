@@ -48,7 +48,8 @@ class AlertController : ManageController {
       r.unit = j.getString("unit");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Alert created");
@@ -135,7 +136,8 @@ class AlertController : ManageController {
       r.criticalValue = getDouble(j, "criticalValue");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Alert updated");
@@ -170,7 +172,8 @@ class AlertController : ManageController {
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
       auto result = usecase.acknowledge(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Alert acknowledged");
@@ -189,7 +192,8 @@ class AlertController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAlert(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

@@ -51,7 +51,8 @@ class DocumentController : PlatformController {
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = usecase.upload(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", Json("pending"))
@@ -109,7 +110,8 @@ class DocumentController : PlatformController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteDocument(DocumentId(id), clientId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);
@@ -131,7 +133,8 @@ class DocumentController : PlatformController {
       r.correctedFields = jsonKeyValuePairs(j, "correctedFields");
 
       auto result = usecase.confirm(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "confirmed")

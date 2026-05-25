@@ -106,7 +106,8 @@ class RoleCollectionController : ManageController {
           r.roleReferences ~= v.get!string;
 
       auto result = usecase.updateRoleCollection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", result.id)
           .set("message", "Role collection updated successfully");
@@ -126,7 +127,8 @@ class RoleCollectionController : ManageController {
       auto id = RoleCollectionId(extractIdFromPath(req));
 
       auto result = usecase.deleteRoleCollection(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", id)
           .set("message", "Role collection deleted successfully");

@@ -96,7 +96,8 @@ class EnvironmentController : ManageController {
             r.subaccountId = j.getString("subaccountId");
 
             auto result = usecase.create(req.getTenantId, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Platform created successfully");
@@ -125,7 +126,8 @@ class EnvironmentController : ManageController {
             r.region = j.getString("region");
 
             auto result = usecase.update(req.getTenantId, PlatformId(id), r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
                 writeError(res, 404, result.message);
@@ -141,7 +143,8 @@ class EnvironmentController : ManageController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 404, result.message);

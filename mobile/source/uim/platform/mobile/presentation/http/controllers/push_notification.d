@@ -47,7 +47,8 @@ class PushNotificationController : ManageController {
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.send(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Push notification sent successfully");
@@ -88,7 +89,8 @@ class PushNotificationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
           .set("tenantId", Json(result.data.tenantId))
@@ -120,7 +122,8 @@ class PushNotificationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deletePushNotification(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

@@ -39,7 +39,8 @@ class BusinessPurposeController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createBusinessPurpose(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.message);
@@ -114,7 +115,8 @@ class BusinessPurposeController : ManageController {
             r.referenceDate = jsonLong(j, "referenceDate");
 
             auto result = usecase.updateBusinessPurpose(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("name", r.name)
@@ -145,7 +147,8 @@ class BusinessPurposeController : ManageController {
                 id = parts[$ - 2];
 
             auto result = usecase.activateBusinessPurpose(BusinessPurposeControllerId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("status", "active")
@@ -166,7 +169,8 @@ class BusinessPurposeController : ManageController {
             auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteBusinessPurpose(tenantId, id);
 
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 400, result.message);

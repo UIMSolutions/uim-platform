@@ -66,7 +66,8 @@ class EventChannelController : ManageController {
             dto.maxPartitions      = j.getString("maxPartitions");
             dto.createdBy          = UserId(j.getString("createdBy"));
             auto result = usecase.createChannel(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -86,7 +87,8 @@ class EventChannelController : ManageController {
             dto.maxPartitions      = j.getString("maxPartitions");
             dto.updatedBy          = UserId(j.getString("updatedBy"));
             auto result = usecase.updateChannel(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -97,7 +99,8 @@ class EventChannelController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = EventChannelId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteChannel(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

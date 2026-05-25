@@ -48,7 +48,8 @@ class ModelController : ManageController {
       r.labels = getStrings(j, "labels");
 
       auto result = usecase.registerModel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Model registered");
@@ -117,7 +118,8 @@ class ModelController : ManageController {
       r.status = j.getString("status");
 
       auto result = usecase.patchModel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Model updated");
@@ -138,7 +140,8 @@ class ModelController : ManageController {
       auto id = ModelId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteModel(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

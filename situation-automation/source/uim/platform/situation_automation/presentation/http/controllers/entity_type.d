@@ -45,7 +45,8 @@ class EntityTypeController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createEntityType(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Entity type created");
@@ -129,7 +130,8 @@ class EntityTypeController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateEntityType(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Entity type updated");
@@ -149,7 +151,8 @@ class EntityTypeController : ManageController {
             auto id = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteEntityType(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Entity type deleted");

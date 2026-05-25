@@ -50,7 +50,8 @@ class DataSubjectController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject created");
@@ -148,7 +149,8 @@ class DataSubjectController : ManageController {
             request.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateDataSubject(request);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject updated");
@@ -170,7 +172,8 @@ class DataSubjectController : ManageController {
             auto id = DataSubjectId(extractIdFromPath(stripped));
 
             auto result = usecase.block(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject blocked");
@@ -192,7 +195,8 @@ class DataSubjectController : ManageController {
             auto id = DataSubjectId(extractIdFromPath(stripped));
 
             auto result = usecase.eraseDataSubject(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject erased (anonymized)");
@@ -211,7 +215,8 @@ class DataSubjectController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteDataSubject(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject deleted");

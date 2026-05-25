@@ -81,7 +81,8 @@ class LogicFlowController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createLogicFlow(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Logic flow created");
@@ -111,7 +112,8 @@ class LogicFlowController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateLogicFlow(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Logic flow updated");
@@ -132,7 +134,8 @@ class LogicFlowController : ManageController {
             auto id = LogicFlowId(extractIdFromPath(path));
 
             auto result = usecase.deleteLogicFlow(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Logic flow deleted successfully");
 

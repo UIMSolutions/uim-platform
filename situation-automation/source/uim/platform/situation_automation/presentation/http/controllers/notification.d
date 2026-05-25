@@ -47,7 +47,8 @@ class NotificationController : ManageController {
             r.actionUrl = j.getString("actionUrl");
 
             auto result = usecase.createNotification(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Notification created");
@@ -134,7 +135,8 @@ class NotificationController : ManageController {
             r.status = j.getString("status");
 
             auto result = usecase.updateNotification(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Notification updated");
@@ -154,7 +156,8 @@ class NotificationController : ManageController {
             auto notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteNotification(tenantId, notificationId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Notification deleted");

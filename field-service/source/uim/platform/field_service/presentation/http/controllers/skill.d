@@ -77,7 +77,8 @@ class SkillController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSkill(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Skill created");
@@ -107,7 +108,8 @@ class SkillController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSkill(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Skill updated");
@@ -127,7 +129,8 @@ class SkillController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = SkillId(extractIdFromPath(path));
             auto result = usecase.deleteSkill(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Skill deleted");
 

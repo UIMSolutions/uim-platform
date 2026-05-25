@@ -67,7 +67,8 @@ class CustomerController : ManageController {
         dto.createdBy = UserId(j.getString("createdBy"));
 
         auto result = customers.registerCustomer(dto);
-        if (result.success) {
+        if (result.hasError)
+            return errorResponse(result.message, 400);
             return Json.emptyObject
                 .set("id", result.id)
                 .set("message", "Customer registered successfully")

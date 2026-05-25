@@ -42,7 +42,8 @@ class PushRegistrationController : ManageController {
       r.pushToken = j.getString("pushToken");
       r.topics = getStrings(j, "topics");
       auto result = usecase.register(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Push registration successful");
@@ -82,7 +83,8 @@ class PushRegistrationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
           .set("tenantId", Json(result.data.tenantId))
@@ -108,7 +110,8 @@ class PushRegistrationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = PushRegistrationId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deletePushRegistration(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

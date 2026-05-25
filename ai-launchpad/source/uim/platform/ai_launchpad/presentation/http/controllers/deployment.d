@@ -46,7 +46,8 @@ class DeploymentController : ManageController {
       r.ttl = j.getInteger("ttl");
 
       auto result = usecase.createDeployment(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Deployment created");
@@ -120,7 +121,8 @@ class DeploymentController : ManageController {
       r.ttl = j.getInteger("ttl");
 
       auto result = usecase.patchDeployment(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Deployment updated");
@@ -175,7 +177,8 @@ class DeploymentController : ManageController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteDeployment(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Deployment deleted successfully"); 
           

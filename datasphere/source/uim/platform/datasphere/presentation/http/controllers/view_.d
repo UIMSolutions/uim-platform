@@ -48,7 +48,8 @@ class ViewController : ManageController {
       // r.updatedAt = now;
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "View created");
@@ -140,7 +141,8 @@ class ViewController : ManageController {
       r.isPersisted = j.getBoolean("isPersisted", false);
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "View updated");
@@ -161,7 +163,8 @@ class ViewController : ManageController {
       auto id = ViewId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteView(spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

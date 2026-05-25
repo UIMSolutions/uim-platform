@@ -72,7 +72,8 @@ class WebhookController : ManageController {
             dto.maxParallelity   = j.getString("maxParallelity");
             dto.createdBy        = UserId(j.getString("createdBy"));
             auto result = usecase.createWebhook(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -93,7 +94,8 @@ class WebhookController : ManageController {
             dto.maxParallelity = j.getString("maxParallelity");
             dto.updatedBy      = UserId(j.getString("updatedBy"));
             auto result = usecase.updateWebhook(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -104,7 +106,8 @@ class WebhookController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteWebhook(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

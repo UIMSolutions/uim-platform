@@ -46,7 +46,8 @@ class KeyringController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createKeyring(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Keyring created successfully");
@@ -132,7 +133,8 @@ class KeyringController : ManageController {
       r.tenantId = tenantId;
 
       auto result = usecase.rotateKeyring(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
         .set("versionId", result.id);
 
@@ -152,7 +154,8 @@ class KeyringController : ManageController {
       auto keyringId = CredentialId(j.getString("keyringId"));
 
       auto result = usecase.disableCredential(tenantId, keyringId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
         .set("id", result.id);
 
@@ -171,7 +174,8 @@ class KeyringController : ManageController {
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteCredential(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 400, result.message);

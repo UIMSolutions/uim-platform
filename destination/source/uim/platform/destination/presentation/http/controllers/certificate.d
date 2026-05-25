@@ -53,7 +53,8 @@ class CertificateController : ManageController {
       r.uploadedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.upload(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Certificate uploaded");

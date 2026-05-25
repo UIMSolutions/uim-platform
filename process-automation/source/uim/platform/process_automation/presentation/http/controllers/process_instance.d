@@ -44,7 +44,8 @@ class ProcessInstanceController : ManageController {
             r.context = jsonKeyValuePairs(j, "context");
 
             auto result = processInstanceUsecase.startProcessInstance(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process instance started");
@@ -140,7 +141,8 @@ class ProcessInstanceController : ManageController {
             r.action = j.getString("action");
 
             auto result = processInstanceUsecase.performProcessInstanceAction(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Action performed: " ~ r.action);
@@ -159,7 +161,8 @@ class ProcessInstanceController : ManageController {
             auto id = ProcessInstanceId(extractIdFromPath(req.requestURI.to!string));
             
             auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process instance deleted");

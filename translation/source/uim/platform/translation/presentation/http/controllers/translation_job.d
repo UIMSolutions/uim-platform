@@ -49,7 +49,8 @@ class TranslationJobController : ManageController {
             catch (Exception) { r.jobType = JobType.document; }
 
             auto result = usecase.submitJob(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("jobId", result.id)
@@ -113,7 +114,8 @@ class TranslationJobController : ManageController {
             string id = parts.length >= 2 ? parts[$ - 2] : "";
 
             auto result = usecase.cancelJob(tenantId, TranslationJobId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject.set("jobId", id).set("status", "cancelled"),
                     200

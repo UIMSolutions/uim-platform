@@ -74,7 +74,8 @@ class ReplicationController : ManageController {
             dto.triggeredBy = UserId(j.getString("triggeredBy"));
 
             auto result = usecase.createReplication(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Replication created"), 201);
@@ -102,7 +103,8 @@ class ReplicationController : ManageController {
                 return;
             }
 
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Replication updated"), 200);
@@ -120,7 +122,8 @@ class ReplicationController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = ReplicationId(extractIdFromPath(path));
             auto result = usecase.deleteReplication(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "Replication deleted"), 200);
             } else {
                 writeError(res, 404, result.message);

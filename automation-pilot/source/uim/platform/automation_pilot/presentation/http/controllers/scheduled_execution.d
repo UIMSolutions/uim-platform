@@ -78,7 +78,8 @@ class ScheduledExecutionController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = scheduledExecutions.createScheduledExecution(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Scheduled execution created");
@@ -107,7 +108,8 @@ class ScheduledExecutionController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = scheduledExecutions.updateScheduledExecution(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Scheduled execution updated");
@@ -128,7 +130,8 @@ class ScheduledExecutionController : ManageController {
             auto id = ScheduledExecutionId(extractIdFromPath(path));
 
             auto result = scheduledExecutions.deleteScheduledExecution(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Scheduled execution deleted successfully");

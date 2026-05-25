@@ -51,7 +51,8 @@ class AlertRuleController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createAlertRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -137,7 +138,8 @@ class AlertRuleController : ManageController {
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 
       auto result = usecase.updateAlertRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Alert rule updated successfully");

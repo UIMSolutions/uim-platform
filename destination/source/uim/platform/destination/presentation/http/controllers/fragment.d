@@ -59,7 +59,8 @@ class FragmentController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createFragment(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Fragment created");
@@ -129,7 +130,8 @@ class FragmentController : ManageController {
       r.properties = jsonStrMap(j, "properties");
 
       auto result = usecase.updateFragment(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Fragment updated successfully");
@@ -149,7 +151,8 @@ class FragmentController : ManageController {
       auto id = DestinationFragmentId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteFragment(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Fragment deleted successfully");

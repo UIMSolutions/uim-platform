@@ -50,7 +50,8 @@ class ChannelController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createChannel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
         
@@ -129,7 +130,8 @@ class ChannelController : ManageController {
       r.slackChannel = j.getString("slackChannel");
 
       auto result = usecase.updateChannel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
           

@@ -45,7 +45,8 @@ class RemoteTableController : ManageController {
       r.replicationMode = j.getString("replicationMode");
 
       auto result = usecase.createRemoteTable(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Remote table created");
@@ -128,7 +129,8 @@ class RemoteTableController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

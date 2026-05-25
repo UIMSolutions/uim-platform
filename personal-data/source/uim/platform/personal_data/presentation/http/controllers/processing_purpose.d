@@ -44,7 +44,8 @@ class ProcessingPurposeController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Processing purpose created");
@@ -109,7 +110,8 @@ class ProcessingPurposeController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Processing purpose updated");
@@ -129,7 +131,8 @@ class ProcessingPurposeController : ManageController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteProcessingPurpose(id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Processing purpose deleted");

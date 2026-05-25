@@ -51,7 +51,8 @@ class SituationInstanceController : ManageController {
             r.dueAt = jsonLong(j, "dueAt");
 
             auto result = usecase.createSituationInstance(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation instance created");
@@ -152,7 +153,8 @@ class SituationInstanceController : ManageController {
             r.assignedTo = j.getString("assignedTo");
 
             auto result = usecase.updateSituationInstance(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation instance updated");
@@ -191,7 +193,8 @@ class SituationInstanceController : ManageController {
             r.outcome = j.getString("outcome");
 
             auto result = usecase.resolveSituationInstance(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation resolved");
@@ -212,7 +215,8 @@ class SituationInstanceController : ManageController {
             auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
             
             auto result = usecase.deleteSituationInstance(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation instance deleted");

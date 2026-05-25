@@ -74,7 +74,8 @@ class ContentConnectorController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createContentConnector(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Content connector created");
@@ -103,7 +104,8 @@ class ContentConnectorController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateContentConnector(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Content connector updated");
@@ -124,7 +126,8 @@ class ContentConnectorController : ManageController {
             auto contentConnectorId = ContentConnectorId(extractIdFromPath(path));
 
             auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Content connector deleted");

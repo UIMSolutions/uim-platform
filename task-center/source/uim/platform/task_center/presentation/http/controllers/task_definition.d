@@ -45,7 +45,8 @@ class TaskDefinitionController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createTaskDefinition(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task definition created");
@@ -115,7 +116,8 @@ class TaskDefinitionController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateTaskDefinition(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task definition updated");
@@ -138,7 +140,8 @@ class TaskDefinitionController : ManageController {
             auto id = TaskDefinitionId(extractIdFromPath(stripped));
 
             auto result = usecase.activateTaskDefinition(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task definition activated");
@@ -161,7 +164,8 @@ class TaskDefinitionController : ManageController {
             auto id = TaskDefinitionId(extractIdFromPath(stripped));
 
             auto result = usecase.deactivateTaskDefinition(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task definition deactivated");
@@ -181,7 +185,8 @@ class TaskDefinitionController : ManageController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task definition deleted");

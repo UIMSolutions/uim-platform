@@ -86,7 +86,8 @@ class QueueController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createQueue(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Queue created");
@@ -117,7 +118,8 @@ class QueueController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateQueue(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Queue updated");
@@ -138,7 +140,8 @@ class QueueController : ManageController {
             auto id = QueueId(extractIdFromPath(path));
 
             auto result = usecase.deleteQueue(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Queue deleted");
 

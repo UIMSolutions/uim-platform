@@ -45,7 +45,8 @@ class ExecutionController : ManageController {
       r.resourceGroupId = j.getString("resourceGroupId");
 
       auto result = usecase.createExecution(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution scheduled")
@@ -118,7 +119,8 @@ class ExecutionController : ManageController {
       r.targetStatus = j.getString("targetStatus");
 
       auto result = usecase.patchExecution(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution updated");
@@ -174,7 +176,8 @@ class ExecutionController : ManageController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteExecution(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Execution deleted successfully");
 

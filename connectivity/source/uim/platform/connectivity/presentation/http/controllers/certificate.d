@@ -50,7 +50,8 @@ class CertificateController : ManageController {
       r.validTo = jsonLong(j, "validTo");
 
       auto result = usecase.createCertificate(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Certificate created successfully");
@@ -109,7 +110,8 @@ class CertificateController : ManageController {
       r.active = j.getBoolean("active", true);
 
       auto result = usecase.updateCertificate(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Certificate updated successfully");
@@ -128,7 +130,8 @@ class CertificateController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteCertificate(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Certificate deleted successfully");

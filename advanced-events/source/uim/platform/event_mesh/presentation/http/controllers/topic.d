@@ -42,7 +42,7 @@ class TopicController : ManageController {
       .set("count", items.length)
       .set("resources", jarr);
 
-    return successResoponse("Topic list retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("Topic list retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {

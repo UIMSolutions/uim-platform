@@ -45,7 +45,8 @@ class EnrichmentDataController : ManageController {
       r.fields = jsonKeyValuePairs(j, "fields");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Enrichment data created");
@@ -113,7 +114,8 @@ class EnrichmentDataController : ManageController {
       r.fields = jsonKeyValuePairs(j, "fields");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Enrichment data updated");
@@ -134,7 +136,8 @@ class EnrichmentDataController : ManageController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteEnrichmentData(EnrichmentDataId(id), clientId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

@@ -46,7 +46,8 @@ class TrainingJobController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.createTrainingJob(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Training job created");
@@ -110,7 +111,8 @@ class TrainingJobController : ManageController {
       r.targetStatus = j.getString("targetStatus");
 
       auto result = usecase.patchTrainingJob(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Training job updated");
@@ -131,7 +133,8 @@ class TrainingJobController : ManageController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteTrainingJob(tenantId, id, clientId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

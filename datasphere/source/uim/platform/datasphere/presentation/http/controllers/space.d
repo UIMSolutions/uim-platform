@@ -44,7 +44,8 @@ class SpaceController : ManageController {
       r.priority = j.getInteger("priority", 0);
 
       auto result = usecase.createSpace(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Space created");
@@ -127,7 +128,8 @@ class SpaceController : ManageController {
       r.priority = j.getInteger("priority", 0);
 
       auto result = usecase.updateSpace(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Space updated");
@@ -147,7 +149,8 @@ class SpaceController : ManageController {
       auto id = SpaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteSpace(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

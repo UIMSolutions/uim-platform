@@ -46,7 +46,8 @@ class AppVersionController : ManageController {
       r.sizeBytes = jsonLong(j, "sizeBytes");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App version created successfully");
@@ -90,7 +91,8 @@ class AppVersionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)
@@ -127,7 +129,8 @@ class AppVersionController : ManageController {
       r.status = j.getString("status");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "App version updated successfully");
@@ -146,7 +149,8 @@ class AppVersionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = AppVersionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAppVersion(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

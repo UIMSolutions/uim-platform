@@ -42,7 +42,8 @@ class SchemaController : ManageController {
       r.type = j.getString("type");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Schema created");
@@ -123,7 +124,8 @@ class SchemaController : ManageController {
       r.owner = j.getString("owner");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Schema updated");
@@ -142,7 +144,8 @@ class SchemaController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = SchemaId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteSchema(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

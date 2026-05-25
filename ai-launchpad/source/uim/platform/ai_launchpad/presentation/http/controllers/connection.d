@@ -42,7 +42,8 @@ class ConnectionController : ManageController {
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
       auto result = usecase.createConnection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Connection created");
@@ -109,7 +110,8 @@ class ConnectionController : ManageController {
       r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
       auto result = usecase.patchConnection(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Connection updated");
 
@@ -128,7 +130,8 @@ class ConnectionController : ManageController {
       auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteConnection(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("message", "Connection deleted");
 

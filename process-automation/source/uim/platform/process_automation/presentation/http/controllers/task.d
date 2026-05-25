@@ -52,7 +52,8 @@ class TaskController : ManageController {
       r.dueDate = jsonLong(j, "dueDate");
 
       auto result = taskUsecase.createTask(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "PATask created");
@@ -148,7 +149,8 @@ class TaskController : ManageController {
       r.dueDate = jsonLong(j, "dueDate");
 
       auto result = taskUsecase.updateTask(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "PATask updated");
@@ -183,7 +185,8 @@ class TaskController : ManageController {
       r.userId = j.getString("userId");
 
       auto result = taskUsecase.claimTask(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "PATask claimed");
@@ -221,7 +224,8 @@ class TaskController : ManageController {
       r.formData = j.getString("formData");
 
       auto result = taskUsecase.completeTask(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "PATask completed");
@@ -241,7 +245,8 @@ class TaskController : ManageController {
 
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
       auto result = taskUsecase.deleteTask(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "PATask deleted");

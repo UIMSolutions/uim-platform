@@ -43,7 +43,8 @@ class DataFlowController : ManageController {
       r.scheduleFrequency = j.getString("scheduleFrequency");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Data flow created");
@@ -120,7 +121,8 @@ class DataFlowController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteDataFlow(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

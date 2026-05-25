@@ -82,7 +82,8 @@ class RunConfigurationController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createRunConfiguration(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Run configuration created");
@@ -112,7 +113,8 @@ class RunConfigurationController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateRunConfiguration(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Run configuration updated");
@@ -132,7 +134,8 @@ class RunConfigurationController : ManageController {
             auto id = RunConfigurationId(extractIdFromPath(path));
             
             auto result = usecase.deleteRunConfiguration(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Run configuration deleted");
 

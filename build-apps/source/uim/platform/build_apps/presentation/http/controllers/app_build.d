@@ -69,7 +69,8 @@ class AppBuildController : ManageController {
         dto.createdBy = UserId(j.getString("createdBy"));
 
         auto result = usecase.createAppBuild(dto);
-        if (result.success) {
+        if (result.hasError)
+            return errorResponse(result.message, 400);
             auto resp = Json.emptyObject
                 .set("id", result.id)
                 .set("message", "App build created");

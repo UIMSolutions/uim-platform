@@ -47,7 +47,8 @@ class DecisionController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = decisionUsecase.createDecision(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Decision created");
@@ -137,7 +138,8 @@ class DecisionController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = decisionUsecase.updateDecision(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Decision updated");
@@ -158,7 +160,8 @@ class DecisionController : ManageController {
 
             auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
             auto result = decisionUsecase.deleteDecision(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Decision deleted");

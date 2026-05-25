@@ -48,7 +48,8 @@ class DatabaseUserController : ManageController {
       r.roles = getStrings(j, "roles");
 
       auto result = usecase.createDatabaseUser(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Database user created");
@@ -131,7 +132,8 @@ class DatabaseUserController : ManageController {
       r.roles = getStrings(j, "roles");
 
       auto result = usecase.updateDatabaseUser(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Database user updated");
@@ -151,7 +153,8 @@ class DatabaseUserController : ManageController {
       auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteDatabaseUser(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

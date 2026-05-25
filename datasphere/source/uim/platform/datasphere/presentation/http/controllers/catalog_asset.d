@@ -46,7 +46,8 @@ class CatalogAssetController : ManageController {
       r.glossaryTerms = getStrings(j, "glossaryTerms");
 
       auto result = assets.createCatalogAsset(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Catalog asset created successfully");
@@ -156,7 +157,8 @@ class CatalogAssetController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = assets.deleteCatalogAsset(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

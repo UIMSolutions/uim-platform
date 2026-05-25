@@ -51,7 +51,8 @@ class PackageController : ManageController {
       r.items = parseContentItems(j);
 
       auto result = usecase.createPackage(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Package created successfully");
@@ -113,7 +114,8 @@ class PackageController : ManageController {
       r.items = parseContentItems(j);
 
       auto result = usecase.updatePackage(id, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Package updated successfully");
@@ -132,7 +134,8 @@ class PackageController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = PackageId(extractIdFromPath(req.requestURI));
       auto result = usecase.deletePackage(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Package deleted successfully");
@@ -156,7 +159,8 @@ class PackageController : ManageController {
       r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.assemblePackage(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "assembled")

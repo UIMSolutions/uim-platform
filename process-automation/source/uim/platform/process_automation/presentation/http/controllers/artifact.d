@@ -48,7 +48,8 @@ class ArtifactController : ManageController {
             r.contentUrl = j.getString("contentUrl");
 
             auto result = artifactUsecase.createArtifact(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Artifact published");
@@ -142,7 +143,8 @@ class ArtifactController : ManageController {
             r.contentUrl = j.getString("contentUrl");
 
             auto result = artifactUsecase.updateArtifact(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                 .set("id", result.id)
                 .set("message", "Artifact updated");
@@ -163,7 +165,8 @@ class ArtifactController : ManageController {
             auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
             
             auto result = artifactUsecase.deleteArtifact(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Artifact deleted");

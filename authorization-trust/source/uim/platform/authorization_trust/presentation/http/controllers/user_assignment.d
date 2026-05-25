@@ -97,7 +97,8 @@ class UserAssignmentController : ManageController {
       auto id = UserAssignmentId(extractIdFromPath(req));
 
       auto result = usecase.deleteUserAssignment(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("result", Json.emptyObject.set("id", id))
           .set("message", "User assignment deleted successfully");

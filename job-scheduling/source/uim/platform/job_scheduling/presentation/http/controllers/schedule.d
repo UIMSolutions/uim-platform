@@ -58,7 +58,8 @@ class ScheduleController : ManageController {
             r.endTime = getLong(j, "endTime");
 
             auto result = usecase.createSchedule(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("jobId", jobId)
@@ -135,7 +136,8 @@ class ScheduleController : ManageController {
             r.endTime = getLong(j, "endTime");
 
             auto result = usecase.updateSchedule(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Schedule updated");
@@ -156,7 +158,8 @@ class ScheduleController : ManageController {
             auto ids = extractJobAndScheduleIds(path);
 
             auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 404, result.message);
@@ -179,7 +182,8 @@ class ScheduleController : ManageController {
             r.active = j.getBoolean("active", true);
 
             auto result = usecase.activateAllSchedules(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", r.active
                             ? "All schedules activated" : "All schedules deactivated");

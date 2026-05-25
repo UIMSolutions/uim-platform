@@ -75,7 +75,8 @@ class ServiceAccountController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createServiceAccount(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Service account created");
@@ -103,7 +104,8 @@ class ServiceAccountController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateServiceAccount(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Service account updated");
@@ -124,7 +126,8 @@ class ServiceAccountController : ManageController {
             auto id = ServiceAccountId(extractIdFromPath(path));
 
             auto result = usecase.deleteServiceAccount(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Service account deleted");
 

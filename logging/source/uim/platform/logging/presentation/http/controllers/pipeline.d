@@ -53,7 +53,8 @@ class PipelineController : ManageController {
       }
 
       auto result = usecase.createPipeline(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Pipeline created");
@@ -131,7 +132,8 @@ class PipelineController : ManageController {
       r.tenantId = tenantId;
 
       auto result = usecase.updatePipeline(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", result.id)
           .set("message", "Pipeline updated");

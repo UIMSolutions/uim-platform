@@ -36,7 +36,8 @@ class ArchivingJobController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createArchivingJob(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Archiving job created");
@@ -118,7 +119,8 @@ class ArchivingJobController : ManageController {
             r.errorMessage = j.getString("errorMessage");
 
             auto result = usecase.updateArchivingJob(id, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Archiving job updated");

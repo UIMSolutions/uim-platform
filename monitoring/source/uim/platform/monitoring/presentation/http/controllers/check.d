@@ -57,7 +57,8 @@ class CheckController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createCheck(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Health check created successfully");
@@ -122,7 +123,8 @@ class CheckController : ManageController {
       r.thresholdOperator = j.getString("thresholdOperator");
 
       auto result = usecase.updateCheck(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Health check updated successfully");
@@ -142,7 +144,8 @@ class CheckController : ManageController {
       auto id = HealthCheckId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteCheck(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", id)
           .set("deleted", true)
@@ -172,7 +175,8 @@ class CheckController : ManageController {
       r.httpStatusCode = j.getInteger("httpStatusCode");
 
       auto result = usecase.recordResult(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Health check result recorded successfully");

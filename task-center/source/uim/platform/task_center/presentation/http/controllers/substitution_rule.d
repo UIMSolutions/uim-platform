@@ -45,7 +45,8 @@ class SubstitutionRuleController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSubstitutionRule(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Substitution rule created");
@@ -120,7 +121,8 @@ class SubstitutionRuleController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSubstitutionRule(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Substitution rule updated");
@@ -144,7 +146,8 @@ class SubstitutionRuleController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.activateSubstitutionRule(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Substitution rule activated");
@@ -166,7 +169,8 @@ class SubstitutionRuleController : ManageController {
             auto id = SubstitutionRuleId(extractIdFromPath(stripped));
 
             auto result = usecase.deactivateSubstitutionRule(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Substitution rule deactivated");
@@ -185,7 +189,8 @@ class SubstitutionRuleController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteSubstitutionRule(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Substitution rule deleted");

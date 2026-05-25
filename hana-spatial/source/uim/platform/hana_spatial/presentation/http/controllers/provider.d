@@ -47,7 +47,8 @@ class ProviderController : ManageController {
       r.config = jsonKeyValuePairs(j, "config");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Provider created"), 201);
       } else {
         writeError(res, 400, result.message);
@@ -115,7 +116,8 @@ class ProviderController : ManageController {
       r.supportsPoi = j.getBoolean("supportsPoi");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Provider updated"), 200);
       } else {
         writeError(res, 400, result.message);
@@ -130,7 +132,8 @@ class ProviderController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.remove(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
       } else {
         writeError(res, 404, result.message);

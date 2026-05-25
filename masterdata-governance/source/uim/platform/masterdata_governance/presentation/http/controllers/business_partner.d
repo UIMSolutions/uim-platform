@@ -100,7 +100,8 @@ class BusinessPartnerController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createBusinessPartner(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Business partner created"), 201);
@@ -140,7 +141,8 @@ class BusinessPartnerController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateBusinessPartner(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Business partner updated"), 200);
@@ -158,7 +160,8 @@ class BusinessPartnerController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = BusinessPartnerId(extractIdFromPath(path));
             auto result = usecase.deleteBusinessPartner(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "Business partner deleted"), 200);
             } else {
                 writeError(res, 404, result.message);

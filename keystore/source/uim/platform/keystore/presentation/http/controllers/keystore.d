@@ -72,7 +72,8 @@ class KeystoreController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.uploadKeystore(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -168,7 +169,8 @@ class KeystoreController : ManageController {
       r.updatedBy = UserId(j.getString("updatedBy"));
 
       auto result = usecase.updateKeystore(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
       } else {
         writeError(res, result.message == "Keystore not found" ? 404 : 400, result.message);
@@ -184,7 +186,8 @@ class KeystoreController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteKeystore(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
       } else {
         writeError(res, 404, result.message);

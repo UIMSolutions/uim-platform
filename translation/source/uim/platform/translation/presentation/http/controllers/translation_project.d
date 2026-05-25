@@ -49,7 +49,8 @@ class TranslationProjectController : ManageController {
                     r.targetLanguages ~= l.get!string;
 
             auto result = usecase.createProject(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject.set("id", result.id).set("message", "Translation project created"),
                     201
@@ -129,7 +130,8 @@ class TranslationProjectController : ManageController {
                     r.targetLanguages ~= l.get!string;
 
             auto result = usecase.updateProject(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject.set("id", result.id).set("message", "Translation project updated"),
                     200
@@ -147,7 +149,8 @@ class TranslationProjectController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = TranslationProjectId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteProject(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 404, result.message);

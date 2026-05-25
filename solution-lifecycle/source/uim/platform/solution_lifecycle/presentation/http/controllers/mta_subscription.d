@@ -66,7 +66,8 @@ class MtaSubscriptionController : ManageController {
             r.extensionDescriptor = j.getString("extensionDescriptor");
 
             auto result = usecase.subscribe(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("operationId", result.id)
@@ -89,7 +90,8 @@ class MtaSubscriptionController : ManageController {
             r.unsubscribedBy  = req.json.getString("unsubscribedBy");
 
             auto result = usecase.unsubscribe(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("operationId", result.id)

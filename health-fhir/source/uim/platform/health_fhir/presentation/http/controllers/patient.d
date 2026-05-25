@@ -56,7 +56,8 @@ class PatientController : ManageController {
       }
 
       auto result = usecase.createPatient(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(
           Json.emptyObject
             .set("resourceType", "Patient")

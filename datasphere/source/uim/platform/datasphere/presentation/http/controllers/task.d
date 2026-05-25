@@ -50,7 +50,8 @@ class TaskController : ManageController {
       // r.updatedAt = now;
 
       auto result = usecase.createTask(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Task created");
@@ -132,7 +133,8 @@ class TaskController : ManageController {
       auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteTask(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("message", "Task deleted successfully"); 
         res.writeJsonBody(response, 200);

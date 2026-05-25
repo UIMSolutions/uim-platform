@@ -81,7 +81,8 @@ class EquipmentController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createEquipment(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Equipment created");
@@ -114,7 +115,8 @@ class EquipmentController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateEquipment(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Equipment updated");
@@ -134,7 +136,8 @@ class EquipmentController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = EquipmentId(extractIdFromPath(path));
             auto result = usecase.deleteEquipment(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Equipment deleted");
                   

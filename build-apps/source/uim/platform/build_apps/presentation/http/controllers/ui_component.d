@@ -81,7 +81,8 @@ class UIComponentController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = components.createUIComponent(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "UI component created");
@@ -110,7 +111,8 @@ class UIComponentController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = components.updateUIComponent(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "UI component updated");
@@ -131,7 +133,8 @@ class UIComponentController : ManageController {
             auto id = UIComponentId(extractIdFromPath(path));
 
             auto result = components.deleteUIComponent(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "UI component deleted");
 

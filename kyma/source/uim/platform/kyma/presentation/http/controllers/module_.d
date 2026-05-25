@@ -52,7 +52,8 @@ class ModuleController : ManageController {
       r.enabledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.enableModule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 

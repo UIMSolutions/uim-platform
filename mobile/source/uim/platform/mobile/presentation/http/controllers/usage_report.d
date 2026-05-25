@@ -46,7 +46,8 @@ class UsageReportController : ManageController {
       r.appVersion = j.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
       auto result = usecase.report(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Usage report created successfully");
@@ -86,7 +87,8 @@ class UsageReportController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)

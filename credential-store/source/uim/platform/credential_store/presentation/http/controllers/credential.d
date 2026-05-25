@@ -91,7 +91,8 @@ class CredentialController : ManageController {
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto result = usecase.createCredential(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Credential created successfully");

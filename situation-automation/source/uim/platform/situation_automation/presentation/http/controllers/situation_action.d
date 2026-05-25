@@ -53,7 +53,8 @@ class SituationActionController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSituationAction(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation action created");
@@ -153,7 +154,8 @@ class SituationActionController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSituationAction(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation action updated");
@@ -173,7 +175,8 @@ class SituationActionController : ManageController {
             auto id = SituationActionId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteSituationAction(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Situation action deleted");

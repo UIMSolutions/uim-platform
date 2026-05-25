@@ -45,7 +45,8 @@ class TemplateController : ManageController {
       r.regions = jsonRegionArray(j, "regions");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Template created");
@@ -113,7 +114,8 @@ class TemplateController : ManageController {
       r.status = j.getString("status");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Template updated");
@@ -134,7 +136,8 @@ class TemplateController : ManageController {
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteTemplate(TemplateId(id), clientId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Template deleted");
 

@@ -47,7 +47,8 @@ class DataContextController : ManageController {
             r.expiresAt = jsonLong(j, "expiresAt");
 
             auto result = usecase.createDataContext(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data context created");
@@ -123,7 +124,8 @@ class DataContextController : ManageController {
 
             auto id = DataContextId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteDataContext(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data context deleted");
@@ -142,7 +144,8 @@ class DataContextController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.deletePersonalData(tenantId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Personal data contexts deleted");
 

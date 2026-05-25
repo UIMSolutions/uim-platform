@@ -86,7 +86,8 @@ class AlertController : ManageController {
       r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.acknowledgeAlert(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("state", "acknowledged")
@@ -111,7 +112,8 @@ class AlertController : ManageController {
       r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.resolveAlert(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("state", "resolved")
@@ -131,7 +133,8 @@ class AlertController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = AlertId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteAlert(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Alert deleted successfully");

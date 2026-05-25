@@ -82,7 +82,8 @@ class EventMessageController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.publishMessage(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Event message published");
@@ -102,7 +103,8 @@ class EventMessageController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
             auto result = usecase.acknowledgeMessage(tenantId, EventMessageId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Event message acknowledged");
 
@@ -122,7 +124,8 @@ class EventMessageController : ManageController {
             auto id = EventMessageId(extractIdFromPath(path));
 
             auto result = usecase.deleteMessage(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Event message deleted");
 

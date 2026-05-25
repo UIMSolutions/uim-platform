@@ -54,7 +54,8 @@ class TaskController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task created");
@@ -135,7 +136,8 @@ class TaskController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateTask(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task updated");
@@ -159,7 +161,8 @@ class TaskController : ManageController {
             auto userId = j.getString("userId");
 
             auto result = usecase.claim(tenantId, id, userId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task claimed");
@@ -181,7 +184,8 @@ class TaskController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.releaseTask(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task released");
@@ -206,7 +210,8 @@ class TaskController : ManageController {
             auto comment = j.getString("comment");
 
             auto result = usecase.forward(tenantId, id, toUser, comment);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task forwarded");
@@ -230,7 +235,8 @@ class TaskController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.completeTask(tenantId, id)(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task completed");
@@ -252,7 +258,8 @@ class TaskController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.cancelTask(tenantId, id)(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task cancelled");
@@ -271,7 +278,8 @@ class TaskController : ManageController {
             auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteTask(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Task deleted");

@@ -45,7 +45,8 @@ class UserSessionController : ManageController {
       r.platform = j.getString("platform");
       r.appVersion = j.getString("appVersion");
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -86,7 +87,8 @@ class UserSessionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)
@@ -113,7 +115,8 @@ class UserSessionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.terminate(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -131,7 +134,8 @@ class UserSessionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = UserSessionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.delete(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

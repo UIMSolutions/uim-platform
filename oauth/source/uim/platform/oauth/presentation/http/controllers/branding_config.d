@@ -79,7 +79,8 @@ class BrandingConfigController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createConfig(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Branding config created");
@@ -114,7 +115,8 @@ class BrandingConfigController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateConfig(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Branding config updated");
@@ -135,7 +137,8 @@ class BrandingConfigController : ManageController {
             auto id = BrandingConfigId(extractIdFromPath(path));
             auto result = usecase.deleteConfig(tenantId, id);
 
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Branding config deleted");
                 

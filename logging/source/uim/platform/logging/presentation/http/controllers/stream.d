@@ -45,7 +45,8 @@ class StreamController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createStream(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Log stream created");
@@ -122,7 +123,8 @@ class StreamController : ManageController {
       r.isActive = j.getBoolean("isActive", true);
 
       auto result = usecase.updateStream(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Log stream updated");

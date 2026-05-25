@@ -48,7 +48,8 @@ class SubscriptionController : ManageController {
       r.labels = jsonStrMap(j, "labels");
 
       auto result = usecase.subscribeSubscription(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Subscription successful");

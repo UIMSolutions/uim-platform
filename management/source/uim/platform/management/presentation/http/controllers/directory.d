@@ -49,7 +49,8 @@ class DirectoryController : ManageController {
       r.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Directory created");
@@ -111,7 +112,8 @@ class DirectoryController : ManageController {
       request.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = usecase.update(tenantId, id, request);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Directory updated");
@@ -129,7 +131,8 @@ class DirectoryController : ManageController {
       auto id = DirectoryId(extractId(req.requestURI));
 
       auto result = usecase.deleteDirectory(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Directory deleted");

@@ -74,7 +74,8 @@ class ConfigurationController : ManageController {
     // r.inputArtifacts = jsonKeyValuePairs(j, "inputArtifactBindings");
   
     auto result = usecase.createConfiguration(r);
-    if (result.success) {
+    if (result.hasError)
+            return errorResponse(result.message, 400);
       auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Configuration created");

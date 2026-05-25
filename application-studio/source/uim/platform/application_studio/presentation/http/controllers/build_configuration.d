@@ -28,99 +28,100 @@ class BuildConfigurationController : ManageController {
         router.delete_("/api/v1/application-studio/build-configurations/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listBuildConfigurations(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listBuildConfigurations(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Build configuration list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = BuildConfigurationId(extractIdFromPath(path));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getBuildConfiguration(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Build configuration not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        BuildConfigurationDTO dto;
+        dto.configId = data.getString("id");
+        dto.tenantId = tenantId;
+        dto.projectId = data.getString("projectId");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.buildCommand = data.getString("buildCommand");
+        dto.deployCommand = data.getString("deployCommand");
+        dto.artifactPath = data.getString("artifactPath");
+        dto.mtaDescriptor = data.getString("mtaDescriptor");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createBuildConfiguration(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.configId);
+
+        return successResponse("Build configuration created successfully", "Created", 201, resp);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            BuildConfigurationDTO dto;
-            dto.id = j.getString("id");
-            dto.tenantId = tenantId;
-            dto.projectId = j.getString("projectId");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.buildCommand = j.getString("buildCommand");
-            dto.deployCommand = j.getString("deployCommand");
-            dto.artifactPath = j.getString("artifactPath");
-            dto.mtaDescriptor = j.getString("mtaDescriptor");
-            dto.createdBy = UserId(j.getString("createdBy"));
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createBuildConfiguration(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Build configuration created");
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = BuildConfigurationId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid build configuration ID", "InvalidId", 400);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = usecase.getBuildConfiguration(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Build configuration not found", "NotFound", 404);
+
+        return successResponse("Build configuration retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            BuildConfigurationDTO dto;
-            dto.id = BuildConfigurationId(extractIdFromPath(path));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.buildCommand = j.getString("buildCommand");
-            dto.deployCommand = j.getString("deployCommand");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto id = BuildConfigurationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid build configuration ID", "InvalidId", 400);
 
-            auto result = usecase.updateBuildConfiguration(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Build configuration updated");
+        auto data = precheck.data;
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        BuildConfigurationDTO dto;
+        dto.configId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.buildCommand = data.getString("buildCommand");
+        dto.deployCommand = data.getString("deployCommand");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateBuildConfiguration(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Build configuration updated successfully", "Updated", 200, resp);
     }
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -130,7 +131,8 @@ class BuildConfigurationController : ManageController {
             auto id = BuildConfigurationId(extractIdFromPath(path));
 
             auto result = usecase.deleteBuildConfiguration(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Build configuration deleted");
 

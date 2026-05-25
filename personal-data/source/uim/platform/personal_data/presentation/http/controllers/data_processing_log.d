@@ -45,7 +45,8 @@ class DataProcessingLogController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createProcessingLog(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Data Processing log entry created");
@@ -109,7 +110,8 @@ class DataProcessingLogController : ManageController {
             auto id = DataProcessingLogId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteProcessingLog(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Processing log entry deleted");

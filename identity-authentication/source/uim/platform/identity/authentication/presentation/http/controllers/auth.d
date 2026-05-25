@@ -52,7 +52,8 @@ class AuthController : PlatformController {
         response["mfaType"] = Json(result.mfaType.to!string);
       }
 
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         response["sessionId"] = Json(result.sessionId);
         response["userId"] = Json(result.userId);
       }

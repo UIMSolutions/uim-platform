@@ -47,7 +47,8 @@ class MetricController : ManageController {
       r.category = j.getString("category");
 
       auto result = usecase.pushMetric(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 

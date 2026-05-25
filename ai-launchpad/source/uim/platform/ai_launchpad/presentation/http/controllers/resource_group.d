@@ -48,7 +48,7 @@ class ResourceGroupController : ManageController {
       .set("resources", jarr)
       .set("message", "Resource groups retrieved");
 
-    return successResoponse("Resource groups retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("Resource groups retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -109,7 +109,8 @@ class ResourceGroupController : ManageController {
       r.labels = jsonPairArray(j, "labels");
 
       auto result = usecase.patchResourceGroup(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Resource group updated");

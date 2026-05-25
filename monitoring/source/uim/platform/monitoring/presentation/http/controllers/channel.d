@@ -54,7 +54,8 @@ class ChannelController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createChannel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Notification channel created");
@@ -120,7 +121,8 @@ class ChannelController : ManageController {
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
 
       auto result = usecase.updateChannel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", result.id)
           .set("message", "Notification channel updated successfully");
@@ -140,7 +142,8 @@ class ChannelController : ManageController {
       auto id = NotificationChannelId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteChannel(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("deleted", true)
           .set("message", "Notification channel deleted successfully");

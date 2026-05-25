@@ -87,7 +87,8 @@ class MeshBridgeController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createBridge(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Mesh bridge created");
@@ -118,7 +119,8 @@ class MeshBridgeController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateBridge(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Mesh bridge updated");
@@ -138,7 +140,8 @@ class MeshBridgeController : ManageController {
             auto path = req.requestURI.to!string;
             auto bridgeId = MeshBridgeId(extractIdFromPath(path));
             auto result = usecase.deleteBridge(tenantId, bridgeId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Mesh bridge deleted");
 

@@ -48,7 +48,8 @@ class ProviderController : ManageController {
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.registerProvider(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Provider registered successfully");
@@ -106,7 +107,8 @@ class ProviderController : ManageController {
       r.authToken = j.getString("authToken");
 
       auto result = usecase.updateProvider(id, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Provider updated successfully");
@@ -125,7 +127,8 @@ class ProviderController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI);
       auto result = usecase.deregisterProvider(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Provider deregistered successfully");
@@ -146,7 +149,8 @@ class ProviderController : ManageController {
       auto providerId = j.getString("providerId");
 
       auto result = usecase.syncProvider(providerId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Provider synced successfully");

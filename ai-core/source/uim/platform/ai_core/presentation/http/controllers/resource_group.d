@@ -39,7 +39,8 @@ class ResourceGroupController : ManageController {
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = groups.createResourceGroup(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("resourceGroupId", result.id)
           .set("message", "Resource group created");
@@ -122,7 +123,8 @@ class ResourceGroupController : ManageController {
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = groups.patchResourceGroup(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("resourceGroupId", result.id)
           .set("message", "Resource group updated");
@@ -142,7 +144,8 @@ class ResourceGroupController : ManageController {
       auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = groups.deleteResourceGroup(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

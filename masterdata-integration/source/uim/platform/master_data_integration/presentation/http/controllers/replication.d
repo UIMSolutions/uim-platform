@@ -54,7 +54,8 @@ class ReplicationController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication job created");
@@ -116,7 +117,8 @@ class ReplicationController : ManageController {
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.startReplicationJob(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication job started");
@@ -134,7 +136,8 @@ class ReplicationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
       auto result = usecase.pauseReplicationJob(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication job paused");
@@ -152,7 +155,8 @@ class ReplicationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
       auto result = usecase.cancelReplicationJob(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication job canceled");
@@ -170,7 +174,8 @@ class ReplicationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteReplicationJob(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Replication job deleted");

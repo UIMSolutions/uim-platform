@@ -42,7 +42,8 @@ class ClientController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.createClient(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("clientId", result.id)
           .set("message", "Client created");
@@ -107,7 +108,8 @@ class ClientController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.patchClient(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("clientId", result.id)
           .set("message", "Client updated");
@@ -128,7 +130,8 @@ class ClientController : ManageController {
       auto tenantId = req.getTenantId;
 
       auto result = usecase.deleteClient(tenantId, ClientId(id));
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

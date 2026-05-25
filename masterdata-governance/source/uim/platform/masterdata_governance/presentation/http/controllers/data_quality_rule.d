@@ -80,7 +80,8 @@ class DataQualityRuleController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDataQualityRule(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data quality rule created"), 201);
@@ -114,7 +115,8 @@ class DataQualityRuleController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateDataQualityRule(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data quality rule updated"), 200);
@@ -132,7 +134,8 @@ class DataQualityRuleController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = DataQualityRuleId(extractIdFromPath(path));
             auto result = usecase.deleteDataQualityRule(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "Data quality rule deleted"), 200);
             } else {
                 writeError(res, 404, result.message);

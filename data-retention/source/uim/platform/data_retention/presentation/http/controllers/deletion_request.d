@@ -36,7 +36,8 @@ class DeletionRequestController : ManageController {
             r.requestedBy = j.getString("requestedBy");
 
             auto result = usecase.createDeletionRequest(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.message);
@@ -116,7 +117,8 @@ class DeletionRequestController : ManageController {
             r.errorMessage = j.getString("errorMessage");
 
             auto result = usecase.updateDeletionRequest(id, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
                 writeError(res, 400, result.message);
@@ -132,7 +134,8 @@ class DeletionRequestController : ManageController {
             auto id = DeletionRequestId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteDeletionRequest(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 404, result.message);

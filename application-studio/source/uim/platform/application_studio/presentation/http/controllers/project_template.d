@@ -79,7 +79,8 @@ class ProjectTemplateController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createProjectTemplate(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Project template created");
@@ -108,7 +109,8 @@ class ProjectTemplateController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateProjectTemplate(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Project template updated");
@@ -128,7 +130,8 @@ class ProjectTemplateController : ManageController {
             auto id = ProjectTemplateId(extractIdFromPath(path));
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteProjectTemplate(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Project template deleted");
 

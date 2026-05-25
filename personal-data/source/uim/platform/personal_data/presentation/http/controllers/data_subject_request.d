@@ -44,7 +44,8 @@ class DataSubjectRequestController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject request created");
@@ -123,7 +124,8 @@ class DataSubjectRequestController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject request updated");
@@ -142,7 +144,8 @@ class DataSubjectRequestController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = DataSubjectRequestId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteDataSubjectRequest(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Data subject request deleted");

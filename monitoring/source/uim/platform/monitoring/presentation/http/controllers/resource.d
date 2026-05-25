@@ -53,7 +53,8 @@ class ResourceController : ManageController {
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.register(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Resource created successfully");
@@ -119,7 +120,8 @@ class ResourceController : ManageController {
       r.tags = getStrings(j, "tags");
 
       auto result = usecase.updateResource(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Resource updated successfully");
@@ -139,7 +141,8 @@ class ResourceController : ManageController {
       auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteMonitoredResource(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Resource deleted successfully");

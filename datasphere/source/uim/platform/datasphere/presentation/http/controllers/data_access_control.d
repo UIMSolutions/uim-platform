@@ -45,7 +45,8 @@ class DataAccessControlController : ManageController {
         .map!(v => UserId(v.to!string)).array.toJson;
 
       auto result = usecase.createDataAccessControl(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Data access control created");
@@ -124,7 +125,8 @@ class DataAccessControlController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteDataAccessControl(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Data access control deleted"); 
 

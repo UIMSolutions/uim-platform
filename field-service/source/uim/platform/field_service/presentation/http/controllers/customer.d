@@ -80,7 +80,8 @@ class CustomerController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createCustomer(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Customer created");
@@ -112,7 +113,8 @@ class CustomerController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateCustomer(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Customer updated");
@@ -132,7 +134,8 @@ class CustomerController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = CustomerId(extractIdFromPath(path));
             auto result = usecase.deleteCustomer(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Customer deleted");
                   

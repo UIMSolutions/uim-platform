@@ -45,7 +45,8 @@ class BackupController : ManageController {
       r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Backup created");
@@ -129,7 +130,8 @@ class BackupController : ManageController {
       r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Backup updated");
@@ -148,7 +150,8 @@ class BackupController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = BackupId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteBackup(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

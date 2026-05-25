@@ -80,7 +80,8 @@ class ServiceCallController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createServiceCall(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Service call created");
@@ -111,7 +112,8 @@ class ServiceCallController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateServiceCall(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Service call updated");
@@ -132,7 +134,8 @@ class ServiceCallController : ManageController {
             auto id = ServiceCallId(extractIdFromPath(path));
             
             auto result = usecase.deleteServiceCall(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Service call deleted");
                   

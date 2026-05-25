@@ -37,7 +37,8 @@ class LegalGroundController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createLegalGround(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.message);
@@ -111,7 +112,8 @@ class LegalGroundController : ManageController {
             r.referenceDate = jsonLong(j, "referenceDate");
 
             auto result = usecase.updateLegalGround(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Legal ground updated successfully");

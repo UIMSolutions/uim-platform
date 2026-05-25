@@ -76,7 +76,8 @@ class ExecutionController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = executions.createExecution(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Execution created");
@@ -100,7 +101,8 @@ class ExecutionController : ManageController {
             dto.executionId = ExecutionId(extractIdFromPath(path));
 
             auto result = executions.updateExecution(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Execution updated");
@@ -121,7 +123,8 @@ class ExecutionController : ManageController {
             auto id = ExecutionId(extractIdFromPath(path));
 
             auto result = executions.deleteExecution(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Execution deleted");

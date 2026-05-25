@@ -42,7 +42,7 @@ class ProjectController : ManageController {
             .set("count", items.length)
             .set("resources", jarr);
 
-        return successResoponse("Project list retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("Project list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {

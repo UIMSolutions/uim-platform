@@ -45,7 +45,8 @@ class RetentionRuleController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Retention rule created");
@@ -111,7 +112,8 @@ class RetentionRuleController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Retention rule updated");
@@ -131,7 +133,8 @@ class RetentionRuleController : ManageController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteRetentionRule(id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Retention rule deleted");

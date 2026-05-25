@@ -36,7 +36,8 @@ class ResidenceRuleController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createResidenceRule(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("businessPurposeId", r.businessPurposeId.value)
@@ -114,7 +115,8 @@ class ResidenceRuleController : ManageController {
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateResidenceRule(id, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("duration", r.duration)

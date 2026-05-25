@@ -66,7 +66,8 @@ class MtaOperationController : ManageController {
             auto bare = path[0 .. path.indexOf("/poll")];
             auto id = MtaOperationId(extractIdFromPath(bare));
             auto result = usecase.pollOperation(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto op = usecase.getOperation(tenantId, id);
                 res.writeJsonBody(op.toJson, 200);
             } else {
@@ -89,7 +90,8 @@ class MtaOperationController : ManageController {
             r.abortedBy   = j.getString("abortedBy");
 
             auto result = usecase.abortOperation(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "Operation aborted"), 200);
             } else {
                 writeError(res, 400, result.message);

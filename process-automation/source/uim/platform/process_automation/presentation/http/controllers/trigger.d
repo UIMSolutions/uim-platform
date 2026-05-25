@@ -49,7 +49,8 @@ class TriggerController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = triggerUsecase.createTrigger(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trigger created");
@@ -141,7 +142,8 @@ class TriggerController : ManageController {
             r.filterExpression = j.getString("filterExpression");
 
             auto result = triggerUsecase.updateTrigger(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trigger updated");
@@ -161,7 +163,8 @@ class TriggerController : ManageController {
 
             auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
             auto result = triggerUsecase.deleteTrigger(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trigger deleted");

@@ -45,7 +45,8 @@ class ScenarioController : ManageController {
       r.labels = getStrings(j, "labels");
 
       auto result = usecase.syncScenario(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Scenario synced");
@@ -108,7 +109,8 @@ class ScenarioController : ManageController {
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteScenario(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Scenario deleted successfully");

@@ -75,7 +75,8 @@ class OAuthScopeController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createScope(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "OAuth scope created");
@@ -102,7 +103,8 @@ class OAuthScopeController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateScope(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "OAuth scope updated");
@@ -122,7 +124,8 @@ class OAuthScopeController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = OAuthScopeId(extractIdFromPath(path));
             auto result = usecase.deleteOAuthScope(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "OAuth scope deleted");
 

@@ -40,7 +40,8 @@ class WorkspaceController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.createWorkspace(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Workspace created");
@@ -102,7 +103,8 @@ class WorkspaceController : ManageController {
       r.description = j.getString("description");
 
       auto result = usecase.patchWorkspace(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Workspace updated");
 
@@ -121,7 +123,8 @@ class WorkspaceController : ManageController {
       auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteWorkspace(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Workspace deleted");
 

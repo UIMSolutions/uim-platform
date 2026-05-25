@@ -47,7 +47,8 @@ class TaskChainController : ManageController {
       // r.updatedAt = now;
 
       auto result = usecase.createTaskChain(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Task chain created");
@@ -125,7 +126,8 @@ class TaskChainController : ManageController {
       auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteTaskChain(tenantId, spaceId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

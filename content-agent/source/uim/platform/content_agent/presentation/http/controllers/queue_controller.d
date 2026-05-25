@@ -46,7 +46,8 @@ class QueueController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createQueue(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Queue created successfully");
@@ -105,7 +106,8 @@ class QueueController : ManageController {
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = usecase.updateQueue(id, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Queue updated successfully");
@@ -124,7 +126,8 @@ class QueueController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = QueueId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteQueue(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Queue deleted successfully");

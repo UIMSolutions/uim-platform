@@ -41,7 +41,8 @@ class UserTaskFilterController : ManageController {
             r.description = j.getString("description");
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Filter created");
@@ -112,7 +113,8 @@ class UserTaskFilterController : ManageController {
             r.description = j.getString("description");
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Filter updated");
@@ -136,7 +138,8 @@ class UserTaskFilterController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Filter set as default");
@@ -155,7 +158,8 @@ class UserTaskFilterController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteUserTaskFilter(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Filter deleted");

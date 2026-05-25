@@ -80,7 +80,8 @@ class TriggerController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createTrigger(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trigger created");
@@ -111,7 +112,8 @@ class TriggerController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateTrigger(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Trigger updated");
@@ -132,7 +134,8 @@ class TriggerController : ManageController {
             auto id = TriggerId(extractIdFromPath(path));
 
             auto result = usecase.deleteTrigger(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Trigger deleted");
 

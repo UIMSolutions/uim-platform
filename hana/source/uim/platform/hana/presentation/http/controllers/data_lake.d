@@ -43,7 +43,8 @@ class DataLakeController : ManageController {
       r.storage = jsonKeyValuePairs(j, "storage");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Data lake created");
@@ -124,7 +125,8 @@ class DataLakeController : ManageController {
       r.computeNodes = j.getInteger("computeNodes", 1);
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Data lake updated");
@@ -143,7 +145,8 @@ class DataLakeController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = DataLakeId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteDataLake(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

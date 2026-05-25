@@ -111,7 +111,8 @@ class ServiceBindingController : ManageController {
       auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
 
       auto result = usecase.revokeBinding(tenantId, ServiceBindingId(id));
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("revoked", true)
           .set("message", "Service binding revoked");

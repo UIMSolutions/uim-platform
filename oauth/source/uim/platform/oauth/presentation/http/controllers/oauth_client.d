@@ -87,7 +87,8 @@ class OAuthClientController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createClient(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "OAuth client created");
@@ -118,7 +119,8 @@ class OAuthClientController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateClient(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "OAuth client updated");
@@ -139,7 +141,8 @@ class OAuthClientController : ManageController {
             auto id = OAuthClientId(extractIdFromPath(path));
             
             auto result = usecase.deleteClient(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "OAuth client deleted");
 

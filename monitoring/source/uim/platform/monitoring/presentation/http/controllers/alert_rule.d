@@ -55,7 +55,8 @@ class AlertRuleController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Alert rule created successfully");
@@ -122,7 +123,8 @@ class AlertRuleController : ManageController {
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
       auto result = usecase.updateRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Alert rule updated successfully");
@@ -141,7 +143,8 @@ class AlertRuleController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = AlertRuleId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteRule(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Alert rule deleted successfully");

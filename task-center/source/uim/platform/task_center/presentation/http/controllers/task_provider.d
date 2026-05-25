@@ -48,7 +48,8 @@ class TaskProviderController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider created");
@@ -116,7 +117,8 @@ class TaskProviderController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider updated");
@@ -139,7 +141,8 @@ class TaskProviderController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.activate(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider activated");
@@ -162,7 +165,8 @@ class TaskProviderController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.deactivate(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider deactivated");
@@ -185,7 +189,8 @@ class TaskProviderController : ManageController {
             auto tenantId = req.getTenantId;
 
             auto result = usecase.sync(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider sync initiated");
@@ -205,7 +210,8 @@ class TaskProviderController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteTaskProvider(tenantId, TaskProviderId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Provider deleted");

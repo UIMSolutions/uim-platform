@@ -45,7 +45,8 @@ class FormController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = formUsecase.createForm(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Form created");
@@ -131,7 +132,8 @@ class FormController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = formUsecase.updateForm(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Form updated");
@@ -152,7 +154,8 @@ class FormController : ManageController {
 
             auto id = FormId(extractIdFromPath(req.requestURI.to!string));
             auto result = formUsecase.deleteForm(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Form deleted");

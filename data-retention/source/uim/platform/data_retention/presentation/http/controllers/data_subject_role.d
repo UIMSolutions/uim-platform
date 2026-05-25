@@ -32,7 +32,8 @@ class DataSubjectRoleController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDataSubjectRole(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("name", r.name)
@@ -94,7 +95,8 @@ class DataSubjectRoleController : ManageController {
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateDataSubjectRole(tenantId, id, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("name", r.name)

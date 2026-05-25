@@ -88,7 +88,8 @@ class EventApplicationController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createApplication(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Event application created");
@@ -121,7 +122,8 @@ class EventApplicationController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateApplication(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Event application updated");
@@ -142,7 +144,8 @@ class EventApplicationController : ManageController {
             auto id = EventApplicationId(extractIdFromPath(path));
 
             auto result = usecase.deleteApplication(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Event application deleted");
 

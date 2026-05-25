@@ -45,7 +45,8 @@ class AutomationRuleController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createAutomationRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Automation rule created");
@@ -141,7 +142,8 @@ class AutomationRuleController : ManageController {
       r.updatedBy = UserId(j.getString("updatedBy"));
 
       auto result = usecase.updateAutomationRule(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Automation rule updated");
@@ -161,7 +163,8 @@ class AutomationRuleController : ManageController {
 
       auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteAutomationRule(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Automation rule deleted");

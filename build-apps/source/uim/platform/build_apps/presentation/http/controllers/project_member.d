@@ -77,7 +77,8 @@ class ProjectMemberController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createProjectMember(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Project member added");
@@ -106,7 +107,8 @@ class ProjectMemberController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateProjectMember(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Project member updated");
@@ -127,7 +129,8 @@ class ProjectMemberController : ManageController {
             auto id = ProjectMemberId(extractIdFromPath(path));
 
             auto result = usecase.deleteProjectMember(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Project member deleted");
                   

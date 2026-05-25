@@ -80,7 +80,8 @@ class AuthorizationCodeController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createCode(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Authorization code created");
@@ -101,7 +102,8 @@ class AuthorizationCodeController : ManageController {
             auto id = AuthorizationCodeId(extractIdFromPath(path));
 
             auto result = usecase.markUsedCode(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", id)
                     .set("message", "Authorization code marked as used");
@@ -121,7 +123,8 @@ class AuthorizationCodeController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = AuthorizationCodeId(extractIdFromPath(path));
             auto result = usecase.deleteCode(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Authorization code deleted");
 

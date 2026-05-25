@@ -48,7 +48,8 @@ class ConnectorController : ManageController {
       r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
       auto result = usecase.registerConnector(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Connector registered successfully");
@@ -112,7 +113,8 @@ class ConnectorController : ManageController {
       r.connectorVersion = j.getString("connectorVersion");
 
       auto result = usecase.heartbeat(tenantId, connectorId, r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("status", "acknowledged")
           .set("message", "Heartbeat received");
@@ -131,7 +133,8 @@ class ConnectorController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ConnectorId(extractIdFromPath(req.requestURI));
       auto result = usecase.unregister(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Connector unregistered successfully");

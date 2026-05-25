@@ -74,7 +74,8 @@ class ChangeRequestController : ManageController {
             dto.requestedBy = UserId(j.getString("requestedBy"));
 
             auto result = usecase.createChangeRequest(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Change request created"), 201);
@@ -112,7 +113,8 @@ class ChangeRequestController : ManageController {
                 return;
             }
 
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Change request updated"), 200);
@@ -130,7 +132,8 @@ class ChangeRequestController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = ChangeRequestId(extractIdFromPath(path));
             auto result = usecase.deleteChangeRequest(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("message", "Change request deleted"), 200);
             } else {
                 writeError(res, 404, result.message);

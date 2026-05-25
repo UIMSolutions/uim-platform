@@ -41,7 +41,8 @@ class MtaController : ManageController {
             r.namespace_          = j.getString("namespace");
 
             auto result = usecase.deployMta(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("operationId", result.id)
@@ -94,7 +95,8 @@ class MtaController : ManageController {
             r.updatedBy           = j.getString("updatedBy");
 
             auto result = usecase.updateMta(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("operationId", result.id)
@@ -117,7 +119,8 @@ class MtaController : ManageController {
             r.deletedBy = req.json.getString("deletedBy");
 
             auto result = usecase.deleteMta(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(
                     Json.emptyObject
                         .set("operationId", result.id)

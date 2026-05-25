@@ -64,7 +64,8 @@ class MessageClientController : ManageController {
             dto.permittedNamespace = j.getString("permittedNamespace");
             dto.createdBy          = UserId(j.getString("createdBy"));
             auto result = usecase.createClient(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -84,7 +85,8 @@ class MessageClientController : ManageController {
             dto.permittedNamespace = j.getString("permittedNamespace");
             dto.updatedBy          = UserId(j.getString("updatedBy"));
             auto result = usecase.updateClient(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -95,7 +97,8 @@ class MessageClientController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = MessageClientId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteClient(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

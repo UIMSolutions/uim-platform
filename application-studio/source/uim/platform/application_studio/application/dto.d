@@ -12,12 +12,13 @@ mixin(ShowModule!());
 @safe:
 
 struct DevSpaceDTO {
-    DevSpaceId devSpaceId;
+    DevSpaceId spaceId;
     TenantId tenantId;
+
     string name;
     string description;
     string plan;
-    DevSpaceTypeId devSpaceTypeId;
+    DevSpaceTypeId typeId;
     string extensions;
     string owner;
     string region;
@@ -29,7 +30,7 @@ struct DevSpaceDTO {
 }
 
 struct DevSpaceTypeDTO {
-    DevSpaceTypeId devSpaceTypeId;
+    DevSpaceTypeId typeId;
     TenantId tenantId;
     string name;
     string description;
@@ -62,11 +63,11 @@ struct ExtensionDTO {
 struct ProjectDTO {
     ProjectId projectId;
     TenantId tenantId;
-    DevSpaceId devSpaceId;
+    DevSpaceId spaceId;
     string name;
     string description;
     string projectType;
-    ProjectTemplateId projectTemplateId;
+    ProjectTemplateId templateId;
     string rootPath;
     string gitRepositoryUrl;
     string gitBranch;
@@ -76,7 +77,7 @@ struct ProjectDTO {
 }
 
 struct ProjectTemplateDTO {
-    ProjectTemplateId projectTemplateId;
+    ProjectTemplateId templateId;
     TenantId tenantId;
     string name;
     string description;
@@ -92,9 +93,9 @@ struct ProjectTemplateDTO {
 }
 
 struct ServiceBindingDTO {
-    ServiceBindingId serviceBindingId;
+    ServiceBindingId bindingId;
     TenantId tenantId;
-    DevSpaceId devSpaceId;
+    DevSpaceId spaceId;
     string name;
     string description;
     string providerType;
@@ -108,7 +109,7 @@ struct ServiceBindingDTO {
 }
 
 struct RunConfigurationDTO {
-    RunConfigurationId runConfigurationId;
+    RunConfigurationId configId;
     TenantId tenantId;
     ProjectId projectId;
     string name;
@@ -124,7 +125,7 @@ struct RunConfigurationDTO {
 }
 
 struct BuildConfigurationDTO {
-    BuildConfigurationId buildConfigurationId;
+    BuildConfigurationId configId;
     TenantId tenantId;
     ProjectId projectId;
     string name;

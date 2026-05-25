@@ -47,7 +47,8 @@ class ProcessController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = processUsecase.createProcess(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process created");
@@ -137,7 +138,8 @@ class ProcessController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = processUsecase.updateProcess(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process updated");
@@ -173,7 +175,8 @@ class ProcessController : ManageController {
             r.action = j.getString("action");
 
             auto result = processUsecase.deployProcess(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process deployment action performed: " ~ r.action);
@@ -193,7 +196,8 @@ class ProcessController : ManageController {
 
             auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
             auto result = processUsecase.deleteProcess(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Process deleted");

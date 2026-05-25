@@ -49,7 +49,8 @@ class ChannelController : ManageController {
       r.backendPort = getUshort(j, "backendPort");
 
       auto result = usecase.createChannel(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Channel created");
@@ -107,7 +108,8 @@ class ChannelController : ManageController {
       auto tenantId = req.getTenantId;
 
       auto result = usecase.openChannel(tenantId, channelId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "opened")
@@ -133,7 +135,8 @@ class ChannelController : ManageController {
       auto channelId = ChannelId(parts[$ - 2]);
 
       auto result = usecase.closeChannel(tenantId, channelId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "closed")
@@ -153,7 +156,8 @@ class ChannelController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = ChannelId(extractIdFromPath(req.requestURI));
       auto result = usecase.deleteChannel(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("deleted", true)

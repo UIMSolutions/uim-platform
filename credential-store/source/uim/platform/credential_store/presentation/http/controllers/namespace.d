@@ -42,7 +42,8 @@ class NamespaceController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createNamespace(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Namespace created successfully");
@@ -119,7 +120,8 @@ class NamespaceController : ManageController {
       request.description = j.getString("description");
 
       auto result = usecase.updateNamespace(request);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Namespace updated successfully");
@@ -139,7 +141,8 @@ class NamespaceController : ManageController {
       auto id = NamespaceId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteNamespace(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 400, result.message);

@@ -82,7 +82,8 @@ class ServiceBindingController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createServiceBinding(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Service binding created");
@@ -109,7 +110,8 @@ class ServiceBindingController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateServiceBinding(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Service binding updated");
@@ -130,7 +132,8 @@ class ServiceBindingController : ManageController {
             auto id = ServiceBindingId(extractIdFromPath(path));
 
             auto result = usecase.deleteServiceBinding(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Service binding deleted");
 

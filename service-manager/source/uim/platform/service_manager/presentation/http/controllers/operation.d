@@ -73,7 +73,8 @@ class OperationController : ManageController {
             r.description = j.getString("description");
 
             auto result = usecase.createOperation(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -91,7 +92,8 @@ class OperationController : ManageController {
             r.errorMessage = j.getString("errorMessage");
 
             auto result = usecase.updateOperation(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -103,7 +105,8 @@ class OperationController : ManageController {
             auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteOperation(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

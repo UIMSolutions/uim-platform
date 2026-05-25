@@ -78,7 +78,8 @@ class AssignmentController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createAssignment(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
                 response["message"] = Json("Assignment created");
@@ -108,7 +109,8 @@ class AssignmentController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateAssignment(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject;
                 response["id"] = Json(result.id);
                 response["message"] = Json("Assignment updated");
@@ -127,7 +129,8 @@ class AssignmentController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = AssignmentId(extractIdFromPath(path));
             auto result = usecase.deleteAssignment(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject;
                 response["message"] = Json("Assignment deleted");
                 res.writeJsonBody(response, 200);

@@ -84,7 +84,8 @@ class SubscriptionController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createSubscription(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Subscription created");
@@ -113,7 +114,8 @@ class SubscriptionController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateSubscription(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Subscription updated");
@@ -134,7 +136,8 @@ class SubscriptionController : ManageController {
             auto id = EventSubscriptionId(extractIdFromPath(path));
 
             auto result = usecase.deleteSubscription(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Subscription deleted");
 

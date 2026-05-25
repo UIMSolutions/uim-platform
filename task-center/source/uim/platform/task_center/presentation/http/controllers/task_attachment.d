@@ -41,7 +41,8 @@ class TaskAttachmentController : ManageController {
             r.uploadedBy = UserId(j.getString("uploadedBy"));
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Attachment created");
@@ -99,7 +100,8 @@ class TaskAttachmentController : ManageController {
             auto id = TaskAttachmentId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteTaskAttachment(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Attachment deleted");

@@ -36,7 +36,8 @@ class DataSubjectController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDataSubject(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else {
                 writeError(res, 400, result.message);
@@ -103,7 +104,8 @@ class DataSubjectController : ManageController {
             r.roleId = RoleId(j.getString("roleId"));
 
             auto result = usecase.updateDataSubject(id, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else {
                 writeError(res, 400, result.message);
@@ -124,7 +126,8 @@ class DataSubjectController : ManageController {
             auto id = DataSubjectId(id);
 
             auto result = usecase.blockDataSubject(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto response = Json.emptyObject
                     .set("id", result.id)
                     .set("lifecycleStatus", "blocked")

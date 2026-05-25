@@ -44,7 +44,8 @@ class HDIContainerController : ManageController {
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
       auto result = usecase.createHDIContainer(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "HDI Container created");
@@ -128,7 +129,8 @@ class HDIContainerController : ManageController {
       r.grantedSchemas = getStrings(j, "grantedSchemas");
 
       auto result = usecase.updateHDIContainer(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "HDI Container updated");
@@ -148,7 +150,8 @@ class HDIContainerController : ManageController {
       auto id = HDIContainerId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteHDIContainer(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

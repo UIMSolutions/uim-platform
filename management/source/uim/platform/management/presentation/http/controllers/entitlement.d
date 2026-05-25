@@ -50,7 +50,8 @@ class EntitlementController : ManageController {
       r.assignedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.assign(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 

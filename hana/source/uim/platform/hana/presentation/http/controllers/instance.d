@@ -55,7 +55,8 @@ class InstanceController : ManageController {
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Instance created");
@@ -155,7 +156,8 @@ class InstanceController : ManageController {
       r.whitelistedIps = getStrings(j, "whitelistedIps");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Instance updated");
@@ -191,7 +193,8 @@ class InstanceController : ManageController {
       r.action = j.getString("action");
 
       auto result = usecase.performAction(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Action performed: " ~ r.action);
@@ -210,7 +213,8 @@ class InstanceController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = InstanceId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteInstance(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

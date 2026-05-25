@@ -75,7 +75,8 @@ class DestinationController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createDestination(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Destination created successfully");
@@ -160,7 +161,8 @@ class DestinationController : ManageController {
       r.fragmentIds = getStrings(j, "fragmentIds");
 
       auto result = usecase.updateDestination(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Destination updated successfully");
@@ -180,7 +182,8 @@ class DestinationController : ManageController {
       auto id = DestinationId(extractIdFromPath(req.requestURI));
       
       auto result = usecase.deleteDestination(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true);
 

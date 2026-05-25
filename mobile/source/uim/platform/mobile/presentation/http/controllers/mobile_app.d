@@ -47,7 +47,8 @@ class MobileAppController : ManageController {
       r.iconUrl = j.getString("iconUrl");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -89,7 +90,8 @@ class MobileAppController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)
@@ -130,7 +132,8 @@ class MobileAppController : ManageController {
       r.iconUrl = j.getString("iconUrl");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Mobile app updated successfully");
@@ -149,7 +152,8 @@ class MobileAppController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = MobileAppId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteMobileApp(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

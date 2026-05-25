@@ -60,7 +60,8 @@ class ConfigurationController : ManageController {
             r.enableAlertNotifications = j.getBoolean("enableAlertNotifications", false);
 
             auto result = usecase.updateConfiguration(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Configuration updated");

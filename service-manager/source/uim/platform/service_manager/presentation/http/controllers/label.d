@@ -67,7 +67,8 @@ class LabelController : ManageController {
             r.value = j.getString("value");
 
             auto result = usecase.create(req.getTenantId, r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -83,7 +84,8 @@ class LabelController : ManageController {
             r.value = j.getString("value");
 
             auto result = usecase.update(req.getTenantId, LabelId(id), r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -94,7 +96,8 @@ class LabelController : ManageController {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = usecase.deleteLabel(req.getTenantId, LabelId(id));
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

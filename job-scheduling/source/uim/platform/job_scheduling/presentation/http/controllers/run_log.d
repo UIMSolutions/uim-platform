@@ -93,7 +93,8 @@ class RunLogController : ManageController {
             r.executionDurationMs = jsonLong(j, "executionDurationMs");
 
             auto result = usecase.updateStatus(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Run log updated");

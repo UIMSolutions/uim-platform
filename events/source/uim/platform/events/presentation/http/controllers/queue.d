@@ -71,7 +71,8 @@ class QueueController : ManageController {
             dto.ingressEnabled     = j.getBool("ingressEnabled");
             dto.createdBy          = UserId(j.getString("createdBy"));
             auto result = usecase.createQueue(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -93,7 +94,8 @@ class QueueController : ManageController {
             dto.maxRedeliveryCount = j.getString("maxRedeliveryCount");
             dto.updatedBy          = UserId(j.getString("updatedBy"));
             auto result = usecase.updateQueue(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -104,7 +106,8 @@ class QueueController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = QueueId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteQueue(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

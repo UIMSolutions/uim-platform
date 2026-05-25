@@ -44,7 +44,8 @@ class DashboardController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDashboard(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Dashboard created");
@@ -126,7 +127,8 @@ class DashboardController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateDashboard(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Dashboard updated");
@@ -146,7 +148,8 @@ class DashboardController : ManageController {
             auto id = DashboardId(extractIdFromPath(req.requestURI.to!string));
             
             auto result = usecase.deleteDashboard(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Dashboard deleted");

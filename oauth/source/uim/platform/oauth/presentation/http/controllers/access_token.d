@@ -78,7 +78,8 @@ class AccessTokenController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createToken(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Access token created");
@@ -99,7 +100,8 @@ class AccessTokenController : ManageController {
             auto id = AccessTokenId(extractIdFromPath(path));
 
             auto result = usecase.revokeToken(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Access token revoked");
 
@@ -119,7 +121,8 @@ class AccessTokenController : ManageController {
             auto id = AccessTokenId(extractIdFromPath(path));
             
             auto result = usecase.deleteToken(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("message", "Access token deleted");
 

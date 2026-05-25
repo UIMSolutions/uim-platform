@@ -41,7 +41,8 @@ class DeploymentController : ManageController {
       r.ttl = j.getInteger("ttl");
 
       auto result = usercase.createDeployment(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Deployment scheduled")
@@ -108,7 +109,8 @@ class DeploymentController : ManageController {
       request.ttl = j.getInteger("ttl");
 
       auto result = usercase.patchDeployment(request);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Deployment modified");
@@ -129,7 +131,8 @@ class DeploymentController : ManageController {
       auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usercase.deleteDeployment(tenantId, rgId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("status", "deleted")
           .set("message", "Deployment deleted");

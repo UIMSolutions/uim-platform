@@ -46,7 +46,8 @@ class VisibilityController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = visibilityUsecase.createVisibility(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Visibility dashboard created");
@@ -130,7 +131,8 @@ class VisibilityController : ManageController {
             r.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = visibilityUsecase.updateVisibility(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Visibility dashboard updated");
@@ -151,7 +153,8 @@ class VisibilityController : ManageController {
 
             auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
             auto result = visibilityUsecase.deleteVisibility(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Visibility dashboard deleted");

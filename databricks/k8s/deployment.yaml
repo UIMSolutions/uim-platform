@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uim-databricks
+  namespace: uim-platform
+  labels:
+    app: uim-databricks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uim-databricks
+  template:
+    metadata:
+      labels:
+        app: uim-databricks
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: uim-databricks
+        image: uim-databricks-platform-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8104
+          name: http
+        envFrom:
+        - configMapRef:
+            name: databricks-config
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8104
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8104
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3

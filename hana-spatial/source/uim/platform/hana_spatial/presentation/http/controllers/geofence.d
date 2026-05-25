@@ -45,7 +45,8 @@ class GeofenceController : ManageController {
       r.metadata = jsonKeyValuePairs(j, "metadata");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Geofence zone created"), 201);
       } else {
         writeError(res, 400, result.message);
@@ -107,7 +108,8 @@ class GeofenceController : ManageController {
       r.active = j.getBoolean("active");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Geofence zone updated"), 200);
       } else {
         writeError(res, 400, result.message);
@@ -122,7 +124,8 @@ class GeofenceController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.remove(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
       } else {
         writeError(res, 404, result.message);

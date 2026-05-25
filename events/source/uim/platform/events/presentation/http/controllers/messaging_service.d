@@ -69,7 +69,8 @@ class MessagingServiceController : ManageController {
             dto.maxMessageSize  = j.getString("maxMessageSize");
             dto.createdBy   = UserId(j.getString("createdBy"));
             auto result = usecase.createService(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service created"), 201);
             } else { writeError(res, 400, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -92,7 +93,8 @@ class MessagingServiceController : ManageController {
             dto.maxMessageSize = j.getString("maxMessageSize");
             dto.updatedBy   = UserId(j.getString("updatedBy"));
             auto result = usecase.updateService(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service updated"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -103,7 +105,8 @@ class MessagingServiceController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = MessagingServiceId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteService(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Messaging service deleted"), 200);
             } else { writeError(res, 404, result.message); }
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }

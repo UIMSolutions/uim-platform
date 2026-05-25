@@ -48,7 +48,8 @@ class DatasetController : ManageController {
       r.labels = getStrings(j, "labels");
 
       auto result = usecase.registerDataset(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Dataset registered");
@@ -121,7 +122,8 @@ class DatasetController : ManageController {
       r.status = j.getString("status");
 
       auto result = usecase.patchDataset(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Dataset updated successfully");
           
@@ -141,7 +143,8 @@ class DatasetController : ManageController {
       auto id = DatasetId(extractIdFromPath(req.requestURI.to!string));
 
       auto result = usecase.deleteDataset(tenantId, connectionId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("message", "Dataset deleted successfully");
 

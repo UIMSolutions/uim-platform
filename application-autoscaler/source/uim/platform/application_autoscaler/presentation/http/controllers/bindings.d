@@ -20,38 +20,43 @@ class AppBindingController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.post("/api/v1/bindings",      &handleCreate);
-    router.get("/api/v1/bindings",       &handleList);
-    router.get("/api/v1/bindings/*",     &handleGet);
+    router.post("/api/v1/bindings", &handleCreate);
+    router.get("/api/v1/bindings", &handleList);
+    router.get("/api/v1/bindings/*", &handleGet);
     router.delete_("/api/v1/bindings/*", &handleDelete);
     router.post("/api/v1/bindings/*/policy", &handleAttachPolicy);
+  }
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto bindings = usecase.listBindings(tenantId);
+    auto arr = bindings.map!(b => b.toJson()).array.toJson;
+
+    auto response = json.emptyObject
+      .set("items", arr)
+      .set("totalCount", bindings.length);
+
+    return successResponse("Bindings retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
       CreateAppBindingRequest r;
-      r.tenantId         = j.getString("tenant_id");
-      r.appGuid          = j.getString("app_guid");
-      r.appName          = j.getString("app_name");
-      r.serviceInstanceId= j.getString("service_instance_id");
+      r.tenantId = j.getString("tenant_id");
+      r.appGuid = j.getString("app_guid");
+      r.appName = j.getString("app_name");
+      r.serviceInstanceId = j.getString("service_instance_id");
       auto result = usecase.createBinding(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Binding created"), 201);
       else
         writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto bindings = usecase.listBindings(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (b; bindings) arr ~= b.toJson();
-      res.writeJsonBody(Json.emptyObject.set("items", arr).set("totalCount", bindings.length), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

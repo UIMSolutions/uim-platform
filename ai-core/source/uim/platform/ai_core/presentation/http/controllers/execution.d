@@ -40,7 +40,8 @@ class ExecutionController : ManageController {
       r.configurationId = ConfigurationId(j.getString("configurationId"));
 
       auto result = usecase.createExecution(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution scheduled")
@@ -106,7 +107,8 @@ class ExecutionController : ManageController {
       r.targetStatus = j.getString("targetStatus");
 
       auto result = usecase.patchExecution(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Execution modified");
@@ -127,7 +129,8 @@ class ExecutionController : ManageController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteExecution(tenantId, rgId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

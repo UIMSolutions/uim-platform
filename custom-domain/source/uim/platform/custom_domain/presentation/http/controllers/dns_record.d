@@ -44,7 +44,8 @@ class DnsRecordController : ManageController {
             r.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createDnsRecord(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "DNS record created");
@@ -130,7 +131,8 @@ class DnsRecordController : ManageController {
             r.ttl = j.getInteger("ttl");
 
             auto result = usecase.updateDnsRecord(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "DNS record updated");
@@ -150,7 +152,8 @@ class DnsRecordController : ManageController {
             auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
 
             auto result = usecase.deleteDnsRecord(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "DNS record deleted");

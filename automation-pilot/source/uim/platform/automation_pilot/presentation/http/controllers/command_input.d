@@ -68,7 +68,8 @@ class CommandInputController : ManageController {
         dto.createdBy = UserId(j.getString("createdBy"));
 
         auto result = commandInputs.createCommandInput(dto);
-        if (result.success) {
+        if (result.hasError)
+            return errorResponse(result.message, 400);
             auto resp = Json.emptyObject
                 .set("id", result.id)
                 .set("message", "Command Input created");

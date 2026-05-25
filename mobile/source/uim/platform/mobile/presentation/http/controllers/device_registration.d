@@ -44,7 +44,8 @@ class DeviceRegistrationController : ManageController {
       r.userId = j.getString("userId");
       r.deviceToken = j.getString("deviceToken");
       auto result = usecase.register(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -86,7 +87,8 @@ class DeviceRegistrationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.data.id)
           .set("tenantId", result.data.tenantId)
@@ -115,7 +117,8 @@ class DeviceRegistrationController : ManageController {
       auto j = req.json;
       auto status = j.getString("status");
       auto result = usecase.updateStatus(id, status);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
           
@@ -133,7 +136,8 @@ class DeviceRegistrationController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

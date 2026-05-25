@@ -40,7 +40,8 @@ class TaskCommentController : ManageController {
             r.content = j.getString("content");
 
             auto result = usecase.create(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Comment created");
@@ -101,7 +102,8 @@ class TaskCommentController : ManageController {
             r.content = j.getString("content");
 
             auto result = usecase.update(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Comment updated");
@@ -120,7 +122,8 @@ class TaskCommentController : ManageController {
             auto tenantId = req.getTenantId;
             auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
             auto result = usecase.deleteTaskComment(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Comment deleted");

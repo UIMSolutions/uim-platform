@@ -82,7 +82,8 @@ class PermissionController : ManageController {
             dto.description = j.getString("description");
             dto.grantedBy = UserId(j.getString("grantedBy"));
             auto result = usecase.grantPermission(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Permission granted"), 201);
             } else {
                 writeError(res, 400, result.message);

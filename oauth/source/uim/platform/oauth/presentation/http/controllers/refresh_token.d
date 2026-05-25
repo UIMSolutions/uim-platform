@@ -77,7 +77,8 @@ class RefreshTokenController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createToken(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Refresh token created");
@@ -98,7 +99,8 @@ class RefreshTokenController : ManageController {
             auto id = RefreshTokenId(extractIdFromPath(path));
 
             auto result = usecase.revokeToken(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Refresh token revoked");
 
@@ -118,7 +120,8 @@ class RefreshTokenController : ManageController {
             auto id = RefreshTokenId(extractIdFromPath(path));
 
             auto result = usecase.deleteToken(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Refresh token deleted");
 

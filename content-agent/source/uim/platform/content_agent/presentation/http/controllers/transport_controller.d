@@ -49,7 +49,8 @@ class TransportController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createTransportRequest(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Transport request created successfully");
@@ -106,7 +107,8 @@ class TransportController : ManageController {
       r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.releaseTransport(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "released")
@@ -128,7 +130,8 @@ class TransportController : ManageController {
       auto requestId = j.getString("requestId");
 
       auto result = usecase.cancelTransport(requestId);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("status", "cancelled")

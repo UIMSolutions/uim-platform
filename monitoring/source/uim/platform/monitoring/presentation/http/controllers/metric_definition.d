@@ -51,7 +51,8 @@ class MetricDefinitionController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createDefinition(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Metric definition created successfully");
@@ -113,7 +114,8 @@ class MetricDefinitionController : ManageController {
       request.isEnabled = j.getBoolean("isEnabled", true);
 
       auto result = usecase.updateDefinition(request);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Metric definition updated successfully");
@@ -133,7 +135,8 @@ class MetricDefinitionController : ManageController {
       auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
 
       auto result = usecase.deleteMetricDefinition(tenantId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("id", result.id)

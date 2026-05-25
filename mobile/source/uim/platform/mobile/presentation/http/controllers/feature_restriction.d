@@ -47,7 +47,8 @@ class FeatureRestrictionController : ManageController {
       r.metadata = j.getString("metadata");
       r.createdBy = UserId(j.getString("createdBy"));
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id);
 
@@ -90,7 +91,8 @@ class FeatureRestrictionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto result = usecase.get(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", Json(result.data.id))
           .set("tenantId", Json(result.data.tenantId))
@@ -129,7 +131,8 @@ class FeatureRestrictionController : ManageController {
       r.metadata = j.getString("metadata");
       r.updatedBy = UserId(j.getString("updatedBy"));
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Feature restriction updated successfully");
@@ -148,7 +151,8 @@ class FeatureRestrictionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = FeatureRestrictionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteFeatureRestriction(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeBody("", 204);
       } else {
         writeError(res, 400, result.message);

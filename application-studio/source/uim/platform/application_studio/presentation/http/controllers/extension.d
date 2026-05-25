@@ -78,7 +78,8 @@ class ExtensionController : ManageController {
 
             auto tenantId = req.getTenantId;
             auto result = usecase.createExtension(tenantId, dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Extension created");
@@ -106,7 +107,8 @@ class ExtensionController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateExtension(tenantId, dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Extension updated");
@@ -127,7 +129,8 @@ class ExtensionController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(extractIdFromPath(path));
             auto result = usecase.deleteExtension(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Extension deleted");
 

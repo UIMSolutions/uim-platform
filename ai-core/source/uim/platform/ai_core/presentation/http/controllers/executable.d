@@ -45,7 +45,8 @@ class ExecutableController : ManageController {
       r.deployable = j.getString("deployable");
 
       auto result = usecase.createExecutable(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Executable registered");
@@ -130,7 +131,8 @@ class ExecutableController : ManageController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteExecutable(tenantId, rgId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", id)
           .set("message", "Executable deleted");

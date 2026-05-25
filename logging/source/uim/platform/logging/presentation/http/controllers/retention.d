@@ -45,7 +45,8 @@ class RetentionController : ManageController {
       r.createdBy = UserId(j.getString("createdBy"));
 
       auto result = usecase.createRetentionPolicy(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", RetentionPolicyId(result.id))
           .set("message", "Retention policy created");
@@ -127,7 +128,8 @@ class RetentionController : ManageController {
       r.tenantId = tenantId;
 
       auto result = usecase.updateRetentionPolicy(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto response = Json.emptyObject
           .set("id", result.id)
           .set("message", "Retention policy updated");

@@ -139,7 +139,8 @@ class JobController : ManageController {
             r.endTime = getLong(j, "endTime");
 
             auto result = usecase.updateJob(r);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Job updated");
@@ -161,7 +162,8 @@ class JobController : ManageController {
             // Delete all schedules first
             scheduleUsecase.deleteAllSchedules(tenantId, jobId);
             auto result = usecase.deleteJob(tenantId, jobId);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 res.writeJsonBody(Json.emptyObject, 204);
             } else {
                 writeError(res, 404, result.message);

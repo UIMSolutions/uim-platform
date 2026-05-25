@@ -44,7 +44,8 @@ class ArtifactController : ManageController {
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = usecase.createArtifact(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Artifact registered");
@@ -106,7 +107,8 @@ class ArtifactController : ManageController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteArtifact(tenantId, rgId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("status", "deleted")
           .set("message", "Artifact deleted");

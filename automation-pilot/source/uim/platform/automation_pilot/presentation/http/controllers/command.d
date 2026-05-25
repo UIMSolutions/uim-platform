@@ -83,7 +83,8 @@ class CommandController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = commands.createCommand(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Command created");
@@ -115,7 +116,8 @@ class CommandController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = commands.updateCommand(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Command updated");
@@ -136,7 +138,8 @@ class CommandController : ManageController {
             auto id = CommandId(extractIdFromPath(path));
 
             auto result = commands.deleteCommand(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                     .set("id", result.id)
                     .set("message", "Command deleted");

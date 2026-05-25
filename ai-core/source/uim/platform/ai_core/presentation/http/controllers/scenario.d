@@ -44,7 +44,8 @@ class ScenarioController : ManageController {
       r.labels = getStrings(j, "labels");
 
       auto result = usecase.createScenario(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Scenario registered");
@@ -118,7 +119,8 @@ class ScenarioController : ManageController {
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteScenario(tenantId, rgId, id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);

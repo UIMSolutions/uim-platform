@@ -78,7 +78,8 @@ class TechnicianController : ManageController {
             dto.createdBy = UserId(j.getString("createdBy"));
 
             auto result = usecase.createTechnician(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Technician created");
@@ -108,7 +109,8 @@ class TechnicianController : ManageController {
             dto.updatedBy = UserId(j.getString("updatedBy"));
 
             auto result = usecase.updateTechnician(dto);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("id", result.id)
                   .set("message", "Technician updated");
@@ -128,7 +130,8 @@ class TechnicianController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = TechnicianId(extractIdFromPath(path));
             auto result = usecase.deleteTechnician(tenantId, id);
-            if (result.success) {
+            if (result.hasError)
+            return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
                   .set("message", "Technician deleted");
                   

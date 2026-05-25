@@ -50,7 +50,8 @@ class DatabaseConnectionController : ManageController {
       r.properties = jsonKeyValuePairs(j, "properties");
 
       auto result = usecase.create(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Database connection created");
@@ -140,7 +141,8 @@ class DatabaseConnectionController : ManageController {
       r.password = j.getString("password");
 
       auto result = usecase.update(r);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Database connection updated");
@@ -159,7 +161,8 @@ class DatabaseConnectionController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = DatabaseConnectionId(extractIdFromPath(req.requestURI.to!string));
       auto result = usecase.deleteDatabaseConnection(id);
-      if (result.success) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
         writeError(res, 404, result.message);
