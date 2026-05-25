@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PersonalDataRecordController : PlatformController {
+class PersonalDataRecordController : ManageController {
     private ManagePersonalDataRecordsUseCase usecase;
 
     this(ManagePersonalDataRecordsUseCase usecase) {

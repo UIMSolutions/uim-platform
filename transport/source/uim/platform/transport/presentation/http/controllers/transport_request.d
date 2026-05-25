@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TransportRequestController : PlatformController {
+class TransportRequestController : ManageController {
     private ManageTransportRequestsUseCase usecase;
 
     this(ManageTransportRequestsUseCase usecase) {

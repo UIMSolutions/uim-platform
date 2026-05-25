@@ -19,7 +19,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/saas-provisioning/applications/*
 ///   PUT    /api/v1/saas-provisioning/applications/*
 ///   DELETE /api/v1/saas-provisioning/applications/*
-class SaasApplicationController : PlatformController {
+class SaasApplicationController : ManageController {
     private ManageSaasApplicationsUseCase usecase;
 
     this(ManageSaasApplicationsUseCase usecase) {

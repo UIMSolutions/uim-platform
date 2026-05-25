@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionRuleController : PlatformController {
+class RetentionRuleController : ManageController {
     private ManageRetentionRulesUseCase usecase;
 
     this(ManageRetentionRulesUseCase usecase) {

@@ -16,7 +16,7 @@ mixin(ShowModule!());
 /// GET    /api/v1/translation/jobs         — list all jobs for the tenant
 /// GET    /api/v1/translation/jobs/*       — get job status and result
 /// POST   /api/v1/translation/jobs/*/cancel — cancel a pending job
-class TranslationJobController : PlatformController {
+class TranslationJobController : ManageController {
     private ManageTranslationJobsUseCase usecase;
 
     this(ManageTranslationJobsUseCase usecase) {

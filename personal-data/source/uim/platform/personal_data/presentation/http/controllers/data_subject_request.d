@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRequestController : PlatformController {
+class DataSubjectRequestController : ManageController {
     private ManageDataSubjectRequestsUseCase usecase;
 
     this(ManageDataSubjectRequestsUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessingPurposeController : PlatformController {
+class ProcessingPurposeController : ManageController {
     private ManageProcessingPurposesUseCase usecase;
 
     this(ManageProcessingPurposesUseCase usecase) {

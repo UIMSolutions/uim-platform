@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ReplicationController : PlatformController {
+class ReplicationController : ManageController {
     private ManageReplicationsUseCase usecase;
 
     this(ManageReplicationsUseCase usecase) {

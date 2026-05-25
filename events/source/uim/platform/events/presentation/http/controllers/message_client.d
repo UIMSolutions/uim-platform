@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MessageClientController : PlatformController {
+class MessageClientController : ManageController {
     private ManageMessageClientsUseCase usecase;
 
     this(ManageMessageClientsUseCase usecase) { this.usecase = usecase; }

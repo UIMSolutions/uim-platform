@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DnsRecordController : PlatformController {
+class DnsRecordController : ManageController {
     private ManageDnsRecordsUseCase usecase;
 
     this(ManageDnsRecordsUseCase usecase) {

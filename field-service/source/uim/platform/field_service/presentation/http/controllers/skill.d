@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SkillController : PlatformController {
+class SkillController : ManageController {
     private ManageSkillsUseCase usecase;
 
     this(ManageSkillsUseCase usecase) {

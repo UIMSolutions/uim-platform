@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RefreshTokenController : PlatformController {
+class RefreshTokenController : ManageController {
     private ManageRefreshTokensUseCase usecase;
 
     this(ManageRefreshTokensUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomerController : PlatformController {
+class CustomerController : ManageController {
     private ManageCustomersUseCase customers;
 
     this(ManageCustomersUseCase customers) {

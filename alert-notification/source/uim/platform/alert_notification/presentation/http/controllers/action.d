@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActionController : PlatformController {
+class ActionController : ManageController {
     private ManageActionsUseCase usecase;
 
     this(ManageActionsUseCase usecase) { this.usecase = usecase; }

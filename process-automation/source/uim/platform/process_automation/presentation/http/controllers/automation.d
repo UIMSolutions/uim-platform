@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AutomationController : PlatformController {
+class AutomationController : ManageController {
     private ManageAutomationsUseCase automationUsecase;
 
     this(ManageAutomationsUseCase automationUsecase) {

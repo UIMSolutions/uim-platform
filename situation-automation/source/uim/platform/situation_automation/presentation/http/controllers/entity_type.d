@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EntityTypeController : PlatformController {
+class EntityTypeController : ManageController {
     private ManageEntityTypesUseCase usecase;
 
     this(ManageEntityTypesUseCase usecase) {

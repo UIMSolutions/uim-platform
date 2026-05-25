@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SocialIdentityController : PlatformController {
+class SocialIdentityController : ManageController {
     private ManageSocialIdentitiesUseCase socialIdentities;
 
     this(ManageSocialIdentitiesUseCase socialIdentities) {

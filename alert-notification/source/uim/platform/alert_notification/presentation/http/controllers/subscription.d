@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubscriptionController : PlatformController {
+class SubscriptionController : ManageController {
     private ManageSubscriptionsUseCase usecase;
 
     this(ManageSubscriptionsUseCase usecase) { this.usecase = usecase; }

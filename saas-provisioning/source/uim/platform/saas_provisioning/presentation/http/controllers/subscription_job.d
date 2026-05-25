@@ -16,7 +16,7 @@ mixin(ShowModule!());
 ///
 ///   GET /api/v1/saas-provisioning/jobs
 ///   GET /api/v1/saas-provisioning/jobs/*
-class SubscriptionJobController : PlatformController {
+class SubscriptionJobController : ManageController {
     private ManageSubscriptionJobsUseCase usecase;
 
     this(ManageSubscriptionJobsUseCase usecase) {

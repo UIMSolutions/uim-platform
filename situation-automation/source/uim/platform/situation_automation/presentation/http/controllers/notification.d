@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NotificationController : PlatformController {
+class NotificationController : ManageController {
     private ManageNotificationsUseCase usecase;
 
     this(ManageNotificationsUseCase usecase) {

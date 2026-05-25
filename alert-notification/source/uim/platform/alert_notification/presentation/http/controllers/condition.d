@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConditionController : PlatformController {
+class ConditionController : ManageController {
     private ManageConditionsUseCase usecase;
 
     this(ManageConditionsUseCase usecase) { this.usecase = usecase; }

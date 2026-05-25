@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CommandInputController : PlatformController {
+class CommandInputController : ManageController {
     private ManageCommandInputsUseCase commandInputs;
 
     this(ManageCommandInputsUseCase commandInputs) {

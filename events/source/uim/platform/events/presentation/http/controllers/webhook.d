@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class WebhookController : PlatformController {
+class WebhookController : ManageController {
     private ManageWebhooksUseCase usecase;
 
     this(ManageWebhooksUseCase usecase) { this.usecase = usecase; }

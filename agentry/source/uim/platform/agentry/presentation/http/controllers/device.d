@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeviceController : PlatformController {
+class DeviceController : ManageController {
     private ManageDevicesUseCase usecase;
 
     this(ManageDevicesUseCase usecase) {

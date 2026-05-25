@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OperationController : PlatformController {
+class OperationController : ManageController {
     private ManageOperationsUseCase usecase;
 
     this(ManageOperationsUseCase usecase) { this.usecase = usecase; }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// REST /api/v1/slm/operations — list, get, poll, abort async MTA operations.
-class MtaOperationController : PlatformController {
+class MtaOperationController : ManageController {
     private ManageMtaOperationsUseCase usecase;
 
     this(ManageMtaOperationsUseCase usecase) {

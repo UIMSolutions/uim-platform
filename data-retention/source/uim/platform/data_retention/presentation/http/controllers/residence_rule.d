@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ResidenceRuleController : PlatformController {
+class ResidenceRuleController : ManageController {
     private ManageResidenceRulesUseCase usecase;
 
     this(ManageResidenceRulesUseCase usecase) {

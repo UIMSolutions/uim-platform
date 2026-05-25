@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ArtifactController : PlatformController {
+class ArtifactController : ManageController {
     private ManageArtifactsUseCase artifactUsecase;
 
     this(ManageArtifactsUseCase artifactUsecase) {

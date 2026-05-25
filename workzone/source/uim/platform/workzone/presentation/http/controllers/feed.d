@@ -17,7 +17,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class FeedController : PlatformController {
+class FeedController : ManageController {
     private ManageFeedsUseCase useCase;
 
     this(ManageFeedsUseCase useCase) {

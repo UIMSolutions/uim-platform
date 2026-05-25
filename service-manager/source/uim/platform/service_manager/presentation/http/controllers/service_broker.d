@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceBrokerController : PlatformController {
+class ServiceBrokerController : ManageController {
     private ManageServiceBrokersUseCase usecase;
 
     this(ManageServiceBrokersUseCase usecase) { this.usecase = usecase; }

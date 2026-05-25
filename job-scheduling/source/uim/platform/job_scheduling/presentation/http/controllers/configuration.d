@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConfigurationController : PlatformController {
+class ConfigurationController : ManageController {
     private ManageConfigurationsUseCase usecase;
 
     this(ManageConfigurationsUseCase usecase) {

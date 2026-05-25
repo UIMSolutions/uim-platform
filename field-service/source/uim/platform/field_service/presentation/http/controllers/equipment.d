@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EquipmentController : PlatformController {
+class EquipmentController : ManageController {
     private ManageEquipmentUseCase usecase;
 
     this(ManageEquipmentUseCase usecase) {

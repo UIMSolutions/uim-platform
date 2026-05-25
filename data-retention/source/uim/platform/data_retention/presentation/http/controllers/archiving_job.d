@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ArchivingJobController : PlatformController {
+class ArchivingJobController : ManageController {
     private ManageArchivingJobsUseCase usecase;
 
     this(ManageArchivingJobsUseCase usecase) {

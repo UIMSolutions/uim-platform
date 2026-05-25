@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BusinessPartnerController : PlatformController {
+class BusinessPartnerController : ManageController {
     private ManageBusinessPartnersUseCase usecase;
 
     this(ManageBusinessPartnersUseCase usecase) {

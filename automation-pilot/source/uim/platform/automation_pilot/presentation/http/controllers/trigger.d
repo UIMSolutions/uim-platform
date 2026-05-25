@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TriggerController : PlatformController {
+class TriggerController : ManageController {
     private ManageTriggersUseCase usecase;
 
     this(ManageTriggersUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class FolderController : PlatformController {
+class FolderController : ManageController {
     private ManageFoldersUseCase usecase;
 
     this(ManageFoldersUseCase usecase) {

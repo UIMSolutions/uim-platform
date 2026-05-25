@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DashboardController : PlatformController {
+class DashboardController : ManageController {
     private ManageDashboardsUseCase usecase;
 
     this(ManageDashboardsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SituationInstanceController : PlatformController {
+class SituationInstanceController : ManageController {
     private ManageSituationInstancesUseCase usecase;
 
     this(ManageSituationInstancesUseCase usecase) {

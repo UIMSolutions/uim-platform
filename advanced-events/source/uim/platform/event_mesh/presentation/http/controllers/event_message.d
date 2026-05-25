@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EventMessageController : PlatformController {
+class EventMessageController : ManageController {
     private ManageEventMessagesUseCase usecase;
 
     this(ManageEventMessagesUseCase usecase) {

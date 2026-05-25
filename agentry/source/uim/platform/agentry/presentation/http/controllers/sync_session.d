@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SyncSessionController : PlatformController {
+class SyncSessionController : ManageController {
     private ManageSyncSessionsUseCase usecase;
 
     this(ManageSyncSessionsUseCase usecase) {

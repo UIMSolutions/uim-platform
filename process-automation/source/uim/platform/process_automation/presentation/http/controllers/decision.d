@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DecisionController : PlatformController {
+class DecisionController : ManageController {
     private ManageDecisionsUseCase decisionUsecase;
 
     this(ManageDecisionsUseCase decisionUsecase) {

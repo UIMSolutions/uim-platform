@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueController : PlatformController {
+class QueueController : ManageController {
     private ManageQueuesUseCase usecase;
 
     this(ManageQueuesUseCase usecase) { this.usecase = usecase; }

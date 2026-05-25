@@ -17,7 +17,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/abap/programs/*        — get program by ID
 ///   PUT    /api/v1/abap/programs/*        — full update
 ///   DELETE /api/v1/abap/programs/*        — delete
-class ProgramController : PlatformController {
+class ProgramController : ManageController {
     private ManageProgramsUseCase usecase;
 
     this(ManageProgramsUseCase usecase) {

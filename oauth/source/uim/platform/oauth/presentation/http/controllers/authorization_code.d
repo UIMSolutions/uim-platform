@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AuthorizationCodeController : PlatformController {
+class AuthorizationCodeController : ManageController {
     private ManageAuthorizationCodesUseCase usecase;
 
     this(ManageAuthorizationCodesUseCase usecase) {

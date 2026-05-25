@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceAccountController : PlatformController {
+class ServiceAccountController : ManageController {
     private ManageServiceAccountsUseCase usecase;
 
     this(ManageServiceAccountsUseCase usecase) {

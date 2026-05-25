@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScheduledExecutionController : PlatformController {
+class ScheduledExecutionController : ManageController {
     private ManageScheduledExecutionsUseCase scheduledExecutions;
 
     this(ManageScheduledExecutionsUseCase scheduledExecutions) {

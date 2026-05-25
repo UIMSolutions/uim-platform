@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScreenSetController : PlatformController {
+class ScreenSetController : ManageController {
     private ManageScreenSetsUseCase screenSets;
 
     this(ManageScreenSetsUseCase screenSets) {

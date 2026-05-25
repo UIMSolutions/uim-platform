@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApplicationGroupController : PlatformController {
+class ApplicationGroupController : ManageController {
     private ManageApplicationGroupsUseCase usecase;
 
     this(ManageApplicationGroupsUseCase usecase) {

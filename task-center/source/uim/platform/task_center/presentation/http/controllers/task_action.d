@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskActionController : PlatformController {
+class TaskActionController : ManageController {
     private ManageTaskActionsUseCase usecase;
 
     this(ManageTaskActionsUseCase usecase) {

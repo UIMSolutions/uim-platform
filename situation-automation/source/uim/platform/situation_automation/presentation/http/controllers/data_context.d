@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataContextController : PlatformController {
+class DataContextController : ManageController {
     private ManageDataContextsUseCase usecase;
 
     this(ManageDataContextsUseCase usecase) {

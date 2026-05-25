@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentController : PlatformController {
+class DocumentController : ManageController {
     private ManageDocumentsUseCase usecase;
 
     this(ManageDocumentsUseCase usecase) {

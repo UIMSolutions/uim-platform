@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderController : PlatformController {
+class IdentityProviderController : ManageController {
     private ManageIdentityProvidersUseCase identityProviders;
 
     this(ManageIdentityProvidersUseCase identityProviders) {

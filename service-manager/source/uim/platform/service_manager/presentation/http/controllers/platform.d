@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EnvironmentController : PlatformController {
+class EnvironmentController : ManageController {
     private ManagePlatformsUseCase usecase;
 
     this(ManagePlatformsUseCase usecase) {

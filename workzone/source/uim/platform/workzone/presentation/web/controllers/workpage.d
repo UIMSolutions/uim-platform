@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// Web MVC controller — renders HTML for workpage management under a workspace.
 /// Routes: /ui/workspaces/{wsId}/pages
-class WorkpageWebController : PlatformController {
+class WorkpageWebController : ManageController {
     private ManageWorkpagesUseCase workpageUseCase;
     private ManageWorkspacesUseCase workspaceUseCase;
 

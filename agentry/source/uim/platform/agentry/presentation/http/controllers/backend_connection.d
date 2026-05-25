@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BackendConnectionController : PlatformController {
+class BackendConnectionController : ManageController {
     private ManageBackendConnectionsUseCase usecase;
 
     this(ManageBackendConnectionsUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ChangeRequestController : PlatformController {
+class ChangeRequestController : ManageController {
     private ManageChangeRequestsUseCase usecase;
 
     this(ManageChangeRequestsUseCase usecase) {

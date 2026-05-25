@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataQualityRuleController : PlatformController {
+class DataQualityRuleController : ManageController {
     private ManageDataQualityRulesUseCase usecase;
 
     this(ManageDataQualityRulesUseCase usecase) {

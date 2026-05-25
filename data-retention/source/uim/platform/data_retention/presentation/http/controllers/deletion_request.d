@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeletionRequestController : PlatformController {
+class DeletionRequestController : ManageController {
     private ManageDeletionRequestsUseCase usecase;
 
     this(ManageDeletionRequestsUseCase usecase) {

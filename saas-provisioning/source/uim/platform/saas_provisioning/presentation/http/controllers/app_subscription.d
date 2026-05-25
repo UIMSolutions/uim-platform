@@ -22,7 +22,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/saas-provisioning/subscriptions/*          — get subscription by ID
 ///   PATCH  /api/v1/saas-provisioning/subscriptions/*          — update state / error
 ///   DELETE /api/v1/saas-provisioning/subscriptions/*          — unsubscribe
-class AppSubscriptionController : PlatformController {
+class AppSubscriptionController : ManageController {
     private ManageAppSubscriptionsUseCase usecase;
 
     this(ManageAppSubscriptionsUseCase usecase) {

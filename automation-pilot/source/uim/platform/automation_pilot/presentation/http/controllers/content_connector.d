@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ContentConnectorController : PlatformController {
+class ContentConnectorController : ManageController {
     private ManageContentConnectorsUseCase usecase;
 
     this(ManageContentConnectorsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActionController : PlatformController {
+class ActionController : ManageController {
     private ManageActionsUseCase actionUsecase;
 
     this(ManageActionsUseCase actionUsecase) {

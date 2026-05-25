@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LogicFlowController : PlatformController {
+class LogicFlowController : ManageController {
     private ManageLogicFlowsUseCase usecase;
 
     this(ManageLogicFlowsUseCase usecase) {

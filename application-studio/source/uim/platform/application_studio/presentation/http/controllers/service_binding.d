@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceBindingController : PlatformController {
+class ServiceBindingController : ManageController {
     private ManageServiceBindingsUseCase usecase;
 
     this(ManageServiceBindingsUseCase usecase) {

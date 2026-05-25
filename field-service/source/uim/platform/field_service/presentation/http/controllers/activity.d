@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActivityController : PlatformController {
+class ActivityController : ManageController {
     private ManageActivitiesUseCase usecase;
 
     this(ManageActivitiesUseCase usecase) {

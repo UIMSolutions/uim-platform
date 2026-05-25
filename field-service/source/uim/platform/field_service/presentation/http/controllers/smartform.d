@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SmartformController : PlatformController {
+class SmartformController : ManageController {
     private ManageSmartformsUseCase usecase;
 
     this(ManageSmartformsUseCase usecase) {

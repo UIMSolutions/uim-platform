@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeploymentController : PlatformController {
+class DeploymentController : ManageController {
     private ManageDeploymentsUseCase usecase;
 
     this(ManageDeploymentsUseCase usecase) {

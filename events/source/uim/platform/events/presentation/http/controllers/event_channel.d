@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EventChannelController : PlatformController {
+class EventChannelController : ManageController {
     private ManageEventChannelsUseCase usecase;
 
     this(ManageEventChannelsUseCase usecase) { this.usecase = usecase; }

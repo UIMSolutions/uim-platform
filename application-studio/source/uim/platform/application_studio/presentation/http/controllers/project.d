@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProjectController : PlatformController {
+class ProjectController : ManageController {
     private ManageProjectsUseCase usecase;
 
     this(ManageProjectsUseCase usecase) {
@@ -28,99 +28,98 @@ class ProjectController : PlatformController {
         router.delete_("/api/v1/application-studio/projects/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listProjects(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Project list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listProjects(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResoponse("Project list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ProjectId(extractIdFromPath(path));
-            auto e = usecase.getProject(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Project not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = req.requestURI.to!string;
+        auto id = ProjectId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid project ID", "BadRequest", 400);
+
+        auto e = usecase.getProject(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Project not found", "NotFound", 404);
+
+        return successResponse("Project retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            ProjectDTO dto;
-            dto.projectId = ProjectId(j.getString("id"));
-            dto.tenantId = req.getTenantId;
-            dto.devSpaceId = j.getString("devSpaceId");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.templateId = j.getString("templateId");
-            dto.rootPath = j.getString("rootPath");
-            dto.gitRepositoryUrl = j.getString("gitRepositoryUrl");
-            dto.gitBranch = j.getString("gitBranch");
-            dto.namespace_ = j.getString("namespace");
-            dto.createdBy = UserId(j.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createProject(dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Project created");
+        auto tenantId = precheck.tenantId;
+        auto data = recheck.data;
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        ProjectDTO dto;
+        dto.projectId = ProjectId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.devSpaceId = data.getString("devSpaceId");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.templateId = data.getString("templateId");
+        dto.rootPath = data.getString("rootPath");
+        dto.gitRepositoryUrl = data.getString("gitRepositoryUrl");
+        dto.gitBranch = data.getString("gitBranch");
+        dto.namespace_ = data.getString("namespace");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createProject(dto);
+        if (result.hasError)
+            return errorResponse(result.message, "BadRequest", 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Project created successfully", "Created", 201, resp);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            ProjectDTO dto;
-            dto.projectId = ProjectId(extractIdFromPath(path));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.gitRepositoryUrl = j.getString("gitRepositoryUrl");
-            dto.gitBranch = j.getString("gitBranch");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        auto path = req.requestURI.to!string;
 
-            auto result = usecase.updateProject(tenantId, dto);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Project updated");
+        ProjectDTO dto;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.gitRepositoryUrl = data.getString("gitRepositoryUrl");
+        dto.gitBranch = data.getString("gitBranch");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.updateProject(tenantId, dto);
+        if (result.hasError)
+            return errorResponse(result.message, "BadRequest", 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Project updated");
+
+        res.writeJsonBody(resp, 200);
     }
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {

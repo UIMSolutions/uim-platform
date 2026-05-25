@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ExecutionController : PlatformController {
+class ExecutionController : ManageController {
     private ManageExecutionsUseCase executions;
 
     this(ManageExecutionsUseCase executions) {

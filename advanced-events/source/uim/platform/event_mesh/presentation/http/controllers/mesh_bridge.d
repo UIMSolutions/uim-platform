@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MeshBridgeController : PlatformController {
+class MeshBridgeController : ManageController {
     private ManageMeshBridgesUseCase usecase;
 
     this(ManageMeshBridgesUseCase usecase) {

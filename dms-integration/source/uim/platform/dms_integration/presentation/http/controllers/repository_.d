@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RepositoryController : PlatformController {
+class RepositoryController : ManageController {
     private ManageRepositoriesUseCase usecase;
 
     this(ManageRepositoriesUseCase usecase) {

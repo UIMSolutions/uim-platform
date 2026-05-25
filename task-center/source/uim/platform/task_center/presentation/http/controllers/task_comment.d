@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskCommentController : PlatformController {
+class TaskCommentController : ManageController {
     private ManageTaskCommentsUseCase usecase;
 
     this(ManageTaskCommentsUseCase usecase) {

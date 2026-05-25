@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UserTaskFilterController : PlatformController {
+class UserTaskFilterController : ManageController {
     private ManageUserTaskFiltersUseCase usecase;
 
     this(ManageUserTaskFiltersUseCase usecase) {

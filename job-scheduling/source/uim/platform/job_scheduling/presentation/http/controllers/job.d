@@ -15,7 +15,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class JobController : PlatformController {
+class JobController : ManageController {
     private ManageJobsUseCase usecase;
     private ManageSchedulesUseCase scheduleUsecase;
 

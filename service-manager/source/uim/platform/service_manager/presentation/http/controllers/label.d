@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LabelController : PlatformController {
+class LabelController : ManageController {
     private ManageLabelsUseCase usecase;
 
     this(ManageLabelsUseCase usecase) { this.usecase = usecase; }

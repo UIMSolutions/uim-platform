@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TrustedCertificateController : PlatformController {
+class TrustedCertificateController : ManageController {
     private ManageTrustedCertificatesUseCase usecase;
 
     this(ManageTrustedCertificatesUseCase usecase) {

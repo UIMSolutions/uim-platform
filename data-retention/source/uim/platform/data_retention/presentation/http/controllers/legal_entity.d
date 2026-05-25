@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LegalEntityController : PlatformController {
+class LegalEntityController : ManageController {
     private ManageLegalEntitiesUseCase usecase;
 
     this(ManageLegalEntitiesUseCase usecase) { this.usecase = usecase; }

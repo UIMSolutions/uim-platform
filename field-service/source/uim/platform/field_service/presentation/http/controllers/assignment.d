@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AssignmentController : PlatformController {
+class AssignmentController : ManageController {
     private ManageAssignmentsUseCase usecase;
 
     this(ManageAssignmentsUseCase usecase) {

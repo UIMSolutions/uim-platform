@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class VisibilityController : PlatformController {
+class VisibilityController : ManageController {
     private ManageVisibilitiesUseCase visibilityUsecase;
 
     this(ManageVisibilitiesUseCase visibilityUsecase) {

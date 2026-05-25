@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConsentRecordController : PlatformController {
+class ConsentRecordController : ManageController {
     private ManageConsentRecordsUseCase consentRecords;
 
     this(ManageConsentRecordsUseCase consentRecords) {

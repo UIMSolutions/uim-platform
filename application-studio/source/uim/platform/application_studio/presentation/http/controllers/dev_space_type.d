@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DevSpaceTypeController : PlatformController {
+class DevSpaceTypeController : ManageController {
     private ManageDevSpaceTypesUseCase usecase;
 
     this(ManageDevSpaceTypesUseCase usecase) {

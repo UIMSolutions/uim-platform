@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TriggerController : PlatformController {
+class TriggerController : ManageController {
     private ManageTriggersUseCase triggerUsecase;
 
     this(ManageTriggersUseCase triggerUsecase) {
