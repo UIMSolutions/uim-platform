@@ -1,0 +1,28 @@
+# syntax=docker/dockerfile:1
+FROM dlang2/ldc-ubuntu:1.40.1 AS builder
+
+WORKDIR /build
+COPY . /build/logistic-management
+WORKDIR /build/logistic-management
+RUN dub build --build=release --config=defaultRun
+
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates curl libgcc-s1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd -r appuser && useradd -r -g appuser appuser
+
+WORKDIR /app
+COPY --from=builder /build/logistic-management/build/uim-logistic-management-platform-service .
+
+ENV LOGMGMT_HOST=0.0.0.0
+ENV LOGMGMT_PORT=8086
+
+EXPOSE 8086
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -fs http://localhost:8086/api/v1/health || exit 1
+
+USER appuser
+ENTRYPOINT ["/app/uim-logistic-management-platform-service"]
