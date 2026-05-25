@@ -9,7 +9,7 @@ module uim.platform.ai_core.presentation.http.controllers.artifact;
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class ArtifactController : ManageController {
@@ -28,97 +28,97 @@ class ArtifactController : ManageController {
     router.delete_("/api/v2/lm/artifacts/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto j = req.json;
-      CreateArtifactRequest r;
-      r.tenantId = tenantId;
-      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = ScenarioId(j.getString("scenarioId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.kind = j.getString("kind");
-      r.url = j.getString("url");
-      r.labels = jsonKeyValuePairs(j, "labels");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      auto result = usecase.createArtifact(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Artifact registered");
+    CreateArtifactRequest r;
+    r.tenantId = tenantId;
+    r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    r.scenarioId = ScenarioId(data.getString("scenarioId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.kind = data.getString("kind");
+    r.url = data.getString("url");
+    r.labels = jsonKeyValuePairs(data, "labels");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.createArtifact(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Artifact created successfully", "Created", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto artifacts = scenarioId.isEmpty
-        ? usecase.listArtifacts(tenantId, rgId)
-        : usecase.listArtifacts(tenantId, rgId, scenarioId);
+    auto tenantId = precheck.tenantId;
 
-      auto jarr = artifacts.map!(a => a.toJson).array.toJson;
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
-      auto resp = Json.emptyObject
-        .set("count", artifacts.length)
-        .set("resources", jarr)
-        .set("message", "Artifacts retrieved");
+    auto artifacts = scenarioId.isEmpty
+      ? usecase.listArtifacts(tenantId, rgId) : usecase.listArtifacts(tenantId, rgId, scenarioId);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto jarr = artifacts.map!(a => a.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("count", artifacts.length)
+      .set("resources", jarr);
+
+    return successResponse("Artifact list retrieved successfully", "Retrieved", 200, resp);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto a = usecase.getArtifact(tenantId, rgId, id);
-      if (a.isNull) {
-        writeError(res, 404, "Artifact not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = ArtifactId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid artifact ID", 400);
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      res.writeJsonBody(a.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto artefact = usecase.getArtifact(tenantId, rgId, id);
+    if (artefact.isNull)
+      return errorResponse("Artifact not found", 404);
+
+    auto responseData = artefact.toJson();
+    return successResponse("Artifact retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteArtifact(tenantId, rgId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Artifact deleted");
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid artifact ID", 400);
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto result = usecase.deleteArtifact(tenantId, rgId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", id);
+
+    return successResponse("Artifact deleted successfully", "Deleted", 200, resp);
   }
 }

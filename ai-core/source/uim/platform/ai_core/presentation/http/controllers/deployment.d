@@ -9,7 +9,7 @@ module uim.platform.ai_core.presentation.http.controllers.deployment;
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 class DeploymentController : ManageController {
@@ -29,121 +29,131 @@ class DeploymentController : ManageController {
     router.delete_("/api/v2/lm/deployments/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateDeploymentRequest r;
-      r.tenantId = tenantId;
-      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.configurationId = ConfigurationId(j.getString("configurationId"));
-      r.ttl = j.getInteger("ttl");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      auto result = usercase.createDeployment(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Deployment scheduled")
-          .set("status", "PENDING");
+    CreateDeploymentRequest r;
+    r.tenantId = tenantId;
+    r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    r.configurationId = ConfigurationId(j.getString("configurationId"));
+    r.ttl = j.getInteger("ttl");
 
-        res.writeJsonBody(resp, 202);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usercase.createDeployment(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Deployment created successfully", "Created", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      
-      auto deploys = usercase.listDeployments(tenantId, rgId);
-      auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto deploys = usercase.listDeployments(tenantId, rgId);
+    auto jDeploys = deploys.map!(deployment => deployment.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("count", deploys.length)
+      .set("resources", jDeploys);
+
+    return successResponse("Deployment list retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = DeploymentId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto deployment = usercase.getDeployment(tenantId, rgId, id);
+    if (deployment.isNull)
+      return errorResponse("Deployment not found", 404);
+
+    auto responseData = job.toJson();
+    return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = req.getTenantId;
+    auto data = prceheck.data;
+    auto id = DeploymentId(extractIdFromPath(precheck.path));
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+
+    PatchDeploymentRequest request;
+    request.tenantId = tenantId;
+    request.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    request.deploymentId = id;
+    request.targetStatus = j.getString("targetStatus");
+    request.configurationId = j.getString("configurationId");
+    request.ttl = j.getInteger("ttl");
+
+    auto result = usercase.patchDeployment(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    if (result.success)
 
       auto resp = Json.emptyObject
-        .set("count", deploys.length)
-        .set("resources", jDeploys)
-        .set("message", "Deployments retrieved");
-        
+        .set("id", result.id);
+
+    return successResponse("Deployment updated successfully", "Updated", 200, resp);
+  }
+
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = patchHandler(req);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;  
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto deployment = usercase.getDeployment(tenantId, rgId, id);
-      if (deployment.isNull) {
-        writeError(res, 404, "Deployment not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
 
-      res.writeJsonBody(deployment.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto result = usercase.deleteDeployment(tenantId, rgId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("status", "deleted");
+
+    return successResponse("Deployment deleted successfully", "Deleted", 200, resp);
   }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
-      
-      auto j = req.json;
-      PatchDeploymentRequest request;
-      request.tenantId = tenantId;
-      request.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      request.deploymentId = id;
-      request.targetStatus = j.getString("targetStatus");
-      request.configurationId = j.getString("configurationId");
-      request.ttl = j.getInteger("ttl");
-
-      auto result = usercase.patchDeployment(request);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Deployment modified");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
-
-      auto result = usercase.deleteDeployment(tenantId, rgId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Deployment deleted");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
 }

@@ -28,51 +28,55 @@ class EventMessageController : ManageController {
         router.delete_("/api/v1/event-mesh/messages/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listMessages(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Event message list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listMessages(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Event message list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto message = usecase.getMessage(tenantId, EventMessageId(id));
-            if (message.isNull) {
-                writeError(res, 404, "Event message not found");
-                return;
-            }
-            res.writeJsonBody(message.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+
+        auto id = EventMessageId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid message ID", 400);
+
+        auto message = usecase.getMessage(tenantId, id);
+        if (message.isNull)
+            return errorResponse("Event message not found", 404);
+
+        auto responseData = job.toJson();
+
+        return successResponse("");
     }
 
     protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto j = req.json;
+
             EventMessageDTO dto;
             dto.messageId = EventMessageId(j.getString("id"));
             dto.tenantId = tenantId;
             dto.serviceId = BrokerServiceId(j.getString("serviceId"));
             dto.topicId = j.getString("topicId");
-            dto.queueId = j.getString("queueId");
-            // TODO: dto.publisherId = j.getString("publisherId");
+            dto.queueId = j.getString("queueId"); // TODO: dto.publisherId = j.getString("publisherId");
             dto.correlationId = j.getString("correlationId");
             dto.contentType = j.getString("contentType");
             dto.payload = j.getString("payload");
@@ -80,14 +84,15 @@ class EventMessageController : ManageController {
             dto.replyTo = j.getString("replyTo");
             dto.timeToLive = j.getString("timeToLive");
             dto.createdBy = UserId(j.getString("createdBy"));
-
             auto result = usecase.publishMessage(dto);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Event message published");
+                return errorResponse(result.message, 400);
 
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Event message published");
+
+            if (result.success) {
                 res.writeJsonBody(resp, 201);
             } else {
                 writeError(res, 400, result.message);
@@ -100,41 +105,43 @@ class EventMessageController : ManageController {
     protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
-            auto result = usecase.acknowledgeMessage(tenantId, EventMessageId(id));
+            auto path = req
+                .requestURI.to!string;
+            auto id = EventMessageId(extractIdFromPath(path));
+            auto result = usecase.acknowledgeMessage(
+                tenantId,
+                id);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Event message acknowledged");
+                return errorResponse(result.message, 400);
+            auto resp = Json.emptyObject
+                .set("message", "Event message acknowledged");
 
+            if (result.success) {
                 res.writeJsonBody(resp, 200);
             } else {
-                writeError(res, 404, result.message);
+                writeError(res, 400, result.message);
             }
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = EventMessageId(extractIdFromPath(path));
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
 
-            auto result = usecase.deleteMessage(tenantId, id);
-            if (result.hasError)
+        auto id = EventMessageId(
+            extractIdFromPath(path));
+        auto result = usecase.deleteMessage(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Event message deleted");
+        auto resp = Json
+            .emptyObject
+            .set("message", "Event message deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Event message deleted successfully", "Deleted", 200, resp);
     }
 }

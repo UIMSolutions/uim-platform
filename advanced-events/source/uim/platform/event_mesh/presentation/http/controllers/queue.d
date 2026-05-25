@@ -28,129 +28,125 @@ class QueueController : ManageController {
         router.delete_("/api/v1/event-mesh/queues/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listQueues(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Queue list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listQueues(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Queue list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = QueueId(extractIdFromPath(path));
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getQueue(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Queue not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = QueueId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid queue ID", 400);
+        auto queue = usecase.getQueue(tenantId, id);
+
+        if (queue.isNull)
+            return errorResponse("Queue not found", 404);
+
+        auto responseData = queue.toJson();
+        return successResponse("Queue retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            QueueDTO dto;
-            dto.queueId = QueueId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.serviceId = BrokerServiceId(j.getString("brokerServiceId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.maxMsgSpoolUsage = j.getString("maxMsgSpoolUsage");
-            dto.maxBindCount = j.getString("maxBindCount");
-            dto.maxMsgSize = j.getString("maxMsgSize");
-            dto.maxRedeliveryCount = j.getString("maxRedeliveryCount");
-            dto.maxTtl = j.getString("maxTtl");
-            dto.deadMessageQueue = j.getString("deadMessageQueue");
-            dto.owner = j.getString("owner");
-            dto.permission = j.getString("permission");
-            dto.egressEnabled = j.getString("egressEnabled");
-            dto.ingressEnabled = j.getString("ingressEnabled");
-            dto.createdBy = UserId(j.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createQueue(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        QueueDTO dto;
+        dto.queueId = QueueId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.maxMsgSpoolUsage = data.getString("maxMsgSpoolUsage");
+        dto.maxBindCount = data.getString("maxBindCount");
+        dto.maxMsgSize = data.getString("maxMsgSize");
+        dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
+        dto.maxTtl = data.getString("maxTtl");
+        dto.deadMessageQueue = data.getString("deadMessageQueue");
+        dto.owner = data.getString("owner");
+        dto.permission = data.getString("permission");
+        dto.egressEnabled = data.getString("egressEnabled");
+        dto.ingressEnabled = data.getString("ingressEnabled");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createQueue(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Queue created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Queue created successfully", "Created", 201, resp);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            QueueDTO dto;
-            dto.queueId = QueueId(extractIdFromPath(path));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.maxMsgSpoolUsage = j.getString("maxMsgSpoolUsage");
-            dto.maxBindCount = j.getString("maxBindCount");
-            dto.maxMsgSize = j.getString("maxMsgSize");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto data = precheck.data;
 
-            auto result = usecase.updateQueue(dto);
-            if (result.hasError)
+        QueueDTO dto;
+        dto.queueId = QueueId(extractIdFromPath(path));
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.maxMsgSpoolUsage = data.getString("maxMsgSpoolUsage");
+        dto.maxBindCount = data.getString("maxBindCount");
+        dto.maxMsgSize = data.getString("maxMsgSize");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateQueue(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Queue updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Queue updated successfully", "Updated", 200, resp);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = QueueId(extractIdFromPath(path));
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteQueue(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+
+        auto id = QueueId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid queue ID", 400);
+
+        auto result = usecase.deleteQueue(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Queue deleted");
+        auto resp = Json.emptyObject
+            .set("message", "Queue deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Queue deleted successfully", "Deleted", 200, resp);
     }
 }
