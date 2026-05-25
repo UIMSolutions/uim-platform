@@ -35,7 +35,7 @@ class DeadLetterEntryController : ManageController {
         if (precheck.hasError)
             return errorResponse(precheck.error, 400);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = _useCase.listDeadLetterEntries(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -48,7 +48,7 @@ class DeadLetterEntryController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return errorResponse(precheck.error, 400);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto id = DeadLetterEntryId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -70,7 +70,7 @@ class DeadLetterEntryController : ManageController {
         if (precheck.hasError)
             return errorResponse(precheck.error, 400);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         
         auto id = DeadLetterEntryId(data.getString("entryId"));
@@ -98,7 +98,7 @@ class DeadLetterEntryController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return errorResponse(precheck.error, 400);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = DeadLetterEntryId(extractIdFromPath(req.requestURI.to!string));
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);
         if (result.hasError)

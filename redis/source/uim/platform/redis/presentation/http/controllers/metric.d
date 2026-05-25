@@ -31,7 +31,7 @@ class MetricController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = metrics.listMetrics(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -46,7 +46,7 @@ class MetricController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = MetricId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid metric ID").set("statusCode", 400);
@@ -63,7 +63,7 @@ class MetricController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         MetricDTO dto;
@@ -100,7 +100,7 @@ class MetricController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = MetricId(extractIdFromPath(req.requestURI.to!string));
 
         auto result = metrics.deleteMetric(tenantId, id);

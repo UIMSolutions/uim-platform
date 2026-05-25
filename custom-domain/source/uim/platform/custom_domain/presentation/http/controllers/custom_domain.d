@@ -35,7 +35,7 @@ class CustomDomainController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto domains = usecase.listDomains(tenantId);
         auto jarr = domains.map!(d => Json.emptyObject
@@ -59,7 +59,7 @@ class CustomDomainController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = CustomDomainId(data.getString("id"));
         if (id.isNull)
@@ -88,7 +88,7 @@ class CustomDomainController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
 
         // Check for /activate or /deactivate suffix — skip
@@ -134,7 +134,7 @@ class CustomDomainController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
@@ -220,7 +220,7 @@ class CustomDomainController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = CustomDomainId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);

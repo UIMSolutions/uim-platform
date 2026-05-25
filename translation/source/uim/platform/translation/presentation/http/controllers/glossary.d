@@ -35,7 +35,7 @@ class GlossaryController : ManageController {
             return precheck;
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         CreateGlossaryEntryRequest r;
@@ -69,7 +69,7 @@ class GlossaryController : ManageController {
             return precheck;
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto entries = usecase.listEntries(tenantId);
         auto arr = entries.map!(e => e.toJson)
@@ -88,7 +88,7 @@ class GlossaryController : ManageController {
             return precheck;
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = GlossaryEntryId(extractIdFromPath(req.requestURI.to!string));
 
         auto entry = usecase.getEntry(tenantId, id);
@@ -111,7 +111,7 @@ class GlossaryController : ManageController {
             return precheck;
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto entryId = GlossaryEntryId(extractIdFromPath(req.requestURI.to!string));
         auto data = precheck.data;
 

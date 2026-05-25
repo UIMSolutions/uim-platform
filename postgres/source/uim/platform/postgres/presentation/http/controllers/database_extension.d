@@ -27,7 +27,7 @@ class DatabaseExtensionController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = extensions.listDatabaseExtensions(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -39,7 +39,7 @@ class DatabaseExtensionController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = extensions.getDatabaseExtension(tenantId, id);
@@ -50,7 +50,7 @@ class DatabaseExtensionController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DatabaseExtensionDTO dto;
         dto.databaseExtensionId = DatabaseExtensionId(data.getString("databaseExtensionId", ""));
@@ -68,7 +68,7 @@ class DatabaseExtensionController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = DatabaseExtensionId(extractIdFromPath(req.requestURI.to!string));
         auto result = extensions.deleteDatabaseExtension(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);

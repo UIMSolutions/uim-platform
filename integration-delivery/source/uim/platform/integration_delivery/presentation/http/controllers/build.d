@@ -32,7 +32,7 @@ class BuildController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = builds.listBuilds(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class BuildController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class BuildController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         BuildDTO dto;
@@ -89,7 +89,7 @@ class BuildController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -108,7 +108,7 @@ class BuildController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = BuildId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);

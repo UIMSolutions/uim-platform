@@ -32,7 +32,7 @@ class PipelineController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = pipelines.listPipelines(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class PipelineController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class PipelineController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         PipelineDTO dto;
@@ -88,7 +88,7 @@ class PipelineController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -114,7 +114,7 @@ class PipelineController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);

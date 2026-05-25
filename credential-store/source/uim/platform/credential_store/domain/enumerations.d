@@ -10,6 +10,7 @@ enum CredentialType {
   key,
   keyring,
 }
+
 CredentialType toCredentialType(string s) {
   switch (s.toLower()) {
   case "password":
@@ -28,6 +29,7 @@ enum CredentialStatus {
   disabled,
   deleted_,
 }
+
 CredentialStatus toCredentialStatus(string s) {
   switch (s.toLower()) {
   case "active":
@@ -52,6 +54,7 @@ enum OperationType {
   generate,
   rotate,
 }
+
 OperationType toOperationType(string s) {
   switch (s.toLower()) {
   case "create":
@@ -86,6 +89,7 @@ enum ResourceType {
   serviceBinding,
   dek,
 }
+
 ResourceType toResourceType(string s) {
   switch (s.toLower()) {
   case "namespace":
@@ -105,12 +109,14 @@ ResourceType toResourceType(string s) {
   default:
     return ResourceType.namespace; // Default case
   }
+}
 
 enum PermissionLevel {
   readWrite,
   readOnly,
   admin,
 }
+
 PermissionLevel toPermissionLevel(string s) {
   switch (s.toLower()) {
   case "readwrite":
@@ -121,13 +127,14 @@ PermissionLevel toPermissionLevel(string s) {
     return PermissionLevel.admin;
   default:
     return PermissionLevel.readOnly; // Default case
-  } 
+  }
 }
 
 enum BindingStatus {
   active,
   revoked,
 }
+
 BindingStatus toBindingStatus(string s) {
   switch (s.toLower()) {
   case "active":
@@ -146,6 +153,7 @@ enum KeyringRotationPeriod {
   days180 = 180,
   days365 = 365,
 }
+
 KeyringRotationPeriod toKeyringRotationPeriod(string s) {
   switch (s.toLower()) {
   case "30":

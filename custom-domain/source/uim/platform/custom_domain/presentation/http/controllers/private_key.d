@@ -32,7 +32,7 @@ class PrivateKeyController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto keys = usecase.listPrivateKeys(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -56,7 +56,7 @@ class PrivateKeyController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = PrivateKeyId(data.getString("id"));
         if (id.isNull)
@@ -84,7 +84,7 @@ class PrivateKeyController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Private Key ID", 400);
@@ -116,7 +116,7 @@ class PrivateKeyController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = PrivateKeyId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Private Key ID", 400);

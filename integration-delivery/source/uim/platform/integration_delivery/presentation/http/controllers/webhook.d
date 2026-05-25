@@ -32,7 +32,7 @@ class WebhookController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = webhooks.listWebhooks(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -47,7 +47,7 @@ class WebhookController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
@@ -64,7 +64,7 @@ class WebhookController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         WebhookDTO dto;
@@ -86,7 +86,7 @@ class WebhookController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
@@ -111,7 +111,7 @@ class WebhookController : ManageController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);

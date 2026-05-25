@@ -56,7 +56,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     CreateTransportRequestRequest r;
@@ -80,7 +80,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = TransportRequestId(precheck.getString("id"));
     if (id.isNull)
       return errorResponse("Invalid transport request id", 400);
@@ -97,7 +97,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto requestId = TransportRequestId(precheck.getString("id"));
     if (requestId.isNull)
       return errorResponse("Invalid transport request id", 400);
@@ -187,7 +187,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = TransportRequestId(precheck.getString("id"));
 
     auto result = usecase.deleteTransportRequest(tenantId, id);

@@ -32,7 +32,7 @@ class DomainMappingController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto mappings = usecase.listDomainMappings(tenantId);
         auto jarr = Json.emptyArray;
         foreach (m; mappings) {
@@ -57,7 +57,7 @@ class DomainMappingController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         CreateDomainMappingRequest r;
@@ -85,7 +85,7 @@ class DomainMappingController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Domain Mapping ID", 400);
@@ -127,7 +127,7 @@ class DomainMappingController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
         if (precheck.hasError) return precheck;
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = DomainMappingId(extractIdFromPath(req.requestURI.to!string));
         auto result = usecase.deleteDomainMapping(tenantId, id);
         if (result.hasError) return errorResponse(result.message, 404);

@@ -33,7 +33,7 @@ class SocialIdentityController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = socialIdentities.listSocialIdentities(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -49,7 +49,7 @@ class SocialIdentityController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto j = req.json;
 
         SocialIdentityDTO dto;
@@ -76,7 +76,7 @@ class SocialIdentityController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SocialIdentityId(extractIdFromPath(path));
         if (id.isNull)
@@ -94,7 +94,7 @@ class SocialIdentityController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SocialIdentityId(extractIdFromPath(path));
         if (id.isNull)
@@ -111,7 +111,7 @@ class SocialIdentityController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SocialIdentityId(extractIdFromPath(path));
         if (id.isNull)

@@ -33,7 +33,7 @@ class SitePolicyController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = sitePolicies.listSitePolicies(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -49,7 +49,7 @@ class SitePolicyController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto j = req.json;
 
         SitePolicyDTO dto;
@@ -83,7 +83,7 @@ class SitePolicyController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SitePolicyId(extractIdFromPath(path));
         if (id.isNull)
@@ -101,7 +101,7 @@ class SitePolicyController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SitePolicyId(extractIdFromPath(path));
         if (id.isNull)
@@ -132,7 +132,7 @@ class SitePolicyController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = SitePolicyId(extractIdFromPath(path));
         if (id.isNull)

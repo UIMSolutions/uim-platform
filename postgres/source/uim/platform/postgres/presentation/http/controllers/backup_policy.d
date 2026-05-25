@@ -28,7 +28,7 @@ class BackupPolicyController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = backupPolicies.listBackupPolicies(tenantId);
         return Json.emptyObject
             .set("count", items.length)
@@ -40,7 +40,7 @@ class BackupPolicyController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = backupPolicies.getBackupPolicy(tenantId, id);
@@ -51,7 +51,7 @@ class BackupPolicyController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(data.getString("backupPolicyId", ""));
@@ -69,7 +69,7 @@ class BackupPolicyController : ManageController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
@@ -86,7 +86,7 @@ class BackupPolicyController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);

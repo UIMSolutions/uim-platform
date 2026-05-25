@@ -35,7 +35,7 @@ class CertificateController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto certs = certificates.listCertificates(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -62,7 +62,7 @@ class CertificateController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data; // Consistent with other createHandler implementations
         auto id = CertificateId(data.getString("id"));
         if (id.isNull)
@@ -88,7 +88,7 @@ class CertificateController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto path = req.requestURI.to!string;
         enum UPLOAD_CHAIN_SUFFIX = "/upload-chain";
@@ -232,7 +232,7 @@ class CertificateController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = CertificateId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);

@@ -70,7 +70,7 @@ class SystemInstanceController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
 
     auto instances = usecase.listInstances(tenantId);
     auto arr = instances.map!(inst => inst.toJson).array.toJson;
@@ -87,7 +87,7 @@ class SystemInstanceController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
     if (id.isNull)
       return errorResponse("Invalid system instance id", 400);
@@ -104,7 +104,7 @@ class SystemInstanceController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = SystemInstanceId(extractIdFromPath(req.requestURI));
     if (id.isNull)
       return errorResponse("Invalid system instance id", 400);
@@ -132,7 +132,7 @@ class SystemInstanceController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = SystemInstanceId(precheck.getString("id"));
     if (id.isNull)
       return errorResponse("Invalid system instance id", 400);

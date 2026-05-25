@@ -30,7 +30,7 @@ class DomainDashboardController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto d = usecase.getDashboard(tenantId);
         if (d.isNull) 
             return errorResponse("Dashboard data not found for tenant", 404);

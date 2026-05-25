@@ -35,7 +35,7 @@ class BindingController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto bindings = this.bindings.listServiceBindings(tenantId);
 
     auto jarr = Json.emptyArray;
@@ -61,7 +61,7 @@ class BindingController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     CreateServiceBindingRequest r;
@@ -99,7 +99,7 @@ class BindingController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
@@ -127,7 +127,7 @@ class BindingController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
@@ -156,7 +156,7 @@ class BindingController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);

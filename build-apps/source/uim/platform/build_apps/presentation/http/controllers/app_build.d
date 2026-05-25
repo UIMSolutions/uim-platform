@@ -34,7 +34,7 @@ class AppBuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto items = usecase.listAppBuilds(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -53,7 +53,7 @@ class AppBuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto j = req.json;
 
         AppBuildDTO dto;
@@ -86,7 +86,7 @@ class AppBuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {
@@ -114,7 +114,7 @@ class AppBuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {
@@ -154,7 +154,7 @@ class AppBuildController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(extractIdFromPath(path));
         if (id.isNull) {

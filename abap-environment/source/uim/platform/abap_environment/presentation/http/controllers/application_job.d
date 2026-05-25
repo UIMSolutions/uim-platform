@@ -39,7 +39,7 @@ class ApplicationJobController : ManageController {
     }
 
     auto data = precheck.data;
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto systemId = SystemInstanceId(data.getString("systemInstanceId"));
 
     auto jobs = usecase.listApplicationJobs(tenantId, systemId);
@@ -58,7 +58,7 @@ class ApplicationJobController : ManageController {
       return precheck;
     }
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     CreateApplicationJobRequest r;
@@ -90,7 +90,7 @@ class ApplicationJobController : ManageController {
     if (precheck.hasError) {
       return precheck;
     }
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
     auto job = usecase.getApplicationJob(tenantId, id);
@@ -113,7 +113,7 @@ class ApplicationJobController : ManageController {
       return precheck;
     }
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
     auto data = req.json;
 
@@ -166,7 +166,7 @@ class ApplicationJobController : ManageController {
       return precheck;
     }
 
-    auto tenantId = getTenantId(precheck);
+    auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
 
     auto result = usecase.deleteApplicationJob(tenantId, id);

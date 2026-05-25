@@ -33,7 +33,7 @@ class TlsConfigurationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto configs = usecase.listTlsConfigurations(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -61,7 +61,7 @@ class TlsConfigurationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = TlsConfigurationId(data.getString("id"));
         if (id.isNull)
@@ -93,7 +93,7 @@ class TlsConfigurationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid TLS Configuration ID", 400);
@@ -127,7 +127,7 @@ class TlsConfigurationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
 
         UpdateTlsConfigurationRequest r;
@@ -157,7 +157,7 @@ class TlsConfigurationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = TlsConfigurationId(extractIdFromPath(req.requestURI.to!string));
         if (id.isNull)
             return errorResponse("Invalid TLS Configuration ID", 400);

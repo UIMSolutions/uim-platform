@@ -33,7 +33,7 @@ class CustomerController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto items = customers.listCustomers(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
 
@@ -50,7 +50,7 @@ class CustomerController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto j = req.json;
 
         CustomerDTO dto;
@@ -82,7 +82,7 @@ class CustomerController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = CustomerId(extractIdFromPath(path));
         if (id.isNull)
@@ -100,7 +100,7 @@ class CustomerController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = CustomerId(extractIdFromPath(path));
         if (id.isNull)
@@ -131,7 +131,7 @@ class CustomerController : PlatformController {
         if (precheck.hasError)
             return Json.emptyObject.set("error", precheck.error);
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = CustomerId(extractIdFromPath(path));
         if (id.isNull)

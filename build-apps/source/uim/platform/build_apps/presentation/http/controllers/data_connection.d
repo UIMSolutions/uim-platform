@@ -34,7 +34,7 @@ class DataConnectionController : PlatformController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto items = usecase.listDataConnections(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -162,7 +162,7 @@ class DataConnectionController : PlatformController {
                 .set("statusCode", 400);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = DataConnectionId(extractIdFromPath(path));
         if (id.isNull) {

@@ -33,7 +33,7 @@ class CatalogController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto items = catalogs.listCatalogs(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -51,7 +51,7 @@ class CatalogController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = CatalogId(data.getString("catalogId", ""));
         if (id.isNull)
@@ -79,7 +79,7 @@ class CatalogController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
@@ -97,7 +97,7 @@ class CatalogController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = CatalogId(precheck.getString("id"));
         if (id.isNull)

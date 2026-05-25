@@ -34,7 +34,7 @@ class ApplicationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
 
         auto items = usecase.listApplications(tenantId);
         auto jarr = items.map!(e => e.toJson()).array.toJson;
@@ -53,7 +53,7 @@ class ApplicationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = ApplicationId(data.getString("id"));
         if (id.isNull) {
@@ -99,7 +99,7 @@ class ApplicationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = ApplicationId(extractIdFromPath(path));
         if (id.isNull) {
@@ -129,7 +129,7 @@ class ApplicationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = ApplicationId(extractIdFromPath(path));
         if (id.isNull) {
@@ -171,7 +171,7 @@ class ApplicationController : ManageController {
                 .set("statusCode", 400);
         }
 
-        auto tenantId = getTenantId(precheck);
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto applicationId = ApplicationId(extractIdFromPath(path));
 
