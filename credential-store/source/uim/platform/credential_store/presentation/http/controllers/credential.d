@@ -37,43 +37,43 @@ class CredentialController : ManageController {
 
   // --- Password endpoints ---
 
-  override protected void handleCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreatePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "password");
   }
 
-  override protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "password");
   }
 
-  override protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res, "");
   }
 
-  override protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res, "password");
   }
 
   // --- Key endpoints ---
 
-  override protected void handleCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreateKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleCreateCredential(req, res, "key");
   }
 
-  override protected void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "key");
   }
 
-  override protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleGetCredential(req, res, "key");
   }
 
-  override protected void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteKey(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleDeleteCredential(req, res, "key");
   }
 
   // --- Shared handlers ---
 
-  override protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
@@ -105,7 +105,7 @@ class CredentialController : ManageController {
     }
   }
 
-  override protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
@@ -137,7 +137,7 @@ class CredentialController : ManageController {
     }
   }
 
-  override protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
@@ -180,7 +180,7 @@ class CredentialController : ManageController {
     }
   }
 
-  override protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));

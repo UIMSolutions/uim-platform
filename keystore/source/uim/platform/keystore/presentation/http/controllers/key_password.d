@@ -51,7 +51,7 @@ class KeyPasswordController : ManageController {
   }
 
   // GET /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  override protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId      = req.getTenantId;
       auto alias_       = extractIdFromPath(req.requestURI.to!string);
@@ -79,7 +79,7 @@ class KeyPasswordController : ManageController {
   }
 
   // DELETE /api/v1/passwords/{alias}?accountId=...&applicationId=...
-  override protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeletePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId      = req.getTenantId;
       auto alias_        = extractIdFromPath(req.requestURI.to!string);
@@ -98,7 +98,7 @@ class KeyPasswordController : ManageController {
   }
 
   // GET /api/v1/passwords?accountId=...&applicationId=...
-  override protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId      = req.getTenantId;
       auto accountId     = req.params.get("accountId", "");

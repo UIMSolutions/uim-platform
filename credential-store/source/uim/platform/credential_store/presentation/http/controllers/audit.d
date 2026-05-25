@@ -28,7 +28,7 @@ class AuditController : PlatformController {
     router.get("/api/v1/audit-logs/*", &handleGet);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
       auto namespaceId = req.params.get("namespaceId", "");
@@ -65,7 +65,7 @@ class AuditController : PlatformController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
       auto id = AuditLogEntryId(extractIdFromPath(req.requestURI.to!string));

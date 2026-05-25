@@ -62,8 +62,12 @@ class KeyEntryController : ManageController {
     }
   }
 
-  protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (!precheck.isNull)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto path = req.requestPath.to!string;
     auto keystoreId = KeystoreId(extractSegment(path, 4)); // /api/v1/keystores/{id}/entries
     auto entries = usecase.listByKeystore(tenantId, keystoreId);
@@ -90,18 +94,12 @@ class KeyEntryController : ManageController {
         .set("totalCount", entries.length));
   }
 
-  // GET /api/v1/keystores/{keystoreId}/entries
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (!precheck.isNull)
+      return precheck;
 
-  protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto path = req.requestPath.to!string;
     auto id = KeyEntryId(extractSegment(path, 6)); // /api/v1/keystores/{id}/entries/{entryId}
     auto entry = usecase.getById(tenantId, id);
@@ -124,18 +122,12 @@ class KeyEntryController : ManageController {
         .set("createdAt", entry.createdAt));
   }
 
-  // GET /api/v1/keystores/{keystoreId}/entries/{id}
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (!precheck.isNull)
+      return precheck;
 
-  protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = KeyEntryId(extractSegment(req.requestPath.to!string, 6)); // /api/v1/keystores/{id}/entries/{entryId}
     auto result = usecase.deleteKeyEntry(tenantId, id);
     if (result.hasError)
