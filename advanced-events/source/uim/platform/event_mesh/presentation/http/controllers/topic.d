@@ -133,18 +133,16 @@ class TopicController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
     auto id = TopicId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid topic ID", 400);
+      
     auto result = usecase.deleteTopic(tenantId, id);
-    if (result.success) {
-      auto resp = Json.emptyObject
-        .set("message", "Topic deleted");
+    if (result.hasError)
+      return errorResponse(result.message, 404);
 
-      res.writeJsonBody(resp, 200);
-    } else {
-      writeError(res, 404, result.message);
-    }
+    auto resp = Json.emptyObject
+      .set("message", "Topic deleted");
+
+    return successResponse("Topic deleted successfully", "Deleted", 200, resp);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 }
