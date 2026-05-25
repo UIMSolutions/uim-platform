@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: private-link-config
+  namespace: uim-platform
+  labels:
+    app: uim-private-link-platform-service
+    component: private-link
+data:
+  PRIVLINK_HOST: "0.0.0.0"
+  PRIVLINK_PORT: "8087"
+  # Set PRIVLINK_MONGO_URI to enable MongoDB-backed persistence
+  # PRIVLINK_MONGO_URI: "mongodb://user:pass@mongo:27017/private_link"
+  # Set PRIVLINK_DATA_DIR to enable file-based persistence
+  # PRIVLINK_DATA_DIR: "/var/lib/private-link"

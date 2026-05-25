@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uim-private-link-platform-service
+  namespace: uim-platform
+  labels:
+    app: uim-private-link-platform-service
+    component: private-link
+    version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uim-private-link-platform-service
+  template:
+    metadata:
+      labels:
+        app: uim-private-link-platform-service
+        component: private-link
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: private-link
+        image: uim-private-link-platform-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8087
+          name: http
+        envFrom:
+        - configMapRef:
+            name: private-link-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8087
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8087
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
