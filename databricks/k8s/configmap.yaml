@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: databricks-config
+  namespace: uim-platform
+  labels:
+    app: uim-databricks
+data:
+  DATABRICKS_HOST: "0.0.0.0"
+  DATABRICKS_PORT: "8104"

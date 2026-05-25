@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uim-databricks
+  namespace: uim-platform
+  labels:
+    app: uim-databricks
+spec:
+  type: ClusterIP
+  selector:
+    app: uim-databricks
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8104
+    targetPort: 8104
