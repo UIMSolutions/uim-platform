@@ -18,24 +18,10 @@ enum KeystoreFormat {
   p12,
   pem,
 }
-// Keystore scope level (search order: subscription > application > account)
-enum KeystoreLevel {
-  account,
-  application,
-  subscription,
-}
-// Type of entry within a keystore
-enum KeyEntryType {
-  trustedCertificate,
-  privateKey,
-  certificate,
-  secretKey,
-}
-// Helper: parse KeystoreFormat from string
-KeystoreFormat parseKeystoreFormat(string s) @safe {
+KeystoreFormat toKeystoreFormat(string s) @safe {
   import std.uni : toLower;
 
-  switch (s.toLower) {
+  switch (s.toLower()) {
   case "jceks":
     return KeystoreFormat.jceks;
   case "p12":
@@ -46,29 +32,42 @@ KeystoreFormat parseKeystoreFormat(string s) @safe {
     return KeystoreFormat.jks;
   }
 }
-// Helper: format KeystoreFormat to string
-string keystoreFormatToString(KeystoreFormat f) @safe {
-  final switch (f) {
-  case KeystoreFormat.jks:
-    return "jks";
-  case KeystoreFormat.jceks:
-    return "jceks";
-  case KeystoreFormat.p12:
-    return "p12";
-  case KeystoreFormat.pem:
-    return "pem";
-  }
+// Keystore scope level (search order: subscription > application > account)
+enum KeystoreLevel {
+  account,
+  application,
+  subscription,
 }
-// Helper: parse KeystoreLevel from string
-KeystoreLevel parseKeystoreLevel(string s) @safe {
+KeystoreLevel toKeystoreLevel(string s) @safe {
   import std.uni : toLower;
 
-  switch (s.toLower) {
+  switch (s.toLower()) {
   case "application":
     return KeystoreLevel.application;
   case "subscription":
     return KeystoreLevel.subscription;
   default:
     return KeystoreLevel.account;
+  }
+}
+// Type of entry within a keystore
+enum KeyEntryType {
+  trustedCertificate,
+  privateKey,
+  certificate,
+  secretKey,
+}
+KeyEntryType toKeyEntryType(string s) @safe {
+  import std.uni : toLower;
+
+  switch (s.toLower()) {
+  case "privatekey":
+    return KeyEntryType.privateKey;
+  case "certificate":
+    return KeyEntryType.certificate;
+  case "secretkey":
+    return KeyEntryType.secretKey;
+  default:
+    return KeyEntryType.trustedCertificate;
   }
 }

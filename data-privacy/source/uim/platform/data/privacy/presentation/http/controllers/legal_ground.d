@@ -40,7 +40,7 @@ class LegalGroundController : PlatformController {
       r.tenantId = tenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.basis = j.getString("basis").to!LegalBasis;
-      r.purpose = j.getString("purpose").to!ProcessingPurpose;
+      r.purpose = j.getString("purpose");
       r.description = j.getString("description");
       r.legalReference = j.getString("legalReference");
       r.validFrom = j.getLong("validFrom");

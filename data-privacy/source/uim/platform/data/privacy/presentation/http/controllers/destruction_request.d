@@ -122,28 +122,4 @@ class DestructionRequestController : PlatformController {
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
-
-  private static Json serialize(const DestructionRequest e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("requestedBy", e.requestedBy)
-      .set("status", e.status.to!string)
-      .set("archiveRequestId", e.archiveRequestId)
-      .set("blockingRequestId", e.blockingRequestId)
-      .set("reason", e.reason)
-      .set("scheduledAt", e.scheduledAt)
-      .set("startedAt", e.startedAt)
-      .set("completedAt", e.completedAt);
-  }
-
-  private static DestructionStatus parseDestructionStatus(string status) {
-    switch (status) {
-      case "inProgress": return DestructionStatus.inProgress;
-      case "completed": return DestructionStatus.completed;
-      case "failed": return DestructionStatus.failed;
-      default: return DestructionStatus.scheduled;
-    }
-  }
 }

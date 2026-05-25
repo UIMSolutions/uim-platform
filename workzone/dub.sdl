@@ -48,13 +48,13 @@ configuration "verbose" {
 
 // ── Desktop GUI (GtkD) ───────────────────────────────────────────────────────
 // Build with: dub build --config=gui
-// Requires GtkD >= 3.10 and GTK3 shared libraries.
+// Requires GtkD >= 3.11 and GTK3 shared libraries.
 configuration "gui" {
     targetType "executable"
     targetName "uim-workzone-gui"
     targetPath "build"
     mainSourceFile "source/ui_main.d"
-    dependency "gtkd" version=">=3.10.0 <4.0.0"
+    dependency "gtkd" version=">=3.11.0 <4.0.0"
     versions "WorkzoneGui"
 }
 

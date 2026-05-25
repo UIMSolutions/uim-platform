@@ -35,19 +35,6 @@ class ObservationController : PlatformController {
     );
   }
 
-  private static ObservationStatus parseStatus(string s) {
-    switch (s) {
-      case "registered":    return ObservationStatus.registered_;
-      case "preliminary":   return ObservationStatus.preliminary_;
-      case "final":         return ObservationStatus.final_;
-      case "amended":       return ObservationStatus.amended_;
-      case "corrected":     return ObservationStatus.corrected_;
-      case "cancelled":     return ObservationStatus.cancelled_;
-      case "entered-in-error": return ObservationStatus.enteredInError;
-      default:              return ObservationStatus.unknown_;
-    }
-  }
-
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;

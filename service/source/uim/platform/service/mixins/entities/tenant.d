@@ -14,6 +14,24 @@ mixin template TenantEntity(TId) {
   UserId updatedBy; // user who last updated the entity
   long updatedAt; // timestamp of when the entity was last updated
 
+  this(TenantId tenantId) {
+    this.tenantId = tenantId;
+    this.id = randomUUID().toString;
+    this.createdAt = Clock.currStdTime();
+    this.updatedAt = createdAt;
+  }
+
+  this(TenantId tenantId, TId id) {
+    this(tenantId);
+    this.id = id;
+  }
+
+  this(TenantId tenantId, TId id, UserId byUser) {
+    this(tenantId, id);
+    this.createdBy = byUser;
+    this.updatedBy = byUser;
+  }
+
   // Helper method to check if the entity is new (i.e. has no ID assigned yet)
   bool isNull() const {
     return id.isNull;

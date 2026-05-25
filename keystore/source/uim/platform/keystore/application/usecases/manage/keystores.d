@@ -23,22 +23,21 @@ class ManageKeystoresUseCase {
   }
 
   // Upload (create) a keystore at the given scope level.
-  CommandResult upload(UploadKeystoreRequest r) {
+  CommandResult uploadKeystore(UploadKeystoreRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Name is required");
     if (r.content.length == 0)
       return CommandResult(false, "", "Content is required");
 
-    auto level = parseKeystoreLevel(r.level);
+    auto level = r.level.toKeystoreLevel;
 
     if (repo.existsByName(r.tenantId, r.accountId, r.applicationId, level, r.name))
       return CommandResult(false, "", "A keystore with this name already exists at the specified level");
 
-    Keystore ks;
-    ks.id = randomUUID().toString();
+    Keystore ks = Keystore(r.tenantId);
     ks.name = r.name;
     ks.description = r.description;
-    ks.format = parseKeystoreFormat(r.format);
+    ks.format = r.format.toKeystoreFormat;
     ks.level = level;
     ks.content = r.content;
     ks.accountId = r.accountId;
@@ -46,8 +45,6 @@ class ManageKeystoresUseCase {
     ks.subscriptionId = r.subscriptionId;
     ks.createdBy = r.createdBy;
     ks.updatedBy = r.createdBy;
-    ks.createdAt = currentTimestamp();
-    ks.updatedAt = ks.createdAt;
 
     repo.save(ks);
     return CommandResult(true, ks.id.value, "");
@@ -75,7 +72,7 @@ class ManageKeystoresUseCase {
   }
 
   Keystore getKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
-    return repo.findByName(tenantId, accountId, applicationId, parseKeystoreLevel(level), name);
+    return repo.findByName(tenantId, accountId, applicationId, level.toKeystoreLevel, name);
   }
 
   Keystore[] listKeystores(TenantId tenantId, string accountId) {

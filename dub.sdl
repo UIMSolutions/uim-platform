@@ -10,8 +10,8 @@ targetType "library"
 targetName "uim-platform"
 // External dependencies
 dependency "uim-framework" version="~>26.5.1"
-dependency "vibe-d" version="~>0.9.4"
-dependency "gtk-d" version="~>3.10.0"
+dependency "vibe-d" version="~>0.10.3"
+dependency "gtk-d" version="~>3.11.0"
 // Internal Dependencies
 dependency ":service" version="*"
 

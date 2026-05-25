@@ -100,7 +100,7 @@ struct CreateLegalGroundRequest {
   TenantId tenantId;
   DataSubjectId dataSubjectId;
   LegalBasis basis;
-  ProcessingPurpose purpose;
+  string purpose;
   string description;
   string legalReference;
   string[] categories;

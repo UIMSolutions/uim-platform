@@ -31,19 +31,18 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.description.length == 0)
       return CommandResult(false, "", "Description is required");
 
-    auto now = currentTimestamp();
     LegalGround ground;
     ground.initEntity(req.tenantId);
+
     ground.dataSubjectId = req.dataSubjectId;
     ground.basis = req.basis;
-    ground.purpose = req.purpose;
+    ground.purpose = req.purpose.toProcessingPurpose;
     ground.description = req.description;
     ground.legalReference = req.legalReference;
     ground.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     ground.isActive = true;
-    ground.validFrom = req.validFrom > 0 ? req.validFrom : now;
+    ground.validFrom = req.validFrom > 0 ? req.validFrom : ground.createdAt;
     ground.validUntil = req.validUntil;
-    ground.createdAt = now;
 
     legalGrounds.save(ground);
     return CommandResult(true, ground.id.value, "");

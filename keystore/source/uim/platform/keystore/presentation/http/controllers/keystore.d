@@ -47,7 +47,7 @@ class KeystoreController : PlatformController {
     r.content = j.getString("content");
     r.createdBy = UserId(j.getString("createdBy"));
 
-    auto result = usecase.upload(r);
+    auto result = usecase.uploadKeystore(r);
     if (result.hasError) 
       return errorResponse(result.message);
 
@@ -58,6 +58,7 @@ class KeystoreController : PlatformController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
+
       UploadKeystoreRequest r;
       r.tenantId = tenantId;
       r.accountId = j.getString("accountId");
@@ -70,7 +71,7 @@ class KeystoreController : PlatformController {
       r.content = j.getString("content");
       r.createdBy = UserId(j.getString("createdBy"));
 
-      auto result = usecase.upload(r);
+      auto result = usecase.uploadKeystore(r);
       if (result.success) {
         auto resp = Json.emptyObject
           .set("id", result.id);
@@ -102,7 +103,7 @@ class KeystoreController : PlatformController {
           .set("id", ks.id)
           .set("name", ks.name)
           .set("description", ks.description)
-          .set("format", keystoreFormatToString(ks.format))
+          .set("format", ks.format.to!string)
           .set("level", ks.level.to!string)
           .set("accountId", ks.accountId)
           .set("applicationId", ks.applicationId)
@@ -136,7 +137,7 @@ class KeystoreController : PlatformController {
         .set("id", ks.id)
         .set("name", ks.name)
         .set("description", ks.description)
-        .set("format", keystoreFormatToString(ks.format))
+        .set("format", ks.format.to!string)
         .set("level", ks.level.to!string)
         .set("content", ks.content)
         .set("accountId", ks.accountId)
@@ -217,7 +218,7 @@ class KeystoreController : PlatformController {
         .set("id", ks.id)
         .set("name", ks.name)
         .set("description", ks.description)
-        .set("format", keystoreFormatToString(ks.format))
+        .set("format", ks.format.to!string)
         .set("level", ks.level.to!string)
         .set("content", ks.content)
         .set("accountId", ks.accountId)
