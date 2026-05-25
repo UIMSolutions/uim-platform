@@ -45,34 +45,16 @@ class ProjectController : ManageController {
         return successResoponse("Project list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
-        auto id = ProjectId(extractIdFromPath(path));
-        if (id.isNull)
-            return errorResponse("Invalid project ID", "BadRequest", 400);
-
-        auto e = usecase.getProject(tenantId, id);
-        if (e.isNull)
-            return errorResponse("Project not found", "NotFound", 404);
-
-        return successResponse("Project retrieved successfully", "Retrieved", 200, e.toJson());
-    }
-
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto data = recheck.data;
+        auto data = precheck.data;
 
         ProjectDTO dto;
-        dto.projectId = ProjectId(data.getString("id"));
+        dto.projectId = ProjectId(precheck.id);
         dto.tenantId = tenantId;
         dto.devSpaceId = data.getString("devSpaceId");
         dto.name = data.getString("name");
@@ -86,12 +68,30 @@ class ProjectController : ManageController {
 
         auto result = usecase.createProject(dto);
         if (result.hasError)
-            return errorResponse(result.message, "BadRequest", 400);
+            return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
             .set("id", result.id);
 
         return successResponse("Project created successfully", "Created", 201, resp);
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = ProjectId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid project ID", 400);
+
+        auto e = usecase.getProject(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Project not found", 404);
+
+        return successResponse("Project retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -101,7 +101,6 @@ class ProjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto path = req.requestURI.to!string;
 
         ProjectDTO dto;
         dto.tenantId = tenantId;
@@ -113,32 +112,32 @@ class ProjectController : ManageController {
 
         auto result = usecase.updateProject(tenantId, dto);
         if (result.hasError)
-            return errorResponse(result.message, "BadRequest", 400);
+            return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Project updated");
+            .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
+        return successResponse("Project updated successfully", "Updated", 200, resp);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto path = req.requestURI.to!string;
-            auto id = ProjectId(extractIdFromPath(path));
-            auto result = usecase.deleteProject(tenantId, id);
-            if (result.success) {
-                auto resp = Json.emptyObject
-                    .set("message", "Project deleted");
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = ProjectId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid project ID", 400);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.deleteProject(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto resp = Json.emptyObject
+            .set("id", id);
+
+        return successResponse("Project deleted successfully", "Deleted", 200, resp);
     }
 }

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-hana-spatial-config
+  labels:
+    app: cloud-hana-spatial
+    component: spatial-services
+data:
+  HANA_SPATIAL_HOST: "0.0.0.0"
+  HANA_SPATIAL_PORT: "8098"
