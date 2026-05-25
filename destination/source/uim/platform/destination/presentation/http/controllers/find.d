@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.destination.presentation.http.controllers.find;
 
-
-
-
 // import uim.platform.destination.application.usecases.find_destination;
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.presentation.http
@@ -27,63 +24,65 @@ class FindController : PlatformController {
     router.get("/api/v1/destinations/find", &handleFind);
   }
 
-  protected void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      
-      FindDestinationRequest r;
-      r.tenantId = tenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-      r.name = req.params.get("name");
-      r.headerProvider = req.params.get("headerProvider");
+  protected Json findHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.find(r);
+    FindDestinationRequest r;
+    r.tenantId = precheck.tenantId;
+    r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+    r.name = req.params.get("name");
+    r.headerProvider = req.params.get("headerProvider");
 
-      if (!result.found) {
-        writeError(res, 404, result.message);
-        return;
-      }
+    auto result = usecase.find(r);
+    if (!result.found)
+      return errorResponse("Destination not found", 404);
 
-      auto j = Json.emptyObject
-      .set("destinationName", result.destinationName)
-      .set("url", result.url)
-      .set("authentication", result.authenticationType)
-      .set("proxyType", result.proxyType)
-      .set("type", result.destinationType);
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; result.properties)
+      propsJson[k] = Json(v);
 
-      auto propsJson = Json.emptyObject;
-      foreach (k, v; result.properties)
-        propsJson[k] = Json(v);
-      j["properties"] = propsJson;
+    auto fragArr = result.appliedFragments.map!(s => Json(s)).array.toJson;
 
-      auto fragArr = result.appliedFragments.map!(s => Json(s)).array.toJson;
-      j["appliedFragments"] = fragArr;
+    // Auth tokens
+    auto tokenArr = Json.emptyArray;
+    foreach (t; result.authTokens) {
+      tokenArr ~= Json.emptyObject
+        .set("type", t.type_)
+        .set("value", t.value_)
+        .set("expiresAt", t.expiresAt)
+        .set("httpHeaderSuggestion", t.httpHeaderSuggestion);
+    }
 
-      // Auth tokens
-      auto tokenArr = Json.emptyArray;
-      foreach (t; result.authTokens) {
-        tokenArr ~= Json.emptyObject
-          .set("type", t.type_)
-          .set("value", t.value_)
-          .set("expiresAt", t.expiresAt)
-          .set("httpHeaderSuggestion", t.httpHeaderSuggestion);
-      }
-      j["authTokens"] = tokenArr;
-
-      // Certificates
-      auto certArr = Json.emptyArray;
-      foreach (c; result.certificates) {
-        certArr ~= Json.emptyObject
+    auto certArr = Json.emptyArray;
+    foreach (c; result.certificates) {
+      certArr ~= Json.emptyObject
         .set("name", c.name)
         .set("type", c.type_)
         .set("format", c.format_)
         .set("status", c.status);
-      }
-      j["certificates"] = certArr;
-
-      res.writeJsonBody(j, 200);
     }
-    catch (Exception e) {
+
+    auto j = Json.emptyObject
+      .set("destinationName", result.destinationName)
+      .set("url", result.url)
+      .set("authentication", result.authenticationType)
+      .set("proxyType", result.proxyType)
+      .set("type", result.destinationType)
+      .set("properties", propsJson)
+      .set("appliedFragments", fragArr)
+      .set("authTokens", tokenArr.toJson)
+      .set("certificates", certArr.toJson);
+
+    return successResponse("Destination found", "Found", 200, j);
+  }
+
+  protected void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = findHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

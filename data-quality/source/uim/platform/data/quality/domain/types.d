@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.quality.domain.types;
-import uim.platform.data.quality;
+module uim.platform.data_quality.domain.types;
+import uim.platform.data_quality;
 /// Unique identifier type aliases for type safety.
 struct RecordId {
   string value;
@@ -17,6 +17,16 @@ struct RecordId {
 }
 
 struct ValidationRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ValidationResultId {
   string value;
 
   this(string value) {
@@ -96,5 +106,14 @@ struct ProfileJobId {
   mixin DomainId;
 }
 
+struct QualityDashboardId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 

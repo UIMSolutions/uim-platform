@@ -5,11 +5,9 @@
 *****************************************************************************************************************/
 module app;
 
-
-
-// import uim.platform.data.quality.infrastructure.config;
-// import uim.platform.data.quality.infrastructure.container;
-import uim.platform.data.quality;
+// import uim.platform.data_quality.infrastructure.config;
+// import uim.platform.data_quality.infrastructure.container;
+import uim.platform.data_quality;
 // import std.stdio : writefln;
 @safe:
 

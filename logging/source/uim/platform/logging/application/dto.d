@@ -131,7 +131,7 @@ struct CreateDashboardRequest {
 
 struct UpdateDashboardRequest {
   TenantId tenantId;
-  DashboardId dashboardId;
+  QualityDashboardId dashboardId;
 
   string name;
   string description;

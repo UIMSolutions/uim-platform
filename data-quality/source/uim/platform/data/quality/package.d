@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.quality;
+module uim.platform.data_quality;
 
 public {
     import uim.platform.service;
 
-    import uim.platform.data.quality.application;
-    import uim.platform.data.quality.domain;
-    import uim.platform.data.quality.helpers;
-    import uim.platform.data.quality.infrastructure;
-    import uim.platform.data.quality.presentation;
+    import uim.platform.data_quality.application;
+    import uim.platform.data_quality.domain;
+    import uim.platform.data_quality.helpers;
+    import uim.platform.data_quality.infrastructure;
+    import uim.platform.data_quality.presentation;
 }
