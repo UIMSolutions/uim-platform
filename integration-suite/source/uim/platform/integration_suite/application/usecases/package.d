@@ -8,5 +8,4 @@ public {
   import uim.platform.integration_suite.application.usecases.manage_topic_subscriptions;
   import uim.platform.integration_suite.application.usecases.manage_trading_partners;
   import uim.platform.integration_suite.application.usecases.manage_message_mappings;
-  import uim.platform.integration_suite.application.usecases.manage_integration_users;
 }

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-suite
+  labels:
+    app: integration-suite
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integration-suite
+  template:
+    metadata:
+      labels:
+        app: integration-suite
+    spec:
+      containers:
+      - name: integration-suite
+        image: uim-platform/integration-suite:latest
+        ports:
+        - containerPort: 8096
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: integration-suite-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
