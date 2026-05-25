@@ -5,10 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.presentation.http.controllers.cleansing_job;
 
-
-
-
-
 // import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;

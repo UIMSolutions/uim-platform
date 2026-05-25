@@ -52,3 +52,4 @@ struct CleansingJob {
 
     return result;
   }
+}

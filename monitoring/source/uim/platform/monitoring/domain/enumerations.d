@@ -1,4 +1,10 @@
 module uim.platform.monitoring.domain.enumerations;
+
+import uim.platform.monitoring;
+
+mixin(ShowModule!());
+
+@safe:
 /// Type of monitored resource.
 enum ResourceType {
   javaApplication,

@@ -41,9 +41,9 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     definition.name = req.name;
     definition.displayName = req.displayName.length > 0 ? req.displayName : req.name;
     definition.description = req.description;
-    definition.category = toMetricCategory(req.category);
-    definition.unit = toMetricUnit(req.unit);
-    definition.aggregation = toAggregationMethod(req.aggregation);
+    definition.category = req.category.toMetricCategory;
+    definition.unit = req.unit.toMetricUnit;
+    definition.aggregation = req.aggregation.toAggregationMethod;
     definition.isCustom = true;
     definition.isEnabled = true;
 
@@ -52,20 +52,20 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDefinition(UpdateMetricDefinitionRequest req) {
-    auto def = definitions.findById(req.tenantId, req.id);
-    if (def.isNull)
+    auto definition = definitions.findById(req.tenantId, req.id);
+    if (definition.isNull)
       return CommandResult(false, "", "Metric definition not found");
 
     if (req.displayName.length > 0)
-      def.displayName = req.displayName;
+      definition.displayName = req.displayName;
     if (req.description.length > 0)
-      def.description = req.description;
+      definition.description = req.description;
     if (req.aggregation.length > 0)
-      def.aggregation = toAggregationMethod(req.aggregation);
-    def.isEnabled = req.isEnabled;
+      definition.aggregation = req.aggregation.toAggregationMethod;
+    definition.isEnabled = req.isEnabled;
 
-    definitions.update(def);
-    return CommandResult(true, def.id.value, "");
+    definitions.update(definition);
+    return CommandResult(true, definition.id.value, "");
   }
 
   MetricDefinition getDefinition(TenantId tenantId, MetricDefinitionId id) {
@@ -93,14 +93,12 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (req.resourceId.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
 
-    Metric m;
-    m.initEntity(req.tenantId);
-
+    auto m = Metric(req.tenantId);
     m.resourceId = req.resourceId;
     m.name = req.name;
     m.value_ = req.value_;
-    m.unit = toMetricUnit(req.unit);
-    m.category = toMetricCategory(req.category);
+    m.unit = req.unit.toMetricUnit;
+    m.category = req.category.toMetricCategory;
     m.labels = req.labels;
     m.timestamp = m.createdAt; // use server time for consistency
 
@@ -111,14 +109,12 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
     foreach (r; req.metrics) {
-      Metric m;
-      m.initEntity(req.tenantId);
-
+      auto m = Metric(req.tenantId);
       m.resourceId = r.resourceId;
       m.name = r.name;
       m.value_ = r.value_;
-      m.unit = toMetricUnit(r.unit);
-      m.category = toMetricCategory(r.category);
+      m.unit = r.unit.toMetricUnit;
+      m.category = r.category.toMetricCategory;
       m.labels = r.labels;
       m.timestamp = clockSeconds();
       metrics ~= m;
@@ -147,7 +143,8 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     string metricName, long startTime, long endTime) {
     auto metrics = metricRepo.findInTimeRange(tenantId, resourceId,
       metricName, startTime, endTime);
-    MetricSummary s;
+
+    auto s = MetricSummary();
     s.name = metricName;
     s.resourceId = resourceId;
     s.windowStartTime = startTime;
