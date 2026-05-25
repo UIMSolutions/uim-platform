@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-datasphere-composer
+  labels:
+    app: cloud-datasphere-composer
+spec:
+  type: ClusterIP
+  selector:
+    app: cloud-datasphere-composer
+  ports:
+  - name: http
+    port: 8099
+    targetPort: 8099
+    protocol: TCP

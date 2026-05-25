@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-datasphere-composer
+  labels:
+    app: cloud-datasphere-composer
+    tier: platform-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-datasphere-composer
+  template:
+    metadata:
+      labels:
+        app: cloud-datasphere-composer
+    spec:
+      containers:
+      - name: cloud-datasphere-composer
+        image: cloud-datasphere-composer:latest
+        ports:
+        - containerPort: 8099
+        envFrom:
+        - configMapRef:
+            name: cloud-datasphere-composer-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8099
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8099
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-datasphere-composer-config
+data:
+  DATASPHERE_COMPOSER_HOST: "0.0.0.0"
+  DATASPHERE_COMPOSER_PORT: "8099"
