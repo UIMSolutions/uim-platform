@@ -97,7 +97,7 @@ class RetentionController : ManageController {
     auto data = precheck.data;
 
     UpdateRetentionPolicyRequest policyRequest;
-    policyRequest.retentionPolicyId = RetentionPolicyId(precheck.getString("id"));
+    policyRequest.retentionPolicyId = RetentionPolicyId(precheck.id);
     policyRequest.tenantId = tenantId;
     policyRequest.name = data.getString("name");
     policyRequest.description = data.getString("description");
@@ -123,7 +123,7 @@ class RetentionController : ManageController {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError) return precheck;
 
-    useCase.deletePolicy(precheck.tenantId, RetentionPolicyId(precheck.getString("id")));
+    useCase.deletePolicy(precheck.tenantId, RetentionPolicyId(precheck.id));
     return successResponse("Retention policy deleted successfully", 200, 
       Json.emptyObject.set("status", "deleted"));
   }

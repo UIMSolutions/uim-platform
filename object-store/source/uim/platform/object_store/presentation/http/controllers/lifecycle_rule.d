@@ -79,7 +79,7 @@ class LifecycleRuleController : ManageController {
         .set("totalCount", rules.length));
   }
 
-  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, response.code);
@@ -94,7 +94,7 @@ class LifecycleRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = LifecycleRuleId(precheck.getString("id"));
+    auto id = LifecycleRuleId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid lifecycle rule ID");
 
@@ -111,7 +111,7 @@ class LifecycleRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = LifecycleRuleId(precheck.getString("id"));
+    auto id = LifecycleRuleId(precheck.id);
     auto data = precheck.data;
 
     UpdateLifecycleRuleRequest request;
@@ -125,7 +125,7 @@ class LifecycleRuleController : ManageController {
     request.transitionStorageClass = data.getString("transitionStorageClass");
     request.abortIncompleteUploadDays = data.getInteger("abortIncompleteUploadDays");
 
-    auto result = usecase.updateRule(id, request);
+    auto result = usecase.updateRule(request);
     if (result.hasError)
       return errorResponse(result.message);
 
@@ -139,7 +139,9 @@ class LifecycleRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = LifecycleRuleId(precheck.getString("id"));
+    auto id = LifecycleRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid lifecycle rule ID");
 
     auto result = usecase.deleteRule(tenantId, id);
     if (!result.success)

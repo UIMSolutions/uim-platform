@@ -21,6 +21,8 @@ class ServiceBindingController : ManageController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/buckets/*/service-bindings", &handleListByBucket);
     router.get("/api/v1/service-bindings/*", &handleGet);
@@ -28,34 +30,34 @@ class ServiceBindingController : ManageController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      auto r = CreateServiceBindingRequest();
-      r.tenantId = tenantId;
-      r.bucketId = j.getString("bucketId");
-      r.name = j.getString("name");
-      r.permission = j.getString("permission");
-      r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createBinding(r);
-      if (result.success) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Service binding created");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto request = CreateServiceBindingRequest();
+    request.tenantId = tenantId;
+    request.bucketId = data.getString("bucketId");
+    request.name = data.getString("name");
+    request.permission = data.getString("permission");
+    request.expiresAt = jsonLong(data, "expiresAt");
+    request.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createBinding(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Service binding created");
+
+    return successResponse("Service binding created successfully", 201, resp);
   }
 
-  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
 
@@ -73,24 +75,23 @@ class ServiceBindingController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      if (id == "revoke")
-        return;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto binding = usecase.getBinding(tenantId, id);
-      if (binding.isNull) {
-        writeError(res, 404, "Service binding not found");
-        return;
-      }
-      auto resp = binding.toJson
-        .set("message", "Service binding retrieved successfully");
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+
+    auto id = extractIdFromPath(req.requestURI);
+    if (id == "revoke")
+      return errorResponse("Invalid service binding ID", 400);
+
+    auto binding = usecase.getBinding(tenantId, ServiceBindingId(id));
+    if (binding.isNull)
+      return errorResponse("Service binding not found", 404);
+
+    return successResponse("Service binding retrieved successfully", 200, binding.toJson);
   }
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -109,7 +110,7 @@ class ServiceBindingController : ManageController {
       auto slashPos = rest.indexOf('/');
       auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
 
-      auto result = usecase.revokeBinding(tenantId, id);
+      auto result = usecase.revokeBinding(tenantId, ServiceBindingId(id));
       if (result.success) {
         auto resp = Json.emptyObject
           .set("revoked", true)
@@ -124,36 +125,24 @@ class ServiceBindingController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = usecase.deleteBinding(tenantId, id);
-      if (result.success) {
-        auto response = Json.emptyObject
-          .set("deleted", true);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(response, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = precheck.tenantId;
+    auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
 
-  private static Json serializeBinding(ServiceBinding b) {
-    return Json.emptyObject
-      .set("id", b.id)
-      .set("tenantId", b.tenantId)
-      .set("name", b.name)
-      .set("bucketId", b.bucketId)
-      .set("accessKeyId", b.accessKeyId) // Never return the secret hash
-      .set("permission", b.permission.to!string)
-      .set("status", b.status.to!string)
-      .set("expiresAt", b.expiresAt)
-      .set("createdBy", b.createdBy)
-      .set("createdAt", b.createdAt);
+    auto result = usecase.deleteBinding(tenantId, (id));
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto response = Json.emptyObject
+      .set("deleted", true);
+
+    return successResponse("Service binding deleted successfully", 200, response);
   }
 
   private static string extractBucketIdFromBindingsPath(string uri) {

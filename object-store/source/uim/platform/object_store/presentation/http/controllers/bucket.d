@@ -83,7 +83,7 @@ class BucketController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = BucketId(precheck.getString("id"));
+    auto id = BucketId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid bucket ID", 400);
 

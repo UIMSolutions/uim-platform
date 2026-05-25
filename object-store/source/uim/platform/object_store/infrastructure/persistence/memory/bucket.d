@@ -30,6 +30,6 @@ class MemoryBucketRepository : TenantRepository!(Bucket, BucketId), BucketReposi
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).remove();
+    remove(findByName(tenantId, name));
   }
 }

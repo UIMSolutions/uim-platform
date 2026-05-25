@@ -81,7 +81,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = TransportRequestId(precheck.getString("id"));
+    auto id = TransportRequestId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid transport request id", 400);
 
@@ -98,7 +98,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto requestId = TransportRequestId(precheck.getString("id"));
+    auto requestId = TransportRequestId(precheck.id);
     if (requestId.isNull)
       return errorResponse("Invalid transport request id", 400);
 
@@ -188,7 +188,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = TransportRequestId(precheck.getString("id"));
+    auto id = TransportRequestId(precheck.id);
 
     auto result = usecase.deleteTransportRequest(tenantId, id);
     if (result.hasError)

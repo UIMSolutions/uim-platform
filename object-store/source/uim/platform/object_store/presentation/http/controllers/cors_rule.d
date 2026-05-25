@@ -75,7 +75,7 @@ class CorsRuleController : ManageController {
         .set("totalCount", rules.length));
   }
 
-  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucket(req);
       res.writeJsonBody(response, response.code);
@@ -90,7 +90,7 @@ class CorsRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = CorsRuleId(precheck.getString("id"));
+    auto id = CorsRuleId(precheck.id);
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
 
@@ -107,7 +107,7 @@ class CorsRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = CorsRuleId(precheck.getString("id"));
+    auto id = CorsRuleId(precheck.id);
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
 
@@ -137,14 +137,13 @@ class CorsRuleController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = CorsRuleId(precheck.getString("id"));
+    auto id = CorsRuleId(precheck.id);
     if (id.isEmpty)
       return errorResponse("Invalid CORS rule ID");
 
     auto result = usecase.deleteRule(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.message == "CORS rule not found" ? 404 : 400, result
-          .message);
+      return errorResponse(result.message, result.message == "CORS rule not found" ? 404 : 400);
 
     return successResponse("CORS rule deleted successfully", 200);
   }

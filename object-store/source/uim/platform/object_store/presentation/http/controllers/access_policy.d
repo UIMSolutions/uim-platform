@@ -79,7 +79,7 @@ class AccessPolicyController : ManageController {
     return successResponse("Access policies retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, response.code);
@@ -94,7 +94,7 @@ class AccessPolicyController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = AccessPolicyId(precheck.getString("id"));
+    auto id = AccessPolicyId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);
 
@@ -111,7 +111,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = AccessPolicyId(precheck.getString("id"));
+    auto id = AccessPolicyId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);
 
@@ -140,7 +140,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = AccessPolicyId(precheck.getString("id"));
+    auto id = AccessPolicyId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);
 

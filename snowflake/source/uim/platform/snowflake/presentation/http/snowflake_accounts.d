@@ -1,0 +1,76 @@
+module uim.platform.snowflake.presentation.http.snowflake_accounts;
+import uim.platform.snowflake;
+import vibe.http.server;
+import vibe.http.router;
+import std.conv : to;
+mixin(ShowModule!());
+@safe:
+class SnowflakeAccountController : ManageController {
+  private ManageSnowflakeAccountsUseCase usecase;
+  this(ManageSnowflakeAccountsUseCase usecase) { this.usecase = usecase; }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.get   ("/api/v1/snowflake/accounts",           &handleList);
+    router.get   ("/api/v1/snowflake/accounts/*",         &handleGet);
+    router.post  ("/api/v1/snowflake/accounts",           &handleCreate);
+    router.put   ("/api/v1/snowflake/accounts/*",         &handleUpdate);
+    router.delete_("/api/v1/snowflake/accounts/*",        &handleDelete);
+    router.post  ("/api/v1/snowflake/accounts/*/activate",&handleActivate);
+  }
+
+  void handleList(HTTPServerRequest req, HTTPServerResponse res) {
+    auto items = usecase.list(req.getTenantId);
+    auto arr = Json.emptyArray;
+    foreach (item; items) arr ~= item.toJson();
+    res.writeJsonBody(arr, cast(int) HTTPStatus.ok);
+  }
+
+  void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
+    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    if (item.isNull) { writeError(res, 404, "Account not found"); return; }
+    res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
+  }
+
+  void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
+    auto j = req.json;
+    CreateAccountRequest r;
+    r.tenantId         = req.getTenantId;
+    r.id               = j.getString("id");
+    r.name             = j.getString("name");
+    r.region           = j.getString("region");
+    r.adminEmail       = j.getString("adminEmail");
+    r.adminFirstName   = j.getString("adminFirstName");
+    r.adminLastName    = j.getString("adminLastName");
+    r.entitlementSystemId = j.getString("entitlementSystemId");
+    auto result = usecase.create(r);
+    if (!result.success) { writeError(res, 400, result.message); return; }
+    auto resp = Json.emptyObject;
+    resp["id"] = Json(result.id);
+    res.writeJsonBody(resp, cast(int) HTTPStatus.created);
+  }
+
+  void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
+    auto j = req.json;
+    UpdateAccountRequest r;
+    r.tenantId = req.getTenantId;
+    r.id       = extractIdFromPath(req.requestPath.to!string);
+    r.name     = j.getString("name");
+    r.status   = j.getString("status");
+    auto result = usecase.update(r);
+    if (!result.success) { writeError(res, 400, result.message); return; }
+    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+  }
+
+  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
+    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    if (!result.success) { writeError(res, 404, result.message); return; }
+    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+  }
+
+  void handleActivate(HTTPServerRequest req, HTTPServerResponse res) {
+    auto result = usecase.activate(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    if (!result.success) { writeError(res, 404, result.message); return; }
+    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+  }
+}

@@ -64,7 +64,7 @@ class AlertController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = AlertId(precheck.getString("id"));
+    auto id = AlertId(precheck.id);
     auto a = usecase.getById(tenantId, id);
     if (a.isNull)
       return errorResponse("Alert not found", 404);
@@ -155,7 +155,7 @@ class AlertController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = AlertId(precheck.getString("id"));
+    auto id = AlertId(precheck.id);
 
     auto result = usecase.deleteAlert(tenantId, id);
     if (result.hasError)

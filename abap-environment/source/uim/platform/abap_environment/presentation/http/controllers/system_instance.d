@@ -133,7 +133,7 @@ class SystemInstanceController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = SystemInstanceId(precheck.getString("id"));
+    auto id = SystemInstanceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid system instance id", 400);
 

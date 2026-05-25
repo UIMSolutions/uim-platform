@@ -80,7 +80,7 @@ class CatalogController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = CatalogId(precheck.getString("id"));
+        auto id = CatalogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
 
@@ -99,7 +99,7 @@ class CatalogController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = CatalogId(precheck.getString("id"));
+        auto id = CatalogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
 
@@ -125,7 +125,7 @@ class CatalogController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = CatalogId(precheck.getString("id"));
+        auto id = CatalogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid catalog ID", 400);
 

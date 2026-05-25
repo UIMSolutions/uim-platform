@@ -138,7 +138,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
       // Mark current latest as not latest
       auto currentLatest = versionRepo.findLatest(tenantId, obj.id);
-      if (currentLatest !is null && currentLatest.id.length > 0) {
+      if (!currentLatest.isNull && !currentLatest.id.isNull) {
         currentLatest.isLatest = false;
         versionRepo.save(currentLatest);
       }

@@ -86,7 +86,7 @@ class ObjectController : ManageController {
     return successResponse("Objects retrieved successfully", "OK", 200, resp);
   }
 
-  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, 200);
@@ -103,7 +103,7 @@ class ObjectController : ManageController {
     auto tenantId = req.getTenantId;
     auto id = StorageObjectId(extractIdFromPath(req.requestURI));
     // Check if this is a versions request
-    if (id == "versions" || id == "copy")
+    if (id.value == "versions" || id.value == "copy")
       return errorResponse("Invalid object ID", 400);
 
     auto obj = usecase.getObject(tenantId, id);
@@ -119,14 +119,15 @@ class ObjectController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = BucketId(extractIdFromPath(req.requestURI));
-    auto j = req.json;
+    auto id = BucketId(extractIdFromPath(precheck.path));
+    auto data = precheck.data;
+
     auto r = UpdateObjectMetadataRequest();
     r.tenantId = tenantId;
     r.bucketId = id;
-    r.contentType = j.getString("contentType");
-    r.metadata = j.getString("metadata");
-    r.storageClass = j.getString("storageClass");
+    r.contentType = data.getString("contentType");
+    r.metadata = data.getString("metadata");
+    r.storageClass = data.getString("storageClass");
 
     auto result = usecase.updateObjectMetadata(r);
     if (result.hasError)
@@ -139,7 +140,7 @@ class ObjectController : ManageController {
     return successResponse("Object metadata updated successfully", "Updated", 200, resp);
   }
 
-  override protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = updateMetadataHandler(req);
       res.writeJsonBody(response, response.code);
@@ -154,7 +155,7 @@ class ObjectController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = extractIdFromPath(precheck.path);
 
     auto result = usecase.deleteObject(tenantId, id);
     if (result.hasError)
@@ -185,7 +186,7 @@ class ObjectController : ManageController {
 
     auto result = usecase.copyObject(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage, "Bad Request", 400);
+      return errorResponse(result.errorMessage, 400);
 
     auto resp = Json.emptyObject
       .set("id", result.id)
@@ -221,7 +222,7 @@ class ObjectController : ManageController {
     return successResponse("Object versions retrieved successfully", "OK", 200, resp);
   }
 
-  override protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listVersionsHandler(req);
       res.writeJsonBody(response, response.code);
