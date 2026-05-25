@@ -1,4 +1,4 @@
-name "dataattribute-recommendation"
+name "data-attribute-recommendation"
 description "SAP Data Attribute Recommendation style service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/dataattribute-recommendation"
 authors "Ozan Nurettin Suel" "UI Manufaktur"
