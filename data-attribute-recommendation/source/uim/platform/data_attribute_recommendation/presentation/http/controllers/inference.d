@@ -108,7 +108,7 @@ class InferenceController : PlatformController {
     }
   }
 
-  protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listRequests(tenantId);

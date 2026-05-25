@@ -64,7 +64,7 @@ class PersonalDataModelController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
@@ -86,7 +86,7 @@ class PersonalDataModelController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

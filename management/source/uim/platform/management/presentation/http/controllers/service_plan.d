@@ -65,7 +65,7 @@ class ServicePlanController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto serviceName = req.params.get("serviceName");
       auto category = req.params.get("category");

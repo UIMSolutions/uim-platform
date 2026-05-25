@@ -41,7 +41,7 @@ class CredentialController : ManageController {
     handleCreateCredential(req, res, "password");
   }
 
-  protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListPasswords(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "password");
   }
 
@@ -59,7 +59,7 @@ class CredentialController : ManageController {
     handleCreateCredential(req, res, "key");
   }
 
-  protected void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListKeys(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     handleListCredentials(req, res, "key");
   }
 
@@ -105,7 +105,7 @@ class CredentialController : ManageController {
     }
   }
 
-  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+  override protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));

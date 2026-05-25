@@ -28,7 +28,7 @@ class MtaOperationController : PlatformController {
         router.get("/api/v1/slm/operations/*/logs",   &handleLogs);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto ops = usecase.listOperations(tenantId);

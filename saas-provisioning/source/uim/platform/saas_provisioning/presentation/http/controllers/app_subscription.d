@@ -40,7 +40,7 @@ class AppSubscriptionController : PlatformController {
 
     // -----------------------------------------------------------------------
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             AppSubscription[] subs;

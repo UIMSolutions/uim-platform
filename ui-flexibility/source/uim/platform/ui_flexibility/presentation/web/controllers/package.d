@@ -23,7 +23,7 @@ class FlexChangesWebController : ManageController {
     router.get("/web/changes", &handleListPage);
   }
 
-  protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto changes = usecase.listChanges(tenantId);
@@ -48,7 +48,7 @@ class FlexVariantsWebController : ManageController {
     router.get("/web/variants", &handleListPage);
   }
 
-  protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto variants = usecase.listVariants(tenantId);

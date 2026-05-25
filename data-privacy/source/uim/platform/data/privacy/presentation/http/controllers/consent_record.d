@@ -62,7 +62,7 @@ class ConsentController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -88,7 +88,7 @@ class ConsentController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");

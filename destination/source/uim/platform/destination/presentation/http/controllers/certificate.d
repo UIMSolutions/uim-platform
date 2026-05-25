@@ -67,7 +67,7 @@ class CertificateController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -92,7 +92,7 @@ class CertificateController : ManageController {
     }
   }
 
-  protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
 

@@ -28,7 +28,7 @@ class EventController : PlatformController {
     router.get("/api/v1/events/*", &handleGet);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto gaId = req.params.get("globalAccountId");

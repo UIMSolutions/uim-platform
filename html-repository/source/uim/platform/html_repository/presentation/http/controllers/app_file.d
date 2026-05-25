@@ -56,7 +56,7 @@ class AppFileController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto versionId = getString(req.json, "versionId");

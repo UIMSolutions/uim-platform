@@ -33,7 +33,7 @@ class ProgramController : PlatformController {
         router.delete_("/api/v1/abap/programs/*",&handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = req.getTenantId;
             auto programs  = usecase.listPrograms(tenantId);

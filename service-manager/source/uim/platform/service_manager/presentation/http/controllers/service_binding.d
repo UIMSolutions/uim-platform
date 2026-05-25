@@ -21,7 +21,7 @@ class ServiceBindingController : PlatformController {
         router.delete_("/api/v1/service-manager/service-bindings/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

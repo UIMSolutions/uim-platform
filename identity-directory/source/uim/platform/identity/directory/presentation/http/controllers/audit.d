@@ -29,7 +29,7 @@ class AuditController : PlatformController {
     router.get("/api/v1/audit-logs/target/*", &handleByTarget);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto events = useCase.listEvents(tenantId);

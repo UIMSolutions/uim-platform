@@ -34,7 +34,7 @@ class AlertController : ManageController {
     router.delete_("/api/v1/alerts/*", &handleDelete);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto state = req.params.get("state", "");

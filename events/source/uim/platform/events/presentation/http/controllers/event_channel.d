@@ -25,7 +25,7 @@ class EventChannelController : PlatformController {
         router.delete_("/api/v1/sap-event-mesh/event-channels/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto items = usecase.listChannels(tenantId);

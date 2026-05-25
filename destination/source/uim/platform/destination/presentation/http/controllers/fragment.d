@@ -73,7 +73,7 @@ class FragmentController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));

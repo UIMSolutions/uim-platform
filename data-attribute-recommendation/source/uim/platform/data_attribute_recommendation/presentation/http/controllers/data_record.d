@@ -81,7 +81,7 @@ class DataRecordController : ManageController {
     }
   }
 
-  protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto datasetId = DatasetId(extractIdFromPath(req.requestURI));

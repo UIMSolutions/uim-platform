@@ -59,7 +59,7 @@ class MenuItemController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = req.headers.get("X-Site-Id", "");
       auto items = useCase.listMenuItems(siteId);

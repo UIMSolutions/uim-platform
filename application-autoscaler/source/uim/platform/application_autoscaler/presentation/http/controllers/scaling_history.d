@@ -26,7 +26,7 @@ class ScalingHistoryController : ManageController {
   }
 
   // GET /api/v1/apps/{appId}/scaling-history
-  protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto appId = AppId(extractIdFromPath(req));

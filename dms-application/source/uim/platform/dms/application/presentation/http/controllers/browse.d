@@ -108,7 +108,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));

@@ -55,7 +55,7 @@ class ServiceBindingController : ManageController {
     }
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
 

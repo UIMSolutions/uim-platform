@@ -19,7 +19,7 @@ class TextTypeController : PlatformController {
         router.get("/api/v1/translation/text-types", &handleList);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             // Each entry: id + description
             auto arr = Json.emptyArray;

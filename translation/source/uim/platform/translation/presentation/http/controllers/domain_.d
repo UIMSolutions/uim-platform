@@ -19,7 +19,7 @@ class DomainController : PlatformController {
         router.get("/api/v1/translation/domains", &handleList);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             static immutable string[] domains = [
                 "IT", "HR", "Finance", "Legal", "Supply Chain", "Manufacturing",

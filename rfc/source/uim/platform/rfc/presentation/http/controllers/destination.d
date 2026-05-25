@@ -32,7 +32,7 @@ class DestinationController : PlatformController {
         router.delete_("/api/v1/rfc/destinations/*",  &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto dests    = _usecase.listDestinations(tenantId);

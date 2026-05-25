@@ -99,7 +99,7 @@ class ScalingPolicyController : ManageController {
   }
 
   // GET /api/v1/policies
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto policies = usecase.listPolicies(tenantId);

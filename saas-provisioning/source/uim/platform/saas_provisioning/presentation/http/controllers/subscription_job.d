@@ -29,7 +29,7 @@ class SubscriptionJobController : PlatformController {
         router.get("/api/v1/saas-provisioning/jobs/*", &handleGet);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto jobs = usecase.listJobs(tenantId);

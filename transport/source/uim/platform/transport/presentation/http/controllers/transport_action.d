@@ -26,7 +26,7 @@ class TransportActionController : PlatformController {
         router.put("/api/v1/transport/actions/*", &handleUpdate);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto items = usecase.listActions(tenantId);

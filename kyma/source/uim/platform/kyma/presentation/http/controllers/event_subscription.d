@@ -73,7 +73,7 @@ class EventSubscriptionController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");

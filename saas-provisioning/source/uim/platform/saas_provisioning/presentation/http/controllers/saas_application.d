@@ -37,7 +37,7 @@ class SaasApplicationController : PlatformController {
 
     // -----------------------------------------------------------------------
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto apps = usecase.listApplications(tenantId);

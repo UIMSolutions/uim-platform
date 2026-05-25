@@ -28,7 +28,7 @@ class BrokerServiceController : PlatformController {
         router.delete_("/api/v1/event-mesh/broker-services/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

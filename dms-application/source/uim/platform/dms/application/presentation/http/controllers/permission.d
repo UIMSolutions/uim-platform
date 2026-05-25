@@ -63,7 +63,7 @@ class PermissionController : ManageController {
     }
   }
 
-  protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto resourceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.getTenantId;
@@ -85,7 +85,7 @@ class PermissionController : ManageController {
     }
   }
 
-  protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = UserId(extractIdFromPath(req.requestURI));
       auto tenantId = req.getTenantId;

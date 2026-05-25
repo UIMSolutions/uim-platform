@@ -79,7 +79,7 @@ class LifecycleRuleController : ManageController {
         .set("totalCount", rules.length));
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, response.code);

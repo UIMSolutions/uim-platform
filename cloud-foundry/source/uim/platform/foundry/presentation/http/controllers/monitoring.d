@@ -29,7 +29,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/apps/*", &handleAppHealth);
   }
 
-  protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
         auto tenantId = req.getTenantId;
       auto items = useCase.listAppHealth(tenantId);

@@ -74,7 +74,7 @@ class RouteController : ManageController {
     }
   }
 
-  protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
@@ -196,7 +196,7 @@ class RouteController : ManageController {
     }
   }
 
-  protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);

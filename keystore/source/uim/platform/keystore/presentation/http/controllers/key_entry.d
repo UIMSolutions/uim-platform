@@ -91,7 +91,7 @@ class KeyEntryController : ManageController {
   }
 
   // GET /api/v1/keystores/{keystoreId}/entries
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listHandler(req);
       res.writeJsonBody(response, 200);

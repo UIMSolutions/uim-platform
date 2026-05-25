@@ -28,7 +28,7 @@ class ProjectTemplateController : PlatformController {
         router.delete_("/api/v1/application-studio/project-templates/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

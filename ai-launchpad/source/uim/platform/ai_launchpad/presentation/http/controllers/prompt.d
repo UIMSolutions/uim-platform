@@ -64,7 +64,7 @@ r.tenantId = tenantId;
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto collectionId = PromptCollectionId(req.headers.get("X-Collection-Id", ""));

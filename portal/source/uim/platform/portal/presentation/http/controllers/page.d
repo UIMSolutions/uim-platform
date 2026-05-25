@@ -60,7 +60,7 @@ class PageController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
       // Use query param for site filter

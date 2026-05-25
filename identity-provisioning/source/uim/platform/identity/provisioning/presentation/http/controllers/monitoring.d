@@ -34,7 +34,7 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listJobSummaries(tenantId);
@@ -88,7 +88,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = usecase.listProvisionedEntities(tenantId);

@@ -21,7 +21,7 @@ class ServiceOfferingController : PlatformController {
         router.delete_("/api/v1/service-manager/service-offerings/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             

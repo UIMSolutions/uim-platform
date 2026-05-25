@@ -73,7 +73,7 @@ class ServiceController : ManageController {
     }
   }
 
-  protected void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
@@ -183,7 +183,7 @@ class ServiceController : ManageController {
     }
   }
 
-  protected void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);

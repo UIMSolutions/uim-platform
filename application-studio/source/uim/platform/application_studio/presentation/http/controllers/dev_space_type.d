@@ -28,7 +28,7 @@ class DevSpaceTypeController : PlatformController {
         router.delete_("/api/v1/application-studio/dev-space-types/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
 

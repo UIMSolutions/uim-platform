@@ -37,7 +37,7 @@ class StepController : ManageController {
     router.put("/api/v1/steps/assign/*", &handleAssign);
   }
 
-  protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));

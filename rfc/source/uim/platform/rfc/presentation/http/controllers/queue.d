@@ -28,7 +28,7 @@ class QueueController : PlatformController {
         router.delete_("/api/v1/rfc/queues/entries/*",   &handleDeleteEntry);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = req.getTenantId;
             auto queueName = extractIdFromPath(req.requestURI.to!string);

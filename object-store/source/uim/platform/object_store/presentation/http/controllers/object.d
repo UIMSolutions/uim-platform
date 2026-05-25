@@ -86,7 +86,7 @@ class ObjectController : ManageController {
     return successResponse("Objects retrieved successfully", "OK", 200, resp);
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, 200);
@@ -221,7 +221,7 @@ class ObjectController : ManageController {
     return successResponse("Object versions retrieved successfully", "OK", 200, resp);
   }
 
-  protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listVersionsHandler(req);
       res.writeJsonBody(response, response.code);

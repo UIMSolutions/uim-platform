@@ -62,7 +62,7 @@ class DatasetController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));

@@ -53,7 +53,7 @@ class SectionController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = req.headers.get("X-Page-Id", "");
       auto sections = useCase.listSections(pageId);

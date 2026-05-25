@@ -57,7 +57,7 @@ class TenantController : ManageController {
     }
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenants = useCase.listTenants();
       auto response = Json.emptyObject;

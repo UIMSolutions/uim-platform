@@ -28,7 +28,7 @@ class UIComponentController : PlatformController {
         router.delete_("/api/v1/build-apps/ui-components/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
 

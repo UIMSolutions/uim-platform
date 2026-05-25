@@ -79,7 +79,7 @@ class AccessPolicyController : ManageController {
     return successResponse("Access policies retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listByBucketHandler(req);
       res.writeJsonBody(response, response.code);

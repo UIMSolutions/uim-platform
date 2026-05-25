@@ -28,7 +28,7 @@ class BrandingConfigController : PlatformController {
         router.delete_("/api/v1/oauth/branding-configs/*", &handleDelete);
     }
 
-    protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
             auto items = usecase.listConfigs(tenantId);
