@@ -1,0 +1,122 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.print.presentation.http.controllers.print_client;
+
+import uim.platform.print;
+
+mixin(ShowModule!());
+
+@safe:
+
+class PrintClientController : ManageController {
+    private ManagePrintClientsUseCase usecase;
+
+    this(ManagePrintClientsUseCase usecase) {
+        this.usecase = usecase;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        router.get("/api/v1/print/clients", &handleList);
+        router.get("/api/v1/print/clients/*", &handleGet);
+        router.post("/api/v1/print/clients", &handleCreate);
+        router.put("/api/v1/print/clients/*", &handleUpdate);
+        router.delete_("/api/v1/print/clients/*", &handleDelete);
+    }
+
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listPrintClients(tenantId);
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+            auto resp = Json.emptyObject
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Print client list retrieved successfully");
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto id = PrintClientId(extractIdFromPath(path));
+            auto e = usecase.getPrintClient(tenantId, id);
+            if (e.isNull) { writeError(res, 404, "Print client not found"); return; }
+            res.writeJsonBody(e.toJson(), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto j = req.json;
+            PrintClientDTO dto;
+            dto.clientId = PrintClientId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.version_ = j.getString("version");
+            dto.hostName = j.getString("hostName");
+            dto.ipAddress = j.getString("ipAddress");
+            dto.osType = j.getString("osType");
+            dto.osVersion = j.getString("osVersion");
+
+            auto result = usecase.registerPrintClient(dto);
+            if (!result.success) { writeError(res, 400, result.message); return; }
+
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Print client registered successfully");
+            res.writeJsonBody(resp, 201);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto j = req.json;
+            PrintClientDTO dto;
+            dto.clientId = PrintClientId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.version_ = j.getString("version");
+            dto.ipAddress = j.getString("ipAddress");
+
+            auto result = usecase.updatePrintClient(dto);
+            if (!result.success) { writeError(res, 404, result.message); return; }
+
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Print client updated successfully");
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto id = PrintClientId(extractIdFromPath(path));
+            auto result = usecase.deletePrintClient(tenantId, id);
+            if (!result.success) { writeError(res, 404, result.message); return; }
+            res.writeJsonBody(Json.emptyObject.set("message", "Print client deleted successfully"), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}

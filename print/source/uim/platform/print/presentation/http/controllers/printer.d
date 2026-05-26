@@ -1,0 +1,129 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.print.presentation.http.controllers.printer;
+
+import uim.platform.print;
+
+mixin(ShowModule!());
+
+@safe:
+
+class PrinterController : ManageController {
+    private ManagePrintersUseCase usecase;
+
+    this(ManagePrintersUseCase usecase) {
+        this.usecase = usecase;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        router.get("/api/v1/print/printers", &handleList);
+        router.get("/api/v1/print/printers/*", &handleGet);
+        router.post("/api/v1/print/printers", &handleCreate);
+        router.put("/api/v1/print/printers/*", &handleUpdate);
+        router.delete_("/api/v1/print/printers/*", &handleDelete);
+    }
+
+    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto items = usecase.listPrinters(tenantId);
+            auto jarr = items.map!(e => e.toJson()).array.toJson;
+            auto resp = Json.emptyObject
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Printer list retrieved successfully");
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto id = PrinterId(extractIdFromPath(path));
+            auto e = usecase.getPrinter(tenantId, id);
+            if (e.isNull) { writeError(res, 404, "Printer not found"); return; }
+            res.writeJsonBody(e.toJson(), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto j = req.json;
+            PrinterDTO dto;
+            dto.printerId = PrinterId(j.getString("id"));
+            dto.tenantId = tenantId;
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.host = j.getString("host");
+            auto portVal = cast(int) j.getInt("port");
+            dto.port = portVal > 0 ? cast(ushort) portVal : 631;
+            dto.queue = j.getString("queue");
+            dto.location = j.getString("location");
+            dto.model = j.getString("model");
+            dto.vendor = j.getString("vendor");
+            dto.protocol = j.getString("protocol");
+            dto.colorCapable = j.getBool("colorCapable");
+            dto.duplexCapable = j.getBool("duplexCapable");
+            dto.clientId = j.getString("clientId");
+
+            auto result = usecase.createPrinter(dto);
+            if (!result.success) { writeError(res, 400, result.message); return; }
+
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Printer registered successfully");
+            res.writeJsonBody(resp, 201);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto j = req.json;
+            PrinterDTO dto;
+            dto.printerId = PrinterId(extractIdFromPath(path));
+            dto.tenantId = tenantId;
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.host = j.getString("host");
+            dto.location = j.getString("location");
+            dto.status = j.getString("status");
+
+            auto result = usecase.updatePrinter(dto);
+            if (!result.success) { writeError(res, 404, result.message); return; }
+
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Printer updated successfully");
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.getTenantId;
+            auto path = req.requestURI.to!string;
+            auto id = PrinterId(extractIdFromPath(path));
+            auto result = usecase.deletePrinter(tenantId, id);
+            if (!result.success) { writeError(res, 404, result.message); return; }
+            res.writeJsonBody(Json.emptyObject.set("message", "Printer deleted successfully"), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}

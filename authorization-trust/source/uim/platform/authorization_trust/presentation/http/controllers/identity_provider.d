@@ -28,113 +28,123 @@ class IdentityProviderController : ManageController {
     router.delete_("/api/v1/identity-providers/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateIdentityProviderRequest r;
-      r.tenantId = tenantId;
-      r.alias_ = j.getString("alias");
-      r.displayName = j.getString("displayName");
-      r.idpType = j.getString("idpType");
-      r.metadataUrl = j.getString("metadataUrl");
-      r.entityId = j.getString("entityId");
-      r.ssoUrl = j.getString("ssoUrl");
-      r.sloUrl = j.getString("sloUrl");
-      r.signingCert = j.getString("signingCert");
-      r.isActive = j.getBool("isActive");
-      r.isDefault = j.getBool("isDefault");
+    auto tenantId = precheck.tenantId;
 
-      auto result = usecase.createIdentityProvider(r);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Identity provider created successfully"), 201);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto idps = usecase.listIdentityProviders(tenantId);
+    auto jarr = idps.map!(idp => idp.toJson()).array.toJson;
+
+    Json.emptyObject
+      .set("items", jarr)
+      .set("totalCount", idps.length);
+
+    return successResponse("Identity provider list retrieved successfully", "Retrieved", 200);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto idps = usecase.listIdentityProviders(tenantId);
-      auto jarr = Json.emptyArray;
-      foreach (idp; idps)
-        jarr ~= idpToJson(idp);
-      res.writeJsonBody(Json.emptyObject
-          .set("items", jarr)
-          .set("totalCount", idps.length)
-          .set("message", "Identity providers retrieved successfully"), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+
+    CreateIdentityProviderRequest r;
+    r.tenantId = tenantId;
+    r.alias_ = data.getString("alias");
+    r.displayName = data.getString("displayName");
+    r.idpType = data.getString("idpType");
+    r.metadataUrl = data.getString("metadataUrl");
+    r.entityId = data.getString("entityId");
+    r.ssoUrl = data.getString("ssoUrl");
+    r.sloUrl = data.getString("sloUrl");
+    r.signingCert = data.getString("signingCert");
+    r.isActive = data.getBool("isActive");
+    r.isDefault = data.getBool("isDefault");
+
+    auto result = usecase.createIdentityProvider(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Identity provider created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = IdentityProviderId(extractIdFromPath(req));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto idp = usecase.getIdentityProvider(tenantId, id);
-      if (idp.isNull) {
-        writeError(res, 404, "Identity provider not found");
-        return;
-      }
-      res.writeJsonBody(idp.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+
+    auto id = IdentityProviderId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid identity provider ID", 400);
+
+    auto idp = usecase.getIdentityProvider(tenantId, id);
+    if (idp.isNull)
+      return errorResponse("Identity provider not found", 404);
+
+    auto responseData = idp.toJson();
+    return successResponse("Identity provider retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = IdentityProviderId(extractIdFromPath(req));
-      auto j = req.json;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UpdateIdentityProviderRequest r;
-      r.tenantId = tenantId;
-      r.identityProviderId = id;
-      r.displayName = j.getString("displayName");
-      r.metadataUrl = j.getString("metadataUrl");
-      r.ssoUrl = j.getString("ssoUrl");
-      r.sloUrl = j.getString("sloUrl");
-      r.signingCert = j.getString("signingCert");
-      r.isActive = j.getBool("isActive");
-      r.isDefault = j.getBool("isDefault");
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto data = precheck.data;
 
-      auto result = usecase.updateIdentityProvider(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Identity provider updated successfully"), 200);
-      else
-        writeError(res, result.message == "Identity provider not found" ? 404 : 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = IdentityProviderId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid identity provider ID", 400);
+
+    UpdateIdentityProviderRequest r;
+    r.tenantId = tenantId;
+    r.identityProviderId = id;
+    r.displayName = data.getString("displayName");
+    r.metadataUrl = data.getString("metadataUrl");
+    r.ssoUrl = data.getString("ssoUrl");
+    r.sloUrl = data.getString("sloUrl");
+    r.signingCert = data.getString("signingCert");
+    r.isActive = data.getBool("isActive");
+    r.isDefault = data.getBool("isDefault");
+
+    auto result = usecase.updateIdentityProvider(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", id);
+    return successResponse("Identity provider updated successfully", "Updated", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = IdentityProviderId(extractIdFromPath(req));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteIdentityProvider(tenantId, id);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject.set("id", id)
-            .set("message", "Identity provider deleted successfully"), 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+
+    auto id = IdentityProviderId(extractIdFromPath(path));
+    if (id.isNull)
+      return errorResponse("Invalid identity provider ID", 400);
+
+    auto result = usecase.deleteIdentityProvider(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", id);
+    return successResponse("Identity provider deleted successfully", "Deleted", 200, responseData);
   }
 }
