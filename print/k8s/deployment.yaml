@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uim-print-platform-service
+  namespace: uim-platform
+  labels:
+    app: print
+    component: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: print
+  template:
+    metadata:
+      labels:
+        app: print
+        component: uim-platform
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: print
+        image: uim-platform/print:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8120
+          name: http
+        envFrom:
+        - configMapRef:
+            name: print-config
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8120
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8120
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        volumeMounts:
+        - name: print-data
+          mountPath: /data/print
+      volumes:
+      - name: print-data
+        emptyDir: {}
