@@ -90,7 +90,7 @@ class DataAccessControlController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
+      auto id = DataAccessControlprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto dac = usecase.getDataAccessControl(tenantId, spaceId, id);
@@ -121,7 +121,7 @@ class DataAccessControlController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataAccessControlId(extractIdFromPath(req.requestURI.to!string));
+      auto id = DataAccessControlprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteDataAccessControl(tenantId, spaceId, id);

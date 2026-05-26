@@ -41,7 +41,7 @@ class DatabaseUserController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DatabaseUserprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = users.getDatabaseUser(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Database user not found").set("statusCode", 404);
@@ -71,7 +71,7 @@ class DatabaseUserController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DatabaseUserDTO dto;
-        dto.databaseUserId = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+        dto.databaseUserId = DatabaseUserprecheck.id);
         dto.tenantId       = tenantId;
         dto.roles          = data.getString("roles", "");
         dto.updatedBy      = UserId(data.getString("updatedBy", ""));
@@ -84,7 +84,7 @@ class DatabaseUserController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DatabaseUserprecheck.id);
         auto result = users.deleteDatabaseUser(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Database user deleted successfully").set("status", "success").set("statusCode", 200);

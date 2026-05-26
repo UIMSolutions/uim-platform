@@ -95,7 +95,7 @@ class DataContextController : ManageController {
         try {
 
             auto tenantId = req.getTenantId;
-            auto id = DataContextId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataContextprecheck.id);
             auto d = usecase.getDataContext(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Data context not found");
@@ -122,7 +122,7 @@ class DataContextController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = DataContextId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataContextprecheck.id);
             auto result = usecase.deleteDataContext(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

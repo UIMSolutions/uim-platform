@@ -190,7 +190,7 @@ class AlertController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AlertId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Alertprecheck.id);
       auto result = usecase.deleteAlert(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

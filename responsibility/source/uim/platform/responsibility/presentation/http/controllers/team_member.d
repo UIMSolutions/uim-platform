@@ -40,7 +40,7 @@ class TeamMemberController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamMemberId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamMemberprecheck.id);
         auto e = _uc.getMember(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Member not found").set("statusCode", 404);
@@ -76,7 +76,7 @@ class TeamMemberController : ManageController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         TeamMemberDTO dto;
-        dto.memberId    = TeamMemberId(extractIdFromPath(req.requestURI.to!string));
+        dto.memberId    = TeamMemberprecheck.id);
         dto.tenantId    = tenantId;
         dto.role        = data.getString("role", "responsible");
         dto.validFrom   = data.getString("validFrom", "");
@@ -91,7 +91,7 @@ class TeamMemberController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamMemberId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamMemberprecheck.id);
         auto result = _uc.removeMember(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

@@ -80,7 +80,7 @@ class ArchivingJobController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ArchivingJobprecheck.id);
 
             auto aj = usecase.getArchivingJob(tenantId, id);
             if (aj.isNull) {
@@ -106,7 +106,7 @@ class ArchivingJobController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ArchivingJobprecheck.id);
             auto j = req.json;
 
             UpdateArchivingJobRequest r;
@@ -137,7 +137,7 @@ class ArchivingJobController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ArchivingJobId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ArchivingJobprecheck.id);
 
             usecase.deleteArchivingJob(tenantId, id);
             auto response = Json.emptyObject

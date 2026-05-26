@@ -97,7 +97,7 @@ class AutomationController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Automationprecheck.id);
             
             auto a = automationUsecase.getAutomation(tenantId, id);
             if (a.isNull) {
@@ -132,7 +132,7 @@ class AutomationController : ManageController {
             auto j = req.json;
             UpdateAutomationRequest r;
             r.tenantId = tenantId;
-            r.automationId = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            r.automationId = Automationprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -161,7 +161,7 @@ class AutomationController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = AutomationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Automationprecheck.id);
             auto result = automationUsecase.deleteAutomation(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

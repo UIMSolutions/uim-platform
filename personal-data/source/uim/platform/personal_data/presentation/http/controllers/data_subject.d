@@ -138,7 +138,7 @@ class DataSubjectController : ManageController {
             auto j = req.json;
             UpdateDataSubjectRequest request;
             request.tenantId = tenantId;
-            request.id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
+            request.id = DataSubjectprecheck.id);
             request.firstName = j.getString("firstName");
             request.lastName = j.getString("lastName");
             request.email = j.getString("email");
@@ -213,7 +213,7 @@ class DataSubjectController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectprecheck.id);
             auto result = usecase.deleteDataSubject(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

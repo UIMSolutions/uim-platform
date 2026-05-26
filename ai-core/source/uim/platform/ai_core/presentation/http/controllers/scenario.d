@@ -89,7 +89,7 @@ class ScenarioController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Scenarioprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto s = usecase.getScenario(tenantId, rgId, id);
@@ -115,7 +115,7 @@ class ScenarioController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ScenarioId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Scenarioprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteScenario(tenantId, rgId, id);

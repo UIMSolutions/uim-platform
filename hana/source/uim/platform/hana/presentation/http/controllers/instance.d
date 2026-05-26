@@ -211,7 +211,7 @@ class InstanceController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = InstanceId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Instanceprecheck.id);
       auto result = usecase.deleteInstance(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

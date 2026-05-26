@@ -97,7 +97,7 @@ class ExecutableController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Executableprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto e = usecase.getExecutable(tenantId, rgId, id);
@@ -127,7 +127,7 @@ class ExecutableController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ExecutableId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Executableprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteExecutable(tenantId, rgId, id);

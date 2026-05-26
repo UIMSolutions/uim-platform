@@ -48,7 +48,7 @@ class BackupPolicyController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
+        auto id = BackupPolicyprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid backup policy ID").set("statusCode", 400);
 
@@ -97,7 +97,7 @@ class BackupPolicyController : ManageController {
         auto data = precheck.data;
 
         BackupPolicyDTO dto;
-        dto.backupPolicyId  = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
+        dto.backupPolicyId  = BackupPolicyprecheck.id);
         dto.tenantId        = tenantId;
         dto.enabled         = data.getBool("enabled", true);
         dto.intervalHours   = data.getLong("intervalHours", 0);
@@ -122,7 +122,7 @@ class BackupPolicyController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = BackupPolicyId(extractIdFromPath(req.requestURI.to!string));
+        auto id = BackupPolicyprecheck.id);
 
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
         if (result.hasError)

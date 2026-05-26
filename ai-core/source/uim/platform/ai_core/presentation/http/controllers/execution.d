@@ -78,7 +78,7 @@ class ExecutionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Executionprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto ex = usecase.getExecution(tenantId, rgId, id);
@@ -96,7 +96,7 @@ class ExecutionController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Executionprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto j = req.json;
@@ -125,7 +125,7 @@ class ExecutionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ExecutionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Executionprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
       auto result = usecase.deleteExecution(tenantId, rgId, id);

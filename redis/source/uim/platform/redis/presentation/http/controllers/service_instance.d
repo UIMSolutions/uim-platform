@@ -48,7 +48,7 @@ class ServiceInstanceController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceInstanceprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid service instance ID").set("statusCode", 400);
 
@@ -100,7 +100,7 @@ class ServiceInstanceController : ManageController {
         auto data = precheck.data;
 
         ServiceInstanceDTO dto;
-        dto.serviceInstanceId = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        dto.serviceInstanceId = ServiceInstanceprecheck.id);
         dto.tenantId          = tenantId;
         dto.name              = data.getString("name", "");
         dto.description       = data.getString("description", "");
@@ -125,7 +125,7 @@ class ServiceInstanceController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceInstanceprecheck.id);
 
         auto result = instances.deleteServiceInstance(tenantId, id);
         if (result.hasError)

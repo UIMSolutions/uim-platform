@@ -120,7 +120,7 @@ class PushNotificationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PushNotificationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = PushNotificationprecheck.id);
       auto result = usecase.deletePushNotification(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

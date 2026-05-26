@@ -99,7 +99,7 @@ class ActionController : ManageController {
         try {
 
             auto tenantId = req.getTenantId;
-            auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Actionprecheck.id);
 
             auto a = actionUsecase.getAction(tenantId, id);
             if (a.isNull) {
@@ -136,7 +136,7 @@ class ActionController : ManageController {
             auto j = req.json;
             UpdateActionRequest r;
             r.tenantId = tenantId;
-            r.actionId = ActionId(extractIdFromPath(req.requestURI.to!string));
+            r.actionId = Actionprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.baseUrl = j.getString("baseUrl");
@@ -166,7 +166,7 @@ class ActionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = ActionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Actionprecheck.id);
             auto result = actionUsecase.deleteAction(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

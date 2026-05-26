@@ -92,7 +92,7 @@ class FormController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = FormId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Formprecheck.id);
             auto f = formUsecase.getForm(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Form not found");
@@ -125,7 +125,7 @@ class FormController : ManageController {
             auto j = req.json;
             UpdateFormRequest r;
             r.tenantId = tenantId;
-            r.formId = FormId(extractIdFromPath(req.requestURI.to!string));
+            r.formId = Formprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -152,7 +152,7 @@ class FormController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = FormId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Formprecheck.id);
             auto result = formUsecase.deleteForm(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

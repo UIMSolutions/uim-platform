@@ -73,7 +73,7 @@ class ApplicationGroupController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ApplicationGroupControllerprecheck.id);
             auto ag = usecase.getApplicationGroup(tenantId, id);
             if (ag.isNull) {
                 writeError(res, 404, "Application group not found");
@@ -96,7 +96,7 @@ class ApplicationGroupController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ApplicationGroupControllerprecheck.id);
             auto j = req.json;
 
             UpdateApplicationGroupRequest r;
@@ -122,7 +122,7 @@ class ApplicationGroupController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ApplicationGroupControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ApplicationGroupControllerprecheck.id);
 
             usecase.deleteApplicationGroup(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);

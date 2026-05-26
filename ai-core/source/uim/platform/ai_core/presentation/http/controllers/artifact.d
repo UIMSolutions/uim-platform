@@ -106,7 +106,7 @@ class ArtifactController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+    auto id = Artifactprecheck.id);
     if (id.isNull)
       return errorResponse("Invalid artifact ID", 400);
 

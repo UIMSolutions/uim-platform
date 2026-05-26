@@ -40,7 +40,7 @@ class ResponsibilityContextController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityContextId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ResponsibilityContextprecheck.id);
         auto e = _uc.getContext(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Context not found").set("statusCode", 404);
@@ -73,7 +73,7 @@ class ResponsibilityContextController : ManageController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         ResponsibilityContextDTO dto;
-        dto.contextId   = ResponsibilityContextId(extractIdFromPath(req.requestURI.to!string));
+        dto.contextId   = ResponsibilityContextprecheck.id);
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -88,7 +88,7 @@ class ResponsibilityContextController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityContextId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ResponsibilityContextprecheck.id);
         auto result = _uc.deleteContext(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

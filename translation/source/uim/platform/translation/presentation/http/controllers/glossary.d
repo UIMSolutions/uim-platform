@@ -89,7 +89,7 @@ class GlossaryController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto id = GlossaryEntryId(extractIdFromPath(req.requestURI.to!string));
+        auto id = GlossaryEntryprecheck.id);
 
         auto entry = usecase.getEntry(tenantId, id);
         if (entry.isNull) {
@@ -112,7 +112,7 @@ class GlossaryController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto entryId = GlossaryEntryId(extractIdFromPath(req.requestURI.to!string));
+        auto entryId = GlossaryEntryprecheck.id);
         auto data = precheck.data;
 
         UpdateGlossaryEntryRequest r;
@@ -145,7 +145,7 @@ class GlossaryController : ManageController {
         }
 
         auto tenantId = TenantId(req.getTenantId);
-        auto entryId = GlossaryEntryId(extractIdFromPath(req.requestURI.to!string));
+        auto entryId = GlossaryEntryprecheck.id);
         if (entryId.isNull) {
             return Json.emptyObject
                 .set("status", "error")

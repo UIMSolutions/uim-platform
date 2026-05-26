@@ -48,7 +48,7 @@ class CacheEntryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
+        auto id = CacheEntryprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid cache entry ID").set("statusCode", 400);
 
@@ -96,7 +96,7 @@ class CacheEntryController : ManageController {
         auto data = precheck.data;
 
         CacheEntryDTO dto;
-        dto.cacheEntryId = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
+        dto.cacheEntryId = CacheEntryprecheck.id);
         dto.tenantId     = tenantId;
         dto.value        = data.getString("value", "");
         dto.ttl          = data.getLong("ttl", -1);
@@ -119,7 +119,7 @@ class CacheEntryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CacheEntryId(extractIdFromPath(req.requestURI.to!string));
+        auto id = CacheEntryprecheck.id);
 
         auto result = cacheEntries.deleteCacheEntry(tenantId, id);
         if (result.hasError)

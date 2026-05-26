@@ -40,7 +40,7 @@ class ServiceBindingController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceBindingprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = bindings.getServiceBinding(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Service binding not found").set("statusCode", 404);
@@ -69,7 +69,7 @@ class ServiceBindingController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceBindingprecheck.id);
         auto result = bindings.deleteServiceBinding(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service binding deleted successfully").set("status", "success").set("statusCode", 200);

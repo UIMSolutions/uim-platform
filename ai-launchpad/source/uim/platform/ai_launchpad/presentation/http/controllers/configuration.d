@@ -83,7 +83,7 @@ class ConfigurationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
-      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Configurationprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto c = configurations.getConfiguration(tenantId, connectionId, id);
@@ -103,7 +103,7 @@ class ConfigurationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId();
-      auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Configurationprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = configurations.deleteConfiguration(tenantId, connectionId, id);

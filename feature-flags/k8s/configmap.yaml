@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feature-flags-config
+  labels:
+    app: cloud-feature-flags
+    tier: platform-service
+data:
+  FEATURE_FLAGS_HOST: "0.0.0.0"
+  FEATURE_FLAGS_PORT: "8097"
+  FEATURE_FLAGS_SERVICE_NAME: "Feature Flags Service"
+  # Storage backend: MEMORY | FILE | MONGODB
+  FEATURE_FLAGS_STORAGE_BACKEND: "MEMORY"
+  FEATURE_FLAGS_FILE_PATH: "/data/feature-flags"
+  FEATURE_FLAGS_MONGO_URI: "mongodb://mongodb:27017"
+  FEATURE_FLAGS_MONGO_DB: "feature_flags"

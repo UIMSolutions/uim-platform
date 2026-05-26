@@ -95,7 +95,7 @@ class DataSubjectController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectprecheck.id);
 
             auto j = req.json;
             UpdateDataSubjectRequest r;
@@ -145,7 +145,7 @@ class DataSubjectController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectprecheck.id);
 
             usecase.deleteDataSubject(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);

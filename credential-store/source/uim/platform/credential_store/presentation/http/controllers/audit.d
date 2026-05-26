@@ -68,7 +68,7 @@ class AuditController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
-      auto id = AuditLogEntryId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AuditLogEntryprecheck.id);
       auto auditLog = auditLogs.getLog(tenantId, id);
 
       if (auditLog.isNull) {

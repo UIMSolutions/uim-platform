@@ -38,7 +38,7 @@ class DeterminationLogController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = DeterminationLogId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DeterminationLogprecheck.id);
         auto e = _uc.getLog(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Log not found").set("statusCode", 404);
@@ -49,7 +49,7 @@ class DeterminationLogController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = DeterminationLogId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DeterminationLogprecheck.id);
         auto result = _uc.deleteLog(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

@@ -122,7 +122,7 @@ class CatalogAssetController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
+      auto id = CatalogAssetprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto ca = assets.getCatalogAsset(tenantId, spaceId, id);
@@ -153,7 +153,7 @@ class CatalogAssetController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = CatalogAssetId(extractIdFromPath(req.requestURI.to!string));
+      auto id = CatalogAssetprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = assets.deleteCatalogAsset(tenantId, spaceId, id);

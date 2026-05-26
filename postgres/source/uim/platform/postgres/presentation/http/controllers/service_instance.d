@@ -41,7 +41,7 @@ class ServiceInstanceController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceInstanceprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = instances.getServiceInstance(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Service instance not found").set("statusCode", 404);
@@ -76,7 +76,7 @@ class ServiceInstanceController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServiceInstanceDTO dto;
-        dto.serviceInstanceId = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        dto.serviceInstanceId = ServiceInstanceprecheck.id);
         dto.tenantId          = tenantId;
         dto.name              = data.getString("name", "");
         dto.description       = data.getString("description", "");
@@ -92,7 +92,7 @@ class ServiceInstanceController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id = ServiceInstanceprecheck.id);
         auto result = instances.deleteServiceInstance(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service instance deleted successfully").set("status", "success").set("statusCode", 200);

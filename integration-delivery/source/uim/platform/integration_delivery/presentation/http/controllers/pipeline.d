@@ -48,7 +48,7 @@ class PipelineController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Pipelineprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
 
@@ -90,7 +90,7 @@ class PipelineController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Pipelineprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
 
@@ -115,7 +115,7 @@ class PipelineController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Pipelineprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
 

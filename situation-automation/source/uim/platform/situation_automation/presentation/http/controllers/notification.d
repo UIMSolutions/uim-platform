@@ -95,7 +95,7 @@ class NotificationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
+            auto notificationId = Notificationprecheck.id);
             auto n = usecase.getNotification(tenantId, notificationId);
             if (n.isNull) {
                 writeError(res, 404, "Notification not found");
@@ -131,7 +131,7 @@ class NotificationController : ManageController {
             
             UpdateNotificationRequest r;
             r.tenantId = tenantId;
-            r.notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
+            r.notificationId = Notificationprecheck.id);
             r.status = j.getString("status");
 
             auto result = usecase.updateNotification(r);
@@ -153,7 +153,7 @@ class NotificationController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto notificationId = NotificationId(extractIdFromPath(req.requestURI.to!string));
+            auto notificationId = Notificationprecheck.id);
 
             auto result = usecase.deleteNotification(tenantId, notificationId);
             if (result.hasError)

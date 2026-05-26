@@ -96,7 +96,7 @@ class ProcessController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Processprecheck.id);
             auto p = processUsecase.getProcess(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Process not found");
@@ -130,7 +130,7 @@ class ProcessController : ManageController {
             auto j = req.json;
             UpdateProcessRequest r;
             r.tenantId = tenantId;
-            r.processId = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            r.processId = Processprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -194,7 +194,7 @@ class ProcessController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = ProcessId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Processprecheck.id);
             auto result = processUsecase.deleteProcess(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -100,7 +100,7 @@ class SituationTemplateController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationTemplateprecheck.id);
 
             auto t = usecase.getSituationTemplate(tenantId, id);
             if (t.isNull) {
@@ -135,7 +135,7 @@ class SituationTemplateController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationTemplateprecheck.id);
 
             auto j = req.json;
             UpdateSituationTemplateRequest r;
@@ -171,7 +171,7 @@ class SituationTemplateController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = SituationTemplateId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationTemplateprecheck.id);
             auto result = usecase.deleteSituationTemplate(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

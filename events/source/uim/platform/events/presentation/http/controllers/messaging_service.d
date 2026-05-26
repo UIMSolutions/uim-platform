@@ -79,7 +79,7 @@ class MessagingServiceController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = req.getTenantId;
-            auto serviceId = MessagingServiceId(extractIdFromPath(req.requestURI.to!string));
+            auto serviceId = MessagingServiceprecheck.id);
             auto j = req.json;
             MessagingServiceDTO dto;
             dto.tenantId    = tenantId;
@@ -103,7 +103,7 @@ class MessagingServiceController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = MessagingServiceId(extractIdFromPath(req.requestURI.to!string));
+            auto id = MessagingServiceprecheck.id);
             auto result = usecase.deleteService(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

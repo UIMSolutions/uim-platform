@@ -140,7 +140,7 @@ class OfflineStoreController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = OfflineStoreId(extractIdFromPath(req.requestURI.to!string));
+      auto id = OfflineStoreprecheck.id);
       auto result = usecase.deleteOfflineStore(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

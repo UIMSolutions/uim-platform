@@ -41,7 +41,7 @@ class ImportQueueEntryController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ImportQueueEntryId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ImportQueueEntryprecheck.id);
             auto item = usecase.getEntry(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Import queue entry not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -76,7 +76,7 @@ class ImportQueueEntryController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ImportQueueEntryId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ImportQueueEntryprecheck.id);
             auto j = req.json;
             auto action = j.getString("action");
             if (action == "reset") {
@@ -108,7 +108,7 @@ class ImportQueueEntryController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ImportQueueEntryId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ImportQueueEntryprecheck.id);
             auto result = usecase.deleteEntry(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Import queue entry deleted"), 200);
             else writeError(res, 404, result.message);

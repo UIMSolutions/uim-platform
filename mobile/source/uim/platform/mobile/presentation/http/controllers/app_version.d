@@ -147,7 +147,7 @@ class AppVersionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AppVersionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AppVersionprecheck.id);
       auto result = usecase.deleteAppVersion(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

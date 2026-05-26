@@ -90,7 +90,7 @@ class ConfigurationController : ManageController {
 
   protected override Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+    auto id = Configurationprecheck.id);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto c = usecase.getConfiguration(tenantId, rgId, id);
@@ -112,7 +112,7 @@ class ConfigurationController : ManageController {
 
   protected override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+    auto id = Configurationprecheck.id);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto result = usecase.deleteConfiguration(tenantId, rgId, id);

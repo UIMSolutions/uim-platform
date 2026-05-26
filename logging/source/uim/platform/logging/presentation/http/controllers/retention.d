@@ -90,7 +90,7 @@ class RetentionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      auto policyId = RetentionPolicyprecheck.id);
       auto policy = usecase.getRetentionPolicy(tenantId, policyId);
       if (policy.isNull) {
         writeError(res, 404, "Retention policy not found");
@@ -115,7 +115,7 @@ class RetentionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      auto policyId = RetentionPolicyprecheck.id);
       auto j = req.json;
 
       UpdateRetentionPolicyRequest r;
@@ -146,7 +146,7 @@ class RetentionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto policyId = RetentionPolicyId(extractIdFromPath(req.requestURI.to!string));
+      auto policyId = RetentionPolicyprecheck.id);
       usecase.deleteRetentionPolicy(tenantId, policyId);
 
       auto response = Json.emptyObject

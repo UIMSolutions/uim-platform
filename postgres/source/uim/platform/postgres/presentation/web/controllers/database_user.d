@@ -39,7 +39,7 @@ class WebDatabaseUserController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DatabaseUserprecheck.id);
         auto u  = _useCase.getDatabaseUser(tenantId, id);
         _model.setSelected(u, !u.isNull);
         _view.renderDetail(res, _model);
@@ -63,7 +63,7 @@ class WebDatabaseUserController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+        auto id = DatabaseUserprecheck.id);
         auto result = _useCase.deleteDatabaseUser(tenantId, id);
         if (result.success) _model.setSuccess("User deleted");
         else                _model.setError(404, result.message);

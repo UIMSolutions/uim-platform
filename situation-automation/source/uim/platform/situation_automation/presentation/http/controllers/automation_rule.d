@@ -95,7 +95,7 @@ class AutomationRuleController : ManageController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AutomationRuleprecheck.id);
       auto r = usecase.getAutomationRule(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Automation rule not found");
@@ -133,7 +133,7 @@ class AutomationRuleController : ManageController {
       auto j = req.json;
       UpdateAutomationRuleRequest r;
       r.tenantId = tenantId;
-      r.automationRuleId = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      r.automationRuleId = AutomationRuleprecheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");
@@ -161,7 +161,7 @@ class AutomationRuleController : ManageController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto id = AutomationRuleId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AutomationRuleprecheck.id);
       auto result = usecase.deleteAutomationRule(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -98,7 +98,7 @@ class TriggerController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Triggerprecheck.id);
             auto t = triggerUsecase.getTrigger(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
@@ -134,7 +134,7 @@ class TriggerController : ManageController {
             auto j = req.json;
             UpdateTriggerRequest r;
             r.tenantId = tenantId;
-            r.triggerId = TriggerId(extractIdFromPath(req.requestURI.to!string));
+            r.triggerId = Triggerprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.cronExpression = j.getString("cronExpression");
@@ -161,7 +161,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = TriggerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Triggerprecheck.id);
             auto result = triggerUsecase.deleteTrigger(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -92,7 +92,7 @@ class DatabaseUserController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+      auto id = DatabaseUserprecheck.id);
 
       auto u = usecase.getDatabaseUser(tenantId, id);
       if (u.isNull) {
@@ -124,7 +124,7 @@ class DatabaseUserController : ManageController {
       auto j = req.json;
       UpdateDatabaseUserRequest r;
       r.tenantId = tenantId;
-      r.id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+      r.id = DatabaseUserprecheck.id);
       r.password = j.getString("password");
       r.defaultSchema = j.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
@@ -150,7 +150,7 @@ class DatabaseUserController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DatabaseUserId(extractIdFromPath(req.requestURI.to!string));
+      auto id = DatabaseUserprecheck.id);
 
       auto result = usecase.deleteDatabaseUser(tenantId, id);
       if (result.hasError)

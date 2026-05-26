@@ -47,7 +47,7 @@ class MetricController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = MetricId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Metricprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid metric ID").set("statusCode", 400);
 
@@ -101,7 +101,7 @@ class MetricController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = MetricId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Metricprecheck.id);
 
         auto result = metrics.deleteMetric(tenantId, id);
         if (result.hasError)

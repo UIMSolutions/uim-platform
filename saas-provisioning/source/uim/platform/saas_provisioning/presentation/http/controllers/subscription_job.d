@@ -45,7 +45,7 @@ class SubscriptionJobController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SubscriptionJobId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SubscriptionJobprecheck.id);
             auto job = usecase.getJob(tenantId, id);
             if (job.isNull) { writeError(res, 404, "Job not found"); return; }
             res.writeJsonBody(job.toJson(), 200);

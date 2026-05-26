@@ -96,7 +96,7 @@ class DecisionController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Decisionprecheck.id);
             auto d = decisionUsecase.getDecision(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Decision not found");
@@ -130,7 +130,7 @@ class DecisionController : ManageController {
             auto j = req.json;
             UpdateDecisionRequest r;
             r.tenantId = tenantId;
-            r.decisionId = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            r.decisionId = Decisionprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.hitPolicy = j.getString("hitPolicy");
@@ -158,7 +158,7 @@ class DecisionController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = DecisionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Decisionprecheck.id);
             auto result = decisionUsecase.deleteDecision(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

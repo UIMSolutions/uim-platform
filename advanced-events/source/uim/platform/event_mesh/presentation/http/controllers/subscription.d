@@ -54,19 +54,19 @@ class SubscriptionController : ManageController {
         auto data = precheck.data;
 
         SubscriptionDTO dto;
-        dto.subscriptionId = EventSubscriptionId(j.getString("id"));
+        dto.subscriptionId = EventSubscriptionId(data.getString("id"));
         dto.tenantId = tenantId;
-        dto.serviceId = BrokerServiceId(j.getString("serviceId"));
-        dto.topicId = TopicId(j.getString("topicId"));
-        dto.queueId = QueueId(j.getString("queueId"));
-        dto.applicationId = EventApplicationId(j.getString("applicationId"));
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.topicFilter = j.getString("topicFilter");
-        dto.selector = j.getString("selector");
-        dto.maxRedeliveryCount = j.getString("maxRedeliveryCount");
-        dto.maxTtl = j.getString("maxTtl");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.serviceId = BrokerServiceId(data.getString("serviceId"));
+        dto.topicId = TopicId(data.getString("topicId"));
+        dto.queueId = QueueId(data.getString("queueId"));
+        dto.applicationId = EventApplicationId(data.getString("applicationId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.topicFilter = data.getString("topicFilter");
+        dto.selector = data.getString("selector");
+        dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
+        dto.maxTtl = data.getString("maxTtl");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createSubscription(dto);
         if (result.hasError)
@@ -84,7 +84,6 @@ class SubscriptionController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid subscription ID", 400);
@@ -93,8 +92,7 @@ class SubscriptionController : ManageController {
         if (e.isNull)
             return errorResponse("Subscription not found", 404);
 
-        auto responseData = job.toJson();
-
+        auto responseData = e.toJson();
         return successResponse("Subscription retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -104,7 +102,6 @@ class SubscriptionController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto data = precheck.data;
 
         auto id = EventSubscriptionId(precheck.id);
@@ -114,19 +111,17 @@ class SubscriptionController : ManageController {
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(precheck.id);
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.topicFilter = j.getString("topicFilter");
-        dto.selector = j.getString("selector");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.topicFilter = data.getString("topicFilter");
+        dto.selector = data.getString("selector");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateSubscription(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto responseData = Json.emptyObject.set("id", id);
         return successResponse("Subscription updated successfully", "Updated", 200, resp);
     }
 
@@ -136,7 +131,6 @@ class SubscriptionController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
 
         auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
@@ -145,9 +139,8 @@ class SubscriptionController : ManageController {
         auto result = usecase.deleteSubscription(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto responseData = Json.emptyObject
-            .set("id", id);
 
+        auto responseData = Json.emptyObject.set("id", id);
         return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
     }
 }

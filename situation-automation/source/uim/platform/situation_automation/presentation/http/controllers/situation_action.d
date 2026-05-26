@@ -99,7 +99,7 @@ class SituationActionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationActionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationActionprecheck.id);
 
             auto a = usecase.getSituationAction(tenantId, id);
             if (a.isNull) {
@@ -142,7 +142,7 @@ class SituationActionController : ManageController {
 
             UpdateSituationActionRequest r;
             r.tenantId = tenantId;
-            r.situationActionId = SituationActionId(extractIdFromPath(req.requestURI.to!string));
+            r.situationActionId = SituationActionprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.baseUrl = j.getString("baseUrl");
@@ -172,7 +172,7 @@ class SituationActionController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationActionId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationActionprecheck.id);
 
             auto result = usecase.deleteSituationAction(tenantId, id);
             if (result.hasError)

@@ -29,51 +29,55 @@ class JobController : ManageController {
         router.delete_("/api/v1/abap/jobs/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto jobs = usecase.listJobs(tenantId);
-            auto jarr = Json.emptyArray;
-            foreach (j; jobs)
-                jarr ~= j.toJson();
-            res.writeJsonBody(Json.emptyObject.set("count", cast(long)jobs.length).set("items", jarr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto jobs = usecase.listJobs(tenantId);
+        auto jarr = jobs.map!(j => j.toJson).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", jobs.length)
+            .set("resources", jarr);
+
+        return successResponse("Job list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
-            auto job = usecase.getJob(tenantId, id);
-            if (job.isNull) {
-                writeError(res, 404, "Job not found");
-                return;
-            }
-            res.writeJsonBody(job.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = JobId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid job ID", 400);
+
+        auto job = usecase.getJob(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Job not found", 404);
+
+        auto responseData = job.toJson();
+        return successResponse("Job retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    protected Json deleteHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
-        auto id = extractIdFromPath(req.requestURI.to!string);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = JobId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid job ID", 400);
+
         auto result = usecase.deleteJob(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.message);
+            return errorResponse(result.message, 400);
 
-        return successResponse("Job deleted successfully", 200, 
-            Json.emptyObject.set("id", result.id));
-    }
-
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deleteHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Job deleted successfully", "Deleted", 200, responseData);
     }
 }

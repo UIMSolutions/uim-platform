@@ -109,7 +109,7 @@ class SubstitutionRuleController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SubstitutionRuleprecheck.id);
             auto j = req.json;
             UpdateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
@@ -187,7 +187,7 @@ class SubstitutionRuleController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {            
             auto tenantId = req.getTenantId;
-            auto id = SubstitutionRuleId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SubstitutionRuleprecheck.id);
             auto result = usecase.deleteSubstitutionRule(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

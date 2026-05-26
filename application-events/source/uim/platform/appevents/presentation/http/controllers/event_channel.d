@@ -48,7 +48,7 @@ class EventChannelController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventChannelId(extractIdFromPath(req.requestURI.to!string));
+        auto id = EventChannelprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getEventChannel(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Channel not found").set("statusCode", 404);
@@ -81,7 +81,7 @@ class EventChannelController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         EventChannelDTO dto;
-        dto.channelId    = EventChannelId(extractIdFromPath(req.requestURI.to!string));
+        dto.channelId    = EventChannelprecheck.id);
         dto.tenantId     = tenantId;
         dto.name         = data.getString("name", "");
         dto.topicId      = EventTopicId(data.getString("topicId", ""));
@@ -99,7 +99,7 @@ class EventChannelController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventChannelId(extractIdFromPath(req.requestURI.to!string));
+        auto id = EventChannelprecheck.id);
         auto result = _useCase.deleteEventChannel(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Channel deleted successfully").set("status", "success").set("statusCode", 200);

@@ -106,7 +106,7 @@ class JobController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = JobId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Jobprecheck.id);
 
             auto job = usecase.getJob(tenantId, id);
             if (job.isNull) {
@@ -124,7 +124,7 @@ class JobController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto jobId = JobId(extractIdFromPath(req.requestURI.to!string));
+            auto jobId = Jobprecheck.id);
             auto j = req.json;
 
             UpdateJobRequest r;
@@ -157,7 +157,7 @@ class JobController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto jobId = JobId(extractIdFromPath(req.requestURI.to!string));
+            auto jobId = Jobprecheck.id);
 
             // Delete all schedules first
             scheduleUsecase.deleteAllSchedules(tenantId, jobId);

@@ -46,7 +46,7 @@ class FormationController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = FormationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Formationprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getFormation(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Formation not found").set("statusCode", 404);
@@ -76,7 +76,7 @@ class FormationController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         FormationDTO dto;
-        dto.formationId    = FormationId(extractIdFromPath(req.requestURI.to!string));
+        dto.formationId    = Formationprecheck.id);
         dto.tenantId       = tenantId;
         dto.name           = data.getString("name", "");
         dto.description    = data.getString("description", "");
@@ -91,7 +91,7 @@ class FormationController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = FormationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Formationprecheck.id);
         auto result = _useCase.deleteFormation(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Formation deleted successfully").set("status", "success").set("statusCode", 200);

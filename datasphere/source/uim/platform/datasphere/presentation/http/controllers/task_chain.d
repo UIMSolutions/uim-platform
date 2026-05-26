@@ -92,7 +92,7 @@ class TaskChainController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
+      auto id = TaskChainprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tc = usecase.getTaskChain(spaceId, id);
@@ -123,7 +123,7 @@ class TaskChainController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto id = TaskChainId(extractIdFromPath(req.requestURI.to!string));
+      auto id = TaskChainprecheck.id);
 
       auto result = usecase.deleteTaskChain(tenantId, spaceId, id);
       if (result.hasError)

@@ -123,7 +123,7 @@ class TaskController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Taskprecheck.id);
             auto j = req.json;
             UpdateTaskRequest r;
             r.tenantId = tenantId;
@@ -275,7 +275,7 @@ class TaskController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Taskprecheck.id);
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteTask(tenantId, id);
             if (result.hasError)

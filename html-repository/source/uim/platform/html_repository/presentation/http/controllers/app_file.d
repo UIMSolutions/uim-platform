@@ -89,7 +89,7 @@ class AppFileController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppFileId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AppFileprecheck.id);
       auto tenantId = req.getTenantId;
       if (isNull) {
         writeError(res, 404, "File not found");
@@ -123,7 +123,7 @@ class AppFileController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto j = req.json;
-      auto id = AppFileId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AppFileprecheck.id);
 
       auto tenantId = req.getTenantId;
       if (id.isNull) {
@@ -151,7 +151,7 @@ class AppFileController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppFileId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AppFileprecheck.id);
       if (id.isNull) {
         writeError(res, 404, "File not found");
         return;

@@ -94,7 +94,7 @@ class ServiceBindingController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = ServiceBindingId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ServiceBindingprecheck.id);
             auto result = usecase.deleteServiceBinding(req.getTenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

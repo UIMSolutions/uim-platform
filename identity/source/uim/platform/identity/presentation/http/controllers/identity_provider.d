@@ -40,7 +40,7 @@ class IdentityProviderController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = IdentityProviderId(extractIdFromPath(req.requestURI.to!string));
+            auto id = IdentityProviderprecheck.id);
             auto e = usecase.getIdentityProvider(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Identity provider not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -75,7 +75,7 @@ class IdentityProviderController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             IdentityProviderDTO dto;
-            dto.idpId = IdentityProviderId(extractIdFromPath(req.requestURI.to!string));
+            dto.idpId = IdentityProviderprecheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -94,7 +94,7 @@ class IdentityProviderController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = IdentityProviderId(extractIdFromPath(req.requestURI.to!string));
+            auto id = IdentityProviderprecheck.id);
             auto result = usecase.deleteIdentityProvider(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Identity provider deleted successfully"), 200);

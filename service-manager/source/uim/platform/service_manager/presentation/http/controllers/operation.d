@@ -43,7 +43,7 @@ class OperationController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Operationprecheck.id);
 
             auto e = usecase.getOperation(tenantId, (id));
             if (e.isNull) { writeError(res, 404, "Operation not found"); return; }
@@ -83,7 +83,7 @@ class OperationController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Operationprecheck.id);
             auto data = precheck.data;
             UpdateOperationRequest r;
             r.tenantId = tenantId;
@@ -102,7 +102,7 @@ class OperationController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Operationprecheck.id);
 
             auto result = usecase.deleteOperation(tenantId, id);
             if (result.hasError)

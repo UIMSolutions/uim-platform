@@ -98,7 +98,7 @@ class TranslationProjectController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = TranslationProjectId(extractIdFromPath(req.requestURI.to!string));
+            auto id = TranslationProjectprecheck.id);
             auto p = usecase.getProject(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Translation project not found");
@@ -117,7 +117,7 @@ class TranslationProjectController : ManageController {
 
             UpdateTranslationProjectRequest r;
             r.tenantId = tenantId;
-            r.projectId = TranslationProjectId(extractIdFromPath(req.requestURI.to!string));
+            r.projectId = TranslationProjectprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.provider = j.getString("provider");
@@ -147,7 +147,7 @@ class TranslationProjectController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = TranslationProjectId(extractIdFromPath(req.requestURI.to!string));
+            auto id = TranslationProjectprecheck.id);
             auto result = usecase.deleteProject(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

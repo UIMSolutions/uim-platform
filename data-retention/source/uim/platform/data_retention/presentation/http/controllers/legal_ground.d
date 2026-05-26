@@ -76,7 +76,7 @@ class LegalGroundController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = LegalGroundId(extractIdFromPath(req.requestURI.to!string));
+            auto id = LegalGroundprecheck.id);
             auto lg = usecase.getLegalGround(tenantId, id);
             if (lg.isNull) {
                 writeError(res, 404, "Legal ground not found");
@@ -100,7 +100,7 @@ class LegalGroundController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = LegalGroundId(extractIdFromPath(req.requestURI.to!string));
+            auto id = LegalGroundprecheck.id);
             auto j = req.json;
 
             UpdateLegalGroundRequest r;
@@ -130,7 +130,7 @@ class LegalGroundController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = LegalGroundId(extractIdFromPath(req.requestURI.to!string));
+            auto id = LegalGroundprecheck.id);
 
             usecase.deleteLegalGround(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);

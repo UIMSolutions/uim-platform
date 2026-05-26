@@ -99,7 +99,7 @@ class ArtifactController : ManageController {
             
             auto tenantId = req.getTenantId;
 
-            auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Artifactprecheck.id);
             auto a = artifactUsecase.getArtifact(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
@@ -136,7 +136,7 @@ class ArtifactController : ManageController {
             auto j = req.json;
             UpdateArtifactRequest r;
             r.tenantId = tenantId;
-            r.artifactId = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            r.artifactId = Artifactprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");
@@ -162,7 +162,7 @@ class ArtifactController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = ArtifactId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Artifactprecheck.id);
             
             auto result = artifactUsecase.deleteArtifact(tenantId, id);
             if (result.hasError)

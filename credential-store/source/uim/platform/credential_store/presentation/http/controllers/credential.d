@@ -141,7 +141,7 @@ class CredentialController : ManageController {
   protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Credentialprecheck.id);
 
       // Support conditional read via If-None-Match
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
@@ -184,7 +184,7 @@ class CredentialController : ManageController {
   protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Credentialprecheck.id);
 
       usecase.deleteCredential(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

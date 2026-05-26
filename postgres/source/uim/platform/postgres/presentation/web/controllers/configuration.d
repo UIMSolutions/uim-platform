@@ -37,7 +37,7 @@ class WebConfigurationController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Configurationprecheck.id);
         auto c  = _useCase.getConfiguration(tenantId, id);
         _model.setSelected(c, !c.isNull);
         _view.renderDetail(res, _model);

@@ -93,7 +93,7 @@ class ConnectionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Connectionprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto c = usecase.getConnection(tenantId, spaceId, id);
@@ -124,7 +124,7 @@ class ConnectionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConnectionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Connectionprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteConnection(tenantId, spaceId, id);

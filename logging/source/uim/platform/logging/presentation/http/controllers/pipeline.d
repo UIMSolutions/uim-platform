@@ -96,7 +96,7 @@ class PipelineController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Pipelineprecheck.id);
       auto p = usecase.getPipeline(tenantId, id);
       if (p.isNull) {
         writeError(res, 404, "Pipeline not found");
@@ -120,7 +120,7 @@ class PipelineController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Pipelineprecheck.id);
       auto j = req.json;
 
       UpdatePipelineRequest r;
@@ -150,7 +150,7 @@ class PipelineController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto pipelineId = PipelineId(extractIdFromPath(req.requestURI.to!string));
+      auto pipelineId = Pipelineprecheck.id);
       
       usecase.deletePipeline(tenantId, pipelineId);
       auto response = Json.emptyObject

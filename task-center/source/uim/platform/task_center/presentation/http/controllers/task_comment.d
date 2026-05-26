@@ -80,7 +80,7 @@ class TaskCommentController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
+            auto id = TaskCommentprecheck.id);
             auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
                 writeError(res, 404, "Comment not found");
@@ -94,7 +94,7 @@ class TaskCommentController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
+            auto id = TaskCommentprecheck.id);
             auto j = req.json;
             UpdateTaskCommentRequest r;
             r.tenantId = tenantId;
@@ -120,7 +120,7 @@ class TaskCommentController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = TaskCommentId(extractIdFromPath(req.requestURI.to!string));
+            auto id = TaskCommentprecheck.id);
             auto result = usecase.deleteTaskComment(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

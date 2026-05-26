@@ -73,7 +73,7 @@ class OrganizationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = OrganizationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Organizationprecheck.id);
       auto o = usecase.getOrganization(tenantId, id);
       if (o.isNull) { writeFhirError(res, 404, "Organization not found"); return; }
       res.writeJsonBody(o.toJson(), 200);
@@ -85,7 +85,7 @@ class OrganizationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = OrganizationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Organizationprecheck.id);
       auto j = req.json;
       UpdateOrganizationRequest r;
       r.tenantId = tenantId;
@@ -105,7 +105,7 @@ class OrganizationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = OrganizationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Organizationprecheck.id);
       auto result = usecase.deleteOrganization(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

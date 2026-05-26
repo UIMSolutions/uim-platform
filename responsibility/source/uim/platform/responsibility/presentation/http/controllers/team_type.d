@@ -40,7 +40,7 @@ class TeamTypeController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamTypeId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamTypeprecheck.id);
         auto e = _uc.getType(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "TeamType not found").set("statusCode", 404);
@@ -72,7 +72,7 @@ class TeamTypeController : ManageController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         TeamTypeDTO dto;
-        dto.typeId      = TeamTypeId(extractIdFromPath(req.requestURI.to!string));
+        dto.typeId      = TeamTypeprecheck.id);
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -88,7 +88,7 @@ class TeamTypeController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamTypeId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamTypeprecheck.id);
         auto result = _uc.deleteType(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

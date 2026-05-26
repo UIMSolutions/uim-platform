@@ -92,7 +92,7 @@ class DnsRecordController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DnsRecordprecheck.id);
             
             auto record = usecase.getDnsRecord(tenantId, id);
             if (record.isNull) {
@@ -126,7 +126,7 @@ class DnsRecordController : ManageController {
 
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.dnsRecordId = DnsRecordId(extractIdFromPath(req.requestURI.to!string)) ;
+            r.dnsRecordId = DnsRecordprecheck.id) ;
             r.value = j.getString("value");
             r.ttl = j.getInteger("ttl");
 
@@ -149,7 +149,7 @@ class DnsRecordController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DnsRecordId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DnsRecordprecheck.id);
 
             auto result = usecase.deleteDnsRecord(tenantId, id);
             if (result.hasError)

@@ -81,7 +81,7 @@ class ConditionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Conditionprecheck.id);
       auto c = usecase.getCondition(tenantId, id);
       if (c.isNull) { writeFhirError(res, 404, "Condition not found"); return; }
       res.writeJsonBody(c.toJson(), 200);
@@ -93,7 +93,7 @@ class ConditionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Conditionprecheck.id);
       auto j = req.json;
       UpdateConditionRequest r;
       r.tenantId    = tenantId;
@@ -116,7 +116,7 @@ class ConditionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConditionId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Conditionprecheck.id);
       auto result = usecase.deleteCondition(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

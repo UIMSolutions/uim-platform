@@ -33,7 +33,7 @@ class ContentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto path = AppFileId(extractIdFromPath(req.requestURI.to!string));
+      auto path = AppFileprecheck.id);
       if (path.length == 0) {
         writeError(res, 404, "Content not found");
         return;

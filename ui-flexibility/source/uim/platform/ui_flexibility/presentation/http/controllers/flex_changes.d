@@ -79,7 +79,7 @@ class FlexChangesController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));
+      auto id = FlexChangeprecheck.id);
       auto c = usecase.getChange(tenantId, id);
       if (c.isNull) { writeError(res, 404, "FlexChange not found"); return; }
       res.writeJsonBody(c.toJson(), 200);
@@ -91,7 +91,7 @@ class FlexChangesController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));
+      auto id = FlexChangeprecheck.id);
       auto j = req.json;
       UpdateFlexChangeRequest r;
       r.tenantId   = tenantId;
@@ -114,7 +114,7 @@ class FlexChangesController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = FlexChangeId(extractIdFromPath(req.requestURI.to!string));
+      auto id = FlexChangeprecheck.id);
       auto result = usecase.deleteChange(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

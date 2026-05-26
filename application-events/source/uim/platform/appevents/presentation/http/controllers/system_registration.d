@@ -46,7 +46,7 @@ class SystemRegistrationController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = SystemRegistrationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = SystemRegistrationprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getSystemRegistration(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "System registration not found").set("statusCode", 404);
@@ -75,7 +75,7 @@ class SystemRegistrationController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = SystemRegistrationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = SystemRegistrationprecheck.id);
         auto result = _useCase.unregisterSystem(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "System unregistered successfully").set("status", "success").set("statusCode", 200);

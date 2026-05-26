@@ -71,7 +71,7 @@ class MedicationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MedicationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Medicationprecheck.id);
       auto m = usecase.getMedication(tenantId, id);
       if (m.isNull) { writeFhirError(res, 404, "Medication not found"); return; }
       res.writeJsonBody(m.toJson(), 200);
@@ -83,7 +83,7 @@ class MedicationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MedicationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Medicationprecheck.id);
       auto j = req.json;
       UpdateMedicationRequest r;
       r.tenantId     = tenantId;
@@ -101,7 +101,7 @@ class MedicationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MedicationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Medicationprecheck.id);
       auto result = usecase.deleteMedication(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

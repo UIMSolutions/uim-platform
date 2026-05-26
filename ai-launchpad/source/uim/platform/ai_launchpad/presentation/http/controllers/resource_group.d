@@ -98,7 +98,7 @@ class ResourceGroupController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
+      auto id = ResourceGroupprecheck.id);
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 

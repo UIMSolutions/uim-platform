@@ -39,7 +39,7 @@ class WebServiceInstanceController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id  = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id  = ServiceInstanceprecheck.id);
         auto inst = _useCase.getServiceInstance(tenantId, id);
         _model.setSelected(inst, !inst.isNull);
         _view.renderDetail(res, _model);
@@ -62,7 +62,7 @@ class WebServiceInstanceController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id  = ServiceInstanceId(extractIdFromPath(req.requestURI.to!string));
+        auto id  = ServiceInstanceprecheck.id);
         auto result = _useCase.deleteServiceInstance(tenantId, id);
         if (result.success) _model.setSuccess("Instance deleted");
         else                _model.setError(404, result.message);

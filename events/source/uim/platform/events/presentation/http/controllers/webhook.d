@@ -82,7 +82,7 @@ class WebhookController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = req.getTenantId;
-            auto webhookId = WebhookId(extractIdFromPath(req.requestURI.to!string));
+            auto webhookId = Webhookprecheck.id);
             auto j = req.json;
             WebhookDTO dto;
             dto.tenantId       = tenantId;
@@ -104,7 +104,7 @@ class WebhookController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = WebhookId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Webhookprecheck.id);
             auto result = usecase.deleteWebhook(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

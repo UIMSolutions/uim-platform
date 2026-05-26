@@ -85,7 +85,7 @@ class SaasApplicationController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SaasApplicationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SaasApplicationprecheck.id);
             auto app = usecase.getApplication(tenantId, id);
             if (app.isNull) { writeError(res, 404, "Application not found"); return; }
             res.writeJsonBody(app.toJson(), 200);
@@ -97,7 +97,7 @@ class SaasApplicationController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id       = SaasApplicationId(extractIdFromPath(req.requestURI.to!string));
+            auto id       = SaasApplicationprecheck.id);
             auto body_    = req.json;
 
             UpdateAppRequest dto;
@@ -126,7 +126,7 @@ class SaasApplicationController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SaasApplicationId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SaasApplicationprecheck.id);
             auto result = usecase.deregisterApplication(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);

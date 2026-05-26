@@ -90,7 +90,7 @@ class ResourceGroupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId();
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
+      auto id = ResourceGroupprecheck.id);
 
       auto rg = groups.getResourceGroup(tenantId, id);
       if (rg.isNull) {
@@ -114,7 +114,7 @@ class ResourceGroupController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
+      auto id = ResourceGroupprecheck.id);
       auto j = req.json;
 
       PatchResourceGroupRequest r;
@@ -141,7 +141,7 @@ class ResourceGroupController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ResourceGroupId(extractIdFromPath(req.requestURI.to!string));
+      auto id = ResourceGroupprecheck.id);
 
       auto result = groups.deleteResourceGroup(tenantId, id);
       if (result.hasError)

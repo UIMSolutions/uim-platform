@@ -40,7 +40,7 @@ class GroupController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = GroupId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Groupprecheck.id);
             auto e = usecase.getGroup(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Group not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -69,7 +69,7 @@ class GroupController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             GroupDTO dto;
-            dto.groupId = GroupId(extractIdFromPath(req.requestURI.to!string));
+            dto.groupId = Groupprecheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -83,7 +83,7 @@ class GroupController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = GroupId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Groupprecheck.id);
             auto result = usecase.deleteGroup(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Group deleted successfully"), 200);

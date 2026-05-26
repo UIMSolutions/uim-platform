@@ -91,7 +91,7 @@ class VisibilityController : ManageController {
         try {
 
             auto tenantId = req.getTenantId;
-            auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Visibilityprecheck.id);
             auto v = visibilityUsecase.getVisibility(tenantId, id);
             if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
@@ -124,7 +124,7 @@ class VisibilityController : ManageController {
             auto j = req.json;
             UpdateVisibilityRequest r;
             r.tenantId = tenantId;
-            r.visibilityId = VisibilityId(extractIdFromPath(req.requestURI.to!string));
+            r.visibilityId = Visibilityprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
@@ -151,7 +151,7 @@ class VisibilityController : ManageController {
 
             auto tenantId = req.getTenantId;
 
-            auto id = VisibilityId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Visibilityprecheck.id);
             auto result = visibilityUsecase.deleteVisibility(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

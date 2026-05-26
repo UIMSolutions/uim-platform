@@ -70,7 +70,7 @@ class DataSubjectRoleController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectRoleId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectRoleprecheck.id);
 
             auto dsr = usecase.getById(tenantId, id);
             if (dsr.isNull) { writeError(res, 404, "Data subject role not found"); return; }
@@ -86,7 +86,7 @@ class DataSubjectRoleController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectRoleId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectRoleprecheck.id);
             auto j = req.json;
             UpdateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
@@ -111,7 +111,7 @@ class DataSubjectRoleController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = DataSubjectRoleId(extractIdFromPath(req.requestURI.to!string));
+            auto id = DataSubjectRoleprecheck.id);
 
             usecase.deleteDataSubjectRole(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);

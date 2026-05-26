@@ -90,7 +90,7 @@ class EntityTypeController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto entityTypeId = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
+            auto entityTypeId = EntityTypeprecheck.id);
 
             auto et = usecase.getEntityType(tenantId, entityTypeId);
             if (et.isNull) {
@@ -123,7 +123,7 @@ class EntityTypeController : ManageController {
             
             UpdateEntityTypeRequest r;
             r.tenantId = tenantId;
-            r.entityTypeId = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
+            r.entityTypeId = EntityTypeprecheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");
@@ -148,7 +148,7 @@ class EntityTypeController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = EntityTypeId(extractIdFromPath(req.requestURI.to!string));
+            auto id = EntityTypeprecheck.id);
 
             auto result = usecase.deleteEntityType(tenantId, id);
             if (result.hasError)

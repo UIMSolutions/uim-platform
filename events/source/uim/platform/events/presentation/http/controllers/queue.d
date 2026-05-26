@@ -81,7 +81,7 @@ class QueueController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto queueId  = QueueId(extractIdFromPath(req.requestURI.to!string));
+            auto queueId  = Queueprecheck.id);
             auto j = req.json;
             QueueDTO dto;
             dto.tenantId           = tenantId;
@@ -104,7 +104,7 @@ class QueueController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = QueueId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Queueprecheck.id);
             auto result = usecase.deleteQueue(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -94,7 +94,7 @@ class RemoteTableController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
+      auto id = RemoteTableprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
@@ -125,7 +125,7 @@ class RemoteTableController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RemoteTableId(extractIdFromPath(req.requestURI.to!string));
+      auto id = RemoteTableprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);

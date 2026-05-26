@@ -40,7 +40,7 @@ class UserController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = UserId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Userprecheck.id);
             auto e = usecase.getUser(tenantId, id);
             if (e.isNull) { writeError(res, 404, "User not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -77,7 +77,7 @@ class UserController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             UserDTO dto;
-            dto.userId = UserId(extractIdFromPath(req.requestURI.to!string));
+            dto.userId = Userprecheck.id);
             dto.tenantId = tenantId;
             dto.displayName = j.getString("displayName");
             dto.firstName = j.getString("firstName");
@@ -97,7 +97,7 @@ class UserController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = UserId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Userprecheck.id);
             auto result = usecase.deleteUser(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "User deleted successfully"), 200);

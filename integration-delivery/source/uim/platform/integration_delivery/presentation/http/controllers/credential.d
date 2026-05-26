@@ -48,7 +48,7 @@ class CredentialController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Credentialprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
 
@@ -91,7 +91,7 @@ class CredentialController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Credentialprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
 
@@ -116,7 +116,7 @@ class CredentialController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CredentialId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Credentialprecheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
 

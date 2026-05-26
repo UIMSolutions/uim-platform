@@ -76,7 +76,7 @@ class WorkspaceController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Workspaceprecheck.id);
 
       auto w = usecase.getWorkspace(tenantId, id);
       if (w.isNull) {
@@ -93,7 +93,7 @@ class WorkspaceController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Workspaceprecheck.id);
       auto j = req.json;
 
       PatchWorkspaceRequest r;
@@ -120,7 +120,7 @@ class WorkspaceController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = WorkspaceId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Workspaceprecheck.id);
 
       auto result = usecase.deleteWorkspace(tenantId, id);
       if (result.hasError)

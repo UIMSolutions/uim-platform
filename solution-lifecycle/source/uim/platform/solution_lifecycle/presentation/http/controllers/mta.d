@@ -75,7 +75,7 @@ class MtaController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = MtaId(extractIdFromPath(req.requestURI.to!string));
+            auto id = Mtaprecheck.id);
             auto m = usecase.getMta(tenantId, id);
             if (m.isNull) { writeError(res, 404, "MTA not found"); return; }
             res.writeJsonBody(m.toJson, 200);

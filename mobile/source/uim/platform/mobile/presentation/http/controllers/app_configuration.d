@@ -143,7 +143,7 @@ class AppConfigurationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppConfigurationId(extractIdFromPath(req.requestURI.to!string));
+      auto id = AppConfigurationprecheck.id);
       auto result = usecase.deleteAppConfiguration(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

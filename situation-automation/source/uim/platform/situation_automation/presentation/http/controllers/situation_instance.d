@@ -100,7 +100,7 @@ class SituationInstanceController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationInstanceprecheck.id);
 
             auto i = usecase.getSituationInstance(tenantId, id);
             if (i.isNull) {
@@ -142,7 +142,7 @@ class SituationInstanceController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationInstanceprecheck.id);
             auto j = req.json;
 
             UpdateSituationInstanceRequest r;
@@ -212,7 +212,7 @@ class SituationInstanceController : ManageController {
         try {
             auto tenantId = req.getTenantId;
 
-            auto id = SituationInstanceId(extractIdFromPath(req.requestURI.to!string));
+            auto id = SituationInstanceprecheck.id);
             
             auto result = usecase.deleteSituationInstance(tenantId, id);
             if (result.hasError)

@@ -36,7 +36,7 @@ class WebMetricController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = MetricId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Metricprecheck.id);
         auto m = _useCase.getMetric(tenantId, id);
         _model.setSelected(m, !m.isNull);
         _view.renderDetail(res, _model);

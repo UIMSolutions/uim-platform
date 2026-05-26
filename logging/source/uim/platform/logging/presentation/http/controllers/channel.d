@@ -94,7 +94,7 @@ class ChannelController : ManageController {
       auto tenantId = req.getTenantId;
       
 
-      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
+      auto id = NotificationChannelprecheck.id);
       auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Notification channel not found");
@@ -115,7 +115,7 @@ class ChannelController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
+      auto id = NotificationChannelprecheck.id);
       auto j = req.json;
       UpdateNotificationChannelRequest r;
       r.channelId = id;
@@ -147,7 +147,7 @@ class ChannelController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto channelId = NotificationChannelId(extractIdFromPath(req.requestURI.to!string));
+      auto channelId = NotificationChannelprecheck.id);
 
       usecase.deleteChannel(tenantId, channelId);
       res.writeJsonBody(Json.emptyObject, 204);

@@ -88,7 +88,7 @@ class StreamController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
+      auto id = LogStreamprecheck.id);
       auto s = usecase.getStream(tenantId, id);
 
       if (s.isNull) {
@@ -113,7 +113,7 @@ class StreamController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = LogStreamId(extractIdFromPath(req.requestURI.to!string));
+      auto id = LogStreamprecheck.id);
       auto j = req.json;
       UpdateLogStreamRequest r;
       r.tenantId = tenantId;
@@ -141,7 +141,7 @@ class StreamController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto streamId = LogStreamId(extractIdFromPath(req.requestURI.to!string));
+      auto streamId = LogStreamprecheck.id);
       usecase.deleteStream(tenantId, streamId);
 
       res.writeJsonBody(Json.emptyObject, 204);

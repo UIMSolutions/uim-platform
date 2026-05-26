@@ -127,7 +127,7 @@ class KeystoreController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Keystoreprecheck.id);
 
       auto ks = usecase.getKeystore(tenantId, id);
       if (ks.isNull) {
@@ -158,7 +158,7 @@ class KeystoreController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Keystoreprecheck.id);
 
       auto j = req.json;
       UpdateKeystoreRequest r;
@@ -184,7 +184,7 @@ class KeystoreController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = KeystoreId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Keystoreprecheck.id);
       auto result = usecase.deleteKeystore(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

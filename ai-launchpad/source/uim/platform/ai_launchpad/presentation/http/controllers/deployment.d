@@ -87,7 +87,7 @@ class DeploymentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto d = usecase.getDeployment(tenantId, connectionId, id);
@@ -108,7 +108,7 @@ class DeploymentController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto j = req.json;
 
@@ -173,7 +173,7 @@ class DeploymentController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DeploymentId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteDeployment(tenantId, connectionId, id);

@@ -40,7 +40,7 @@ class TeamCategoryController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamCategoryprecheck.id);
         auto e = _uc.getCategory(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Category not found").set("statusCode", 404);
@@ -71,7 +71,7 @@ class TeamCategoryController : ManageController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         TeamCategoryDTO dto;
-        dto.categoryId  = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
+        dto.categoryId  = TeamCategoryprecheck.id);
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -86,7 +86,7 @@ class TeamCategoryController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = TeamCategoryId(extractIdFromPath(req.requestURI.to!string));
+        auto id = TeamCategoryprecheck.id);
         auto result = _uc.deleteCategory(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

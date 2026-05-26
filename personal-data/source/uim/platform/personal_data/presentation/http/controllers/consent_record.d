@@ -134,7 +134,7 @@ class ConsentRecordController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = ConsentRecordId(extractIdFromPath(req.requestURI.to!string));
+            auto id = ConsentRecordprecheck.id);
 
             auto result = usecase.deleteConsentRecord(tenantId, id);
             if (result.hasError)

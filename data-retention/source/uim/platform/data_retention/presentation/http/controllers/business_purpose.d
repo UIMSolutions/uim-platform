@@ -78,7 +78,7 @@ class BusinessPurposeController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = BusinessPurposeControllerprecheck.id);
 
             auto bp = usecase.getBusinessPurpose(tenantId, id);
             if (bp.isNull) {
@@ -101,7 +101,7 @@ class BusinessPurposeController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = BusinessPurposeControllerprecheck.id);
 
             auto j = req.json;
             UpdateBusinessPurposeRequest r;
@@ -166,7 +166,7 @@ class BusinessPurposeController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = BusinessPurposeControllerId(extractIdFromPath(req.requestURI.to!string));
+            auto id = BusinessPurposeControllerprecheck.id);
             auto result = usecase.deleteBusinessPurpose(tenantId, id);
 
             if (result.hasError)

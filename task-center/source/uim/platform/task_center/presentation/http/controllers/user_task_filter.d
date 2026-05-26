@@ -104,7 +104,7 @@ class UserTaskFilterController : ManageController {
         try {
             
 
-            auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
+            auto id = UserTaskFilterprecheck.id);
             auto j = req.json;
             UpdateUserTaskFilterRequest r;
             r.tenantId = tenantId;
@@ -156,7 +156,7 @@ class UserTaskFilterController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = UserTaskFilterId(extractIdFromPath(req.requestURI.to!string));
+            auto id = UserTaskFilterprecheck.id);
             auto result = usecase.deleteUserTaskFilter(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

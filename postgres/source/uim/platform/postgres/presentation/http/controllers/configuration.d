@@ -41,7 +41,7 @@ class ConfigurationController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Configurationprecheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = configurations.getConfiguration(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Configuration not found").set("statusCode", 404);
@@ -78,7 +78,7 @@ class ConfigurationController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ConfigurationDTO dto;
-        dto.configurationId     = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        dto.configurationId     = Configurationprecheck.id);
         dto.tenantId            = tenantId;
         dto.auditLogLevels      = data.getString("auditLogLevels", "");
         dto.maxConnections      = data.getLong("maxConnections", 0);
@@ -94,7 +94,7 @@ class ConfigurationController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ConfigurationId(extractIdFromPath(req.requestURI.to!string));
+        auto id = Configurationprecheck.id);
         auto result = configurations.deleteConfiguration(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Configuration deleted successfully").set("status", "success").set("statusCode", 200);

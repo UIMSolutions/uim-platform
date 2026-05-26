@@ -101,7 +101,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Taskprecheck.id);
       auto t = taskUsecase.getTask(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "PATask not found");
@@ -141,7 +141,7 @@ class TaskController : ManageController {
       auto j = req.json;
       UpdateTaskRequest r;
       r.tenantId = tenantId;
-      r.taskId = TaskId(extractIdFromPath(req.requestURI.to!string));
+      r.taskId = Taskprecheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");
@@ -243,7 +243,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto id = TaskId(extractIdFromPath(req.requestURI.to!string));
+      auto id = Taskprecheck.id);
       auto result = taskUsecase.deleteTask(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
