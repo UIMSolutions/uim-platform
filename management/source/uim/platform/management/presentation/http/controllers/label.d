@@ -35,7 +35,7 @@ class LabelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateLabelRequest r;
       r.tenantId = tenantId;
       r.resourceType = j.getString("resourceType");
@@ -101,7 +101,7 @@ class LabelController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateLabelRequest r;
       r.tenantId = tenantId;
       r.values = getStrings(j, "values");

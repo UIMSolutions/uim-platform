@@ -38,7 +38,7 @@ class SubaccountController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateSubaccountRequest r;
       r.tenantId = tenantId;
       r.globalAccountId = j.getString("globalAccountId");
@@ -112,7 +112,7 @@ class SubaccountController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateSubaccountRequest r;
       r.tenantId = tenantId;
       r.subaccountId = id;
@@ -137,7 +137,7 @@ class SubaccountController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubaccountId(extractId(req.requestURI));
-      auto j = req.json;
+      auto data = precheck.data;
       MoveSubaccountRequest r;
       r.tenantId = tenantId;
       r.subaccountId = id;

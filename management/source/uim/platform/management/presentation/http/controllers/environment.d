@@ -33,7 +33,7 @@ class EnvironmentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateEnvironmentInstanceRequest r;
       r.tenantId = tenantId;
       r.subaccountId = j.getString("subaccountId");
@@ -106,7 +106,7 @@ class EnvironmentController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateEnvironmentInstanceRequest request;
       request.tenantId = tenantId;
       request.environmentInstanceId = id;

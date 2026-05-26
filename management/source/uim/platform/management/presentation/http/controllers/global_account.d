@@ -37,7 +37,7 @@ class GlobalAccountController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateGlobalAccountRequest r;
       r.displayName = j.getString("displayName");
       r.description = j.getString("description");
@@ -105,7 +105,7 @@ class GlobalAccountController : ManageController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateGlobalAccountRequest request;
       request.displayName = j.getString("displayName");
       request.description = j.getString("description");

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management.presentation.http.controllers.directory;
 
-
 // 
 // import uim.platform.management.application.usecases.manage.directories;
 // import uim.platform.management.application.dto;
@@ -32,79 +31,88 @@ class DirectoryController : ManageController {
     router.delete_("/api/v1/directories/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
-      CreateDirectoryRequest r;
-      r.globalAccountId = j.getString("globalAccountId");
-      r.parentDirectoryId = j.getString("parentDirectoryId");
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.features = getStrings(j, "features");
-      r.manageEntitlements = j.getBoolean("manageEntitlements");
-      r.manageAuthorizations = j.getBoolean("manageAuthorizations");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.labels = jsonStrMap(j, "labels");
-      r.customProperties = jsonStrMap(j, "customProperties");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Directory created");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto gaId = req.params.get("globalAccountId");
+    auto parentId = req.params.get("parentDirectoryId");
+
+    Directory[] items;
+    if (!parentId.isEmpty)
+      items = usecase.listDirectories(tenantId, parentId);
+    else if (!gaId.isEmpty)
+      items = usecase.listDirectories(tenantId, gaId);
+
+    auto arr = items.map!(d => d.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
+    return successResponse("Directory list retrieved successfully", "Retrieved", 200, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto gaId = req.params.get("globalAccountId");
-      auto parentId = req.params.get("parentDirectoryId");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      Directory[] items;
-      if (!parentId.isEmpty)
-        items = usecase.listDirectories(tenantId, parentId);
-      else if (!gaId.isEmpty)
-        items = usecase.listDirectories(tenantId, gaId);
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      auto arr = items.map!(d => d.toJson).array.toJson;
+    CreateDirectoryRequest r;
+    r.tenantId = tenantId;
+    r.globalAccountId = data.getString("globalAccountId");
+    r.parentDirectoryId = data.getString("parentDirectoryId");
+    r.displayName = data.getString("displayName");
+    r.description = data.getString("description");
+    r.features = getStrings(data, "features");
+    r.manageEntitlements = data.getBoolean("manageEntitlements");
+    r.manageAuthorizations = data.getBoolean("manageAuthorizations");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    r.labels = jsonStrMap(data, "labels");
+    r.customProperties = jsonStrMap(data, "customProperties");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Directories retrieved successfully");
+    auto result = usecase.createDirectory(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Directory created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = extractId(req.requestURI);
-      auto d = usecase.getById(tenantId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Directory not found");
-        return;
-      }
-      res.writeJsonBody(d.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+
+    auto id = DirectoryId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid directory ID", 400);
+
+    auto d = usecase.getById(tenantId, id);
+    if (job.isNull)
+      return errorResponse("Directory not found", 404);
+
+    auto responseData = d.toJson();
+    return successResponse("Directory retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateDirectoryRequest request;
       request.displayName = j.getString("displayName");
       request.description = j.getString("description");
@@ -113,35 +121,35 @@ class DirectoryController : ManageController {
 
       auto result = usecase.update(tenantId, id, request);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Directory updated");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Directory updated");
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 404, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else
+      writeError(res, 404, result.message);
   }
-
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = DirectoryId(extractId(req.requestURI));
-
-      auto result = usecase.deleteDirectory(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Directory deleted");
-
-        res.writeJsonBody(resp, 204);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+ catch (Exception e)
+    writeError(res, 500, "Internal server error");
 }
 
+override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = req.getTenantId;
+    auto id = DirectoryId(extractId(req.requestURI));
+
+    auto result = usecase.deleteDirectory(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Directory deleted");
+
+    res.writeJsonBody(resp, 204);
+  } else
+    writeError(res, 400, result.message);
+} catch (Exception e)
+  writeError(res, 500, "Internal server error");
+}
+}

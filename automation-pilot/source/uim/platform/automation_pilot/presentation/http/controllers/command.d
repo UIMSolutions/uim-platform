@@ -28,128 +28,121 @@ class CommandController : ManageController {
         router.delete_("/api/v1/automation-pilot/commands/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = commands.listCommands(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
+        auto items = commands.listCommands(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Command list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = CommandId(extractIdFromPath(path));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = commands.getCommand(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Command not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto j = req.json;
+        CommandDTO dto;
+        dto.tenantId = tenantId;
+        dto.commandId = CommandId(data.getString("id"));
+        dto.catalogId = CatalogId(data.getString("catalogId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.version_ = data.getString("version");
+        dto.inputSchema = data.getString("inputSchema");
+        dto.outputSchema = data.getString("outputSchema");
+        dto.steps = data.getString("steps");
+        dto.timeout = data.getString("timeout");
+        dto.retryCount = data.getString("retryCount");
+        dto.tags = data.getString("tags");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            CommandDTO dto;
-            dto.tenantId = tenantId;
-            dto.commandId = CommandId(j.getString("id"));
-            dto.catalogId = CatalogId(j.getString("catalogId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.inputSchema = j.getString("inputSchema");
-            dto.outputSchema = j.getString("outputSchema");
-            dto.steps = j.getString("steps");
-            dto.timeout = j.getString("timeout");
-            dto.retryCount = j.getString("retryCount");
-            dto.tags = j.getString("tags");
-            dto.createdBy = UserId(j.getString("createdBy"));
-
-            auto result = commands.createCommand(dto);
-            if (result.hasError)
+        auto result = commands.createCommand(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Command created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Command created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            CommandDTO dto;
-            dto.tenantId = tenantId;
-            dto.commandId = CommandId(extractIdFromPath(path));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.inputSchema = j.getString("inputSchema");
-            dto.outputSchema = j.getString("outputSchema");
-            dto.steps = j.getString("steps");
-            dto.timeout = j.getString("timeout");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
 
-            auto result = commands.updateCommand(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Command updated");
+        auto id = CommandId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid command ID", 400);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = commands.getCommand(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Command not found", 404);
+
+        auto responseData = e.toJson();
+        return successResponse("Command retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = CommandId(extractIdFromPath(path));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = commands.deleteCommand(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto data = precheck.data;
+
+        auto id = CommandId(extractIdFromPath(path));
+
+        CommandDTO dto;
+        dto.tenantId = tenantId;
+        dto.commandId = CommandId(extractIdFromPath(path));
+        dto.name = j.getString("name");
+        dto.description = j.getString("description");
+        dto.inputSchema = j.getString("inputSchema");
+        dto.outputSchema = j.getString("outputSchema");
+        dto.steps = j.getString("steps");
+        dto.timeout = j.getString("timeout");
+        dto.updatedBy = UserId(j.getString("updatedBy"));
+
+        auto result = commands.updateCommand(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Command deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Command updated successfully", "Updated", 200, responseData);
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        
+        auto id = CommandId(extractIdFromPath(path));
+        if (id.isNull)
+            return errorResponse("Invalid command ID", 400);
+
+        auto result = commands.deleteCommand(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Command deleted successfully", "Deleted", 200, responseData);
     }
 }

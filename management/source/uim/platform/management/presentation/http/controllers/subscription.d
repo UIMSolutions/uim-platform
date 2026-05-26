@@ -36,7 +36,7 @@ class SubscriptionController : ManageController {
   protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateSubscriptionRequest r;
       r.tenantId = tenantId;
       r.subaccountId = j.getString("subaccountId");
@@ -101,7 +101,7 @@ class SubscriptionController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = SubscriptionId(extractId(req.requestURI));
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateSubscriptionRequest r;
       r.tenantId = tenantId;  
       r.planName = j.getString("planName");

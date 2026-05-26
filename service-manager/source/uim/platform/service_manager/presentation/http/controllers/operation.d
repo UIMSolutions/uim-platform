@@ -63,7 +63,7 @@ class OperationController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateOperationRequest r;
             r.tenantId = tenantId;
@@ -84,7 +84,7 @@ class OperationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto id = OperationId(extractIdFromPath(req.requestURI.to!string));
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateOperationRequest r;
             r.tenantId = tenantId;
             r.operationId = id;

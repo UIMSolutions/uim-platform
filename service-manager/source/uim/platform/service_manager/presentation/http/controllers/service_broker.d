@@ -57,7 +57,7 @@ class ServiceBrokerController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateServiceBrokerRequest r;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -75,7 +75,7 @@ class ServiceBrokerController : ManageController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateServiceBrokerRequest r;
             r.name = j.getString("name");
             r.description = j.getString("description");

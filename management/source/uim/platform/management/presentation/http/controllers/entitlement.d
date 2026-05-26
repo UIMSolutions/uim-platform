@@ -36,7 +36,7 @@ class EntitlementController : ManageController {
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       AssignEntitlementRequest r;
       r.globalAccountId = j.getString("globalAccountId");
       r.directoryId = j.getString("directoryId");
@@ -108,7 +108,7 @@ class EntitlementController : ManageController {
       auto tenantId = req.getTenantId;
       auto id = EntitlementId(extractId(req.requestURI));
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateEntitlementQuotaRequest request;
       request.tenantId = tenantId;
       request.entitlementId = id;

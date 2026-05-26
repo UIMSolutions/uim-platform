@@ -62,7 +62,7 @@ class ServiceInstanceController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateServiceInstanceRequest r;
             r.name = j.getString("name");
             r.planId = j.getString("planId");
@@ -84,7 +84,7 @@ class ServiceInstanceController : ManageController {
         try {
             
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateServiceInstanceRequest r;
             r.name = j.getString("name");
             r.planId = j.getString("planId");

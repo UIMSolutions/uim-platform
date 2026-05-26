@@ -35,7 +35,7 @@ class ServicePlanController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateServicePlanRequest r;
       r.serviceName = j.getString("serviceName");
       r.serviceDisplayName = j.getString("serviceDisplayName");
@@ -112,7 +112,7 @@ class ServicePlanController : ManageController {
         try {
       auto tenantId = req.getTenantId;
       auto id = extractId(req.requestURI);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateServicePlanRequest r;
       r.planDisplayName = j.getString("planDisplayName");
       r.description = j.getString("description");

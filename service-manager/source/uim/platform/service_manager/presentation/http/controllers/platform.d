@@ -85,7 +85,7 @@ class EnvironmentController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreatePlatformRequest r;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -116,7 +116,7 @@ class EnvironmentController : ManageController {
             
 
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdatePlatformRequest r;
             r.name = j.getString("name");
             r.description = j.getString("description");
