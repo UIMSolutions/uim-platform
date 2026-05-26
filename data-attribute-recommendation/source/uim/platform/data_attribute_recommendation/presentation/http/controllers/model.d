@@ -87,7 +87,7 @@ class ModelController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto config = usecase.getModelConfig(tenantId, id);
       if (config.isNull) {
@@ -104,7 +104,7 @@ class ModelController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateModelConfigRequest();
       r.id = id;
@@ -138,7 +138,7 @@ class ModelController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess) {
@@ -163,7 +163,7 @@ class ModelController : ManageController {
   protected void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto r = StartTrainingRequest();
       r.modelConfigId = id;
       r.tenantId = tenantId;
@@ -189,7 +189,7 @@ class ModelController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteModelConfig(tenantId, id);
       if (result.isSuccess) {

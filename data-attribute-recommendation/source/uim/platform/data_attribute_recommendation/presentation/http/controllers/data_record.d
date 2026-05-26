@@ -67,7 +67,7 @@ class DataRecordController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
 
       auto record = usecase.getDataRecord(tenantId, id);
       if (record.isNull) {
@@ -84,7 +84,7 @@ class DataRecordController : ManageController {
   override protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto datasetId = DatasetId(extractIdFromPath(req.requestURI));
+      auto datasetId = DatasetId(precheck.id);
       
       auto items = usecase.listDataRecords(tenantId, datasetId);
       auto arr = items.map!(r => r.toJson).array.toJson;
@@ -104,7 +104,7 @@ class DataRecordController : ManageController {
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+      auto id = DataRecordId(precheck.id);
 
       auto result = usecase.validateDataRecord(tenantId, id);
       if (result.isSuccess) {
@@ -126,7 +126,7 @@ class DataRecordController : ManageController {
   protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+      auto id = DataRecordId(precheck.id);
       
       auto result = usecase.rejectDataRecord(tenantId, id);
       if (result.isSuccess) {
@@ -148,7 +148,7 @@ class DataRecordController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataRecordId(extractIdFromPath(req.requestURI));
+      auto id = DataRecordId(precheck.id);
 
       auto result = usecase.deleteDataRecord(tenantId, id);
       if (result.isSuccess()) {

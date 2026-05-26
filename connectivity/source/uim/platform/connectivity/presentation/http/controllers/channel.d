@@ -85,7 +85,7 @@ class ChannelController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ChannelId(extractIdFromPath(req.requestURI));
+      auto id = ChannelId(precheck.id);
       auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
@@ -154,7 +154,7 @@ class ChannelController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ChannelId(extractIdFromPath(req.requestURI));
+      auto id = ChannelId(precheck.id);
       auto result = usecase.deleteChannel(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

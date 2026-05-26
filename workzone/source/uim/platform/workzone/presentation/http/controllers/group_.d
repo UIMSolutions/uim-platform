@@ -78,7 +78,7 @@ class GroupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto g = useCase.getGroup(tenantId, id);
       if (g.isNull) {
@@ -94,7 +94,7 @@ class GroupController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateGroupRequest();
       r.id = id;
@@ -119,7 +119,7 @@ class GroupController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteGroup(tenantId, id);
       if (result.isSuccess()) {

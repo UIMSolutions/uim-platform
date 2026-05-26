@@ -86,7 +86,7 @@ class CertificateController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;  
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
+      auto id = CertificateId(precheck.id);
 
       auto cert = usecase.getCertificate(tenantId, id);
       if (cert.isNull) {
@@ -104,7 +104,7 @@ class CertificateController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateCertificateRequest();
-      r.certificateId = CertificateId(extractIdFromPath(req.requestURI));
+      r.certificateId = CertificateId(precheck.id);
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.active = j.getBoolean("active", true);
@@ -128,7 +128,7 @@ class CertificateController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
+      auto id = CertificateId(precheck.id);
       auto result = usecase.deleteCertificate(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

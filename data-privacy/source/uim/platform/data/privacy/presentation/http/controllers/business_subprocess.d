@@ -77,7 +77,7 @@ class BusinessSubprocessController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
+      auto id = BusinessSubprocessId(precheck.id);
 
       auto entry = usecase.getSubprocess(tenantId, id);
       if (entry.isNull) {
@@ -96,7 +96,7 @@ class BusinessSubprocessController : ManageController {
 
       UpdateBusinessSubprocessRequest r;
       r.tenantId = tenantId;
-      r.subprocessId = BusinessSubprocessId(extractIdFromPath(req.requestURI));
+      r.subprocessId = BusinessSubprocessId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purposes = j.getStrings("purposes");
@@ -119,7 +119,7 @@ class BusinessSubprocessController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BusinessSubprocessId(extractIdFromPath(req.requestURI));
+      auto id = BusinessSubprocessId(precheck.id);
 
       usecase.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

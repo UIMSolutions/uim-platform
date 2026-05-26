@@ -49,7 +49,8 @@ class GroupController : ManageController {
 
       auto result = useCase.createGroup(createReq);
 
-      if (result.isSuccess()) {
+      if (result.hasError)
+            return errorResponse(result.message, 400);
       auto response = Json.emptyObject
         .set("id", Json(result.groupId))
         .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
@@ -80,7 +81,7 @@ class GroupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto groupId = extractIdFromPath(req.requestURI);
+      auto groupId = precheck.id;
       auto group = useCase.getGroup(groupId);
       if (group == Group.init) {
         writeScimError(res, 404, "Group not found");
@@ -95,7 +96,7 @@ class GroupController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto groupId = extractIdFromPath(req.requestURI);
+      auto groupId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
         j.getString("description"),);
@@ -114,7 +115,7 @@ class GroupController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto groupId = extractIdFromPath(req.requestURI);
+      auto groupId = precheck.id;
       auto error = useCase.deleteGroup(groupId);
       if (error.length > 0)
         writeScimError(res, 404, error);

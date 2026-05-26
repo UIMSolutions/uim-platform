@@ -95,7 +95,7 @@ class ValidationRuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto rule = usecase.getById(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "Validation rule not found");
@@ -113,7 +113,7 @@ class ValidationRuleController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -153,7 +153,7 @@ class ValidationRuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteValidationRule(tenantId, id);
       if (result.isSuccess())

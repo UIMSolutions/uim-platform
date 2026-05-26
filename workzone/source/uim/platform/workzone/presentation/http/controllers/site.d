@@ -81,7 +81,7 @@ class SiteController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto s = useCase.getSite(tenantId, id);
       if (s.isNull) {
@@ -99,7 +99,7 @@ class SiteController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateSiteRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -118,7 +118,7 @@ class SiteController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteSite(tenantId, id);
       if (result.isSuccess())

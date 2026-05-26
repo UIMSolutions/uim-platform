@@ -82,7 +82,7 @@ class DataRetrievalController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
+      auto id = DataRetrievalRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -99,7 +99,7 @@ class DataRetrievalController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateRetrievalStatusRequest r;
-      r.id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
+      r.id = DataRetrievalRequestId(precheck.id);
       r.tenantId = tenantId;
       r.status = j.getString("status");
       r.downloadUrl = j.getString("downloadUrl");
@@ -121,7 +121,7 @@ class DataRetrievalController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DataRetrievalRequestId(extractIdFromPath(req.requestURI));
+      auto id = DataRetrievalRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

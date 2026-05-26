@@ -89,7 +89,7 @@ class ResourceController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
+      auto id = MonitoredResourceId(precheck.id);
 
       if (!usecase.existsResource(tenantId, id)) {
         writeError(res, 404, "Resource not found");
@@ -106,7 +106,7 @@ class ResourceController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
+      auto id = MonitoredResourceId(precheck.id);
       auto j = req.json;
 
       UpdateResourceRequest r;
@@ -138,7 +138,7 @@ class ResourceController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MonitoredResourceId(extractIdFromPath(req.requestURI));
+      auto id = MonitoredResourceId(precheck.id);
 
       auto result = usecase.deleteMonitoredResource(tenantId, id);
       if (result.hasError)

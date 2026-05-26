@@ -72,7 +72,7 @@ class CatalogController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto catalogId = extractIdFromPath(req.requestURI);
+      auto catalogId = precheck.id;
       if (!useCase.existsCatalog(catalogId)) {
         writeApiError(res, 404, "Catalog not found");
         return;
@@ -87,7 +87,7 @@ class CatalogController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto catalogId = extractIdFromPath(req.requestURI);
+      auto catalogId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateCatalogRequest(catalogId, j.getString("title"),
         j.getString("description"), getStrings(j, "allowedRoleIds"),
@@ -105,7 +105,7 @@ class CatalogController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto catalogId = extractIdFromPath(req.requestURI);
+      auto catalogId = precheck.id;
       auto error = useCase.deleteCatalog(catalogId);
       if (error.length > 0)
         writeApiError(res, 404, error);

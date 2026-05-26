@@ -80,7 +80,7 @@ class PurposeRecordController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
+      auto recordId = PurposeRecordId(precheck.id);
 
       auto record = usecase.getRecord(tenantId, recordId);
       if (record.isNull) {
@@ -97,7 +97,7 @@ class PurposeRecordController : ManageController {
       auto tenantId = req.getTenantId;
       DeactivatePurposeRecordRequest r;
       r.tenantId = tenantId;
-      r.recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
+      r.recordId = PurposeRecordId(precheck.id);
 
       auto result = usecase.deactivateRecord(r);
       if (result.isSuccess()) {
@@ -114,7 +114,7 @@ class PurposeRecordController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto recordId = PurposeRecordId(extractIdFromPath(req.requestURI));
+      auto recordId = PurposeRecordId(precheck.id);
 
       usecase.deleteRecord(tenantId, recordId);
       res.writeJsonBody(Json.emptyObject, 204);

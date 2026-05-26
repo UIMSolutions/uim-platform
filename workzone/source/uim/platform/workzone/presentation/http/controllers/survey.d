@@ -86,7 +86,7 @@ class SurveyController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = SurveyId(extractIdFromPath(req.requestURI));
+      auto id = SurveyId(precheck.id);
       auto tenantId = req.getTenantId;
       auto s = useCase.getSurvey(tenantId, id);
       if (s.isNull) {
@@ -104,7 +104,7 @@ class SurveyController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateSurveyRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
@@ -127,7 +127,7 @@ class SurveyController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = SurveyId(extractIdFromPath(req.requestURI));
+      auto id = SurveyId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
       if (result.isSuccess()) {

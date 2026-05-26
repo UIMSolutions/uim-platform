@@ -114,7 +114,7 @@ class ConsentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
+      auto id = ConsentRecordId(precheck.id);
 
       auto entry = usecase.getConsent(tenantId, id);
       if (entry.isNull) {
@@ -153,7 +153,7 @@ class ConsentController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ConsentRecordId(extractIdFromPath(req.requestURI));
+      auto id = ConsentRecordId(precheck.id);
 
       usecase.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

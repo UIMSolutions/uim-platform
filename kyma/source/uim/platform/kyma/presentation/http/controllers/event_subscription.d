@@ -104,7 +104,7 @@ class EventSubscriptionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto sub = usecase.getSubscription(tenantId, id);
       if (sub.isNull) {
         writeError(res, 404, "Subscription not found");
@@ -120,7 +120,7 @@ class EventSubscriptionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateEventSubscriptionRequest r;
       r.description = j.getString("description");
@@ -147,7 +147,7 @@ class EventSubscriptionController : ManageController {
   protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.pauseSubscription(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -162,7 +162,7 @@ class EventSubscriptionController : ManageController {
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.resumeSubscription(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -177,7 +177,7 @@ class EventSubscriptionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteSubscription(tenantId, id);
       if (result.success)
         res.writeBody("", 204);

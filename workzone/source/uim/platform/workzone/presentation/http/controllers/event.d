@@ -89,7 +89,7 @@ class EventController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto ev = useCase.getEvent(tenantId, id);
       if (ev.isNull) {
@@ -105,7 +105,7 @@ class EventController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateEventRequest();
       r.id = id;
@@ -134,7 +134,7 @@ class EventController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteEvent(tenantId, id);
       if (result.isSuccess()) {

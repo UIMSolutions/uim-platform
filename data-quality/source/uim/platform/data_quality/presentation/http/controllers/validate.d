@@ -83,7 +83,7 @@ class ValidateController : PlatformController {
 
   override protected void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto recordId = extractIdFromPath(req.requestURI);
+      auto recordId = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.getResultByRecord(tenantId, recordId);
       if (result.isNull) {

@@ -101,7 +101,7 @@ class ObjectController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = StorageObjectId(extractIdFromPath(req.requestURI));
+    auto id = StorageObjectId(precheck.id);
     // Check if this is a versions request
     if (id.value == "versions" || id.value == "copy")
       return errorResponse("Invalid object ID", 400);

@@ -96,7 +96,7 @@ class ServiceBindingController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto b = usecase.getBinding(ServiceBindingId(tenantId, id));
       if (b.isNull) {
         writeError(res, 404, "Service binding not found");
@@ -112,7 +112,7 @@ class ServiceBindingController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));
+      auto id = ServiceBindingId(tenantId, precheck.id);
       auto j = req.json;
       UpdateServiceBindingRequest r;
       r.tenantId = tenantId;  
@@ -136,7 +136,7 @@ class ServiceBindingController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(tenantId, extractIdFromPath(req.requestURI));
+      auto id = ServiceBindingId(tenantId, precheck.id);
 
       auto result = usecase.deleteBinding(tenantId, id);
       if (result.success)

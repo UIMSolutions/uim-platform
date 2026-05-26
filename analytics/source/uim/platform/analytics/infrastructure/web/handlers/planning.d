@@ -27,7 +27,7 @@ class PlanningHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), 400);
       return;
@@ -55,7 +55,7 @@ class PlanningHandler {
   }
 
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.lockPlanningModel(TenantId.init, id);
     if (result.planningModelId.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
@@ -65,7 +65,7 @@ class PlanningHandler {
   }
 
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.approvePlanningModel(TenantId.init, id);
     if (result.planningModelId.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
@@ -75,7 +75,7 @@ class PlanningHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deletePlanningModel(TenantId.init, id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

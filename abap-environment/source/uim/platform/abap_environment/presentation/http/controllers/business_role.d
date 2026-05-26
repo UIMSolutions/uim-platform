@@ -112,7 +112,7 @@ class BusinessRoleController : ManageController {
         .set("statusCode", 400);
     }
 
-    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    auto id = BusinessRoleId(precheck.id);
     if (id.isNull) {
       return Json.emptyObject
         .set("status", "error")
@@ -141,7 +141,7 @@ class BusinessRoleController : ManageController {
       return precheck;
     }
 
-    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    auto id = BusinessRoleId(precheck.id);
     if (id.isNull) {
       return Json.emptyObject
         .set("status", "error")
@@ -179,7 +179,7 @@ class BusinessRoleController : ManageController {
       return precheck;
     }
 
-    auto id = BusinessRoleId(extractIdFromPath(req.requestURI));
+    auto id = BusinessRoleId(precheck.id);
     if (id.isNull) {
       return Json.emptyObject
         .set("status", "error")

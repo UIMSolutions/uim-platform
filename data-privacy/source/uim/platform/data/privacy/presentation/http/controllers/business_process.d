@@ -76,7 +76,7 @@ class BusinessProcessController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
+      auto id = BusinessProcessId(precheck.id);
 
       auto entry = usecase.getProcess(tenantId, id);
       if (entry.isNull) {
@@ -94,7 +94,7 @@ class BusinessProcessController : ManageController {
       auto j = req.json;
       
       UpdateBusinessProcessRequest r;
-      r.processId = BusinessProcessId(extractIdFromPath(req.requestURI));
+      r.processId = BusinessProcessId(precheck.id);
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -118,7 +118,7 @@ class BusinessProcessController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BusinessProcessId(extractIdFromPath(req.requestURI));
+      auto id = BusinessProcessId(precheck.id);
 
       usecase.deleteProcess(tenantId, id);
 

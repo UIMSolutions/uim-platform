@@ -85,7 +85,7 @@ class ProvisioningJobController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto job = usecase.getJob(tenantId, id);
       if (job.isNull) {
@@ -102,7 +102,7 @@ class ProvisioningJobController : PlatformController {
   protected void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
 
       auto result = usecase.runJob(tenantId, id);
@@ -152,7 +152,7 @@ class ProvisioningJobController : PlatformController {
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.cancelJob(tenantId, id);
       if (result.isSuccess) {
@@ -173,7 +173,7 @@ class ProvisioningJobController : PlatformController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteJob(tenantId, id);
       if (result.isSuccess) {

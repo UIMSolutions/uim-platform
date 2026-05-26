@@ -93,7 +93,7 @@ class RouteController : ManageController {
   protected void handleRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = RouteId(extractIdFromPath(req.requestURI));
+      auto id = RouteId(precheck.id);
       auto tenantId = req.getTenantId;
       auto r = useCase.getRoute(tenantId, id);
       if (r.isNull) {
@@ -109,7 +109,7 @@ class RouteController : ManageController {
   override protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = RouteId(extractIdFromPath(req.requestURI));
+      auto id = RouteId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
@@ -129,7 +129,7 @@ class RouteController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = MapRouteRequest();
-      r.routeId = RouteId(extractIdFromPath(req.requestURI));
+      r.routeId = RouteId(precheck.id);
       r.tenantId = tenantId;
       r.appId = j.getString("appId");
 
@@ -148,7 +148,7 @@ class RouteController : ManageController {
 
   protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto routeId = RouteId(extractIdFromPath(req.requestURI));
+      auto routeId = RouteId(precheck.id);
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = routeId;
@@ -217,7 +217,7 @@ class RouteController : ManageController {
   override protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DomainId(extractIdFromPath(req.requestURI));
+      auto id = DomainId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {

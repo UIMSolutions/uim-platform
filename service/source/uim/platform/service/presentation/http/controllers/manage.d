@@ -105,7 +105,7 @@ class ManageController : PlatformController {
     if (precheck.hasError)
       return precheck; // Return error response from precheck 
 
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 
@@ -132,7 +132,7 @@ class ManageController : PlatformController {
     if (precheck.hasError)
       return precheck; // Return error response from precheck
 
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 

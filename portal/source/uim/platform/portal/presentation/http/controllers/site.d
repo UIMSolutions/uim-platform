@@ -73,7 +73,7 @@ class SiteController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto site = useCase.getSite(siteId);
       if (site == Site.init) {
         writeApiError(res, 404, "Site not found");
@@ -87,7 +87,7 @@ class SiteController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateSiteRequest(siteId, j.getString("name"), j.getString("description"),
         j.getString("alias"), j.getString("themeId"), parseSiteSettings(j),);
@@ -104,7 +104,7 @@ class SiteController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto error = useCase.deleteSite(siteId);
       if (error.length > 0)
         writeApiError(res, 404, error);
@@ -117,7 +117,7 @@ class SiteController : ManageController {
 
   protected void handlelish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto error = useCase.publishSite(siteId);
       if (error.length > 0)
         writeApiError(res, 400, error);
@@ -130,7 +130,7 @@ class SiteController : ManageController {
 
   protected void handleUnpublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto error = useCase.unpublishSite(siteId);
       if (error.length > 0)
         writeApiError(res, 400, error);
@@ -143,7 +143,7 @@ class SiteController : ManageController {
 
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = extractIdFromPath(req.requestURI);
+      auto siteId = precheck.id;
       auto error = useCase.archiveSite(siteId);
       if (error.length > 0)
         writeApiError(res, 400, error);

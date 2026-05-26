@@ -28,7 +28,7 @@ class DataSourceHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), 400);
       return;
@@ -62,7 +62,7 @@ class DataSourceHandler {
   }
 
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.testConnection(TenantId.init, DataSourceId(id));
     if (result.id.isNull) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
@@ -72,7 +72,7 @@ class DataSourceHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deleteSource(TenantId.init, DataSourceId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

@@ -86,7 +86,7 @@ class MetricDefinitionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
+      auto id = MetricDefinitionId(precheck.id);
 
       auto d = usecase.getDefinition(tenantId, id);
       if (d.isNull) {
@@ -102,7 +102,7 @@ class MetricDefinitionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
+      auto id = MetricDefinitionId(precheck.id);
 
       auto j = req.json;
       UpdateMetricDefinitionRequest request;
@@ -132,7 +132,7 @@ class MetricDefinitionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = MetricDefinitionId(extractIdFromPath(req.requestURI));
+      auto id = MetricDefinitionId(precheck.id);
 
       auto result = usecase.deleteMetricDefinition(tenantId, id);
       if (result.hasError)

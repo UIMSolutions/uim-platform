@@ -25,7 +25,7 @@ class MonthlyCostReportHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing report id"), 400);
       return;
@@ -56,7 +56,7 @@ class MonthlyCostReportHandler {
   }
 
   void markReady(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.markReady(TenantId.init, MonthlyCostReportId(id));
     if (result.isEmpty) {
       res.writeJsonBody(errorJson("Monthly cost report not found", 404), 404);
@@ -66,7 +66,7 @@ class MonthlyCostReportHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deleteReport(TenantId.init, MonthlyCostReportId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

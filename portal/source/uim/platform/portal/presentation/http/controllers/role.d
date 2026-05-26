@@ -69,7 +69,7 @@ class RoleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto roleId = extractIdFromPath(req.requestURI);
+      auto roleId = precheck.id;
       auto role = useCase.getRole(roleId);
       if (role == Role.init) {
         writeApiError(res, 404, "Role not found");
@@ -83,7 +83,7 @@ class RoleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto roleId = extractIdFromPath(req.requestURI);
+      auto roleId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateRoleRequest(roleId, j.getString("name"),
         j.getString("description"),);
@@ -117,7 +117,7 @@ class RoleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto roleId = extractIdFromPath(req.requestURI);
+      auto roleId = precheck.id;
       auto error = useCase.deleteRole(roleId);
       if (error.length > 0)
         writeApiError(res, 404, error);

@@ -117,7 +117,7 @@ class MasterDataController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto obj = usecase.getObject(id);
       if (obj.isNull) {
         writeError(res, 404, "Master data object not found");
@@ -132,7 +132,7 @@ class MasterDataController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateMasterDataObjectRequest r;
       r.displayName = j.getString("displayName");
@@ -154,7 +154,7 @@ class MasterDataController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteObject(id);
       if (result.success)
         res.writeBody("", 204);

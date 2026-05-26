@@ -83,7 +83,7 @@ class ProxySystemController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto sys = usecase.getProxySystem(tenantId, id);
       if (sys.isNull) {
@@ -99,7 +99,7 @@ class ProxySystemController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateProxySystemRequest();
       r.id = id;
@@ -126,7 +126,7 @@ class ProxySystemController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
@@ -147,7 +147,7 @@ class ProxySystemController : ManageController {
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
@@ -167,7 +167,7 @@ class ProxySystemController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteProxySystem(tenantId, id);
       if (result.isSuccess) {

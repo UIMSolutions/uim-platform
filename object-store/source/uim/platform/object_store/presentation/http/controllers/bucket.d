@@ -66,7 +66,7 @@ class BucketController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = BucketId(extractIdFromPath(req.requestURI));
+    auto id = BucketId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid bucket ID", 400);
 
@@ -111,7 +111,7 @@ class BucketController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = BucketId(extractIdFromPath(req.requestURI));
+    auto id = BucketId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid bucket ID", 400);
 

@@ -98,7 +98,7 @@ class ReplicationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ReplicationJobId(precheck.id);
 
       auto job = usecase.getReplicationJob(tenantId, id);
       if (job.isNull) {
@@ -114,7 +114,7 @@ class ReplicationController : ManageController {
   protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ReplicationJobId(precheck.id);
 
       auto result = usecase.startReplicationJob(tenantId, id);
       if (result.hasError)
@@ -134,7 +134,7 @@ class ReplicationController : ManageController {
   protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ReplicationJobId(precheck.id);
       auto result = usecase.pauseReplicationJob(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -153,7 +153,7 @@ class ReplicationController : ManageController {
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ReplicationJobId(precheck.id);
       auto result = usecase.cancelReplicationJob(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -172,7 +172,7 @@ class ReplicationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ReplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ReplicationJobId(precheck.id);
       auto result = usecase.deleteReplicationJob(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

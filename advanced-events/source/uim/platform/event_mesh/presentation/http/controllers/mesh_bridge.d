@@ -20,7 +20,7 @@ class MeshBridgeController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/event-mesh/bridges", &handleList);
         router.get("/api/v1/event-mesh/bridges/*", &handleGet);
         router.post("/api/v1/event-mesh/bridges", &handleCreate);
@@ -28,129 +28,117 @@ class MeshBridgeController : ManageController {
         router.delete_("/api/v1/event-mesh/bridges/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listBridges(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Mesh bridge list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto bridges = usecase.listBridges(tenantId);
+        auto jsBridges = bridges.map!(e => e.toJson()).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", bridges.length)
+            .set("resources", jsBridges);
+
+        return successResponse("Mesh bridge list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = MeshBridgeId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getBridge(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Mesh bridge not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = MeshBridgeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid mesh bridge ID", 400);
+
+        auto e = usecase.getBridge(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Mesh bridge not found", 404);
+
+        auto responseData = e.toJson();
+        return successResponse("Mesh bridge retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            MeshBridgeDTO dto;
-            dto.bridgeId = MeshBridgeId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.sourceServiceId = BrokerServiceId(j.getString("sourceServiceId"));
-            dto.targetServiceId = BrokerServiceId(j.getString("targetServiceId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.remoteAddress = j.getString("remoteAddress");
-            dto.remoteVpnName = j.getString("remoteVpnName");
-            dto.topicSubscriptions = j.getString("topicSubscriptions");
-            dto.queueBindings = j.getString("queueBindings");
-            dto.tlsEnabled = j.getString("tlsEnabled");
-            dto.compressedDataEnabled = j.getString("compressedDataEnabled");
-            dto.maxTtl = j.getString("maxTtl");
-            dto.retryCount = j.getString("retryCount");
-            dto.retryDelay = j.getString("retryDelay");
-            dto.createdBy = UserId(j.getString("createdBy"));
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            auto result = usecase.createBridge(dto);
-            if (result.hasError)
+        MeshBridgeDTO dto;
+        dto.bridgeId = MeshBridgeId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.sourceServiceId = BrokerServiceId(data.getString("sourceServiceId"));
+        dto.targetServiceId = BrokerServiceId(data.getString("targetServiceId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.remoteAddress = data.getString("remoteAddress");
+        dto.remoteVpnName = data.getString("remoteVpnName");
+        dto.topicSubscriptions = data.getString("topicSubscriptions");
+        dto.queueBindings = data.getString("queueBindings");
+        dto.tlsEnabled = data.getString("tlsEnabled");
+        dto.compressedDataEnabled = data.getString("compressedDataEnabled");
+        dto.maxTtl = data.getString("maxTtl");
+        dto.retryCount = data.getString("retryCount");
+        dto.retryDelay = data.getString("retryDelay");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createBridge(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Mesh bridge created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Mesh bridge created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            MeshBridgeDTO dto;
-            dto.bridgeId = MeshBridgeId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.remoteAddress = j.getString("remoteAddress");
-            dto.topicSubscriptions = j.getString("topicSubscriptions");
-            dto.queueBindings = j.getString("queueBindings");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
 
-            auto result = usecase.updateBridge(dto);
-            if (result.hasError)
+        auto data = precheck.data;
+        MeshBridgeDTO dto;
+        dto.bridgeId = MeshBridgeId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.remoteAddress = data.getString("remoteAddress");
+        dto.topicSubscriptions = data.getString("topicSubscriptions");
+        dto.queueBindings = data.getString("queueBindings");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateBridge(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Mesh bridge updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Mesh bridge updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto bridgeId = MeshBridgeId(precheck.id);
-            auto result = usecase.deleteBridge(tenantId, bridgeId);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Mesh bridge deleted");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+
+        auto id = MeshBridgeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid mesh bridge ID", 400);
+
+        auto result = usecase.deleteBridge(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Mesh bridge deleted successfully", "Deleted", 200, responseData);
     }
 }

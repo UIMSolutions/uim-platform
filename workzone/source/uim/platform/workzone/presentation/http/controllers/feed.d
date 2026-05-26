@@ -82,7 +82,7 @@ class FeedController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
-        auto id = extractIdFromPath(req.requestURI);
+        auto id = precheck.id;
         auto tenantId = req.getTenantId;
         auto entry = useCase.getEntry(tenantId, id);
         if (entry.isNull) {
@@ -97,7 +97,7 @@ class FeedController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
-        auto id = extractIdFromPath(req.requestURI);
+        auto id = precheck.id;
         auto tenantId = req.getTenantId;
         useCase.deleteEntry(tenantId, id);
         res.writeBody("", 204);

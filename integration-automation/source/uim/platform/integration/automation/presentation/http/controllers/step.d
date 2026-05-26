@@ -60,7 +60,7 @@ class StepController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto step = useCase.getStep(tenantId, id);
       if (step.isNull) {
@@ -95,7 +95,7 @@ class StepController : ManageController {
   protected void handlert(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
 
@@ -118,7 +118,7 @@ class StepController : ManageController {
   protected void handleplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = CompleteStepRequest();
       r.id = id;
@@ -145,7 +145,7 @@ class StepController : ManageController {
   protected void handlel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = FailStepRequest();
       r.id = id;
@@ -172,7 +172,7 @@ class StepController : ManageController {
   protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = SkipStepRequest();
       r.id = id;
@@ -199,7 +199,7 @@ class StepController : ManageController {
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = AssignStepRequest();
       r.id = id;

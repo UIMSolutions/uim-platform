@@ -82,7 +82,7 @@ class ShareController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ShareId(extractIdFromPath(req.requestURI));
+      auto id = ShareId(precheck.id);
       
       auto share = usecase.getShare(tenantId, id);
       if (share.isNull) {
@@ -98,7 +98,7 @@ class ShareController : ManageController {
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ShareId(extractIdFromPath(req.requestURI));
+      auto id = ShareId(precheck.id);
       
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
@@ -118,7 +118,7 @@ class ShareController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ShareId(extractIdFromPath(req.requestURI));
+      auto id = ShareId(precheck.id);
       
       auto result = usecase.deleteShare(tenantId, id);
       if (result.isSuccess) {

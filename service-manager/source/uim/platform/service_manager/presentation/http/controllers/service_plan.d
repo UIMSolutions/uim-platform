@@ -21,9 +21,13 @@ class ServicePlanController : ManageController {
         router.delete_("/api/v1/service-manager/service-plans/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             
             auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;

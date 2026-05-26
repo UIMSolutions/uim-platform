@@ -28,133 +28,123 @@ class EventApplicationController : ManageController {
         router.delete_("/api/v1/event-mesh/applications/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            
-            auto items = usecase.listApplications(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Event application list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listApplications(tenantId);
+        auto jarr = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Event application list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = EventApplicationId(precheck.id);
-            auto e = usecase.getApplication(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Event application not found");
-                return;
-            }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = e.toJson()
-                .set("message", "Event application retrieved successfully");
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+        EventApplicationDTO dto;
+        dto.applicationId = EventApplicationId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.serviceId = BrokerServiceId(data.getString("serviceId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.applicationDomainId = data.getString("applicationDomainId");
+        dto.clientUsername = data.getString("clientUsername");
+        dto.clientProfile = data.getString("clientProfile");
+        dto.aclProfile = data.getString("aclProfile");
+        dto.version_ = data.getString("version");
+        dto.publishTopics = data.getString("publishTopics");
+        dto.subscribeTopics = data.getString("subscribeTopics");
+        dto.webhookUrl = data.getString("webhookUrl");
+        dto.maxConnections = data.getString("maxConnections");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            EventApplicationDTO dto;
-            dto.applicationId = EventApplicationId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.serviceId = BrokerServiceId(j.getString("serviceId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.applicationDomainId = j.getString("applicationDomainId");
-            dto.clientUsername = j.getString("clientUsername");
-            dto.clientProfile = j.getString("clientProfile");
-            dto.aclProfile = j.getString("aclProfile");
-            dto.version_ = j.getString("version");
-            dto.publishTopics = j.getString("publishTopics");
-            dto.subscribeTopics = j.getString("subscribeTopics");
-            dto.webhookUrl = j.getString("webhookUrl");
-            dto.maxConnections = j.getString("maxConnections");
-            dto.createdBy = UserId(j.getString("createdBy"));
-
-            auto result = usecase.createApplication(dto);
-            if (result.hasError)
+        auto result = usecase.createApplication(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Event application created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Event application created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            EventApplicationDTO dto;
-            dto.applicationId = EventApplicationId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.clientUsername = j.getString("clientUsername");
-            dto.clientProfile = j.getString("clientProfile");
-            dto.aclProfile = j.getString("aclProfile");
-            dto.publishTopics = j.getString("publishTopics");
-            dto.subscribeTopics = j.getString("subscribeTopics");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto id = EventApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid event application ID", 400);
 
-            auto result = usecase.updateApplication(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Event application updated");
+        auto e = usecase.getApplication(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Event application not found", 404);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = e.toJson();
+        return successResponse("Event application retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = EventApplicationId(precheck.id);
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteApplication(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        auto id = EventApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid event application ID", 400);
+
+        EventApplicationDTO dto;
+        dto.tenantId = tenantId;
+        dto.applicationId = id;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.clientUsername = data.getString("clientUsername");
+        dto.clientProfile = data.getString("clientProfile");
+        dto.aclProfile = data.getString("aclProfile");
+        dto.publishTopics = data.getString("publishTopics");
+        dto.subscribeTopics = data.getString("subscribeTopics");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateApplication(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Event application deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Event application updated successfully", "Updated", 200, responseData);
+
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = EventApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid event application ID", 400);
+
+        auto result = usecase.deleteApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Event application deleted successfully", "Deleted", 200, responseData);
     }
 }

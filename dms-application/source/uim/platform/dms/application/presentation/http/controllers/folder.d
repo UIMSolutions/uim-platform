@@ -83,7 +83,7 @@ class FolderController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FolderId(extractIdFromPath(req.requestURI));
+      auto id = FolderId(precheck.id);
       
       auto folder = usecase.getFolder(tenantId, id);
       if (folder.isNull) {
@@ -103,7 +103,7 @@ class FolderController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FolderId(extractIdFromPath(req.requestURI));
+      auto id = FolderId(precheck.id);
       auto j = req.json;
       auto r = UpdateFolderRequest();
       r.folderId = id;
@@ -130,7 +130,7 @@ class FolderController : ManageController {
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FolderId(extractIdFromPath(req.requestURI));
+      auto id = FolderId(precheck.id);
       auto j = req.json;
       auto r = MoveFolderRequest();
       r.folderId = id;
@@ -155,7 +155,7 @@ class FolderController : ManageController {
 
   override protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto parentId = FolderId(extractIdFromPath(req.requestURI));
+      auto parentId = FolderId(precheck.id);
       auto tenantId = req.getTenantId;
 
       auto subfolders = usecase.listSubfolders(tenantId, parentId);
@@ -175,7 +175,7 @@ class FolderController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FolderId(extractIdFromPath(req.requestURI));
+      auto id = FolderId(precheck.id);
       auto result = usecase.deleteFolder(req.getTenantId, id);
 
       if (result.isSuccess) {

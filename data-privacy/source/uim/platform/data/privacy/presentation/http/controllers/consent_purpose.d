@@ -81,7 +81,7 @@ class ConsentPurposeController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
+      auto id = ConsentPurposeId(precheck.id);
 
       auto entry = usecase.getPurpose(tenantId, id);
       if (entry.isNull) {
@@ -99,7 +99,7 @@ class ConsentPurposeController : ManageController {
       auto j = req.json;
       UpdateConsentPurposeRequest r;
       r.tenantId = tenantId;
-      r.purposeId = ConsentPurposeId(extractIdFromPath(req.requestURI));
+      r.purposeId = ConsentPurposeId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.consentFormTemplate = j.getString("consentFormTemplate");
@@ -121,7 +121,7 @@ class ConsentPurposeController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ConsentPurposeId(extractIdFromPath(req.requestURI));
+      auto id = ConsentPurposeId(precheck.id);
 
       usecase.deletePurpose(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

@@ -96,7 +96,7 @@ class WidgetController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto w = useCase.getWidget(tenantId, id);
       if (w.isNull) {
@@ -114,7 +114,7 @@ class WidgetController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateWidgetRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = j.getString("title");
       r.row = j.getInteger("row");
@@ -151,7 +151,7 @@ class WidgetController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteWidget(tenantId, id);
       if (result.isSuccess()) {

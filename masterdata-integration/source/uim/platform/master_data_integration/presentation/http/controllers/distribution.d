@@ -93,7 +93,7 @@ class DistributionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto model = usecase.getModel(id);
       if (model.isNull) {
         writeError(res, 404, "Distribution model not found");
@@ -108,7 +108,7 @@ class DistributionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateDistributionModelRequest r;
       r.name = j.getString("name");
@@ -139,7 +139,7 @@ class DistributionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteModel(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -158,7 +158,7 @@ class DistributionController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.activate(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -177,7 +177,7 @@ class DistributionController : ManageController {
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deactivate(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);

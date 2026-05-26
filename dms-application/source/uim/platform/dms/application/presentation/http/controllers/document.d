@@ -117,7 +117,7 @@ class DocumentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DocumentId(extractIdFromPath(req.requestURI));
+      auto id = DocumentId(precheck.id);
       
       auto doc = usecase.getDocument(tenantId, id);
       if (doc.isNull) {
@@ -133,7 +133,7 @@ class DocumentController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DocumentId(extractIdFromPath(req.requestURI));
+      auto id = DocumentId(precheck.id);
       auto j = req.json;
       auto r = UpdateDocumentRequest();
       r.documentId = id;
@@ -161,7 +161,7 @@ class DocumentController : ManageController {
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DocumentId(extractIdFromPath(req.requestURI));
+      auto id = DocumentId(precheck.id);
       auto j = req.json;
       auto r = MoveDocumentRequest();
       r.documentId = id;
@@ -186,7 +186,7 @@ class DocumentController : ManageController {
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DocumentId(extractIdFromPath(req.requestURI));
+      auto id = DocumentId(precheck.id);
       
       auto result = usecase.archiveDocument(tenantId, id);
       if (result.isSuccess) {
@@ -205,7 +205,7 @@ class DocumentController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DocumentId(extractIdFromPath(req.requestURI));
+      auto id = DocumentId(precheck.id);
       
       auto result = usecase.deleteDocument(tenantId, id);
       if (result.isSuccess) {

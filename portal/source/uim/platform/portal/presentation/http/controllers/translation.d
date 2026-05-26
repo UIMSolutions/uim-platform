@@ -79,7 +79,7 @@ class TranslationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto translationId = extractIdFromPath(req.requestURI);
+      auto translationId = precheck.id;
       auto translation = useCase.getTranslation(tenantId, translationId);
       if (translation == Translation.init) {
         writeApiError(res, 404, "Translation not found");
@@ -94,7 +94,7 @@ class TranslationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto translationId = extractIdFromPath(req.requestURI);
+      auto translationId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateTranslationRequest(translationId, j.getString("value"),);
 
@@ -111,7 +111,7 @@ class TranslationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto translationId = extractIdFromPath(req.requestURI);
+      auto translationId = precheck.id;
       auto error = useCase.deleteTranslation(tenantId, translationId);
       if (error.length > 0)
         writeApiError(res, 404, error);

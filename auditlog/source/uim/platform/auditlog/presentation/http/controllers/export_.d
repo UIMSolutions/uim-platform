@@ -79,7 +79,7 @@ class ExportController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
+    ExportJobId jobId = ExportJobId(precheck.id);
     auto tenantId = req.getTenantId;
 
     auto job = useCase.getExport(tenantId, jobId);
@@ -94,7 +94,7 @@ class ExportController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
+    ExportJobId jobId = ExportJobId(precheck.id);
     auto tenantId = req.getTenantId;
 
     auto result = useCase.deleteExport(tenantId, jobId);

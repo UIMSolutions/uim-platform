@@ -74,7 +74,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto id = ServiceBindingId(precheck.id);
 
     auto binding = usecase.getServiceBinding(tenantId, id);
     if (binding.isNull) {
@@ -91,7 +91,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto id = ServiceBindingId(precheck.id);
     auto j = req.json;
 
     UpdateServiceBindingRequest r;
@@ -114,7 +114,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto id = ServiceBindingId(precheck.id);
 
     auto result = usecase.deleteServiceBinding(tenantId, id);
     if (result.hasError()) {

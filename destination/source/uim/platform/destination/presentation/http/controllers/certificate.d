@@ -135,7 +135,7 @@ class CertificateController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = CertificateId(extractIdFromPath(req.requestURI));
+    auto id = CertificateId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid certificate ID", 400);
 
@@ -184,7 +184,7 @@ class CertificateController : ManageController {
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = CertificateId(extractIdFromPath(req.requestURI));
+      auto id = CertificateId(precheck.id);
       auto result = usecase.validateCertificate(tenantId, id);
 
       auto resp = Json.emptyObject

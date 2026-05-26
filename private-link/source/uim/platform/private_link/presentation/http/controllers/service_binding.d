@@ -54,7 +54,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto id = ServiceBindingId(precheck.id);
     auto binding = usecase.getBinding(tenantId, id);
     if (binding.id.value.length == 0)
       return Json.emptyObject.set("message", "Service binding not found").set("statusCode", 404);
@@ -68,7 +68,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+    auto id = ServiceBindingId(precheck.id);
     auto result = usecase.deleteBinding(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Service binding not found" ? 404 : 400;

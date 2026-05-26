@@ -91,7 +91,7 @@ class FilterRuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto rule = usecase.getRule(id);
       if (rule.isNull) {
         writeError(res, 404, "Filter rule not found");
@@ -106,7 +106,7 @@ class FilterRuleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateFilterRuleRequest r;
       r.name = j.getString("name");
@@ -128,7 +128,7 @@ class FilterRuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteRule(id);
       if (result.success)
         res.writeBody("", 204);

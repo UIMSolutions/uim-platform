@@ -26,9 +26,13 @@ class PermissionController : ManageController {
         router.delete_("/api/v1/dms-integration/permissions/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             Permission[] items;
             auto documentId = req.query.get("documentId", "");
             auto folderId = req.query.get("folderId", "");

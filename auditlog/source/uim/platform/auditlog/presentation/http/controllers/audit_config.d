@@ -69,7 +69,8 @@ class AuditConfigController : ManageController {
     request.rateLimitPerSecond = req.json.getInteger("rateLimitPerSecond", 8);
 
     auto result = useCase.createAuditConfig(request);
-    if (result.isSuccess()) {
+    if (result.hasError)
+            return errorResponse(result.message, 400);
       auto response = Json.emptyObject
         .set("id", result.id)
         .set("message", "Audit config created successfully")
@@ -102,7 +103,7 @@ class AuditConfigController : ManageController {
 
     auto j = req.json;
     auto r = UpdateAuditConfigRequest();
-    r.id = AuditConfigId(extractIdFromPath(req.requestURI));
+    r.id = AuditConfigId(precheck.id);
     r.tenantId = tenantId;
     r.name = j.getString("name");
     r.logDataAccess = j.getBoolean("logDataAccess", true);
@@ -140,7 +141,7 @@ class AuditConfigController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
       auto tenantId = req.getTenantId;
-      auto id = AuditConfigId(extractIdFromPath(req.requestURI));
+      auto id = AuditConfigId(precheck.id);
 
       useCase.deleteAuditConfig(tenantId, id);
       return Json.emptyObject

@@ -134,7 +134,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = req.getTenantId;
-    auto id = TransportRequestId(extractIdFromPath(req.requestURI));
+    auto id = TransportRequestId(precheck.id);
     auto result = usecase.releaseTransportRequest(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message);
@@ -162,7 +162,7 @@ class TransportRequestController : ManageController {
     if (requestId.isNull)
       return errorResponse("Invalid transport request id", 400);
 
-    auto taskId = TransportTaskId(extractIdFromPath(req.requestURI));
+    auto taskId = TransportTaskId(precheck.id);
     if (taskId.isNull)
       return errorResponse("Invalid transport task id", 400);
 

@@ -31,9 +31,13 @@ class EnvironmentController : ManageController {
         * @param req The HTTP request object containing details of the incoming request.
         * @param res The HTTP response object used to send back the response to the client.
         */
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             
             auto items = usecase.listByTenant(tenantId);
             auto jarr = Json.emptyArray;

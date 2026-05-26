@@ -82,7 +82,7 @@ class CardController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       
       auto c = useCase.getCard(tenantId, id);
@@ -101,7 +101,7 @@ class CardController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateCardRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = j.getString("title");
       r.subtitle = j.getString("subtitle");
@@ -129,7 +129,7 @@ class CardController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       useCase.deleteCard(tenantId, id);
       res.writeBody("", 204);

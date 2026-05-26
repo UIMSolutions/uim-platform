@@ -83,7 +83,7 @@ class RepositoryController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RepositoryId(extractIdFromPath(req.requestURI));
+      auto id = RepositoryId(precheck.id);
 
       auto repository = usecase.getRepository(tenantId, id);
       if (repository.isNull) {
@@ -99,7 +99,7 @@ class RepositoryController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RepositoryId(extractIdFromPath(req.requestURI));
+      auto id = RepositoryId(precheck.id);
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
       r.repositoryId = id;
@@ -128,7 +128,7 @@ class RepositoryController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RepositoryId(extractIdFromPath(req.requestURI));
+      auto id = RepositoryId(precheck.id);
       
       auto result = usecase.activateRepository(tenantId, id);
       if (result.isSuccess) {
@@ -148,7 +148,7 @@ class RepositoryController : ManageController {
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RepositoryId(extractIdFromPath(req.requestURI));
+      auto id = RepositoryId(precheck.id);
       
       auto result = usecase.archiveRepository(tenantId, id);
       if (result.isSuccess) {
@@ -167,7 +167,7 @@ class RepositoryController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RepositoryId(extractIdFromPath(req.requestURI));
+      auto id = RepositoryId(precheck.id);
       
       auto result = usecase.deleteRepository(tenantId, id);
       if (result.isSuccess) {

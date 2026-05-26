@@ -79,7 +79,7 @@ class BusinessContextController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = BusinessContextId(extractIdFromPath(req.requestURI));
+      auto id = BusinessContextId(precheck.id);
 
       auto entry = usecase.getContext(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class BusinessContextController : ManageController {
 
       UpdateBusinessContextRequest r;
       r.tenantId = tenantId;
-      r.contextId = BusinessContextId(extractIdFromPath(req.requestURI));
+      r.contextId = BusinessContextId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataCategories = j.getStrings("dataCategories");
@@ -124,7 +124,7 @@ class BusinessContextController : ManageController {
       auto tenantId = req.getTenantId;
 
       ActivateBusinessContextRequest r;
-      r.contextId = BusinessContextId(extractIdFromPath(req.requestURI));
+      r.contextId = BusinessContextId(precheck.id);
       r.tenantId = tenantId;
 
       auto result = usecase.activateContext(r);
@@ -143,7 +143,7 @@ class BusinessContextController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto contextId = BusinessContextId(extractIdFromPath(req.requestURI));
+      auto contextId = BusinessContextId(precheck.id);
 
       usecase.deleteContext(tenantId, contextId);
       res.writeJsonBody(Json.emptyObject, 204);

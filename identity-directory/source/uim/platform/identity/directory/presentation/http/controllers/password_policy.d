@@ -101,7 +101,7 @@ class PasswordPolicyController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto policyId = extractIdFromPath(req.requestURI);
+      auto policyId = precheck.id;
       auto policy = useCase.getPolicy(policyId);
       if (policy == PasswordPolicy.init) {
         auto errRes = Json.emptyObject;

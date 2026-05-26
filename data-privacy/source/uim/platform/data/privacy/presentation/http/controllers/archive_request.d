@@ -79,7 +79,7 @@ class ArchiveRequestController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
+      auto id = ArchiveRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class ArchiveRequestController : ManageController {
 
       UpdateArchiveStatusRequest r;
       r.tenantId = tenantId;
-      r.requestId = ArchiveRequestId(extractIdFromPath(req.requestURI));
+      r.requestId = ArchiveRequestId(precheck.id);
       r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
@@ -117,7 +117,7 @@ class ArchiveRequestController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ArchiveRequestId(extractIdFromPath(req.requestURI));
+      auto id = ArchiveRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

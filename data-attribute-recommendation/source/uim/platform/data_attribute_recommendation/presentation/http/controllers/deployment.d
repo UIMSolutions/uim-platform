@@ -84,7 +84,7 @@ class DeploymentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto dep = usecase.getDeployment(tenantId, id);
       if (dep.isNull) {
@@ -101,7 +101,7 @@ class DeploymentController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.activateDeployment(tenantId, id);
       if (result.isSuccess) {
@@ -126,7 +126,7 @@ class DeploymentController : ManageController {
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateDeployment(tenantId, id);
       if (result.isSuccess) {
@@ -151,7 +151,7 @@ class DeploymentController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteDeployment(tenantId, id);
       if (result.isSuccess) {

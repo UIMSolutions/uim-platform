@@ -91,7 +91,7 @@ class TileController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tileId = extractIdFromPath(req.requestURI);
+      auto tileId = precheck.id;
       auto tile = useCase.getTile(tileId);
       if (tile == Tile.init) {
         writeApiError(res, 404, "Tile not found");
@@ -105,7 +105,7 @@ class TileController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tileId = extractIdFromPath(req.requestURI);
+      auto tileId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateTileRequest(tileId, j.getString("title"),
         j.getString("subtitle"), j.getString("description"),
@@ -127,7 +127,7 @@ class TileController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tileId = extractIdFromPath(req.requestURI);
+      auto tileId = precheck.id;
       auto error = useCase.deleteTile(tileId);
       if (error.length > 0)
         writeApiError(res, 404, error);

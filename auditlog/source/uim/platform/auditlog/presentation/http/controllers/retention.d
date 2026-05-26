@@ -74,7 +74,7 @@ class RetentionController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    RetentionPolicyId policyId = RetentionPolicyId(extractIdFromPath(req.requestURI));
+    RetentionPolicyId policyId = RetentionPolicyId(precheck.id);
     auto precheck = super.getHandler(req);
     if (precheck.hasError) 
       return precheck;

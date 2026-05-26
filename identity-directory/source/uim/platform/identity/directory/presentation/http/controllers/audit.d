@@ -47,7 +47,7 @@ class AuditController : PlatformController {
 
   protected void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto actorId = extractIdFromPath(req.requestURI);
+      auto actorId = precheck.id;
       auto events = useCase.findByActor(actorId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(events.length);
@@ -63,7 +63,7 @@ class AuditController : PlatformController {
 
   protected void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto targetId = extractIdFromPath(req.requestURI);
+      auto targetId = precheck.id;
       auto events = useCase.findByTarget(targetId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(events.length);

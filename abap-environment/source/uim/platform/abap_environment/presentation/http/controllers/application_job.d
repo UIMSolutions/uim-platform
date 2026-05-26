@@ -91,7 +91,7 @@ class ApplicationJobController : ManageController {
       return precheck;
     }
     auto tenantId = precheck.tenantId;
-    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+    auto id = ApplicationJobId(precheck.id);
 
     auto job = usecase.getApplicationJob(tenantId, id);
     if (job.isNull) {
@@ -114,7 +114,7 @@ class ApplicationJobController : ManageController {
     }
 
     auto tenantId = precheck.tenantId;
-    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+    auto id = ApplicationJobId(precheck.id);
     auto data = req.json;
 
     UpdateApplicationJobRequest r;
@@ -143,7 +143,7 @@ class ApplicationJobController : ManageController {
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationJobId(precheck.id);
 
       auto result = usecase.cancelApplicationJob(tenantId, id);
       if (result.isSuccess()) {
@@ -167,7 +167,7 @@ class ApplicationJobController : ManageController {
     }
 
     auto tenantId = precheck.tenantId;
-    auto id = ApplicationJobId(extractIdFromPath(req.requestURI));
+    auto id = ApplicationJobId(precheck.id);
 
     auto result = usecase.deleteApplicationJob(tenantId, id);
     if (result.hasError()) {

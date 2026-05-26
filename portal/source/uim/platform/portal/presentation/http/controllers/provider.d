@@ -71,7 +71,7 @@ class ProviderController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto providerId = extractIdFromPath(req.requestURI);
+      auto providerId = precheck.id;
       auto provider = useCase.getProvider(providerId);
       if (provider == ContentProvider.init) {
         writeApiError(res, 404, "Content provider not found");
@@ -85,7 +85,7 @@ class ProviderController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto providerId = extractIdFromPath(req.requestURI);
+      auto providerId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateProviderRequest(providerId, j.getString("name"),
         j.getString("description"), j.getString("contentEndpointUrl"),
@@ -103,7 +103,7 @@ class ProviderController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto providerId = extractIdFromPath(req.requestURI);
+      auto providerId = precheck.id;
       auto error = useCase.deleteProvider(providerId);
       if (error.length > 0)
         writeApiError(res, 404, error);

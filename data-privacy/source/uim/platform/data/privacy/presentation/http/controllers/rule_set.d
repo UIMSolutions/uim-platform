@@ -75,7 +75,7 @@ class RuleSetController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RuleSetId(extractIdFromPath(req.requestURI));
+      auto id = RuleSetId(precheck.id);
 
       auto entry = usecase.getRuleSet(tenantId, id);
       if (entry.isNull) {
@@ -94,7 +94,7 @@ class RuleSetController : ManageController {
 
       UpdateRuleSetRequest r;
       r.tenantId = tenantId;
-      r.setId = RuleSetId(extractIdFromPath(req.requestURI));
+      r.setId = RuleSetId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getInteger("priority");
@@ -115,7 +115,7 @@ class RuleSetController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RuleSetId(extractIdFromPath(req.requestURI));
+      auto id = RuleSetId(precheck.id);
 
       auto result = usecase.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
@@ -133,7 +133,7 @@ class RuleSetController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = RuleSetId(extractIdFromPath(req.requestURI));
+      auto id = RuleSetId(precheck.id);
 
       usecase.deleteRuleSet(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

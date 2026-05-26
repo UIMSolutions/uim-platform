@@ -85,7 +85,7 @@ class UserController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = extractIdFromPath(req.requestURI);
+      auto userId = precheck.id;
       auto user = useCase.getUser(userId);
       if (user == User.init) {
         writeScimError(res, 404, "User not found");
@@ -101,7 +101,7 @@ class UserController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = extractIdFromPath(req.requestURI);
+      auto userId = precheck.id;
       auto j = req.json;
 
       auto updateReq = UpdateUserRequest(userId, j.parseUserName, j.getString("displayName"),
@@ -130,7 +130,7 @@ class UserController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = extractIdFromPath(req.requestURI);
+      auto userId = precheck.id;
       auto error = useCase.deleteUser(userId);
       if (error.length > 0) {
         writeScimError(res, 404, error);

@@ -28,9 +28,13 @@ class MtaOperationController : ManageController {
         router.get("/api/v1/slm/operations/*/logs",   &handleLogs);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             auto ops = usecase.listOperations(tenantId);
             auto arr = Json.emptyArray;
             foreach (op; ops) arr ~= op.toJson;

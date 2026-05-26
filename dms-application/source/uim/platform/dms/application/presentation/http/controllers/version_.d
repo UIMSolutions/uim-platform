@@ -37,7 +37,7 @@ class VersionController : ManageController {
 
   protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(extractIdFromPath(req.requestURI));
+      auto docId = DocumentId(precheck.id);
       auto tenantId = req.getTenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
@@ -93,7 +93,7 @@ class VersionController : ManageController {
 
   protected void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(extractIdFromPath(req.requestURI));
+      auto docId = DocumentId(precheck.id);
       auto tenantId = req.getTenantId;
 
       auto result = usecase.cancelCheckOut(tenantId, docId);
@@ -115,7 +115,7 @@ class VersionController : ManageController {
 
   protected void handleAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(extractIdFromPath(req.requestURI));
+      auto docId = DocumentId(precheck.id);
       auto tenantId = req.getTenantId;
       auto versions = usecase.getAllVersions(tenantId, docId);
       auto arr = versions.map!(v => v.toJson).array.toJson;
@@ -134,7 +134,7 @@ class VersionController : ManageController {
 
   override protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(extractIdFromPath(req.requestURI));
+      auto docId = DocumentId(precheck.id);
       auto tenantId = req.getTenantId;
       auto ver = usecase.getCurrentVersion(tenantId, docId);
       if (ver.isNull) {

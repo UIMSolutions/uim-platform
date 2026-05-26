@@ -26,9 +26,13 @@ class DocumentVersionController : ManageController {
         router.delete_("/api/v1/dms-integration/document-versions/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             DocumentVersion[] items;
             auto documentId = req.query.get("documentId", "");
             auto filter = req.query.get("filter", "");

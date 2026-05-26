@@ -78,7 +78,7 @@ class ImportController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ImportJobId(extractIdFromPath(req.requestURI));
+      auto id = ImportJobId(precheck.id);
       auto job = usecase.getImportJob(tenantId, id);
       if (job.isNull) {
         writeError(res, 404, "Import job not found");

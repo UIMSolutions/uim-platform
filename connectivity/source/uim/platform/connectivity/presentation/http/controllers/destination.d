@@ -90,7 +90,7 @@ class DestinationController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = DestinationId(extractIdFromPath(req.requestURI));
+    auto id = DestinationId(precheck.id);
 
     auto dest = usecase.getDestination(tenantId, id);
     if (dest.isNull) {
@@ -105,7 +105,7 @@ class DestinationController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = DestinationId(extractIdFromPath(req.requestURI));
+    auto id = DestinationId(precheck.id);
     auto j = req.json;
 
     auto r = UpdateDestinationRequest();
@@ -151,7 +151,7 @@ class DestinationController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = DestinationId(extractIdFromPath(req.requestURI));
+    auto id = DestinationId(precheck.id);
 
     auto result = usecase.deleteDestination(tenantId, id);
     if (result.hasError()) {

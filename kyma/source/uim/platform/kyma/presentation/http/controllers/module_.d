@@ -89,7 +89,7 @@ class ModuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto m = usecase.getModule(id);
       if (m.isNull) {
         writeError(res, 404, "Module not found");
@@ -105,7 +105,7 @@ class ModuleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateModuleRequest r;
       r.version_ = j.getString("version");
@@ -127,7 +127,7 @@ class ModuleController : ManageController {
   protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.disableModule(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -142,7 +142,7 @@ class ModuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteModule(id);
       if (result.success)
         res.writeBody("", 204);

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.http.controllers.business_user;
 
-
 // 
 // 
 // import uim.platform.abap_environment.application.usecases.manage.business_users;
@@ -35,123 +34,113 @@ class BusinessUserController : ManageController {
     router.delete_("/api/v1/business-users/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto j = req.json;
-      CreateBusinessUserRequest r;
-      r.tenantId = tenantId;
-      r.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
-      r.username = j.getString("username");
-      r.firstName = j.getString("firstName");
-      r.lastName = j.getString("lastName");
-      r.email = j.getString("email");
-      r.roleIds = getStrings(j, "roleIds");
+    auto tenantId = precheck.tenantId;
+    auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
-      auto result = usecase.createBusinessUser(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Business user created successfully");
+    auto users = usecase.listBusinessUsers(tenantId, systemId);
+    auto arr = users.map!(user => user.toJson).array.toJson;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", users.length);
+
+    return successResponse("Business user list retrieved successfully", "Retrieved", 200, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-      
-      auto users = usecase.listBusinessUsers(tenantId, systemId);
-      auto arr = users.map!(user => user.toJson).array.toJson;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", users.length)
-        .set("message", "Business users fetched");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    CreateBusinessUserRequest r;
+    r.tenantId = tenantId;
+    r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    r.username = data.getString("username");
+    r.firstName = data.getString("firstName");
+    r.lastName = data.getString("lastName");
+    r.email = data.getString("email");
+    r.roleIds = data.getStrings("roleIds");
+
+    auto result = usecase.createBusinessUser(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business user created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto user = usecase.getBusinessUser(tenantId, id);
-      if (user.isNull) {
-        writeError(res, 404, "Business user not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      auto resp = Json.emptyObject
-        .set("item", user.toJson)
-        .set("message", "Business user retrieved successfully");
+    auto id = BusinessUserId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid business user ID", 400);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto user = usecase.getBusinessUser(tenantId, id);
+    if (user.isNull)
+      return errorResponse("Business user not found", 404);
+
+    auto responseData = user.toJson();
+    return successResponse("Business user retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto j = req.json;
-      UpdateBusinessUserRequest r;
-      r.tenantId = tenantId;
-      r.businessUserId = id;
-      r.firstName = j.getString("firstName");
-      r.lastName = j.getString("lastName");
-      r.email = j.getString("email");
-      r.status = j.getString("status");
-      r.roleIds = getStrings(j, "roleIds");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      auto result = usecase.updateBusinessUser(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Business user updated");
+    auto id = BusinessUserId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid business user ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    UpdateBusinessUserRequest r;
+    r.tenantId = tenantId;
+    r.businessUserId = id;
+    r.firstName = data.getString("firstName");
+    r.lastName = data.getString("lastName");
+    r.email = data.getString("email");
+    r.status = data.getString("status");
+    r.roleIds = getStrings(data, "roleIds");
+
+    auto result = usecase.updateBusinessUser(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", id);
+    return successResponse("Business user updated successfully", "Updated", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId;
-      auto id = BusinessUserId(extractIdFromPath(req.requestURI));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteBusinessUser(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "deleted")
-          .set("message", "Business user deleted");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = BusinessUserId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid business user ID", 400);
+
+    auto result = usecase.deleteBusinessUser(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business user deleted successfully", "Deleted", 200, responseData);
   }
-
 }

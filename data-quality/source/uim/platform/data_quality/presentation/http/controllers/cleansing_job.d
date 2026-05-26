@@ -76,7 +76,7 @@ class CleansingJobController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = CleansingJobId(extractIdFromPath(req.requestURI));
+      auto id = CleansingJobId(precheck.id);
 
       auto job = usecase.getCleansingJob(tenantId, id);
       if (job.isNull) {

@@ -27,33 +27,39 @@ class BackendConnectionController : ManageController {
         router.delete_("/api/v1/agentry/backend-connections/*", &handleDelete);
     }
 
-   override protected Json listHandler(HTTPServerRequest req) {
+    override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listBackendConnections(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
+        auto connections = usecase.listBackendConnections(tenantId);
+        auto jsConnections = connections.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", connections.length)
+            .set("resources", jsConnections);
 
         return successResponse("Backend connection list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = BackendConnectionId(precheck.id);
-            auto e = usecase.getBackendConnection(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Backend connection not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = BackendConnectionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid backend connection ID", 400);
+        
+        auto e = usecase.getBackendConnection(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Backend connection not found", 404);
+
+        auto responseData = e.toJson();
+        return successResponse("Backend connection retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -77,7 +83,10 @@ class BackendConnectionController : ManageController {
             dto.certificateFingerprint = j.getString("certificateFingerprint");
 
             auto result = usecase.createBackendConnection(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
+            if (!result.success) {
+                writeError(res, 400, result.message);
+                return;
+            }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -102,7 +111,10 @@ class BackendConnectionController : ManageController {
             dto.destinationName = j.getString("destinationName");
 
             auto result = usecase.updateBackendConnection(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+            if (!result.success) {
+                writeError(res, 404, result.message);
+                return;
+            }
 
             auto resp = Json.emptyObject
                 .set("id", result.id)
@@ -119,7 +131,10 @@ class BackendConnectionController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = BackendConnectionId(precheck.id);
             auto result = usecase.deleteBackendConnection(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+            if (!result.success) {
+                writeError(res, 404, result.message);
+                return;
+            }
             res.writeJsonBody(Json.emptyObject.set("message", "Backend connection deleted successfully"), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

@@ -60,7 +60,7 @@ class ServiceInstanceController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+    auto id = ServiceInstanceId(precheck.id);
     auto inst = usecase.getInstance(tenantId, id);
     if (inst.id.value.length == 0)
       return Json.emptyObject.set("message", "Service instance not found").set("statusCode", 404);
@@ -69,7 +69,7 @@ class ServiceInstanceController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+    auto id = ServiceInstanceId(precheck.id);
     auto j = req.json;
     auto r = UpdateServiceInstanceRequest();
     r.tenantId = tenantId;
@@ -87,7 +87,7 @@ class ServiceInstanceController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+    auto id = ServiceInstanceId(precheck.id);
     auto result = usecase.deleteInstance(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Service instance not found" ? 404 : 400;

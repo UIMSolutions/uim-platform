@@ -94,7 +94,7 @@ class ApplicationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationId(precheck.id);
 
       if (!usecase.hasApplication(tenantId, id)) {
         writeError(res, 404, "Application not found");
@@ -110,7 +110,7 @@ class ApplicationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationId(precheck.id);
       auto j = req.json;
       UpdateApplicationRequest r;
       r.description = j.getString("description");
@@ -134,7 +134,7 @@ class ApplicationController : ManageController {
   protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationId(precheck.id);
       auto result = usecase.connectApplication(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -148,7 +148,7 @@ class ApplicationController : ManageController {
   protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationId(precheck.id);
       auto result = usecase.disconnectApplication(tenantId, id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -162,7 +162,7 @@ class ApplicationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ApplicationId(extractIdFromPath(req.requestURI));
+      auto id = ApplicationId(precheck.id);
       auto result = usecase.deleteApplication(tenantId, id);
       if (result.success)
         res.writeBody("", 204);

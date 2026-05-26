@@ -68,7 +68,7 @@ class SectionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto sectionId = extractIdFromPath(req.requestURI);
+      auto sectionId = precheck.id;
       auto section = useCase.getSection(sectionId);
       if (section == PortalSection.init) {
         writeApiError(res, 404, "PortalSection not found");
@@ -82,7 +82,7 @@ class SectionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto sectionId = extractIdFromPath(req.requestURI);
+      auto sectionId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateSectionRequest(sectionId, j.getString("title"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
@@ -99,7 +99,7 @@ class SectionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto sectionId = extractIdFromPath(req.requestURI);
+      auto sectionId = precheck.id;
       auto j = req.json;
       auto pageId = j.getString("pageId");
       auto error = useCase.deleteSection(sectionId, pageId);

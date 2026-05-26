@@ -79,7 +79,7 @@ class BlockingController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
+      auto id = BlockingRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -97,7 +97,7 @@ class BlockingController : ManageController {
       auto j = req.json;
 
       UpdateBlockingStatusRequest r;
-      r.id = BlockingRequestId(extractIdFromPath(req.requestURI));
+      r.id = BlockingRequestId(precheck.id);
       r.tenantId = tenantId;
       r.status = j.getString("status");
 
@@ -117,7 +117,7 @@ class BlockingController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = BlockingRequestId(extractIdFromPath(req.requestURI));
+      auto id = BlockingRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

@@ -91,7 +91,7 @@ class AlertRuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
+      auto id = AlertRuleId(precheck.id);
       auto r = usecase.getRule(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Alert rule not found");
@@ -106,7 +106,7 @@ class AlertRuleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
+      auto id = AlertRuleId(precheck.id);
       auto j = req.json;
 
       UpdateAlertRuleRequest r;
@@ -141,7 +141,7 @@ class AlertRuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AlertRuleId(extractIdFromPath(req.requestURI));
+      auto id = AlertRuleId(precheck.id);
       auto result = usecase.deleteRule(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -102,7 +102,7 @@ class NotificationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto n = useCase.getNotification(tenantId, id);
       if (n.isNull) {
@@ -118,7 +118,7 @@ class NotificationController : ManageController {
   protected void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.markAsRead(tenantId, id);
       if (result.isSuccess()) {
@@ -138,7 +138,7 @@ class NotificationController : ManageController {
   protected void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
@@ -158,7 +158,7 @@ class NotificationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       useCase.deleteNotification(tenantId, id);
       res.writeBody("", 204);

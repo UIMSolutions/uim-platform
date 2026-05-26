@@ -85,7 +85,7 @@ class AppController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AppId(extractIdFromPath(req.requestURI));
+      auto id = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, id);
       if (app.isNull) {
@@ -103,7 +103,7 @@ class AppController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateAppRequest();
-      r.id = AppId(extractIdFromPath(req.requestURI));
+      r.id = AppId(precheck.id);
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -137,7 +137,7 @@ class AppController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {

@@ -51,7 +51,7 @@ class MonitoringController : PlatformController {
   protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = MonitoringId(extractIdFromPath(req.requestURI));
+      auto id = MonitoringId(precheck.id);
 
       auto tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(tenantId, id);
@@ -68,7 +68,7 @@ class MonitoringController : PlatformController {
 
   protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = SpaceId(extractIdFromPath(req.requestURI));
+      auto spaceId = SpaceId(precheck.id);
       auto tenantId = req.getTenantId;
       auto u = useCase.getSpaceUsage(tenantId, spaceId);
 

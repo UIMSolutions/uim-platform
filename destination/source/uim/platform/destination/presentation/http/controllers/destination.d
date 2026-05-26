@@ -116,7 +116,7 @@ class DestinationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
+      auto id = DestinationId(precheck.id);
 
       auto d = usecase.getDestination(tenantId, id);
       if (d.isNull) {
@@ -132,7 +132,7 @@ class DestinationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
+      auto id = DestinationId(precheck.id);
       auto j = req.json;
 
       UpdateDestinationRequest r;
@@ -179,7 +179,7 @@ class DestinationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DestinationId(extractIdFromPath(req.requestURI));
+      auto id = DestinationId(precheck.id);
       
       auto result = usecase.deleteDestination(tenantId, id);
       if (result.hasError)

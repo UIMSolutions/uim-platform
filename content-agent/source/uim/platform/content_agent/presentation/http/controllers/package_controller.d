@@ -87,7 +87,7 @@ class PackageController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PackageId(extractIdFromPath(req.requestURI));
+      auto id = PackageId(precheck.id);
       auto pkg = usecase.getPackage(id);
       if (pkg.isNull) {
         writeError(res, 404, "Package not found");
@@ -105,7 +105,7 @@ class PackageController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PackageId(extractIdFromPath(req.requestURI));
+      auto id = PackageId(precheck.id);
       auto j = req.json;
       auto r = UpdatePackageRequest();
       r.description = j.getString("description");
@@ -132,7 +132,7 @@ class PackageController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PackageId(extractIdFromPath(req.requestURI));
+      auto id = PackageId(precheck.id);
       auto result = usecase.deletePackage(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

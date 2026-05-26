@@ -78,7 +78,7 @@ class DataControllerController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataControllerId(extractIdFromPath(req.requestURI));
+      auto id = DataControllerId(precheck.id);
 
       auto entry = usecase.getController(tenantId, id);
       if (entry.isNull) {
@@ -97,7 +97,7 @@ class DataControllerController : ManageController {
       
       UpdateDataControllerRequest r;
       r.tenantId = tenantId;
-      r.controllerId = DataControllerId(extractIdFromPath(req.requestURI));
+      r.controllerId = DataControllerId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -124,7 +124,7 @@ class DataControllerController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto controllerId = DataControllerId(extractIdFromPath(req.requestURI));
+      auto controllerId = DataControllerId(precheck.id);
 
       usecase.deleteController(tenantId, controllerId);
       res.writeJsonBody(Json.emptyObject, 204);

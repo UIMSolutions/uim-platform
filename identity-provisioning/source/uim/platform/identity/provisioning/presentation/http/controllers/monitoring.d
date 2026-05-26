@@ -55,7 +55,7 @@ class MonitoringController : PlatformController {
   override protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto summary = usecase.getJobSummary(tenantId, id);
       if (summary.jobId.isEmpty) {
@@ -70,7 +70,7 @@ class MonitoringController : PlatformController {
 
   protected void handleJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto jobId = extractIdFromPath(req.requestURI);
+      auto jobId = precheck.id;
       auto tenantId = req.getTenantId;
 
       auto logs = usecase.getJobLogs(tenantId, jobId);

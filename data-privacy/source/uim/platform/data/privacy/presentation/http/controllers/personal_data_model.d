@@ -107,7 +107,7 @@ class PersonalDataModelController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+      auto id = PersonalDataModelId(precheck.id);
 
       auto entry = usecase.getModel(tenantId, id);
       if (entry.isNull) {
@@ -126,7 +126,7 @@ class PersonalDataModelController : ManageController {
       auto j = req.json;
 
       UpdatePersonalDataModelRequest r;
-      r.id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+      r.id = PersonalDataModelId(precheck.id);
       r.tenantId = tenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
@@ -155,7 +155,7 @@ class PersonalDataModelController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = PersonalDataModelId(extractIdFromPath(req.requestURI));
+      auto id = PersonalDataModelId(precheck.id);
  
       usecase.deleteModel(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

@@ -115,9 +115,7 @@ class DeploymentController : ManageController {
                 .set("id", result.id)
                 .set("message", "Deployment updated successfully");
             res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -131,8 +129,6 @@ class DeploymentController : ManageController {
                 return;
             }
             res.writeJsonBody(Json.emptyObject.set("message", "Deployment deleted successfully"), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 }

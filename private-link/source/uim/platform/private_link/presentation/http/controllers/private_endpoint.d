@@ -62,7 +62,7 @@ class PrivateEndpointController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = PrivateEndpointId(extractIdFromPath(req.requestURI));
+    auto id = PrivateEndpointId(precheck.id);
     auto ep = usecase.getEndpoint(tenantId, id);
     if (ep.id.value.length == 0)
       return Json.emptyObject.set("message", "Private endpoint not found").set("statusCode", 404);
@@ -71,7 +71,7 @@ class PrivateEndpointController : ManageController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = PrivateEndpointId(extractIdFromPath(req.requestURI));
+    auto id = PrivateEndpointId(precheck.id);
     auto j = req.json;
     auto r = UpdatePrivateEndpointStatusRequest();
     r.tenantId = tenantId;
@@ -89,7 +89,7 @@ class PrivateEndpointController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = PrivateEndpointId(extractIdFromPath(req.requestURI));
+    auto id = PrivateEndpointId(precheck.id);
     auto result = usecase.deleteEndpoint(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Private endpoint not found" ? 404 : 400;

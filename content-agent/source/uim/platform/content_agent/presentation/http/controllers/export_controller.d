@@ -81,7 +81,7 @@ class ExportController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto job = usecase.getExportJob(id);
       if (job.isNull) {
         writeError(res, 404, "Export job not found");

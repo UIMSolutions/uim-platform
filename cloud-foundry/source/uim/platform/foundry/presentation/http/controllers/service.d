@@ -94,7 +94,7 @@ class ServiceController : ManageController {
   override protected void handleGetGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+      auto id = ServiceInstanceId(precheck.id);
       auto tenantId = req.getTenantId;
       auto si = useCase.getInstance(tenantId, id);
       if (si.isNull) {
@@ -113,7 +113,7 @@ class ServiceController : ManageController {
   override protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+      auto id = ServiceInstanceId(precheck.id);
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
@@ -139,7 +139,7 @@ class ServiceController : ManageController {
   override protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceInstanceId(extractIdFromPath(req.requestURI));
+      auto id = ServiceInstanceId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
@@ -204,7 +204,7 @@ class ServiceController : ManageController {
   override protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = ServiceBindingId(extractIdFromPath(req.requestURI));
+      auto id = ServiceBindingId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {

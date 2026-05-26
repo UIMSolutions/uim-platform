@@ -25,7 +25,7 @@ class MonthlyUsageReportHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing report id"), 400);
       return;
@@ -53,7 +53,7 @@ class MonthlyUsageReportHandler {
   }
 
   void markReady(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.markReady(TenantId.init, MonthlyUsageReportId(id));
     if (result.isEmpty) {
       res.writeJsonBody(errorJson("Monthly usage report not found", 404), 404);
@@ -63,7 +63,7 @@ class MonthlyUsageReportHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deleteReport(TenantId.init, MonthlyUsageReportId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

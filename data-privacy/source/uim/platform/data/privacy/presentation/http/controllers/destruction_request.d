@@ -77,7 +77,7 @@ class DestructionRequestController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
+      auto id = DestructionRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -95,7 +95,7 @@ class DestructionRequestController : ManageController {
       auto j = req.json;
 
       UpdateDestructionStatusRequest r;
-      r.requestId = DestructionRequestId(extractIdFromPath(req.requestURI));
+      r.requestId = DestructionRequestId(precheck.id);
       r.tenantId = tenantId;
       r.status = j.getString("status");
 
@@ -115,7 +115,7 @@ class DestructionRequestController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = DestructionRequestId(extractIdFromPath(req.requestURI));
+      auto id = DestructionRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

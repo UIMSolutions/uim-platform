@@ -75,7 +75,7 @@ class MenuItemController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto menuItemId = extractIdFromPath(req.requestURI);
+      auto menuItemId = precheck.id;
       if (!useCase.existsMenuItem(menuItemId)) {
         writeApiError(res, 404, "Menu item not found");
         return;
@@ -90,7 +90,7 @@ class MenuItemController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto menuItemId = extractIdFromPath(req.requestURI);
+      auto menuItemId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateMenuItemRequest(menuItemId, j.getString("title"),
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
@@ -110,7 +110,7 @@ class MenuItemController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto menuItemId = extractIdFromPath(req.requestURI);
+      auto menuItemId = precheck.id;
       auto j = req.json;
       auto siteId = j.getString("siteId");
       auto error = useCase.deleteMenuItem(menuItemId, siteId);

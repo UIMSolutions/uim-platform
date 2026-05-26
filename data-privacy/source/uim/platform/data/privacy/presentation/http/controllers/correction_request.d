@@ -77,7 +77,7 @@ class CorrectionRequestController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
+      auto id = CorrectionRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
       if (entry.isNull) {
@@ -96,7 +96,7 @@ class CorrectionRequestController : ManageController {
 
       UpdateCorrectionStatusRequest r;
       r.tenantId = tenantId;
-      r.requestId = CorrectionRequestId(extractIdFromPath(req.requestURI));
+      r.requestId = CorrectionRequestId(precheck.id);
       r.status = j.getString("status");
 
       auto result = usecase.updateStatus(r);
@@ -115,7 +115,7 @@ class CorrectionRequestController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = CorrectionRequestId(extractIdFromPath(req.requestURI));
+      auto id = CorrectionRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

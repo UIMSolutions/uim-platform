@@ -28,7 +28,7 @@ class StoryHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), 400);
       return;
@@ -54,7 +54,7 @@ class StoryHandler {
   }
 
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.publishStory(id);
     if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
@@ -64,7 +64,7 @@ class StoryHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deleteStory(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

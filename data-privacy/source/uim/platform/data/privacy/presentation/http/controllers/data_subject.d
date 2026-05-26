@@ -81,7 +81,7 @@ class DataSubjectController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataSubjectId(extractIdFromPath(req.requestURI));
+      auto id = DataSubjectId(precheck.id);
 
       auto entry = usecase.getSubject(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class DataSubjectController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateDataSubjectRequest r;
-      r.id = DataSubjectId(extractIdFromPath(req.requestURI));
+      r.id = DataSubjectId(precheck.id);
       r.tenantId = tenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
@@ -123,7 +123,7 @@ class DataSubjectController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataSubjectId(extractIdFromPath(req.requestURI));
+      auto id = DataSubjectId(precheck.id);
 
       usecase.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

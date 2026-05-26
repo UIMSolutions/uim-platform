@@ -105,7 +105,7 @@ class ApiRuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto rule = usecase.getApiRule(tenantId, id);
       if (rule.isNull) {
         writeError(res, 404, "API rule not found");
@@ -121,7 +121,7 @@ class ApiRuleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateApiRuleRequest r;
       r.description = j.getString("description");
@@ -151,7 +151,7 @@ class ApiRuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteApiRule(tenantId, id);
       if (result.success)
         res.writeBody("", 204);

@@ -63,7 +63,7 @@ class InferenceController : PlatformController {
   protected void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
 
       // Try as inference request
@@ -90,7 +90,7 @@ class InferenceController : PlatformController {
   protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.getResult(tenantId, id);
       if (result.isNull) {

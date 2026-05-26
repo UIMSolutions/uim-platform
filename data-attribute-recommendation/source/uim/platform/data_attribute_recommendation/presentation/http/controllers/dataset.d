@@ -81,7 +81,7 @@ class DatasetController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
 
       auto ds = usecase.getDataset(tenantId, id);
       if (ds.isNull) {
@@ -97,7 +97,7 @@ class DatasetController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
 
       auto r = UpdateDatasetRequest();
@@ -126,7 +126,7 @@ class DatasetController : ManageController {
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
 
       auto result = usecase.validateDataset(tenantId, id);
       if (result.isSuccess) {
@@ -148,7 +148,7 @@ class DatasetController : ManageController {
   protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
 
       auto result = usecase.processDataset(tenantId, id);
       if (result.isSuccess) {
@@ -170,7 +170,7 @@ class DatasetController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
 
       auto result = usecase.deleteDataset(tenantId, id);
       if (result.isSuccess) {

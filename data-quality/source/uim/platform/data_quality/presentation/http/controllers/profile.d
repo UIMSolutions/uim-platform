@@ -82,7 +82,7 @@ class ProfileController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto profile = usecase.getById(tenantId, id);
       if (profile.isNull) {

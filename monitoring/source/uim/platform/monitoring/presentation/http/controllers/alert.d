@@ -64,7 +64,7 @@ class AlertController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AlertId(extractIdFromPath(req.requestURI));
+      auto id = AlertId(precheck.id);
       auto a = usecase.getAlert(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
@@ -131,7 +131,7 @@ class AlertController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AlertId(extractIdFromPath(req.requestURI));
+      auto id = AlertId(precheck.id);
       auto result = usecase.deleteAlert(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

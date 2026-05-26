@@ -26,7 +26,7 @@ class PredictionHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), 400);
       return;
@@ -56,7 +56,7 @@ class PredictionHandler {
   }
 
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     auto result = useCases.trainPrediction(id);
     if (result.predictionId.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), 404);
@@ -66,7 +66,7 @@ class PredictionHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deletePrediction(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

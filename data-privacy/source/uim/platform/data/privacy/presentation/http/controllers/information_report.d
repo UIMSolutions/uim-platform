@@ -77,7 +77,7 @@ class InformationReportController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = InformationReportId(extractIdFromPath(req.requestURI));
+      auto id = InformationReportId(precheck.id);
 
       auto entry = usecase.getReport(tenantId, id);
       if (entry.isNull) {
@@ -98,7 +98,7 @@ class InformationReportController : ManageController {
       auto j = req.json;
 
       UpdateInformationReportStatusRequest r;
-      r.reportId = InformationReportId(extractIdFromPath(req.requestURI));
+      r.reportId = InformationReportId(precheck.id);
       r.tenantId = tenantId;
       r.status = j.getString("status");
       r.downloadUrl = j.getString("downloadUrl");
@@ -119,7 +119,7 @@ class InformationReportController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = InformationReportId(extractIdFromPath(req.requestURI));
+      auto id = InformationReportId(precheck.id);
 
       usecase.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

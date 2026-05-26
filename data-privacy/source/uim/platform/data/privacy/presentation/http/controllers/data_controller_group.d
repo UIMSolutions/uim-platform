@@ -73,7 +73,7 @@ class DataControllerGroupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
+      auto id = DataControllerGroupId(precheck.id);
 
       auto entry = usecase.getGroup(tenantId, id);
       if (entry.isNull) {
@@ -88,7 +88,7 @@ class DataControllerGroupController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
+      auto id = DataControllerGroupId(precheck.id);
       auto j = req.json;
 
       UpdateDataControllerGroupRequest r;
@@ -114,7 +114,7 @@ class DataControllerGroupController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = DataControllerGroupId(extractIdFromPath(req.requestURI));
+      auto id = DataControllerGroupId(precheck.id);
 
       usecase.deleteGroup(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

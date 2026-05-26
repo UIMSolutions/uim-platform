@@ -99,7 +99,7 @@ class ClientController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto client = usecase.getClient(id);
       if (client.isNull) {
         writeError(res, 404, "Client not found");
@@ -114,7 +114,7 @@ class ClientController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateClientRequest r;
       r.name = j.getString("name");
@@ -144,7 +144,7 @@ class ClientController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.deleteClient(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -161,7 +161,7 @@ class ClientController : ManageController {
   protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.connect(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -175,7 +175,7 @@ class ClientController : ManageController {
   protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto result = usecase.disconnect(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);

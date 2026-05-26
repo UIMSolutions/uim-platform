@@ -99,7 +99,7 @@ class TaskController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto t = useCase.getTask(tenantId, id);
       if (t.isNull) {
@@ -117,7 +117,7 @@ class TaskController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateTaskRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
@@ -161,7 +161,7 @@ class TaskController : ManageController {
   protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.completeTask(tenantId, id);
       if (result.isSuccess()) {
@@ -181,7 +181,7 @@ class TaskController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteTask(tenantId, id);
       if (result.isSuccess()) {

@@ -83,7 +83,7 @@ class ServiceBindingController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id == "revoke")
       return errorResponse("Invalid service binding ID", 400);
 

@@ -79,7 +79,7 @@ class RoleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto r = useCase.getRole(tenantId, id);
       if (r.isNull) {
@@ -97,7 +97,7 @@ class RoleController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateRoleRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       ;
       r.tenantId = tenantId;
       r.name = j.getString("name");
@@ -117,7 +117,7 @@ class RoleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteRole(tenantId, id);
       if (result.isSuccess())

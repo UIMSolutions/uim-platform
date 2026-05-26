@@ -78,7 +78,7 @@ class PageController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto pageId = extractIdFromPath(req.requestURI);
+      auto pageId = precheck.id;
       if (useCase.existsPage(pageId)) {
         writeApiError(res, 404, "Page not found");
         return;
@@ -93,7 +93,7 @@ class PageController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto pageId = extractIdFromPath(req.requestURI);
+      auto pageId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdatePageRequest(pageId, j.getString("title"),
         j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
@@ -112,7 +112,7 @@ class PageController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto pageId = extractIdFromPath(req.requestURI);
+      auto pageId = precheck.id;
       auto j = req.json;
       auto siteId = j.getString("siteId");
       auto error = useCase.deletePage(pageId, siteId);

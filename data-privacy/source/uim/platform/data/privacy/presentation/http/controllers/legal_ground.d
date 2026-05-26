@@ -91,7 +91,7 @@ class LegalGroundController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = LegalGroundId(extractIdFromPath(req.requestURI));
+      auto id = LegalGroundId(precheck.id);
 
       auto entry = usecase.getGround(tenantId, id);
       if (entry.isNull) {
@@ -109,7 +109,7 @@ class LegalGroundController : ManageController {
       auto j = req.json;
 
       UpdateLegalGroundRequest r;
-      r.id = LegalGroundId(extractIdFromPath(req.requestURI));
+      r.id = LegalGroundId(precheck.id);
       r.tenantId = tenantId;
       r.description = j.getString("description");
       r.legalReference = j.getString("legalReference");
@@ -132,7 +132,7 @@ class LegalGroundController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = LegalGroundId(extractIdFromPath(req.requestURI));
+      auto id = LegalGroundId(precheck.id);
 
       usecase.deleteGround(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

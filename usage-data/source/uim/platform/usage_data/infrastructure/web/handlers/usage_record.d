@@ -25,7 +25,7 @@ class UsageRecordHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing usage record id"), 400);
       return;
@@ -65,7 +65,7 @@ class UsageRecordHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestURI);
+    auto id = precheck.id;
     useCases.deleteRecord(TenantId.init, UsageRecordId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

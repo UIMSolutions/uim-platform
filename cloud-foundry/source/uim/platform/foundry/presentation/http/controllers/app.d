@@ -93,7 +93,7 @@ class AppController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto app = useCase.getApp(tenantId, appId);
       if (app.isNull) {
@@ -109,7 +109,7 @@ class AppController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto j = req.json;
       auto r = UpdateAppRequest();
       r.id = appId;
@@ -143,7 +143,7 @@ class AppController : ManageController {
 
   protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.startApp(tenantId, appId);
       if (result.isSuccess()) {
@@ -161,7 +161,7 @@ class AppController : ManageController {
 
   protected void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.stopApp(tenantId, appId);
       if (result.isSuccess()) {
@@ -178,7 +178,7 @@ class AppController : ManageController {
 
   protected void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.restartApp(tenantId, appId);
       if (result.isSuccess()) {
@@ -195,7 +195,7 @@ class AppController : ManageController {
 
   protected void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = AppId(extractIdFromPath(req.requestURI));
+      auto appId = AppId(precheck.id);
       auto j = req.json;
       auto r = ScaleAppRequest();
       r.id = appId;
@@ -219,7 +219,7 @@ class AppController : ManageController {
   protected void handleEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppId(extractIdFromPath(req.requestURI));
+      auto id = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(tenantId, id);
 
@@ -236,7 +236,7 @@ class AppController : ManageController {
   protected void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppId(extractIdFromPath(req.requestURI));
+      auto id = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
@@ -257,7 +257,7 @@ class AppController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = AppId(extractIdFromPath(req.requestURI));
+      auto id = AppId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {

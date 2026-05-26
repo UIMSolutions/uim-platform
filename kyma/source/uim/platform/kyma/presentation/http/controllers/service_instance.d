@@ -92,7 +92,7 @@ class ServiceInstanceController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto inst = usecase.getServiceInstance(tenantId, id);
       if (inst.isNull) {
         writeError(res, 404, "Service instance not found");
@@ -135,7 +135,7 @@ class ServiceInstanceController : ManageController {
     try {
       auto tenantId = req.getTenantId;
       auto id = ServiceInstanceId(
-        extractIdFromPath(req.requestURI));
+        precheck.id);
       auto result = usecase.deleteServiceInstance(tenantId, id);
       if (result.success)
         res.writeBody("", 204);

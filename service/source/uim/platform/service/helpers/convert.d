@@ -46,7 +46,7 @@ TenantId tenantId(Json data) {
 }
 
 string id(Json data) {
-    return precheck.id;
+    return data.getString("id");
 }
 
 Json data(Json data) {

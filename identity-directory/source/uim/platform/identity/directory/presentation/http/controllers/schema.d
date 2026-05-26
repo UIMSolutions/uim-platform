@@ -72,7 +72,7 @@ class SchemaController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto schemaId = extractIdFromPath(req.requestURI);
+      auto schemaId = precheck.id;
       auto schema = useCase.getSchema(schemaId);
       if (schema == Schema.init) {
         writeScimError(res, 404, "Schema not found");
@@ -87,7 +87,7 @@ class SchemaController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto schemaId = extractIdFromPath(req.requestURI);
+      auto schemaId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateSchemaRequest(schemaId, j.getString("name"),
           j.getString("description"), parseSchemaAttributes(j),);
@@ -109,7 +109,7 @@ class SchemaController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto schemaId = extractIdFromPath(req.requestURI);
+      auto schemaId = precheck.id;
       auto error = useCase.deleteSchema(schemaId);
       if (error.length > 0)
         writeScimError(res, 404, error);

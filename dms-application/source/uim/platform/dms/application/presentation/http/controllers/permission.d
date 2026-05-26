@@ -65,7 +65,7 @@ class PermissionController : ManageController {
 
   override protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resourceId = extractIdFromPath(req.requestURI);
+      auto resourceId = precheck.id;
       auto tenantId = req.getTenantId;
       auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
       auto resourceType = resourceTypeStr.to!ResourceType;
@@ -87,7 +87,7 @@ class PermissionController : ManageController {
 
   override protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = UserId(extractIdFromPath(req.requestURI));
+      auto userId = UserId(precheck.id);
       auto tenantId = req.getTenantId;
 
       auto items = permissions.listByUser(tenantId, userId);
@@ -134,7 +134,7 @@ class PermissionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PermissionId(extractIdFromPath(req.requestURI));
+      auto id = PermissionId(precheck.id);
       auto j = req.json;
       auto r = UpdatePermissionRequest();
       r.id = id;
@@ -160,7 +160,7 @@ class PermissionController : ManageController {
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = PermissionId(extractIdFromPath(req.requestURI));
+      auto id = PermissionId(precheck.id);
       
       auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {

@@ -83,7 +83,7 @@ class SoftwareComponentController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+    auto id = SoftwareComponentId(precheck.id);
 
     auto comp = usecase.getSoftwareComponent(tenantId, id);
     if (comp.isNull) {
@@ -104,7 +104,7 @@ class SoftwareComponentController : ManageController {
   protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+      auto id = SoftwareComponentId(precheck.id);
       auto j = req.json;
       
       CloneSoftwareComponentRequest r;
@@ -132,7 +132,7 @@ class SoftwareComponentController : ManageController {
   protected void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+      auto id = SoftwareComponentId(precheck.id);
       auto j = req.json;
 
       PullSoftwareComponentRequest r;
@@ -157,7 +157,7 @@ class SoftwareComponentController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = req.getTenantId;
-    auto id = SoftwareComponentId(extractIdFromPath(req.requestURI));
+    auto id = SoftwareComponentId(precheck.id);
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);
     if (result.hasError()) {

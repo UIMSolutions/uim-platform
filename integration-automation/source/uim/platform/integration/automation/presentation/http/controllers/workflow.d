@@ -85,7 +85,7 @@ class WorkflowController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto wf = useCase.getWorkflow(tenantId, id);
       if (wf.isNull) {
@@ -101,7 +101,7 @@ class WorkflowController : ManageController {
   protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.startWorkflow(tenantId, id);
       if (result.isSuccess()) {
@@ -121,7 +121,7 @@ class WorkflowController : ManageController {
   protected void handlepend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.suspendWorkflow(tenantId, id);
       if (result.isSuccess()) {
@@ -141,7 +141,7 @@ class WorkflowController : ManageController {
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.resumeWorkflow(tenantId, id);
       if (result.isSuccess()) {
@@ -161,7 +161,7 @@ class WorkflowController : ManageController {
   protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.terminateWorkflow(tenantId, id);
       if (result.isSuccess()) {
@@ -181,7 +181,7 @@ class WorkflowController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteWorkflow(tenantId, id);
       if (result.isSuccess()) {

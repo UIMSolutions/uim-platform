@@ -78,7 +78,7 @@ class BuildpackController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
+      auto buildpackId = BuildpackId(precheck.id);
       auto tenantId = req.getTenantId;
       auto bp = useCase.getBuildpack(tenantId, buildpackId);
       if (bp.isNull) {
@@ -93,7 +93,7 @@ class BuildpackController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
+      auto buildpackId = BuildpackId(precheck.id);
       auto j = req.json;
       auto r = UpdateBuildpackRequest();
       r.id = buildpackId;
@@ -121,7 +121,7 @@ class BuildpackController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto buildpackId = BuildpackId(extractIdFromPath(req.requestURI));
+      auto buildpackId = BuildpackId(precheck.id);
       auto tenantId = req.getTenantId;
       auto result = useCase.deleteBuildpack(tenantId, buildpackId);
       if (result.isSuccess()) {

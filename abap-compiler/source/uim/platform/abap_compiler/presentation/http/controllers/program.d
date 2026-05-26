@@ -60,7 +60,6 @@ class ProgramController : ManageController {
 
         CreateProgramRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
         r.title = data.getString("title");
         r.language = data.getString("language", "EN");
         r.sourceCode = data.getString("sourceCode");
@@ -132,7 +131,6 @@ class ProgramController : ManageController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", id);
-        return successResponse("Program deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
-                .id));
+        return successResponse("Program deleted successfully", "Deleted", 200, responseData);
     }
 }

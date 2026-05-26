@@ -85,7 +85,7 @@ class ApiClientController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = extractIdFromPath(req.requestURI);
+      auto clientId = precheck.id;
       auto client = useCase.getClient(clientId);
       if (client == ApiClient.init) {
         auto errRes = Json.emptyObject;
@@ -106,7 +106,7 @@ class ApiClientController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = extractIdFromPath(req.requestURI);
+      auto clientId = precheck.id;
       auto error = useCase.revokeClient(clientId);
       if (error.length > 0) {
         auto errRes = Json.emptyObject;

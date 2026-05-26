@@ -39,7 +39,7 @@ class BrowseController : PlatformController {
 
   override protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto folderId = FolderId(extractIdFromPath(req.requestURI));
+      auto folderId = FolderId(precheck.id);
       auto tenantId = req.getTenantId;
       auto contents = usecase.browseFolderContents(tenantId, folderId);
 
@@ -61,7 +61,7 @@ class BrowseController : PlatformController {
 
   protected void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto repoId = RepositoryId(extractIdFromPath(req.requestURI));
+      auto repoId = RepositoryId(precheck.id);
       auto tenantId = req.getTenantId;
       auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
@@ -130,7 +130,7 @@ class BrowseController : PlatformController {
   override protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = FavoriteId(extractIdFromPath(req.requestURI));
+      auto id = FavoriteId(precheck.id);
       
       auto result = usecase.deleteFavorite(tenantId, id);
       if (result.isSuccess) {

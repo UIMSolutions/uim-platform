@@ -84,7 +84,7 @@ class ConnectorController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConnectorId(extractIdFromPath(req.requestURI));
+      auto id = ConnectorId(precheck.id);
       auto cc = usecase.getConnector(tenantId, id);
       if (cc.isNull) {
         writeError(res, 404, "Connector not found");
@@ -131,7 +131,7 @@ class ConnectorController : ManageController {
   protected void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = ConnectorId(extractIdFromPath(req.requestURI));
+      auto id = ConnectorId(precheck.id);
       auto result = usecase.unregister(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

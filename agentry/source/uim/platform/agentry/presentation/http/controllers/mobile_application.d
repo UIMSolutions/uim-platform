@@ -27,9 +27,13 @@ class MobileApplicationController : ManageController {
         router.delete_("/api/v1/agentry/mobile-applications/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
             auto items = usecase.listMobileApplications(tenantId);
             auto jarr = items.map!(e => e.toJson()).array.toJson;
             auto resp = Json.emptyObject
@@ -37,9 +41,7 @@ class MobileApplicationController : ManageController {
                 .set("resources", jarr)
                 .set("message", "Mobile application list retrieved successfully");
             res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -50,9 +52,7 @@ class MobileApplicationController : ManageController {
             auto e = usecase.getMobileApplication(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Mobile application not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -81,9 +81,7 @@ class MobileApplicationController : ManageController {
                 .set("id", result.id)
                 .set("message", "Mobile application created successfully");
             res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -109,9 +107,7 @@ class MobileApplicationController : ManageController {
                 .set("id", result.id)
                 .set("message", "Mobile application updated successfully");
             res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -122,8 +118,6 @@ class MobileApplicationController : ManageController {
             auto result = usecase.deleteMobileApplication(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Mobile application deleted successfully"), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
     }
 }

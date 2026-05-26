@@ -105,7 +105,7 @@ class ContentController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto item = useCase.getContent(tenantId, id);
       if (item.isNull) {
@@ -123,7 +123,7 @@ class ContentController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       auto r = UpdateContentRequest();
-      r.id = extractIdFromPath(req.requestURI);
+      r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
@@ -157,7 +157,7 @@ class ContentController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       useCase.deleteContent(tenantId, id);
       res.writeBody("", 204);
@@ -169,7 +169,7 @@ class ContentController : ManageController {
   protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = useCase.publishContent(tenantId, id);
       if (result.isSuccess()) {

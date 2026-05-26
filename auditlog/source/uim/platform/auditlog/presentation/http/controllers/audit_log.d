@@ -114,7 +114,7 @@ class AuditLogController : PlatformController {
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId();
-      auto id = AuditLogId(extractIdFromPath(req.requestURI));
+      auto id = AuditLogId(precheck.id);
 
       if (!retrieveUsecase.hasAuditLog(tenantId, id)) {
         writeError(res, 404, "Audit log entry not found");

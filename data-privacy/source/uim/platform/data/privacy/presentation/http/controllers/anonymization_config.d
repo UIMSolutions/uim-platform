@@ -75,7 +75,7 @@ class AnonymizationConfigController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
+      auto id = AnonymizationConfigId(precheck.id);
 
       auto entry = usecase.getConfig(tenantId, id);
       if (entry.isNull) {
@@ -92,7 +92,7 @@ class AnonymizationConfigController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
-      r.configId = AnonymizationConfigId(extractIdFromPath(req.requestURI));
+      r.configId = AnonymizationConfigId(precheck.id);
       r.tenantId = tenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -114,7 +114,7 @@ class AnonymizationConfigController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
+      auto id = AnonymizationConfigId(precheck.id);
 
       auto result = usecase.activateConfig(tenantId, id);
       if (result.isSuccess()) {
@@ -131,7 +131,7 @@ class AnonymizationConfigController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = AnonymizationConfigId(extractIdFromPath(req.requestURI));
+      auto id = AnonymizationConfigId(precheck.id);
 
       usecase.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);

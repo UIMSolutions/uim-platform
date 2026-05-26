@@ -86,7 +86,7 @@ class SourceSystemController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto sys = usecase.getSourceSystem(tenantId, id);
       if (sys.isNull) {
@@ -103,7 +103,7 @@ class SourceSystemController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateSourceSystemRequest();
       r.id = id;
@@ -133,7 +133,7 @@ class SourceSystemController : ManageController {
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
@@ -157,7 +157,7 @@ class SourceSystemController : ManageController {
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
@@ -178,7 +178,7 @@ class SourceSystemController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
       auto result = usecase.deleteSourceSystem(tenantId, id);
       if (result.isSuccess) {

@@ -54,7 +54,7 @@ class MonitoringController : PlatformController {
 
   protected void handleWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto workflowId = extractIdFromPath(req.requestURI);
+      auto workflowId = precheck.id;
       auto tenantId = req.getTenantId;
 
       auto logs = useCase.getWorkflowLogs(tenantId, workflowId);
@@ -74,7 +74,7 @@ class MonitoringController : PlatformController {
 
   protected void handleStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto stepId = extractIdFromPath(req.requestURI);
+      auto stepId = precheck.id;
       auto tenantId = req.getTenantId;
       auto logs = useCase.getStepLogs(tenantId, stepId);
 
@@ -113,7 +113,7 @@ class MonitoringController : PlatformController {
 
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto workflowId = extractIdFromPath(req.requestURI);
+      auto workflowId = precheck.id;
       auto tenantId = req.getTenantId;
       auto summary = useCase.getWorkflowSummary(tenantId, workflowId);
 

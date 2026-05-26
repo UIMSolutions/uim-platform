@@ -87,7 +87,7 @@ class ThemeController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto themeId = extractIdFromPath(req.requestURI);
+      auto themeId = precheck.id;
       auto theme = useCase.getTheme(themeId);
       if (theme == Theme.init) {
         writeApiError(res, 404, "Theme not found");
@@ -101,7 +101,7 @@ class ThemeController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto themeId = extractIdFromPath(req.requestURI);
+      auto themeId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateThemeRequest(themeId, j.getString("name"),
         j.getString("description"), jsonEnum!ThemeMode(j, "mode",
@@ -120,7 +120,7 @@ class ThemeController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto themeId = extractIdFromPath(req.requestURI);
+      auto themeId = precheck.id;
       auto error = useCase.deleteTheme(themeId);
       if (error.length > 0)
         writeApiError(res, 400, error);
