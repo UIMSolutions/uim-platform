@@ -62,7 +62,7 @@ class EnvironmentController : ManageController {
             
 
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, PlatformId(id));
             if (e.isNull) {
                 writeError(res, 404, "Platform not found");
@@ -115,7 +115,7 @@ class EnvironmentController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdatePlatformRequest r;
             r.name = j.getString("name");
@@ -141,7 +141,7 @@ class EnvironmentController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

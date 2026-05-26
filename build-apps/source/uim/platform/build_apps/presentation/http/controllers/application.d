@@ -55,7 +55,7 @@ class ApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = ApplicationId(data.getString("id"));
+        auto id = ApplicationId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid Application ID")

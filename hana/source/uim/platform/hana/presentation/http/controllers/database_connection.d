@@ -96,7 +96,7 @@ class DatabaseConnectionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto c = usecase.getById(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Database connection not found");
@@ -131,7 +131,7 @@ class DatabaseConnectionController : ManageController {
       auto j = req.json;
       UpdateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.host = j.getString("host");

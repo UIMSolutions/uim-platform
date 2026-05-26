@@ -43,7 +43,7 @@ class ServiceOfferingController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceOfferingId(id));
             if (e.isNull) { writeError(res, 404, "Service offering not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -83,7 +83,7 @@ class ServiceOfferingController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceOfferingRequest r;
             r.name = j.getString("name");
@@ -103,7 +103,7 @@ class ServiceOfferingController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteServiceOffering(req.getTenantId, ServiceOfferingId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

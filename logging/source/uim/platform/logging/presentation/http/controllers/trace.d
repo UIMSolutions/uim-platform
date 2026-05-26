@@ -101,7 +101,7 @@ class TraceController : PlatformController {
     try {
 
       auto tenantId = req.getTenantId;
-      auto traceId = extractIdFromPath(req.requestURI.to!string);
+      auto traceid = precheck.id;
 
       auto spans = usecase.getTrace(tenantId, traceId);
 

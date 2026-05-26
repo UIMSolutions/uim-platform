@@ -90,7 +90,7 @@ class PoiController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto item = usecase.getById(tenantId, id);
       if (item.isNull) {
         writeError(res, 404, "POI not found");
@@ -105,7 +105,7 @@ class PoiController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
       UpdatePoiRequest r;
       r.tenantId = tenantId;
@@ -134,7 +134,7 @@ class PoiController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

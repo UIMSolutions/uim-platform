@@ -41,7 +41,7 @@ class ServiceBindingController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceBindingId(id));
             if (e.isNull) { writeError(res, 404, "Service binding not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -76,7 +76,7 @@ class ServiceBindingController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceBindingRequest r;
             r.name = j.getString("name");

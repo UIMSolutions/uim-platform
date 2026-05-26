@@ -39,7 +39,7 @@ class QueueSubscriptionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getSubscription(tenantId, QueueSubscriptionId(id));
             if (e.isNull) { writeError(res, 404, "Queue subscription not found"); return; }
             res.writeJsonBody(Json.emptyObject

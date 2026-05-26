@@ -84,7 +84,7 @@ class EnrichmentDataController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto ed = usecase.getById(id, clientId);
@@ -102,7 +102,7 @@ class EnrichmentDataController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
 
       UpdateEnrichmentDataRequest r;
@@ -132,7 +132,7 @@ class EnrichmentDataController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteEnrichmentData(EnrichmentDataId(id), clientId);

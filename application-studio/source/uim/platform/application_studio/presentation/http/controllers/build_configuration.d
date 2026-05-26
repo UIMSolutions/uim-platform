@@ -54,7 +54,7 @@ class BuildConfigurationController : ManageController {
         auto data = precheck.data;
 
         BuildConfigurationDTO dto;
-        dto.configId = data.getString("id");
+        dto.configId = precheck.id;
         dto.tenantId = tenantId;
         dto.projectId = data.getString("projectId");
         dto.name = data.getString("name");

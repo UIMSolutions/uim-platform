@@ -82,7 +82,7 @@ class RetentionRuleController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
                 writeError(res, 404, "Retention rule not found");
@@ -101,7 +101,7 @@ class RetentionRuleController : ManageController {
             auto j = req.json;
             UpdateRetentionRuleRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.id = precheck.id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.retentionPeriod = j.getString("retentionPeriod");
@@ -131,7 +131,7 @@ class RetentionRuleController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteRetentionRule(id);
             if (result.hasError)
             return errorResponse(result.message, 400);

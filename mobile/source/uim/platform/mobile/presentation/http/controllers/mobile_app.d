@@ -88,7 +88,7 @@ class MobileAppController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto result = usecase.get(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -119,7 +119,7 @@ class MobileAppController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
       UpdateMobileAppRequest r;
       r.id = id;

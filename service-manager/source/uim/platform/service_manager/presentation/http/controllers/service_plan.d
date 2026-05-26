@@ -43,7 +43,7 @@ class ServicePlanController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServicePlanId(id));
             if (e.isNull) { writeError(res, 404, "Service plan not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -82,7 +82,7 @@ class ServicePlanController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateServicePlanRequest r;
             r.name = j.getString("name");
@@ -101,7 +101,7 @@ class ServicePlanController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteServicePlan(req.getTenantId, ServicePlanId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

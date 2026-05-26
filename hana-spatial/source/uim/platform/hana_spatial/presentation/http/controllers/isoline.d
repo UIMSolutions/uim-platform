@@ -78,7 +78,7 @@ class IsolineController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto item = usecase.getById(tenantId, id);
       if (item.isNull) {
         writeError(res, 404, "Isoline not found");
@@ -93,7 +93,7 @@ class IsolineController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

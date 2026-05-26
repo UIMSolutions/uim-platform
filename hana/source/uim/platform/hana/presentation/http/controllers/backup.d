@@ -90,7 +90,7 @@ class BackupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto b = usecase.getById(tenantId, id);
       if (b.isNull) {
         writeError(res, 404, "Backup not found");
@@ -123,7 +123,7 @@ class BackupController : ManageController {
       auto j = req.json;
       UpdateBackupRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.destination = j.getString("destination");
       r.cronExpression = j.getString("cronExpression");

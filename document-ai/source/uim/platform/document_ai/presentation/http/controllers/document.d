@@ -88,7 +88,7 @@ class DocumentController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto d = usecase.getById(id, clientId);
@@ -106,7 +106,7 @@ class DocumentController : PlatformController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteDocument(DocumentId(id), clientId);
@@ -124,7 +124,7 @@ class DocumentController : PlatformController {
   protected void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
       ConfirmDocumentRequest r;
       r.tenantId = tenantId;
@@ -152,7 +152,7 @@ class DocumentController : PlatformController {
   protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
-      auto docId = extractIdFromPath(req.requestURI.to!string);
+      auto docid = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.getExtractionResult(docId, clientId);

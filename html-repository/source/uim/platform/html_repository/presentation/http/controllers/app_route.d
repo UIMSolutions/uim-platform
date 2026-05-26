@@ -87,7 +87,7 @@ class AppRouteController : ManageController {
     try {
       auto tenantId = req.getTenantId;
 
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;
@@ -120,7 +120,7 @@ class AppRouteController : ManageController {
       auto tenantId = req.getTenantId;
 
       auto j = req.json;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;
@@ -148,7 +148,7 @@ class AppRouteController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       if (id.isNull) {
         writeError(res, 404, "Route not found");
         return;

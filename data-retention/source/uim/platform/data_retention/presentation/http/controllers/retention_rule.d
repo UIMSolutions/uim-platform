@@ -78,7 +78,7 @@ class RetentionRuleController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto rr = usecase.getRetentionRule(tenantId, id);
             if (rr.isNull) {
                 writeError(res, 404, "Retention rule not found");

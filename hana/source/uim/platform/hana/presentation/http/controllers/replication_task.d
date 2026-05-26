@@ -92,7 +92,7 @@ class ReplicationTaskController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto t = usecase.getById(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Replication task not found");
@@ -129,7 +129,7 @@ class ReplicationTaskController : ManageController {
       auto j = req.json;
       UpdateReplicationTaskRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.mode = j.getString("mode");

@@ -104,7 +104,7 @@ class TaskProviderController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto j = req.json;
             UpdateTaskProviderRequest r;
             r.tenantId = tenantId;
@@ -208,7 +208,7 @@ class TaskProviderController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteTaskProvider(tenantId, TaskProviderId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

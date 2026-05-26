@@ -182,7 +182,7 @@ class TaskDefinitionController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
             if (result.hasError)

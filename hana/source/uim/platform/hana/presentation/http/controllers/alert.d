@@ -93,7 +93,7 @@ class AlertController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto a = usecase.getById(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Alert not found");
@@ -128,7 +128,7 @@ class AlertController : ManageController {
       auto j = req.json;
       UpdateAlertRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.severity = j.getString("severity");

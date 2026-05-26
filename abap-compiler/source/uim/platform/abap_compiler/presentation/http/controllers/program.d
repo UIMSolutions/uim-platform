@@ -26,79 +26,113 @@ class ProgramController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get   ("/api/v1/abap/programs",  &handleList);
-        router.post  ("/api/v1/abap/programs",  &handleCreate);
-        router.get   ("/api/v1/abap/programs/*",&handleGet);
-        router.put   ("/api/v1/abap/programs/*",&handleUpdate);
-        router.delete_("/api/v1/abap/programs/*",&handleDelete);
+        router.get("/api/v1/abap/programs", &handleList);
+        router.post("/api/v1/abap/programs", &handleCreate);
+        router.get("/api/v1/abap/programs/*", &handleGet);
+        router.put("/api/v1/abap/programs/*", &handleUpdate);
+        router.delete_("/api/v1/abap/programs/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId  = req.getTenantId;
-            auto programs  = usecase.listPrograms(tenantId);
-            auto jarr      = Json.emptyArray;
-            foreach (p; programs) jarr ~= p.toJson();
-            res.writeJsonBody(Json.emptyObject.set("count", cast(long) programs.length).set("items", jarr), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto programs = usecase.listPrograms(tenantId);
+        auto jarr = programs.map!(p => p.toJson).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", programs.length)
+            .set("resources", jarr);
+
+        return successResponse("Program list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            CreateProgramRequest r;
-            r.tenantId    = req.getTenantId;
-            r.id          = j.getString("id");
-            r.title       = j.getString("title");
-            r.language    = j.getString("language", "EN");
-            r.sourceCode  = j.getString("sourceCode");
-            r.programType = cast(ProgramType) j.getString("programType", "report").to!int;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createProgram(r);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program created"), 201);
-            else
-                writeError(res, 400, result.message);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        CreateProgramRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.title = data.getString("title");
+        r.language = data.getString("language", "EN");
+        r.sourceCode = data.getString("sourceCode");
+        r.programType = cast(ProgramType)data.getString("programType", "report").to!int;
+
+        auto result = usecase.createProgram(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Program created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
-            auto prog     = usecase.getProgram(tenantId, id);
-            if (prog.isNull) { writeError(res, 404, "Program not found"); return; }
-            res.writeJsonBody(prog.toJson(), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ProgramId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid program ID", 400);
+
+        auto prog = usecase.getProgram(tenantId, id);
+        if (prog.isNull)
+            return errorResponse("Program not found", 404);
+
+        auto responseData = prog.toJson();
+        return successResponse("Program retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            UpdateProgramRequest r;
-            r.tenantId   = req.getTenantId;
-            r.id         = extractIdFromPath(req.requestURI.to!string);
-            r.title      = j.getString("title");
-            r.language   = j.getString("language", "EN");
-            r.sourceCode = j.getString("sourceCode");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateProgram(r);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program updated"), 200);
-            else
-                writeError(res, result.message.length > 0 ? 400 : 404, result.message);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+
+        auto id = ProgramId(precheck.id);
+
+        UpdateProgramRequest r;
+        r.tenantId = tenantId;
+        r.programId = id;
+        r.title = data.getString("title");
+        r.language = data.getString("language", "EN");
+        r.sourceCode = data.getString("sourceCode");
+
+        auto result = usecase.updateProgram(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Program updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
-            auto result   = usecase.deleteProgram(tenantId, id);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Program deleted"), 200);
-            else
-                writeError(res, 404, result.message);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ProgramId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid program ID", 400);
+
+        auto result = usecase.deleteProgram(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Program deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
+                .id));
     }
 }

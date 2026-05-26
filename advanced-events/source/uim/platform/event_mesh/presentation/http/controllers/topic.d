@@ -54,7 +54,7 @@ class TopicController : ManageController {
     auto data = precheck.data;
 
     TopicDTO dto;
-    dto.topicId = TopicId(data.getString("id"));
+    dto.topicId = TopicId(precheck.id);
     dto.tenantId = tenantId;
     dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
     dto.name = data.getString("name");

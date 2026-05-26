@@ -89,7 +89,7 @@ class DataLakeController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto d = usecase.getById(tenantId, id);
       if (d.isNull) {
         writeError(res, 404, "Data lake not found");
@@ -119,7 +119,7 @@ class DataLakeController : ManageController {
       auto j = req.json;
       UpdateDataLakeRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.computeNodes = j.getInteger("computeNodes", 1);

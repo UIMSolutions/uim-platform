@@ -55,7 +55,7 @@ class CommandController : ManageController {
 
         CommandDTO dto;
         dto.tenantId = tenantId;
-        dto.commandId = CommandId(data.getString("id"));
+        dto.commandId = CommandId(precheck.id);
         dto.catalogId = CatalogId(data.getString("catalogId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");

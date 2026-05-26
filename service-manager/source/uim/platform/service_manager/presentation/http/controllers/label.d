@@ -43,7 +43,7 @@ class LabelController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, LabelId(id));
             if (e.isNull) { writeError(res, 404, "Label not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -77,7 +77,7 @@ class LabelController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateLabelRequest r;
             r.key = j.getString("key");
@@ -94,7 +94,7 @@ class LabelController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteLabel(req.getTenantId, LabelId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -42,7 +42,7 @@ class ServiceBrokerController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceBrokerId(id));
             if (e.isNull) { writeError(res, 404, "Service broker not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -74,7 +74,7 @@ class ServiceBrokerController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceBrokerRequest r;
             r.name = j.getString("name");

@@ -90,7 +90,7 @@ class ConfigurationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto c = usecase.getById(tenantId, id);
       if (c.isNull) {
         writeError(res, 404, "Configuration not found");
@@ -123,7 +123,7 @@ class ConfigurationController : ManageController {
       auto j = req.json;
       UpdateConfigurationRequest r;
       r.tenantId = tenantId;
-      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.id = precheck.id;
       r.value = j.getString("value");
 
       auto result = usecase.update(r);

@@ -80,7 +80,7 @@ class ClientController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
 
       auto c = usecase.getClient(tenantId, id);
@@ -98,7 +98,7 @@ class ClientController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
 
       PatchClientRequest r;
@@ -126,7 +126,7 @@ class ClientController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto tenantId = req.getTenantId;
 
       auto result = usecase.deleteClient(tenantId, ClientId(id));

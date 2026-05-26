@@ -55,7 +55,7 @@ class DevSpaceTypeController : ManageController {
         auto data = precheck.data;
 
         DevSpaceTypeDTO dto;
-        dto.typeId = data.getString("id");
+        dto.typeId = precheck.id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

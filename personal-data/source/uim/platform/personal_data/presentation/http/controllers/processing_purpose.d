@@ -81,7 +81,7 @@ class ProcessingPurposeController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto p = usecase.getById(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Processing purpose not found");
@@ -100,7 +100,7 @@ class ProcessingPurposeController : ManageController {
             auto j = req.json;
             UpdateProcessingPurposeRequest r;
             r.tenantId = tenantId;
-            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.id = precheck.id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.legalBasis = j.getString("legalBasis");
@@ -129,7 +129,7 @@ class ProcessingPurposeController : ManageController {
         try {
             
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteProcessingPurpose(id);
             if (result.hasError)
             return errorResponse(result.message, 400);

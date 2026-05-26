@@ -83,7 +83,7 @@ class TrainingJobController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto tj = usecase.getTrainingJob(tenantId, id, clientId);
@@ -101,7 +101,7 @@ class TrainingJobController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto j = req.json;
 
       PatchTrainingJobRequest r;
@@ -129,7 +129,7 @@ class TrainingJobController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.getTenantId;
-      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteTrainingJob(tenantId, id, clientId, id);

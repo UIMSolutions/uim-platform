@@ -54,7 +54,7 @@ class SubscriptionController : ManageController {
         auto data = precheck.data;
 
         SubscriptionDTO dto;
-        dto.subscriptionId = EventSubscriptionId(data.getString("id"));
+        dto.subscriptionId = EventSubscriptionId(precheck.id);
         dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.topicId = TopicId(data.getString("topicId"));

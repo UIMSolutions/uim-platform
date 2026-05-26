@@ -52,7 +52,7 @@ class RegisteredApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = data.getString("id");
+        auto id = precheck.id;
 
         CreateRegisteredApplicationRequest r;
         r.tenantId = tenantId;

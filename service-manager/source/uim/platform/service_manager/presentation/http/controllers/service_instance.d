@@ -43,7 +43,7 @@ class ServiceInstanceController : ManageController {
         try {
             
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceInstanceId(id));
             if (e.isNull) { writeError(res, 404, "Service instance not found"); return; }
             res.writeJsonBody(Json.emptyObject
@@ -83,7 +83,7 @@ class ServiceInstanceController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceInstanceRequest r;
             r.name = j.getString("name");
@@ -102,7 +102,7 @@ class ServiceInstanceController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto result = usecase.deleteServiceInstance(req.getTenantId, ServiceInstanceId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

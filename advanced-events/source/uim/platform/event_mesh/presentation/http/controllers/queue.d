@@ -73,7 +73,7 @@ class QueueController : ManageController {
         auto data = precheck.data;
 
         QueueDTO dto;
-        dto.queueId = QueueId(data.getString("id"));
+        dto.queueId = QueueId(precheck.id);
         dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.name = data.getString("name");

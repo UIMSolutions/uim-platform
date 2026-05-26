@@ -61,7 +61,7 @@ class CustomDomainController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = CustomDomainId(data.getString("id"));
+        auto id = CustomDomainId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
 

@@ -62,7 +62,7 @@ class DomainMappingController : ManageController {
 
         CreateDomainMappingRequest r;
         r.tenantId = tenantId;
-        r.domainMappingId = DomainMappingId(data.getString("id"));
+        r.domainMappingId = DomainMappingId(precheck.id);
         r.customDomainId = CustomDomainId(data.getString("customDomainId"));
         r.standardRoute = data.getString("standardRoute");
         r.customRoute = data.getString("customRoute");

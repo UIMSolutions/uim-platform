@@ -63,7 +63,7 @@ class TlsConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = TlsConfigurationId(data.getString("id"));
+        auto id = TlsConfigurationId(precheck.id);
         if (id.isNull)
             return errorResponse("TLS Configuration ID is required", 400);
 

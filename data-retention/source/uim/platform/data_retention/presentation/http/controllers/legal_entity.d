@@ -97,7 +97,7 @@ class LegalEntityController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId;
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
 
             usecase.deleteLegalEntity(tenantId, id);
             res.writeJsonBody(Json.emptyObject, 204);

@@ -54,7 +54,7 @@ class EventSchemaController : ManageController {
         auto data = precheck.data;
 
         EventSchemaDTO dto;
-        dto.schemaId = EventSchemaId(data.getString("id"));
+        dto.schemaId = EventSchemaId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

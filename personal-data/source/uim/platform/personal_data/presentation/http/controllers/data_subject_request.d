@@ -96,7 +96,7 @@ class DataSubjectRequestController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto id = precheck.id;
             auto r = usecase.getDataSubjectRequest(id);
             if (r.isNull) {
                 writeError(res, 404, "Data subject request not found");
