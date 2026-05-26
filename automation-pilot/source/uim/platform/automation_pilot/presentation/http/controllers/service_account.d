@@ -48,7 +48,7 @@ class ServiceAccountController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ServiceAccountId(extractIdFromPath(path));
+            auto id = ServiceAccountId(precheck.id);
 
             auto e = usecase.getServiceAccount(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Service account not found"); return; }
@@ -97,7 +97,7 @@ class ServiceAccountController : ManageController {
 
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
-            dto.serviceAccountId = ServiceAccountId(extractIdFromPath(path));
+            dto.serviceAccountId = ServiceAccountId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.permissions = j.getString("permissions");
@@ -123,7 +123,7 @@ class ServiceAccountController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ServiceAccountId(extractIdFromPath(path));
+            auto id = ServiceAccountId(precheck.id);
 
             auto result = usecase.deleteServiceAccount(tenantId, id);
             if (result.hasError)

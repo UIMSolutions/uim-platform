@@ -50,7 +50,7 @@ class ProjectMemberController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ProjectMemberId(extractIdFromPath(path));
+            auto id = ProjectMemberId(precheck.id);
 
             auto e = usecase.getProjectMember(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Project member not found"); return; }
@@ -100,7 +100,7 @@ class ProjectMemberController : ManageController {
             
             ProjectMemberDTO dto;
             dto.tenantId = tenantId;
-            dto.projectMemberId = ProjectMemberId(extractIdFromPath(path));
+            dto.projectMemberId = ProjectMemberId(precheck.id);
             dto.displayName = j.getString("displayName");
             dto.email = j.getString("email");
             dto.permissions = j.getString("permissions");
@@ -126,7 +126,7 @@ class ProjectMemberController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ProjectMemberId(extractIdFromPath(path));
+            auto id = ProjectMemberId(precheck.id);
 
             auto result = usecase.deleteProjectMember(tenantId, id);
             if (result.hasError)

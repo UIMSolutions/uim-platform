@@ -49,7 +49,7 @@ class BrandingConfigController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BrandingConfigId(extractIdFromPath(path));
+            auto id = BrandingConfigId(precheck.id);
 
             auto e = usecase.getConfig(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Branding config not found"); return; }
@@ -102,7 +102,7 @@ class BrandingConfigController : ManageController {
 
             BrandingConfigDTO dto;
             dto.tenantId = tenantId;
-            dto.configId = BrandingConfigId(extractIdFromPath(path));
+            dto.configId = BrandingConfigId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.logoUrl = j.getString("logoUrl");
@@ -134,7 +134,7 @@ class BrandingConfigController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BrandingConfigId(extractIdFromPath(path));
+            auto id = BrandingConfigId(precheck.id);
             auto result = usecase.deleteConfig(tenantId, id);
 
             if (result.hasError)

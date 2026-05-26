@@ -50,7 +50,7 @@ class PageController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = PageId(extractIdFromPath(path));
+            auto id = PageId(precheck.id);
             
             auto e = usecase.getPage(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Page not found"); return; }
@@ -103,7 +103,7 @@ class PageController : ManageController {
 
             PageDTO dto;
             dto.tenantId = tenantId;
-            dto.pageId = PageId(extractIdFromPath(path));
+            dto.pageId = PageId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.route = j.getString("route");
@@ -131,7 +131,7 @@ class PageController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = PageId(extractIdFromPath(path));
+            auto id = PageId(precheck.id);
 
             auto result = usecase.deletePage(tenantId, id);
             if (result.hasError)

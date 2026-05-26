@@ -50,7 +50,7 @@ class EventApplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = EventApplicationId(extractIdFromPath(path));
+            auto id = EventApplicationId(precheck.id);
             auto e = usecase.getApplication(tenantId, id);
             if (e.isNull) {
                 writeError(res, 404, "Event application not found");
@@ -110,7 +110,7 @@ class EventApplicationController : ManageController {
             auto j = req.json;
 
             EventApplicationDTO dto;
-            dto.applicationId = EventApplicationId(extractIdFromPath(path));
+            dto.applicationId = EventApplicationId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -141,7 +141,7 @@ class EventApplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = EventApplicationId(extractIdFromPath(path));
+            auto id = EventApplicationId(precheck.id);
 
             auto result = usecase.deleteApplication(tenantId, id);
             if (result.hasError)

@@ -48,7 +48,7 @@ class DevSpaceController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DevSpaceId(extractIdFromPath(path));
+            auto id = DevSpaceId(precheck.id);
             auto e = usecase.getDevSpace(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Dev space not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -97,7 +97,7 @@ class DevSpaceController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DevSpaceDTO dto;
-            dto.id = DevSpaceId(extractIdFromPath(path));
+            dto.id = DevSpaceId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.extensions = j.getString("extensions");
@@ -123,7 +123,7 @@ class DevSpaceController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DevSpaceId(extractIdFromPath(path));
+            auto id = DevSpaceId(precheck.id);
             auto result = usecase.deleteDevSpace(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

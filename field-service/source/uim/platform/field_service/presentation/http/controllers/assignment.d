@@ -48,7 +48,7 @@ class AssignmentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AssignmentId(extractIdFromPath(path));
+            auto id = AssignmentId(precheck.id);
 
             auto e = usecase.getAssignment(tenantId, id);
             if (e.isNull) {
@@ -99,7 +99,7 @@ class AssignmentController : ManageController {
             auto j = req.json;
 
             AssignmentDTO dto;
-            dto.assignmentId = AssignmentId(extractIdFromPath(path));
+            dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;
             dto.acceptedDate = j.getString("acceptedDate");
             dto.startedDate = j.getString("startedDate");
@@ -127,7 +127,7 @@ class AssignmentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AssignmentId(extractIdFromPath(path));
+            auto id = AssignmentId(precheck.id);
             auto result = usecase.deleteAssignment(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

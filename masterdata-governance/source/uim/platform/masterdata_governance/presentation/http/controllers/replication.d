@@ -46,7 +46,7 @@ class ReplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ReplicationId(extractIdFromPath(path));
+            auto id = ReplicationId(precheck.id);
             auto rep = usecase.getReplication(tenantId, id);
             if (rep.isNull) { writeError(res, 404, "Replication not found"); return; }
             res.writeJsonBody(rep.toJson, 200);
@@ -92,7 +92,7 @@ class ReplicationController : ManageController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
-            auto id = ReplicationId(extractIdFromPath(path));
+            auto id = ReplicationId(precheck.id);
             auto action = j.getString("action");
 
             CommandResult result;
@@ -120,7 +120,7 @@ class ReplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ReplicationId(extractIdFromPath(path));
+            auto id = ReplicationId(precheck.id);
             auto result = usecase.deleteReplication(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

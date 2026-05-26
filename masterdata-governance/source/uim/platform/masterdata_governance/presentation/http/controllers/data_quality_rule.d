@@ -46,7 +46,7 @@ class DataQualityRuleController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DataQualityRuleId(extractIdFromPath(path));
+            auto id = DataQualityRuleId(precheck.id);
             auto rule = usecase.getDataQualityRule(tenantId, id);
             if (rule.isNull) { writeError(res, 404, "Data quality rule not found"); return; }
             res.writeJsonBody(rule.toJson, 200);
@@ -99,7 +99,7 @@ class DataQualityRuleController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataQualityRuleDTO dto;
-            dto.ruleId = DataQualityRuleId(extractIdFromPath(path));
+            dto.ruleId = DataQualityRuleId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -132,7 +132,7 @@ class DataQualityRuleController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DataQualityRuleId(extractIdFromPath(path));
+            auto id = DataQualityRuleId(precheck.id);
             auto result = usecase.deleteDataQualityRule(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

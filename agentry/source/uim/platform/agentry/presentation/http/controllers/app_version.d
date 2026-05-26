@@ -46,7 +46,7 @@ class AppVersionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AppVersionId(extractIdFromPath(path));
+            auto id = AppVersionId(precheck.id);
             auto e = usecase.getAppVersion(tenantId, id);
             if (e.isNull) { writeError(res, 404, "App version not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -90,7 +90,7 @@ class AppVersionController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             AppVersionDTO dto;
-            dto.appVersionId = AppVersionId(extractIdFromPath(path));
+            dto.appVersionId = AppVersionId(precheck.id);
             dto.tenantId = tenantId;
             dto.releaseNotes = j.getString("releaseNotes");
             dto.artifactUrl = j.getString("artifactUrl");
@@ -112,7 +112,7 @@ class AppVersionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AppVersionId(extractIdFromPath(path));
+            auto id = AppVersionId(precheck.id);
             auto result = usecase.deleteAppVersion(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "App version deleted successfully"), 200);

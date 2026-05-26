@@ -85,7 +85,7 @@ class SubscriptionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = EventSubscriptionId(extractIdFromPath(path));
+        auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid subscription ID", 400);
 
@@ -107,12 +107,12 @@ class SubscriptionController : ManageController {
         auto path = precheck.path;
         auto data = precheck.data;
 
-        auto id = EventSubscriptionId(extractIdFromPath(path));
+        auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid subscription ID", 400);
 
         SubscriptionDTO dto;
-        dto.subscriptionId = EventSubscriptionId(extractIdFromPath(path));
+        dto.subscriptionId = EventSubscriptionId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = j.getString("name");
         dto.description = j.getString("description");
@@ -138,7 +138,7 @@ class SubscriptionController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = EventSubscriptionId(extractIdFromPath(path));
+        auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid subscription ID", 400);
 

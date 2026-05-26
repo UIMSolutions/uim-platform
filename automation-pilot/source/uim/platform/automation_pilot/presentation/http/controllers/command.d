@@ -84,7 +84,7 @@ class CommandController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = CommandId(extractIdFromPath(path));
+        auto id = CommandId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid command ID", 400);
 
@@ -105,11 +105,11 @@ class CommandController : ManageController {
         auto path = precheck.path;
         auto data = precheck.data;
 
-        auto id = CommandId(extractIdFromPath(path));
+        auto id = CommandId(precheck.id);
 
         CommandDTO dto;
         dto.tenantId = tenantId;
-        dto.commandId = CommandId(extractIdFromPath(path));
+        dto.commandId = CommandId(precheck.id);
         dto.name = j.getString("name");
         dto.description = j.getString("description");
         dto.inputSchema = j.getString("inputSchema");
@@ -134,7 +134,7 @@ class CommandController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         
-        auto id = CommandId(extractIdFromPath(path));
+        auto id = CommandId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid command ID", 400);
 

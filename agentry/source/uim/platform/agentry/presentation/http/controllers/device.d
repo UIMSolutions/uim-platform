@@ -84,7 +84,7 @@ class DeviceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = DeviceId(extractIdFromPath(path));
+        auto id = DeviceId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid device ID", 400);
 
@@ -104,7 +104,7 @@ class DeviceController : ManageController {
         auto data = precheck.data;
 
         DeviceDTO dto;
-        dto.deviceId = DeviceId(extractIdFromPath(path));
+        dto.deviceId = DeviceId(precheck.id);
         dto.tenantId = tenantId;
         dto.osVersion = data.getString("osVersion");
         dto.appVersionInstalled = data.getString("appVersionInstalled");
@@ -128,7 +128,7 @@ class DeviceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = DeviceId(extractIdFromPath(path));
+        auto id = DeviceId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid device ID", 400);
 

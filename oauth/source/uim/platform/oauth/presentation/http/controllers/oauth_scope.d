@@ -48,7 +48,7 @@ class OAuthScopeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = OAuthScopeId(extractIdFromPath(path));
+            auto id = OAuthScopeId(precheck.id);
 
             auto e = usecase.getScope(tenantId, id);
             if (e.isNull) {
@@ -97,7 +97,7 @@ class OAuthScopeController : ManageController {
             auto j = req.json;
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
-            dto.scopeId = OAuthScopeId(extractIdFromPath(path));
+            dto.scopeId = OAuthScopeId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.updatedBy = UserId(j.getString("updatedBy"));
@@ -122,7 +122,7 @@ class OAuthScopeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = OAuthScopeId(extractIdFromPath(path));
+            auto id = OAuthScopeId(precheck.id);
             auto result = usecase.deleteOAuthScope(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -55,7 +55,7 @@ class DocumentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DocumentId(extractIdFromPath(path));
+            auto id = DocumentId(precheck.id);
             auto item = usecase.getDocument(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Document not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -109,7 +109,7 @@ class DocumentController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             auto action = j.getString("action");
-            auto id = DocumentId(extractIdFromPath(path));
+            auto id = DocumentId(precheck.id);
             auto userId = UserId(j.getString("userId"));
 
             if (action == "checkout") {
@@ -175,7 +175,7 @@ class DocumentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DocumentId(extractIdFromPath(path));
+            auto id = DocumentId(precheck.id);
             auto result = usecase.deleteDocument(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document deleted"), 200);
             else writeError(res, 400, result.message);

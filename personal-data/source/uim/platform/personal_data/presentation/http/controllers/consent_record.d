@@ -89,7 +89,7 @@ class ConsentRecordController : ManageController {
             if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
                 return;
 
-            auto id = ConsentRecordId(extractIdFromPath(path));
+            auto id = ConsentRecordId(precheck.id);
             if (!usecase.hasConsentRecord(tenantId, id)) {
                 writeError(res, 404, "Consent record not found");
                 return;

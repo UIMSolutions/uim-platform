@@ -48,7 +48,7 @@ class MtaOperationController : ManageController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             // /api/v1/slm/operations/{id}  — exclude sub-paths like /poll /abort /logs
-            auto id = MtaOperationId(extractIdFromPath(path));
+            auto id = MtaOperationId(precheck.id);
             auto op = usecase.getOperation(tenantId, id);
             if (op.isNull) { writeError(res, 404, "Operation not found"); return; }
             res.writeJsonBody(op.toJson, 200);

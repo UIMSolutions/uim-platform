@@ -49,7 +49,7 @@ class ExtensionController : ManageController {
         try {   
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ExtensionId(extractIdFromPath(path));
+            auto id = ExtensionId(precheck.id);
             auto e = usecase.getExtension(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Extension not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -100,7 +100,7 @@ class ExtensionController : ManageController {
             auto j = req.json;
             
             ExtensionDTO dto;
-            dto.extensionId = ExtensionId(extractIdFromPath(path));
+            dto.extensionId = ExtensionId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -127,7 +127,7 @@ class ExtensionController : ManageController {
             auto tenantId = req.getTenantId;
             
             auto path = req.requestURI.to!string;
-            auto id = ExtensionId(extractIdFromPath(path));
+            auto id = ExtensionId(precheck.id);
             auto result = usecase.deleteExtension(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

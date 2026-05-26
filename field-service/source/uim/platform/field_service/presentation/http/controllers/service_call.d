@@ -48,7 +48,7 @@ class ServiceCallController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ServiceCallId(extractIdFromPath(path));
+            auto id = ServiceCallId(precheck.id);
             auto serviceCall = usecase.getServiceCall(tenantId, id);
             if (serviceCall.isNull) { writeError(res, 404, "Service call not found"); return; }
             res.writeJsonBody(serviceCall.toJson, 200);
@@ -101,7 +101,7 @@ class ServiceCallController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceCallDTO dto;
-            dto.serviceCallId = ServiceCallId(extractIdFromPath(path));
+            dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
@@ -131,7 +131,7 @@ class ServiceCallController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ServiceCallId(extractIdFromPath(path));
+            auto id = ServiceCallId(precheck.id);
             
             auto result = usecase.deleteServiceCall(tenantId, id);
             if (result.hasError)

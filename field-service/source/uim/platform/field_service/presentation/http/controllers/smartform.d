@@ -48,7 +48,7 @@ class SmartformController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SmartformId(extractIdFromPath(path));
+            auto id = SmartformId(precheck.id);
 
             auto e = usecase.getSmartform(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Smartform not found"); return; }
@@ -97,7 +97,7 @@ class SmartformController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SmartformDTO dto;
-            dto.smartformId = SmartformId(extractIdFromPath(path));
+            dto.smartformId = SmartformId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -128,7 +128,7 @@ class SmartformController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SmartformId(extractIdFromPath(path));
+            auto id = SmartformId(precheck.id);
             auto result = usecase.deleteSmartform(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

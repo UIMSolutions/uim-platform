@@ -46,7 +46,7 @@ class BusinessPartnerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BusinessPartnerId(extractIdFromPath(path));
+            auto id = BusinessPartnerId(precheck.id);
             auto bp = usecase.getBusinessPartner(tenantId, id);
             if (bp.isNull) { writeError(res, 404, "Business partner not found"); return; }
             res.writeJsonBody(bp.toJson, 200);
@@ -119,7 +119,7 @@ class BusinessPartnerController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BusinessPartnerDTO dto;
-            dto.businessPartnerId = BusinessPartnerId(extractIdFromPath(path));
+            dto.businessPartnerId = BusinessPartnerId(precheck.id);
             dto.tenantId = tenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");
@@ -158,7 +158,7 @@ class BusinessPartnerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BusinessPartnerId(extractIdFromPath(path));
+            auto id = BusinessPartnerId(precheck.id);
             auto result = usecase.deleteBusinessPartner(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

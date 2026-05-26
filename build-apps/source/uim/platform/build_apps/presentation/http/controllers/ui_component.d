@@ -49,7 +49,7 @@ class UIComponentController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = UIComponentId(extractIdFromPath(path));
+            auto id = UIComponentId(precheck.id);
 
             auto e = components.getUIComponent(tenantId, id);
             if (e.isNull) { writeError(res, 404, "UI component not found"); return; }
@@ -104,7 +104,7 @@ class UIComponentController : ManageController {
 
             UIComponentDTO dto;
             dto.tenantId = tenantId;
-            dto.uiComponentId = UIComponentId(extractIdFromPath(path));
+            dto.uiComponentId = UIComponentId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -130,7 +130,7 @@ class UIComponentController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = UIComponentId(extractIdFromPath(path));
+            auto id = UIComponentId(precheck.id);
 
             auto result = components.deleteUIComponent(tenantId, id);
             if (result.hasError)

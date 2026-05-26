@@ -46,7 +46,7 @@ class PrintQueueController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintQueueId(extractIdFromPath(path));
+            auto id = PrintQueueId(precheck.id);
             auto e = usecase.getPrintQueue(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print queue not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -89,7 +89,7 @@ class PrintQueueController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             PrintQueueDTO dto;
-            dto.queueId = PrintQueueId(extractIdFromPath(path));
+            dto.queueId = PrintQueueId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -113,7 +113,7 @@ class PrintQueueController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintQueueId(extractIdFromPath(path));
+            auto id = PrintQueueId(precheck.id);
             auto result = usecase.deletePrintQueue(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Print queue deleted successfully"), 200);

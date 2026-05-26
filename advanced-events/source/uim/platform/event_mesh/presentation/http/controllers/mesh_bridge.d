@@ -50,7 +50,7 @@ class MeshBridgeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = MeshBridgeId(extractIdFromPath(path));
+            auto id = MeshBridgeId(precheck.id);
 
             auto e = usecase.getBridge(tenantId, id);
             if (e.isNull) {
@@ -109,7 +109,7 @@ class MeshBridgeController : ManageController {
             auto j = req.json;
 
             MeshBridgeDTO dto;
-            dto.bridgeId = MeshBridgeId(extractIdFromPath(path));
+            dto.bridgeId = MeshBridgeId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -138,7 +138,7 @@ class MeshBridgeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto bridgeId = MeshBridgeId(extractIdFromPath(path));
+            auto bridgeId = MeshBridgeId(precheck.id);
             auto result = usecase.deleteBridge(tenantId, bridgeId);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -50,7 +50,7 @@ class OAuthClientController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = OAuthClientId(extractIdFromPath(path));
+            auto id = OAuthClientId(precheck.id);
 
             auto e = usecase.getClient(tenantId, id);
             if (e.isNull) {
@@ -110,7 +110,7 @@ class OAuthClientController : ManageController {
 
             OAuthClientDTO dto;
             dto.tenantId = tenantId;
-            dto.clientId = OAuthClientId(extractIdFromPath(path));
+            dto.clientId = OAuthClientId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.redirectUris = j.getString("redirectUris");
@@ -138,7 +138,7 @@ class OAuthClientController : ManageController {
         try {
             auto path = req.requestURI.to!string;
             auto tenantId = req.getTenantId;
-            auto id = OAuthClientId(extractIdFromPath(path));
+            auto id = OAuthClientId(precheck.id);
             
             auto result = usecase.deleteClient(tenantId, id);
             if (result.hasError)

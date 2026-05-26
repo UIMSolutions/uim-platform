@@ -83,7 +83,7 @@ class AppDefinitionController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = AppDefinitionId(extractIdFromPath(path));
+        auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
 
@@ -103,7 +103,7 @@ class AppDefinitionController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto data = precheck.data;
-        auto id = AppDefinitionId(extractIdFromPath(path));
+        auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
 
@@ -133,7 +133,7 @@ class AppDefinitionController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = AppDefinitionId(extractIdFromPath(path));
+        auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
 

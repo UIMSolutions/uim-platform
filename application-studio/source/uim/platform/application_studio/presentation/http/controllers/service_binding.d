@@ -50,7 +50,7 @@ class ServiceBindingController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ServiceBindingId(extractIdFromPath(path));
+            auto id = ServiceBindingId(precheck.id);
 
             auto e = usecase.getServiceBinding(tenantId, id);
             if (e.isNull) {
@@ -103,7 +103,7 @@ class ServiceBindingController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ServiceBindingDTO dto;
-            dto.id = ServiceBindingId(extractIdFromPath(path));
+            dto.id = ServiceBindingId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.serviceUrl = j.getString("serviceUrl");
@@ -129,7 +129,7 @@ class ServiceBindingController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ServiceBindingId(extractIdFromPath(path));
+            auto id = ServiceBindingId(precheck.id);
 
             auto result = usecase.deleteServiceBinding(tenantId, id);
             if (result.hasError)

@@ -49,7 +49,7 @@ class ActivityController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ActivityId(extractIdFromPath(path));
+            auto id = ActivityId(precheck.id);
             Activity activity = usecase.getActivity(tenantId, id);
             if (activity.isNull) {
                 writeError(res, 404, "Activity not found");
@@ -104,7 +104,7 @@ class ActivityController : ManageController {
             auto j = req.json;
 
             ActivityDTO dto;
-            dto.activityId = ActivityId(extractIdFromPath(path));
+            dto.activityId = ActivityId(precheck.id);
             dto.tenantId = tenantId;
             dto.subject = j.getString("subject");
             dto.description = j.getString("description");
@@ -136,7 +136,7 @@ class ActivityController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ActivityId(extractIdFromPath(path));
+            auto id = ActivityId(precheck.id);
             auto result = usecase.deleteActivity(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

@@ -82,7 +82,7 @@ class DevSpaceTypeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = DevSpaceTypeId(extractIdFromPath(path));
+        auto id = DevSpaceTypeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid dev space type ID", 400);
 
@@ -103,7 +103,7 @@ class DevSpaceTypeController : ManageController {
 
         DevSpaceTypeDTO dto;
         dto.tenantId = tenantId;
-        dto.typeId = DevSpaceTypeId(extractIdFromPath(path));
+        dto.typeId = DevSpaceTypeId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.predefinedExtensions = data.getString("predefinedExtensions");
@@ -126,7 +126,7 @@ class DevSpaceTypeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = DevSpaceTypeId(extractIdFromPath(path));
+        auto id = DevSpaceTypeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid dev space type ID", 400);
 

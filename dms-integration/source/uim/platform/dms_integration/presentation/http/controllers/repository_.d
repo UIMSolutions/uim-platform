@@ -45,7 +45,7 @@ class RepositoryController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RepositoryId(extractIdFromPath(path));
+            auto id = RepositoryId(precheck.id);
             auto item = usecase.getRepository(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Repository not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -94,7 +94,7 @@ class RepositoryController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             auto action = j.getString("action");
-            auto id = RepositoryId(extractIdFromPath(path));
+            auto id = RepositoryId(precheck.id);
 
             if (action == "activate") {
                 auto result = usecase.activateRepository(tenantId, id);
@@ -133,7 +133,7 @@ class RepositoryController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RepositoryId(extractIdFromPath(path));
+            auto id = RepositoryId(precheck.id);
             auto result = usecase.deleteRepository(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository deleted"), 200);
             else writeError(res, 404, result.message);

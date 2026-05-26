@@ -71,7 +71,7 @@ class DataConnectionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto dataConnectionId = DataConnectionId(extractIdFromPath(path));
+            auto dataConnectionId = DataConnectionId(precheck.id);
 
             auto e = usecase.getDataConnection(tenantId, dataConnectionId);
             if (e.isNull) {
@@ -130,7 +130,7 @@ class DataConnectionController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataConnectionDTO dto;
-            dto.dataConnectionId = DataConnectionId(extractIdFromPath(path));
+            dto.dataConnectionId = DataConnectionId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -166,7 +166,7 @@ class DataConnectionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = DataConnectionId(extractIdFromPath(path));
+        auto id = DataConnectionId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid Data Connection ID")

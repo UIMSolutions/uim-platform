@@ -49,7 +49,7 @@ class ContentConnectorController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ContentConnectorId(extractIdFromPath(path));
+            auto id = ContentConnectorId(precheck.id);
 
             auto e = usecase.getContentConnector(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Content connector not found"); return; }
@@ -95,7 +95,7 @@ class ContentConnectorController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             ContentConnectorDTO dto;
-            dto.contentConnectorId = ContentConnectorId(extractIdFromPath(path));
+            dto.contentConnectorId = ContentConnectorId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.repositoryUrl = j.getString("repositoryUrl");
@@ -123,7 +123,7 @@ class ContentConnectorController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto contentConnectorId = ContentConnectorId(extractIdFromPath(path));
+            auto contentConnectorId = ContentConnectorId(precheck.id);
 
             auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
             if (result.hasError)

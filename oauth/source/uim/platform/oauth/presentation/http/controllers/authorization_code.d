@@ -99,7 +99,7 @@ class AuthorizationCodeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AuthorizationCodeId(extractIdFromPath(path));
+            auto id = AuthorizationCodeId(precheck.id);
 
             auto result = usecase.markUsedCode(tenantId, id);
             if (result.hasError)
@@ -121,7 +121,7 @@ class AuthorizationCodeController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AuthorizationCodeId(extractIdFromPath(path));
+            auto id = AuthorizationCodeId(precheck.id);
             auto result = usecase.deleteCode(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

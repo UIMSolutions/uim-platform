@@ -167,7 +167,7 @@ class CertificateController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = CertificateId(extractIdFromPath(path));
+    auto id = CertificateId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid certificate ID", 400);
 

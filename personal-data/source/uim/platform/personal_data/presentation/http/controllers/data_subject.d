@@ -119,7 +119,7 @@ class DataSubjectController : ManageController {
             if (path.length > 6 && path[$ - 6 .. $] == "/erase")
                 return;
 
-            auto id = DataSubjectId(extractIdFromPath(path));
+            auto id = DataSubjectId(precheck.id);
             if (!usecase.hasDataSubject(tenantId, id)) {
                 writeError(res, 404, "Data subject not found");
                 return;

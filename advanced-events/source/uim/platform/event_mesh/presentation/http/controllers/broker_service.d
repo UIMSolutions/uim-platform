@@ -52,7 +52,7 @@ class BrokerServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = req.requestURI.to!string;
-    auto id = BrokerServiceId(extractIdFromPath(path));
+    auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid broker service ID", "BadRequest", 400);
 
@@ -106,7 +106,7 @@ class BrokerServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = req.requestURI.to!string;
-    auto id = BrokerServiceId(extractIdFromPath(path));
+    auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid broker service ID", "BadRequest", 400);
 
@@ -140,7 +140,7 @@ class BrokerServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = req.requestURI.to!string;
-    auto id = BrokerServiceId(extractIdFromPath(path));
+    auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid broker service ID", 400);
 

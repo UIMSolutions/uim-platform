@@ -49,7 +49,7 @@ class ExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto executionId = ExecutionId(extractIdFromPath(path));
+            auto executionId = ExecutionId(precheck.id);
 
             auto e = executions.getExecution(tenantId, executionId);
             if (e.isNull) {
@@ -98,7 +98,7 @@ class ExecutionController : ManageController {
 
             ExecutionDTO dto;
             dto.tenantId = tenantId;
-            dto.executionId = ExecutionId(extractIdFromPath(path));
+            dto.executionId = ExecutionId(precheck.id);
 
             auto result = executions.updateExecution(dto);
             if (result.hasError)
@@ -120,7 +120,7 @@ class ExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ExecutionId(extractIdFromPath(path));
+            auto id = ExecutionId(precheck.id);
 
             auto result = executions.deleteExecution(tenantId, id);
             if (result.hasError)

@@ -46,7 +46,7 @@ class ChangeRequestController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ChangeRequestId(extractIdFromPath(path));
+            auto id = ChangeRequestId(precheck.id);
             auto cr = usecase.getChangeRequest(tenantId, id);
             if (cr.isNull) { writeError(res, 404, "Change request not found"); return; }
             res.writeJsonBody(cr.toJson, 200);
@@ -92,7 +92,7 @@ class ChangeRequestController : ManageController {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
-            auto id = ChangeRequestId(extractIdFromPath(path));
+            auto id = ChangeRequestId(precheck.id);
             auto action = j.getString("action");
             auto userId = UserId(j.getString("userId"));
             auto comments = j.getString("comments");
@@ -130,7 +130,7 @@ class ChangeRequestController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ChangeRequestId(extractIdFromPath(path));
+            auto id = ChangeRequestId(precheck.id);
             auto result = usecase.deleteChangeRequest(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

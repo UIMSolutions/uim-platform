@@ -78,7 +78,7 @@ class ConsentRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = ConsentRecordId(extractIdFromPath(path));
+        auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
 
@@ -96,7 +96,7 @@ class ConsentRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = ConsentRecordId(extractIdFromPath(path));
+        auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
 
@@ -113,7 +113,7 @@ class ConsentRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = ConsentRecordId(extractIdFromPath(path));
+        auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
 

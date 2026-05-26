@@ -79,7 +79,7 @@ class IdentityProviderController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = IdentityProviderId(extractIdFromPath(path));
+        auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 
@@ -97,7 +97,7 @@ class IdentityProviderController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = IdentityProviderId(extractIdFromPath(path));
+        auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 
@@ -127,7 +127,7 @@ class IdentityProviderController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = IdentityProviderId(extractIdFromPath(path));
+        auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 

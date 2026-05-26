@@ -50,7 +50,7 @@ class RefreshTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RefreshTokenId(extractIdFromPath(path));
+            auto id = RefreshTokenId(precheck.id);
 
             auto e = usecase.getToken(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Refresh token not found"); return; }
@@ -96,7 +96,7 @@ class RefreshTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RefreshTokenId(extractIdFromPath(path));
+            auto id = RefreshTokenId(precheck.id);
 
             auto result = usecase.revokeToken(tenantId, id);
             if (result.hasError)
@@ -117,7 +117,7 @@ class RefreshTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RefreshTokenId(extractIdFromPath(path));
+            auto id = RefreshTokenId(precheck.id);
 
             auto result = usecase.deleteToken(tenantId, id);
             if (result.hasError)

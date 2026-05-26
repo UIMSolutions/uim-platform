@@ -48,7 +48,7 @@ class CustomerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = CustomerId(extractIdFromPath(path));
+            auto id = CustomerId(precheck.id);
             
             auto customer = usecase.getCustomer(tenantId, id);
             if (customer.isNull) { writeError(res, 404, "Customer not found"); return; }
@@ -102,7 +102,7 @@ class CustomerController : ManageController {
             auto j = req.json;
 
             CustomerDTO dto;
-            dto.customerId = CustomerId(extractIdFromPath(path));
+            dto.customerId = CustomerId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -132,7 +132,7 @@ class CustomerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = CustomerId(extractIdFromPath(path));
+            auto id = CustomerId(precheck.id);
             auto result = usecase.deleteCustomer(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

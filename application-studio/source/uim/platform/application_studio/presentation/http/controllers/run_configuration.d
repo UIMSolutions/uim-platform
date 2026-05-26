@@ -50,7 +50,7 @@ class RunConfigurationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RunConfigurationId(extractIdFromPath(path));
+            auto id = RunConfigurationId(precheck.id);
 
             auto e = usecase.getRunConfiguration(tenantId, id);
             if (e.isNull) {
@@ -105,7 +105,7 @@ class RunConfigurationController : ManageController {
 
             RunConfigurationDTO dto;
             dto.tenantId = tenantId;
-            dto.runConfigurationId = RunConfigurationId(extractIdFromPath(path));
+            dto.runConfigurationId = RunConfigurationId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.entryPoint = j.getString("entryPoint");
@@ -131,7 +131,7 @@ class RunConfigurationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = RunConfigurationId(extractIdFromPath(path));
+            auto id = RunConfigurationId(precheck.id);
             
             auto result = usecase.deleteRunConfiguration(tenantId, id);
             if (result.hasError)

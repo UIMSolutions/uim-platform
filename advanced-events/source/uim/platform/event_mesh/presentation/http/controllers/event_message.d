@@ -53,7 +53,7 @@ class EventMessageController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = EventMessageId(extractIdFromPath(path));
+        auto id = EventMessageId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid message ID", 400);
 
@@ -107,7 +107,7 @@ class EventMessageController : ManageController {
             auto tenantId = req.getTenantId;
             auto path = req
                 .requestURI.to!string;
-            auto id = EventMessageId(extractIdFromPath(path));
+            auto id = EventMessageId(precheck.id);
             auto result = usecase.acknowledgeMessage(
                 tenantId,
                 id);

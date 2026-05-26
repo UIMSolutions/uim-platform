@@ -89,7 +89,7 @@ class AppBuildController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = AppBuildId(extractIdFromPath(path));
+        auto id = AppBuildId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid App Build ID")
@@ -117,7 +117,7 @@ class AppBuildController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = AppBuildId(extractIdFromPath(path));
+        auto id = AppBuildId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid App Build ID")
@@ -157,7 +157,7 @@ class AppBuildController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = AppBuildId(extractIdFromPath(path));
+        auto id = AppBuildId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid App Build ID")

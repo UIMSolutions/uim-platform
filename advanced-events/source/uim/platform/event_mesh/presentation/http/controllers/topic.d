@@ -103,7 +103,7 @@ class TopicController : ManageController {
     auto data = precheck.data;
 
     TopicDTO dto;
-    dto.topicId = TopicId(extractIdFromPath(path));
+    dto.topicId = TopicId(precheck.id);
     dto.tenantId = tenantId;
     dto.name = j.getString("name");
     dto.description = j.getString("description");
@@ -132,7 +132,7 @@ class TopicController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = TopicId(extractIdFromPath(path));
+    auto id = TopicId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid topic ID", 400);
       

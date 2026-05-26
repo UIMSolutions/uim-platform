@@ -46,7 +46,7 @@ class PrintClientController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintClientId(extractIdFromPath(path));
+            auto id = PrintClientId(precheck.id);
             auto e = usecase.getPrintClient(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print client not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -88,7 +88,7 @@ class PrintClientController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             PrintClientDTO dto;
-            dto.clientId = PrintClientId(extractIdFromPath(path));
+            dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -111,7 +111,7 @@ class PrintClientController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintClientId(extractIdFromPath(path));
+            auto id = PrintClientId(precheck.id);
             auto result = usecase.deletePrintClient(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Print client deleted successfully"), 200);

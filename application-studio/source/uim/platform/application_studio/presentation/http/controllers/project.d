@@ -83,7 +83,7 @@ class ProjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = ProjectId(extractIdFromPath(path));
+        auto id = ProjectId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid project ID", 400);
 
@@ -127,7 +127,7 @@ class ProjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = ProjectId(extractIdFromPath(path));
+        auto id = ProjectId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid project ID", 400);
 

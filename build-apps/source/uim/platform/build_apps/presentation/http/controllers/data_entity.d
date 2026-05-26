@@ -51,7 +51,7 @@ class DataEntityController : ManageController {
             auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
-            auto id = DataEntityId(extractIdFromPath(path));
+            auto id = DataEntityId(precheck.id);
 
             auto e = usecase.getDataEntity(tenantId, id);
             if (e.isNull) {
@@ -105,7 +105,7 @@ class DataEntityController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataEntityDTO dto;
-            dto.dataEntityId = DataEntityId(extractIdFromPath(path));
+            dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -133,7 +133,7 @@ class DataEntityController : ManageController {
             auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
-            auto id = DataEntityId(extractIdFromPath(path));
+            auto id = DataEntityId(precheck.id);
             auto result = usecase.deleteDataEntity(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

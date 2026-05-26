@@ -50,7 +50,7 @@ class ScheduledExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ScheduledExecutionId(extractIdFromPath(path));
+            auto id = ScheduledExecutionId(precheck.id);
 
             auto e = scheduledExecutions.getScheduledExecution(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Scheduled execution not found"); return; }
@@ -101,7 +101,7 @@ class ScheduledExecutionController : ManageController {
             
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
-            dto.scheduledExecutionId = ScheduledExecutionId(extractIdFromPath(path));
+            dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
             dto.cronExpression = j.getString("cronExpression");
             dto.scheduledAt = j.getLong("scheduledAt");
             dto.description = j.getString("description");
@@ -127,7 +127,7 @@ class ScheduledExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = ScheduledExecutionId(extractIdFromPath(path));
+            auto id = ScheduledExecutionId(precheck.id);
 
             auto result = scheduledExecutions.deleteScheduledExecution(tenantId, id);
             if (result.hasError)

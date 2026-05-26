@@ -49,7 +49,7 @@ class SkillController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SkillId(extractIdFromPath(path));
+            auto id = SkillId(precheck.id);
             auto e = usecase.getSkill(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Skill not found"); return; }
             res.writeJsonBody(e.toJson, 200);
@@ -98,7 +98,7 @@ class SkillController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SkillDTO dto;
-            dto.skillId = SkillId(extractIdFromPath(path));
+            dto.skillId = SkillId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -127,7 +127,7 @@ class SkillController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SkillId(extractIdFromPath(path));
+            auto id = SkillId(precheck.id);
             auto result = usecase.deleteSkill(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

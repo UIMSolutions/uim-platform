@@ -82,7 +82,7 @@ class BuildConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = BuildConfigurationId(extractIdFromPath(path));
+        auto id = BuildConfigurationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid build configuration ID", "InvalidId", 400);
 
@@ -128,7 +128,7 @@ class BuildConfigurationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BuildConfigurationId(extractIdFromPath(path));
+            auto id = BuildConfigurationId(precheck.id);
 
             auto result = usecase.deleteBuildConfiguration(tenantId, id);
             if (result.hasError)

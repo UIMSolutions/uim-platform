@@ -49,7 +49,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = TriggerId(extractIdFromPath(path));
+            auto id = TriggerId(precheck.id);
 
             auto e = usecase.getTrigger(tenantId, id);
             if (e.isNull) {
@@ -103,7 +103,7 @@ class TriggerController : ManageController {
 
             TriggerDTO dto;
             dto.tenantId = tenantId;
-            dto.triggerId = TriggerId(extractIdFromPath(path));
+            dto.triggerId = TriggerId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.eventType = j.getString("eventType");
@@ -131,7 +131,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = TriggerId(extractIdFromPath(path));
+            auto id = TriggerId(precheck.id);
 
             auto result = usecase.deleteTrigger(tenantId, id);
             if (result.hasError)

@@ -46,7 +46,7 @@ class PrintTaskController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintTaskId(extractIdFromPath(path));
+            auto id = PrintTaskId(precheck.id);
             auto e = usecase.getPrintTask(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print task not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -89,7 +89,7 @@ class PrintTaskController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintTaskId(extractIdFromPath(path));
+            auto id = PrintTaskId(precheck.id);
             auto j = req.json;
             auto status = j.getString("status");
             auto errorMessage = j.getString("errorMessage");
@@ -110,7 +110,7 @@ class PrintTaskController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PrintTaskId(extractIdFromPath(path));
+            auto id = PrintTaskId(precheck.id);
             auto result = usecase.deletePrintTask(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Print task deleted successfully"), 200);

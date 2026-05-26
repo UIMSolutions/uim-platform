@@ -84,7 +84,7 @@ class IdentityProviderController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = IdentityProviderId(extractIdFromPath(path));
+    auto id = IdentityProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid identity provider ID", 400);
 
@@ -105,7 +105,7 @@ class IdentityProviderController : ManageController {
     auto path = precheck.path;
     auto data = precheck.data;
 
-    auto id = IdentityProviderId(extractIdFromPath(path));
+    auto id = IdentityProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid identity provider ID", 400);
 
@@ -136,7 +136,7 @@ class IdentityProviderController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = IdentityProviderId(extractIdFromPath(path));
+    auto id = IdentityProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid identity provider ID", 400);
 

@@ -50,7 +50,7 @@ class AccessTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AccessTokenId(extractIdFromPath(path));
+            auto id = AccessTokenId(precheck.id);
 
             auto e = usecase.getToken(tenantId, id);
             if (e.isNull) {
@@ -97,7 +97,7 @@ class AccessTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AccessTokenId(extractIdFromPath(path));
+            auto id = AccessTokenId(precheck.id);
 
             auto result = usecase.revokeToken(tenantId, id);
             if (result.hasError)
@@ -118,7 +118,7 @@ class AccessTokenController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = AccessTokenId(extractIdFromPath(path));
+            auto id = AccessTokenId(precheck.id);
             
             auto result = usecase.deleteToken(tenantId, id);
             if (result.hasError)

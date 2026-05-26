@@ -46,7 +46,7 @@ class SyncSessionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SyncSessionId(extractIdFromPath(path));
+            auto id = SyncSessionId(precheck.id);
             auto e = usecase.getSyncSession(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Sync session not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -86,7 +86,7 @@ class SyncSessionController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SyncSessionDTO dto;
-            dto.syncSessionId = SyncSessionId(extractIdFromPath(path));
+            dto.syncSessionId = SyncSessionId(precheck.id);
             dto.tenantId = tenantId;
             dto.status = j.getString("status");
 
@@ -106,7 +106,7 @@ class SyncSessionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = SyncSessionId(extractIdFromPath(path));
+            auto id = SyncSessionId(precheck.id);
             auto result = usecase.deleteSyncSession(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Sync session deleted successfully"), 200);

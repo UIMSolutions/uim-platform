@@ -44,7 +44,7 @@ class ProvisioningJobController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ProvisioningJobId(extractIdFromPath(path));
+            auto id = ProvisioningJobId(precheck.id);
             auto e = usecase.getJob(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Provisioning job not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -79,7 +79,7 @@ class ProvisioningJobController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ProvisioningJobId(extractIdFromPath(path));
+            auto id = ProvisioningJobId(precheck.id);
             auto result = usecase.deleteJob(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Provisioning job deleted successfully"), 200);

@@ -52,7 +52,7 @@ class FolderController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = FolderId(extractIdFromPath(path));
+            auto id = FolderId(precheck.id);
             auto item = usecase.getFolder(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Folder not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -100,7 +100,7 @@ class FolderController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             auto action = j.getString("action");
-            auto id = FolderId(extractIdFromPath(path));
+            auto id = FolderId(precheck.id);
             auto userId = UserId(j.getString("userId"));
 
             if (action == "move") {
@@ -132,7 +132,7 @@ class FolderController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = FolderId(extractIdFromPath(path));
+            auto id = FolderId(precheck.id);
             auto result = usecase.deleteFolder(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Folder deleted"), 200);
             else writeError(res, 400, result.message);

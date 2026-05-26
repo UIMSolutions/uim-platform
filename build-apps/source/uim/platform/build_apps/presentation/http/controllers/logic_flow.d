@@ -50,7 +50,7 @@ class LogicFlowController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto id = LogicFlowId(extractIdFromPath(path));
+            auto id = LogicFlowId(precheck.id);
 
             auto e = usecase.getLogicFlow(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Logic flow not found"); return; }
@@ -104,7 +104,7 @@ class LogicFlowController : ManageController {
 
             LogicFlowDTO dto;
             dto.tenantId = tenantId;
-            dto.logicFlowId = LogicFlowId(extractIdFromPath(path));
+            dto.logicFlowId = LogicFlowId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.nodes = j.getString("nodes");
@@ -131,7 +131,7 @@ class LogicFlowController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = LogicFlowId(extractIdFromPath(path));
+            auto id = LogicFlowId(precheck.id);
 
             auto result = usecase.deleteLogicFlow(tenantId, id);
             if (result.hasError)

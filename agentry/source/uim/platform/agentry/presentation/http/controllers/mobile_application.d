@@ -46,7 +46,7 @@ class MobileApplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = MobileApplicationId(extractIdFromPath(path));
+            auto id = MobileApplicationId(precheck.id);
             auto e = usecase.getMobileApplication(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Mobile application not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -92,7 +92,7 @@ class MobileApplicationController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             MobileApplicationDTO dto;
-            dto.mobileApplicationId = MobileApplicationId(extractIdFromPath(path));
+            dto.mobileApplicationId = MobileApplicationId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -118,7 +118,7 @@ class MobileApplicationController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = MobileApplicationId(extractIdFromPath(path));
+            auto id = MobileApplicationId(precheck.id);
             auto result = usecase.deleteMobileApplication(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Mobile application deleted successfully"), 200);

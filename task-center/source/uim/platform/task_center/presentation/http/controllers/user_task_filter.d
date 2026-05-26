@@ -88,7 +88,7 @@ class UserTaskFilterController : ManageController {
                 return;
 
             auto tenantId = req.getTenantId;
-            auto id = UserTaskFilterId(extractIdFromPath(path));
+            auto id = UserTaskFilterId(precheck.id);
             auto f = usecase.getUserTaskFilter(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Filter not found");

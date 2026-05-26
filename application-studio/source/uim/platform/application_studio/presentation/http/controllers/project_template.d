@@ -49,7 +49,7 @@ class ProjectTemplateController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = ProjectTemplateId(extractIdFromPath(path));
+            auto id = ProjectTemplateId(precheck.id);
 
             auto e = usecase.getProjectTemplate(tenantId, id);
             if (e.isNull) {
@@ -102,7 +102,7 @@ class ProjectTemplateController : ManageController {
 
             ProjectTemplateDTO dto;
             dto.tenantId = tenantId;
-            dto.projectTemplateId = ProjectTemplateId(extractIdFromPath(path));
+            dto.projectTemplateId = ProjectTemplateId(precheck.id);
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.version_ = j.getString("version");
@@ -127,7 +127,7 @@ class ProjectTemplateController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
-            auto id = ProjectTemplateId(extractIdFromPath(path));
+            auto id = ProjectTemplateId(precheck.id);
             auto tenantId = req.getTenantId;
             auto result = usecase.deleteProjectTemplate(tenantId, id);
             if (result.hasError)

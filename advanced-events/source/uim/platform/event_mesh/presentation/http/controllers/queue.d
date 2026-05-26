@@ -52,7 +52,7 @@ class QueueController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto id = QueueId(extractIdFromPath(path));
+        auto id = QueueId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid queue ID", 400);
         auto queue = usecase.getQueue(tenantId, id);
@@ -110,7 +110,7 @@ class QueueController : ManageController {
         auto data = precheck.data;
 
         QueueDTO dto;
-        dto.queueId = QueueId(extractIdFromPath(path));
+        dto.queueId = QueueId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -137,7 +137,7 @@ class QueueController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = QueueId(extractIdFromPath(path));
+        auto id = QueueId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid queue ID", 400);
 

@@ -81,7 +81,7 @@ class DeploymentController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = DeploymentId(extractIdFromPath(path));
+        auto id = DeploymentId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid deployment ID", 400);
 
@@ -100,7 +100,7 @@ class DeploymentController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DeploymentDTO dto;
-            dto.deploymentId = DeploymentId(extractIdFromPath(path));
+            dto.deploymentId = DeploymentId(precheck.id);
             dto.tenantId = tenantId;
             dto.notes = j.getString("notes");
             dto.scheduledAt = j.getString("scheduledAt");
@@ -124,7 +124,7 @@ class DeploymentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DeploymentId(extractIdFromPath(path));
+            auto id = DeploymentId(precheck.id);
             auto result = usecase.deleteDeployment(tenantId, id);
             if (!result.success) {
                 writeError(res, 404, result.message);

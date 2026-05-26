@@ -84,7 +84,7 @@ class ResourceGroupController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = ResourceGroupId(extractIdFromPath(path));
+    auto id = ResourceGroupId(precheck.id);
 
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -131,7 +131,7 @@ class ResourceGroupController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = ResourceGroupId(extractIdFromPath(path));
+    auto id = ResourceGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid resource group ID", 400);
 

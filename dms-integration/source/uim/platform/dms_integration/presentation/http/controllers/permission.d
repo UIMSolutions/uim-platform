@@ -54,7 +54,7 @@ class PermissionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PermissionId(extractIdFromPath(path));
+            auto id = PermissionId(precheck.id);
             auto item = usecase.getPermission(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Permission not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -97,7 +97,7 @@ class PermissionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = PermissionId(extractIdFromPath(path));
+            auto id = PermissionId(precheck.id);
             auto result = usecase.deletePermission(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Permission revoked"), 200);
             else writeError(res, 404, result.message);

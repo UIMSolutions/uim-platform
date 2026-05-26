@@ -85,7 +85,7 @@ class ArtifactController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = ArtifactId(extractIdFromPath(path));
+    auto id = ArtifactId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid artifact ID", 400);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

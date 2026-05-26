@@ -108,7 +108,7 @@ class TaskController : ManageController {
                 return;
 
             auto tenantId = req.getTenantId;
-            auto id = TaskId(extractIdFromPath(path));
+            auto id = TaskId(precheck.id);
             auto t = usecase.getById(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Task not found");

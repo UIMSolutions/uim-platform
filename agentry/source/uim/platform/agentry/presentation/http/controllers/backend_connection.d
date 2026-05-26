@@ -47,7 +47,7 @@ class BackendConnectionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BackendConnectionId(extractIdFromPath(path));
+            auto id = BackendConnectionId(precheck.id);
             auto e = usecase.getBackendConnection(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Backend connection not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -94,7 +94,7 @@ class BackendConnectionController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BackendConnectionDTO dto;
-            dto.connectionId = BackendConnectionId(extractIdFromPath(path));
+            dto.connectionId = BackendConnectionId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -117,7 +117,7 @@ class BackendConnectionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = BackendConnectionId(extractIdFromPath(path));
+            auto id = BackendConnectionId(precheck.id);
             auto result = usecase.deleteBackendConnection(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Backend connection deleted successfully"), 200);

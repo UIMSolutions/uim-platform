@@ -49,7 +49,7 @@ class EquipmentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = EquipmentId(extractIdFromPath(path));
+            auto id = EquipmentId(precheck.id);
             auto equipment = usecase.getEquipment(tenantId, id);
             if (equipment.isNull) { writeError(res, 404, "Equipment not found"); return; }
             res.writeJsonBody(equipment.toJson, 200);
@@ -103,7 +103,7 @@ class EquipmentController : ManageController {
             auto j = req.json;
 
             EquipmentDTO dto;
-            dto.equipmentId = EquipmentId(extractIdFromPath(path));
+            dto.equipmentId = EquipmentId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
@@ -134,7 +134,7 @@ class EquipmentController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = EquipmentId(extractIdFromPath(path));
+            auto id = EquipmentId(precheck.id);
             auto result = usecase.deleteEquipment(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

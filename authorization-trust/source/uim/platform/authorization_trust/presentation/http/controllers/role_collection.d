@@ -75,7 +75,7 @@ class RoleCollectionController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = RoleCollectionId(extractIdFromPath(path));
+    auto id = RoleCollectionId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role collection ID", 400);
 
@@ -94,7 +94,7 @@ class RoleCollectionController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
-    auto id = RoleCollectionId(extractIdFromPath(path));
+    auto id = RoleCollectionId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role collection ID", 400);
 
@@ -122,7 +122,7 @@ class RoleCollectionController : ManageController {
     auto tenantId = precheck.tenantId;
     auto path = precheck.path;
 
-    auto id = RoleCollectionId(extractIdFromPath(path));
+    auto id = RoleCollectionId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role collection ID", 400);
 

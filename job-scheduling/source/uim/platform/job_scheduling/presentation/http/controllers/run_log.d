@@ -80,7 +80,7 @@ class RunLogController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto runLogId = RunLogId(extractIdFromPath(path));
+            auto runLogId = RunLogId(precheck.id);
             auto j = req.json;
 
             UpdateRunLogRequest r;

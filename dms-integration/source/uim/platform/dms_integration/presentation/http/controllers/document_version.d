@@ -53,7 +53,7 @@ class DocumentVersionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DocumentVersionId(extractIdFromPath(path));
+            auto id = DocumentVersionId(precheck.id);
             auto item = usecase.getDocumentVersion(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Document version not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -97,7 +97,7 @@ class DocumentVersionController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DocumentVersionId(extractIdFromPath(path));
+            auto id = DocumentVersionId(precheck.id);
             auto result = usecase.deleteDocumentVersion(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Document version deleted"), 200);
             else writeError(res, 400, result.message);

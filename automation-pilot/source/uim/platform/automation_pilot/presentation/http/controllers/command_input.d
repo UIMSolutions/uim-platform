@@ -88,7 +88,7 @@ class CommandInputController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = CommandInputId(extractIdFromPath(path));
+        auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid Command Input ID")
@@ -118,7 +118,7 @@ class CommandInputController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = CommandInputId(extractIdFromPath(path));
+        auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid Command Input ID")
@@ -130,7 +130,7 @@ class CommandInputController : ManageController {
 
         CommandInputDTO dto;
         dto.tenantId = tenantId;
-        dto.commandInputId = CommandInputId(extractIdFromPath(path));
+        dto.commandInputId = CommandInputId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.keys = data.getString("keys");
@@ -159,7 +159,7 @@ class CommandInputController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = CommandInputId(extractIdFromPath(path));
+        auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
                 .set("error", "Invalid Command Input ID")

@@ -89,7 +89,7 @@ class TaskDefinitionController : ManageController {
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
             auto tenantId = req.getTenantId;
-            auto id = TaskDefinitionId(extractIdFromPath(path));
+            auto id = TaskDefinitionId(precheck.id);
             auto d = usecase.getTaskDefinition(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Task definition not found");

@@ -46,7 +46,7 @@ class DataQualityScoreController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DataQualityScoreId(extractIdFromPath(path));
+            auto id = DataQualityScoreId(precheck.id);
             auto score = usecase.getDataQualityScore(tenantId, id);
             if (score.isNull) { writeError(res, 404, "Data quality score not found"); return; }
             res.writeJsonBody(score.toJson, 200);
@@ -91,7 +91,7 @@ class DataQualityScoreController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataQualityScoreDTO dto;
-            dto.scoreId = DataQualityScoreId(extractIdFromPath(path));
+            dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
             dto.overallScore = j.getInteger("overallScore");
             dto.completenessScore = j.getInteger("completenessScore");
@@ -119,7 +119,7 @@ class DataQualityScoreController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = DataQualityScoreId(extractIdFromPath(path));
+            auto id = DataQualityScoreId(precheck.id);
             auto result = usecase.deleteDataQualityScore(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

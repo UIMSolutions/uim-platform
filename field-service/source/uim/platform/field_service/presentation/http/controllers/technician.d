@@ -47,7 +47,7 @@ class TechnicianController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = TechnicianId(extractIdFromPath(path));
+            auto id = TechnicianId(precheck.id);
             auto e = usecase.getTechnician(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Technician not found"); return; }
             res.writeJsonBody(e.toJson, 200);
@@ -98,7 +98,7 @@ class TechnicianController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             TechnicianDTO dto;
-            dto.technicianId = TechnicianId(extractIdFromPath(path));
+            dto.technicianId = TechnicianId(precheck.id);
             dto.tenantId = tenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");
@@ -128,7 +128,7 @@ class TechnicianController : ManageController {
         try {
             auto tenantId = req.getTenantId;
             auto path = req.requestURI.to!string;
-            auto id = TechnicianId(extractIdFromPath(path));
+            auto id = TechnicianId(precheck.id);
             auto result = usecase.deleteTechnician(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

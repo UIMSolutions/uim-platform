@@ -76,7 +76,7 @@ class AuditLogController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = AuditLogId(extractIdFromPath(path));
+        auto id = AuditLogId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Audit Log ID").set("status", "error").set("statusCode", 400);
 
@@ -94,7 +94,7 @@ class AuditLogController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
-        auto id = AuditLogId(extractIdFromPath(path));
+        auto id = AuditLogId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Audit Log ID").set("status", "error").set("statusCode", 400);
 
