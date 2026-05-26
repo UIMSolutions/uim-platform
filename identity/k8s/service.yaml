@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity
+  namespace: uim-platform
+  labels:
+    app: identity
+    component: cloud-identity-services
+spec:
+  type: ClusterIP
+  selector:
+    app: identity
+  ports:
+  - name: http
+    port: 8121
+    targetPort: 8121
+    protocol: TCP
