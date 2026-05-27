@@ -38,7 +38,6 @@ class GroupController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       auto members = parseMembers(j);
       CreateGroupRequest createReq;
       createReq.tenantId = tenantId;

@@ -52,7 +52,6 @@ class CustomerController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CustomerDTO dto;
         dto.tenantId = tenantId;
         dto.email = data.getString("email");

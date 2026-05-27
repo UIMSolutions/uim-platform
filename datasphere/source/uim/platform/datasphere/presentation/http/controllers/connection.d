@@ -33,7 +33,6 @@ class ConnectionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateConnectionRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

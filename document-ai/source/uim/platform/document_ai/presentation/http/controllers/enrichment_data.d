@@ -104,7 +104,6 @@ class EnrichmentDataController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
-
       UpdateEnrichmentDataRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

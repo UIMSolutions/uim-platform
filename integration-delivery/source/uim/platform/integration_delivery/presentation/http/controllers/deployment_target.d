@@ -66,7 +66,6 @@ class DeploymentTargetController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DeploymentTargetDTO dto;
         dto.deploymentTargetId = DeploymentTargetId(data.getString("deploymentTargetId", ""));
         dto.tenantId = tenantId;

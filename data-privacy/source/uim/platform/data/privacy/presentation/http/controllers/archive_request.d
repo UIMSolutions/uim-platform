@@ -34,7 +34,6 @@ class ArchiveRequestController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateArchiveRequest r;
       r.tenantId = tenantId;
       r.subjectId = data.getString("dataSubjectId");
@@ -95,7 +94,6 @@ class ArchiveRequestController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateArchiveStatusRequest r;
       r.tenantId = tenantId;
       r.requestId = ArchiveRequestId(precheck.id);

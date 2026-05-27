@@ -101,7 +101,6 @@ class ConnectionController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Connectionprecheck.id);
       auto data = precheck.data;
-
       PatchConnectionRequest r;
       r.tenantId = tenantId;
       r.connectionId = id;

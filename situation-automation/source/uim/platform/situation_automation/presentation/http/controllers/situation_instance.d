@@ -35,7 +35,6 @@ class SituationInstanceController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = SituationTemplateId(data.getString("situationTemplateId"));
@@ -148,7 +147,6 @@ class SituationInstanceController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = SituationInstanceprecheck.id);
             auto data = precheck.data;
-
             UpdateSituationInstanceRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = id;

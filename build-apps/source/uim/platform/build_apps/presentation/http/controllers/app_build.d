@@ -55,7 +55,6 @@ class AppBuildController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         AppBuildDTO dto;
         dto.appBuildId = AppBuildId(precheck.id);
         dto.tenantId = tenantId;
@@ -126,7 +125,6 @@ class AppBuildController : ManageController {
         }
 
         auto data = precheck.data;
-
         AppBuildDTO dto;
         dto.appBuildId = id;
         dto.tenantId = tenantId;

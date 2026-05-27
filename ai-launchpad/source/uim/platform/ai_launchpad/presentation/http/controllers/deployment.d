@@ -111,7 +111,6 @@ class DeploymentController : ManageController {
       auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto data = precheck.data;
-
       PatchDeploymentRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
@@ -145,7 +144,7 @@ class DeploymentController : ManageController {
       BulkPatchDeploymentRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
+      r.deploymentIds = data.getStrings("deploymentIds").map!(id => DeploymentId(id)).array;
       r.targetStatus = data.getString("targetStatus");
 
       auto results = usecase.bulkPatchDeployments(r);

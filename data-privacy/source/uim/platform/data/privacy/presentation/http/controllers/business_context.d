@@ -35,7 +35,6 @@ class BusinessContextController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateBusinessContextRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -95,7 +94,6 @@ class BusinessContextController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateBusinessContextRequest r;
       r.tenantId = tenantId;
       r.contextId = BusinessContextId(precheck.id);

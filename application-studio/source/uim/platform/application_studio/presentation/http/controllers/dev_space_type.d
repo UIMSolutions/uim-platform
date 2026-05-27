@@ -53,7 +53,6 @@ class DevSpaceTypeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DevSpaceTypeDTO dto;
         dto.typeId = precheck.id;
         dto.tenantId = tenantId;
@@ -100,7 +99,6 @@ class DevSpaceTypeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DevSpaceTypeDTO dto;
         dto.tenantId = tenantId;
         dto.typeId = DevSpaceTypeId(precheck.id);

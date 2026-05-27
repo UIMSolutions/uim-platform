@@ -34,14 +34,13 @@ class ConsentPurposeController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateConsentPurposeRequest r;
       r.tenantId = tenantId;
       r.controllerId = DataControllerId(data.getString("controllerId"));
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.purpose = data.getString("purpose");
-      r.dataCategories = getStrings(j, "dataCategories");
+      r.dataCategories = data.getStrings("dataCategories");
       r.consentFormTemplate = data.getString("consentFormTemplate");
       r.version_ = data.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);

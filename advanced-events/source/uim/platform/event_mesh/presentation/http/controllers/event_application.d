@@ -52,7 +52,6 @@ class EventApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(data.getString("id"));
         dto.tenantId = tenantId;
@@ -103,7 +102,6 @@ class EventApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         auto id = EventApplicationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid event application ID", 400);

@@ -32,7 +32,6 @@ class TranslationProjectController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateTranslationProjectRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");
@@ -118,7 +117,6 @@ class TranslationProjectController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             UpdateTranslationProjectRequest r;
             r.tenantId = tenantId;
             r.projectId = TranslationProjectprecheck.id);

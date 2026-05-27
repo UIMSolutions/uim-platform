@@ -66,7 +66,6 @@ class ServicePlanController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ServicePlanDTO dto;
         dto.servicePlanId       = ServicePlanId(data.getString("servicePlanId", ""));
         dto.tenantId            = tenantId;
@@ -99,7 +98,6 @@ class ServicePlanController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ServicePlanDTO dto;
         dto.servicePlanId  = ServicePlanprecheck.id);
         dto.tenantId       = tenantId;

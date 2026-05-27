@@ -66,7 +66,6 @@ class BackupPolicyController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyId(data.getString("backupPolicyId", ""));
         dto.tenantId        = tenantId;
@@ -95,7 +94,6 @@ class BackupPolicyController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyprecheck.id);
         dto.tenantId        = tenantId;

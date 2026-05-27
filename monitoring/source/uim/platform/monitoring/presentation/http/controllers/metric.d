@@ -65,7 +65,6 @@ class MetricController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 

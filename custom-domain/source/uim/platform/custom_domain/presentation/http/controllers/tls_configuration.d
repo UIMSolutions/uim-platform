@@ -129,7 +129,6 @@ class TlsConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         UpdateTlsConfigurationRequest r;
         r.tenantId = tenantId;
         r.tlsConfigurationId = TlsConfigurationprecheck.id);

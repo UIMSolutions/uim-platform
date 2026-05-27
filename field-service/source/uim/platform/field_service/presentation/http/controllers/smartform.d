@@ -66,7 +66,6 @@ class SmartformController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             SmartformDTO dto;
             dto.smartformId = SmartformId(precheck.id);
             dto.tenantId = tenantId;

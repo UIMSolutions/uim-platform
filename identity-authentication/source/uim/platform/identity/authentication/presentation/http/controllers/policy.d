@@ -35,7 +35,6 @@ class PolicyController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       PolicyRule[] rules;
       auto rulesJson = "rules" in j;
       if (rulesJson !is null && (rulesJson).isArray) {
@@ -46,7 +45,7 @@ class PolicyController : ManageController {
       }
 
       auto createReq = CreatePolicyRequest(data.getString("tenantId"), data.getString("name"),
-        data.getString("description"), rules, getStrings(j, "applicationIds"));
+        data.getString("description"), rules, data.getStrings("applicationIds"));
 
       auto result = useCase.createPolicy(createReq);
       auto response = Json.emptyObject;

@@ -36,7 +36,6 @@ class PersonalDataModelController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreatePersonalDataModelRequest r;
       r.tenantId = tenantId;
       r.fieldName = data.getString("fieldName");
@@ -124,7 +123,6 @@ class PersonalDataModelController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdatePersonalDataModelRequest r;
       r.id = PersonalDataModelId(precheck.id);
       r.tenantId = tenantId;

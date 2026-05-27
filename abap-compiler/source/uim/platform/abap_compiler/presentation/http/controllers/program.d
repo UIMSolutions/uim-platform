@@ -57,7 +57,6 @@ class ProgramController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CreateProgramRequest r;
         r.tenantId = tenantId;
         r.title = data.getString("title");
@@ -98,7 +97,6 @@ class ProgramController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         auto id = ProgramId(precheck.id);
 
         UpdateProgramRequest r;

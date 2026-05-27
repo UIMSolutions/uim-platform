@@ -40,7 +40,6 @@ class DataRecordController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       auto r = CreateDataRecordRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");

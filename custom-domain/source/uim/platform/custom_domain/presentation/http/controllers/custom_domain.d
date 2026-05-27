@@ -140,7 +140,6 @@ class CustomDomainController : ManageController {
             return errorResponse("Invalid Custom Domain ID", 400);
 
         auto data = precheck.data;
-
         UpdateCustomDomainRequest r;
         r.customDomainId = id;
         r.tenantId = tenantId;

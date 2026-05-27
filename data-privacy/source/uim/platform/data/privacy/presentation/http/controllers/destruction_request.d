@@ -34,12 +34,11 @@ class DestructionRequestController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateDestructionRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
       r.requestedBy = UserId(data.getString("requestedBy"));
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
       r.archiveRequestId = data.getString("archiveRequestId");
       r.blockingRequestId = data.getString("blockingRequestId");
       r.reason = data.getString("reason");
@@ -93,7 +92,6 @@ class DestructionRequestController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateDestructionStatusRequest r;
       r.requestId = DestructionRequestId(precheck.id);
       r.tenantId = tenantId;

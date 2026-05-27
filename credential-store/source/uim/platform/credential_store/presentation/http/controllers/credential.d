@@ -77,7 +77,6 @@ class CredentialController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateCredentialRequest r;
       r.tenantId = tenantId;
       r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));

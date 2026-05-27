@@ -64,7 +64,6 @@ class LogicFlowController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             LogicFlowDTO dto;
             dto.logicFlowId = LogicFlowId(precheck.id);
             dto.tenantId = tenantId;
@@ -101,7 +100,6 @@ class LogicFlowController : ManageController {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             LogicFlowDTO dto;
             dto.tenantId = tenantId;
             dto.logicFlowId = LogicFlowId(precheck.id);

@@ -39,7 +39,7 @@ class DeletionController : ManageController {
       r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
       r.requestedBy = UserId(data.getString("requestedBy"));
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
       r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
@@ -100,7 +100,6 @@ class DeletionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateDeletionStatusRequest r;
       r.requestId = DeletionRequestId(precheck.id);
       r.tenantId = tenantId;

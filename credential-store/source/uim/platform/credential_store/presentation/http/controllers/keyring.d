@@ -35,7 +35,6 @@ class KeyringController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateKeyringRequest r;
       r.tenantId = tenantId;
       r.namespaceId = req.headers.get("X-Namespace-Id", data.getString("namespaceId"));

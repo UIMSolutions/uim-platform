@@ -116,7 +116,6 @@ class ResourceGroupController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = ResourceGroupprecheck.id);
       auto data = precheck.data;
-
       PatchResourceGroupRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = id;

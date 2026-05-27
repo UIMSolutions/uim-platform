@@ -66,7 +66,6 @@ class CicdRepositoryController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CicdRepositoryDTO dto;
         dto.cicdRepositoryId = CicdRepositoryId(data.getString("cicdRepositoryId", ""));
         dto.tenantId = tenantId;

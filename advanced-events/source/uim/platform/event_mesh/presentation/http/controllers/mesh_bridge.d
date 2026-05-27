@@ -70,7 +70,6 @@ class MeshBridgeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(data.getString("id"));
         dto.tenantId = tenantId;

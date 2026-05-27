@@ -33,7 +33,6 @@ class PromptController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreatePromptRequest r;
 r.tenantId = tenantId;
       r.collectionId = data.getString("collectionId");
@@ -46,7 +45,7 @@ r.tenantId = tenantId;
       r.topP = getDouble(j, "topP");
       r.frequencyPenalty = getDouble(j, "frequencyPenalty");
       r.presencePenalty = getDouble(j, "presencePenalty");
-      r.inputParams = getStrings(j, "inputParams");
+      r.inputParams = data.getStrings("inputParams");
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createPrompt(r);
@@ -108,7 +107,6 @@ r.tenantId = tenantId;
       auto tenantId = precheck.tenantId;
       auto id = Promptprecheck.id);
       auto data = precheck.data;
-
       PatchPromptRequest r;
       r.tenantId = tenantId;
       r.promptId = id;

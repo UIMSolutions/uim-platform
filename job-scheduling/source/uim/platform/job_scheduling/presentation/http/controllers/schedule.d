@@ -41,7 +41,6 @@ class ScheduleController : ManageController {
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
             auto data = precheck.data;
-
             CreateScheduleRequest r;
             r.tenantId = tenantId;
             r.jobId = jobId;
@@ -124,7 +123,6 @@ class ScheduleController : ManageController {
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             auto data = precheck.data;
-
             UpdateScheduleRequest r;
             r.tenantId = tenantId;
             r.jobId = JobId(ids[0]);
@@ -179,7 +177,6 @@ class ScheduleController : ManageController {
             auto path = req.requestURI.to!string;
             auto jobId = JobId(extractJobIdFromSchedulePath(path));
             auto data = precheck.data;
-
             ActivateAllSchedulesRequest r;
             r.tenantId = tenantId;
             r.jobId = jobId;

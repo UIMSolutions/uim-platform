@@ -62,7 +62,6 @@ class ServiceAccountController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
             dto.serviceAccountId = ServiceAccountId(precheck.id);
@@ -94,7 +93,6 @@ class ServiceAccountController : ManageController {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
             dto.serviceAccountId = ServiceAccountId(precheck.id);

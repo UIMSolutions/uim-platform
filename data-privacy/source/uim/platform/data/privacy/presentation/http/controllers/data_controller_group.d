@@ -38,7 +38,7 @@ class DataControllerGroupController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
+      r.controllerIds = data.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.createGroup(r);
       if (result.isSuccess()) {
@@ -90,7 +90,6 @@ class DataControllerGroupController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = DataControllerGroupId(precheck.id);
       auto data = precheck.data;
-
       UpdateDataControllerGroupRequest r;
       r.groupId = id;
       r.tenantId = tenantId;

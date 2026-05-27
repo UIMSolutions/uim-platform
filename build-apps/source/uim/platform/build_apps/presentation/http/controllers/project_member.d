@@ -64,7 +64,6 @@ class ProjectMemberController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(precheck.id);
             dto.tenantId = tenantId;

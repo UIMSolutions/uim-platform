@@ -34,7 +34,6 @@ class NamespaceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateNamespaceRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -113,7 +112,6 @@ class NamespaceController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Namespaceprecheck.id);
       auto data = precheck.data;
-
       UpdateNamespaceRequest request;
       request.tenantId = tenantId;
       request.namespaceId = id;

@@ -71,7 +71,6 @@ class OAuthClientController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             OAuthClientDTO dto;
             dto.tenantId = tenantId;
             dto.clientId = precheck.id;
@@ -111,7 +110,6 @@ class OAuthClientController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             OAuthClientDTO dto;
             dto.tenantId = tenantId;
             dto.clientId = OAuthClientId(precheck.id);

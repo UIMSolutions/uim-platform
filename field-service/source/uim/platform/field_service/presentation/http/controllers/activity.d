@@ -106,7 +106,6 @@ class ActivityController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             ActivityDTO dto;
             dto.activityId = ActivityId(precheck.id);
             dto.tenantId = tenantId;

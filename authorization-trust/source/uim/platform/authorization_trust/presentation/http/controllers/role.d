@@ -32,7 +32,6 @@ class RoleController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateRoleRequest r;
       r.tenantId = tenantId;
       r.name        = data.getString("name");

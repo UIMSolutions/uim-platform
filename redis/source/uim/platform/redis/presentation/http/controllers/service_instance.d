@@ -66,7 +66,6 @@ class ServiceInstanceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId", ""));
         dto.tenantId          = tenantId;
@@ -98,7 +97,6 @@ class ServiceInstanceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ServiceInstanceDTO dto;
         dto.serviceInstanceId = ServiceInstanceprecheck.id);
         dto.tenantId          = tenantId;

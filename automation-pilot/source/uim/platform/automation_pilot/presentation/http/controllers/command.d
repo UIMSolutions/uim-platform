@@ -52,7 +52,6 @@ class CommandController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CommandDTO dto;
         dto.tenantId = tenantId;
         dto.commandId = CommandId(precheck.id);
@@ -104,7 +103,6 @@ class CommandController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto data = precheck.data;
-
         auto id = CommandId(precheck.id);
 
         CommandDTO dto;

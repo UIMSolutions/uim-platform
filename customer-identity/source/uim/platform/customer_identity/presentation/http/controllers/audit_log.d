@@ -50,7 +50,6 @@ class AuditLogController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         AuditLogDTO dto;
         dto.tenantId = tenantId;
         dto.actorId = data.getString("actorId");

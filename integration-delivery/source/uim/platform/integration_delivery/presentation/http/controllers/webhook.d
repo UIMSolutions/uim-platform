@@ -66,7 +66,6 @@ class WebhookController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         WebhookDTO dto;
         dto.webhookId = WebhookId(data.getString("webhookId", ""));
         dto.tenantId = tenantId;

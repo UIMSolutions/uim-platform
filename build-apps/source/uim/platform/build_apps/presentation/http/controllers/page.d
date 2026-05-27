@@ -64,7 +64,6 @@ class PageController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             PageDTO dto;
             dto.pageId = PageId(precheck.id);
             dto.tenantId = tenantId;
@@ -100,7 +99,6 @@ class PageController : ManageController {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             PageDTO dto;
             dto.tenantId = tenantId;
             dto.pageId = PageId(precheck.id);

@@ -51,7 +51,6 @@ class ConsentRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ConsentRecordDTO dto;
         dto.tenantId = tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));

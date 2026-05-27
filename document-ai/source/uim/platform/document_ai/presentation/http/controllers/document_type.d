@@ -36,7 +36,6 @@ class DocumentTypeController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateDocumentTypeRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -44,7 +43,7 @@ class DocumentTypeController : ManageController {
       r.description = data.getString("description");
       r.category = data.getString("category");
       r.defaultSchemaId = data.getString("defaultSchemaId");
-      r.supportedFileTypes = getStrings(j, "supportedFileTypes");
+      r.supportedFileTypes = data.getStrings("supportedFileTypes");
 
       auto result = usecase.createDocumentType(r);
       if (result.hasError)
@@ -111,7 +110,6 @@ class DocumentTypeController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = DocumentTypeprecheck.id);
       auto data = precheck.data;
-
       UpdateDocumentTypeRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

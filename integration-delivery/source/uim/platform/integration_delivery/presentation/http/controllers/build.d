@@ -66,7 +66,6 @@ class BuildController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         BuildDTO dto;
         dto.buildId = BuildId(data.getString("buildId", ""));
         dto.tenantId = tenantId;

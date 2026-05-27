@@ -50,7 +50,6 @@ class CustomerSessionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CustomerSessionDTO dto;
         dto.tenantId = tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));

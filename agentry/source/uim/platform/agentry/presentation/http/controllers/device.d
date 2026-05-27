@@ -50,7 +50,6 @@ class DeviceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DeviceDTO dto;
         dto.deviceId = DeviceId(precheck.id);
         dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
@@ -102,7 +101,6 @@ class DeviceController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DeviceDTO dto;
         dto.deviceId = DeviceId(precheck.id);
         dto.tenantId = tenantId;

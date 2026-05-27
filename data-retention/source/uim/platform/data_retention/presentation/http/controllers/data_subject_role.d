@@ -24,7 +24,6 @@ class DataSubjectRoleController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");

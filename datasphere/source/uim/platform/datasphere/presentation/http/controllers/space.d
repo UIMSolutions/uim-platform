@@ -34,7 +34,6 @@ class SpaceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateSpaceRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(precheck.id);
@@ -118,7 +117,6 @@ class SpaceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateSpaceRequest r;
       r.tenantId = tenantId;
       r.spaceId = Spaceprecheck.id);

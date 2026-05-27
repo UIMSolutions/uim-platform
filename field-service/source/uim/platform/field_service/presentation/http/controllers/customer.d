@@ -104,7 +104,6 @@ class CustomerController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             CustomerDTO dto;
             dto.customerId = CustomerId(precheck.id);
             dto.tenantId = tenantId;

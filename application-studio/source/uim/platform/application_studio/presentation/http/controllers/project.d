@@ -52,7 +52,6 @@ class ProjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ProjectDTO dto;
         dto.projectId = ProjectId(precheck.id);
         dto.tenantId = tenantId;
@@ -101,7 +100,6 @@ class ProjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ProjectDTO dto;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");

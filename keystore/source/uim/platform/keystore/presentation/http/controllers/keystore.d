@@ -58,7 +58,6 @@ class KeystoreController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UploadKeystoreRequest r;
       r.tenantId = tenantId;
       r.accountId = data.getString("accountId");

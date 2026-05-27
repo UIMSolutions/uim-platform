@@ -43,7 +43,7 @@ class SchemaController : ManageController {
       r.description = data.getString("description");
       r.headerFields = jsonFieldArray(j, "headerFields");
       r.lineItemFields = jsonFieldArray(j, "lineItemFields");
-      r.supportedLanguages = getStrings(j, "supportedLanguages");
+      r.supportedLanguages = data.getStrings("supportedLanguages");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -105,7 +105,6 @@ class SchemaController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
-
       UpdateSchemaRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

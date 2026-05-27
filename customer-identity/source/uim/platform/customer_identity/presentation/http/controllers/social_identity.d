@@ -51,7 +51,6 @@ class SocialIdentityController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         SocialIdentityDTO dto;
         dto.tenantId = tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));

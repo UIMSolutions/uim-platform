@@ -65,7 +65,6 @@ class MetricController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         MetricDTO dto;
         dto.metricId                = MetricId(data.getString("metricId", ""));
         dto.tenantId                = tenantId;

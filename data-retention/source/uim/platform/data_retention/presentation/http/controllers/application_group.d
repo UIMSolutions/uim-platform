@@ -52,7 +52,6 @@ class ApplicationGroupController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CreateApplicationGroupRequest r;
         r.tenantId = tenantId;
         r.name = data.getString("name");
@@ -102,7 +101,6 @@ class ApplicationGroupController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         auto id = ApplicationGroupId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid application group ID", 400);

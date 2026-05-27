@@ -71,7 +71,6 @@ class ServiceBindingController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(precheck.id);
             dto.tenantId = tenantId;

@@ -103,7 +103,6 @@ class ProjectTemplateController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             ProjectTemplateDTO dto;
             dto.tenantId = tenantId;
             dto.projectTemplateId = ProjectTemplateId(precheck.id);

@@ -24,7 +24,6 @@ class LegalEntityController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateLegalEntityRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");
@@ -82,7 +81,6 @@ class LegalEntityController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = LegalEntityprecheck.id);
             auto data = precheck.data;
-
             UpdateLegalEntityRequest r;
             r.name = data.getString("name");
             r.description = data.getString("description");

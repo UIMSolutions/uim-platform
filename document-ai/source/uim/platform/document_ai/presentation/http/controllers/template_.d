@@ -104,7 +104,6 @@ class TemplateController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
-
       UpdateTemplateRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

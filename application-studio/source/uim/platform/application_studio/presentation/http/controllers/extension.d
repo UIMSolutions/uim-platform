@@ -66,7 +66,6 @@ class ExtensionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(precheck.id);
             dto.tenantId = tenantId;

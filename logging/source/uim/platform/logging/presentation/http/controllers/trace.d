@@ -66,7 +66,6 @@ class TraceController : PlatformController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       IngestSpanBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 

@@ -38,7 +38,7 @@ class CorrectionRequestController : ManageController {
       r.tenantId = tenantId;
       r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
       r.requestedBy = UserId(data.getString("requestedBy"));
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
       r.fieldName = data.getString("fieldName");
       r.currentValue = data.getString("currentValue");
       r.correctedValue = data.getString("correctedValue");
@@ -93,7 +93,6 @@ class CorrectionRequestController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateCorrectionStatusRequest r;
       r.tenantId = tenantId;
       r.requestId = CorrectionRequestId(precheck.id);

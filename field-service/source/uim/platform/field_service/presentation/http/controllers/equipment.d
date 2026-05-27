@@ -105,7 +105,6 @@ class EquipmentController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             EquipmentDTO dto;
             dto.equipmentId = EquipmentId(precheck.id);
             dto.tenantId = tenantId;

@@ -34,7 +34,6 @@ class AppFileController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UploadAppFileRequest r;
       r.tenantId = tenantId;
       r.versionId = data.getString("versionId");

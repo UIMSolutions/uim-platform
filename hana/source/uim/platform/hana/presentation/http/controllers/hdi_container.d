@@ -33,7 +33,6 @@ class HDIContainerController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateHDIContainerRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
@@ -41,7 +40,7 @@ class HDIContainerController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.appUser = data.getString("appUser");
-      r.grantedSchemas = getStrings(j, "grantedSchemas");
+      r.grantedSchemas = data.getStrings("grantedSchemas");
 
       auto result = usecase.createHDIContainer(r);
       if (result.hasError)
@@ -120,13 +119,12 @@ class HDIContainerController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateHDIContainerRequest r;
       r.tenantId = tenantId;
       r.id = HDIContainerprecheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.grantedSchemas = getStrings(j, "grantedSchemas");
+      r.grantedSchemas = data.getStrings("grantedSchemas");
 
       auto result = usecase.updateHDIContainer(r);
       if (result.hasError)

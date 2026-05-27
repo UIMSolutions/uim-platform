@@ -66,7 +66,6 @@ class TriggerController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             TriggerDTO dto;
             dto.triggerId = TriggerId(precheck.id);
             dto.tenantId = tenantId;
@@ -100,7 +99,6 @@ class TriggerController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             TriggerDTO dto;
             dto.tenantId = tenantId;
             dto.triggerId = TriggerId(precheck.id);

@@ -34,14 +34,13 @@ class InformationReportController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateInformationReportRequest r;
       r.tenantId = tenantId;
       r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
       r.requestedBy = UserId(data.getString("requestedBy"));
       r.format = data.getString("format");
-      r.targetSystems = getStrings(j, "targetSystems");
-      r.categories = getStrings(j, "categories");
+      r.targetSystems = data.getStrings("targetSystems");
+      r.categories = data.getStrings("categories");
       r.reason = data.getString("reason");
 
       auto result = usecase.createReport(r);
@@ -96,7 +95,6 @@ class InformationReportController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateInformationReportStatusRequest r;
       r.reportId = InformationReportId(precheck.id);
       r.tenantId = tenantId;

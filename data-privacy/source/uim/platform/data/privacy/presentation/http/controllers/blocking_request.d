@@ -39,7 +39,7 @@ class BlockingController : ManageController {
       r.tenantId = tenantId;
       r.dataSubjectId = data.getString("dataSubjectId");
       r.requestedBy = data.getString("requestedBy");
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
       r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
@@ -95,7 +95,6 @@ class BlockingController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(precheck.id);
       r.tenantId = tenantId;

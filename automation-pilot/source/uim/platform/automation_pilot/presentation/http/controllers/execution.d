@@ -66,7 +66,6 @@ class ExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             ExecutionDTO dto;
             dto.executionId = ExecutionId(precheck.id);
             dto.tenantId = tenantId;

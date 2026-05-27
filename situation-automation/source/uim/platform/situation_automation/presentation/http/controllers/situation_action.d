@@ -35,7 +35,6 @@ class SituationActionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateSituationActionRequest r;
             r.tenantId = tenantId;
             r.situationActionId = SituationActionId(precheck.id);
@@ -143,7 +142,6 @@ class SituationActionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             UpdateSituationActionRequest r;
             r.tenantId = tenantId;
             r.situationActionId = SituationActionprecheck.id);

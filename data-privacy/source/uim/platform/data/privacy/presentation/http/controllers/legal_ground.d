@@ -35,7 +35,6 @@ class LegalGroundController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateLegalGroundRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = data.getString("dataSubjectId");
@@ -107,7 +106,6 @@ class LegalGroundController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateLegalGroundRequest r;
       r.id = LegalGroundId(precheck.id);
       r.tenantId = tenantId;

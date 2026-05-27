@@ -33,7 +33,6 @@ class OAuthClientController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateOAuthClientRequest r;
       r.tenantId = tenantId;
       r.clientId = data.getString("clientId");

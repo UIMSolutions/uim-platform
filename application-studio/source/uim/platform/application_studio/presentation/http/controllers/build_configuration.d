@@ -52,7 +52,6 @@ class BuildConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         BuildConfigurationDTO dto;
         dto.configId = precheck.id;
         dto.tenantId = tenantId;
@@ -104,7 +103,6 @@ class BuildConfigurationController : ManageController {
             return errorResponse("Invalid build configuration ID", "InvalidId", 400);
 
         auto data = precheck.data;
-
         BuildConfigurationDTO dto;
         dto.configId = id;
         dto.tenantId = tenantId;

@@ -64,7 +64,6 @@ class ScheduledExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
             dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);

@@ -34,7 +34,6 @@ class AppVersionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateAppVersionRequest r;
       r.tenantId = tenantId;
       r.appId = AppVersionId(data.getString("appId"));

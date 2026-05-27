@@ -66,7 +66,6 @@ class ConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ConfigurationDTO dto;
         dto.configurationId         = ConfigurationId(data.getString("configurationId", ""));
         dto.tenantId                = tenantId;
@@ -97,7 +96,6 @@ class ConfigurationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         ConfigurationDTO dto;
         dto.configurationId      = Configurationprecheck.id);
         dto.tenantId             = tenantId;

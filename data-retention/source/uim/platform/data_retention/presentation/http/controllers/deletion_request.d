@@ -26,7 +26,6 @@ class DeletionRequestController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateDeletionRequestRequest r;
             r.tenantId = tenantId;
             r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
@@ -113,7 +112,6 @@ class DeletionRequestController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = DeletionRequestprecheck.id);
             auto data = precheck.data;
-
             UpdateDeletionRequestRequest r;
             r.tenantId = tenantId;
             r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));

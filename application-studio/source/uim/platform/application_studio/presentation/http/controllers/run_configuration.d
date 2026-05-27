@@ -71,7 +71,6 @@ class RunConfigurationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             RunConfigurationDTO dto;
             dto.runConfigurationId = RunConfigurationId(precheck.id);
             dto.tenantId = tenantId;
@@ -106,7 +105,6 @@ class RunConfigurationController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             RunConfigurationDTO dto;
             dto.tenantId = tenantId;
             dto.runConfigurationId = RunConfigurationId(precheck.id);

@@ -66,7 +66,6 @@ class CredentialController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CredentialDTO dto;
         dto.credentialId = CredentialId(data.getString("credentialId", ""));
         dto.tenantId = tenantId;

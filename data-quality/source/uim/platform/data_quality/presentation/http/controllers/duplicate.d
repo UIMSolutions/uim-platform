@@ -34,7 +34,6 @@ class DuplicateController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
       r.datasetId = DataSetId(data.getString("datasetId"));
@@ -69,7 +68,6 @@ class DuplicateController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;
       r.groupId = data.getString("groupId");

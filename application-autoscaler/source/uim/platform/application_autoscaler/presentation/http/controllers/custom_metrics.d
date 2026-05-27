@@ -31,7 +31,6 @@ class CustomMetricController : ManageController {
     try {
       auto appId = extractIdFromPath(req);
       auto data = precheck.data;
-
       // Support batch: {"metrics": [...]} or single object
       auto metricsJ = j["metrics"];
       if (metricsJ.type == Json.Type.array) {

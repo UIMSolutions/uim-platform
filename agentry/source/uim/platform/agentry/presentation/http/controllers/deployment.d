@@ -51,7 +51,6 @@ class DeploymentController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         DeploymentDTO dto;
         dto.deploymentId = DeploymentId(precheck.id);
         dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));

@@ -44,7 +44,7 @@ class UserController : ManageController {
         data.getString("preferredLanguage"), data.getString("locale"),
         data.getString("timezone"), data.getString("password"), parseEmails(j),
         parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
-        getStrings(j, "schemas"),);
+        data.getStrings("schemas"),);
 
       auto result = useCase.createUser(createReq);
       auto response = Json.emptyObject;
@@ -103,7 +103,6 @@ class UserController : ManageController {
     try {
       auto userId = precheck.id;
       auto data = precheck.data;
-
       auto updateReq = UpdateUserRequest(userId, j.parseUserName, data.getString("displayName"),
         data.getString("userType"), data.getString("preferredLanguage"),
         data.getString("locale"), data.getString("timezone"),

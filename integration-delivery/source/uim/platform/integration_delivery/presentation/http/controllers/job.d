@@ -66,7 +66,6 @@ class JobController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         JobDTO dto;
         dto.jobId = JobId(data.getString("jobId", ""));
         dto.tenantId = tenantId;

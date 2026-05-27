@@ -33,7 +33,6 @@ class TaskChainController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateTaskChainRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

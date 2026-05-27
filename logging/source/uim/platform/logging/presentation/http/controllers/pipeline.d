@@ -122,7 +122,6 @@ class PipelineController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Pipelineprecheck.id);
       auto data = precheck.data;
-
       UpdatePipelineRequest r;
       r.pipelineId = id;
       r.description = data.getString("description");

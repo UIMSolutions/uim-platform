@@ -66,7 +66,6 @@ class CacheEntryController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CacheEntryDTO dto;
         dto.cacheEntryId = CacheEntryId(data.getString("cacheEntryId", ""));
         dto.tenantId     = tenantId;
@@ -94,7 +93,6 @@ class CacheEntryController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CacheEntryDTO dto;
         dto.cacheEntryId = CacheEntryprecheck.id);
         dto.tenantId     = tenantId;

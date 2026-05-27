@@ -52,7 +52,6 @@ class SubscriptionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(precheck.id);
         dto.tenantId = tenantId;
@@ -103,7 +102,6 @@ class SubscriptionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid subscription ID", 400);

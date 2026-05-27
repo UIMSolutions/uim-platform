@@ -50,7 +50,6 @@ class ConfigurationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             UpdateConfigurationRequest r;
             r.tenantId = tenantId;
             r.defaultRetries = j.getInteger("defaultRetries", 3);

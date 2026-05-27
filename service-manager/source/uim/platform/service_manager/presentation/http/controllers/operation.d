@@ -68,7 +68,6 @@ class OperationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateOperationRequest r;
             r.tenantId = tenantId;
             r.resourceId = data.getString("resourceId");

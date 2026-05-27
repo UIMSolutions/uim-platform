@@ -71,7 +71,6 @@ class QueueController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         QueueDTO dto;
         dto.queueId = QueueId(precheck.id);
         dto.tenantId = tenantId;
@@ -108,7 +107,6 @@ class QueueController : ManageController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto data = precheck.data;
-
         QueueDTO dto;
         dto.queueId = QueueId(precheck.id);
         dto.tenantId = tenantId;

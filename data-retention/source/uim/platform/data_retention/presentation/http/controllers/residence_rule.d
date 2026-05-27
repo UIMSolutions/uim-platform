@@ -26,7 +26,6 @@ class ResidenceRuleController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateResidenceRuleRequest r;
             r.tenantId = tenantId;
             r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));

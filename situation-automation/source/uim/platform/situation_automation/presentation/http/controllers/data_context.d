@@ -34,7 +34,6 @@ class DataContextController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateDataContextRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));

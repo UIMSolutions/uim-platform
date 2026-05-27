@@ -51,7 +51,6 @@ class AppDefinitionController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         AppDefinitionDTO dto;
         dto.definitionId = AppDefinitionId(precheck.id);
         dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));

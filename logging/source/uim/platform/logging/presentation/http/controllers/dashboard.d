@@ -139,7 +139,6 @@ class DashboardController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Dashboardprecheck.id);
       auto data = precheck.data;
-
       UpdateDashboardRequest r;
       r.tenantId = tenantId;
       r.dashboardId = id;

@@ -117,7 +117,6 @@ class RetentionController : ManageController {
       auto tenantId = precheck.tenantId;
       auto policyId = RetentionPolicyprecheck.id);
       auto data = precheck.data;
-
       UpdateRetentionPolicyRequest r;
       r.policyId = policyId;
       r.description = data.getString("description");

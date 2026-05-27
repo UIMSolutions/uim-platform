@@ -70,7 +70,6 @@ class EventMessageController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             EventMessageDTO dto;
             dto.messageId = EventMessageId(precheck.id);
             dto.tenantId = tenantId;

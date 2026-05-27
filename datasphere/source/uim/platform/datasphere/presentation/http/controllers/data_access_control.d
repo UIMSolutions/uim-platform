@@ -33,7 +33,6 @@ class DataAccessControlController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateDataAccessControlRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

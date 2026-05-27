@@ -30,7 +30,6 @@ class PatientController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreatePatientRequest r;
       r.tenantId  = tenantId;
       r.patientId = PatientId(precheck.id);
@@ -119,7 +118,6 @@ class PatientController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Patientprecheck.id);
       auto data = precheck.data;
-
       UpdatePatientRequest r;
       r.tenantId   = tenantId;
       r.patientId  = id;

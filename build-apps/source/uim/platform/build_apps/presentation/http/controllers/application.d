@@ -139,7 +139,6 @@ class ApplicationController : ManageController {
                 .set("statusCode", 400);
         }
         auto data = precheck.data;
-
         ApplicationDTO dto;
         dto.applicationId = id;
         dto.tenantId = tenantId;

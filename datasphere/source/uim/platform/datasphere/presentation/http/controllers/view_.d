@@ -128,7 +128,6 @@ class ViewController : ManageController {
       
 
       auto data = precheck.data;
-
       UpdateViewRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

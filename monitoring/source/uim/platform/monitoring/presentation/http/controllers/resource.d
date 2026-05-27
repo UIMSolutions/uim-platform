@@ -49,7 +49,7 @@ class ResourceController : ManageController {
       r.runtime = data.getString("runtime");
       r.region = data.getString("region");
       r.instanceCount = j.getInteger("instanceCount");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.register(r);
@@ -108,7 +108,6 @@ class ResourceController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = MonitoredResourceId(precheck.id);
       auto data = precheck.data;
-
       UpdateResourceRequest r;
       r.tenantId = tenantId;
       r.resourceId = id;
@@ -117,7 +116,7 @@ class ResourceController : ManageController {
       r.runtime = data.getString("runtime");
       r.state = data.getString("state");
       r.instanceCount = j.getInteger("instanceCount");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
 
       auto result = usecase.updateResource(r);
       if (result.hasError)

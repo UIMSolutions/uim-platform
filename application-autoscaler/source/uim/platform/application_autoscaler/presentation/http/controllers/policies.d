@@ -136,7 +136,6 @@ class ScalingPolicyController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
       auto data = precheck.data;
-
       UpdateScalingPolicyRequest r;
       r.scalingPolicyId    = id;
       r.instanceMinCount = j.getInteger("instance_min_count");

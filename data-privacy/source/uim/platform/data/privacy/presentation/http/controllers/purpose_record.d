@@ -35,7 +35,6 @@ class PurposeRecordController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreatePurposeRecordRequest r;
       r.tenantId = tenantId;
       r.subjectId = DataSubjectId(data.getString("dataSubjectId"));

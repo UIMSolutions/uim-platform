@@ -34,7 +34,6 @@ class DatabaseUserController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateDatabaseUserRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
@@ -45,7 +44,7 @@ class DatabaseUserController : ManageController {
       r.defaultSchema = data.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
-      r.roles = getStrings(j, "roles");
+      r.roles = data.getStrings("roles");
 
       auto result = usecase.createDatabaseUser(r);
       if (result.hasError)
@@ -129,7 +128,7 @@ class DatabaseUserController : ManageController {
       r.defaultSchema = data.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange");
-      r.roles = getStrings(j, "roles");
+      r.roles = data.getStrings("roles");
 
       auto result = usecase.updateDatabaseUser(r);
       if (result.hasError)

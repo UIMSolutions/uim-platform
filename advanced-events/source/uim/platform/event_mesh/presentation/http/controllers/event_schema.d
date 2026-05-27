@@ -52,7 +52,6 @@ class EventSchemaController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(precheck.id);
         dto.tenantId = tenantId;
@@ -100,7 +99,6 @@ class EventSchemaController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(precheck.id);
         dto.tenantId = tenantId;

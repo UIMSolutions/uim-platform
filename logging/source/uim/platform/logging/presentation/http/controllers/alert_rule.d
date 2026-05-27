@@ -121,7 +121,6 @@ class AlertRuleController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = AlertRuleprecheck.id);
       auto data = precheck.data;
-
       UpdateAlertRuleRequest r;
       r.tenantId = tenantId;
       r.ruleId = id;

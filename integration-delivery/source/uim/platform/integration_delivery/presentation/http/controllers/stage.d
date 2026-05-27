@@ -66,7 +66,6 @@ class StageController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         StageDTO dto;
         dto.stageId = StageId(data.getString("stageId", ""));
         dto.tenantId = tenantId;

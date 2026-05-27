@@ -35,7 +35,6 @@ class DeploymentController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       DeployApplicationRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");

@@ -91,7 +91,6 @@ class RuleSetController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UpdateRuleSetRequest r;
       r.tenantId = tenantId;
       r.setId = RuleSetId(precheck.id);

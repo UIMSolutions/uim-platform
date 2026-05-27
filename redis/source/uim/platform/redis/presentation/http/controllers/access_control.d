@@ -66,7 +66,6 @@ class AccessControlController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         AccessControlDTO dto;
         dto.accessControlId = AccessControlId(data.getString("accessControlId", ""));
         dto.tenantId        = tenantId;
@@ -93,7 +92,6 @@ class AccessControlController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         AccessControlDTO dto;
         dto.accessControlId = AccessControlprecheck.id);
         dto.tenantId        = tenantId;

@@ -26,7 +26,6 @@ class ArchivingJobController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateArchivingJobRequest r;
             r.tenantId = tenantId;
             r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
@@ -112,7 +111,6 @@ class ArchivingJobController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = ArchivingJobprecheck.id);
             auto data = precheck.data;
-
             UpdateArchivingJobRequest r;
             r.tenantId = tenantId;
             r.archivingJobId = id;

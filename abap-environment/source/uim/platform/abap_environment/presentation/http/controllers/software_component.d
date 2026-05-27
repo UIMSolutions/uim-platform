@@ -134,7 +134,6 @@ class SoftwareComponentController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = SoftwareComponentId(precheck.id);
       auto data = precheck.data;
-
       PullSoftwareComponentRequest r;
       r.tenantId = tenantId;
       r.softwareComponentId = id;

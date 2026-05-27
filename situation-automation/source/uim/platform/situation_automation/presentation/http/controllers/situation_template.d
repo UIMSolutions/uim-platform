@@ -34,7 +34,6 @@ class SituationTemplateController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateSituationTemplateRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = precheck.id;

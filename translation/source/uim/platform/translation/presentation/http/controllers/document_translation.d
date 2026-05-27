@@ -31,7 +31,6 @@ class DocumentTranslationController : PlatformController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             TranslateDocumentRequest r;
             r.tenantId = tenantId;
             r.sourceLanguage = data.getString("sourceLanguage");

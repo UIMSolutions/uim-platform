@@ -69,7 +69,6 @@ class AssignmentController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             AssignmentDTO dto;
             dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;
@@ -101,7 +100,6 @@ class AssignmentController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             AssignmentDTO dto;
             dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;

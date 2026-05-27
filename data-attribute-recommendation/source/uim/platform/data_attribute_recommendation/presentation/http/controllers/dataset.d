@@ -99,7 +99,6 @@ class DatasetController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
-
       auto r = UpdateDatasetRequest();
       r.tenantId = tenantId;
       r.datasetId = id;

@@ -59,7 +59,6 @@ class DomainMappingController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CreateDomainMappingRequest r;
         r.tenantId = tenantId;
         r.domainMappingId = DomainMappingId(precheck.id);

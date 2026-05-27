@@ -55,7 +55,6 @@ class CommandInputController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CommandInputDTO dto;
         dto.commandInputId = CommandInputId(precheck.id);
         dto.tenantId = tenantId;
@@ -127,7 +126,6 @@ class CommandInputController : ManageController {
         }
 
         auto data = precheck.data;
-
         CommandInputDTO dto;
         dto.tenantId = tenantId;
         dto.commandInputId = CommandInputId(precheck.id);

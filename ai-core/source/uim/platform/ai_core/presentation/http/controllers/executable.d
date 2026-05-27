@@ -32,7 +32,6 @@ class ExecutableController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateExecutableRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

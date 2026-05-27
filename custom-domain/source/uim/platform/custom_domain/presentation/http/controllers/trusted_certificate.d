@@ -31,7 +31,6 @@ class TrustedCertificateController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateTrustedCertificateRequest r;
             r.tenantId = tenantId;
             r.trustedCertificateId = TrustedCertificateId(precheck.id);

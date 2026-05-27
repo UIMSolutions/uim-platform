@@ -34,7 +34,6 @@ class NotificationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateNotificationRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));

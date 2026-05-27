@@ -113,7 +113,6 @@ auto tenantId = precheck.tenantId;
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
       auto data = precheck.data;
-
       auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
         data.getString("lastName"), data.getString("phoneNumber"));
 

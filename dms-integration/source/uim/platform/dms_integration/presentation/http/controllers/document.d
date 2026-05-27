@@ -123,7 +123,6 @@ class DocumentController : ManageController {
 
         auto id = DocumentId(precheck.id);
         auto data = precheck.data;
-
         auto userId = UserId(data.getString("userId"));
 
         auto action = data.getString("action");

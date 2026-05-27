@@ -47,7 +47,7 @@ class LogController : PlatformController {
       r.orgName = data.getString("orgName");
       r.resourceType = data.getString("resourceType");
       r.resourceId = data.getString("resourceId");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
 
       auto result = usecase.ingest(r);
       if (result.hasError)
@@ -68,7 +68,6 @@ class LogController : PlatformController {
         try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 

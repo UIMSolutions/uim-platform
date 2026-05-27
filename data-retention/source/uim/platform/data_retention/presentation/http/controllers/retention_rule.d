@@ -26,7 +26,6 @@ class RetentionRuleController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateRetentionRuleRequest r;
             r.tenantId = tenantId;
             r.businessPurposeId = data.getString("businessPurposeId");
@@ -107,7 +106,6 @@ class RetentionRuleController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = RetentionRuleprecheck.id);
             auto data = precheck.data;
-
             UpdateRetentionRuleRequest r;
             r.retentionRuleId = id;
             r.tenantId = tenantId;

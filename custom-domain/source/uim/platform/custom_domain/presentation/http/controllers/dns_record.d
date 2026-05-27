@@ -32,7 +32,6 @@ class DnsRecordController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
             r.dnsRecordId = DnsRecordId(precheck.id);
@@ -127,7 +126,6 @@ class DnsRecordController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;
             r.dnsRecordId = DnsRecordprecheck.id) ;

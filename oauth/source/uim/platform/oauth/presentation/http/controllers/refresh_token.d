@@ -68,7 +68,6 @@ class RefreshTokenController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             RefreshTokenDTO dto;
             dto.tokenId = precheck.id;
             dto.tenantId = tenantId;

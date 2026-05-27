@@ -33,7 +33,6 @@ class AddressController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       auto r = CleanseAddressRequest();
       r.tenantId = tenantId;
       r.sourceRecordId = data.getString("sourceRecordId");

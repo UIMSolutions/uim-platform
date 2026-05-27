@@ -95,7 +95,6 @@ class WorkspaceController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Workspaceprecheck.id);
       auto data = precheck.data;
-
       PatchWorkspaceRequest r;
       r.workspaceId = id;
       r.tenantId = tenantId;

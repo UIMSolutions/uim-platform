@@ -67,7 +67,6 @@ class BrandingConfigController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             BrandingConfigDTO dto;
             dto.configId = BrandingConfigId(precheck.id);
             dto.tenantId = tenantId;
@@ -103,7 +102,6 @@ class BrandingConfigController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             BrandingConfigDTO dto;
             dto.tenantId = tenantId;
             dto.configId = BrandingConfigId(precheck.id);

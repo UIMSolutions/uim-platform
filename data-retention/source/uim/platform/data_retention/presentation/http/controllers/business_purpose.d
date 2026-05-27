@@ -27,7 +27,6 @@ class BusinessPurposeController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateBusinessPurposeRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");

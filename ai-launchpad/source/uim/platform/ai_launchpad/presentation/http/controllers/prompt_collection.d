@@ -35,7 +35,6 @@ class PromptCollectionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreatePromptCollectionRequest r;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -102,7 +101,6 @@ class PromptCollectionController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = PromptCollectionprecheck.id);
       auto data = precheck.data;
-
       PatchPromptCollectionRequest r;
       r.tenantId = tenantId;
       r.collectionId = id;

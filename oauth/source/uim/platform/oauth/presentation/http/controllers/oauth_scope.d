@@ -69,7 +69,6 @@ class OAuthScopeController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
             dto.scopeId = OAuthScopeId(precheck.id);

@@ -37,7 +37,6 @@ class DocumentController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       UploadDocumentRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

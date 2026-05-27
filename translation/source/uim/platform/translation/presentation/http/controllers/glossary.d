@@ -37,7 +37,6 @@ class GlossaryController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         CreateGlossaryEntryRequest r;
         r.tenantId = tenantId;
         r.sourceLanguage = data.getString("sourceLanguage");
@@ -114,7 +113,6 @@ class GlossaryController : ManageController {
         auto tenantId = precheck.tenantId;
         auto entryId = GlossaryEntryprecheck.id);
         auto data = precheck.data;
-
         UpdateGlossaryEntryRequest r;
         r.tenantId = tenantId;
         r.entryId = entryId;

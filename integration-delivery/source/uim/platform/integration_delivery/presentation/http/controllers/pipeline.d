@@ -66,7 +66,6 @@ class PipelineController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         PipelineDTO dto;
         dto.pipelineId = PipelineId(data.getString("pipelineId", ""));
         dto.tenantId = tenantId;

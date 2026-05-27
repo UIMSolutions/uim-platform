@@ -40,7 +40,6 @@ class JobController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             CreateJobRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");
@@ -130,7 +129,6 @@ class JobController : ManageController {
             auto tenantId = precheck.tenantId;
             auto jobId = Jobprecheck.id);
             auto data = precheck.data;
-
             UpdateJobRequest r;
             r.tenantId = tenantId;
             r.jobId = jobId;

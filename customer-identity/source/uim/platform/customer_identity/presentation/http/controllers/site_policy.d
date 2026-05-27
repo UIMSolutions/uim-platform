@@ -51,7 +51,6 @@ class SitePolicyController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         SitePolicyDTO dto;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");

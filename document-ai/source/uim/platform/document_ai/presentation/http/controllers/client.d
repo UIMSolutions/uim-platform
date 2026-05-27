@@ -35,7 +35,6 @@ class ClientController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateClientRequest r;
       r.tenantId = tenantId;
       r.clientName = data.getString("clientName");
@@ -100,7 +99,6 @@ class ClientController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
-
       PatchClientRequest r;
       r.tenantId = tenantId;
       r.clientId = id;

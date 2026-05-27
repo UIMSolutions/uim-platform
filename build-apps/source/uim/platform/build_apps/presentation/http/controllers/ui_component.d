@@ -63,7 +63,6 @@ class UIComponentController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto data = precheck.data;
-
             UIComponentDTO dto;
             dto.uiComponentId = UIComponentId(precheck.id);
             dto.tenantId = tenantId;
@@ -101,7 +100,6 @@ class UIComponentController : ManageController {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
             auto data = precheck.data;
-
             UIComponentDTO dto;
             dto.tenantId = tenantId;
             dto.uiComponentId = UIComponentId(precheck.id);

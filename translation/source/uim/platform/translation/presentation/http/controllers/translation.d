@@ -28,7 +28,6 @@ class TranslationController : PlatformController {
         try {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
-
             TranslateTextRequest r;
             r.tenantId = tenantId;
             r.sourceLanguage = data.getString("sourceLanguage");

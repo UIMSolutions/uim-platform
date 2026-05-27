@@ -34,7 +34,6 @@ class AppRouteController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-
       CreateAppRouteRequest request;
       with (request) {
         tenantId = tenantId;
