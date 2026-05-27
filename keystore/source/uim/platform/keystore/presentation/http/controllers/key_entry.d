@@ -29,6 +29,11 @@ class KeyEntryController : ManageController {
   }
 
   protected Json importHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto path = req.requestPath.to!string;
     auto keystoreId = extractSegment(path, 4); // /api/v1/keystores/{id}/entries
     auto data = precheck.data;

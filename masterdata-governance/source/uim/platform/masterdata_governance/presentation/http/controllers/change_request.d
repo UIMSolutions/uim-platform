@@ -123,7 +123,7 @@ class ChangeRequestController : ManageController {
             result = usecase.requestRevision(tenantId, id, userId, comments);
             break;
         case "withdraw":
-            result = usecase.withdrawChangeRequest(tenantId, id, userId);
+            result = usecase.withdrawChangeRequest(tenantId, id);
             break;
         default:
             return errorResponse("Unknown action. Use: submit, approve, reject, requestRevision, withdraw", 400);

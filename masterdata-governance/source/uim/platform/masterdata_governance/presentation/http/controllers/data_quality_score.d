@@ -101,7 +101,7 @@ class DataQualityScoreController : ManageController {
         if (id.isNull)
             return errorResponse("Invalid data quality score ID", 400);
 
-        autodata = precheck.data;
+        auto data = precheck.data;
         DataQualityScoreDTO dto;
         dto.scoreId = DataQualityScoreId(precheck.id);
         dto.tenantId = tenantId;
