@@ -38,7 +38,7 @@ class ApiRuleController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateApiRuleRequest r;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
@@ -122,7 +122,7 @@ class ApiRuleController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateApiRuleRequest r;
       r.description = data.getString("description");
       r.serviceName = data.getString("serviceName");

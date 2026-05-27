@@ -31,7 +31,7 @@ class DnsRecordController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
@@ -126,7 +126,7 @@ class DnsRecordController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;

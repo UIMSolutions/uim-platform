@@ -37,7 +37,7 @@ class InferenceController : PlatformController {
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = SubmitInferenceRequest();
       r.tenantId = tenantId;
       r.deploymentId = data.getString("deploymentId");

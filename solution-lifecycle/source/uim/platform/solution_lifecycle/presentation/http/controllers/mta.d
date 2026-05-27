@@ -30,7 +30,7 @@ class MtaController : ManageController {
 
     protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             DeployMtaRequest r;
             r.tenantId            = req.getTenantId;
             r.archiveId           = data.getString("archiveId");
@@ -90,7 +90,7 @@ class MtaController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateMtaRequest r;
             r.tenantId            = req.getTenantId;
             r.mtaId               = extractIdFromPath(req.requestURI.to!string);

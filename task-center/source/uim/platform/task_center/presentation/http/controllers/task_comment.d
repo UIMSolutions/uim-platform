@@ -31,7 +31,7 @@ class TaskCommentController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
             r.taskCommentId = TaskCommentId(precheck.id);
@@ -99,7 +99,7 @@ class TaskCommentController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto id = TaskCommentprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateTaskCommentRequest r;
             r.tenantId = tenantId;
             r.taskCommentId = id;

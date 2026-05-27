@@ -35,7 +35,7 @@ class ExternalContentProviderController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateExternalContentProviderRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -97,7 +97,7 @@ class ExternalContentProviderController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateExternalContentProviderRequest();
       r.id = id;
       r.tenantId = tenantId;

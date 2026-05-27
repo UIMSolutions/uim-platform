@@ -33,7 +33,7 @@ class DeviceRegistrationController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RegisterDeviceRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
@@ -114,7 +114,7 @@ class DeviceRegistrationController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto status = data.getString("status");
       auto result = usecase.updateStatus(id, status);
       if (result.hasError)

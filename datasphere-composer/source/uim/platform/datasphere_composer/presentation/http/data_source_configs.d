@@ -42,7 +42,7 @@ class DataSourceConfigController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateDataSourceConfigRequest r;
     r.tenantId          = req.getTenantId;
     r.id                = precheck.id;
@@ -62,7 +62,7 @@ class DataSourceConfigController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateDataSourceConfigRequest r;
     r.tenantId          = req.getTenantId;
     r.id                = extractIdFromPath(req.requestPath.to!string);
@@ -78,7 +78,7 @@ class DataSourceConfigController : ManageController {
   }
 
   void handleAddMapping(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     AddIdentifierMappingRequest r;
     r.tenantId           = req.getTenantId;
     r.configId           = extractIdFromPath(req.requestPath.to!string);

@@ -33,7 +33,7 @@ class AppRouteController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateAppRouteRequest request;
       with (request) {
@@ -119,7 +119,7 @@ class AppRouteController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto j = req.json;
+      auto data = precheck.data;
       auto id = precheck.id;
       if (id.isNull) {
         writeError(res, 404, "Route not found");

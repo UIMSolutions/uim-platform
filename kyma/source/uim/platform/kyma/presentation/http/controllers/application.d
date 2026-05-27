@@ -39,7 +39,7 @@ class ApplicationController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RegisterApplicationRequest r;
       with (r) {
         environmentId = data.getString("environmentId");
@@ -111,7 +111,7 @@ class ApplicationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = ApplicationId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateApplicationRequest r;
       r.description = data.getString("description");
       r.connectorUrl = data.getString("connectorUrl");

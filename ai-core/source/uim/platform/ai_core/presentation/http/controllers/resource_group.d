@@ -32,7 +32,7 @@ class ResourceGroupController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateResourceGroupRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = data.getString("resourceGroupId");
@@ -115,7 +115,7 @@ class ResourceGroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = ResourceGroupprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchResourceGroupRequest r;
       r.tenantId = tenantId;

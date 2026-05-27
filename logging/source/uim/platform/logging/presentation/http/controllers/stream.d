@@ -35,7 +35,7 @@ class StreamController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateLogStreamRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -114,7 +114,7 @@ class StreamController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = LogStreamprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateLogStreamRequest r;
       r.tenantId = tenantId;
       r.streamId = id;

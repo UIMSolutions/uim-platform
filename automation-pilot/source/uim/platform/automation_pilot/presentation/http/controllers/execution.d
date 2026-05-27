@@ -65,7 +65,7 @@ class ExecutionController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             ExecutionDTO dto;
             dto.executionId = ExecutionId(precheck.id);

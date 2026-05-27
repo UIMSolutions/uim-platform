@@ -34,7 +34,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateTriggerRequest r;
             r.tenantId = tenantId;
             r.processId = ProcessId(data.getString("processId"));
@@ -135,7 +135,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateTriggerRequest r;
             r.tenantId = tenantId;
             r.triggerId = Triggerprecheck.id);

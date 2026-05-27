@@ -39,7 +39,7 @@ class PageController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreatePageRequest(data.getString("siteId"),
         req.headers.get("X-Tenant-Id", ""), data.getString("title"),
         data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
@@ -94,7 +94,7 @@ class PageController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdatePageRequest(pageId, data.getString("title"),
         data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
           "layout", PageLayout.freeform), getStrings(j, "allowedRoleIds"),
@@ -113,7 +113,7 @@ class PageController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto siteId = data.getString("siteId");
       auto error = useCase.deletePage(pageId, siteId);
       if (error.length > 0)

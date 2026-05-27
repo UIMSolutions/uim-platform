@@ -33,7 +33,7 @@ class DataControllerGroupController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateDataControllerGroupRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -89,7 +89,7 @@ class DataControllerGroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = DataControllerGroupId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateDataControllerGroupRequest r;
       r.groupId = id;

@@ -33,7 +33,7 @@ class ExecutionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateExecutionRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
@@ -99,7 +99,7 @@ class ExecutionController : ManageController {
       auto id = Executionprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
-      auto j = req.json;
+      auto data = precheck.data;
       PatchExecutionRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = rgId;

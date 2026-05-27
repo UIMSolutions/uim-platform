@@ -33,7 +33,7 @@ class ProcessInstanceController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             StartProcessInstanceRequest r;
             r.tenantId = tenantId;
             r.processId = ProcessId(data.getString("processId"));
@@ -138,7 +138,7 @@ class ProcessInstanceController : ManageController {
             auto sub = path[0 .. actionIdx];
             auto id = extractIdFromPath(sub);
 
-            auto j = req.json;
+            auto data = precheck.data;
             ProcessInstanceActionRequest r;
             r.tenantId = tenantId;
             r.processInstanceId = ProcessInstanceId(id);

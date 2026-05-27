@@ -33,7 +33,7 @@ class DestructionRequestController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateDestructionRequest r;
       r.tenantId = tenantId;
@@ -92,7 +92,7 @@ class DestructionRequestController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateDestructionStatusRequest r;
       r.requestId = DestructionRequestId(precheck.id);

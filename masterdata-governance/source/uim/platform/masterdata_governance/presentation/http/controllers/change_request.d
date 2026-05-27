@@ -62,7 +62,7 @@ class ChangeRequestController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ChangeRequestDTO dto;
             dto.changeRequestId = ChangeRequestId(precheck.id);
             dto.tenantId = tenantId;
@@ -95,7 +95,7 @@ class ChangeRequestController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             auto id = ChangeRequestId(precheck.id);
             auto action = data.getString("action");
             auto userId = UserId(data.getString("userId"));

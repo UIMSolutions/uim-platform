@@ -63,7 +63,7 @@ class ProjectMemberController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(precheck.id);
@@ -96,7 +96,7 @@ class ProjectMemberController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             
             ProjectMemberDTO dto;
             dto.tenantId = tenantId;

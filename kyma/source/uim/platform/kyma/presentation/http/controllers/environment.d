@@ -37,7 +37,7 @@ class EnvironmentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateEnvironmentRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -111,7 +111,7 @@ class EnvironmentController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateEnvironmentRequest r;
       r.tenantId = tenantId;
       r.id = id;

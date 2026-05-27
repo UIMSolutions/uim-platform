@@ -55,7 +55,7 @@ class QueueController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             QueueDTO dto;
             dto.queueId            = QueueId(precheck.id);
             dto.tenantId           = tenantId;
@@ -86,7 +86,7 @@ class QueueController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto queueId  = Queueprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             QueueDTO dto;
             dto.tenantId           = tenantId;
             dto.queueId            = queueId;

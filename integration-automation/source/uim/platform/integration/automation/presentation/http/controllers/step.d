@@ -119,7 +119,7 @@ class StepController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CompleteStepRequest();
       r.id = id;
       r.tenantId = tenantId;
@@ -146,7 +146,7 @@ class StepController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = FailStepRequest();
       r.id = id;
       r.tenantId = tenantId;
@@ -173,7 +173,7 @@ class StepController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = SkipStepRequest();
       r.id = id;
       r.tenantId = tenantId;
@@ -200,7 +200,7 @@ class StepController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = AssignStepRequest();
       r.id = id;
       r.tenantId = tenantId;

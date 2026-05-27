@@ -49,7 +49,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
 
     CreateServiceBindingRequest r;
     r.tenantId = tenantId;
@@ -92,7 +92,7 @@ class ServiceBindingController : ManageController {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
-    auto j = req.json;
+    auto data = precheck.data;
 
     UpdateServiceBindingRequest r;
     r.tenantId = tenantId;

@@ -62,7 +62,7 @@ class DataQualityScoreController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
@@ -93,7 +93,7 @@ class DataQualityScoreController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;

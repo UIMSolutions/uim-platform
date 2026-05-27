@@ -38,7 +38,7 @@ class ConsentController : ManageController {
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateConsentRecordRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = data.getString("dataSubjectId");
@@ -132,7 +132,7 @@ class ConsentController : ManageController {
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RevokeConsentRequest r;
       r.id = ConsentRecordId(precheck.id);
       r.tenantId = tenantId;

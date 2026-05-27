@@ -38,7 +38,7 @@ class TileController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateTileRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("catalogId"), data.getString("title"), data.getString("subtitle"),
         data.getString("description"), data.getString("icon"), data.getString("info"),
@@ -106,7 +106,7 @@ class TileController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tileId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateTileRequest(tileId, data.getString("title"),
         data.getString("subtitle"), data.getString("description"),
         data.getString("icon"), data.getString("info"), jsonEnum!TileType(j,

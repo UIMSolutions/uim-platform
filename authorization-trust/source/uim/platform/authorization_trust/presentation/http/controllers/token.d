@@ -38,7 +38,7 @@ class TokenController : PlatformController {
       // Accept both application/json and application/x-www-form-urlencoded
       auto ct = req.contentType;
       if (ct.length > 0 && ct == "application/json") {
-        auto j = req.json;
+        auto data = precheck.data;
         grantType    = data.getString("grant_type");
         clientId     = data.getString("client_id");
         clientSecret = data.getString("client_secret");

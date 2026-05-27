@@ -35,7 +35,7 @@ class PersonalDataModelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreatePersonalDataModelRequest r;
       r.tenantId = tenantId;
@@ -123,7 +123,7 @@ class PersonalDataModelController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdatePersonalDataModelRequest r;
       r.id = PersonalDataModelId(precheck.id);

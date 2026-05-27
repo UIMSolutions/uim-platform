@@ -87,7 +87,7 @@ class DataConnectionController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
             auto dataConnectionId = DataConnectionId(precheck.id);
 
             DataConnectionDTO dto;
@@ -128,7 +128,7 @@ class DataConnectionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             DataConnectionDTO dto;
             dto.dataConnectionId = DataConnectionId(precheck.id);
             dto.tenantId = tenantId;

@@ -34,7 +34,7 @@ class AutomationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateAutomationRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
@@ -133,7 +133,7 @@ class AutomationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateAutomationRequest r;
             r.tenantId = tenantId;
             r.automationId = Automationprecheck.id);

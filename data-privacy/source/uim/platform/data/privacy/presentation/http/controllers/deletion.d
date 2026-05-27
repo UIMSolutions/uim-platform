@@ -34,7 +34,7 @@ class DeletionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateDeletionRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
@@ -99,7 +99,7 @@ class DeletionController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateDeletionStatusRequest r;
       r.requestId = DeletionRequestId(precheck.id);

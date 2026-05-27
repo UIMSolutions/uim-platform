@@ -49,7 +49,7 @@ class RouteController : ManageController {
   override protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateRouteRequest();
       r.tenantId = tenantId;
       r.spaceId = data.getString("spaceId");
@@ -127,7 +127,7 @@ class RouteController : ManageController {
   protected void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = MapRouteRequest();
       r.routeId = RouteId(precheck.id);
       r.tenantId = tenantId;
@@ -149,7 +149,7 @@ class RouteController : ManageController {
   protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto routeId = RouteId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = MapRouteRequest();
       r.routeId = routeId;
       r.tenantId = tenantId;
@@ -173,7 +173,7 @@ class RouteController : ManageController {
   override protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateDomainRequest();
       r.tenantId = tenantId;
       r.ownerOrgId = data.getString("ownerOrgId");

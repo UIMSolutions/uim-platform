@@ -61,7 +61,7 @@ class ServiceAccountController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
@@ -93,7 +93,7 @@ class ServiceAccountController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
 
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;

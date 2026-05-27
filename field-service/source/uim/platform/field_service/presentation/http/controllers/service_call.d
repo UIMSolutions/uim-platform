@@ -64,7 +64,7 @@ class ServiceCallController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ServiceCallDTO dto;
             dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;
@@ -103,7 +103,7 @@ class ServiceCallController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             ServiceCallDTO dto;
             dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;

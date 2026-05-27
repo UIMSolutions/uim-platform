@@ -32,7 +32,7 @@ class DataAccessControlController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateDataAccessControlRequest r;
       r.tenantId = tenantId;

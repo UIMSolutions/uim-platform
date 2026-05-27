@@ -37,7 +37,7 @@ class GroupController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto members = parseMembers(j);
       CreateGroupRequest createReq;
@@ -97,7 +97,7 @@ class GroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto groupId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
         data.getString("description"),);
       auto error = useCase.updateGroup(updateReq);
@@ -129,7 +129,7 @@ class GroupController : ManageController {
   protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
         data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
       auto error = useCase.addMember(addReq);
@@ -149,7 +149,7 @@ class GroupController : ManageController {
   override protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);
       if (error.length > 0) {

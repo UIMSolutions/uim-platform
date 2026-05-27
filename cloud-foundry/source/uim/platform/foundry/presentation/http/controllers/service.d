@@ -48,7 +48,7 @@ class ServiceController : ManageController {
   override protected void handleCreate(Instance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = tenantId;
       r.spaceId = SpaceId(data.getString("spaceId"));
@@ -114,7 +114,7 @@ class ServiceController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
       r.tenantId = tenantId;
@@ -160,7 +160,7 @@ class ServiceController : ManageController {
   override protected void handleCreate(Binding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateServiceBindingRequest();
       r.tenantId = tenantId;
       r.appId = AppId(data.getString("appId"));

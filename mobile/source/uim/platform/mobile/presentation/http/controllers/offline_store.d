@@ -33,7 +33,7 @@ class OfflineStoreController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateOfflineStoreRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
@@ -113,7 +113,7 @@ class OfflineStoreController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateOfflineStoreRequest r;
       r.id = id;
       r.name = data.getString("name");

@@ -32,7 +32,7 @@ class DataFlowController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       
       CreateDataFlowRequest r;
       r.tenantId = tenantId;

@@ -84,7 +84,7 @@ class MtaOperationController : ManageController {
 
     protected void handleAbort(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             AbortOperationRequest r;
             r.tenantId    = req.getTenantId;
             auto path = req.requestURI.to!string;

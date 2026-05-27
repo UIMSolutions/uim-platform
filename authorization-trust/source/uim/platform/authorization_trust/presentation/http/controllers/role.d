@@ -31,7 +31,7 @@ class RoleController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateRoleRequest r;
       r.tenantId = tenantId;
@@ -87,7 +87,7 @@ class RoleController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = RoleId(extractIdFromPath(req));
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateRoleRequest r;
       r.tenantId = tenantId;
       r.id          = id;

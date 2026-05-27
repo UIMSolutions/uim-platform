@@ -38,7 +38,7 @@ class ServiceInstanceController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CreateServiceInstanceRequest();
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -70,7 +70,7 @@ class ServiceInstanceController : ManageController {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
     r.tenantId = tenantId;
     r.instanceId = id;

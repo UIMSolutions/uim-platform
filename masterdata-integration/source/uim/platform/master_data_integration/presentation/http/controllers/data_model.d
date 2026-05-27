@@ -34,7 +34,7 @@ class DataModelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateDataModelRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -119,7 +119,7 @@ class DataModelController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateDataModelRequest r;
       r.description = data.getString("description");
       r.version_ = data.getString("version");

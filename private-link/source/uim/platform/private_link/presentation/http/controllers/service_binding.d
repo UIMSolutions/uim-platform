@@ -37,7 +37,7 @@ class ServiceBindingController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CreateServiceBindingRequest();
     r.tenantId = tenantId;
     r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));

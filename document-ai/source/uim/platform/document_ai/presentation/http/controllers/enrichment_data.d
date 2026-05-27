@@ -34,7 +34,7 @@ class EnrichmentDataController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateEnrichmentDataRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
@@ -103,7 +103,7 @@ class EnrichmentDataController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateEnrichmentDataRequest r;
       r.tenantId = tenantId;

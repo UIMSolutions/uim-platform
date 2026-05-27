@@ -58,7 +58,7 @@ class ProvisioningJobController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ProvisioningJobDTO dto;
             dto.jobId = ProvisioningJobId(precheck.id);
             dto.tenantId = tenantId;

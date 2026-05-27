@@ -42,7 +42,7 @@ class ObjectController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CreateObjectRequest();
 
     r.tenantId = tenantId;
@@ -171,7 +171,7 @@ class ObjectController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CopyObjectRequest();
     r.tenantId = tenantId;
     r.sourceBucketId = data.getString("sourceBucketId");

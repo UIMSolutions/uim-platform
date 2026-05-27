@@ -57,7 +57,7 @@ class TransportRequestController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             TransportRequestDTO dto;
             dto.requestId = TransportRequestId(precheck.id);
             dto.tenantId = tenantId;
@@ -87,7 +87,7 @@ class TransportRequestController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = TransportRequestprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             auto statusStr = data.getString("status");
             if (statusStr.length > 0) {
                 import std.conv : to;

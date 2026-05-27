@@ -29,7 +29,7 @@ class MtaArchiveController : ManageController {
 
     protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             UploadMtaArchiveRequest r;
             r.tenantId     = req.getTenantId;
             r.fileName     = data.getString("fileName");

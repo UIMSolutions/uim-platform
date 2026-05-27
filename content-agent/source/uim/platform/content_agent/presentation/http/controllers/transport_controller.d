@@ -37,7 +37,7 @@ class TransportController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateTransportRequest();
       r.tenantId = tenantId;
       r.sourceSubaccount = data.getString("sourceSubaccount");
@@ -100,7 +100,7 @@ class TransportController : ManageController {
   protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = ReleaseTransportRequest();
       r.requestId = data.getString("requestId");
       r.tenantId = tenantId;
@@ -126,7 +126,7 @@ class TransportController : ManageController {
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto requestId = data.getString("requestId");
 
       auto result = usecase.cancelTransport(requestId);

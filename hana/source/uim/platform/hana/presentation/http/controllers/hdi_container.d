@@ -32,7 +32,7 @@ class HDIContainerController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateHDIContainerRequest r;
       r.tenantId = tenantId;
@@ -119,7 +119,7 @@ class HDIContainerController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateHDIContainerRequest r;
       r.tenantId = tenantId;

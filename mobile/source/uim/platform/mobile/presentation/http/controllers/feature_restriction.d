@@ -34,7 +34,7 @@ class FeatureRestrictionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
@@ -120,7 +120,7 @@ class FeatureRestrictionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFeatureRestrictionRequest r;
       r.id = id;
       r.description = data.getString("description");
@@ -165,7 +165,7 @@ class FeatureRestrictionController : ManageController {
   protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto featureId = data.getString("featureId");
       auto userId = data.getString("userId");
       auto deviceId = data.getString("deviceId");

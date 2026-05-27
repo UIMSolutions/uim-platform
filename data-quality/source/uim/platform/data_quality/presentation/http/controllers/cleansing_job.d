@@ -32,7 +32,7 @@ class CleansingJobController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateCleansingJobRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");

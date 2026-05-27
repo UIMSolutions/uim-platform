@@ -22,7 +22,7 @@ public:
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       CreateWorkspaceRequest r;
       r.tenantId      = req.getTenantId;
       r.id            = precheck.id;
@@ -62,7 +62,7 @@ public:
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateWorkspaceRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];

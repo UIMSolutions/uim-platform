@@ -35,7 +35,7 @@ class ProcessController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateProcessRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
@@ -131,7 +131,7 @@ class ProcessController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateProcessRequest r;
             r.tenantId = tenantId;
             r.processId = Processprecheck.id);
@@ -172,7 +172,7 @@ class ProcessController : ManageController {
             auto sub = path[0 .. deployIdx];
             auto id = extractIdFromPath(sub);
 
-            auto j = req.json;
+            auto data = precheck.data;
             DeployProcessRequest r;
             r.tenantId = tenantId;
             r.processId = id;

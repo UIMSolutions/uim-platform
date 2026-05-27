@@ -81,7 +81,7 @@ class RunLogController : ManageController {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto runLogId = RunLogId(precheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateRunLogRequest r;
             r.runLogId = runLogId;

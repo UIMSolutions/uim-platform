@@ -36,7 +36,7 @@ class EventController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateEventRequest();
       r.tenantId = tenantId;
       r.workspaceId = data.getString("workspaceId");
@@ -106,7 +106,7 @@ class EventController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateEventRequest();
       r.id = id;
       r.tenantId = tenantId;

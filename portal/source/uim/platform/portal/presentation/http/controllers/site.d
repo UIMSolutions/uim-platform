@@ -38,7 +38,7 @@ class SiteController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateSiteRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"),
         data.getString("alias"), data.getString("themeId"), parseSiteSettings(j),);
@@ -88,7 +88,7 @@ class SiteController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto siteId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateSiteRequest(siteId, data.getString("name"), data.getString("description"),
         data.getString("alias"), data.getString("themeId"), parseSiteSettings(j),);
 

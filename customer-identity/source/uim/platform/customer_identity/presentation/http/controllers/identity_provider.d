@@ -50,7 +50,7 @@ class IdentityProviderController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         IdentityProviderDTO dto;
         dto.tenantId = tenantId;
@@ -101,7 +101,7 @@ class IdentityProviderController : ManageController {
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 
-        auto j = req.json;
+        auto data = precheck.data;
         IdentityProviderDTO dto;
         dto.identityProviderId = id;
         dto.tenantId = tenantId;

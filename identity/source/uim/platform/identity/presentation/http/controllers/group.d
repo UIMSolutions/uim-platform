@@ -54,7 +54,7 @@ class GroupController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             GroupDTO dto;
             dto.groupId = GroupId(precheck.id);
             dto.tenantId = tenantId;
@@ -71,7 +71,7 @@ class GroupController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             GroupDTO dto;
             dto.groupId = Groupprecheck.id);
             dto.tenantId = tenantId;

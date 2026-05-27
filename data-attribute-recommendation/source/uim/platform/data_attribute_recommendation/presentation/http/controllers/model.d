@@ -37,7 +37,7 @@ class ModelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateModelConfigRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
@@ -105,7 +105,7 @@ class ModelController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateModelConfigRequest();
       r.id = id;
       r.tenantId = tenantId;

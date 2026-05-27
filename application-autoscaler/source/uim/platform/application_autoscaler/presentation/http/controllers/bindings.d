@@ -46,7 +46,7 @@ class AppBindingController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       CreateAppBindingRequest r;
       r.tenantId = data.getString("tenant_id");
       r.appGuid = data.getString("app_guid");
@@ -96,7 +96,7 @@ class AppBindingController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto bindingId = AppBindingId(extractIdFromPath(req));
-      auto j = req.json;
+      auto data = precheck.data;
       auto policyId = data.getString("policy_id");
       auto result = usecase.attachPolicy(tenantId, bindingId, policyId);
       if (result.success)

@@ -54,7 +54,7 @@ class IdentityProviderController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderId(precheck.id);
             dto.tenantId = tenantId;
@@ -77,7 +77,7 @@ class IdentityProviderController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderprecheck.id);
             dto.tenantId = tenantId;

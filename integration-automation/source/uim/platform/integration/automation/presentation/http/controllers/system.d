@@ -38,7 +38,7 @@ class SystemController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateSystemRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -106,7 +106,7 @@ class SystemController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateSystemRequest();
       r.id = id;
       r.tenantId = tenantId;

@@ -33,7 +33,7 @@ class AppFileController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UploadAppFileRequest r;
       r.tenantId = tenantId;
@@ -122,7 +122,7 @@ class AppFileController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto id = AppFileprecheck.id);
 
       auto tenantId = precheck.tenantId;

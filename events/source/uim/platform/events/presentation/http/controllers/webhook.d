@@ -55,7 +55,7 @@ class WebhookController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             WebhookDTO dto;
             dto.webhookId        = WebhookId(precheck.id);
             dto.tenantId         = tenantId;
@@ -87,7 +87,7 @@ class WebhookController : ManageController {
         try {
             auto tenantId  = req.getTenantId;
             auto webhookId = Webhookprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             WebhookDTO dto;
             dto.tenantId       = tenantId;
             dto.webhookId      = webhookId;

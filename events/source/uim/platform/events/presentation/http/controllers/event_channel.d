@@ -55,7 +55,7 @@ class EventChannelController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             EventChannelDTO dto;
             dto.channelId          = EventChannelId(precheck.id);
             dto.tenantId           = tenantId;
@@ -81,7 +81,7 @@ class EventChannelController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto channelId = EventChannelprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             EventChannelDTO dto;
             dto.tenantId           = tenantId;
             dto.channelId          = channelId;

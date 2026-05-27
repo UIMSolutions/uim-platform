@@ -29,7 +29,7 @@ class SpatialFeatureController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateSpatialFeatureRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -98,7 +98,7 @@ class SpatialFeatureController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateSpatialFeatureRequest r;
       r.tenantId = tenantId;
       r.id = id;

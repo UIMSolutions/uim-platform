@@ -30,7 +30,7 @@ class DataAccessController : PlatformController {
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = WriteDataAccessLogRequest();
       r.tenantId = tenantId;
       r.accessedBy = data.getString("accessedBy");

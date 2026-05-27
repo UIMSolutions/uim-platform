@@ -39,7 +39,7 @@ class RepositoryController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateRepositoryRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -100,7 +100,7 @@ class RepositoryController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateRepositoryRequest();
       r.repositoryId = id;
       r.tenantId = tenantId;

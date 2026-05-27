@@ -37,7 +37,7 @@ class ThemeController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateThemeRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"), jsonEnum!ThemeMode(j,
           "mode", ThemeMode.light), data.getString("baseTheme"), parseColors(j),
@@ -102,7 +102,7 @@ class ThemeController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto themeId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateThemeRequest(themeId, data.getString("name"),
         data.getString("description"), jsonEnum!ThemeMode(j, "mode",
           ThemeMode.light), parseColors(j), parseFonts(j),

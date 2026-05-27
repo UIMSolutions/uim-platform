@@ -36,7 +36,7 @@ class TaskController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateTaskRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
@@ -128,7 +128,7 @@ class TaskController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = Taskprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateTaskRequest r;
             r.tenantId = tenantId;
             r.taskId = id;
@@ -161,7 +161,7 @@ class TaskController : ManageController {
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             auto userId = data.getString("userId");
 
             auto result = usecase.claim(tenantId, id, userId);
@@ -209,7 +209,7 @@ class TaskController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = TaskId(extractIdFromPath(stripped));
-            auto j = req.json;
+            auto data = precheck.data;
             auto toUser = data.getString("toUser");
             auto comment = data.getString("comment");
 

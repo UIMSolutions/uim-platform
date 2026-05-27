@@ -23,7 +23,7 @@ class DataSubjectRoleController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
@@ -91,7 +91,7 @@ class DataSubjectRoleController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = DataSubjectRoleprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
             r.name = data.getString("name");

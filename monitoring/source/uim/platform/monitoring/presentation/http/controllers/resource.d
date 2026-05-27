@@ -38,7 +38,7 @@ class ResourceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RegisterResourceRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -107,7 +107,7 @@ class ResourceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = MonitoredResourceId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateResourceRequest r;
       r.tenantId = tenantId;

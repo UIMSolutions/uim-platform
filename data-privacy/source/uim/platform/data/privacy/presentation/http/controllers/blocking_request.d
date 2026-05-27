@@ -34,7 +34,7 @@ class BlockingController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateBlockingRequest r;
       r.tenantId = tenantId;
       r.dataSubjectId = data.getString("dataSubjectId");
@@ -94,7 +94,7 @@ class BlockingController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(precheck.id);

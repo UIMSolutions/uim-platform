@@ -34,7 +34,7 @@ class ContentCacheController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateContentCacheRequest r;
       r.tenantId = tenantId;
       r.fileId = data.getString("fileId");

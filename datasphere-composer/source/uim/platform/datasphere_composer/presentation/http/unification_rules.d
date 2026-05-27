@@ -42,7 +42,7 @@ class UnificationRuleController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateUnificationRuleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = precheck.id;
@@ -62,7 +62,7 @@ class UnificationRuleController : ManageController {
   }
 
   void handleReorder(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     ReorderRulesRequest r;
     r.tenantId  = req.getTenantId;
     r.orderedIds = j.getStrings("orderedIds");
@@ -86,7 +86,7 @@ class UnificationRuleController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateUnificationRuleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);

@@ -34,7 +34,7 @@ class ProvisioningRequestController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateProvisioningRequest r;
     r.tenantId       = req.getTenantId;
     r.id             = precheck.id;
@@ -64,7 +64,7 @@ class ProvisioningRequestController : ManageController {
   }
 
   void handleComplete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
     r.tenantId        = req.getTenantId;
     r.id              = extractIdFromPath(req.requestPath.to!string);
@@ -75,7 +75,7 @@ class ProvisioningRequestController : ManageController {
   }
 
   void handleFail(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);

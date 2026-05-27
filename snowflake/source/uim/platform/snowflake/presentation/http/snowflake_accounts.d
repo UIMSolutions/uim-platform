@@ -33,7 +33,7 @@ class SnowflakeAccountController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateAccountRequest r;
     r.tenantId         = req.getTenantId;
     r.id               = precheck.id;
@@ -51,7 +51,7 @@ class SnowflakeAccountController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateAccountRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);

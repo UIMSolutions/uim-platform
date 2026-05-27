@@ -37,7 +37,7 @@ class ChannelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateChannelRequest();
       r.connectorId = data.getString("connectorId");
       r.tenantId = tenantId;

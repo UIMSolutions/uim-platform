@@ -34,7 +34,7 @@ class FlexVariantsController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFlexVariantRequest request;
       request.tenantId    = tenantId;
       request.variantId   = FlexVariantId(precheck.id);
@@ -92,7 +92,7 @@ class FlexVariantsController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = FlexVariantprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       
       UpdateFlexVariantRequest request;
       request.tenantId    = tenantId;

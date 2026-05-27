@@ -49,7 +49,7 @@ class ConfigurationController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateConfigurationRequest r;
             r.tenantId = tenantId;

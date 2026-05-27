@@ -61,7 +61,7 @@ class PrintDocumentController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             PrintDocumentDTO dto;
             dto.documentId = PrintDocumentId(precheck.id);
             dto.tenantId = tenantId;

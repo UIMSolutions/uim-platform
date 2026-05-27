@@ -42,7 +42,7 @@ class AppController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
       r.spaceId = data.getString("spaceId");
@@ -110,7 +110,7 @@ class AppController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateAppRequest();
       r.id = appId;
       r.tenantId = tenantId;
@@ -196,7 +196,7 @@ class AppController : ManageController {
   protected void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = ScaleAppRequest();
       r.id = appId;
       r.tenantId = tenantId;
@@ -238,7 +238,7 @@ class AppController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = AppId(precheck.id);
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto envJson = data.getString("environmentVariables");
 
       auto result = useCase.setEnvironment(tenantId, id, envJson);

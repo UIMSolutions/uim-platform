@@ -37,7 +37,7 @@ class ServiceBindingController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
       r.serviceInstanceId = data.getString("serviceInstanceId");
@@ -113,7 +113,7 @@ class ServiceBindingController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = ServiceBindingId(tenantId, precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateServiceBindingRequest r;
       r.tenantId = tenantId;  
       r.serviceBindingId = id;

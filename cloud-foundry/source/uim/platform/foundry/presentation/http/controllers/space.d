@@ -40,7 +40,7 @@ class SpaceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateSpaceRequest();
       r.tenantId = tenantId;
       r.orgId = OrgId(data.getString("orgId"));
@@ -104,7 +104,7 @@ class SpaceController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = SpaceId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateSpaceRequest();
       r.id = id;
       r.tenantId = tenantId;

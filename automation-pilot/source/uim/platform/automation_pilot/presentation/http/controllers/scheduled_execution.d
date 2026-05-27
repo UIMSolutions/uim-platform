@@ -63,7 +63,7 @@ class ScheduledExecutionController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
@@ -97,7 +97,7 @@ class ScheduledExecutionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;

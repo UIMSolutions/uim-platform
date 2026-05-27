@@ -63,7 +63,7 @@ class PageController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             PageDTO dto;
             dto.pageId = PageId(precheck.id);
@@ -99,7 +99,7 @@ class PageController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
 
             PageDTO dto;
             dto.tenantId = tenantId;

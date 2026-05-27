@@ -32,7 +32,7 @@ class OAuthClientController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateOAuthClientRequest r;
       r.tenantId = tenantId;
@@ -119,7 +119,7 @@ class OAuthClientController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = OAuthClientId(extractIdFromPath(req));
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateOAuthClientRequest r;
       r.id = id;
       r.tenantId = tenantId;

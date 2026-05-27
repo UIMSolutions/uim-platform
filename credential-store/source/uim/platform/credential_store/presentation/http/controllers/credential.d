@@ -76,7 +76,7 @@ class CredentialController : ManageController {
   protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateCredentialRequest r;
       r.tenantId = tenantId;

@@ -35,7 +35,7 @@ class FlexVersionsController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFlexVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = FlexVersionId(precheck.id);
@@ -65,7 +65,7 @@ class FlexVersionsController : ManageController {
       if (activateIdx < 0) { writeError(res, 400, "Invalid activate path"); return; }
       auto basePath2 = fullPath[0 .. activateIdx];
       auto id = FlexVersionId(extractIdFromPath(basePath2));
-      auto j = req.json;
+      auto data = precheck.data;
       ActivateVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = id;
@@ -114,7 +114,7 @@ class FlexVersionsController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = FlexVersionprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFlexVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = id;

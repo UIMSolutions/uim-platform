@@ -71,7 +71,7 @@ class AuthorizationCodeController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             AuthorizationCodeDTO dto;
             dto.codeId = AuthorizationCodeId(precheck.id);
             dto.tenantId = tenantId;

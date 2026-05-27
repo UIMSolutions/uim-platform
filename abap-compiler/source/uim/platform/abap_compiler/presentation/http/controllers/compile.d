@@ -27,7 +27,7 @@ class CompileController : PlatformController {
 
     protected void handleCompile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             CompileRequest r;
             r.tenantId   = req.getTenantId;
             r.programId  = data.getString("programId");

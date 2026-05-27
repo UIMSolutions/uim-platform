@@ -31,7 +31,7 @@ class DatabaseConnectionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
@@ -128,7 +128,7 @@ class DatabaseConnectionController : ManageController {
     try {
       
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;

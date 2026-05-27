@@ -33,7 +33,7 @@ class ArchiveRequestController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateArchiveRequest r;
       r.tenantId = tenantId;
@@ -94,7 +94,7 @@ class ArchiveRequestController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateArchiveStatusRequest r;
       r.tenantId = tenantId;

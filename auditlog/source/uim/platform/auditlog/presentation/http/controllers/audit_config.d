@@ -101,7 +101,7 @@ class AuditConfigController : ManageController {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
 
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = UpdateAuditConfigRequest();
     r.id = AuditConfigId(precheck.id);
     r.tenantId = tenantId;

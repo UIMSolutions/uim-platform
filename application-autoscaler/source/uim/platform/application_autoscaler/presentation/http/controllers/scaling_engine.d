@@ -31,7 +31,7 @@ class ScalingEngineController : PlatformController {
   // Body: { "app_id": "...", "metric_type": "cpu", "current_value": 85.0 }
   protected void handleTrigger(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       TriggerScalingRequest r;
       r.appId        = data.getString("app_id");
       r.metricType   = data.getString("metric_type");

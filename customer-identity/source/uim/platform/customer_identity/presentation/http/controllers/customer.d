@@ -51,7 +51,7 @@ class CustomerController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         CustomerDTO dto;
         dto.tenantId = tenantId;
@@ -107,7 +107,7 @@ class CustomerController : ManageController {
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Customer ID").set("status", "error").set("statusCode", 400);
 
-        auto j = req.json;
+        auto data = precheck.data;
         CustomerDTO dto;
         dto.customerId = id;
         dto.tenantId = tenantId;

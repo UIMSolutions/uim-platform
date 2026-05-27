@@ -39,7 +39,7 @@ class ModuleController : ManageController {
   protected void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       EnableModuleRequest r;
       r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
@@ -106,7 +106,7 @@ class ModuleController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateModuleRequest r;
       r.version_ = data.getString("version");
       r.channel = data.getString("channel");

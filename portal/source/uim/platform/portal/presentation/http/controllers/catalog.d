@@ -37,7 +37,7 @@ class CatalogController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("title"), data.getString("description"), data.getString("providerId"),
         getStrings(j, "allowedRoleIds"), j.getBoolean("active", true),);
@@ -88,7 +88,7 @@ class CatalogController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateCatalogRequest(catalogId, data.getString("title"),
         data.getString("description"), getStrings(j, "allowedRoleIds"),
         j.getBoolean("active", true),);

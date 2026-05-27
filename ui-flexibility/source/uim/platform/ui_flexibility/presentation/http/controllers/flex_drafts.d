@@ -34,7 +34,7 @@ class FlexDraftsController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFlexDraftRequest r;
       r.tenantId       = tenantId;
       r.draftId        = FlexDraftId(precheck.id);
@@ -79,7 +79,7 @@ class FlexDraftsController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = FlexDraftprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFlexDraftRequest r;
       r.tenantId   = tenantId;
       r.draftId    = id;

@@ -31,7 +31,7 @@ class ScopeController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateScopeRequest r;
       r.tenantId = tenantId;
       r.name        = data.getString("name");
@@ -83,7 +83,7 @@ class ScopeController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = ScopeId(extractIdFromPath(req));
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateScopeRequest r;
       r.tenantId = tenantId;
       r.id          = id;

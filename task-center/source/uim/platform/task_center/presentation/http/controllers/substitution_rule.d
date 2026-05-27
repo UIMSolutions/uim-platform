@@ -33,7 +33,7 @@ class SubstitutionRuleController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
@@ -114,7 +114,7 @@ class SubstitutionRuleController : ManageController {
             auto tenantId = precheck.tenantId;
 
             auto id = SubstitutionRuleprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = id;

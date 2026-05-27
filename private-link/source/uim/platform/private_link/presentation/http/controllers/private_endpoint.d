@@ -39,7 +39,7 @@ class PrivateEndpointController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CreatePrivateEndpointRequest();
     r.tenantId = tenantId;
     r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
@@ -72,7 +72,7 @@ class PrivateEndpointController : ManageController {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = UpdatePrivateEndpointStatusRequest();
     r.tenantId = tenantId;
     r.endpointId = id;
@@ -110,7 +110,7 @@ class PrivateEndpointController : ManageController {
         rawId = parts[i - 1];
     }
     auto id = PrivateEndpointId(rawId);
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = ApprovePrivateEndpointRequest();
     r.tenantId = tenantId;
     r.endpointId = id;

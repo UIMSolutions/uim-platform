@@ -33,7 +33,7 @@ class DataContextController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateDataContextRequest r;
             r.tenantId = tenantId;

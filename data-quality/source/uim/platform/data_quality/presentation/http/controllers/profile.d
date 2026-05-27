@@ -36,7 +36,7 @@ class ProfileController : PlatformController {
   protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = ProfileDatasetRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");

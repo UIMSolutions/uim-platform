@@ -62,7 +62,7 @@ class PrintClientController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             PrintClientDTO dto;
             dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;
@@ -90,7 +90,7 @@ class PrintClientController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             PrintClientDTO dto;
             dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;

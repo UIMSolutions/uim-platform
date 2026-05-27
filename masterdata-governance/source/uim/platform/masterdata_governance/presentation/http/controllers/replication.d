@@ -62,7 +62,7 @@ class ReplicationController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ReplicationDTO dto;
             dto.replicationId = ReplicationId(precheck.id);
             dto.tenantId = tenantId;
@@ -95,7 +95,7 @@ class ReplicationController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             auto id = ReplicationId(precheck.id);
             auto action = data.getString("action");
 

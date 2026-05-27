@@ -35,7 +35,7 @@ class DocumentTypeController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateDocumentTypeRequest r;
       r.tenantId = tenantId;
@@ -110,7 +110,7 @@ class DocumentTypeController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = DocumentTypeprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateDocumentTypeRequest r;
       r.tenantId = tenantId;

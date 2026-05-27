@@ -35,7 +35,7 @@ class GroupController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateGroupRequest(data.getString("tenantId"),
         data.getString("name"), data.getString("description"));
 
@@ -101,7 +101,7 @@ class GroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto j = req.json;
+      auto data = precheck.data;
       auto error = useCase.addMember(data.getString("groupId"), data.getString("userId"));
 
       if (error.length > 0) {

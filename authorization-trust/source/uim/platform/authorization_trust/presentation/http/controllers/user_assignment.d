@@ -30,7 +30,7 @@ class UserAssignmentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateUserAssignmentRequest r;
       r.tenantId = tenantId;
       r.userId = UserId(data.getString("userId"));

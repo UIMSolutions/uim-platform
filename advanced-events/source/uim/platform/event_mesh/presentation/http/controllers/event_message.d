@@ -69,7 +69,7 @@ class EventMessageController : ManageController {
     protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             EventMessageDTO dto;
             dto.messageId = EventMessageId(precheck.id);

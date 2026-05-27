@@ -55,7 +55,7 @@ class QueueSubscriptionController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             QueueSubscriptionDTO dto;
             dto.subscriptionId = QueueSubscriptionId(precheck.id);
             dto.tenantId       = tenantId;
@@ -78,7 +78,7 @@ class QueueSubscriptionController : ManageController {
         try {
             auto tenantId      = req.getTenantId;
             auto subscriptionId = QueueSubscriptionprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             QueueSubscriptionDTO dto;
             dto.tenantId       = tenantId;
             dto.subscriptionId = subscriptionId;

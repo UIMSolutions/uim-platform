@@ -54,7 +54,7 @@ class ApplicationController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(precheck.id);
             dto.tenantId = tenantId;
@@ -77,7 +77,7 @@ class ApplicationController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ApplicationDTO dto;
             dto.applicationId = Applicationprecheck.id);
             dto.tenantId = tenantId;

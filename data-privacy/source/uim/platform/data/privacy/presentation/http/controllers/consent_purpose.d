@@ -33,7 +33,7 @@ class ConsentPurposeController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateConsentPurposeRequest r;
       r.tenantId = tenantId;
@@ -96,7 +96,7 @@ class ConsentPurposeController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateConsentPurposeRequest r;
       r.tenantId = tenantId;
       r.purposeId = ConsentPurposeId(precheck.id);

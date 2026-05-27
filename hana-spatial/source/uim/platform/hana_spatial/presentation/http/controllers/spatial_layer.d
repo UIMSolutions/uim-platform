@@ -29,7 +29,7 @@ class SpatialLayerController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateSpatialLayerRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -94,7 +94,7 @@ class SpatialLayerController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateSpatialLayerRequest r;
       r.tenantId = tenantId;
       r.id = id;

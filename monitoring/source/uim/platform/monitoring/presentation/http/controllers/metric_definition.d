@@ -38,7 +38,7 @@ class MetricDefinitionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateMetricDefinitionRequest r;
       r.tenantId = tenantId;
@@ -104,7 +104,7 @@ class MetricDefinitionController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = MetricDefinitionId(precheck.id);
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateMetricDefinitionRequest request;
       request.tenantId = tenantId;
       request.id = id;

@@ -26,7 +26,7 @@ class DataSubjectController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
@@ -101,7 +101,7 @@ class DataSubjectController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = DataSubjectprecheck.id);
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateDataSubjectRequest r;
             r.tenantId = tenantId;
             r.lifecycleStatus = data.getString("lifecycleStatus");

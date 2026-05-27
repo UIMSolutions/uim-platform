@@ -34,7 +34,7 @@ class ActionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateActionRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
@@ -137,7 +137,7 @@ class ActionController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateActionRequest r;
             r.tenantId = tenantId;
             r.actionId = Actionprecheck.id);

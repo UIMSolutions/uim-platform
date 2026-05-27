@@ -37,7 +37,7 @@ class MenuItemController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateMenuItemRequest(data.getString("siteId"),
         req.headers.get("X-Tenant-Id", ""), data.getString("title"),
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
@@ -91,7 +91,7 @@ class MenuItemController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateMenuItemRequest(menuItemId, data.getString("title"),
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
         data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
@@ -111,7 +111,7 @@ class MenuItemController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto siteId = data.getString("siteId");
       auto error = useCase.deleteMenuItem(menuItemId, siteId);
       if (error.length > 0)

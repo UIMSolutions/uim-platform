@@ -33,7 +33,7 @@ class PushRegistrationController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RegisterPushRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");

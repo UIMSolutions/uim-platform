@@ -35,7 +35,7 @@ class AuthController : PlatformController {
   protected void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
           data.getString("email"), data.getString("password"),
           data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
@@ -70,7 +70,7 @@ class AuthController : PlatformController {
   protected void handleen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
           data.getString("clientSecret"), getStrings(j, "scopes"));
 

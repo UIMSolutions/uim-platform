@@ -33,7 +33,7 @@ class DashboardController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateDashboardRequest r;
             r.tenantId = tenantId;
             r.dashboardId = DashboardId(precheck.id);
@@ -120,7 +120,7 @@ class DashboardController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateDashboardRequest r;
             r.tenantId = tenantId;

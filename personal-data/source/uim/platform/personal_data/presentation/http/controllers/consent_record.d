@@ -31,7 +31,7 @@ class ConsentRecordController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateConsentRecordRequest r;
             r.tenantId = tenantId;
             r.dataSubjectId = data.getString("dataSubjectId");
@@ -113,7 +113,7 @@ class ConsentRecordController : ManageController {
             auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
             auto id = ConsentRecordId(extractIdFromPath(stripped));
 
-            auto j = req.json;
+            auto data = precheck.data;
             WithdrawConsentRequest r;
             r.id = id;
             r.reason = data.getString("reason");

@@ -37,7 +37,7 @@ class FragmentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFragmentRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -111,7 +111,7 @@ class FragmentController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = DestinationFragmentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFragmentRequest r;
       r.tenantId = tenantId;
       r.fragmentId = id;

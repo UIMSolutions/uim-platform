@@ -38,7 +38,7 @@ class ProviderController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = RegisterProviderRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -100,7 +100,7 @@ class ProviderController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateProviderRequest();
       r.description = data.getString("description");
       r.endpoint = data.getString("endpoint");
@@ -145,7 +145,7 @@ class ProviderController : ManageController {
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto providerId = data.getString("providerId");
 
       auto result = usecase.syncProvider(providerId);

@@ -37,7 +37,7 @@ class SurveyController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateSurveyRequest();
       r.tenantId = tenantId;
       r.workspaceId = data.getString("workspaceId");
@@ -102,7 +102,7 @@ class SurveyController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateSurveyRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;

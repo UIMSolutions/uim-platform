@@ -70,7 +70,7 @@ class ServiceBindingController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(precheck.id);
@@ -105,7 +105,7 @@ class ServiceBindingController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(precheck.id);
             dto.name = data.getString("name");

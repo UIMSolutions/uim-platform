@@ -34,7 +34,7 @@ class FormController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateFormRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
@@ -126,7 +126,7 @@ class FormController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateFormRequest r;
             r.tenantId = tenantId;
             r.formId = Formprecheck.id);

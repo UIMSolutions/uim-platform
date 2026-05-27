@@ -32,7 +32,7 @@ class PushNotificationController : ManageController {
   protected void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       SendPushNotificationRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");

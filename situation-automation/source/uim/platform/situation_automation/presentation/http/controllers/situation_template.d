@@ -33,7 +33,7 @@ class SituationTemplateController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateSituationTemplateRequest r;
             r.tenantId = tenantId;
@@ -141,7 +141,7 @@ class SituationTemplateController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = SituationTemplateprecheck.id);
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateSituationTemplateRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = id;

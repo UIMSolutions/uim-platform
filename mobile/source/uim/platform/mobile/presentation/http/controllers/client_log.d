@@ -32,7 +32,7 @@ class ClientLogController : ManageController {
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       UploadClientLogRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");

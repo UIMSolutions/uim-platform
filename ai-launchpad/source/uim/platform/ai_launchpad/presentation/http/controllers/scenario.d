@@ -33,7 +33,7 @@ class ScenarioController : ManageController {
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       SyncScenarioRequest r;

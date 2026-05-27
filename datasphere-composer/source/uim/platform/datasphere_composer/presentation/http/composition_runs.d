@@ -41,7 +41,7 @@ class CompositionRunController : ManageController {
   }
 
   void handleStart(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     StartCompositionRunRequest r;
     r.tenantId      = req.getTenantId;
     r.id            = precheck.id;
@@ -56,7 +56,7 @@ class CompositionRunController : ManageController {
   }
 
   void handleAction(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CompositionRunActionRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);

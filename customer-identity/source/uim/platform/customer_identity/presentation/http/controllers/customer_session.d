@@ -49,7 +49,7 @@ class CustomerSessionController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         CustomerSessionDTO dto;
         dto.tenantId = tenantId;

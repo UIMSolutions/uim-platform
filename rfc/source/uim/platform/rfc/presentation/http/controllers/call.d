@@ -36,7 +36,7 @@ class CallController : PlatformController {
 
     protected void handleInvoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             InvokeRfcRequest r;
             r.tenantId        = req.getTenantId;
             r.destinationId   = data.getString("destinationId");

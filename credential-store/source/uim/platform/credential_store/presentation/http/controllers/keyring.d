@@ -34,7 +34,7 @@ class KeyringController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateKeyringRequest r;
       r.tenantId = tenantId;
@@ -127,7 +127,7 @@ class KeyringController : ManageController {
   protected void handleRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RotateKeyringRequest r;
       r.keyringId = data.getString("keyringId");
       r.tenantId = tenantId;
@@ -150,7 +150,7 @@ class KeyringController : ManageController {
   protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto keyringId = CredentialId(data.getString("keyringId"));
 
       auto result = usecase.disableCredential(tenantId, keyringId);

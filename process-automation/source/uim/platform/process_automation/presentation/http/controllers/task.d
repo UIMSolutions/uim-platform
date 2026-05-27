@@ -36,7 +36,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto j = req.json;
+      auto data = precheck.data;
       CreateTaskRequest r;
       r.tenantId = tenantId;
       r.processInstanceId = data.getString("processInstanceId");
@@ -138,7 +138,7 @@ class TaskController : ManageController {
 
       auto tenantId = precheck.tenantId;
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = Taskprecheck.id);
@@ -178,7 +178,7 @@ class TaskController : ManageController {
       auto sub = path[0 .. claimIdx];
       auto id = TaskId(extractIdFromPath(sub));
 
-      auto j = req.json;
+      auto data = precheck.data;
       ClaimTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = id;
@@ -215,7 +215,7 @@ class TaskController : ManageController {
       auto sub = path[0 .. completeIdx];
       auto id = TaskId(extractIdFromPath(sub));
 
-      auto j = req.json;
+      auto data = precheck.data;
       CompleteTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = id;

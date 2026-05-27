@@ -34,7 +34,7 @@ class PromptCollectionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreatePromptCollectionRequest r;
       r.name = data.getString("name");
@@ -101,7 +101,7 @@ class PromptCollectionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = PromptCollectionprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchPromptCollectionRequest r;
       r.tenantId = tenantId;

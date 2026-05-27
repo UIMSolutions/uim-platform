@@ -32,7 +32,7 @@ class PromptController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreatePromptRequest r;
 r.tenantId = tenantId;
@@ -107,7 +107,7 @@ r.tenantId = tenantId;
     try {
       auto tenantId = precheck.tenantId;
       auto id = Promptprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchPromptRequest r;
       r.tenantId = tenantId;

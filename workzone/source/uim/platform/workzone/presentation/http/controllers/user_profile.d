@@ -36,7 +36,7 @@ class UserProfileController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateUserProfileRequest();
       r.tenantId = tenantId;
       r.userId = data.getString("userId");
@@ -101,7 +101,7 @@ class UserProfileController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateUserProfileRequest();
       r.id = id;
       r.tenantId = tenantId;

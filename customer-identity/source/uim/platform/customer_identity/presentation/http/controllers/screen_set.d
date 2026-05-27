@@ -50,7 +50,7 @@ class ScreenSetController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         ScreenSetDTO dto;
         dto.tenantId = tenantId;
@@ -99,7 +99,7 @@ class ScreenSetController : ManageController {
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Screen Set ID").set("status", "error").set("statusCode", 400);
 
-        auto j = req.json;
+        auto data = precheck.data;
         ScreenSetDTO dto;
         dto.screenSetId = id;
         dto.tenantId = tenantId;

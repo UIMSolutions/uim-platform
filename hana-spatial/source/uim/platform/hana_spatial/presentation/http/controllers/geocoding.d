@@ -29,7 +29,7 @@ class GeocodingController : ManageController {
   private void handleGeocode(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       GeocodeAddressRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -53,7 +53,7 @@ class GeocodingController : ManageController {
   private void handleReverseGeocode(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       ReverseGeocodeRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;

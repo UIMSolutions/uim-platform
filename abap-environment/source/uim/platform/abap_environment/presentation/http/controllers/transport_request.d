@@ -157,7 +157,7 @@ class TransportRequestController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto requestId = TransportRequestId(data.getString("requestId"));
     if (requestId.isNull)
       return errorResponse("Invalid transport request id", 400);

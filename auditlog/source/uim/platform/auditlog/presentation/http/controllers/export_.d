@@ -47,7 +47,7 @@ class ExportController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
 
     CreateExportJobRequest jobRequest = CreateExportJobRequest();
     jobRequest.tenantId = tenantId;

@@ -39,7 +39,7 @@ class ProvisioningJobController : PlatformController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
       r.sourceSystemId = data.getString("sourceSystemId");
@@ -124,7 +124,7 @@ class ProvisioningJobController : PlatformController {
   override protected void handleCreate(AndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
       r.sourceSystemId = data.getString("sourceSystemId");

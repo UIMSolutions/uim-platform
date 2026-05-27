@@ -38,7 +38,7 @@ class PackageController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreatePackageRequest();
       r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
@@ -106,7 +106,7 @@ class PackageController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = PackageId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdatePackageRequest();
       r.description = data.getString("description");
       r.version_ = data.getString("version");
@@ -152,7 +152,7 @@ class PackageController : ManageController {
   protected void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = AssemblePackageRequest();
       r.packageId = data.getString("packageId");
       r.tenantId = tenantId;

@@ -34,7 +34,7 @@ class FlexApplicationsController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = FlexApplicationId(precheck.id);
@@ -89,7 +89,7 @@ class FlexApplicationsController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = FlexApplicationprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = id;

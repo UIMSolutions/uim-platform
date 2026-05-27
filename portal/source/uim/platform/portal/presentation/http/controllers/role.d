@@ -36,7 +36,7 @@ class RoleController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"),
         jsonEnum!RoleScope(j, "scope", RoleScope.site),);
@@ -84,7 +84,7 @@ class RoleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto roleId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateRoleRequest(roleId, data.getString("name"),
         data.getString("description"),);
 
@@ -101,7 +101,7 @@ class RoleController : ManageController {
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto assignReq = AssignRoleRequest(data.getString("roleId"), getStrings(j,
           "userIds"), getStrings(j, "groupIds"),);
 

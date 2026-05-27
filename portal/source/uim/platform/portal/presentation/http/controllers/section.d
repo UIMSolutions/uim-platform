@@ -35,7 +35,7 @@ class SectionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateSectionRequest(data.getString("pageId"),
         req.headers.get("X-Tenant-Id", ""), data.getString("title"), jsonInt(j,
           "sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
@@ -83,7 +83,7 @@ class SectionController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateSectionRequest(sectionId, data.getString("title"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
 
@@ -100,7 +100,7 @@ class SectionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto sectionId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto pageId = data.getString("pageId");
       auto error = useCase.deleteSection(sectionId, pageId);
       if (error.length > 0)

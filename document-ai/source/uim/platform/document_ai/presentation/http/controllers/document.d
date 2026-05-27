@@ -36,7 +36,7 @@ class DocumentController : PlatformController {
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UploadDocumentRequest r;
       r.tenantId = tenantId;
@@ -125,7 +125,7 @@ class DocumentController : PlatformController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       ConfirmDocumentRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

@@ -48,7 +48,7 @@ class DestinationController : PlatformController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             CreateDestinationRequest r;
             r.tenantId       = req.getTenantId;
             r.id             = precheck.id;
@@ -83,7 +83,7 @@ class DestinationController : PlatformController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateDestinationRequest r;
             r.tenantId   = req.getTenantId;
             r.id         = extractIdFromPath(req.requestURI.to!string);

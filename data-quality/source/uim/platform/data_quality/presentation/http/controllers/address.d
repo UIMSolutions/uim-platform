@@ -32,7 +32,7 @@ class AddressController : PlatformController {
   protected void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto r = CleanseAddressRequest();
       r.tenantId = tenantId;
@@ -54,7 +54,7 @@ class AddressController : PlatformController {
   protected void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto batchReq = CleanseBatchAddressRequest();
       batchReq.tenantId = req.getTenantId;
 

@@ -40,7 +40,7 @@ class AuditLogController : PlatformController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
 
     auto r = WriteAuditLogRequest();
     r.tenantId = tenantId;

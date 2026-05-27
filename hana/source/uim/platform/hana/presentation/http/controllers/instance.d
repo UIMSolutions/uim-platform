@@ -33,7 +33,7 @@ class InstanceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateInstanceRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -141,7 +141,7 @@ class InstanceController : ManageController {
     try {
       
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateInstanceRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -186,7 +186,7 @@ class InstanceController : ManageController {
       auto sub = path[0 .. actionIdx];
       auto id = extractIdFromPath(sub);
 
-      auto j = req.json;
+      auto data = precheck.data;
       InstanceActionRequest r;
       r.tenantId = tenantId;
       r.id = id;

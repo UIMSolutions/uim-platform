@@ -37,7 +37,7 @@ class WidgetController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateWidgetRequest();
       r.pageId = data.getString("pageId");
       r.tenantId = tenantId;
@@ -112,7 +112,7 @@ class WidgetController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateWidgetRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;

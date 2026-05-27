@@ -30,7 +30,7 @@ class CustomMetricController : ManageController {
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = extractIdFromPath(req);
-      auto j = req.json;
+      auto data = precheck.data;
 
       // Support batch: {"metrics": [...]} or single object
       auto metricsJ = j["metrics"];

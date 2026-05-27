@@ -33,7 +33,7 @@ class NamespaceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateNamespaceRequest r;
       r.tenantId = tenantId;
@@ -112,7 +112,7 @@ class NamespaceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Namespaceprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateNamespaceRequest request;
       request.tenantId = tenantId;

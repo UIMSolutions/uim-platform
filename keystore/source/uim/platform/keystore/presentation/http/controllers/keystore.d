@@ -34,7 +34,7 @@ class KeystoreController : ManageController {
 
   protected Json uploadHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     UploadKeystoreRequest r;
     r.tenantId = tenantId;
     r.accountId = data.getString("accountId");
@@ -57,7 +57,7 @@ class KeystoreController : ManageController {
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UploadKeystoreRequest r;
       r.tenantId = tenantId;
@@ -160,7 +160,7 @@ class KeystoreController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Keystoreprecheck.id);
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateKeystoreRequest r;
       r.tenantId = tenantId;
       r.keystoreId = id;

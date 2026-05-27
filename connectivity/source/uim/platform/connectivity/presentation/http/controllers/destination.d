@@ -44,7 +44,7 @@ class DestinationController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
     auto r = CreateDestinationRequest();
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -106,7 +106,7 @@ class DestinationController : ManageController {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
-    auto j = req.json;
+    auto data = precheck.data;
 
     auto r = UpdateDestinationRequest();
     r.tenantId = tenantId;

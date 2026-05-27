@@ -79,7 +79,7 @@ class AlertController : ManageController {
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       AcknowledgeAlertRequest r;
       r.alertId = AlertId(data.getString("alertId"));
       r.tenantId = tenantId;
@@ -105,7 +105,7 @@ class AlertController : ManageController {
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       ResolveAlertRequest r;
       r.alertId = AlertId(data.getString("alertId"));
       r.tenantId = tenantId;

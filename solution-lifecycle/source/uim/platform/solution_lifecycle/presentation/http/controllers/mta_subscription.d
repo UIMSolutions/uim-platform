@@ -60,7 +60,7 @@ class MtaSubscriptionController : ManageController {
 
     protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             SubscribeMtaRequest r;
             r.tenantId            = req.getTenantId;
             r.providerMtaId       = data.getString("providerMtaId");

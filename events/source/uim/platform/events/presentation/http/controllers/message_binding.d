@@ -55,7 +55,7 @@ class MessageBindingController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             MessageBindingDTO dto;
             dto.bindingId   = MessageBindingId(precheck.id);
             dto.tenantId    = tenantId;
@@ -80,7 +80,7 @@ class MessageBindingController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto bindingId = MessageBindingprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             MessageBindingDTO dto;
             dto.tenantId    = tenantId;
             dto.bindingId   = bindingId;

@@ -32,7 +32,7 @@ class HtmlAppController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateHtmlAppRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -115,7 +115,7 @@ class HtmlAppController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       if (id.isNull) {

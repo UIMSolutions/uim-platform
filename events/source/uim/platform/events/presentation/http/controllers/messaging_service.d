@@ -56,7 +56,7 @@ class MessagingServiceController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             MessagingServiceDTO dto;
             dto.serviceId   = MessagingServiceId(precheck.id);
             dto.tenantId    = tenantId;
@@ -84,7 +84,7 @@ class MessagingServiceController : ManageController {
         try {
             auto tenantId  = req.getTenantId;
             auto serviceId = MessagingServiceprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             MessagingServiceDTO dto;
             dto.tenantId    = tenantId;
             dto.serviceId   = serviceId;

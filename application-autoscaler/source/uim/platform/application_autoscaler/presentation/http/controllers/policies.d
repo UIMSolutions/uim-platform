@@ -30,7 +30,7 @@ class ScalingPolicyController : ManageController {
   // POST /api/v1/policies
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       CreateScalingPolicyRequest r;
       r.appId            = data.getString("app_id");
       r.tenantId         = data.getString("tenant_id");
@@ -135,7 +135,7 @@ class ScalingPolicyController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateScalingPolicyRequest r;
       r.scalingPolicyId    = id;

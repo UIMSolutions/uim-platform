@@ -29,7 +29,7 @@ class GeocodingJobController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateGeocodingJobRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -96,7 +96,7 @@ class GeocodingJobController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       GeocodingJobActionRequest r;
       r.tenantId = tenantId;
       r.id = id;

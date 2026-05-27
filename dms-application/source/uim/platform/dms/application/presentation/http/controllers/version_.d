@@ -61,7 +61,7 @@ class VersionController : ManageController {
   protected void handleckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CheckInRequest();
       r.documentId = DocumentId(data.getString("documentId"));
       r.tenantId = tenantId;

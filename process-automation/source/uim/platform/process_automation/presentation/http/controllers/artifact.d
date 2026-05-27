@@ -34,7 +34,7 @@ class ArtifactController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateArtifactRequest r;
             r.tenantId = tenantId;
             r.artifactId = ArtifactId(precheck.id);
@@ -137,7 +137,7 @@ class ArtifactController : ManageController {
             
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateArtifactRequest r;
             r.tenantId = tenantId;
             r.artifactId = Artifactprecheck.id);

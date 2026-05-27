@@ -35,7 +35,7 @@ class FlexChangesController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = FlexChangeId(precheck.id);
@@ -92,7 +92,7 @@ class FlexChangesController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = FlexChangeprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = id;

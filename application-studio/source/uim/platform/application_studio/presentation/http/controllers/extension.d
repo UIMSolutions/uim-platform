@@ -65,7 +65,7 @@ class ExtensionController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(precheck.id);
@@ -101,7 +101,7 @@ class ExtensionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(precheck.id);

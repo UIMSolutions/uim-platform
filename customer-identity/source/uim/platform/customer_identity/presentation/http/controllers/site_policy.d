@@ -50,7 +50,7 @@ class SitePolicyController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         SitePolicyDTO dto;
         dto.tenantId = tenantId;
@@ -107,7 +107,7 @@ class SitePolicyController : ManageController {
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Site Policy ID").set("status", "error").set("statusCode", 400);
 
-        auto j = req.json;
+        auto data = precheck.data;
         SitePolicyDTO dto;
         dto.sitePolicyId = id;
         dto.tenantId = tenantId;

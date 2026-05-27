@@ -34,7 +34,7 @@ class VisibilityController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateVisibilityRequest r;
             r.tenantId = tenantId;
             r.visibilityId = VisibilityId(precheck.id);
@@ -125,7 +125,7 @@ class VisibilityController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateVisibilityRequest r;
             r.tenantId = tenantId;
             r.visibilityId = Visibilityprecheck.id);

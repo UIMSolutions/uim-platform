@@ -35,7 +35,7 @@ class ProviderController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateProviderRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"), jsonEnum!ProviderType(j,
           "providerType", ProviderType.local),
@@ -86,7 +86,7 @@ class ProviderController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto providerId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateProviderRequest(providerId, data.getString("name"),
         data.getString("description"), data.getString("contentEndpointUrl"),
         data.getString("authToken"), j.getBoolean("active", true),);

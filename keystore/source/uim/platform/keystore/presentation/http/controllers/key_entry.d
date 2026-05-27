@@ -31,7 +31,7 @@ class KeyEntryController : ManageController {
   protected Json importHandler(HTTPServerRequest req) {
     auto path = req.requestPath.to!string;
     auto keystoreId = extractSegment(path, 4); // /api/v1/keystores/{id}/entries
-    auto j = req.json;
+    auto data = precheck.data;
     ImportKeyEntryRequest r;
     r.keystoreId = keystoreId;
     r.alias_ = data.getString("alias");

@@ -36,7 +36,7 @@ class ConnectorController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = RegisterConnectorRequest();
       r.subaccountId = data.getString("subaccountId");
       r.tenantId = tenantId;
@@ -107,7 +107,7 @@ class ConnectorController : ManageController {
       }
       auto connectorId = ConnectorId(parts[$ - 2]); // second-to-last segment before "heartbeat"
 
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = HeartbeatRequest();
       auto tenantId = precheck.tenantId;
       r.connectorVersion = data.getString("connectorVersion");

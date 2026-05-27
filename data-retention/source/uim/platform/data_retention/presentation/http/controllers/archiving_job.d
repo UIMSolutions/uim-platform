@@ -25,7 +25,7 @@ class ArchivingJobController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateArchivingJobRequest r;
             r.tenantId = tenantId;
@@ -111,7 +111,7 @@ class ArchivingJobController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = ArchivingJobprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateArchivingJobRequest r;
             r.tenantId = tenantId;

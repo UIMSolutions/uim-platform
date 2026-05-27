@@ -34,7 +34,7 @@ class DatasetController : ManageController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       RegisterDatasetRequest r;
@@ -111,7 +111,7 @@ class DatasetController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = Datasetprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchDatasetRequest r;

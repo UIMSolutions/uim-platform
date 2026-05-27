@@ -38,7 +38,7 @@ class ShareController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateShareRequest();
       r.tenantId = tenantId;
       r.documentId = DocumentId(data.getString("documentId"));

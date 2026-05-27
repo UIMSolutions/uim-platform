@@ -33,7 +33,7 @@ class RetentionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateRetentionPolicyRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -116,7 +116,7 @@ class RetentionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto policyId = RetentionPolicyprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateRetentionPolicyRequest r;
       r.policyId = policyId;

@@ -25,7 +25,7 @@ class ResidenceRuleController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateResidenceRuleRequest r;
             r.tenantId = tenantId;
@@ -112,7 +112,7 @@ class ResidenceRuleController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = ResidenceRuleprecheck.id);
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateResidenceRuleRequest r;
             r.duration = jsonInt(j, "duration");
             r.periodUnit = data.getString("periodUnit");

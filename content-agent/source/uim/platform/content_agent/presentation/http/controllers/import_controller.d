@@ -32,7 +32,7 @@ class ImportController : PlatformController {
   protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = StartImportRequest();
       r.tenantId = tenantId;
       r.packageId = ContentPackageId(data.getString("packageId"));

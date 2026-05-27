@@ -38,7 +38,7 @@ class PermissionController : ManageController {
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreatePermissionRequest();
       r.tenantId = tenantId;
       r.resourceId = data.getString("resourceId");
@@ -108,7 +108,7 @@ class PermissionController : ManageController {
   protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto resourceId = data.getString("resourceId");
       auto resourceType = data.getString("resourceType").to!ResourceType;
       auto userId = UserId(data.getString("userId"));
@@ -135,7 +135,7 @@ class PermissionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = PermissionId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdatePermissionRequest();
       r.id = id;
       r.tenantId = tenantId;

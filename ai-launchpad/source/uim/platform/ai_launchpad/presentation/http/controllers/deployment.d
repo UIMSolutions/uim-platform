@@ -35,7 +35,7 @@ class DeploymentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateDeploymentRequest r;
@@ -110,7 +110,7 @@ class DeploymentController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchDeploymentRequest r;
       r.tenantId = tenantId;
@@ -139,7 +139,7 @@ class DeploymentController : ManageController {
   protected void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchDeploymentRequest r;

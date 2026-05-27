@@ -23,7 +23,7 @@ public:
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       CreateApiProductRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = precheck.id;
@@ -57,7 +57,7 @@ public:
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateApiProductRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = extractIdFromPath(req);

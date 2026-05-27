@@ -33,7 +33,7 @@ class CorrectionRequestController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateCorrectionRequest r;
       r.tenantId = tenantId;
       r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
@@ -92,7 +92,7 @@ class CorrectionRequestController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateCorrectionStatusRequest r;
       r.tenantId = tenantId;

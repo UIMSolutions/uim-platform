@@ -34,7 +34,7 @@ class LegalGroundController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateLegalGroundRequest r;
       r.tenantId = tenantId;
@@ -106,7 +106,7 @@ class LegalGroundController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateLegalGroundRequest r;
       r.id = LegalGroundId(precheck.id);

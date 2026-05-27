@@ -40,7 +40,7 @@ class FolderController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateFolderRequest();
       r.tenantId = tenantId;
       r.repositoryId = data.getString("repositoryId");
@@ -104,7 +104,7 @@ class FolderController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateFolderRequest();
       r.folderId = id;
       r.tenantId = tenantId;
@@ -131,7 +131,7 @@ class FolderController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = MoveFolderRequest();
       r.folderId = id;
       r.tenantId = tenantId;

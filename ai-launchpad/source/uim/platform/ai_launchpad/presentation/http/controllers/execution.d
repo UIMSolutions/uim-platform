@@ -35,7 +35,7 @@ class ExecutionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       CreateExecutionRequest r;
@@ -109,7 +109,7 @@ class ExecutionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = Executionprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchExecutionRequest r;
@@ -137,7 +137,7 @@ class ExecutionController : ManageController {
   protected void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       BulkPatchExecutionRequest r;

@@ -33,7 +33,7 @@ class ZerocopyConnectorController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateConnectorRequest r;
     r.tenantId       = req.getTenantId;
     r.id             = precheck.id;
@@ -50,7 +50,7 @@ class ZerocopyConnectorController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateConnectorRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
@@ -69,7 +69,7 @@ class ZerocopyConnectorController : ManageController {
   }
 
   void handleEnroll(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     EnrollConnectorRequest r;
     r.tenantId    = req.getTenantId;
     r.connectorId = extractIdFromPath(req.requestPath.to!string);

@@ -31,7 +31,7 @@ class ConfigChangeController : PlatformController {
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = WriteConfigChangeLogRequest();
       r.tenantId = tenantId;
       r.changedBy = data.getString("changedBy");

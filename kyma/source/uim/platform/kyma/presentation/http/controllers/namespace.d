@@ -37,7 +37,7 @@ class NamespaceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateNamespaceRequest r;
       r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
@@ -105,7 +105,7 @@ class NamespaceController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateNamespaceRequest r;
       r.description = data.getString("description");
       r.cpuLimit = data.getString("cpuLimit");

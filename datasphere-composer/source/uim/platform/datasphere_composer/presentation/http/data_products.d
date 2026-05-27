@@ -55,7 +55,7 @@ class DataProductController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateDataProductRequest r;
     r.tenantId     = req.getTenantId;
     r.id           = precheck.id;
@@ -73,7 +73,7 @@ class DataProductController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateDataProductRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);

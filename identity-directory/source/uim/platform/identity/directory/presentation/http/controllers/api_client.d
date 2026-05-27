@@ -33,7 +33,7 @@ class ApiClientController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
           data.getString("name"), data.getString("description"), getStrings(j,
             "scopes"), jsonLong(j, "expiresAt"),);

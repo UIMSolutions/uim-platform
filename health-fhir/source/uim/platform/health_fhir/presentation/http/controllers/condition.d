@@ -38,7 +38,7 @@ class ConditionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateConditionRequest r;
       r.tenantId     = tenantId;
       r.conditionId  = ConditionId(precheck.id);
@@ -94,7 +94,7 @@ class ConditionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Conditionprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateConditionRequest r;
       r.tenantId    = tenantId;
       r.conditionId = id;

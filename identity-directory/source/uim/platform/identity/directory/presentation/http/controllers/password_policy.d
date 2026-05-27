@@ -34,7 +34,7 @@ class PasswordPolicyController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
           data.getString("name"), data.getString("description"), jsonUint(j,
             "minLength", 8), jsonUint(j, "maxLength", 128), j.getBoolean("requireUppercase",

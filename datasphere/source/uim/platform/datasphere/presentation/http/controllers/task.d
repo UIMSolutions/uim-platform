@@ -33,7 +33,7 @@ class TaskController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
 
-      auto j = req.json;
+      auto data = precheck.data;
       CreateTaskRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

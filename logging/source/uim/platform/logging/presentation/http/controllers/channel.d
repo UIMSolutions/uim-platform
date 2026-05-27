@@ -33,7 +33,7 @@ class ChannelController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
  
       CreateNotificationChannelRequest r;
       r.tenantId = tenantId;
@@ -116,7 +116,7 @@ class ChannelController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = NotificationChannelprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateNotificationChannelRequest r;
       r.channelId = id;
       r.tenantId = tenantId;

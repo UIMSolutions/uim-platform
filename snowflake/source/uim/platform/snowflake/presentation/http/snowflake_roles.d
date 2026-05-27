@@ -32,7 +32,7 @@ class SnowflakeRoleController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateRoleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = precheck.id;
@@ -48,7 +48,7 @@ class SnowflakeRoleController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateRoleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);

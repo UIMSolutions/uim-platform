@@ -36,7 +36,7 @@ class ValidateController : PlatformController {
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = ValidateRecordRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
@@ -53,7 +53,7 @@ class ValidateController : PlatformController {
   protected void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = ValidateBatchRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");

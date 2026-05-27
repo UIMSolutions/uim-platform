@@ -87,7 +87,7 @@ class BrowseController : PlatformController {
   protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateFavoriteRequest();
       r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));

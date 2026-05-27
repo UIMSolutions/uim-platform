@@ -30,7 +30,7 @@ class SecurityEventController : PlatformController {
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = WriteSecurityEventRequest();
       r.tenantId = tenantId;
       r.userId = data.getString("userId");

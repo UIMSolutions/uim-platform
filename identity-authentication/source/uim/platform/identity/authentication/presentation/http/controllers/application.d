@@ -35,7 +35,7 @@ class ApplicationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateAppRequest request;
       request.tenantId = tenantId;
       request.name = data.getString("name");
@@ -116,7 +116,7 @@ class ApplicationController : ManageController {
       auto idx = path.lastIndexOf('/');
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateAppRequest request;
       request.tenantId = tenantId;
       request.applicationId = appId;

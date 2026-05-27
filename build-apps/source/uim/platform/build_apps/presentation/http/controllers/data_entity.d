@@ -67,7 +67,7 @@ class DataEntityController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;
@@ -103,7 +103,7 @@ class DataEntityController : ManageController {
             auto tenantId = req.getTenantId();
 
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;

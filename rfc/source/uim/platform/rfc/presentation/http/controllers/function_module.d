@@ -48,7 +48,7 @@ class FunctionModuleController : PlatformController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             CreateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
             r.id            = precheck.id;
@@ -89,7 +89,7 @@ class FunctionModuleController : PlatformController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
             r.id            = extractIdFromPath(req.requestURI.to!string);

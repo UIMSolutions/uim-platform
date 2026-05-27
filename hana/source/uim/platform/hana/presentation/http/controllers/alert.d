@@ -33,7 +33,7 @@ class AlertController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateAlertRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
@@ -125,7 +125,7 @@ class AlertController : ManageController {
     try {
       
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateAlertRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -165,7 +165,7 @@ class AlertController : ManageController {
       auto sub = path[0 .. ackIdx];
       auto id = extractIdFromPath(sub);
 
-      auto j = req.json;
+      auto data = precheck.data;
       AcknowledgeAlertRequest r;
       r.tenantId = tenantId;
       r.id = id;

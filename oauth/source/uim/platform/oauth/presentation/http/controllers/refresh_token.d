@@ -67,7 +67,7 @@ class RefreshTokenController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             RefreshTokenDTO dto;
             dto.tokenId = precheck.id;

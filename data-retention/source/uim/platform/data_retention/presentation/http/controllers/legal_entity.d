@@ -23,7 +23,7 @@ class LegalEntityController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateLegalEntityRequest r;
             r.tenantId = tenantId;
@@ -81,7 +81,7 @@ class LegalEntityController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = LegalEntityprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateLegalEntityRequest r;
             r.name = data.getString("name");

@@ -36,7 +36,7 @@ class TenantController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateTenantRequest(data.getString("name"),
         data.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
 
@@ -103,7 +103,7 @@ class TenantController : ManageController {
       auto idx = path.lastIndexOf('/');
       TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateTenantRequest(tenantId, data.getString("name"), []);
 
       auto error = useCase.updateTenant(updateReq);

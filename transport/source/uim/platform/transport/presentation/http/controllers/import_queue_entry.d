@@ -57,7 +57,7 @@ class ImportQueueEntryController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             ImportQueueEntryDTO dto;
             dto.entryId = ImportQueueEntryId(precheck.id);
             dto.tenantId = tenantId;
@@ -81,7 +81,7 @@ class ImportQueueEntryController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = ImportQueueEntryprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             auto action = data.getString("action");
             if (action == "reset") {
                 auto result = usecase.resetEntry(tenantId, id);

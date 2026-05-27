@@ -37,7 +37,7 @@ class MetricController : ManageController {
   protected void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       PushMetricRequest r;
       r.tenantId = tenantId;
       r.resourceId = data.getString("resourceId");
@@ -64,7 +64,7 @@ class MetricController : ManageController {
   protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;

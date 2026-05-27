@@ -54,7 +54,7 @@ class UserController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             UserDTO dto;
             dto.userId = UserId(precheck.id);
             dto.tenantId = tenantId;
@@ -79,7 +79,7 @@ class UserController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             UserDTO dto;
             dto.userId = Userprecheck.id);
             dto.tenantId = tenantId;

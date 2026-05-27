@@ -29,7 +29,7 @@ class PatientController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreatePatientRequest r;
       r.tenantId  = tenantId;
@@ -118,7 +118,7 @@ class PatientController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Patientprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdatePatientRequest r;
       r.tenantId   = tenantId;

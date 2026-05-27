@@ -63,7 +63,7 @@ class LogicFlowController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             LogicFlowDTO dto;
             dto.logicFlowId = LogicFlowId(precheck.id);
@@ -100,7 +100,7 @@ class LogicFlowController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
 
             LogicFlowDTO dto;
             dto.tenantId = tenantId;

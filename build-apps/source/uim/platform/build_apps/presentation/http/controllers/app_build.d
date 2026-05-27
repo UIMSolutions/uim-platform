@@ -54,7 +54,7 @@ class AppBuildController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         AppBuildDTO dto;
         dto.appBuildId = AppBuildId(precheck.id);

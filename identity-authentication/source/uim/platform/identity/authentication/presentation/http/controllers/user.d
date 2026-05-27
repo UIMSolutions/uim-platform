@@ -36,7 +36,7 @@ class UserController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateUserRequest request;
       request.tenantId = tenantId;
       request.userName = data.getString("userName");
@@ -112,7 +112,7 @@ auto tenantId = precheck.tenantId;
       auto tenantId = precheck.tenantId;
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
         data.getString("lastName"), data.getString("phoneNumber"));
@@ -138,7 +138,7 @@ auto tenantId = precheck.tenantId;
   protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto error = useCase.changePassword(tenantId, data.getString("userId"),
         data.getString("oldPassword"), data.getString("newPassword"));
 

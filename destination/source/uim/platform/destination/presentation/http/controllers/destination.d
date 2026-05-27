@@ -99,22 +99,22 @@ class DestinationController : ManageController {
       auto result = usecase.createDestination(r);
       if (result.hasError)
         return errorResponse(result.message, 400);
+
       auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Destination created successfully");
+        .set("id", result.id);
 
-      res.writeJsonBody(resp, 201);
-    } else {
-      writeError(res, 400, result.message);
-    }
- catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      return successResponse("Destination created successfully", "Created", 201, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
+    override protected Json getHandler(HTTPServerRequest req) {
+      auto precheck = super.getHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
         auto tenantId = precheck.tenantId;
         auto id = DestinationId(precheck.id);
+        if (id.isNull) 
+          return errorResponse("Invalid destination ID", 400);
 
         auto d = usecase.getDestination(tenantId, id);
         if (d.isNull) {
@@ -129,7 +129,7 @@ class DestinationController : ManageController {
           try {
             auto tenantId = precheck.tenantId;
             auto id = DestinationId(precheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateDestinationRequest r;
             r.tenantId = tenantId;

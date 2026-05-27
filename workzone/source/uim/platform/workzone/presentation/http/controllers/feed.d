@@ -35,7 +35,7 @@ class FeedController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
-        auto j = req.json;
+        auto data = precheck.data;
         auto r = CreateFeedEntryRequest();
         r.workspaceId = data.getString("workspaceId");
         r.tenantId = tenantId;

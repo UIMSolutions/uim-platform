@@ -36,7 +36,7 @@ class TranslationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateTranslationRequest(tenantId,
         data.getString("resourceType"), data.getString("resourceId"),
         data.getString("fieldName"), data.getString("language"), data.getString("value"),);
@@ -95,7 +95,7 @@ class TranslationController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateTranslationRequest(translationId, data.getString("value"),);
 
       auto error = useCase.updateTranslation(tenantId, updateReq);

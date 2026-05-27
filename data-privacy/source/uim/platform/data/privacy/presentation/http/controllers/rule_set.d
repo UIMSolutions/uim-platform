@@ -34,7 +34,7 @@ class RuleSetController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateRuleSetRequest r;
       r.tenantId = tenantId;
       r.contextId = data.getString("businessContextId");
@@ -90,7 +90,7 @@ class RuleSetController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateRuleSetRequest r;
       r.tenantId = tenantId;

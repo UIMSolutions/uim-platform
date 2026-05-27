@@ -30,7 +30,7 @@ class GeofenceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateGeofenceZoneRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
@@ -97,7 +97,7 @@ class GeofenceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateGeofenceZoneRequest r;
       r.tenantId = tenantId;
       r.id = id;
@@ -138,7 +138,7 @@ class GeofenceController : ManageController {
   private void handleCheck(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       GeofenceCheckRequest r;
       r.tenantId = tenantId;
       r.zoneId = data.getString("zoneId");

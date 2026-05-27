@@ -33,7 +33,7 @@ class ConnectionController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateConnectionRequest r;
       r.tenantId = tenantId;
       r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
@@ -100,7 +100,7 @@ class ConnectionController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Connectionprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchConnectionRequest r;
       r.tenantId = tenantId;

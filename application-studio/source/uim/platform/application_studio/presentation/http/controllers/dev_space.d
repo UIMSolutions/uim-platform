@@ -60,7 +60,7 @@ class DevSpaceController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             DevSpaceDTO dto;
             dto.id = precheck.id;
             dto.tenantId = req.getTenantId;
@@ -95,7 +95,7 @@ class DevSpaceController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
             DevSpaceDTO dto;
             dto.id = DevSpaceId(precheck.id);
             dto.name = data.getString("name");

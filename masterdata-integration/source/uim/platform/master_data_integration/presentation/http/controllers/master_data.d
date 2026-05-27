@@ -40,7 +40,7 @@ class MasterDataController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateMasterDataObjectRequest r;
       r.tenantId = tenantId;
       r.dataModelId = data.getString("dataModelId");
@@ -133,7 +133,7 @@ class MasterDataController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateMasterDataObjectRequest r;
       r.displayName = data.getString("displayName");
       r.description = data.getString("description");

@@ -38,7 +38,7 @@ class OrganizationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateOrganizationRequest r;
       r.tenantId        = tenantId;
       r.organizationId  = OrganizationId(precheck.id);
@@ -86,7 +86,7 @@ class OrganizationController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Organizationprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateOrganizationRequest r;
       r.tenantId = tenantId;
       r.organizationId = id;

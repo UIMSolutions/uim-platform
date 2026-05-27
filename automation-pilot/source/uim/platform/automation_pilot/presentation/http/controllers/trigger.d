@@ -65,7 +65,7 @@ class TriggerController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             TriggerDTO dto;
             dto.triggerId = TriggerId(precheck.id);
@@ -99,7 +99,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
 
             TriggerDTO dto;
             dto.tenantId = tenantId;

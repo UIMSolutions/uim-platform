@@ -38,7 +38,7 @@ class PractitionerController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreatePractitionerRequest r;
       r.tenantId        = tenantId;
       r.practitionerId  = PractitionerId(precheck.id);
@@ -87,7 +87,7 @@ class PractitionerController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Practitionerprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdatePractitionerRequest r;
       r.tenantId = tenantId;
       r.practitionerId = id;

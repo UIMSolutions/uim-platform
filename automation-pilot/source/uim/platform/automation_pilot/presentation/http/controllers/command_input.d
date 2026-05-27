@@ -54,7 +54,7 @@ class CommandInputController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         CommandInputDTO dto;
         dto.commandInputId = CommandInputId(precheck.id);

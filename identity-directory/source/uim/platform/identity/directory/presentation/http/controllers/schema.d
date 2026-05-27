@@ -35,7 +35,7 @@ class SchemaController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateSchemaRequest(req.headers.get("X-Tenant-Id", ""),
           data.getString("name"), data.getString("description"), parseSchemaAttributes(j),);
 
@@ -88,7 +88,7 @@ class SchemaController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto schemaId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto updateReq = UpdateSchemaRequest(schemaId, data.getString("name"),
           data.getString("description"), parseSchemaAttributes(j),);
       auto error = useCase.updateSchema(updateReq);

@@ -33,7 +33,7 @@ class WorkspaceController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateWorkspaceRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -94,7 +94,7 @@ class WorkspaceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Workspaceprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PatchWorkspaceRequest r;
       r.workspaceId = id;

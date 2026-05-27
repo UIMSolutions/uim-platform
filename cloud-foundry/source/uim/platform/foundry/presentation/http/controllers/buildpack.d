@@ -36,7 +36,7 @@ class BuildpackController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateBuildpackRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -94,7 +94,7 @@ class BuildpackController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateBuildpackRequest();
       r.id = buildpackId;
       r.tenantId = tenantId;

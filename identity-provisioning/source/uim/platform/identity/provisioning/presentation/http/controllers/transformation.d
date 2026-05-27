@@ -39,7 +39,7 @@ class TransformationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateTransformationRequest();
       r.tenantId = tenantId;
       r.systemId = data.getString("systemId");
@@ -99,7 +99,7 @@ class TransformationController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateTransformationRequest();
       r.id = id;
       r.tenantId = tenantId;
@@ -125,7 +125,7 @@ class TransformationController : ManageController {
   protected void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto systemId = data.getString("systemId");
       auto inputAttributes = data.getString("inputAttributes");
 

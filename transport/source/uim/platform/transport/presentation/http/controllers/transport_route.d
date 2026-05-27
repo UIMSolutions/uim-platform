@@ -57,7 +57,7 @@ class TransportRouteController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             TransportRouteDTO dto;
             dto.routeId = TransportRouteId(precheck.id);
             dto.tenantId = tenantId;
@@ -83,7 +83,7 @@ class TransportRouteController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = TransportRouteprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
             auto action = data.getString("action");
             if (action == "enable") {
                 auto result = usecase.enableRoute(tenantId, id);

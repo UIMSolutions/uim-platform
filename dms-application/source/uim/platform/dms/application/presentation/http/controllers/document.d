@@ -40,7 +40,7 @@ class DocumentController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenanId = req.getTenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = CreateDocumentRequest();
       r.tenantId = tenanId;
       r.repositoryId = data.getString("repositoryId");
@@ -134,7 +134,7 @@ class DocumentController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = UpdateDocumentRequest();
       r.documentId = id;
       r.tenantId = tenantId;
@@ -162,7 +162,7 @@ class DocumentController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto r = MoveDocumentRequest();
       r.documentId = id;
       r.tenantId = tenantId;

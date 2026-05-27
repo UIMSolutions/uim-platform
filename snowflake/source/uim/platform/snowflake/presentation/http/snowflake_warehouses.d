@@ -32,7 +32,7 @@ class SnowflakeWarehouseController : ManageController {
   }
 
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     CreateWarehouseRequest r;
     r.tenantId   = req.getTenantId;
     r.id         = precheck.id;
@@ -50,7 +50,7 @@ class SnowflakeWarehouseController : ManageController {
   }
 
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = req.json;
+    auto data = precheck.data;
     UpdateWarehouseRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);

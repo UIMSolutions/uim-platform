@@ -22,7 +22,7 @@ public:
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       CreateSubscriptionRequest r;
       r.tenantId     = req.getTenantId;
       r.id           = precheck.id;
@@ -61,7 +61,7 @@ public:
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateSubscriptionRequest r;
       r.tenantId     = req.getTenantId;
       r.id           = extractIdFromPath(req);

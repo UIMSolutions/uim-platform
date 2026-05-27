@@ -32,7 +32,7 @@ class UsageReportController : ManageController {
   protected void handleReport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateUsageReportRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");

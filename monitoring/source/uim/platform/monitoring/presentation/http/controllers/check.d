@@ -36,7 +36,7 @@ class CheckController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       
       CreateHealthCheckRequest r;
       r.tenantId = tenantId;
@@ -110,7 +110,7 @@ class CheckController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = HealthCheckId(precheck.id);
 
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateHealthCheckRequest r;
       r.tenantId = tenantId;
       r.description = data.getString("description");
@@ -163,7 +163,7 @@ class CheckController : ManageController {
   protected void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       RecordCheckResultRequest r;
       r.tenantId = tenantId;
       r.checkId = HealthCheckId(data.getString("checkId"));

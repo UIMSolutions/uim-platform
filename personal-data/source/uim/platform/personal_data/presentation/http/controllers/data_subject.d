@@ -34,7 +34,7 @@ class DataSubjectController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
@@ -139,7 +139,7 @@ class DataSubjectController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateDataSubjectRequest request;
             request.tenantId = tenantId;
             request.id = DataSubjectprecheck.id);

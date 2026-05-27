@@ -99,7 +99,7 @@ class ResourceGroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = ResourceGroupprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       PatchResourceGroupRequest r;

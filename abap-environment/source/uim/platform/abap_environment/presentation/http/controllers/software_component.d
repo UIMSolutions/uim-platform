@@ -52,7 +52,7 @@ class SoftwareComponentController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto j = req.json;
+    auto data = precheck.data;
 
     CreateSoftwareComponentRequest request;
     request.tenantId = tenantId;
@@ -105,7 +105,7 @@ class SoftwareComponentController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = SoftwareComponentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       
       CloneSoftwareComponentRequest r;
       r.tenantId = tenantId;
@@ -133,7 +133,7 @@ class SoftwareComponentController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = SoftwareComponentId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       PullSoftwareComponentRequest r;
       r.tenantId = tenantId;

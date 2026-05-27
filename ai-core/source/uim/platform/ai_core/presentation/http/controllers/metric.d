@@ -30,7 +30,7 @@ class MetricController : PlatformController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       PatchMetricsRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));

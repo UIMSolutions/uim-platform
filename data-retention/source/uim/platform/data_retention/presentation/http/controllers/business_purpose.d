@@ -26,7 +26,7 @@ class BusinessPurposeController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateBusinessPurposeRequest r;
             r.tenantId = tenantId;
@@ -107,7 +107,7 @@ class BusinessPurposeController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = BusinessPurposeControllerprecheck.id);
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateBusinessPurposeRequest r;
             r.tenantId = tenantId;
             r.businessPurposeId = id;

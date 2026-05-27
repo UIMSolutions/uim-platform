@@ -34,7 +34,7 @@ class DecisionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             CreateDecisionRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
@@ -131,7 +131,7 @@ class DecisionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto j = req.json;
+            auto data = precheck.data;
             UpdateDecisionRequest r;
             r.tenantId = tenantId;
             r.decisionId = Decisionprecheck.id);

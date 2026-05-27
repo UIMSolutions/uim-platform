@@ -34,7 +34,7 @@ class SituationInstanceController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
@@ -147,7 +147,7 @@ class SituationInstanceController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             auto id = SituationInstanceprecheck.id);
-            auto j = req.json;
+            auto data = precheck.data;
 
             UpdateSituationInstanceRequest r;
             r.tenantId = tenantId;
@@ -186,7 +186,7 @@ class SituationInstanceController : ManageController {
             auto sub = path[0 .. resolveIdx];
             auto id = SituationInstanceId(extractIdFromPath(sub));
 
-            auto j = req.json;
+            auto data = precheck.data;
             ResolveSituationRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = id;

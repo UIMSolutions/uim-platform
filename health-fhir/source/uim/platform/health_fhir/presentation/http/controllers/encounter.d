@@ -52,7 +52,7 @@ class EncounterController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = EncounterId(precheck.id);
@@ -109,7 +109,7 @@ class EncounterController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Encounterprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       UpdateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = id;

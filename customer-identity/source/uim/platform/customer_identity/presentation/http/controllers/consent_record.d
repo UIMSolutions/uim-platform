@@ -50,7 +50,7 @@ class ConsentRecordController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto j = req.json;
+        auto data = precheck.data;
 
         ConsentRecordDTO dto;
         dto.tenantId = tenantId;

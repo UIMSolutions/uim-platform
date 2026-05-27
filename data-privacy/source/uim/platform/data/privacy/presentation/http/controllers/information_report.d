@@ -33,7 +33,7 @@ class InformationReportController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       CreateInformationReportRequest r;
       r.tenantId = tenantId;
@@ -95,7 +95,7 @@ class InformationReportController : ManageController {
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateInformationReportStatusRequest r;
       r.reportId = InformationReportId(precheck.id);

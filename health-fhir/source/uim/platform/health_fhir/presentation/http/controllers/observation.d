@@ -38,7 +38,7 @@ class ObservationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateObservationRequest r;
       r.tenantId        = tenantId;
       r.observationId   = ObservationId(precheck.id);
@@ -97,7 +97,7 @@ class ObservationController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = Observationprecheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
       
       UpdateObservationRequest r;
       r.tenantId      = tenantId;

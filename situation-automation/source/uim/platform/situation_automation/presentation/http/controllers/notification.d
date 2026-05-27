@@ -33,7 +33,7 @@ class NotificationController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
 
             CreateNotificationRequest r;
             r.tenantId = tenantId;
@@ -131,7 +131,7 @@ class NotificationController : ManageController {
         try {
 
             auto tenantId = precheck.tenantId;
-            auto j = req.json;
+            auto data = precheck.data;
             
             UpdateNotificationRequest r;
             r.tenantId = tenantId;

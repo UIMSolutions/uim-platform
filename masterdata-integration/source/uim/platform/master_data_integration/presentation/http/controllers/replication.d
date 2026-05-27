@@ -40,7 +40,7 @@ class ReplicationController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateReplicationJobRequest r;
       r.tenantId = tenantId;
       r.distributionModelId = data.getString("distributionModelId");

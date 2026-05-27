@@ -37,7 +37,7 @@ class UserController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("externalId"), data.getString("userName"), j.parseUserName,
         data.getString("displayName"), data.getString("userType"),
@@ -102,7 +102,7 @@ class UserController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = precheck.id;
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto updateReq = UpdateUserRequest(userId, j.parseUserName, data.getString("displayName"),
         data.getString("userType"), data.getString("preferredLanguage"),
@@ -145,7 +145,7 @@ class UserController : ManageController {
   protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       auto error = useCase.changePassword(data.getString("userId"),
         data.getString("currentPassword"), data.getString("newPassword"));
       if (error.length > 0) {

@@ -33,7 +33,7 @@ class DuplicateController : PlatformController {
   protected void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
@@ -68,7 +68,7 @@ class DuplicateController : PlatformController {
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
 
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;

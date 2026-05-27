@@ -62,7 +62,7 @@ class UIComponentController : ManageController {
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = req.getTenantId();
-            auto j = req.json;
+            auto data = precheck.data;
 
             UIComponentDTO dto;
             dto.uiComponentId = UIComponentId(precheck.id);
@@ -100,7 +100,7 @@ class UIComponentController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto path = req.requestURI.to!string;
-            auto j = req.json;
+            auto data = precheck.data;
 
             UIComponentDTO dto;
             dto.tenantId = tenantId;

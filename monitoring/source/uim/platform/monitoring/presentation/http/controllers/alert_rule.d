@@ -37,7 +37,7 @@ class AlertRuleController : ManageController {
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto j = req.json;
+      auto data = precheck.data;
       CreateAlertRuleRequest r;
       r.tenantId = tenantId;
       r.resourceId = data.getString("resourceId");
@@ -107,7 +107,7 @@ class AlertRuleController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = AlertRuleId(precheck.id);
-      auto j = req.json;
+      auto data = precheck.data;
 
       UpdateAlertRuleRequest r;
       r.tenantId = tenantId;
