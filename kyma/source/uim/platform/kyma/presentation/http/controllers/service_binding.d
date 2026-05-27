@@ -40,15 +40,15 @@ class ServiceBindingController : ManageController {
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
-      r.serviceInstanceId = j.getString("serviceInstanceId");
-      r.namespaceId = j.getString("namespaceId");
-      r.environmentId = j.getString("environmentId");
+      r.serviceInstanceId = data.getString("serviceInstanceId");
+      r.namespaceId = data.getString("namespaceId");
+      r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.secretName = j.getString("secretName");
-      r.secretNamespace = j.getString("secretNamespace");
-      r.parametersJson = j.getString("parameters");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.secretName = data.getString("secretName");
+      r.secretNamespace = data.getString("secretNamespace");
+      r.parametersJson = data.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -117,9 +117,9 @@ class ServiceBindingController : ManageController {
       UpdateServiceBindingRequest r;
       r.tenantId = tenantId;  
       r.serviceBindingId = id;
-      r.description = j.getString("description");
-      r.secretName = j.getString("secretName");
-      r.parametersJson = j.getString("parameters");
+      r.description = data.getString("description");
+      r.secretName = data.getString("secretName");
+      r.parametersJson = data.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
 
       auto result = usecase.updateBinding(r);

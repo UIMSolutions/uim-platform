@@ -41,13 +41,13 @@ class DocumentController : PlatformController {
       UploadDocumentRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.fileName = j.getString("fileName");
-      r.mimeType = j.getString("mimeType");
+      r.fileName = data.getString("fileName");
+      r.mimeType = data.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.schemaId = j.getString("schemaId");
-      r.templateId = j.getString("templateId");
-      r.documentTypeId = j.getString("documentTypeId");
-      r.language = j.getString("language");
+      r.schemaId = data.getString("schemaId");
+      r.templateId = data.getString("templateId");
+      r.documentTypeId = data.getString("documentTypeId");
+      r.language = data.getString("language");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = usecase.upload(r);

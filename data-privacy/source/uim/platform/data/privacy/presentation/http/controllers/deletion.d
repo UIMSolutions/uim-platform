@@ -37,10 +37,10 @@ class DeletionController : ManageController {
       auto j = req.json;
       CreateDeletionRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.requestedBy = UserId(data.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
-      r.reason = j.getString("reason");
+      r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
@@ -104,8 +104,8 @@ class DeletionController : ManageController {
       UpdateDeletionStatusRequest r;
       r.requestId = DeletionRequestId(precheck.id);
       r.tenantId = tenantId;
-      r.status = j.getString("status");
-      r.blockerReason = j.getString("blockerReason");
+      r.status = data.getString("status");
+      r.blockerReason = data.getString("blockerReason");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

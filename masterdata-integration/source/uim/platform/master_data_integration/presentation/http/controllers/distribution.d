@@ -39,16 +39,16 @@ class DistributionController : ManageController {
       auto j = req.json;
       CreateDistributionModelRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.direction = j.getString("direction");
-      r.sourceClientId = j.getString("sourceClientId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.direction = data.getString("direction");
+      r.sourceClientId = data.getString("sourceClientId");
       r.targetClientIds = getStrings(j, "targetClientIds");
       r.categories = getStrings(j, "categories");
       r.dataModelIds = getStrings(j, "dataModelIds");
       r.filterRuleIds = getStrings(j, "filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
-      r.cronSchedule = j.getString("cronSchedule");
+      r.cronSchedule = data.getString("cronSchedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -111,15 +111,15 @@ class DistributionController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateDistributionModelRequest r;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
       r.targetClientIds = getStrings(j, "targetClientIds");
       r.categories = getStrings(j, "categories");
       r.dataModelIds = getStrings(j, "dataModelIds");
       r.filterRuleIds = getStrings(j, "filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
-      r.cronSchedule = j.getString("cronSchedule");
+      r.cronSchedule = data.getString("cronSchedule");
 
       auto result = usecase.updateModel(id, r);
       if (result.hasError)

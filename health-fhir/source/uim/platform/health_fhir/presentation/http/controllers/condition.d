@@ -42,9 +42,9 @@ class ConditionController : ManageController {
       CreateConditionRequest r;
       r.tenantId     = tenantId;
       r.conditionId  = ConditionId(precheck.id);
-      r.note_        = j.getString("note");
-      r.onsetDateTime_   = j.getString("onsetDateTime");
-      r.recordedDate_    = j.getString("recordedDate");
+      r.note_        = data.getString("note");
+      r.onsetDateTime_   = data.getString("onsetDateTime");
+      r.recordedDate_    = data.getString("recordedDate");
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto result = usecase.createCondition(r);
@@ -98,9 +98,9 @@ class ConditionController : ManageController {
       UpdateConditionRequest r;
       r.tenantId    = tenantId;
       r.conditionId = id;
-      r.note_       = j.getString("note");
-      r.onsetDateTime_ = j.getString("onsetDateTime");
-      r.recordedDate_  = j.getString("recordedDate");
+      r.note_       = data.getString("note");
+      r.onsetDateTime_ = data.getString("onsetDateTime");
+      r.recordedDate_  = data.getString("recordedDate");
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto result = usecase.updateCondition(r);

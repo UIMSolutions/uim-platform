@@ -73,14 +73,14 @@ class ProjectTemplateController : ManageController {
             ProjectTemplateDTO dto;
             dto.projectTemplateId = ProjectTemplateId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.requiredExtensions = j.getString("requiredExtensions");
-            dto.scaffoldConfig = j.getString("scaffoldConfig");
-            dto.defaultFiles = j.getString("defaultFiles");
-            dto.iconUrl = j.getString("iconUrl");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.requiredExtensions = data.getString("requiredExtensions");
+            dto.scaffoldConfig = data.getString("scaffoldConfig");
+            dto.defaultFiles = data.getString("defaultFiles");
+            dto.iconUrl = data.getString("iconUrl");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createProjectTemplate(dto);
             if (result.hasError)
@@ -107,10 +107,10 @@ class ProjectTemplateController : ManageController {
             ProjectTemplateDTO dto;
             dto.tenantId = tenantId;
             dto.projectTemplateId = ProjectTemplateId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateProjectTemplate(dto);
             if (result.hasError)

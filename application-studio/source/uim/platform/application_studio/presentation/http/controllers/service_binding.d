@@ -75,15 +75,15 @@ class ServiceBindingController : ManageController {
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(precheck.id);
             dto.tenantId = tenantId;
-            dto.devSpaceId = DevSpaceId(j.getString("devSpaceId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.serviceUrl = j.getString("serviceUrl");
-            dto.servicePath = j.getString("servicePath");
-            dto.authType = j.getString("authType");
-            dto.credentials = j.getString("credentials");
-            dto.systemAlias = j.getString("systemAlias");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.devSpaceId = DevSpaceId(data.getString("devSpaceId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.serviceUrl = data.getString("serviceUrl");
+            dto.servicePath = data.getString("servicePath");
+            dto.authType = data.getString("authType");
+            dto.credentials = data.getString("credentials");
+            dto.systemAlias = data.getString("systemAlias");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createServiceBinding(dto);
             if (result.hasError)
@@ -108,10 +108,10 @@ class ServiceBindingController : ManageController {
             auto j = req.json;
             ServiceBindingDTO dto;
             dto.id = ServiceBindingId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.serviceUrl = j.getString("serviceUrl");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.serviceUrl = data.getString("serviceUrl");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateServiceBinding(dto);
             if (result.hasError)

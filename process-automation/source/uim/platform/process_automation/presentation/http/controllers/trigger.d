@@ -37,16 +37,16 @@ class TriggerController : ManageController {
             auto j = req.json;
             CreateTriggerRequest r;
             r.tenantId = tenantId;
-            r.processId = ProcessId(j.getString("processId"));
+            r.processId = ProcessId(data.getString("processId"));
             r.triggerId = TriggerId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.cronExpression = j.getString("cronExpression");
-            r.eventType = j.getString("eventType");
-            r.eventSource = j.getString("eventSource");
-            r.filterExpression = j.getString("filterExpression");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.cronExpression = data.getString("cronExpression");
+            r.eventType = data.getString("eventType");
+            r.eventSource = data.getString("eventSource");
+            r.filterExpression = data.getString("filterExpression");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = triggerUsecase.createTrigger(r);
             if (result.hasError)
@@ -139,11 +139,11 @@ class TriggerController : ManageController {
             UpdateTriggerRequest r;
             r.tenantId = tenantId;
             r.triggerId = Triggerprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.cronExpression = j.getString("cronExpression");
-            r.eventType = j.getString("eventType");
-            r.filterExpression = j.getString("filterExpression");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.cronExpression = data.getString("cronExpression");
+            r.eventType = data.getString("eventType");
+            r.filterExpression = data.getString("filterExpression");
 
             auto result = triggerUsecase.updateTrigger(r);
             if (result.hasError)

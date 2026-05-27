@@ -54,23 +54,23 @@ class SitePolicyController : ManageController {
 
         SitePolicyDTO dto;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.policyType = j.getString("policyType");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.policyType = data.getString("policyType");
         dto.passwordMinLength = j.getInteger("passwordMinLength");
-        dto.passwordComplexity = j.getString("passwordComplexity");
-        dto.passwordRequirements = j.getString("passwordRequirements");
+        dto.passwordComplexity = data.getString("passwordComplexity");
+        dto.passwordRequirements = data.getString("passwordRequirements");
         dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBoolean("mfaRequired");
-        dto.mfaMethod = j.getString("mfaMethod");
+        dto.mfaMethod = data.getString("mfaMethod");
         dto.captchaEnabled = j.getBoolean("captchaEnabled");
         dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
         dto.progressiveProfilingEnabled = j.getBoolean("progressiveProfilingEnabled");
         dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
         dto.lockoutDurationSeconds = j.getInteger("lockoutDurationSeconds");
         dto.emailVerificationRequired = j.getBoolean("emailVerificationRequired");
-        dto.version_ = j.getString("version");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.version_ = data.getString("version");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = sitePolicies.createSitePolicy(dto);
         if (result.success)
@@ -111,15 +111,15 @@ class SitePolicyController : ManageController {
         SitePolicyDTO dto;
         dto.sitePolicyId = id;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
         dto.passwordMinLength = j.getInteger("passwordMinLength");
         dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBoolean("mfaRequired");
         dto.captchaEnabled = j.getBoolean("captchaEnabled");
         dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
         dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = sitePolicies.updateSitePolicy(dto);
         if (result.success)

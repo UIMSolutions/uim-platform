@@ -37,12 +37,12 @@ class CatalogAssetController : ManageController {
       CreateCatalogAssetRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.businessName = j.getString("businessName");
-      r.assetType = j.getString("assetType");
-      r.sourceObjectId = j.getString("sourceObjectId");
-      r.owner = j.getString("owner");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.businessName = data.getString("businessName");
+      r.assetType = data.getString("assetType");
+      r.sourceObjectId = data.getString("sourceObjectId");
+      r.owner = data.getString("owner");
       r.glossaryTerms = getStrings(j, "glossaryTerms");
 
       auto result = assets.createCatalogAsset(r);

@@ -38,11 +38,11 @@ class ExternalContentProviderController : ManageController {
       auto j = req.json;
       auto r = CreateExternalContentProviderRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.endpointUrl = j.getString("endpointUrl");
-      r.authType = j.getString("authType");
-      r.authConfig = j.getString("authConfig");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.endpointUrl = data.getString("endpointUrl");
+      r.authType = data.getString("authType");
+      r.authConfig = data.getString("authConfig");
       r.refreshIntervalSec = j.getInteger("refreshIntervalSec");
 
       auto result = useCase.createProvider(r);
@@ -101,9 +101,9 @@ class ExternalContentProviderController : ManageController {
       auto r = UpdateExternalContentProviderRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.endpointUrl = j.getString("endpointUrl");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.endpointUrl = data.getString("endpointUrl");
 
       auto result = useCase.updateProvider(r);
       if (result.isSuccess()) {

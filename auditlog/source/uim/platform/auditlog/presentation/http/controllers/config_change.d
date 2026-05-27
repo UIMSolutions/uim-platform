@@ -34,10 +34,10 @@ class ConfigChangeController : PlatformController {
       auto j = req.json;
       auto r = WriteConfigChangeLogRequest();
       r.tenantId = tenantId;
-      r.changedBy = j.getString("changedBy");
-      r.configType = j.getString("configType");
-      r.configObjectId = j.getString("configObjectId");
-      r.reason = j.getString("reason");
+      r.changedBy = data.getString("changedBy");
+      r.configType = data.getString("configType");
+      r.configObjectId = data.getString("configObjectId");
+      r.reason = data.getString("reason");
       r.changes = parseChanges(j);
 
       auto result = useCase.writeChange(r);

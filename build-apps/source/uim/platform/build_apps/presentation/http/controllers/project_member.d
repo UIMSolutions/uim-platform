@@ -68,13 +68,13 @@ class ProjectMemberController : ManageController {
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(precheck.id);
             dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.userId = UserId(j.getString("userId"));
-            dto.displayName = j.getString("displayName");
-            dto.email = j.getString("email");
-            dto.role = j.getString("role");
-            dto.permissions = j.getString("permissions");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = ApplicationId(data.getString("applicationId"));
+            dto.userId = UserId(data.getString("userId"));
+            dto.displayName = data.getString("displayName");
+            dto.email = data.getString("email");
+            dto.role = data.getString("role");
+            dto.permissions = data.getString("permissions");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createProjectMember(dto);
             if (result.hasError)
@@ -101,10 +101,10 @@ class ProjectMemberController : ManageController {
             ProjectMemberDTO dto;
             dto.tenantId = tenantId;
             dto.projectMemberId = ProjectMemberId(precheck.id);
-            dto.displayName = j.getString("displayName");
-            dto.email = j.getString("email");
-            dto.permissions = j.getString("permissions");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.displayName = data.getString("displayName");
+            dto.email = data.getString("email");
+            dto.permissions = data.getString("permissions");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateProjectMember(dto);
             if (result.hasError)

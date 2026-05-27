@@ -34,10 +34,10 @@ class PatientController : ManageController {
       CreatePatientRequest r;
       r.tenantId  = tenantId;
       r.patientId = PatientId(precheck.id);
-      r.birthDate_ = j.getString("birthDate");
+      r.birthDate_ = data.getString("birthDate");
       r.active_   = j.get("active", Json(true)).get!bool;
 
-      auto genderStr = j.getString("gender");
+      auto genderStr = data.getString("gender");
       switch (genderStr) {
         case "male":    r.gender_ = Gender.male_;    break;
         case "female":  r.gender_ = Gender.female_;  break;
@@ -123,10 +123,10 @@ class PatientController : ManageController {
       UpdatePatientRequest r;
       r.tenantId   = tenantId;
       r.patientId  = id;
-      r.birthDate_ = j.getString("birthDate");
+      r.birthDate_ = data.getString("birthDate");
       r.active_    = j.get("active", Json(true)).get!bool;
 
-      auto genderStr = j.getString("gender");
+      auto genderStr = data.getString("gender");
       switch (genderStr) {
         case "male":    r.gender_ = Gender.male_;    break;
         case "female":  r.gender_ = Gender.female_;  break;

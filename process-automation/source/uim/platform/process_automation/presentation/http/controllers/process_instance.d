@@ -36,10 +36,10 @@ class ProcessInstanceController : ManageController {
             auto j = req.json;
             StartProcessInstanceRequest r;
             r.tenantId = tenantId;
-            r.processId = ProcessId(j.getString("processId"));
+            r.processId = ProcessId(data.getString("processId"));
             r.processInstanceId = ProcessInstanceId(precheck.id);
-            r.startedBy = UserId(j.getString("startedBy"));
-            r.priority = j.getString("priority");
+            r.startedBy = UserId(data.getString("startedBy"));
+            r.priority = data.getString("priority");
             r.dueDate = jsonLong(j, "dueDate");
             r.context = jsonKeyValuePairs(j, "context");
 
@@ -142,7 +142,7 @@ class ProcessInstanceController : ManageController {
             ProcessInstanceActionRequest r;
             r.tenantId = tenantId;
             r.processInstanceId = ProcessInstanceId(id);
-            r.action = j.getString("action");
+            r.action = data.getString("action");
 
             auto result = processInstanceUsecase.performProcessInstanceAction(r);
             if (result.hasError)

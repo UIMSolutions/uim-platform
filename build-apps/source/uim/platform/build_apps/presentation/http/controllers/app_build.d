@@ -59,14 +59,14 @@ class AppBuildController : ManageController {
         AppBuildDTO dto;
         dto.appBuildId = AppBuildId(precheck.id);
         dto.tenantId = tenantId;
-        dto.applicationId = ApplicationId(j.getString("applicationId"));
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.buildTarget = j.getString("buildTarget");
-        dto.version_ = j.getString("version");
-        dto.buildConfig = j.getString("buildConfig");
-        dto.signingConfig = j.getString("signingConfig");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.buildTarget = data.getString("buildTarget");
+        dto.version_ = data.getString("version");
+        dto.buildConfig = data.getString("buildConfig");
+        dto.signingConfig = data.getString("signingConfig");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createAppBuild(dto);
         if (result.hasError)

@@ -108,13 +108,13 @@ class MobileApplicationController : ManageController {
         MobileApplicationDTO dto;
         dto.mobileApplicationId = id;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.iconUrl = j.getString("iconUrl");
-        dto.category = j.getString("category");
-        dto.vendor = j.getString("vendor");
-        dto.contactEmail = j.getString("contactEmail");
-        dto.minOsVersion = j.getString("minOsVersion");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.iconUrl = data.getString("iconUrl");
+        dto.category = data.getString("category");
+        dto.vendor = data.getString("vendor");
+        dto.contactEmail = data.getString("contactEmail");
+        dto.minOsVersion = data.getString("minOsVersion");
 
         auto result = usecase.updateMobileApplication(dto);
         if (result.hasError)

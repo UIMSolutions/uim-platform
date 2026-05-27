@@ -67,19 +67,19 @@ class TechnicianController : ManageController {
             TechnicianDTO dto;
             dto.technicianId = TechnicianId(precheck.id);
             dto.tenantId = tenantId;
-            dto.firstName = j.getString("firstName");
-            dto.lastName = j.getString("lastName");
-            dto.email = j.getString("email");
-            dto.phone = j.getString("phone");
-            dto.region = j.getString("region");
-            dto.address = j.getString("address");
-            dto.latitude = j.getString("latitude");
-            dto.longitude = j.getString("longitude");
-            dto.availabilityStart = j.getString("availabilityStart");
-            dto.availabilityEnd = j.getString("availabilityEnd");
-            dto.maxWorkload = j.getString("maxWorkload");
-            dto.travelRadius = j.getString("travelRadius");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.firstName = data.getString("firstName");
+            dto.lastName = data.getString("lastName");
+            dto.email = data.getString("email");
+            dto.phone = data.getString("phone");
+            dto.region = data.getString("region");
+            dto.address = data.getString("address");
+            dto.latitude = data.getString("latitude");
+            dto.longitude = data.getString("longitude");
+            dto.availabilityStart = data.getString("availabilityStart");
+            dto.availabilityEnd = data.getString("availabilityEnd");
+            dto.maxWorkload = data.getString("maxWorkload");
+            dto.travelRadius = data.getString("travelRadius");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createTechnician(dto);
             if (result.hasError)
@@ -104,13 +104,13 @@ class TechnicianController : ManageController {
             TechnicianDTO dto;
             dto.technicianId = TechnicianId(precheck.id);
             dto.tenantId = tenantId;
-            dto.firstName = j.getString("firstName");
-            dto.lastName = j.getString("lastName");
-            dto.email = j.getString("email");
-            dto.phone = j.getString("phone");
-            dto.region = j.getString("region");
-            dto.address = j.getString("address");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.firstName = data.getString("firstName");
+            dto.lastName = data.getString("lastName");
+            dto.email = data.getString("email");
+            dto.phone = data.getString("phone");
+            dto.region = data.getString("region");
+            dto.address = data.getString("address");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateTechnician(dto);
             if (result.hasError)

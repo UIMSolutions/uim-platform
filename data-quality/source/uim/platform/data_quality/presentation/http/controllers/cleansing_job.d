@@ -35,8 +35,8 @@ class CleansingJobController : ManageController {
       auto j = req.json;
       auto r = CreateCleansingJobRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.requestedBy = j.getString("requestedBy");
+      r.datasetId = data.getString("datasetId");
+      r.requestedBy = data.getString("requestedBy");
       r.ruleIds = getStrings(j, "ruleIds");
 
       auto result = usecase.createCleansingJob(r);

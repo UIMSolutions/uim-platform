@@ -52,9 +52,9 @@ class FunctionModuleController : PlatformController {
             CreateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
             r.id            = precheck.id;
-            r.functionGroup = j.getString("functionGroup", "");
-            r.shortText     = j.getString("shortText", "");
-            r.remoteEnabled = j.getString("remoteEnabled", "ENABLED");
+            r.functionGroup = data.getString("functionGroup", "");
+            r.shortText     = data.getString("shortText", "");
+            r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");
 
             if (j.type == Json.Type.object && "parameters" in j) {
                 foreach (jp; j["parameters"]) {
@@ -93,8 +93,8 @@ class FunctionModuleController : PlatformController {
             UpdateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
             r.id            = extractIdFromPath(req.requestURI.to!string);
-            r.shortText     = j.getString("shortText", "");
-            r.remoteEnabled = j.getString("remoteEnabled", "ENABLED");
+            r.shortText     = data.getString("shortText", "");
+            r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");
             r.active        = j.get("active", Json(true)).get!bool;
 
             if (j.type == Json.Type.object && "parameters" in j) {

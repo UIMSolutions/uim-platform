@@ -66,11 +66,11 @@ class PrintQueueController : ManageController {
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.printerId = j.getString("printerId");
-            dto.location = j.getString("location");
-            dto.costCenter = j.getString("costCenter");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.printerId = data.getString("printerId");
+            dto.location = data.getString("location");
+            dto.costCenter = data.getString("costCenter");
             dto.isDefault = j.getBoolean("isDefault");
             dto.maxRetries = cast(int) j.getInt("maxRetries");
             dto.retentionDays = cast(int) j.getInt("retentionDays");
@@ -95,11 +95,11 @@ class PrintQueueController : ManageController {
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.location = j.getString("location");
-            dto.costCenter = j.getString("costCenter");
-            dto.status = j.getString("status");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.location = data.getString("location");
+            dto.costCenter = data.getString("costCenter");
+            dto.status = data.getString("status");
 
             auto result = usecase.updatePrintQueue(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

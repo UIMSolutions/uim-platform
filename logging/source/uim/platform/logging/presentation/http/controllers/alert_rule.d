@@ -37,18 +37,18 @@ class AlertRuleController : ManageController {
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.query = j.getString("query");
-      r.condition = j.getString("condition");
-      r.field = j.getString("field");
-      r.pattern = j.getString("pattern");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.query = data.getString("query");
+      r.condition = data.getString("condition");
+      r.field = data.getString("field");
+      r.pattern = data.getString("pattern");
       r.thresholdValue = j.getDouble("thresholdValue");
-      r.thresholdOperator = j.getString("thresholdOperator");
+      r.thresholdOperator = data.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
-      r.severity = j.getString("severity");
+      r.severity = data.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createAlertRule(r);
       if (result.hasError)
@@ -125,15 +125,15 @@ class AlertRuleController : ManageController {
       UpdateAlertRuleRequest r;
       r.tenantId = tenantId;
       r.ruleId = id;
-      r.description = j.getString("description");
-      r.query = j.getString("query");
-      r.condition = j.getString("condition");
-      r.field = j.getString("field");
-      r.pattern = j.getString("pattern");
+      r.description = data.getString("description");
+      r.query = data.getString("query");
+      r.condition = data.getString("condition");
+      r.field = data.getString("field");
+      r.pattern = data.getString("pattern");
       r.thresholdValue = j.getDouble("thresholdValue");
-      r.thresholdOperator = j.getString("thresholdOperator");
+      r.thresholdOperator = data.getString("thresholdOperator");
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
-      r.severity = j.getString("severity");
+      r.severity = data.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 

@@ -67,18 +67,18 @@ class UIComponentController : ManageController {
             UIComponentDTO dto;
             dto.uiComponentId = UIComponentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.category = j.getString("category");
-            dto.version_ = j.getString("version");
-            dto.properties = j.getString("properties");
-            dto.styleProperties = j.getString("styleProperties");
-            dto.eventBindings = j.getString("eventBindings");
-            dto.dataBindings = j.getString("dataBindings");
-            dto.childComponents = j.getString("childComponents");
-            dto.iconUrl = j.getString("iconUrl");
-            dto.previewUrl = j.getString("previewUrl");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.category = data.getString("category");
+            dto.version_ = data.getString("version");
+            dto.properties = data.getString("properties");
+            dto.styleProperties = data.getString("styleProperties");
+            dto.eventBindings = data.getString("eventBindings");
+            dto.dataBindings = data.getString("dataBindings");
+            dto.childComponents = data.getString("childComponents");
+            dto.iconUrl = data.getString("iconUrl");
+            dto.previewUrl = data.getString("previewUrl");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = components.createUIComponent(dto);
             if (result.hasError)
@@ -105,10 +105,10 @@ class UIComponentController : ManageController {
             UIComponentDTO dto;
             dto.tenantId = tenantId;
             dto.uiComponentId = UIComponentId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = components.updateUIComponent(dto);
             if (result.hasError)

@@ -33,11 +33,11 @@ class SpatialFeatureController : ManageController {
       CreateSpatialFeatureRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.layerId = j.getString("layerId");
-      r.name = j.getString("name");
-      r.geometryType = j.getString("geometryType");
-      r.geometry = j.getString("geometry");
-      r.properties = j.getString("properties");
+      r.layerId = data.getString("layerId");
+      r.name = data.getString("name");
+      r.geometryType = data.getString("geometryType");
+      r.geometry = data.getString("geometry");
+      r.properties = data.getString("properties");
       r.tags = jsonKeyValuePairs(j, "tags");
 
       auto result = usecase.create(r);
@@ -102,9 +102,9 @@ class SpatialFeatureController : ManageController {
       UpdateSpatialFeatureRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.name = j.getString("name");
-      r.geometry = j.getString("geometry");
-      r.properties = j.getString("properties");
+      r.name = data.getString("name");
+      r.geometry = data.getString("geometry");
+      r.properties = data.getString("properties");
       r.tags = jsonKeyValuePairs(j, "tags");
 
       auto result = usecase.update(r);

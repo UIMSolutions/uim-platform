@@ -39,16 +39,16 @@ class FlexChangesController : ManageController {
       CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = FlexChangeId(precheck.id);
-      r.appId      = j.getString("appId");
-      r.namespace_ = j.getString("namespace");
-      r.layer_     = toChangeLayer(j.getString("layer"));
-      r.changeType_ = j.getString("changeType");
-      r.selector_   = j.getString("selector");
-      r.content_    = j.getString("content");
-      r.reference_  = j.getString("reference");
-      r.support_    = j.getString("support");
-      r.dependentSelector_ = j.getString("dependentSelector");
-      r.createdBy_  = j.getString("createdBy");
+      r.appId      = data.getString("appId");
+      r.namespace_ = data.getString("namespace");
+      r.layer_     = toChangeLayer(data.getString("layer"));
+      r.changeType_ = data.getString("changeType");
+      r.selector_   = data.getString("selector");
+      r.content_    = data.getString("content");
+      r.reference_  = data.getString("reference");
+      r.support_    = data.getString("support");
+      r.dependentSelector_ = data.getString("dependentSelector");
+      r.createdBy_  = data.getString("createdBy");
       auto result = usecase.createChange(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
@@ -96,10 +96,10 @@ class FlexChangesController : ManageController {
       UpdateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = id;
-      r.selector_  = j.getString("selector");
-      r.content_   = j.getString("content");
-      r.reference_ = j.getString("reference");
-      r.updatedBy_ = j.getString("updatedBy");
+      r.selector_  = data.getString("selector");
+      r.content_   = data.getString("content");
+      r.reference_ = data.getString("reference");
+      r.updatedBy_ = data.getString("updatedBy");
       r.isActive_  = j.get("isActive", Json(true)).get!bool;
       auto result = usecase.updateChange(r);
       if (result.success)

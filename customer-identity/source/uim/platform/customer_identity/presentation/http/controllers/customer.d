@@ -55,16 +55,16 @@ class CustomerController : ManageController {
 
         CustomerDTO dto;
         dto.tenantId = tenantId;
-        dto.email = j.getString("email");
-        dto.phone = j.getString("phone");
-        dto.firstName = j.getString("firstName");
-        dto.lastName = j.getString("lastName");
-        dto.password = j.getString("password");
-        dto.locale = j.getString("locale");
-        dto.country = j.getString("country");
-        dto.birthDate = j.getString("birthDate");
-        dto.profileData = j.getString("profileData");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.email = data.getString("email");
+        dto.phone = data.getString("phone");
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.password = data.getString("password");
+        dto.locale = data.getString("locale");
+        dto.country = data.getString("country");
+        dto.birthDate = data.getString("birthDate");
+        dto.profileData = data.getString("profileData");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = customers.registerCustomer(dto);
         if (result.hasError)
@@ -111,15 +111,15 @@ class CustomerController : ManageController {
         CustomerDTO dto;
         dto.customerId = id;
         dto.tenantId = tenantId;
-        dto.firstName = j.getString("firstName");
-        dto.lastName = j.getString("lastName");
-        dto.phone = j.getString("phone");
-        dto.locale = j.getString("locale");
-        dto.country = j.getString("country");
-        dto.birthDate = j.getString("birthDate");
-        dto.profileData = j.getString("profileData");
-        dto.progressiveData = j.getString("progressiveData");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.phone = data.getString("phone");
+        dto.locale = data.getString("locale");
+        dto.country = data.getString("country");
+        dto.birthDate = data.getString("birthDate");
+        dto.profileData = data.getString("profileData");
+        dto.progressiveData = data.getString("progressiveData");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = customers.updateCustomer(dto);
         if (result.success)

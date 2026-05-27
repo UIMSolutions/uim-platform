@@ -59,15 +59,15 @@ class MessageBindingController : ManageController {
             MessageBindingDTO dto;
             dto.bindingId   = MessageBindingId(precheck.id);
             dto.tenantId    = tenantId;
-            dto.clientId    = MessageClientId(j.getString("clientId"));
-            dto.serviceId   = MessagingServiceId(j.getString("serviceId"));
-            dto.queueId     = QueueId(j.getString("queueId"));
-            dto.channelId   = EventChannelId(j.getString("channelId"));
-            dto.name        = j.getString("name");
-            dto.description = j.getString("description");
-            dto.permission  = j.getString("permission");
-            dto.bindingType = j.getString("bindingType");
-            dto.createdBy   = UserId(j.getString("createdBy"));
+            dto.clientId    = MessageClientId(data.getString("clientId"));
+            dto.serviceId   = MessagingServiceId(data.getString("serviceId"));
+            dto.queueId     = QueueId(data.getString("queueId"));
+            dto.channelId   = EventChannelId(data.getString("channelId"));
+            dto.name        = data.getString("name");
+            dto.description = data.getString("description");
+            dto.permission  = data.getString("permission");
+            dto.bindingType = data.getString("bindingType");
+            dto.createdBy   = UserId(data.getString("createdBy"));
             auto result = usecase.createBinding(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
@@ -84,9 +84,9 @@ class MessageBindingController : ManageController {
             MessageBindingDTO dto;
             dto.tenantId    = tenantId;
             dto.bindingId   = bindingId;
-            dto.description = j.getString("description");
-            dto.bindingType = j.getString("bindingType");
-            dto.updatedBy   = UserId(j.getString("updatedBy"));
+            dto.description = data.getString("description");
+            dto.bindingType = data.getString("bindingType");
+            dto.updatedBy   = UserId(data.getString("updatedBy"));
             auto result = usecase.updateBinding(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);

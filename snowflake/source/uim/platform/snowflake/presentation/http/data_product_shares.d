@@ -37,11 +37,11 @@ class DataProductShareController : ManageController {
     CreateShareRequest r;
     r.tenantId      = req.getTenantId;
     r.id            = precheck.id;
-    r.accountId     = j.getString("accountId");
-    r.connectorId   = j.getString("connectorId");
-    r.dataProductId = j.getString("dataProductId");
-    r.shareName     = j.getString("shareName");
-    r.comment       = j.getString("comment");
+    r.accountId     = data.getString("accountId");
+    r.connectorId   = data.getString("connectorId");
+    r.dataProductId = data.getString("dataProductId");
+    r.shareName     = data.getString("shareName");
+    r.comment       = data.getString("comment");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -54,8 +54,8 @@ class DataProductShareController : ManageController {
     UpdateShareRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
-    r.status   = j.getString("status");
-    r.comment  = j.getString("comment");
+    r.status   = data.getString("status");
+    r.comment  = data.getString("comment");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

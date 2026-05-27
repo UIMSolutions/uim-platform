@@ -48,10 +48,10 @@ class AppBindingController : ManageController {
     try {
       auto j = req.json;
       CreateAppBindingRequest r;
-      r.tenantId = j.getString("tenant_id");
-      r.appGuid = j.getString("app_guid");
-      r.appName = j.getString("app_name");
-      r.serviceInstanceId = j.getString("service_instance_id");
+      r.tenantId = data.getString("tenant_id");
+      r.appGuid = data.getString("app_guid");
+      r.appName = data.getString("app_name");
+      r.serviceInstanceId = data.getString("service_instance_id");
       auto result = usecase.createBinding(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Binding created"), 201);
@@ -97,7 +97,7 @@ class AppBindingController : ManageController {
       auto tenantId = precheck.tenantId;
       auto bindingId = AppBindingId(extractIdFromPath(req));
       auto j = req.json;
-      auto policyId = j.getString("policy_id");
+      auto policyId = data.getString("policy_id");
       auto result = usecase.attachPolicy(tenantId, bindingId, policyId);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("message", "Policy attached"), 200);

@@ -37,9 +37,9 @@ class DuplicateController : PlatformController {
 
       auto r = DetectDuplicatesRequest();
       r.tenantId = tenantId;
-      r.datasetId = DataSetId(j.getString("datasetId"));
+      r.datasetId = DataSetId(data.getString("datasetId"));
       r.matchFields = j.getStringsArray("matchFields");
-      r.strategy = j.getString("strategy").to!MatchStrategy;
+      r.strategy = data.getString("strategy").to!MatchStrategy;
       r.threshold = j.getDouble("threshold", 70.0);
 
       foreach (item; j.getArray("records")) {
@@ -72,8 +72,8 @@ class DuplicateController : PlatformController {
 
       auto r = ResolveDuplicateRequest();
       r.tenantId = tenantId;
-      r.groupId = j.getString("groupId");
-      r.survivorRecordId = j.getString("survivorRecordId");
+      r.groupId = data.getString("groupId");
+      r.survivorRecordId = data.getString("survivorRecordId");
 
       auto result = usecase.resolve(r);
       if (result.isSuccess()) {

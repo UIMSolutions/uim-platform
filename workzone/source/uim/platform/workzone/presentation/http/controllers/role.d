@@ -39,8 +39,8 @@ class RoleController : ManageController {
       auto j = req.json;
       auto r = CreateRoleRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.permissions = getStrings(j, "permissions");
       r.isDefault = j.getBoolean("isDefault");
 
@@ -100,8 +100,8 @@ class RoleController : ManageController {
       r.id = precheck.id;
       ;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.permissions = getStrings(j, "permissions");
 
       auto result = useCase.updateRole(r);

@@ -36,10 +36,10 @@ class SnowflakeWarehouseController : ManageController {
     CreateWarehouseRequest r;
     r.tenantId   = req.getTenantId;
     r.id         = precheck.id;
-    r.accountId  = j.getString("accountId");
-    r.name       = j.getString("name");
-    r.size       = j.getString("size");
-    r.comment    = j.getString("comment");
+    r.accountId  = data.getString("accountId");
+    r.name       = data.getString("name");
+    r.size       = data.getString("size");
+    r.comment    = data.getString("comment");
     if (j["autoSuspend"].type == Json.Type.int_) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
     if (j["autoResume"].type == Json.Type.bool_) r.autoResume = j["autoResume"].get!bool;
     auto result = usecase.create(r);
@@ -54,9 +54,9 @@ class SnowflakeWarehouseController : ManageController {
     UpdateWarehouseRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
-    r.size     = j.getString("size");
-    r.status   = j.getString("status");
-    r.comment  = j.getString("comment");
+    r.size     = data.getString("size");
+    r.status   = data.getString("status");
+    r.comment  = data.getString("comment");
     if (j["autoSuspend"].type == Json.Type.int_) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
     if (j["autoResume"].type == Json.Type.bool_) r.autoResume = j["autoResume"].get!bool;
     auto result = usecase.update(r);

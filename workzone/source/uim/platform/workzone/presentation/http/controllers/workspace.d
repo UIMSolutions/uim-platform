@@ -40,12 +40,12 @@ class WorkspaceController : ManageController {
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.alias_ = j.getString("alias");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.alias_ = data.getString("alias");
+      r.createdBy = UserId(data.getString("createdBy"));
 
-      auto typeStr = j.getString("type");
+      auto typeStr = data.getString("type");
       if (typeStr == "project")
         r.type = WorkspaceType.project;
       else if (typeStr == "department")
@@ -120,9 +120,9 @@ class WorkspaceController : ManageController {
       auto r = UpdateWorkspaceRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.imageUrl = j.getString("imageUrl");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.imageUrl = data.getString("imageUrl");
       r.settings = parseWorkspaceSettings(j);
 
       auto result = useCase.updateWorkspace(r);
@@ -157,12 +157,12 @@ class WorkspaceController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = AddMemberRequest();
-      r.workspaceId = j.getString("workspaceId");
+      r.workspaceId = data.getString("workspaceId");
       r.tenantId = tenantId;
-      r.userId = j.getString("userId");
-      r.displayName = j.getString("displayName");
+      r.userId = data.getString("userId");
+      r.displayName = data.getString("displayName");
 
-      auto roleStr = j.getString("role");
+      auto roleStr = data.getString("role");
       if (roleStr == "admin")
         r.role = MemberRole.admin;
       else if (roleStr == "owner")

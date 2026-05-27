@@ -37,17 +37,17 @@ class ChannelController : ManageController {
  
       CreateNotificationChannelRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.channelType = j.getString("channelType");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.channelType = data.getString("channelType");
       r.emailRecipients = getStrings(j, "emailRecipients");
-      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
-      r.webhookUrl = j.getString("webhookUrl");
-      r.webhookSecret = j.getString("webhookSecret");
-      r.webhookMethod = j.getString("webhookMethod");
-      r.slackWebhookUrl = j.getString("slackWebhookUrl");
-      r.slackChannel = j.getString("slackChannel");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+      r.webhookUrl = data.getString("webhookUrl");
+      r.webhookSecret = data.getString("webhookSecret");
+      r.webhookMethod = data.getString("webhookMethod");
+      r.slackWebhookUrl = data.getString("slackWebhookUrl");
+      r.slackChannel = data.getString("slackChannel");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createChannel(r);
       if (result.hasError)
@@ -120,14 +120,14 @@ class ChannelController : ManageController {
       UpdateNotificationChannelRequest r;
       r.channelId = id;
       r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.state = j.getString("state");
+      r.description = data.getString("description");
+      r.state = data.getString("state");
       r.emailRecipients = getStrings(j, "emailRecipients");
-      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
-      r.webhookUrl = j.getString("webhookUrl");
-      r.webhookSecret = j.getString("webhookSecret");
-      r.slackWebhookUrl = j.getString("slackWebhookUrl");
-      r.slackChannel = j.getString("slackChannel");
+      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+      r.webhookUrl = data.getString("webhookUrl");
+      r.webhookSecret = data.getString("webhookSecret");
+      r.slackWebhookUrl = data.getString("slackWebhookUrl");
+      r.slackChannel = data.getString("slackChannel");
 
       auto result = usecase.updateChannel(r);
       if (result.hasError)

@@ -34,11 +34,11 @@ class TaskActionController : ManageController {
             PerformTaskActionRequest r;
             r.tenantId = tenantId;
             r.taskActionId = TaskActionId(precheck.id);
-            r.taskId = TaskId(j.getString("taskId"));
-            r.actionType = j.getString("actionType");
-            r.performedBy = UserId(j.getString("performedBy"));
-            r.forwardTo = UserId(j.getString("forwardTo"));
-            r.comment = j.getString("comment");
+            r.taskId = TaskId(data.getString("taskId"));
+            r.actionType = data.getString("actionType");
+            r.performedBy = UserId(data.getString("performedBy"));
+            r.forwardTo = UserId(data.getString("forwardTo"));
+            r.comment = data.getString("comment");
 
             auto result = usecase.create(r);
             if (result.hasError)

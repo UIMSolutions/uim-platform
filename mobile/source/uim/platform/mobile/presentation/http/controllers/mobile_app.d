@@ -36,16 +36,16 @@ class MobileAppController : ManageController {
       auto j = req.json;
       CreateMobileAppRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.bundleId = j.getString("bundleId");
-      r.platform = j.getString("platform");
-      r.securityConfig = j.getString("securityConfig");
-      r.authProvider = j.getString("authProvider");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.bundleId = data.getString("bundleId");
+      r.platform = data.getString("platform");
+      r.securityConfig = data.getString("securityConfig");
+      r.authProvider = data.getString("authProvider");
       r.pushEnabled = j.getBoolean("pushEnabled");
       r.offlineEnabled = j.getBoolean("offlineEnabled");
-      r.iconUrl = j.getString("iconUrl");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.iconUrl = data.getString("iconUrl");
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -123,14 +123,14 @@ class MobileAppController : ManageController {
       auto j = req.json;
       UpdateMobileAppRequest r;
       r.id = id;
-      r.description = j.getString("description");
-      r.securityConfig = j.getString("securityConfig");
-      r.authProvider = j.getString("authProvider");
-      r.status = j.getString("status");
+      r.description = data.getString("description");
+      r.securityConfig = data.getString("securityConfig");
+      r.authProvider = data.getString("authProvider");
+      r.status = data.getString("status");
       r.pushEnabled = j.getBoolean("pushEnabled");
       r.offlineEnabled = j.getBoolean("offlineEnabled");
-      r.iconUrl = j.getString("iconUrl");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.iconUrl = data.getString("iconUrl");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -39,12 +39,12 @@ class ShellPluginController : ManageController {
       auto j = req.json;
       auto r = CreateShellPluginRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.version_ = j.getString("version");
-      r.vendor = j.getString("vendor");
-      r.scriptUrl = j.getString("scriptUrl");
-      r.configSchemaUrl = j.getString("configSchemaUrl");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.version_ = data.getString("version");
+      r.vendor = data.getString("vendor");
+      r.scriptUrl = data.getString("scriptUrl");
+      r.configSchemaUrl = data.getString("configSchemaUrl");
       r.hookPoints = getStrings(j, "hookPoints");
 
       auto result = useCase.createPlugin(r);
@@ -108,9 +108,9 @@ class ShellPluginController : ManageController {
       auto r = UpdateShellPluginRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.scriptUrl = j.getString("scriptUrl");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.scriptUrl = data.getString("scriptUrl");
 
       auto result = useCase.updatePlugin(r);
       if (result.isSuccess())

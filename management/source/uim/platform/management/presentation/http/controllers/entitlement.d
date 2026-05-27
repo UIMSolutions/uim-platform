@@ -38,12 +38,12 @@ class EntitlementController : ManageController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       AssignEntitlementRequest r;
-      r.globalAccountId = j.getString("globalAccountId");
-      r.directoryId = j.getString("directoryId");
-      r.subaccountId = j.getString("subaccountId");
-      r.servicePlanId = j.getString("servicePlanId");
-      r.serviceName = j.getString("serviceName");
-      r.planName = j.getString("planName");
+      r.globalAccountId = data.getString("globalAccountId");
+      r.directoryId = data.getString("directoryId");
+      r.subaccountId = data.getString("subaccountId");
+      r.servicePlanId = data.getString("servicePlanId");
+      r.serviceName = data.getString("serviceName");
+      r.planName = data.getString("planName");
       r.quotaAssigned = j.getInteger("quotaAssigned");
       r.unlimited = j.getBoolean("unlimited");
       r.autoAssign = j.getBoolean("autoAssign");

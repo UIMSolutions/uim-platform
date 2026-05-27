@@ -45,8 +45,8 @@ class CompositionRunController : ManageController {
     StartCompositionRunRequest r;
     r.tenantId      = req.getTenantId;
     r.id            = precheck.id;
-    r.name          = j.getString("name");
-    r.triggeredBy   = j.getString("triggeredBy");
+    r.name          = data.getString("name");
+    r.triggeredBy   = data.getString("triggeredBy");
     r.dataProductIds = j.getStrings("dataProductIds");
     auto result = usecase.start(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -60,7 +60,7 @@ class CompositionRunController : ManageController {
     CompositionRunActionRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
-    r.action   = j.getString("action");
+    r.action   = data.getString("action");
     auto result = usecase.performAction(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

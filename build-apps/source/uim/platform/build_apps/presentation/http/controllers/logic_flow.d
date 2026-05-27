@@ -68,17 +68,17 @@ class LogicFlowController : ManageController {
             LogicFlowDTO dto;
             dto.logicFlowId = LogicFlowId(precheck.id);
             dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.pageId = PageId(j.getString("pageId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.trigger = j.getString("trigger");
-            dto.triggerConfig = j.getString("triggerConfig");
-            dto.nodes = j.getString("nodes");
-            dto.connections = j.getString("connections");
-            dto.variables = j.getString("variables");
-            dto.errorHandler = j.getString("errorHandler");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = ApplicationId(data.getString("applicationId"));
+            dto.pageId = PageId(data.getString("pageId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.trigger = data.getString("trigger");
+            dto.triggerConfig = data.getString("triggerConfig");
+            dto.nodes = data.getString("nodes");
+            dto.connections = data.getString("connections");
+            dto.variables = data.getString("variables");
+            dto.errorHandler = data.getString("errorHandler");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createLogicFlow(dto);
             if (result.hasError)
@@ -105,11 +105,11 @@ class LogicFlowController : ManageController {
             LogicFlowDTO dto;
             dto.tenantId = tenantId;
             dto.logicFlowId = LogicFlowId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.nodes = j.getString("nodes");
-            dto.connections = j.getString("connections");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.nodes = data.getString("nodes");
+            dto.connections = data.getString("connections");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateLogicFlow(dto);
             if (result.hasError)

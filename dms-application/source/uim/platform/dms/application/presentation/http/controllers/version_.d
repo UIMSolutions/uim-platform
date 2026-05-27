@@ -63,15 +63,15 @@ class VersionController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CheckInRequest();
-      r.documentId = DocumentId(j.getString("documentId"));
+      r.documentId = DocumentId(data.getString("documentId"));
       r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.isMajor = j.getBoolean("isMajor", true);
-      r.comment = j.getString("comment");
-      r.fileName = j.getString("fileName");
-      r.mimeType = j.getString("mimeType");
+      r.comment = data.getString("comment");
+      r.fileName = data.getString("fileName");
+      r.mimeType = data.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.checksum = j.getString("checksum");
+      r.checksum = data.getString("checksum");
 
       auto result = usecase.checkIn(r);
       if (result.isSuccess) {

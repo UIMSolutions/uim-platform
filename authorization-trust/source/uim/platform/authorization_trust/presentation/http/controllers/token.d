@@ -39,10 +39,10 @@ class TokenController : PlatformController {
       auto ct = req.contentType;
       if (ct.length > 0 && ct == "application/json") {
         auto j = req.json;
-        grantType    = j.getString("grant_type");
-        clientId     = j.getString("client_id");
-        clientSecret = j.getString("client_secret");
-        scopeStr     = j.getString("scope");
+        grantType    = data.getString("grant_type");
+        clientId     = data.getString("client_id");
+        clientSecret = data.getString("client_secret");
+        scopeStr     = data.getString("scope");
       } else {
         // Form body parsed into req.params by vibe.d for form-encoded requests
         grantType    = req.params.get("grant_type", "");

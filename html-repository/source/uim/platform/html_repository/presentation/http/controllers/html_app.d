@@ -35,13 +35,13 @@ class HtmlAppController : ManageController {
       auto j = req.json;
       CreateHtmlAppRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.namespace_ = j.getString("namespace");
-      r.description = j.getString("description");
-      r.spaceId = j.getString("spaceId");
-      r.serviceInstanceId = j.getString("serviceInstanceId");
-      r.visibility = j.getString("visibility");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.namespace_ = data.getString("namespace");
+      r.description = data.getString("description");
+      r.spaceId = data.getString("spaceId");
+      r.serviceInstanceId = data.getString("serviceInstanceId");
+      r.visibility = data.getString("visibility");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.create(r);
       if (result.isSuccess()) {
@@ -125,9 +125,9 @@ class HtmlAppController : ManageController {
       UpdateHtmlAppRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.visibility = j.getString("visibility");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.description = data.getString("description");
+      r.visibility = data.getString("visibility");
+      r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

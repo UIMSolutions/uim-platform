@@ -41,10 +41,10 @@ class PermissionController : ManageController {
       auto j = req.json;
       auto r = CreatePermissionRequest();
       r.tenantId = tenantId;
-      r.resourceId = j.getString("resourceId");
-      r.resourceType = j.getString("resourceType").to!ResourceType;
-      r.userId = UserId(j.getString("userId"));
-      r.level = j.getString("level").to!PermissionLevel;
+      r.resourceId = data.getString("resourceId");
+      r.resourceType = data.getString("resourceType").to!ResourceType;
+      r.userId = UserId(data.getString("userId"));
+      r.level = data.getString("level").to!PermissionLevel;
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = permissions.grantPermission(r);
@@ -109,10 +109,10 @@ class PermissionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto resourceId = j.getString("resourceId");
-      auto resourceType = j.getString("resourceType").to!ResourceType;
-      auto userId = UserId(j.getString("userId"));
-      auto required = j.getString("requiredLevel").to!PermissionLevel;
+      auto resourceId = data.getString("resourceId");
+      auto resourceType = data.getString("resourceType").to!ResourceType;
+      auto userId = UserId(data.getString("userId"));
+      auto required = data.getString("requiredLevel").to!PermissionLevel;
 
       auto allowed = permissions.checkAccess(tenantId, resourceId, resourceType, userId, required);
 
@@ -139,7 +139,7 @@ class PermissionController : ManageController {
       auto r = UpdatePermissionRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.level = j.getString("level").to!PermissionLevel;
+      r.level = data.getString("level").to!PermissionLevel;
 
       auto result = permissions.updatePermission(r);
       if (result.isSuccess) {

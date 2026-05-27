@@ -37,13 +37,13 @@ class InstanceController : ManageController {
       CreateInstanceRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.size = j.getString("size");
-      r.version_ = j.getString("version");
-      r.region = j.getString("region");
-      r.availabilityZone = j.getString("availabilityZone");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.size = data.getString("size");
+      r.version_ = data.getString("version");
+      r.region = data.getString("region");
+      r.availabilityZone = data.getString("availabilityZone");
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = j.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
@@ -145,8 +145,8 @@ class InstanceController : ManageController {
       UpdateInstanceRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = j.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
@@ -190,7 +190,7 @@ class InstanceController : ManageController {
       InstanceActionRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.action = j.getString("action");
+      r.action = data.getString("action");
 
       auto result = usecase.performAction(r);
       if (result.hasError)

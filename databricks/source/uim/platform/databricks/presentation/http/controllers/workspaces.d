@@ -26,12 +26,12 @@ public:
       CreateWorkspaceRequest r;
       r.tenantId      = req.getTenantId;
       r.id            = precheck.id;
-      r.name          = j.getString("name");
-      r.region        = j.getString("region");
-      r.cloudProvider = j.getString("cloudProvider");
-      r.storageRoot   = j.getString("storageRoot");
-      r.credentialId  = j.getString("credentialId");
-      auto tierStr = j.getString("tier");
+      r.name          = data.getString("name");
+      r.region        = data.getString("region");
+      r.cloudProvider = data.getString("cloudProvider");
+      r.storageRoot   = data.getString("storageRoot");
+      r.credentialId  = data.getString("credentialId");
+      auto tierStr = data.getString("tier");
       if (tierStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.tier = tierStr.to!WorkspaceTier; } catch (ConvException) {}
@@ -66,9 +66,9 @@ public:
       UpdateWorkspaceRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];
-      r.name        = j.getString("name");
-      r.storageRoot = j.getString("storageRoot");
-      auto tierStr  = j.getString("tier");
+      r.name        = data.getString("name");
+      r.storageRoot = data.getString("storageRoot");
+      auto tierStr  = data.getString("tier");
       if (tierStr.length > 0) {
         import std.conv : ConvException;
         try { r.tier = tierStr.to!WorkspaceTier; } catch (ConvException) {}

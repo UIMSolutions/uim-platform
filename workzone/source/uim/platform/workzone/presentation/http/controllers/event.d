@@ -39,18 +39,18 @@ class EventController : ManageController {
       auto j = req.json;
       auto r = CreateEventRequest();
       r.tenantId = tenantId;
-      r.workspaceId = j.getString("workspaceId");
-      r.title = j.getString("title");
-      r.description = j.getString("description");
-      r.location = j.getString("location");
-      r.meetingUrl = j.getString("meetingUrl");
-      r.organizerId = j.getString("organizerId");
-      r.organizerName = j.getString("organizerName");
+      r.workspaceId = data.getString("workspaceId");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
+      r.location = data.getString("location");
+      r.meetingUrl = data.getString("meetingUrl");
+      r.organizerId = data.getString("organizerId");
+      r.organizerName = data.getString("organizerName");
       r.allDay = j.getBoolean("allDay");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
-      r.timezone = j.getString("timezone");
-      r.recurrenceRule = j.getString("recurrenceRule");
+      r.timezone = data.getString("timezone");
+      r.recurrenceRule = data.getString("recurrenceRule");
 
       auto result = useCase.createEvent(r);
       if (result.isSuccess()) {
@@ -110,10 +110,10 @@ class EventController : ManageController {
       auto r = UpdateEventRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.description = j.getString("description");
-      r.location = j.getString("location");
-      r.meetingUrl = j.getString("meetingUrl");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
+      r.location = data.getString("location");
+      r.meetingUrl = data.getString("meetingUrl");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
 

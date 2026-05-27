@@ -69,19 +69,19 @@ class CustomerController : ManageController {
             CustomerDTO dto;
             dto.customerId = CustomerId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.customerType = j.getString("customerType");
-            dto.contactPerson = j.getString("contactPerson");
-            dto.email = j.getString("email");
-            dto.phone = j.getString("phone");
-            dto.address = j.getString("address");
-            dto.latitude = j.getString("latitude");
-            dto.longitude = j.getString("longitude");
-            dto.website = j.getString("website");
-            dto.industry = j.getString("industry");
-            dto.accountNumber = j.getString("accountNumber");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.customerType = data.getString("customerType");
+            dto.contactPerson = data.getString("contactPerson");
+            dto.email = data.getString("email");
+            dto.phone = data.getString("phone");
+            dto.address = data.getString("address");
+            dto.latitude = data.getString("latitude");
+            dto.longitude = data.getString("longitude");
+            dto.website = data.getString("website");
+            dto.industry = data.getString("industry");
+            dto.accountNumber = data.getString("accountNumber");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createCustomer(dto);
             if (result.hasError)
@@ -108,13 +108,13 @@ class CustomerController : ManageController {
             CustomerDTO dto;
             dto.customerId = CustomerId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.contactPerson = j.getString("contactPerson");
-            dto.email = j.getString("email");
-            dto.phone = j.getString("phone");
-            dto.address = j.getString("address");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.contactPerson = data.getString("contactPerson");
+            dto.email = data.getString("email");
+            dto.phone = data.getString("phone");
+            dto.address = data.getString("address");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateCustomer(dto);
             if (result.hasError)

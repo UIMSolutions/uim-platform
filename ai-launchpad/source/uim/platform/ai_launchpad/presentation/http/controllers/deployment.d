@@ -41,8 +41,8 @@ class DeploymentController : ManageController {
       CreateDeploymentRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.configurationId = j.getString("configurationId");
-      r.resourceGroupId = j.getString("resourceGroupId");
+      r.configurationId = data.getString("configurationId");
+      r.resourceGroupId = data.getString("resourceGroupId");
       r.ttl = j.getInteger("ttl");
 
       auto result = usecase.createDeployment(r);
@@ -116,8 +116,8 @@ class DeploymentController : ManageController {
       r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.deploymentId = id;
-      r.targetStatus = j.getString("targetStatus");
-      r.configurationId = j.getString("configurationId");
+      r.targetStatus = data.getString("targetStatus");
+      r.configurationId = data.getString("configurationId");
       r.ttl = j.getInteger("ttl");
 
       auto result = usecase.patchDeployment(r);
@@ -146,7 +146,7 @@ class DeploymentController : ManageController {
       r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.deploymentIds = getStrings(j, "deploymentIds").map!(id => DeploymentId(id)).array;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = data.getString("targetStatus");
 
       auto results = usecase.bulkPatchDeployments(r);
       auto jarr = Json.emptyArray;

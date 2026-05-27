@@ -76,19 +76,19 @@ class OAuthClientController : ManageController {
             dto.tenantId = tenantId;
             dto.clientId = precheck.id;
             dto.tenantId = req.getTenantId;
-            dto.parentClientId = j.getString("clientId");
-            dto.clientSecret = j.getString("clientSecret");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.clientType = j.getString("clientType");
-            dto.redirectUris = j.getString("redirectUris");
-            dto.allowedScopes = j.getString("allowedScopes");
-            dto.grantTypes = j.getString("grantTypes");
-            dto.accessTokenValidity = j.getString("accessTokenValidity").length > 0 ? 3600 : 3600;
-            dto.refreshTokenValidity = j.getString("refreshTokenValidity").length > 0 ? 86400
+            dto.parentClientId = data.getString("clientId");
+            dto.clientSecret = data.getString("clientSecret");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.clientType = data.getString("clientType");
+            dto.redirectUris = data.getString("redirectUris");
+            dto.allowedScopes = data.getString("allowedScopes");
+            dto.grantTypes = data.getString("grantTypes");
+            dto.accessTokenValidity = data.getString("accessTokenValidity").length > 0 ? 3600 : 3600;
+            dto.refreshTokenValidity = data.getString("refreshTokenValidity").length > 0 ? 86400
                 : 86400;
-            dto.contacts = j.getString("contacts");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.contacts = data.getString("contacts");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createClient(dto);
             if (result.hasError)
@@ -115,12 +115,12 @@ class OAuthClientController : ManageController {
             OAuthClientDTO dto;
             dto.tenantId = tenantId;
             dto.clientId = OAuthClientId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.redirectUris = j.getString("redirectUris");
-            dto.allowedScopes = j.getString("allowedScopes");
-            dto.contacts = j.getString("contacts");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.redirectUris = data.getString("redirectUris");
+            dto.allowedScopes = data.getString("allowedScopes");
+            dto.contacts = data.getString("contacts");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateClient(dto);
             if (result.hasError)

@@ -61,12 +61,12 @@ class ImportQueueEntryController : ManageController {
             ImportQueueEntryDTO dto;
             dto.entryId = ImportQueueEntryId(precheck.id);
             dto.tenantId = tenantId;
-            dto.nodeId = j.getString("nodeId");
-            dto.requestId = j.getString("requestId");
+            dto.nodeId = data.getString("nodeId");
+            dto.requestId = data.getString("requestId");
             dto.queuePosition = cast(int) j.getLong("queuePosition");
             dto.isSelected = getBoolean(j, "isSelected");
             dto.scheduledAt = j.getLong("scheduledAt");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.enqueue(dto);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Enqueued for import"), 201);
@@ -82,19 +82,19 @@ class ImportQueueEntryController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = ImportQueueEntryprecheck.id);
             auto j = req.json;
-            auto action = j.getString("action");
+            auto action = data.getString("action");
             if (action == "reset") {
                 auto result = usecase.resetEntry(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Entry reset"), 200);
                 else writeError(res, 400, result.message);
                 return;
             }
-            auto statusStr = j.getString("status");
+            auto statusStr = data.getString("status");
             if (statusStr.length > 0) {
                 import std.conv : to;
                 try {
                     auto status = statusStr.to!ImportStatus;
-                    auto errorMsg = j.getString("errorMessage");
+                    auto errorMsg = data.getString("errorMessage");
                     auto result = usecase.updateEntryStatus(tenantId, id, status, errorMsg);
                     if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Status updated"), 200);
                     else writeError(res, 400, result.message);

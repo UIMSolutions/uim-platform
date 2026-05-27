@@ -42,12 +42,12 @@ class FileAccessControlRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             AccessControl a;
-            a.id          = AccessControlId(j.getString("id", ""));
+            a.id          = AccessControlId(data.getString("id", ""));
             a.tenantId    = tenantId;
-            a.instanceId  = ServiceInstanceId(j.getString("instanceId", ""));
-            a.cidr        = j.getString("cidr", "");
-            a.description = j.getString("description", "");
-            a.status      = j.getString("status", "active").to!AccessControlStatus;
+            a.instanceId  = ServiceInstanceId(data.getString("instanceId", ""));
+            a.cidr        = data.getString("cidr", "");
+            a.description = data.getString("description", "");
+            a.status      = data.getString("status", "active").to!AccessControlStatus;
             a.createdAt   = j.getLong("createdAt", 0);
             super.save(a);
         }

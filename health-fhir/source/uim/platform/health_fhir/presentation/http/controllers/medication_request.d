@@ -55,9 +55,9 @@ class MedicationRequestController : ManageController {
       CreateMedicationOrderRequest r;
       r.tenantId              = tenantId;
       r.medicationRequestId   = MedicationRequestId(precheck.id);
-      r.status_               = parseStatus(j.getString("status"));
-      r.authoredOn_           = j.getString("authoredOn");
-      r.note_                 = j.getString("note");
+      r.status_               = parseStatus(data.getString("status"));
+      r.authoredOn_           = data.getString("authoredOn");
+      r.note_                 = data.getString("note");
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto medJ = j.get("medicationReference", Json.emptyObject);
@@ -114,9 +114,9 @@ class MedicationRequestController : ManageController {
       UpdateMedicationOrderRequest r;
       r.tenantId            = tenantId;
       r.medicationRequestId = id;
-      r.status_             = parseStatus(j.getString("status"));
-      r.authoredOn_         = j.getString("authoredOn");
-      r.note_               = j.getString("note");
+      r.status_             = parseStatus(data.getString("status"));
+      r.authoredOn_         = data.getString("authoredOn");
+      r.note_               = data.getString("note");
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto result = usecase.updateMedicationRequest(r);

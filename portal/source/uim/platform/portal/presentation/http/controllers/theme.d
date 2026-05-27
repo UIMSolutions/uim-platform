@@ -39,9 +39,9 @@ class ThemeController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateThemeRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("name"), j.getString("description"), jsonEnum!ThemeMode(j,
-          "mode", ThemeMode.light), j.getString("baseTheme"), parseColors(j),
-        parseFonts(j), j.getString("customCss"), j.getBoolean("isDefault", false),);
+        data.getString("name"), data.getString("description"), jsonEnum!ThemeMode(j,
+          "mode", ThemeMode.light), data.getString("baseTheme"), parseColors(j),
+        parseFonts(j), data.getString("customCss"), j.getBoolean("isDefault", false),);
 
       auto result = useCase.createTheme(createReq);
       if (result.isSuccess()) {
@@ -103,10 +103,10 @@ class ThemeController : ManageController {
     try {
       auto themeId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateThemeRequest(themeId, j.getString("name"),
-        j.getString("description"), jsonEnum!ThemeMode(j, "mode",
+      auto updateReq = UpdateThemeRequest(themeId, data.getString("name"),
+        data.getString("description"), jsonEnum!ThemeMode(j, "mode",
           ThemeMode.light), parseColors(j), parseFonts(j),
-        j.getString("customCss"), j.getBoolean("isDefault", false),);
+        data.getString("customCss"), j.getBoolean("isDefault", false),);
 
       auto error = useCase.updateTheme(updateReq);
       if (error.length > 0)

@@ -35,17 +35,17 @@ class PushNotificationController : ManageController {
       auto j = req.json;
       SendPushNotificationRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.payload = j.getString("payload");
-      r.provider = j.getString("provider");
-      r.priority = j.getString("priority");
+      r.appId = data.getString("appId");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.payload = data.getString("payload");
+      r.provider = data.getString("provider");
+      r.priority = data.getString("priority");
       r.targetDevices = getStrings(j, "targetDevices");
       r.targetTopics = getStrings(j, "targetTopics");
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.send(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

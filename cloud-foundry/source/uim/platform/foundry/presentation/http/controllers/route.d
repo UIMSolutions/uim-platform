@@ -52,13 +52,13 @@ class RouteController : ManageController {
       auto j = req.json;
       auto r = CreateRouteRequest();
       r.tenantId = tenantId;
-      r.spaceId = j.getString("spaceId");
-      r.domainId = j.getString("domainId");
-      r.host = j.getString("host");
-      r.path = j.getString("path");
+      r.spaceId = data.getString("spaceId");
+      r.domainId = data.getString("domainId");
+      r.host = data.getString("host");
+      r.path = data.getString("path");
       r.port = j.getInteger("port");
-      r.protocol = parseRouteProtocol(j.getString("protocol"));
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.protocol = parseRouteProtocol(data.getString("protocol"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createRoute(r);
       if (result.isSuccess()) {
@@ -131,7 +131,7 @@ class RouteController : ManageController {
       auto r = MapRouteRequest();
       r.routeId = RouteId(precheck.id);
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
+      r.appId = data.getString("appId");
 
       auto result = useCase.mapRoute(r);
       if (result.isSuccess()) {
@@ -153,7 +153,7 @@ class RouteController : ManageController {
       auto r = MapRouteRequest();
       r.routeId = routeId;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
+      r.appId = data.getString("appId");
 
       auto result = useCase.unmapRoute(r);
       if (result.isSuccess()) {
@@ -176,11 +176,11 @@ class RouteController : ManageController {
       auto j = req.json;
       auto r = CreateDomainRequest();
       r.tenantId = tenantId;
-      r.ownerOrgId = j.getString("ownerOrgId");
-      r.name = j.getString("name");
-      r.scope_ = parseDomainScope(j.getString("scope"));
+      r.ownerOrgId = data.getString("ownerOrgId");
+      r.name = data.getString("name");
+      r.scope_ = parseDomainScope(data.getString("scope"));
       r.isInternal = j.getBoolean("isInternal");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createDomain(r);
       if (result.isSuccess()) {

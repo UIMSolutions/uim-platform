@@ -36,10 +36,10 @@ class PushRegistrationController : ManageController {
       auto j = req.json;
       RegisterPushRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.deviceId = j.getString("deviceId");
-      r.provider = j.getString("provider");
-      r.pushToken = j.getString("pushToken");
+      r.appId = data.getString("appId");
+      r.deviceId = data.getString("deviceId");
+      r.provider = data.getString("provider");
+      r.pushToken = data.getString("pushToken");
       r.topics = getStrings(j, "topics");
       auto result = usecase.register(r);
       if (result.hasError)

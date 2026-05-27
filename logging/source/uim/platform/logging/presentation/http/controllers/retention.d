@@ -36,13 +36,13 @@ class RetentionController : ManageController {
       auto j = req.json;
       CreateRetentionPolicyRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.dataType = j.getString("dataType");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.dataType = data.getString("dataType");
       r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createRetentionPolicy(r);
       if (result.hasError)
@@ -120,7 +120,7 @@ class RetentionController : ManageController {
 
       UpdateRetentionPolicyRequest r;
       r.policyId = policyId;
-      r.description = j.getString("description");
+      r.description = data.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");

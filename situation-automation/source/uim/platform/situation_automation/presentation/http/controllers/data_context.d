@@ -37,12 +37,12 @@ class DataContextController : ManageController {
 
             CreateDataContextRequest r;
             r.tenantId = tenantId;
-            r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
+            r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
             r.dataContextId = DataContextId(precheck.id);
-            r.entityId = j.getString("entityId");
-            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
+            r.entityId = data.getString("entityId");
+            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
             r.data = jsonKeyValuePairs(j, "data");
-            r.sourceSystem = j.getString("sourceSystem");
+            r.sourceSystem = data.getString("sourceSystem");
             r.containsPersonalData = j.getBoolean("containsPersonalData");
             r.expiresAt = jsonLong(j, "expiresAt");
 

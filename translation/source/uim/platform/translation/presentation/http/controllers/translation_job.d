@@ -38,13 +38,13 @@ class TranslationJobController : ManageController {
 
             SubmitTranslationJobRequest r;
             r.tenantId = tenantId;
-            r.sourceLanguage = j.getString("sourceLanguage");
-            r.targetLanguage = j.getString("targetLanguage");
-            r.provider = j.getString("provider");
-            r.content = j.getString("content");
-            r.contentType = j.getString("contentType", "text/plain");
+            r.sourceLanguage = data.getString("sourceLanguage");
+            r.targetLanguage = data.getString("targetLanguage");
+            r.provider = data.getString("provider");
+            r.content = data.getString("content");
+            r.contentType = data.getString("contentType", "text/plain");
 
-            auto jobTypeStr = j.getString("jobType", "document");
+            auto jobTypeStr = data.getString("jobType", "document");
             try { r.jobType = jobTypeStr.to!JobType; }
             catch (Exception) { r.jobType = JobType.document; }
 

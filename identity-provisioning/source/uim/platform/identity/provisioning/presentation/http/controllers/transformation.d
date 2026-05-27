@@ -42,11 +42,11 @@ class TransformationController : ManageController {
       auto j = req.json;
       auto r = CreateTransformationRequest();
       r.tenantId = tenantId;
-      r.systemId = j.getString("systemId");
-      r.systemRole = parseSystemRole(j.getString("systemRole"));
-      r.name = j.getString("name");
-      r.mappingRules = j.getString("mappingRules");
-      r.conditions = j.getString("conditions");
+      r.systemId = data.getString("systemId");
+      r.systemRole = parseSystemRole(data.getString("systemRole"));
+      r.name = data.getString("name");
+      r.mappingRules = data.getString("mappingRules");
+      r.conditions = data.getString("conditions");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createTransformation(r);
@@ -103,9 +103,9 @@ class TransformationController : ManageController {
       auto r = UpdateTransformationRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.mappingRules = j.getString("mappingRules");
-      r.conditions = j.getString("conditions");
+      r.name = data.getString("name");
+      r.mappingRules = data.getString("mappingRules");
+      r.conditions = data.getString("conditions");
 
       auto result = usecase.updateTransformation(r);
       if (result.isSuccess) {
@@ -126,8 +126,8 @@ class TransformationController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto systemId = j.getString("systemId");
-      auto inputAttributes = j.getString("inputAttributes");
+      auto systemId = data.getString("systemId");
+      auto inputAttributes = data.getString("inputAttributes");
 
       if (systemId.isEmpty || inputAttributes.length == 0) {
         writeError(res, 400, "systemId and inputAttributes are required");

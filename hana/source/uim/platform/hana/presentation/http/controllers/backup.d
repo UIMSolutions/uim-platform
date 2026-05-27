@@ -35,13 +35,13 @@ class BackupController : ManageController {
       auto j = req.json;
       CreateBackupRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.type = j.getString("type");
-      r.destination = j.getString("destination");
+      r.name = data.getString("name");
+      r.type = data.getString("type");
+      r.destination = data.getString("destination");
       r.encrypted = j.getBoolean("encrypted");
-      r.cronExpression = j.getString("cronExpression");
+      r.cronExpression = data.getString("cronExpression");
       r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = usecase.create(r);
@@ -124,9 +124,9 @@ class BackupController : ManageController {
       UpdateBackupRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.destination = j.getString("destination");
-      r.cronExpression = j.getString("cronExpression");
+      r.name = data.getString("name");
+      r.destination = data.getString("destination");
+      r.cronExpression = data.getString("cronExpression");
       r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = usecase.update(r);

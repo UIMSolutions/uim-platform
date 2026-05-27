@@ -40,18 +40,18 @@ class TaskController : ManageController {
             CreateTaskRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.taskDefinitionId = j.getString("taskDefinitionId");
-            r.providerId = j.getString("providerId");
-            r.externalTaskId = j.getString("externalTaskId");
-            r.title = j.getString("title");
-            r.description = j.getString("description");
-            r.priority = j.getString("priority");
-            r.category = j.getString("category");
-            r.assignee = j.getString("assignee");
-            r.creator = j.getString("creator");
-            r.sourceApplication = j.getString("sourceApplication");
-            r.dueDate = j.getString("dueDate");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.taskDefinitionId = data.getString("taskDefinitionId");
+            r.providerId = data.getString("providerId");
+            r.externalTaskId = data.getString("externalTaskId");
+            r.title = data.getString("title");
+            r.description = data.getString("description");
+            r.priority = data.getString("priority");
+            r.category = data.getString("category");
+            r.assignee = data.getString("assignee");
+            r.creator = data.getString("creator");
+            r.sourceApplication = data.getString("sourceApplication");
+            r.dueDate = data.getString("dueDate");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -132,12 +132,12 @@ class TaskController : ManageController {
             UpdateTaskRequest r;
             r.tenantId = tenantId;
             r.taskId = id;
-            r.title = j.getString("title");
-            r.description = j.getString("description");
-            r.priority = j.getString("priority");
-            r.assignee = j.getString("assignee");
-            r.dueDate = j.getString("dueDate");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.title = data.getString("title");
+            r.description = data.getString("description");
+            r.priority = data.getString("priority");
+            r.assignee = data.getString("assignee");
+            r.dueDate = data.getString("dueDate");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateTask(r);
             if (result.hasError)
@@ -162,7 +162,7 @@ class TaskController : ManageController {
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;
             auto j = req.json;
-            auto userId = j.getString("userId");
+            auto userId = data.getString("userId");
 
             auto result = usecase.claim(tenantId, id, userId);
             if (result.hasError)
@@ -210,8 +210,8 @@ class TaskController : ManageController {
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = TaskId(extractIdFromPath(stripped));
             auto j = req.json;
-            auto toUser = j.getString("toUser");
-            auto comment = j.getString("comment");
+            auto toUser = data.getString("toUser");
+            auto comment = data.getString("comment");
 
             auto result = usecase.forward(tenantId, id, toUser, comment);
             if (result.hasError)

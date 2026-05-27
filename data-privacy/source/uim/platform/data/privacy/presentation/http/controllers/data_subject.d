@@ -37,12 +37,12 @@ class DataSubjectController : ManageController {
       auto j = req.json;
       CreateDataSubjectRequest r;
       r.tenantId = tenantId;
-      r.displayName = j.getString("displayName");
-      r.email = j.getString("email");
-      r.externalId = j.getString("externalId");
-      r.sourceSystem = j.getString("sourceSystem");
-      r.country = j.getString("country");
-      r.subjectType = parseSubjectType(j.getString("subjectType"));
+      r.displayName = data.getString("displayName");
+      r.email = data.getString("email");
+      r.externalId = data.getString("externalId");
+      r.sourceSystem = data.getString("sourceSystem");
+      r.country = data.getString("country");
+      r.subjectType = parseSubjectType(data.getString("subjectType"));
 
       auto result = usecase.createSubject(r);
       if (result.isSuccess()) {
@@ -100,11 +100,11 @@ class DataSubjectController : ManageController {
       UpdateDataSubjectRequest r;
       r.id = DataSubjectId(precheck.id);
       r.tenantId = tenantId;
-      r.displayName = j.getString("displayName");
-      r.email = j.getString("email");
-      r.sourceSystem = j.getString("sourceSystem");
-      r.country = j.getString("country");
-      r.subjectType = parseSubjectType(j.getString("subjectType"));
+      r.displayName = data.getString("displayName");
+      r.email = data.getString("email");
+      r.sourceSystem = data.getString("sourceSystem");
+      r.country = data.getString("country");
+      r.subjectType = parseSubjectType(data.getString("subjectType"));
       r.isActive = j.getBoolean("isActive", true);
 
       auto result = usecase.updateSubject(r);

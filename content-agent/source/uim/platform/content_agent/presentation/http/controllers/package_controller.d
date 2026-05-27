@@ -42,10 +42,10 @@ class PackageController : ManageController {
       auto r = CreatePackageRequest();
       r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.version_ = j.getString("version");
-      r.format = j.getString("format");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.version_ = data.getString("version");
+      r.format = data.getString("format");
       r.tags = getStrings(j, "tags");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.items = parseContentItems(j);
@@ -108,8 +108,8 @@ class PackageController : ManageController {
       auto id = PackageId(precheck.id);
       auto j = req.json;
       auto r = UpdatePackageRequest();
-      r.description = j.getString("description");
-      r.version_ = j.getString("version");
+      r.description = data.getString("description");
+      r.version_ = data.getString("version");
       r.tags = getStrings(j, "tags");
       r.items = parseContentItems(j);
 
@@ -154,7 +154,7 @@ class PackageController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = AssemblePackageRequest();
-      r.packageId = j.getString("packageId");
+      r.packageId = data.getString("packageId");
       r.tenantId = tenantId;
       r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 

@@ -40,20 +40,20 @@ class CheckController : ManageController {
       
       CreateHealthCheckRequest r;
       r.tenantId = tenantId;
-      r.resourceId = j.getString("resourceId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.checkType = j.getString("checkType");
+      r.resourceId = data.getString("resourceId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.checkType = data.getString("checkType");
       r.intervalSeconds = j.getInteger("intervalSeconds");
-      r.url = j.getString("url");
-      r.expectedStatus = j.getString("expectedStatus");
-      r.mbeanName = j.getString("mbeanName");
-      r.mbeanAttribute = j.getString("mbeanAttribute");
-      r.customUrl = j.getString("customUrl");
-      r.expectedResponseContains = j.getString("expectedResponseContains");
+      r.url = data.getString("url");
+      r.expectedStatus = data.getString("expectedStatus");
+      r.mbeanName = data.getString("mbeanName");
+      r.mbeanAttribute = data.getString("mbeanAttribute");
+      r.customUrl = data.getString("customUrl");
+      r.expectedResponseContains = data.getString("expectedResponseContains");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
-      r.thresholdOperator = j.getString("thresholdOperator");
+      r.thresholdOperator = data.getString("thresholdOperator");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createCheck(r);
@@ -113,14 +113,14 @@ class CheckController : ManageController {
       auto j = req.json;
       UpdateHealthCheckRequest r;
       r.tenantId = tenantId;
-      r.description = j.getString("description");
+      r.description = data.getString("description");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.intervalSeconds = j.getInteger("intervalSeconds");
-      r.url = j.getString("url");
-      r.expectedStatus = j.getString("expectedStatus");
+      r.url = data.getString("url");
+      r.expectedStatus = data.getString("expectedStatus");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
-      r.thresholdOperator = j.getString("thresholdOperator");
+      r.thresholdOperator = data.getString("thresholdOperator");
 
       auto result = usecase.updateCheck(r);
       if (result.hasError)
@@ -166,11 +166,11 @@ class CheckController : ManageController {
       auto j = req.json;
       RecordCheckResultRequest r;
       r.tenantId = tenantId;
-      r.checkId = HealthCheckId(j.getString("checkId"));
-      r.resourceId = MonitoredResourceId(j.getString("resourceId"));
-      r.status = j.getString("status");
+      r.checkId = HealthCheckId(data.getString("checkId"));
+      r.resourceId = MonitoredResourceId(data.getString("resourceId"));
+      r.status = data.getString("status");
       r.value_ = getDouble(j, "value");
-      r.message = j.getString("message");
+      r.message = data.getString("message");
       r.responseTimeMs = j.getInteger("responseTimeMs");
       r.httpStatusCode = j.getInteger("httpStatusCode");
 

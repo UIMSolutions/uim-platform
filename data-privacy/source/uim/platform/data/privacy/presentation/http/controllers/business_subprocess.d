@@ -37,12 +37,12 @@ class BusinessSubprocessController : ManageController {
 
       CreateBusinessSubprocessRequest r;
       r.tenantId = tenantId;
-      r.parentProcessId = BusinessProcessId(j.getString("parentProcessId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.parentProcessId = BusinessProcessId(data.getString("parentProcessId"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.purposes = j.getStrings("purposes");
       r.dataCategories = j.getStrings("dataCategories");
-      r.owner = j.getString("owner");
+      r.owner = data.getString("owner");
 
       auto result = usecase.createSubprocess(r);
       if (result.isSuccess()) {
@@ -97,11 +97,11 @@ class BusinessSubprocessController : ManageController {
       UpdateBusinessSubprocessRequest r;
       r.tenantId = tenantId;
       r.subprocessId = BusinessSubprocessId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.purposes = j.getStrings("purposes");
       r.dataCategories = j.getStrings("dataCategories");
-      r.owner = j.getString("owner");
+      r.owner = data.getString("owner");
 
       auto result = usecase.updateSubprocess(r);
       if (result.isSuccess()) {

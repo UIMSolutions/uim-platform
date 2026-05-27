@@ -53,13 +53,13 @@ class CustomerSessionController : ManageController {
 
         CustomerSessionDTO dto;
         dto.tenantId = tenantId;
-        dto.customerId = CustomerId(j.getString("customerId"));
-        dto.token = j.getString("token");
-        dto.deviceInfo = j.getString("deviceInfo");
-        dto.ipAddress = j.getString("ipAddress");
-        dto.userAgent = j.getString("userAgent");
+        dto.customerId = CustomerId(data.getString("customerId"));
+        dto.token = data.getString("token");
+        dto.deviceInfo = data.getString("deviceInfo");
+        dto.ipAddress = data.getString("ipAddress");
+        dto.userAgent = data.getString("userAgent");
         dto.expiresAt = j.getInteger("expiresAt");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = sessions.createSession(dto);
         if (result.success)

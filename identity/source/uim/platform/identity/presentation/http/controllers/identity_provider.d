@@ -58,14 +58,14 @@ class IdentityProviderController : ManageController {
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.type_ = j.getString("type");
-            dto.entityId = j.getString("entityId");
-            dto.ssoUrl = j.getString("ssoUrl");
-            dto.sloUrl = j.getString("sloUrl");
-            dto.metadataUrl = j.getString("metadataUrl");
-            dto.clientId = j.getString("clientId");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.type_ = data.getString("type");
+            dto.entityId = data.getString("entityId");
+            dto.ssoUrl = data.getString("ssoUrl");
+            dto.sloUrl = data.getString("sloUrl");
+            dto.metadataUrl = data.getString("metadataUrl");
+            dto.clientId = data.getString("clientId");
             dto.isDefault = j.getBoolean("isDefault");
 
             auto result = usecase.createIdentityProvider(dto);
@@ -81,12 +81,12 @@ class IdentityProviderController : ManageController {
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderprecheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.ssoUrl = j.getString("ssoUrl");
-            dto.sloUrl = j.getString("sloUrl");
-            dto.metadataUrl = j.getString("metadataUrl");
-            dto.status = j.getString("status");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.ssoUrl = data.getString("ssoUrl");
+            dto.sloUrl = data.getString("sloUrl");
+            dto.metadataUrl = data.getString("metadataUrl");
+            dto.status = data.getString("status");
             dto.isDefault = j.getBoolean("isDefault");
 
             auto result = usecase.updateIdentityProvider(dto);

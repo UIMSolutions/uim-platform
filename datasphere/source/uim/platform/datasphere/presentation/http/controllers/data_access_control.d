@@ -37,9 +37,9 @@ class DataAccessControlController : ManageController {
       CreateDataAccessControlRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.criteriaType = j.getString("criteriaType");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.criteriaType = data.getString("criteriaType");
       r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
       r.assignedUserIds = j.getArray("assignedUserIds")
         .map!(v => UserId(v.to!string)).array.toJson;

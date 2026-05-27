@@ -38,14 +38,14 @@ class FlexVariantsController : ManageController {
       CreateFlexVariantRequest request;
       request.tenantId    = tenantId;
       request.variantId   = FlexVariantId(precheck.id);
-      request.appId       = j.getString("appId");
-      request.variantType_ = j.getString("variantType");
-      request.variantName_ = j.getString("variantName");
-      request.content_     = j.getString("content");
+      request.appId       = data.getString("appId");
+      request.variantType_ = data.getString("variantType");
+      request.variantName_ = data.getString("variantName");
+      request.content_     = data.getString("content");
       request.isDefault_   = j.get("isDefault", Json(false)).get!bool;
       request.isPublic_    = j.get("isPublic", Json(false)).get!bool;
-      request.layer_       = j.getString("layer") == "user" ? ChangeLayer.user_ : ChangeLayer.customer_;
-      request.author_      = j.getString("author");
+      request.layer_       = data.getString("layer") == "user" ? ChangeLayer.user_ : ChangeLayer.customer_;
+      request.author_      = data.getString("author");
       auto result = usecase.createVariant(request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
@@ -97,8 +97,8 @@ class FlexVariantsController : ManageController {
       UpdateFlexVariantRequest request;
       request.tenantId    = tenantId;
       request.variantId   = id;
-      request.variantName_ = j.getString("variantName");
-      request.content_     = j.getString("content");
+      request.variantName_ = data.getString("variantName");
+      request.content_     = data.getString("content");
       request.isDefault_   = j.get("isDefault", Json(false)).get!bool;
       request.isPublic_    = j.get("isPublic", Json(false)).get!bool;
       auto result = usecase.updateVariant(request);

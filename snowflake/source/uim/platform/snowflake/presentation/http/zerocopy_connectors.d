@@ -37,11 +37,11 @@ class ZerocopyConnectorController : ManageController {
     CreateConnectorRequest r;
     r.tenantId       = req.getTenantId;
     r.id             = precheck.id;
-    r.accountId      = j.getString("accountId");
-    r.name           = j.getString("name");
-    r.invitationLink = j.getString("invitationLink");
-    r.bdcTenantId    = j.getString("bdcTenantId");
-    r.description    = j.getString("description");
+    r.accountId      = data.getString("accountId");
+    r.name           = data.getString("name");
+    r.invitationLink = data.getString("invitationLink");
+    r.bdcTenantId    = data.getString("bdcTenantId");
+    r.description    = data.getString("description");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -54,9 +54,9 @@ class ZerocopyConnectorController : ManageController {
     UpdateConnectorRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.name        = j.getString("name");
-    r.status      = j.getString("status");
-    r.description = j.getString("description");
+    r.name        = data.getString("name");
+    r.status      = data.getString("status");
+    r.description = data.getString("description");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
@@ -73,7 +73,7 @@ class ZerocopyConnectorController : ManageController {
     EnrollConnectorRequest r;
     r.tenantId    = req.getTenantId;
     r.connectorId = extractIdFromPath(req.requestPath.to!string);
-    r.bdcTenantId = j.getString("bdcTenantId");
+    r.bdcTenantId = data.getString("bdcTenantId");
     auto result = usecase.enroll(r);
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

@@ -52,15 +52,15 @@ class DestinationController : PlatformController {
             CreateDestinationRequest r;
             r.tenantId       = req.getTenantId;
             r.id             = precheck.id;
-            r.connectionType = cast(ConnectionType) j.getString("connectionType", "abapSystem").to!int;
-            r.description    = j.getString("description", "");
-            r.host           = j.getString("host", "");
+            r.connectionType = cast(ConnectionType) data.getString("connectionType", "abapSystem").to!int;
+            r.description    = data.getString("description", "");
+            r.host           = data.getString("host", "");
             r.port           = cast(ushort) j.get("port", Json(3300)).to!long;
-            r.systemId       = j.getString("systemId", "");
-            r.systemNumber   = j.getString("systemNumber", "00");
-            r.client         = j.getString("client", "000");
-            r.language       = j.getString("language", "EN");
-            r.logonUser      = j.getString("logonUser", "");
+            r.systemId       = data.getString("systemId", "");
+            r.systemNumber   = data.getString("systemNumber", "00");
+            r.client         = data.getString("client", "000");
+            r.language       = data.getString("language", "EN");
+            r.logonUser      = data.getString("logonUser", "");
             r.useSNC         = j.get("useSNC", Json(false)).get!bool;
 
             auto result = _usecase.createDestination(r);
@@ -87,10 +87,10 @@ class DestinationController : PlatformController {
             UpdateDestinationRequest r;
             r.tenantId   = req.getTenantId;
             r.id         = extractIdFromPath(req.requestURI.to!string);
-            r.description = j.getString("description", "");
-            r.host        = j.getString("host", "");
+            r.description = data.getString("description", "");
+            r.host        = data.getString("host", "");
             r.port        = cast(ushort) j.get("port", Json(0)).to!long;
-            r.logonUser   = j.getString("logonUser", "");
+            r.logonUser   = data.getString("logonUser", "");
             r.useSNC      = j.get("useSNC", Json(false)).get!bool;
             r.active      = j.get("active", Json(true)).get!bool;
 

@@ -56,14 +56,14 @@ class SoftwareComponentController : ManageController {
 
     CreateSoftwareComponentRequest request;
     request.tenantId = tenantId;
-    request.systemInstanceId = SystemInstanceId(j.getString("systemInstanceId"));
-    request.name = j.getString("name");
-    request.description = j.getString("description");
-    request.componentType = j.getString("componentType");
-    request.repositoryUrl = j.getString("repositoryUrl");
-    request.branch = j.getString("branch");
-    request.branchStrategy = j.getString("branchStrategy");
-    request.namespace = j.getString("namespace");
+    request.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    request.name = data.getString("name");
+    request.description = data.getString("description");
+    request.componentType = data.getString("componentType");
+    request.repositoryUrl = data.getString("repositoryUrl");
+    request.branch = data.getString("branch");
+    request.branchStrategy = data.getString("branchStrategy");
+    request.namespace = data.getString("namespace");
 
     auto result = usecase.createSoftwareComponent(request);
     if (result.hasError()) {
@@ -110,8 +110,8 @@ class SoftwareComponentController : ManageController {
       CloneSoftwareComponentRequest r;
       r.tenantId = tenantId;
       r.softwareComponentId = id;
-      r.branch = j.getString("branch");
-      r.commitId = j.getString("commitId");
+      r.branch = data.getString("branch");
+      r.commitId = data.getString("commitId");
 
       auto result = usecase.cloneSoftwareComponent(r);
       if (result.isSuccess()) {
@@ -138,7 +138,7 @@ class SoftwareComponentController : ManageController {
       PullSoftwareComponentRequest r;
       r.tenantId = tenantId;
       r.softwareComponentId = id;
-      r.commitId = j.getString("commitId");
+      r.commitId = data.getString("commitId");
 
       auto result = usecase.pullSoftwareComponent(r);
       if (result.isSuccess()) {

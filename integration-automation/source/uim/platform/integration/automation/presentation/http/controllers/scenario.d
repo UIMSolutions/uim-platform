@@ -40,15 +40,15 @@ class ScenarioController : ManageController {
       auto j = req.json;
       auto r = CreateScenarioRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = parseScenarioCategory(j.getString("category"));
-      r.version_ = j.getString("version");
-      r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
-      r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = parseScenarioCategory(data.getString("category"));
+      r.version_ = data.getString("version");
+      r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
+      r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
       r.prerequisites = getStrings(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createScenario(r);
       if (result.isSuccess()) {
@@ -107,13 +107,13 @@ class ScenarioController : ManageController {
       auto r = UpdateScenarioRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = parseScenarioCategory(j.getString("category"));
-      r.version_ = j.getString("version");
-      r.status = parseScenarioStatus(j.getString("status"));
-      r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
-      r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = parseScenarioCategory(data.getString("category"));
+      r.version_ = data.getString("version");
+      r.status = parseScenarioStatus(data.getString("status"));
+      r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
+      r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
       r.prerequisites = getStrings(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
 

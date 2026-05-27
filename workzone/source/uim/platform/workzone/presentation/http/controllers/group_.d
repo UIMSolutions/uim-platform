@@ -40,8 +40,8 @@ class GroupController : ManageController {
       auto j = req.json;
       auto r = CreateGroupRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = useCase.createGroup(r);
       if (result.isSuccess()) {
@@ -99,8 +99,8 @@ class GroupController : ManageController {
       auto r = UpdateGroupRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.active = j.getBoolean("active", true);
 
       auto result = useCase.updateGroup(r);

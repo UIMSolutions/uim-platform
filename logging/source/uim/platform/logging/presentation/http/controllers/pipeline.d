@@ -36,12 +36,12 @@ class PipelineController : ManageController {
       auto j = req.json;
       CreatePipelineRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.sourceType = j.getString("sourceType");
-      r.format = j.getString("format");
-      r.targetStreamId = j.getString("targetStreamId");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.sourceType = data.getString("sourceType");
+      r.format = data.getString("format");
+      r.targetStreamId = data.getString("targetStreamId");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       foreach (pj; j.getArray("processors")) {
         ProcessorDTO p;
@@ -125,9 +125,9 @@ class PipelineController : ManageController {
 
       UpdatePipelineRequest r;
       r.pipelineId = id;
-      r.description = j.getString("description");
-      r.format = j.getString("format");
-      r.targetStreamId = j.getString("targetStreamId");
+      r.description = data.getString("description");
+      r.format = data.getString("format");
+      r.targetStreamId = data.getString("targetStreamId");
       r.isActive = j.getBoolean("isActive", true);
       r.tenantId = tenantId;
 

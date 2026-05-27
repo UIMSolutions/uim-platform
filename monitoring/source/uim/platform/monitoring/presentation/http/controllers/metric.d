@@ -40,11 +40,11 @@ class MetricController : ManageController {
       auto j = req.json;
       PushMetricRequest r;
       r.tenantId = tenantId;
-      r.resourceId = j.getString("resourceId");
-      r.name = j.getString("name");
+      r.resourceId = data.getString("resourceId");
+      r.name = data.getString("name");
       r.value_ = getDouble(j, "value");
-      r.unit = j.getString("unit");
-      r.category = j.getString("category");
+      r.unit = data.getString("unit");
+      r.category = data.getString("category");
 
       auto result = usecase.pushMetric(r);
       if (result.hasError)
@@ -75,11 +75,11 @@ class MetricController : ManageController {
 
         PushMetricRequest r;
         r.tenantId = tenantId;
-        r.resourceId = mj.getString("resourceId");
-        r.name = mj.getString("name");
+        r.resourceId = mdata.getString("resourceId");
+        r.name = mdata.getString("name");
         r.value_ = getDouble(mj, "value");
-        r.unit = mj.getString("unit");
-        r.category = mj.getString("category");
+        r.unit = mdata.getString("unit");
+        r.category = mdata.getString("category");
         batchReq.metrics ~= r;
       }
 

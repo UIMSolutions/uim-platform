@@ -36,11 +36,11 @@ class ViewController : ManageController {
       CreateViewRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.businessName = j.getString("businessName");
-      r.semantic = j.getString("semantic");
-      r.sqlExpression = j.getString("sqlExpression");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.businessName = data.getString("businessName");
+      r.semantic = data.getString("semantic");
+      r.sqlExpression = data.getString("sqlExpression");
       r.isExposed = j.getBoolean("isExposed", false);
 
       auto now = Clock.currTime();
@@ -133,10 +133,10 @@ class ViewController : ManageController {
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       r.viewId = Viewprecheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.businessName = j.getString("businessName");
-      r.sqlExpression = j.getString("sqlExpression");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.businessName = data.getString("businessName");
+      r.sqlExpression = data.getString("sqlExpression");
       r.isExposed = j.getBoolean("isExposed", false);
       r.isPersisted = j.getBoolean("isPersisted", false);
 

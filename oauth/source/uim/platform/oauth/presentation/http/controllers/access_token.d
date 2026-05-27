@@ -74,12 +74,12 @@ class AccessTokenController : ManageController {
             AccessTokenDTO dto;
             dto.tokenId = AccessTokenId(precheck.id);
             dto.tenantId = tenantId;
-            dto.tokenValue = j.getString("tokenValue");
-            dto.clientId = j.getString("clientId");
-            dto.userId = j.getString("userId");
-            dto.scopes = j.getString("scopes");
+            dto.tokenValue = data.getString("tokenValue");
+            dto.clientId = data.getString("clientId");
+            dto.userId = data.getString("userId");
+            dto.scopes = data.getString("scopes");
             dto.expiresAt = 0;
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createToken(dto);
             if (result.hasError)

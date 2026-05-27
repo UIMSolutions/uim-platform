@@ -38,11 +38,11 @@ class DeploymentController : PlatformController {
 
       DeployApplicationRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.versionId = j.getString("versionId");
-      r.serviceInstanceId = j.getString("serviceInstanceId");
-      r.operation = j.getString("operation");
-      r.deployedBy = j.getString("deployedBy");
+      r.appId = data.getString("appId");
+      r.versionId = data.getString("versionId");
+      r.serviceInstanceId = data.getString("serviceInstanceId");
+      r.operation = data.getString("operation");
+      r.deployedBy = data.getString("deployedBy");
 
       auto result = deployApp.deploy(r);
       if (result.isSuccess()) {

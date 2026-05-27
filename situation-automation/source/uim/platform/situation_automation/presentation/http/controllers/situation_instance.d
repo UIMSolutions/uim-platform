@@ -38,16 +38,16 @@ class SituationInstanceController : ManageController {
 
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
-            r.situationTemplateId = SituationTemplateId(j.getString("situationTemplateId"));
+            r.situationTemplateId = SituationTemplateId(data.getString("situationTemplateId"));
             r.situationInstanceId = SituationInstanceId(precheck.id);
-            r.description = j.getString("description");
-            r.severity = j.getString("severity").to!SituationSeverity;
-            r.entityId = j.getString("entityId");
-            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
+            r.description = data.getString("description");
+            r.severity = data.getString("severity").to!SituationSeverity;
+            r.entityId = data.getString("entityId");
+            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
             r.contextData = jsonKeyValuePairs(j, "contextData");
-            r.assignedTo = j.getString("assignedTo");
-            r.sourceSystem = j.getString("sourceSystem");
-            r.sourceInstanceId = j.getString("sourceInstanceId");
+            r.assignedTo = data.getString("assignedTo");
+            r.sourceSystem = data.getString("sourceSystem");
+            r.sourceInstanceId = data.getString("sourceInstanceId");
             r.dueAt = jsonLong(j, "dueAt");
 
             auto result = usecase.createSituationInstance(r);
@@ -152,9 +152,9 @@ class SituationInstanceController : ManageController {
             UpdateSituationInstanceRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = id;
-            r.status = j.getString("status");
-            r.severity = j.getString("severity").to!SituationSeverity;
-            r.assignedTo = j.getString("assignedTo");
+            r.status = data.getString("status");
+            r.severity = data.getString("severity").to!SituationSeverity;
+            r.assignedTo = data.getString("assignedTo");
 
             auto result = usecase.updateSituationInstance(r);
             if (result.hasError)
@@ -190,11 +190,11 @@ class SituationInstanceController : ManageController {
             ResolveSituationRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = id;
-            r.resolutionType = j.getString("resolutionType");
-            r.resolvedBy = j.getString("resolvedBy");
-            r.actionId = j.getString("actionId");
-            r.ruleId = j.getString("ruleId");
-            r.outcome = j.getString("outcome");
+            r.resolutionType = data.getString("resolutionType");
+            r.resolvedBy = data.getString("resolvedBy");
+            r.actionId = data.getString("actionId");
+            r.ruleId = data.getString("ruleId");
+            r.outcome = data.getString("outcome");
 
             auto result = usecase.resolveSituationInstance(r);
             if (result.hasError)

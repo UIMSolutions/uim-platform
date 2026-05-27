@@ -64,16 +64,16 @@ class DevSpaceController : ManageController {
             DevSpaceDTO dto;
             dto.id = precheck.id;
             dto.tenantId = req.getTenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.devSpaceTypeId = DevSpaceTypeId(j.getString("devSpaceTypeId"));
-            dto.extensions = j.getString("extensions");
-            dto.owner = UserId(j.getString("owner"));
-            dto.region = j.getString("region");
-            dto.hibernateAfterDays = j.getString("hibernateAfterDays");
-            dto.memoryLimit = j.getString("memoryLimit");
-            dto.diskLimit = j.getString("diskLimit");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.devSpaceTypeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));
+            dto.extensions = data.getString("extensions");
+            dto.owner = UserId(data.getString("owner"));
+            dto.region = data.getString("region");
+            dto.hibernateAfterDays = data.getString("hibernateAfterDays");
+            dto.memoryLimit = data.getString("memoryLimit");
+            dto.diskLimit = data.getString("diskLimit");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDevSpace(tenantId, dto);
             if (result.hasError)
@@ -98,10 +98,10 @@ class DevSpaceController : ManageController {
             auto j = req.json;
             DevSpaceDTO dto;
             dto.id = DevSpaceId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.extensions = j.getString("extensions");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.extensions = data.getString("extensions");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDevSpace(tenantId, dto);
             if (result.hasError)

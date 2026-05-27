@@ -36,13 +36,13 @@ class ClientResourceController : ManageController {
       auto j = req.json;
       CreateClientResourceRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.contentType = j.getString("contentType");
-      r.data = j.getString("data");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.appId = data.getString("appId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.contentType = data.getString("contentType");
+      r.data = data.getString("data");
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -117,12 +117,12 @@ class ClientResourceController : ManageController {
       auto j = req.json;
       UpdateClientResourceRequest r;
       r.id = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.contentType = j.getString("contentType");
-      r.data = j.getString("data");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.contentType = data.getString("contentType");
+      r.data = data.getString("data");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

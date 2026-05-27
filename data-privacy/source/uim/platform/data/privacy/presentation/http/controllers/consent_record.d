@@ -41,12 +41,12 @@ class ConsentController : ManageController {
       auto j = req.json;
       CreateConsentRecordRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.purpose = j.getString("purpose");
-      r.channel = j.getString("channel");
-      r.consentText = j.getString("consentText");
-      r.version_ = j.getString("version");
-      r.ipAddress = j.getString("ipAddress");
+      r.dataSubjectId = data.getString("dataSubjectId");
+      r.purpose = data.getString("purpose");
+      r.channel = data.getString("channel");
+      r.consentText = data.getString("consentText");
+      r.version_ = data.getString("version");
+      r.ipAddress = data.getString("ipAddress");
       r.expiresAt = jsonLong(j, "expiresAt");
 
       auto result = usecase.grantConsent(r);

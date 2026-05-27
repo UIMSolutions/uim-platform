@@ -42,18 +42,18 @@ class FileBackupPolicyRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             BackupPolicy p;
-            p.id          = BackupPolicyId(j.getString("id", ""));
+            p.id          = BackupPolicyId(data.getString("id", ""));
             p.tenantId    = tenantId;
-            p.instanceId  = ServiceInstanceId(j.getString("instanceId", ""));
+            p.instanceId  = ServiceInstanceId(data.getString("instanceId", ""));
             p.enabled     = j.getBoolean("enabled", false);
             p.intervalHours = j.getLong("intervalHours", 24);
             p.retentionDays = j.getLong("retentionDays", 7);
             p.lastBackupAt = j.getLong("lastBackupAt", 0);
             p.nextBackupAt = j.getLong("nextBackupAt", 0);
-            p.status      = j.getString("status", "disabled").to!BackupStatus;
-            p.backupLocation = j.getString("backupLocation", "");
-            p.lastBackupId = j.getString("lastBackupId", "");
-            p.lastError   = j.getString("lastError", "");
+            p.status      = data.getString("status", "disabled").to!BackupStatus;
+            p.backupLocation = data.getString("backupLocation", "");
+            p.lastBackupId = data.getString("lastBackupId", "");
+            p.lastError   = data.getString("lastError", "");
             p.createdAt   = j.getLong("createdAt", 0);
             super.save(p);
         }

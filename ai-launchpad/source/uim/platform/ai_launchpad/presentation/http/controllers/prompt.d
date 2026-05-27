@@ -36,10 +36,10 @@ class PromptController : ManageController {
 
       CreatePromptRequest r;
 r.tenantId = tenantId;
-      r.collectionId = j.getString("collectionId");
-      r.name = j.getString("name");
-      r.modelName = j.getString("modelName");
-      r.modelVersion = j.getString("modelVersion");
+      r.collectionId = data.getString("collectionId");
+      r.name = data.getString("name");
+      r.modelName = data.getString("modelName");
+      r.modelVersion = data.getString("modelVersion");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = getDouble(j, "temperature");
       r.maxTokens = j.getInteger("maxTokens");
@@ -47,7 +47,7 @@ r.tenantId = tenantId;
       r.frequencyPenalty = getDouble(j, "frequencyPenalty");
       r.presencePenalty = getDouble(j, "presencePenalty");
       r.inputParams = getStrings(j, "inputParams");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createPrompt(r);
       if (result.hasError)
@@ -112,8 +112,8 @@ r.tenantId = tenantId;
       PatchPromptRequest r;
       r.tenantId = tenantId;
       r.promptId = id;
-      r.name = j.getString("name");
-      r.status = j.getString("status");
+      r.name = data.getString("name");
+      r.status = data.getString("status");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = getDouble(j, "temperature");
       r.maxTokens = j.getInteger("maxTokens");

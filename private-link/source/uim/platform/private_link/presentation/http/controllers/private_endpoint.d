@@ -42,14 +42,14 @@ class PrivateEndpointController : ManageController {
     auto j = req.json;
     auto r = CreatePrivateEndpointRequest();
     r.tenantId = tenantId;
-    r.serviceInstanceId = ServiceInstanceId(j.getString("serviceInstanceId"));
-    r.name = j.getString("name");
-    r.privateIpAddress = j.getString("privateIpAddress");
-    r.hostname = j.getString("hostname");
+    r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
+    r.name = data.getString("name");
+    r.privateIpAddress = data.getString("privateIpAddress");
+    r.hostname = data.getString("hostname");
     r.port = cast(ushort) j.getInt("port");
-    r.iaasProvider = j.getString("iaasProvider");
-    r.region = j.getString("region");
-    r.providerEndpointId = j.getString("providerEndpointId");
+    r.iaasProvider = data.getString("iaasProvider");
+    r.region = data.getString("region");
+    r.providerEndpointId = data.getString("providerEndpointId");
 
     auto result = usecase.createEndpoint(r);
     if (result.hasError())
@@ -76,8 +76,8 @@ class PrivateEndpointController : ManageController {
     auto r = UpdatePrivateEndpointStatusRequest();
     r.tenantId = tenantId;
     r.endpointId = id;
-    r.status = j.getString("status");
-    r.statusMessage = j.getString("statusMessage");
+    r.status = data.getString("status");
+    r.statusMessage = data.getString("statusMessage");
 
     auto result = usecase.updateEndpointStatus(r);
     if (result.hasError()) {
@@ -114,9 +114,9 @@ class PrivateEndpointController : ManageController {
     auto r = ApprovePrivateEndpointRequest();
     r.tenantId = tenantId;
     r.endpointId = id;
-    r.providerEndpointId = j.getString("providerEndpointId");
-    r.privateIpAddress = j.getString("privateIpAddress");
-    r.hostname = j.getString("hostname");
+    r.providerEndpointId = data.getString("providerEndpointId");
+    r.privateIpAddress = data.getString("privateIpAddress");
+    r.hostname = data.getString("hostname");
     r.port = cast(ushort) j.getInt("port");
 
     auto result = usecase.approveEndpoint(r);

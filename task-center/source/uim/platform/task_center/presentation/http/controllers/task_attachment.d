@@ -34,11 +34,11 @@ class TaskAttachmentController : ManageController {
             CreateTaskAttachmentRequest r;
             r.tenantId = tenantId;
             r.taskAttachmentId = TaskAttachmentId(precheck.id);
-            r.taskId = TaskId(j.getString("taskId"));
-            r.fileName = j.getString("fileName");
-            r.fileSize = j.getString("fileSize");
-            r.mimeType = j.getString("mimeType");
-            r.uploadedBy = UserId(j.getString("uploadedBy"));
+            r.taskId = TaskId(data.getString("taskId"));
+            r.fileName = data.getString("fileName");
+            r.fileSize = data.getString("fileSize");
+            r.mimeType = data.getString("mimeType");
+            r.uploadedBy = UserId(data.getString("uploadedBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)

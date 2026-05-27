@@ -42,10 +42,10 @@ class TargetSystemController : ManageController {
       auto j = req.json;
       auto r = CreateTargetSystemRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.systemType = parseSystemType(j.getString("systemType"));
-      r.connectionConfig = j.getString("connectionConfig");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.systemType = parseSystemType(data.getString("systemType"));
+      r.connectionConfig = data.getString("connectionConfig");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createTargetSystem(r);
@@ -102,9 +102,9 @@ class TargetSystemController : ManageController {
       auto r = UpdateTargetSystemRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.connectionConfig = j.getString("connectionConfig");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.connectionConfig = data.getString("connectionConfig");
 
       auto result = usecase.updateTargetSystem(r);
       if (result.isSuccess) {

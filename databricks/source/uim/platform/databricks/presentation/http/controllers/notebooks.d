@@ -26,13 +26,13 @@ public:
       CreateNotebookRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = precheck.id;
-      r.workspaceId = j.getString("workspaceId");
-      r.path        = j.getString("path");
-      r.name        = j.getString("name");
-      r.content     = j.getString("content");
-      r.format      = j.getString("format");
-      r.ownerId     = j.getString("ownerId");
-      auto langStr  = j.getString("language");
+      r.workspaceId = data.getString("workspaceId");
+      r.path        = data.getString("path");
+      r.name        = data.getString("name");
+      r.content     = data.getString("content");
+      r.format      = data.getString("format");
+      r.ownerId     = data.getString("ownerId");
+      auto langStr  = data.getString("language");
       if (langStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.language = langStr.to!NotebookLanguage; } catch (ConvException) {}
@@ -67,9 +67,9 @@ public:
       UpdateNotebookRequest r;
       r.tenantId = req.getTenantId;
       r.id       = req.requestPath.to!string.split("/")[$-1];
-      r.name     = j.getString("name");
-      r.content  = j.getString("content");
-      r.format   = j.getString("format");
+      r.name     = data.getString("name");
+      r.content  = data.getString("content");
+      r.format   = data.getString("format");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(serializeToJson(result.data));
       else writeError(res, 404, result.message);

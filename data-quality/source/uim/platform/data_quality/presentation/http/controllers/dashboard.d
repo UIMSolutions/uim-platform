@@ -37,8 +37,8 @@ class DashboardController : PlatformController {
       auto j = req.json;
       auto r = ComputeDashboardRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.datasetName = j.getString("datasetName");
+      r.datasetId = data.getString("datasetId");
+      r.datasetName = data.getString("datasetName");
 
       auto dashboard = usecase.compute(r);
       res.writeJsonBody(dashboard.toJson, 200);

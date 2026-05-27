@@ -68,20 +68,20 @@ class ServiceCallController : ManageController {
             ServiceCallDTO dto;
             dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;
-            dto.customerId = CustomerId(j.getString("customerId"));
-            dto.equipmentId = EquipmentId(j.getString("equipmentId"));
-            dto.subject = j.getString("subject");
-            dto.description = j.getString("description");
-            dto.serviceType = j.getString("serviceType");
-            dto.contactPerson = j.getString("contactPerson");
-            dto.contactPhone = j.getString("contactPhone");
-            dto.contactEmail = j.getString("contactEmail");
-            dto.reportedDate = j.getString("reportedDate");
-            dto.dueDate = j.getString("dueDate");
-            dto.address = j.getString("address");
-            dto.latitude = j.getString("latitude");
-            dto.longitude = j.getString("longitude");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.customerId = CustomerId(data.getString("customerId"));
+            dto.equipmentId = EquipmentId(data.getString("equipmentId"));
+            dto.subject = data.getString("subject");
+            dto.description = data.getString("description");
+            dto.serviceType = data.getString("serviceType");
+            dto.contactPerson = data.getString("contactPerson");
+            dto.contactPhone = data.getString("contactPhone");
+            dto.contactEmail = data.getString("contactEmail");
+            dto.reportedDate = data.getString("reportedDate");
+            dto.dueDate = data.getString("dueDate");
+            dto.address = data.getString("address");
+            dto.latitude = data.getString("latitude");
+            dto.longitude = data.getString("longitude");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createServiceCall(dto);
             if (result.hasError)
@@ -107,13 +107,13 @@ class ServiceCallController : ManageController {
             ServiceCallDTO dto;
             dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;
-            dto.subject = j.getString("subject");
-            dto.description = j.getString("description");
-            dto.contactPerson = j.getString("contactPerson");
-            dto.contactPhone = j.getString("contactPhone");
-            dto.contactEmail = j.getString("contactEmail");
-            dto.resolution = j.getString("resolution");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.subject = data.getString("subject");
+            dto.description = data.getString("description");
+            dto.contactPerson = data.getString("contactPerson");
+            dto.contactPhone = data.getString("contactPhone");
+            dto.contactEmail = data.getString("contactEmail");
+            dto.resolution = data.getString("resolution");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateServiceCall(dto);
             if (result.hasError)

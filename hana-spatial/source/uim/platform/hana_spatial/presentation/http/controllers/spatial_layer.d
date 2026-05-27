@@ -33,10 +33,10 @@ class SpatialLayerController : ManageController {
       CreateSpatialLayerRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.coordinateSystem = j.getString("coordinateSystem");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.coordinateSystem = data.getString("coordinateSystem");
       r.isPublic = j.getBoolean("isPublic");
       r.metadata = jsonKeyValuePairs(j, "metadata");
 
@@ -98,8 +98,8 @@ class SpatialLayerController : ManageController {
       UpdateSpatialLayerRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isPublic = j.getBoolean("isPublic");
 
       auto result = usecase.update(r);

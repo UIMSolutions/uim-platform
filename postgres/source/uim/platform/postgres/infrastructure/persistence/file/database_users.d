@@ -43,15 +43,15 @@ class FileDatabaseUserRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             DatabaseUser e;
-            e.id         = DatabaseUserId(j.getString("id", ""));
+            e.id         = DatabaseUserId(data.getString("id", ""));
             e.tenantId   = t;
-            e.instanceId = ServiceInstanceId(j.getString("instanceId", ""));
-            e.username   = j.getString("username", "");
-            e.roles      = j.getString("roles", "readonly");
-            e.status     = j.getString("status", "active").to!UserStatus;
+            e.instanceId = ServiceInstanceId(data.getString("instanceId", ""));
+            e.username   = data.getString("username", "");
+            e.roles      = data.getString("roles", "readonly");
+            e.status     = data.getString("status", "active").to!UserStatus;
             e.createdAt  = j.getLong("createdAt", 0);
-            e.createdBy  = UserId(j.getString("createdBy", ""));
-            e.updatedBy  = UserId(j.getString("updatedBy", ""));
+            e.createdBy  = UserId(data.getString("createdBy", ""));
+            e.updatedBy  = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

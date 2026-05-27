@@ -37,12 +37,12 @@ class SnowflakeAccountController : ManageController {
     CreateAccountRequest r;
     r.tenantId         = req.getTenantId;
     r.id               = precheck.id;
-    r.name             = j.getString("name");
-    r.region           = j.getString("region");
-    r.adminEmail       = j.getString("adminEmail");
-    r.adminFirstName   = j.getString("adminFirstName");
-    r.adminLastName    = j.getString("adminLastName");
-    r.entitlementSystemId = j.getString("entitlementSystemId");
+    r.name             = data.getString("name");
+    r.region           = data.getString("region");
+    r.adminEmail       = data.getString("adminEmail");
+    r.adminFirstName   = data.getString("adminFirstName");
+    r.adminLastName    = data.getString("adminLastName");
+    r.entitlementSystemId = data.getString("entitlementSystemId");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -55,8 +55,8 @@ class SnowflakeAccountController : ManageController {
     UpdateAccountRequest r;
     r.tenantId = req.getTenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
-    r.name     = j.getString("name");
-    r.status   = j.getString("status");
+    r.name     = data.getString("name");
+    r.status   = data.getString("status");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

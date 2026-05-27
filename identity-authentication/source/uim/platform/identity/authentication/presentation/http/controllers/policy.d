@@ -45,8 +45,8 @@ class PolicyController : ManageController {
         }
       }
 
-      auto createReq = CreatePolicyRequest(j.getString("tenantId"), j.getString("name"),
-        j.getString("description"), rules, getStrings(j, "applicationIds"));
+      auto createReq = CreatePolicyRequest(data.getString("tenantId"), data.getString("name"),
+        data.getString("description"), rules, getStrings(j, "applicationIds"));
 
       auto result = useCase.createPolicy(createReq);
       auto response = Json.emptyObject;

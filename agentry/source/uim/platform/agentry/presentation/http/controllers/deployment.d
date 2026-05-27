@@ -54,15 +54,15 @@ class DeploymentController : ManageController {
 
         DeploymentDTO dto;
         dto.deploymentId = DeploymentId(precheck.id);
-        dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
-        dto.appVersionId = AppVersionId(j.getString("appVersionId"));
+        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
+        dto.appVersionId = AppVersionId(data.getString("appVersionId"));
         dto.tenantId = tenantId;
-        dto.scope_ = j.getString("scope");
-        dto.targetDeviceId = j.getString("targetDeviceId");
-        dto.targetGroupName = j.getString("targetGroupName");
+        dto.scope_ = data.getString("scope");
+        dto.targetDeviceId = data.getString("targetDeviceId");
+        dto.targetGroupName = data.getString("targetGroupName");
         dto.scheduledAt = j.getLong("scheduledAt");
-        dto.deployedBy = j.getString("deployedBy");
-        dto.notes = j.getString("notes");
+        dto.deployedBy = data.getString("deployedBy");
+        dto.notes = data.getString("notes");
 
         auto result = usecase.createDeployment(dto);
         if (result.hasError)
@@ -109,7 +109,7 @@ class DeploymentController : ManageController {
         DeploymentDTO dto;
         dto.deploymentId = id;
         dto.tenantId = tenantId;
-        dto.notes = j.getString("notes");
+        dto.notes = data.getString("notes");
         dto.scheduledAt = j.getLong("scheduledAt");
 
         auto result = usecase.updateDeployment(dto);

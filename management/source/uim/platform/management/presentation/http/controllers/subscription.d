@@ -39,10 +39,10 @@ class SubscriptionController : ManageController {
       auto data = precheck.data;
       CreateSubscriptionRequest r;
       r.tenantId = tenantId;
-      r.subaccountId = j.getString("subaccountId");
-      r.globalAccountId = j.getString("globalAccountId");
-      r.appName = j.getString("appName");
-      r.planName = j.getString("planName");
+      r.subaccountId = data.getString("subaccountId");
+      r.globalAccountId = data.getString("globalAccountId");
+      r.appName = data.getString("appName");
+      r.planName = data.getString("planName");
       r.subscribedBy = UserId(req.headers.get("X-User-Id", ""));
       r.parameters = jsonStrMap(j, "parameters");
       r.labels = jsonStrMap(j, "labels");
@@ -104,7 +104,7 @@ class SubscriptionController : ManageController {
       auto data = precheck.data;
       UpdateSubscriptionRequest r;
       r.tenantId = tenantId;  
-      r.planName = j.getString("planName");
+      r.planName = data.getString("planName");
       r.parameters = jsonStrMap(j, "parameters");
 
       auto result = usecase.updateSubscriptionPlan(tenantId, id, r);

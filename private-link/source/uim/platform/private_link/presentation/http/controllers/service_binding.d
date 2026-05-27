@@ -40,8 +40,8 @@ class ServiceBindingController : ManageController {
     auto j = req.json;
     auto r = CreateServiceBindingRequest();
     r.tenantId = tenantId;
-    r.serviceInstanceId = ServiceInstanceId(j.getString("serviceInstanceId"));
-    r.applicationId = j.getString("applicationId");
+    r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
+    r.applicationId = data.getString("applicationId");
 
     auto result = usecase.createBinding(r);
     if (result.hasError())

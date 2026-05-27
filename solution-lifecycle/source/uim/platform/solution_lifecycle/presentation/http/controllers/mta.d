@@ -33,12 +33,12 @@ class MtaController : ManageController {
             auto j = req.json;
             DeployMtaRequest r;
             r.tenantId            = req.getTenantId;
-            r.archiveId           = j.getString("archiveId");
-            r.solutionType        = j.getString("solutionType");
-            r.spaceId             = j.getString("spaceId");
-            r.extensionDescriptor = j.getString("extensionDescriptor");
-            r.deployedBy          = j.getString("deployedBy");
-            r.namespace_          = j.getString("namespace");
+            r.archiveId           = data.getString("archiveId");
+            r.solutionType        = data.getString("solutionType");
+            r.spaceId             = data.getString("spaceId");
+            r.extensionDescriptor = data.getString("extensionDescriptor");
+            r.deployedBy          = data.getString("deployedBy");
+            r.namespace_          = data.getString("namespace");
 
             auto result = usecase.deployMta(r);
             if (result.hasError)
@@ -94,9 +94,9 @@ class MtaController : ManageController {
             UpdateMtaRequest r;
             r.tenantId            = req.getTenantId;
             r.mtaId               = extractIdFromPath(req.requestURI.to!string);
-            r.archiveId           = j.getString("archiveId");
-            r.extensionDescriptor = j.getString("extensionDescriptor");
-            r.updatedBy           = j.getString("updatedBy");
+            r.archiveId           = data.getString("archiveId");
+            r.extensionDescriptor = data.getString("extensionDescriptor");
+            r.updatedBy           = data.getString("updatedBy");
 
             auto result = usecase.updateMta(r);
             if (result.hasError)

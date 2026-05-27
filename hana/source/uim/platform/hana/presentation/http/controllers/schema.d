@@ -35,11 +35,11 @@ class SchemaController : ManageController {
       auto j = req.json;
       CreateSchemaRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.owner = j.getString("owner");
-      r.type = j.getString("type");
+      r.name = data.getString("name");
+      r.owner = data.getString("owner");
+      r.type = data.getString("type");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -121,7 +121,7 @@ class SchemaController : ManageController {
       UpdateSchemaRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.owner = j.getString("owner");
+      r.owner = data.getString("owner");
 
       auto result = usecase.update(r);
       if (result.hasError)

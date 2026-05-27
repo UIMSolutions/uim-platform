@@ -43,12 +43,12 @@ class ReplicationController : ManageController {
       auto j = req.json;
       CreateReplicationJobRequest r;
       r.tenantId = tenantId;
-      r.distributionModelId = j.getString("distributionModelId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.trigger = j.getString("trigger");
+      r.distributionModelId = data.getString("distributionModelId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.trigger = data.getString("trigger");
       r.categories = getStrings(j, "categories");
-      r.sourceClientId = j.getString("sourceClientId");
+      r.sourceClientId = data.getString("sourceClientId");
       r.targetClientIds = getStrings(j, "targetClientIds");
       r.isInitialLoad = j.getBoolean("isInitialLoad");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));

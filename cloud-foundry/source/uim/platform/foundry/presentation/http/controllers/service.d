@@ -51,13 +51,13 @@ class ServiceController : ManageController {
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = tenantId;
-      r.spaceId = SpaceId(j.getString("spaceId"));
-      r.name = j.getString("name");
-      r.serviceName = j.getString("serviceName");
-      r.servicePlanName = j.getString("servicePlanName");
-      r.parameters = j.getString("parameters");
-      r.tags = j.getString("tags");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.spaceId = SpaceId(data.getString("spaceId"));
+      r.name = data.getString("name");
+      r.serviceName = data.getString("serviceName");
+      r.servicePlanName = data.getString("servicePlanName");
+      r.parameters = data.getString("parameters");
+      r.tags = data.getString("tags");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createInstance(r);
       if (result.isSuccess()) {
@@ -118,9 +118,9 @@ class ServiceController : ManageController {
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.parameters = j.getString("parameters");
-      r.tags = j.getString("tags");
+      r.name = data.getString("name");
+      r.parameters = data.getString("parameters");
+      r.tags = data.getString("tags");
 
       auto result = useCase.updateInstance(r);
       if (result.isSuccess()) {
@@ -163,11 +163,11 @@ class ServiceController : ManageController {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = tenantId;
-      r.appId = AppId(j.getString("appId"));
-      r.serviceInstanceId = ServiceInstanceId(j.getString("serviceInstanceId"));
-      r.name = j.getString("name");
-      r.bindingOptions = j.getString("bindingOptions");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.appId = AppId(data.getString("appId"));
+      r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
+      r.name = data.getString("name");
+      r.bindingOptions = data.getString("bindingOptions");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createBinding(r);
       if (result.isSuccess()) {

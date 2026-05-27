@@ -78,16 +78,16 @@ class BrokerServiceController : ManageController {
     BrokerServiceDTO dto;
     dto.serviceId = BrokerServiceId(precheck.id);
     dto.tenantId = tenantId;
-    dto.name = j.getString("name");
-    dto.description = j.getString("description");
-    dto.region = j.getString("region");
-    dto.datacenter = j.getString("datacenter");
-    dto.version_ = j.getString("version");
-    dto.maxConnections = j.getString("maxConnections");
-    dto.maxQueueDepth = j.getString("maxQueueDepth");
-    dto.maxMessageSize = j.getString("maxMessageSize");
-    dto.msgVpnName = j.getString("msgVpnName");
-    dto.createdBy = UserId(j.getString("createdBy"));
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.region = data.getString("region");
+    dto.datacenter = data.getString("datacenter");
+    dto.version_ = data.getString("version");
+    dto.maxConnections = data.getString("maxConnections");
+    dto.maxQueueDepth = data.getString("maxQueueDepth");
+    dto.maxMessageSize = data.getString("maxMessageSize");
+    dto.msgVpnName = data.getString("msgVpnName");
+    dto.createdBy = UserId(data.getString("createdBy"));
 
     auto service = usecase.createService(dto);
     if (service.isNull)

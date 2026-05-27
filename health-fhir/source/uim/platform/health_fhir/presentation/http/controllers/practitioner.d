@@ -42,7 +42,7 @@ class PractitionerController : ManageController {
       CreatePractitionerRequest r;
       r.tenantId        = tenantId;
       r.practitionerId  = PractitionerId(precheck.id);
-      r.birthDate_      = j.getString("birthDate");
+      r.birthDate_      = data.getString("birthDate");
       r.active_         = j.get("active", Json(true)).get!bool;
 
       auto result = usecase.createPractitioner(r);
@@ -91,7 +91,7 @@ class PractitionerController : ManageController {
       UpdatePractitionerRequest r;
       r.tenantId = tenantId;
       r.practitionerId = id;
-      r.birthDate_ = j.getString("birthDate");
+      r.birthDate_ = data.getString("birthDate");
       r.active_    = j.get("active", Json(true)).get!bool;
       auto result = usecase.updatePractitioner(r);
       if (result.success)

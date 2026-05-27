@@ -35,7 +35,7 @@ class ApiClientController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("name"), j.getString("description"), getStrings(j,
+          data.getString("name"), data.getString("description"), getStrings(j,
             "scopes"), jsonLong(j, "expiresAt"),);
 
       auto result = useCase.createClient(createReq);

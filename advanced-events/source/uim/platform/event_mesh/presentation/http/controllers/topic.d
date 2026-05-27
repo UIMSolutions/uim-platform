@@ -105,11 +105,11 @@ class TopicController : ManageController {
     TopicDTO dto;
     dto.topicId = TopicId(precheck.id);
     dto.tenantId = tenantId;
-    dto.name = j.getString("name");
-    dto.description = j.getString("description");
-    dto.topicString = j.getString("topicString");
-    dto.maxMessageSize = j.getString("maxMessageSize");
-    dto.updatedBy = UserId(j.getString("updatedBy"));
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.topicString = data.getString("topicString");
+    dto.maxMessageSize = data.getString("maxMessageSize");
+    dto.updatedBy = UserId(data.getString("updatedBy"));
 
     auto result = usecase.updateTopic(dto);
     if (result.hasError)

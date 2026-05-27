@@ -34,7 +34,7 @@ class MetricController : PlatformController {
       PatchMetricsRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.executionId = ExecutionId(j.getString("executionId"));
+      r.executionId = ExecutionId(data.getString("executionId"));
       r.metrics = jsonKeyValuePairs(j, "metrics");
       r.tags = jsonKeyValuePairs(j, "tags");
       r.customInfo = jsonKeyValuePairs(j, "customInfo");

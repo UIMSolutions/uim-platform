@@ -39,8 +39,8 @@ class ProfileController : PlatformController {
       auto j = req.json;
       auto r = ProfileDatasetRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.datasetName = j.getString("datasetName");
+      r.datasetId = data.getString("datasetId");
+      r.datasetName = data.getString("datasetName");
 
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (recordsJson).isArray) {

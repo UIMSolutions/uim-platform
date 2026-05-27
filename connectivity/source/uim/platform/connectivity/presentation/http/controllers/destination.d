@@ -47,21 +47,21 @@ class DestinationController : ManageController {
     auto j = req.json;
     auto r = CreateDestinationRequest();
     r.tenantId = tenantId;
-    r.name = j.getString("name");
-    r.description = j.getString("description");
-    r.url = j.getString("url");
-    r.destinationType = j.getString("type");
-    r.authType = j.getString("authentication");
-    r.proxyType = j.getString("proxyType");
-    r.user = j.getString("user");
-    r.password = j.getString("password");
-    r.clientId = j.getString("clientId");
-    r.clientSecret = j.getString("clientSecret");
-    r.tokenServiceUrl = j.getString("tokenServiceURL");
-    r.tokenServiceUser = j.getString("tokenServiceUser");
-    r.tokenServicePassword = j.getString("tokenServicePassword");
-    r.certificateId = j.getString("certificateId");
-    r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.url = data.getString("url");
+    r.destinationType = data.getString("type");
+    r.authType = data.getString("authentication");
+    r.proxyType = data.getString("proxyType");
+    r.user = data.getString("user");
+    r.password = data.getString("password");
+    r.clientId = data.getString("clientId");
+    r.clientSecret = data.getString("clientSecret");
+    r.tokenServiceUrl = data.getString("tokenServiceURL");
+    r.tokenServiceUser = data.getString("tokenServiceUser");
+    r.tokenServicePassword = data.getString("tokenServicePassword");
+    r.certificateId = data.getString("certificateId");
+    r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
 
     foreach(prop; j.getArray("properties")) {
       auto key = prop.getString("key");
@@ -110,19 +110,19 @@ class DestinationController : ManageController {
 
     auto r = UpdateDestinationRequest();
     r.tenantId = tenantId;
-    r.description = j.getString("description");
-    r.url = j.getString("url");
-    r.authType = j.getString("authentication");
-    r.proxyType = j.getString("proxyType");
-    r.user = j.getString("user");
-    r.password = j.getString("password");
-    r.clientId = j.getString("clientId");
-    r.clientSecret = j.getString("clientSecret");
-    r.tokenServiceUrl = j.getString("tokenServiceURL");
-    r.tokenServiceUser = j.getString("tokenServiceUser");
-    r.tokenServicePassword = j.getString("tokenServicePassword");
-    r.certificateId = j.getString("certificateId");
-    r.cloudConnectorLocationId = j.getString("cloudConnectorLocationId");
+    r.description = data.getString("description");
+    r.url = data.getString("url");
+    r.authType = data.getString("authentication");
+    r.proxyType = data.getString("proxyType");
+    r.user = data.getString("user");
+    r.password = data.getString("password");
+    r.clientId = data.getString("clientId");
+    r.clientSecret = data.getString("clientSecret");
+    r.tokenServiceUrl = data.getString("tokenServiceURL");
+    r.tokenServiceUser = data.getString("tokenServiceUser");
+    r.tokenServicePassword = data.getString("tokenServicePassword");
+    r.certificateId = data.getString("certificateId");
+    r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
 
     foreach(prop; j.getArray("properties")) {
       auto key = prop.getString("key");

@@ -56,7 +56,7 @@ class EncounterController : ManageController {
       CreateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = EncounterId(precheck.id);
-      r.status_     = parseStatus(j.getString("status"));
+      r.status_     = parseStatus(data.getString("status"));
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto periodJ = j.get("period", Json.emptyObject);
@@ -113,7 +113,7 @@ class EncounterController : ManageController {
       UpdateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = id;
-      r.status_     = parseStatus(j.getString("status"));
+      r.status_     = parseStatus(data.getString("status"));
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
       auto periodJ = j.get("period", Json.emptyObject);

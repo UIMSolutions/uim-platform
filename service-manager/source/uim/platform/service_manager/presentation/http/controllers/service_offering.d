@@ -68,13 +68,13 @@ class ServiceOfferingController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceOfferingRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.catalogName = j.getString("catalogName");
-            r.brokerId = j.getString("brokerId");
-            r.category = j.getString("category");
-            r.tags = j.getString("tags");
-            r.metadata = j.getString("metadata");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.catalogName = data.getString("catalogName");
+            r.brokerId = data.getString("brokerId");
+            r.category = data.getString("category");
+            r.tags = data.getString("tags");
+            r.metadata = data.getString("metadata");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -90,11 +90,11 @@ class ServiceOfferingController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceOfferingRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.catalogName = j.getString("catalogName");
-            r.tags = j.getString("tags");
-            r.metadata = j.getString("metadata");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.catalogName = data.getString("catalogName");
+            r.tags = data.getString("tags");
+            r.metadata = data.getString("metadata");
 
             auto result = usecase.update(req.getTenantId, ServiceOfferingId(id), r);
             if (result.hasError)

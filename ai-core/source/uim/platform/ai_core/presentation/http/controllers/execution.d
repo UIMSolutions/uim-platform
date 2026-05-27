@@ -37,7 +37,7 @@ class ExecutionController : ManageController {
       CreateExecutionRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.configurationId = ConfigurationId(j.getString("configurationId"));
+      r.configurationId = ConfigurationId(data.getString("configurationId"));
 
       auto result = usecase.createExecution(r);
       if (result.hasError)
@@ -104,7 +104,7 @@ class ExecutionController : ManageController {
       r.tenantId = tenantId;
       r.resourceGroupId = rgId;
       r.executionId = id;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = data.getString("targetStatus");
 
       auto result = usecase.patchExecution(r);
       if (result.hasError)

@@ -35,14 +35,14 @@ class ConfigurationController : ManageController {
       auto j = req.json;
       CreateConfigurationRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.section = j.getString("section");
-      r.key = j.getString("key");
-      r.value = j.getString("value");
-      r.scope_ = j.getString("scope");
-      r.dataType = j.getString("dataType");
-      r.description = j.getString("description");
+      r.section = data.getString("section");
+      r.key = data.getString("key");
+      r.value = data.getString("value");
+      r.scope_ = data.getString("scope");
+      r.dataType = data.getString("dataType");
+      r.description = data.getString("description");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -124,7 +124,7 @@ class ConfigurationController : ManageController {
       UpdateConfigurationRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.value = j.getString("value");
+      r.value = data.getString("value");
 
       auto result = usecase.update(r);
       if (result.hasError)

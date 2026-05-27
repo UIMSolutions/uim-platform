@@ -37,15 +37,15 @@ class FeatureRestrictionController : ManageController {
       auto j = req.json;
       CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.featureKey = j.getString("featureKey");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
+      r.appId = data.getString("appId");
+      r.featureKey = data.getString("featureKey");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
       r.enabled = j.getBoolean("enabled");
       r.percentage = j.getInteger("percentage");
       r.whitelist = getStrings(j, "whitelist");
-      r.metadata = j.getString("metadata");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.metadata = data.getString("metadata");
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -123,13 +123,13 @@ class FeatureRestrictionController : ManageController {
       auto j = req.json;
       UpdateFeatureRestrictionRequest r;
       r.id = id;
-      r.description = j.getString("description");
-      r.type = j.getString("type");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
       r.enabled = j.getBoolean("enabled");
       r.percentage = j.getInteger("percentage");
       r.whitelist = getStrings(j, "whitelist");
-      r.metadata = j.getString("metadata");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.metadata = data.getString("metadata");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -166,9 +166,9 @@ class FeatureRestrictionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto featureId = j.getString("featureId");
-      auto userId = j.getString("userId");
-      auto deviceId = j.getString("deviceId");
+      auto featureId = data.getString("featureId");
+      auto userId = data.getString("userId");
+      auto deviceId = data.getString("deviceId");
       auto result = usecase.evaluate(featureId, userId, deviceId);
       auto resp = Json.emptyObject
         .set("enabled", result.enabled);

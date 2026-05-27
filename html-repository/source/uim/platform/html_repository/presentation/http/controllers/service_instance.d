@@ -35,11 +35,11 @@ class ServiceInstanceController : ManageController {
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.spaceId = j.getString("spaceId");
-      r.plan = j.getString("plan");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.spaceId = data.getString("spaceId");
+      r.plan = data.getString("plan");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.create(r);
       if (result.isSuccess()) {
@@ -123,8 +123,8 @@ class ServiceInstanceController : ManageController {
       UpdateServiceInstanceRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.description = data.getString("description");
+      r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

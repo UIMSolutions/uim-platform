@@ -36,12 +36,12 @@ class ChannelController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateChannelRequest();
-      r.workspaceId = j.getString("workspaceId");
+      r.workspaceId = data.getString("workspaceId");
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
-      auto ctStr = j.getString("channelType");
+      auto ctStr = data.getString("channelType");
       if (ctStr == "notification")
         r.channelType = ChannelType.notification;
       else if (ctStr == "custom")
@@ -109,8 +109,8 @@ class ChannelController : ManageController {
       auto r = UpdateChannelRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.active = j.getBoolean("active", true);
       r.config = parseChannelConfig(j);
 

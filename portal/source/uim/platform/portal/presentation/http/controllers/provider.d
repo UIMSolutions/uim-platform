@@ -37,9 +37,9 @@ class ProviderController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateProviderRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("name"), j.getString("description"), jsonEnum!ProviderType(j,
+        data.getString("name"), data.getString("description"), jsonEnum!ProviderType(j,
           "providerType", ProviderType.local),
-        j.getString("contentEndpointUrl"), j.getString("authToken"),);
+        data.getString("contentEndpointUrl"), data.getString("authToken"),);
 
       auto result = useCase.createProvider(createReq);
       if (result.isSuccess()) {
@@ -87,9 +87,9 @@ class ProviderController : ManageController {
     try {
       auto providerId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateProviderRequest(providerId, j.getString("name"),
-        j.getString("description"), j.getString("contentEndpointUrl"),
-        j.getString("authToken"), j.getBoolean("active", true),);
+      auto updateReq = UpdateProviderRequest(providerId, data.getString("name"),
+        data.getString("description"), data.getString("contentEndpointUrl"),
+        data.getString("authToken"), j.getBoolean("active", true),);
 
       auto error = useCase.updateProvider(updateReq);
       if (error.length > 0)

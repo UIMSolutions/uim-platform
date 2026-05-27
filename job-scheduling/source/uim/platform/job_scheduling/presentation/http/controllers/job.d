@@ -43,11 +43,11 @@ class JobController : ManageController {
 
             CreateJobRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.actionUrl = j.getString("action");
-            r.httpMethod = j.getString("httpMethod");
-            r.type = j.getString("type");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.actionUrl = data.getString("action");
+            r.httpMethod = data.getString("httpMethod");
+            r.type = data.getString("type");
             r.active = j.getBoolean("active", true);
             r.startTime = getLong(j, "startTime");
             r.endTime = getLong(j, "endTime");
@@ -134,10 +134,10 @@ class JobController : ManageController {
             UpdateJobRequest r;
             r.tenantId = tenantId;
             r.jobId = jobId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.actionUrl = j.getString("action");
-            r.httpMethod = j.getString("httpMethod");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.actionUrl = data.getString("action");
+            r.httpMethod = data.getString("httpMethod");
             r.active = j.getBoolean("active", true);
             r.startTime = getLong(j, "startTime");
             r.endTime = getLong(j, "endTime");

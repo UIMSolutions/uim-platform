@@ -39,17 +39,17 @@ class ContentController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateContentRequest();
-      r.workspaceId = j.getString("workspaceId");
+      r.workspaceId = data.getString("workspaceId");
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.summary = j.getString("summary");
-      r.authorId = j.getString("authorId");
-      r.authorName = j.getString("authorName");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.summary = data.getString("summary");
+      r.authorId = data.getString("authorId");
+      r.authorName = data.getString("authorName");
       r.tags = getStrings(j, "tags");
-      r.language = j.getString("language");
+      r.language = data.getString("language");
 
-      auto ctStr = j.getString("contentType");
+      auto ctStr = data.getString("contentType");
       if (ctStr == "wikiPage")
         r.contentType = ContentType.wikiPage;
       else if (ctStr == "knowledgeBase")
@@ -125,13 +125,13 @@ class ContentController : ManageController {
       auto r = UpdateContentRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.summary = j.getString("summary");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.summary = data.getString("summary");
       r.tags = getStrings(j, "tags");
       r.pinned = j.getBoolean("pinned");
 
-      auto statusStr = j.getString("status");
+      auto statusStr = data.getString("status");
       if (statusStr == "published")
         r.status = ContentStatus.published;
       else if (statusStr == "archived")

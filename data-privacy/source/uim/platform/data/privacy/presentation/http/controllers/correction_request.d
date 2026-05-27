@@ -36,13 +36,13 @@ class CorrectionRequestController : ManageController {
       auto j = req.json;
       CreateCorrectionRequest r;
       r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.requestedBy = UserId(data.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
-      r.fieldName = j.getString("fieldName");
-      r.currentValue = j.getString("currentValue");
-      r.correctedValue = j.getString("correctedValue");
-      r.reason = j.getString("reason");
+      r.fieldName = data.getString("fieldName");
+      r.currentValue = data.getString("currentValue");
+      r.correctedValue = data.getString("correctedValue");
+      r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
@@ -97,7 +97,7 @@ class CorrectionRequestController : ManageController {
       UpdateCorrectionStatusRequest r;
       r.tenantId = tenantId;
       r.requestId = CorrectionRequestId(precheck.id);
-      r.status = j.getString("status");
+      r.status = data.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

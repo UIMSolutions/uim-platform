@@ -34,13 +34,13 @@ class KeyEntryController : ManageController {
     auto j = req.json;
     ImportKeyEntryRequest r;
     r.keystoreId = keystoreId;
-    r.alias_ = j.getString("alias");
-    r.entryType = j.getString("entryType");
-    r.content = j.getString("content");
-    r.format = j.getString("format");
-    r.subject = j.getString("subject");
-    r.issuer = j.getString("issuer");
-    r.serialNumber = j.getString("serialNumber");
+    r.alias_ = data.getString("alias");
+    r.entryType = data.getString("entryType");
+    r.content = data.getString("content");
+    r.format = data.getString("format");
+    r.subject = data.getString("subject");
+    r.issuer = data.getString("issuer");
+    r.serialNumber = data.getString("serialNumber");
     r.notBefore = j.getInteger("notBefore");
     r.notAfter = j.getInteger("notAfter");
 

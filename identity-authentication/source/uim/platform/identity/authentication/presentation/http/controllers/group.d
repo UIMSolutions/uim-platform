@@ -36,8 +36,8 @@ class GroupController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto createReq = CreateGroupRequest(j.getString("tenantId"),
-        j.getString("name"), j.getString("description"));
+      auto createReq = CreateGroupRequest(data.getString("tenantId"),
+        data.getString("name"), data.getString("description"));
 
       auto result = useCase.createGroup(createReq);
       auto response = Json.emptyObject;
@@ -102,7 +102,7 @@ class GroupController : ManageController {
       auto tenantId = precheck.tenantId;
 
       auto j = req.json;
-      auto error = useCase.addMember(j.getString("groupId"), j.getString("userId"));
+      auto error = useCase.addMember(data.getString("groupId"), data.getString("userId"));
 
       if (error.length > 0) {
         auto errRes = Json.emptyObject;

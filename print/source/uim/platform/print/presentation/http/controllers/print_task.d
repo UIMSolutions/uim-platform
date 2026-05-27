@@ -66,16 +66,16 @@ class PrintTaskController : ManageController {
             PrintTaskDTO dto;
             dto.taskId = PrintTaskId(precheck.id);
             dto.tenantId = tenantId;
-            dto.queueId = j.getString("queueId");
-            dto.documentId = j.getString("documentId");
-            dto.applicationId = j.getString("applicationId");
-            dto.senderApplication = j.getString("senderApplication");
+            dto.queueId = data.getString("queueId");
+            dto.documentId = data.getString("documentId");
+            dto.applicationId = data.getString("applicationId");
+            dto.senderApplication = data.getString("senderApplication");
             dto.copies = cast(int) j.getInt("copies");
             if (dto.copies < 1) dto.copies = 1;
-            dto.paperFormat = j.getString("paperFormat");
+            dto.paperFormat = data.getString("paperFormat");
             dto.colorPrint = j.getBoolean("colorPrint");
             dto.duplexPrint = j.getBoolean("duplexPrint");
-            dto.tray = j.getString("tray");
+            dto.tray = data.getString("tray");
 
             auto result = usecase.createPrintTask(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -95,8 +95,8 @@ class PrintTaskController : ManageController {
             auto path = req.requestURI.to!string;
             auto id = PrintTaskId(precheck.id);
             auto j = req.json;
-            auto status = j.getString("status");
-            auto errorMessage = j.getString("errorMessage");
+            auto status = data.getString("status");
+            auto errorMessage = data.getString("errorMessage");
 
             auto result = usecase.updatePrintTask(tenantId, id, status, errorMessage);
             if (!result.success) { writeError(res, 404, result.message); return; }

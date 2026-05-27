@@ -38,12 +38,12 @@ class ProvisioningRequestController : ManageController {
     CreateProvisioningRequest r;
     r.tenantId       = req.getTenantId;
     r.id             = precheck.id;
-    r.requestedBy    = j.getString("requestedBy");
-    r.accountName    = j.getString("accountName");
-    r.region         = j.getString("region");
-    r.adminEmail     = j.getString("adminEmail");
-    r.adminFirstName = j.getString("adminFirstName");
-    r.adminLastName  = j.getString("adminLastName");
+    r.requestedBy    = data.getString("requestedBy");
+    r.accountName    = data.getString("accountName");
+    r.region         = data.getString("region");
+    r.adminEmail     = data.getString("adminEmail");
+    r.adminFirstName = data.getString("adminFirstName");
+    r.adminLastName  = data.getString("adminLastName");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -68,7 +68,7 @@ class ProvisioningRequestController : ManageController {
     UpdateProvisioningStatusRequest r;
     r.tenantId        = req.getTenantId;
     r.id              = extractIdFromPath(req.requestPath.to!string);
-    r.resultAccountId = j.getString("resultAccountId");
+    r.resultAccountId = data.getString("resultAccountId");
     auto result = usecase.complete(r);
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
@@ -79,7 +79,7 @@ class ProvisioningRequestController : ManageController {
     UpdateProvisioningStatusRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.errorMessage = j.getString("errorMessage");
+    r.errorMessage = data.getString("errorMessage");
     auto result = usecase.fail(r);
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

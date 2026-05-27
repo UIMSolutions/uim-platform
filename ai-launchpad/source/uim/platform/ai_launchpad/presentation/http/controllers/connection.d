@@ -37,9 +37,9 @@ class ConnectionController : ManageController {
       CreateConnectionRequest r;
       r.tenantId = tenantId;
       r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
-      r.clientSecret = j.getString("clientSecret");
-      r.description = j.getString("description");
-      r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
+      r.clientSecret = data.getString("clientSecret");
+      r.description = data.getString("description");
+      r.defaultResourceGroupId = data.getString("defaultResourceGroupId");
 
       auto result = usecase.createConnection(r);
       if (result.hasError)
@@ -105,9 +105,9 @@ class ConnectionController : ManageController {
       PatchConnectionRequest r;
       r.tenantId = tenantId;
       r.connectionId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.defaultResourceGroupId = data.getString("defaultResourceGroupId");
 
       auto result = usecase.patchConnection(r);
       if (result.hasError)

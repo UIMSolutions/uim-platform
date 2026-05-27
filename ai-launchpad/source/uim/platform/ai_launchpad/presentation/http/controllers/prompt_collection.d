@@ -37,10 +37,10 @@ class PromptCollectionController : ManageController {
       auto j = req.json;
 
       CreatePromptCollectionRequest r;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.scenarioId = j.getString("scenarioId");
-      r.workspaceId = j.getString("workspaceId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.scenarioId = data.getString("scenarioId");
+      r.workspaceId = data.getString("workspaceId");
 
       auto result = usecase.createCollection(r);
       if (result.hasError)
@@ -106,8 +106,8 @@ class PromptCollectionController : ManageController {
       PatchPromptCollectionRequest r;
       r.tenantId = tenantId;
       r.collectionId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = usecase.patchCollection(r);
       if (result.hasError)

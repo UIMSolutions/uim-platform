@@ -73,13 +73,13 @@ class AssignmentController : ManageController {
             AssignmentDTO dto;
             dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.activityId = j.getString("activityId");
-            dto.technicianId = j.getString("technicianId");
-            dto.assignedDate = j.getString("assignedDate");
-            dto.schedulingPolicy = j.getString("schedulingPolicy");
-            dto.matchScore = j.getString("matchScore");
-            dto.notes = j.getString("notes");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.activityId = data.getString("activityId");
+            dto.technicianId = data.getString("technicianId");
+            dto.assignedDate = data.getString("assignedDate");
+            dto.schedulingPolicy = data.getString("schedulingPolicy");
+            dto.matchScore = data.getString("matchScore");
+            dto.notes = data.getString("notes");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createAssignment(dto);
             if (result.hasError)
@@ -105,12 +105,12 @@ class AssignmentController : ManageController {
             AssignmentDTO dto;
             dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.acceptedDate = j.getString("acceptedDate");
-            dto.startedDate = j.getString("startedDate");
-            dto.completedDate = j.getString("completedDate");
-            dto.travelDistance = j.getString("travelDistance");
-            dto.notes = j.getString("notes");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.acceptedDate = data.getString("acceptedDate");
+            dto.startedDate = data.getString("startedDate");
+            dto.completedDate = data.getString("completedDate");
+            dto.travelDistance = data.getString("travelDistance");
+            dto.notes = data.getString("notes");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateAssignment(dto);
             if (result.hasError)

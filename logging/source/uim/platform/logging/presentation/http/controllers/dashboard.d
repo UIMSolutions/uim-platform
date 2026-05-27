@@ -38,10 +38,10 @@ class DashboardController : ManageController {
       auto j = req.json;
       CreateDashboardRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isDefault = j.getBoolean("isDefault");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       foreach (pj; j.getArray("panels")) {
         PanelDTO p;
@@ -143,8 +143,8 @@ class DashboardController : ManageController {
       UpdateDashboardRequest r;
       r.tenantId = tenantId;
       r.dashboardId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = usecase.updateDashboard(r);

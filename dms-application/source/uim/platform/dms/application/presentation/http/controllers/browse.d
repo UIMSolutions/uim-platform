@@ -91,8 +91,8 @@ class BrowseController : PlatformController {
       auto r = CreateFavoriteRequest();
       r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
-      r.resourceId = j.getString("resourceId");
-      r.resourceType = j.getString("resourceType").to!ResourceType;
+      r.resourceId = data.getString("resourceId");
+      r.resourceType = data.getString("resourceType").to!ResourceType;
 
       auto result = usecase.addFavorite(r);
       if (result.isSuccess) {

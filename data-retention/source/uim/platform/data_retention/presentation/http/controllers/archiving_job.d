@@ -29,11 +29,11 @@ class ArchivingJobController : ManageController {
 
             CreateArchivingJobRequest r;
             r.tenantId = tenantId;
-            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
-            r.operationType = j.getString("operationType");
-            r.selectionCriteria = j.getString("selectionCriteria");
+            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+            r.operationType = data.getString("operationType");
+            r.selectionCriteria = data.getString("selectionCriteria");
             r.scheduledAt = jsonLong(j, "scheduledAt");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createArchivingJob(r);
             if (result.hasError)
@@ -116,11 +116,11 @@ class ArchivingJobController : ManageController {
             UpdateArchivingJobRequest r;
             r.tenantId = tenantId;
             r.archivingJobId = id;
-            r.operationType = j.getString("operationType").to!OperationType;
-            r.status = j.getString("status");
+            r.operationType = data.getString("operationType").to!OperationType;
+            r.status = data.getString("status");
             r.recordsProcessed = jsonInt(j, "recordsProcessed");
             r.recordsFailed = jsonInt(j, "recordsFailed");
-            r.errorMessage = j.getString("errorMessage");
+            r.errorMessage = data.getString("errorMessage");
 
             auto result = usecase.updateArchivingJob(id, r);
             if (result.hasError)

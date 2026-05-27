@@ -37,11 +37,11 @@ class DataModelController : ManageController {
       auto j = req.json;
       CreateDataModelRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.namespace = j.getString("namespace");
-      r.version_ = j.getString("version");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
+      r.name = data.getString("name");
+      r.namespace = data.getString("namespace");
+      r.version_ = data.getString("version");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
       r.keyFields = getStrings(j, "keyFields");
       r.requiredFields = getStrings(j, "requiredFields");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -51,15 +51,15 @@ class DataModelController : ManageController {
       FieldDefinitionDto[] fields;
       foreach (fj; fieldsArr) {
         FieldDefinitionDto fd;
-        fd.name = fj.getString("name");
-        fd.displayName = fj.getString("displayName");
-        fd.type_ = fj.getString("type");
+        fd.name = fdata.getString("name");
+        fd.displayName = fdata.getString("displayName");
+        fd.type_ = fdata.getString("type");
         fd.isRequired = fj.getBoolean("isRequired");
         fd.isKey = fj.getBoolean("isKey");
-        fd.defaultValue = fj.getString("defaultValue");
+        fd.defaultValue = fdata.getString("defaultValue");
         fd.maxLength = jsonInt(fj, "maxLength");
-        fd.referenceModel = fj.getString("referenceModel");
-        fd.description = fj.getString("description");
+        fd.referenceModel = fdata.getString("referenceModel");
+        fd.description = fdata.getString("description");
         fields ~= fd;
       }
       r.fields = fields;
@@ -121,8 +121,8 @@ class DataModelController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateDataModelRequest r;
-      r.description = j.getString("description");
-      r.version_ = j.getString("version");
+      r.description = data.getString("description");
+      r.version_ = data.getString("version");
       r.keyFields = getStrings(j, "keyFields");
       r.requiredFields = getStrings(j, "requiredFields");
 
@@ -130,15 +130,15 @@ class DataModelController : ManageController {
       FieldDefinitionDto[] fields;
       foreach (fj; fieldsArr) {
         FieldDefinitionDto fd;
-        fd.name = fj.getString("name");
-        fd.displayName = fj.getString("displayName");
-        fd.type_ = fj.getString("type");
+        fd.name = fdata.getString("name");
+        fd.displayName = fdata.getString("displayName");
+        fd.type_ = fdata.getString("type");
         fd.isRequired = fj.getBoolean("isRequired");
         fd.isKey = fj.getBoolean("isKey");
-        fd.defaultValue = fj.getString("defaultValue");
+        fd.defaultValue = fdata.getString("defaultValue");
         fd.maxLength = jsonInt(fj, "maxLength");
-        fd.referenceModel = fj.getString("referenceModel");
-        fd.description = fj.getString("description");
+        fd.referenceModel = fdata.getString("referenceModel");
+        fd.description = fdata.getString("description");
         fields ~= fd;
       }
       r.fields = fields;

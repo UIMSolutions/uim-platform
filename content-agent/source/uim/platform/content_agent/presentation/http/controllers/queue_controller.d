@@ -37,11 +37,11 @@ class QueueController : ManageController {
       auto j = req.json;
       auto r = CreateQueueRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.queueType = j.getString("queueType");
-      r.endpoint = j.getString("endpoint");
-      r.authToken = j.getString("authToken");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.queueType = data.getString("queueType");
+      r.endpoint = data.getString("endpoint");
+      r.authToken = data.getString("authToken");
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -100,9 +100,9 @@ class QueueController : ManageController {
       auto id = QueueId(precheck.id);
       auto j = req.json;
       auto r = UpdateQueueRequest();
-      r.description = j.getString("description");
-      r.endpoint = j.getString("endpoint");
-      r.authToken = j.getString("authToken");
+      r.description = data.getString("description");
+      r.endpoint = data.getString("endpoint");
+      r.authToken = data.getString("authToken");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = usecase.updateQueue(id, r);

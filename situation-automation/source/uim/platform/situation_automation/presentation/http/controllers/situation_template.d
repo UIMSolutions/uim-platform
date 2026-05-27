@@ -38,17 +38,17 @@ class SituationTemplateController : ManageController {
             CreateSituationTemplateRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.situationCategory = j.getString("situationCategory").to!SituationCategory;
-            r.defaultSeverity = j.getString("defaultSeverity").to!SituationSeverity;
-            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
-            r.sourceSystem = j.getString("sourceSystem");
-            r.sourceTemplateId = j.getString("sourceTemplateId");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.situationCategory = data.getString("situationCategory").to!SituationCategory;
+            r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
+            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
+            r.sourceSystem = data.getString("sourceSystem");
+            r.sourceTemplateId = data.getString("sourceTemplateId");
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
-            r.escalationTargetUserId = j.getString("escalationTargetUserId");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.escalationTargetUserId = data.getString("escalationTargetUserId");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createSituationTemplate(r);
             if (result.hasError)
@@ -145,15 +145,15 @@ class SituationTemplateController : ManageController {
             UpdateSituationTemplateRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.situationCategory = j.getString("situationCategory").to!SituationCategory;
-            r.defaultSeverity = j.getString("defaultSeverity").to!SituationSeverity;
-            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.situationCategory = data.getString("situationCategory").to!SituationCategory;
+            r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
+            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
             r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
-            r.escalationTargetUserId = j.getString("escalationTargetUserId");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.escalationTargetUserId = data.getString("escalationTargetUserId");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateSituationTemplate(r);
             if (result.hasError)

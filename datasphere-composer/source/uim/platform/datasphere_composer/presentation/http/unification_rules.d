@@ -46,10 +46,10 @@ class UnificationRuleController : ManageController {
     CreateUnificationRuleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = precheck.id;
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
     r.priority    = j.getInteger("priority");
-    r.model       = j.getString("model");
+    r.model       = data.getString("model");
     r.unique_     = j.getBoolean("unique");
     r.triggerMerge  = j.getBoolean("triggerMerge");
     r.preventMerge  = j.getBoolean("preventMerge");
@@ -90,10 +90,10 @@ class UnificationRuleController : ManageController {
     UpdateUnificationRuleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
     r.priority    = j.getInteger("priority");
-    r.model       = j.getString("model");
+    r.model       = data.getString("model");
     r.unique_     = j.getBoolean("unique");
     r.triggerMerge  = j.getBoolean("triggerMerge");
     r.preventMerge  = j.getBoolean("preventMerge");

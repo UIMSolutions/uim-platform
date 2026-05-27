@@ -41,13 +41,13 @@ class SubaccountController : ManageController {
       auto data = precheck.data;
       CreateSubaccountRequest r;
       r.tenantId = tenantId;
-      r.globalAccountId = j.getString("globalAccountId");
-      r.parentDirectoryId = j.getString("parentDirectoryId");
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.subdomain = j.getString("subdomain");
-      r.region = j.getString("region");
-      r.usage = j.getString("usage");
+      r.globalAccountId = data.getString("globalAccountId");
+      r.parentDirectoryId = data.getString("parentDirectoryId");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.subdomain = data.getString("subdomain");
+      r.region = data.getString("region");
+      r.usage = data.getString("usage");
       r.betaEnabled = j.getBoolean("betaEnabled");
       r.usedForProduction = j.getBoolean("usedForProduction");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -116,9 +116,9 @@ class SubaccountController : ManageController {
       UpdateSubaccountRequest r;
       r.tenantId = tenantId;
       r.subaccountId = id;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.usage = j.getString("usage");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.usage = data.getString("usage");
       r.betaEnabled = j.getBoolean("betaEnabled");
       r.usedForProduction = j.getBoolean("usedForProduction");
       r.labels = jsonStrMap(j, "labels");
@@ -141,8 +141,8 @@ class SubaccountController : ManageController {
       MoveSubaccountRequest r;
       r.tenantId = tenantId;
       r.subaccountId = id;
-      r.globalAccountId = j.getString("globalAccountId");
-      r.targetDirectoryId = j.getString("targetDirectoryId");
+      r.globalAccountId = data.getString("globalAccountId");
+      r.targetDirectoryId = data.getString("targetDirectoryId");
 
       auto result = usecase.moveSubaccount(tenantId, id, r);
       if (result.success)

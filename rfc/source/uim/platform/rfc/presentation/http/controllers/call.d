@@ -39,10 +39,10 @@ class CallController : PlatformController {
             auto j = req.json;
             InvokeRfcRequest r;
             r.tenantId        = req.getTenantId;
-            r.destinationId   = j.getString("destinationId");
-            r.functionModule  = j.getString("functionModule");
-            r.rfcType         = _parseRfcType(j.getString("rfcType", "sRFC"));
-            r.queueName       = j.getString("queueName", "");
+            r.destinationId   = data.getString("destinationId");
+            r.functionModule  = data.getString("functionModule");
+            r.rfcType         = _parseRfcType(data.getString("rfcType", "sRFC"));
+            r.queueName       = data.getString("queueName", "");
 
             if (j.type == Json.Type.object && "importParams" in j) {
                 foreach (jp; j["importParams"])

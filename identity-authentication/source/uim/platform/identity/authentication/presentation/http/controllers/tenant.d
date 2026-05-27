@@ -37,8 +37,8 @@ class TenantController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto createReq = CreateTenantRequest(j.getString("name"),
-        j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
+      auto createReq = CreateTenantRequest(data.getString("name"),
+        data.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
 
       auto result = useCase.createTenant(createReq);
       auto response = Json.emptyObject;
@@ -104,7 +104,7 @@ class TenantController : ManageController {
       TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto j = req.json;
-      auto updateReq = UpdateTenantRequest(tenantId, j.getString("name"), []);
+      auto updateReq = UpdateTenantRequest(tenantId, data.getString("name"), []);
 
       auto error = useCase.updateTenant(updateReq);
       if (error.length > 0) {

@@ -43,13 +43,13 @@ class FileServiceBindingRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServiceBinding b;
-            b.id         = ServiceBindingId(j.getString("id", ""));
+            b.id         = ServiceBindingId(data.getString("id", ""));
             b.tenantId   = tenantId;
-            b.instanceId = ServiceInstanceId(j.getString("instanceId", ""));
-            b.appId      = j.getString("appId", "");
-            b.name       = j.getString("name", "");
-            b.status     = j.getString("status", "active").to!BindingStatus;
-            b.bindingHost = j.getString("bindingHost", "");
+            b.instanceId = ServiceInstanceId(data.getString("instanceId", ""));
+            b.appId      = data.getString("appId", "");
+            b.name       = data.getString("name", "");
+            b.status     = data.getString("status", "active").to!BindingStatus;
+            b.bindingHost = data.getString("bindingHost", "");
             b.bindingPort = cast(ushort) j.getLong("bindingPort", 6379);
             b.expiresAt  = j.getLong("expiresAt", 0);
             b.createdAt  = j.getLong("createdAt", 0);

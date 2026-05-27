@@ -59,14 +59,14 @@ class MessageClientController : ManageController {
             MessageClientDTO dto;
             dto.clientId           = MessageClientId(precheck.id);
             dto.tenantId           = tenantId;
-            dto.serviceId          = MessagingServiceId(j.getString("serviceId"));
-            dto.name               = j.getString("name");
-            dto.description        = j.getString("description");
-            dto.protocol           = j.getString("protocol");
-            dto.xsappname          = j.getString("xsappname");
-            dto.namespace          = j.getString("namespace");
-            dto.permittedNamespace = j.getString("permittedNamespace");
-            dto.createdBy          = UserId(j.getString("createdBy"));
+            dto.serviceId          = MessagingServiceId(data.getString("serviceId"));
+            dto.name               = data.getString("name");
+            dto.description        = data.getString("description");
+            dto.protocol           = data.getString("protocol");
+            dto.xsappname          = data.getString("xsappname");
+            dto.namespace          = data.getString("namespace");
+            dto.permittedNamespace = data.getString("permittedNamespace");
+            dto.createdBy          = UserId(data.getString("createdBy"));
             auto result = usecase.createClient(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
@@ -83,11 +83,11 @@ class MessageClientController : ManageController {
             MessageClientDTO dto;
             dto.tenantId           = tenantId;
             dto.clientId           = clientId;
-            dto.name               = j.getString("name");
-            dto.description        = j.getString("description");
-            dto.namespace          = j.getString("namespace");
-            dto.permittedNamespace = j.getString("permittedNamespace");
-            dto.updatedBy          = UserId(j.getString("updatedBy"));
+            dto.name               = data.getString("name");
+            dto.description        = data.getString("description");
+            dto.namespace          = data.getString("namespace");
+            dto.permittedNamespace = data.getString("permittedNamespace");
+            dto.updatedBy          = UserId(data.getString("updatedBy"));
             auto result = usecase.updateClient(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);

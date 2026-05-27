@@ -46,12 +46,12 @@ class ObjectController : ManageController {
     auto r = CreateObjectRequest();
 
     r.tenantId = tenantId;
-    r.bucketId = j.getString("bucketId");
-    r.key = j.getString("key");
-    r.contentType = j.getString("contentType");
+    r.bucketId = data.getString("bucketId");
+    r.key = data.getString("key");
+    r.contentType = data.getString("contentType");
     r.size = jsonLong(j, "size");
-    r.metadata = j.getString("metadata");
-    r.storageClass = j.getString("storageClass");
+    r.metadata = data.getString("metadata");
+    r.storageClass = data.getString("storageClass");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.createObject(r);
@@ -174,10 +174,10 @@ class ObjectController : ManageController {
     auto j = req.json;
     auto r = CopyObjectRequest();
     r.tenantId = tenantId;
-    r.sourceBucketId = j.getString("sourceBucketId");
-    r.sourceKey = j.getString("sourceKey");
-    r.destBucketId = j.getString("destBucketId");
-    r.destKey = j.getString("destKey");
+    r.sourceBucketId = data.getString("sourceBucketId");
+    r.sourceKey = data.getString("sourceKey");
+    r.destBucketId = data.getString("destBucketId");
+    r.destKey = data.getString("destKey");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.copyObject(r);

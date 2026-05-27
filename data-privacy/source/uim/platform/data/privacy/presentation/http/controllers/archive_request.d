@@ -37,12 +37,12 @@ class ArchiveRequestController : ManageController {
 
       CreateArchiveRequest r;
       r.tenantId = tenantId;
-      r.subjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
+      r.subjectId = data.getString("dataSubjectId");
+      r.requestedBy = data.getString("requestedBy");
       r.targetSystems = j.getStrings("targetSystems");
       r.categories = j.getStrings("categories");
-      r.archiveLocation = j.getString("archiveLocation");
-      r.reason = j.getString("reason");
+      r.archiveLocation = data.getString("archiveLocation");
+      r.reason = data.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);
       r.scheduledAt = j.getLong("scheduledAt");
 
@@ -99,7 +99,7 @@ class ArchiveRequestController : ManageController {
       UpdateArchiveStatusRequest r;
       r.tenantId = tenantId;
       r.requestId = ArchiveRequestId(precheck.id);
-      r.status = j.getString("status");
+      r.status = data.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

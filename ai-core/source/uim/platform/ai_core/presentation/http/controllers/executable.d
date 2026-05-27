@@ -36,13 +36,13 @@ class ExecutableController : ManageController {
       CreateExecutableRequest r;
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = ScenarioId(j.getString("scenarioId"));
+      r.scenarioId = ScenarioId(data.getString("scenarioId"));
       r.executableId = ExecutableId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.versionId = j.getString("versionId");
-      r.deployable = j.getString("deployable");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.versionId = data.getString("versionId");
+      r.deployable = data.getString("deployable");
 
       auto result = usecase.createExecutable(r);
       if (result.hasError)

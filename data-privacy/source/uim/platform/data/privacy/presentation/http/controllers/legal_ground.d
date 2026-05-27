@@ -38,11 +38,11 @@ class LegalGroundController : ManageController {
 
       CreateLegalGroundRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.basis = j.getString("basis").to!LegalBasis;
-      r.purpose = j.getString("purpose");
-      r.description = j.getString("description");
-      r.legalReference = j.getString("legalReference");
+      r.dataSubjectId = data.getString("dataSubjectId");
+      r.basis = data.getString("basis").to!LegalBasis;
+      r.purpose = data.getString("purpose");
+      r.description = data.getString("description");
+      r.legalReference = data.getString("legalReference");
       r.validFrom = j.getLong("validFrom");
       r.validUntil = j.getLong("validUntil");
 
@@ -111,8 +111,8 @@ class LegalGroundController : ManageController {
       UpdateLegalGroundRequest r;
       r.id = LegalGroundId(precheck.id);
       r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.legalReference = j.getString("legalReference");
+      r.description = data.getString("description");
+      r.legalReference = data.getString("legalReference");
       r.isActive = j.getBoolean("isActive", true);
       r.validUntil = j.getLong("validUntil");
 

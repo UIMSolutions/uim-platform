@@ -37,7 +37,7 @@ class SchemaController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateSchemaRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("name"), j.getString("description"), parseSchemaAttributes(j),);
+          data.getString("name"), data.getString("description"), parseSchemaAttributes(j),);
 
       auto result = useCase.createSchema(createReq);
       auto response = Json.emptyObject;
@@ -89,8 +89,8 @@ class SchemaController : ManageController {
     try {
       auto schemaId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateSchemaRequest(schemaId, j.getString("name"),
-          j.getString("description"), parseSchemaAttributes(j),);
+      auto updateReq = UpdateSchemaRequest(schemaId, data.getString("name"),
+          data.getString("description"), parseSchemaAttributes(j),);
       auto error = useCase.updateSchema(updateReq);
       if (error.length > 0)
         writeScimError(res, 404, error);

@@ -40,8 +40,8 @@ class SiteController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateSiteRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("name"), j.getString("description"),
-        j.getString("alias"), j.getString("themeId"), parseSiteSettings(j),);
+        data.getString("name"), data.getString("description"),
+        data.getString("alias"), data.getString("themeId"), parseSiteSettings(j),);
 
       auto result = useCase.createSite(createReq);
       if (result.isSuccess()) {
@@ -89,8 +89,8 @@ class SiteController : ManageController {
     try {
       auto siteId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateSiteRequest(siteId, j.getString("name"), j.getString("description"),
-        j.getString("alias"), j.getString("themeId"), parseSiteSettings(j),);
+      auto updateReq = UpdateSiteRequest(siteId, data.getString("name"), data.getString("description"),
+        data.getString("alias"), data.getString("themeId"), parseSiteSettings(j),);
 
       auto error = useCase.updateSite(updateReq);
       if (error.length > 0)

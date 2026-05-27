@@ -35,16 +35,16 @@ class ClientLogController : ManageController {
       auto j = req.json;
       UploadClientLogRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.deviceId = j.getString("deviceId");
-      r.userId = j.getString("userId");
-      r.level = j.getString("level");
-      r.source = j.getString("source");
-      r.message = j.getString("message");
-      r.stackTrace = j.getString("stackTrace");
-      r.metadata = j.getString("metadata");
-      r.platform = j.getString("platform");
-      r.appVersion = j.getString("appVersion");
+      r.appId = data.getString("appId");
+      r.deviceId = data.getString("deviceId");
+      r.userId = data.getString("userId");
+      r.level = data.getString("level");
+      r.source = data.getString("source");
+      r.message = data.getString("message");
+      r.stackTrace = data.getString("stackTrace");
+      r.metadata = data.getString("metadata");
+      r.platform = data.getString("platform");
+      r.appVersion = data.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
       auto result = usecase.upload(r);
       if (result.hasError)

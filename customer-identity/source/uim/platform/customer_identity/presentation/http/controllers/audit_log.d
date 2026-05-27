@@ -53,15 +53,15 @@ class AuditLogController : ManageController {
 
         AuditLogDTO dto;
         dto.tenantId = tenantId;
-        dto.actorId = j.getString("actorId");
-        dto.action = j.getString("action");
-        dto.resourceType = j.getString("resourceType");
-        dto.resourceId = j.getString("resourceId");
-        dto.ipAddress = j.getString("ipAddress");
-        dto.userAgent = j.getString("userAgent");
-        dto.details = j.getString("details");
+        dto.actorId = data.getString("actorId");
+        dto.action = data.getString("action");
+        dto.resourceType = data.getString("resourceType");
+        dto.resourceId = data.getString("resourceId");
+        dto.ipAddress = data.getString("ipAddress");
+        dto.userAgent = data.getString("userAgent");
+        dto.details = data.getString("details");
         dto.success = j.getBoolean("success");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = auditLogs.recordAuditEvent(dto);
         if (result.success)

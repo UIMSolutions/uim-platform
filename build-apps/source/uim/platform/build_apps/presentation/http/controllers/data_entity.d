@@ -71,16 +71,16 @@ class DataEntityController : ManageController {
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.fields = j.getString("fields");
-            dto.primaryKey = j.getString("primaryKey");
-            dto.indexes = j.getString("indexes");
-            dto.validationRules = j.getString("validationRules");
-            dto.defaultValues = j.getString("defaultValues");
-            dto.relations = j.getString("relations");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = ApplicationId(data.getString("applicationId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.fields = data.getString("fields");
+            dto.primaryKey = data.getString("primaryKey");
+            dto.indexes = data.getString("indexes");
+            dto.validationRules = data.getString("validationRules");
+            dto.defaultValues = data.getString("defaultValues");
+            dto.relations = data.getString("relations");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataEntity(dto);
             if (result.hasError)
@@ -107,10 +107,10 @@ class DataEntityController : ManageController {
             DataEntityDTO dto;
             dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.fields = j.getString("fields");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.fields = data.getString("fields");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDataEntity(dto);
             if (result.hasError)

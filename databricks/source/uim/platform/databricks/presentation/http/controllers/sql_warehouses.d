@@ -26,19 +26,19 @@ public:
       CreateSqlWarehouseRequest r;
       r.tenantId                = req.getTenantId;
       r.id                      = precheck.id;
-      r.workspaceId             = j.getString("workspaceId");
-      r.name                    = j.getString("name");
+      r.workspaceId             = data.getString("workspaceId");
+      r.name                    = data.getString("name");
       r.numClusters             = j.getInt("numClusters");
       r.autoStopMinutes         = j.getInt("autoStopMinutes");
       r.enablePhoton            = j.getBoolean("enablePhoton");
       r.enableServerlessCompute = j.getBoolean("enableServerlessCompute");
-      r.creatorId               = j.getString("creatorId");
-      auto typeStr = j.getString("warehouseType");
+      r.creatorId               = data.getString("creatorId");
+      auto typeStr = data.getString("warehouseType");
       if (typeStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.warehouseType = typeStr.to!WarehouseType; } catch (ConvException) {}
       }
-      auto sizeStr = j.getString("size");
+      auto sizeStr = data.getString("size");
       if (sizeStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.size = sizeStr.to!WarehouseSize; } catch (ConvException) {}
@@ -73,11 +73,11 @@ public:
       UpdateSqlWarehouseRequest r;
       r.tenantId        = req.getTenantId;
       r.id              = req.requestPath.to!string.split("/")[$-1];
-      r.name            = j.getString("name");
+      r.name            = data.getString("name");
       r.numClusters     = j.getInt("numClusters");
       r.autoStopMinutes = j.getInt("autoStopMinutes");
       r.enablePhoton    = j.getBoolean("enablePhoton");
-      auto sizeStr = j.getString("size");
+      auto sizeStr = data.getString("size");
       if (sizeStr.length > 0) {
         import std.conv : ConvException;
         try { r.size = sizeStr.to!WarehouseSize; } catch (ConvException) {}

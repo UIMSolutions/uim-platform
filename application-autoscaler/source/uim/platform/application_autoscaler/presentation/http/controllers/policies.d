@@ -32,24 +32,24 @@ class ScalingPolicyController : ManageController {
     try {
       auto j = req.json;
       CreateScalingPolicyRequest r;
-      r.appId            = j.getString("app_id");
-      r.tenantId         = j.getString("tenant_id");
+      r.appId            = data.getString("app_id");
+      r.tenantId         = data.getString("tenant_id");
       r.instanceMinCount = j.getInteger("instance_min_count");
       r.instanceMaxCount = j.getInteger("instance_max_count");
-      r.timezone         = j.getString("timezone");
-      r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
+      r.timezone         = data.getString("timezone");
+      r.customMetricAllowFrom = data.getString("custom_metric_allow_from");
 
       auto rulesJ = j["scaling_rules"];
       if (rulesJ.type == Json.Type.array)
         foreach (rj; rulesJ.byValue) {
           ScalingRuleRequest rr;
-          rr.metricType         = rj.getString("metric_type");
-          rr.customMetricName   = rj.getString("custom_metric_name");
+          rr.metricType         = rdata.getString("metric_type");
+          rr.customMetricName   = rdata.getString("custom_metric_name");
           rr.threshold          = rj.getInteger("threshold");
-          rr.operator           = rj.getString("operator");
+          rr.operator           = rdata.getString("operator");
           rr.breachDurationSecs = rj.getInteger("breach_duration_secs");
           rr.coolDownSecs       = rj.getInteger("cool_down_secs");
-          rr.adjustment         = rj.getString("adjustment");
+          rr.adjustment         = rdata.getString("adjustment");
           r.scalingRules       ~= rr;
         }
 
@@ -57,10 +57,10 @@ class ScalingPolicyController : ManageController {
       if (recurJ.type == Json.Type.array)
         foreach (sj; recurJ.byValue) {
           RecurringScheduleRequest rs;
-          rs.startTime               = sj.getString("start_time");
-          rs.endTime                 = sj.getString("end_time");
-          rs.startDate               = sj.getString("start_date");
-          rs.endDate                 = sj.getString("end_date");
+          rs.startTime               = sdata.getString("start_time");
+          rs.endTime                 = sdata.getString("end_time");
+          rs.startDate               = sdata.getString("start_date");
+          rs.endDate                 = sdata.getString("end_date");
           rs.instanceMinCount        = sj.getInteger("instance_min_count");
           rs.instanceMaxCount        = sj.getInteger("instance_max_count");
           rs.initialMinInstanceCount = sj.getInteger("initial_min_instance_count");
@@ -77,8 +77,8 @@ class ScalingPolicyController : ManageController {
       if (sdJ.type == Json.Type.array)
         foreach (sj; sdJ.byValue) {
           SpecificDateScheduleRequest sd;
-          sd.startDateTime           = sj.getString("start_date_time");
-          sd.endDateTime             = sj.getString("end_date_time");
+          sd.startDateTime           = sdata.getString("start_date_time");
+          sd.endDateTime             = sdata.getString("end_date_time");
           sd.instanceMinCount        = sj.getInteger("instance_min_count");
           sd.instanceMaxCount        = sj.getInteger("instance_max_count");
           sd.initialMinInstanceCount = sj.getInteger("initial_min_instance_count");
@@ -141,20 +141,20 @@ class ScalingPolicyController : ManageController {
       r.scalingPolicyId    = id;
       r.instanceMinCount = j.getInteger("instance_min_count");
       r.instanceMaxCount = j.getInteger("instance_max_count");
-      r.timezone         = j.getString("timezone");
-      r.customMetricAllowFrom = j.getString("custom_metric_allow_from");
+      r.timezone         = data.getString("timezone");
+      r.customMetricAllowFrom = data.getString("custom_metric_allow_from");
 
       auto rulesJ = j["scaling_rules"];
       if (rulesJ.type == Json.Type.array)
         foreach (rj; rulesJ.byValue) {
           ScalingRuleRequest rr;
-          rr.metricType         = rj.getString("metric_type");
-          rr.customMetricName   = rj.getString("custom_metric_name");
+          rr.metricType         = rdata.getString("metric_type");
+          rr.customMetricName   = rdata.getString("custom_metric_name");
           rr.threshold          = rj.getInteger("threshold");
-          rr.operator           = rj.getString("operator");
+          rr.operator           = rdata.getString("operator");
           rr.breachDurationSecs = rj.getInteger("breach_duration_secs");
           rr.coolDownSecs       = rj.getInteger("cool_down_secs");
-          rr.adjustment         = rj.getString("adjustment");
+          rr.adjustment         = rdata.getString("adjustment");
           r.scalingRules       ~= rr;
         }
 

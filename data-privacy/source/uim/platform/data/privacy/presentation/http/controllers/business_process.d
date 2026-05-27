@@ -36,12 +36,12 @@ class BusinessProcessController : ManageController {
       auto j = req.json;
       CreateBusinessProcessRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.controllerId = j.getString("controllerId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.controllerId = data.getString("controllerId");
       r.purposes = getStrings(j, "purposes");
       r.legalBases = getStrings(j, "legalBases");
-      r.owner = j.getString("owner");
+      r.owner = data.getString("owner");
 
       auto result = usecase.createProcess(r);
       if (result.isSuccess()) {
@@ -96,11 +96,11 @@ class BusinessProcessController : ManageController {
       UpdateBusinessProcessRequest r;
       r.processId = BusinessProcessId(precheck.id);
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.purposes = getStrings(j, "purposes");
       r.legalBases = getStrings(j, "legalBases");
-      r.owner = j.getString("owner");
+      r.owner = data.getString("owner");
 
       auto result = usecase.updateProcess(r);
       if (result.isSuccess()) {

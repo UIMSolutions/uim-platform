@@ -36,9 +36,9 @@ class SnowflakeRoleController : ManageController {
     CreateRoleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = precheck.id;
-    r.accountId   = j.getString("accountId");
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
+    r.accountId   = data.getString("accountId");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
     r.privileges  = getStrings(j, "privileges");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -52,7 +52,7 @@ class SnowflakeRoleController : ManageController {
     UpdateRoleRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.description = j.getString("description");
+    r.description = data.getString("description");
     r.privileges  = getStrings(j, "privileges");
     if (j["active"].type == Json.Type.bool_) r.active = j["active"].get!bool;
     auto result = usecase.update(r);

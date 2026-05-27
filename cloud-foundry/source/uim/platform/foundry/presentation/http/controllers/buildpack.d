@@ -39,12 +39,12 @@ class BuildpackController : ManageController {
       auto j = req.json;
       auto r = CreateBuildpackRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.type_ = parseBuildpackType(j.getString("type"));
+      r.name = data.getString("name");
+      r.type_ = parseBuildpackType(data.getString("type"));
       r.position = j.getInteger("position");
-      r.stack = j.getString("stack");
-      r.filename = j.getString("filename");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.stack = data.getString("stack");
+      r.filename = data.getString("filename");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createBuildpack(r);
       if (result.isSuccess()) {
@@ -98,10 +98,10 @@ class BuildpackController : ManageController {
       auto r = UpdateBuildpackRequest();
       r.id = buildpackId;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
+      r.name = data.getString("name");
       r.position = j.getInteger("position");
-      r.stack = j.getString("stack");
-      r.filename = j.getString("filename");
+      r.stack = data.getString("stack");
+      r.filename = data.getString("filename");
       r.enabled = j.getBoolean("enabled", true);
       r.locked = j.getBoolean("locked");
 

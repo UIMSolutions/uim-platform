@@ -41,10 +41,10 @@ class ProviderController : ManageController {
       auto j = req.json;
       auto r = RegisterProviderRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.endpoint = j.getString("endpoint");
-      r.authToken = j.getString("authToken");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.endpoint = data.getString("endpoint");
+      r.authToken = data.getString("authToken");
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.registerProvider(r);
@@ -102,9 +102,9 @@ class ProviderController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateProviderRequest();
-      r.description = j.getString("description");
-      r.endpoint = j.getString("endpoint");
-      r.authToken = j.getString("authToken");
+      r.description = data.getString("description");
+      r.endpoint = data.getString("endpoint");
+      r.authToken = data.getString("authToken");
 
       auto result = usecase.updateProvider(id, r);
       if (result.hasError)
@@ -146,7 +146,7 @@ class ProviderController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto providerId = j.getString("providerId");
+      auto providerId = data.getString("providerId");
 
       auto result = usecase.syncProvider(providerId);
       if (result.hasError)

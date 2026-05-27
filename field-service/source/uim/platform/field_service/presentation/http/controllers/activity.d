@@ -72,18 +72,18 @@ class ActivityController : ManageController {
             ActivityDTO dto;
             dto.activityId = ActivityId(precheck.id);
             dto.tenantId = tenantId;
-            dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
-            dto.technicianId = TechnicianId(j.getString("technicianId"));
-            dto.subject = j.getString("subject");
-            dto.description = j.getString("description");
-            dto.activityType = j.getString("activityType");
-            dto.plannedStart = j.getString("plannedStart");
-            dto.plannedEnd = j.getString("plannedEnd");
-            dto.address = j.getString("address");
-            dto.latitude = j.getString("latitude");
-            dto.longitude = j.getString("longitude");
-            dto.notes = j.getString("notes");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
+            dto.technicianId = TechnicianId(data.getString("technicianId"));
+            dto.subject = data.getString("subject");
+            dto.description = data.getString("description");
+            dto.activityType = data.getString("activityType");
+            dto.plannedStart = data.getString("plannedStart");
+            dto.plannedEnd = data.getString("plannedEnd");
+            dto.address = data.getString("address");
+            dto.latitude = data.getString("latitude");
+            dto.longitude = data.getString("longitude");
+            dto.notes = data.getString("notes");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createActivity(dto);
             if (result.hasError)
@@ -110,15 +110,15 @@ class ActivityController : ManageController {
             ActivityDTO dto;
             dto.activityId = ActivityId(precheck.id);
             dto.tenantId = tenantId;
-            dto.subject = j.getString("subject");
-            dto.description = j.getString("description");
-            dto.plannedStart = j.getString("plannedStart");
-            dto.plannedEnd = j.getString("plannedEnd");
-            dto.actualStart = j.getString("actualStart");
-            dto.actualEnd = j.getString("actualEnd");
-            dto.notes = j.getString("notes");
-            dto.feedbackCode = j.getString("feedbackCode");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.subject = data.getString("subject");
+            dto.description = data.getString("description");
+            dto.plannedStart = data.getString("plannedStart");
+            dto.plannedEnd = data.getString("plannedEnd");
+            dto.actualStart = data.getString("actualStart");
+            dto.actualEnd = data.getString("actualEnd");
+            dto.notes = data.getString("notes");
+            dto.feedbackCode = data.getString("feedbackCode");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateActivity(dto);
             if (result.hasError)

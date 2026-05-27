@@ -42,17 +42,17 @@ class FileConfigurationRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             Configuration c;
-            c.id              = ConfigurationId(j.getString("id", ""));
+            c.id              = ConfigurationId(data.getString("id", ""));
             c.tenantId        = tenantId;
-            c.instanceId      = ServiceInstanceId(j.getString("instanceId", ""));
-            c.maxMemoryPolicy = j.getString("maxMemoryPolicy", "allkeys-lru").to!MaxMemoryPolicy;
+            c.instanceId      = ServiceInstanceId(data.getString("instanceId", ""));
+            c.maxMemoryPolicy = data.getString("maxMemoryPolicy", "allkeys-lru").to!MaxMemoryPolicy;
             c.timeout         = j.getLong("timeout", 0);
             c.maxConnections  = j.getLong("maxConnections", 10000);
             c.tlsEnabled      = j.getBoolean("tlsEnabled", true);
-            c.persistenceMode = j.getString("persistenceMode", "none").to!PersistenceMode;
+            c.persistenceMode = data.getString("persistenceMode", "none").to!PersistenceMode;
             c.maxMemoryMb     = j.getLong("maxMemoryMb", 256);
             c.notifyKeyspaceEvents = j.getBoolean("notifyKeyspaceEvents", false);
-            c.activeVersion   = j.getString("activeVersion", "");
+            c.activeVersion   = data.getString("activeVersion", "");
             c.createdAt       = j.getLong("createdAt", 0);
             super.save(c);
         }

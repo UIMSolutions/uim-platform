@@ -55,12 +55,12 @@ class FlexPersonalizationsController : ManageController {
       CreateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
       r.personalizationId  = FlexPersonalizationId(precheck.id);
-      r.appId              = j.getString("appId");
-      r.userId_            = j.getString("userId");
-      r.controlId_         = j.getString("controlId");
-      r.scope_             = parseScope(j.getString("scope"));
-      r.changeType_        = parseChangeType(j.getString("changeType"));
-      r.content_           = j.getString("content");
+      r.appId              = data.getString("appId");
+      r.userId_            = data.getString("userId");
+      r.controlId_         = data.getString("controlId");
+      r.scope_             = parseScope(data.getString("scope"));
+      r.changeType_        = parseChangeType(data.getString("changeType"));
+      r.content_           = data.getString("content");
       auto result = usecase.createPersonalization(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
@@ -109,7 +109,7 @@ class FlexPersonalizationsController : ManageController {
       UpdateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
       r.personalizationId  = id;
-      r.content_           = j.getString("content");
+      r.content_           = data.getString("content");
       r.isSynced_          = j.get("isSynced", Json(false)).get!bool;
       auto result = usecase.updatePersonalization(r);
       if (result.success)

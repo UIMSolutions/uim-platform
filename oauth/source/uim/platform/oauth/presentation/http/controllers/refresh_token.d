@@ -72,13 +72,13 @@ class RefreshTokenController : ManageController {
             RefreshTokenDTO dto;
             dto.tokenId = precheck.id;
             dto.tenantId = tenantId;
-            dto.tokenValue = j.getString("tokenValue");
-            dto.clientId = j.getString("clientId");
-            dto.userId = j.getString("userId");
-            dto.scopes = j.getString("scopes");
-            dto.accessTokenId = j.getString("accessTokenId");
+            dto.tokenValue = data.getString("tokenValue");
+            dto.clientId = data.getString("clientId");
+            dto.userId = data.getString("userId");
+            dto.scopes = data.getString("scopes");
+            dto.accessTokenId = data.getString("accessTokenId");
             dto.expiresAt = 0;
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createToken(dto);
             if (result.hasError)

@@ -36,8 +36,8 @@ class SectionController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto createReq = CreateSectionRequest(j.getString("pageId"),
-        req.headers.get("X-Tenant-Id", ""), j.getString("title"), jsonInt(j,
+      auto createReq = CreateSectionRequest(data.getString("pageId"),
+        req.headers.get("X-Tenant-Id", ""), data.getString("title"), jsonInt(j,
           "sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
 
       auto result = useCase.createSection(createReq);
@@ -84,7 +84,7 @@ class SectionController : ManageController {
     try {
       auto sectionId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateSectionRequest(sectionId, j.getString("title"),
+      auto updateReq = UpdateSectionRequest(sectionId, data.getString("title"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
 
       auto error = useCase.updateSection(updateReq);
@@ -101,7 +101,7 @@ class SectionController : ManageController {
     try {
       auto sectionId = precheck.id;
       auto j = req.json;
-      auto pageId = j.getString("pageId");
+      auto pageId = data.getString("pageId");
       auto error = useCase.deleteSection(sectionId, pageId);
       if (error.length > 0)
         writeApiError(res, 404, error);

@@ -42,12 +42,12 @@ class ResourceController : ManageController {
       RegisterResourceRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.resourceType = j.getString("resourceType");
-      r.url = j.getString("url");
-      r.runtime = j.getString("runtime");
-      r.region = j.getString("region");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.resourceType = data.getString("resourceType");
+      r.url = data.getString("url");
+      r.runtime = data.getString("runtime");
+      r.region = data.getString("region");
       r.instanceCount = j.getInteger("instanceCount");
       r.tags = getStrings(j, "tags");
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
@@ -112,10 +112,10 @@ class ResourceController : ManageController {
       UpdateResourceRequest r;
       r.tenantId = tenantId;
       r.resourceId = id;
-      r.description = j.getString("description");
-      r.url = j.getString("url");
-      r.runtime = j.getString("runtime");
-      r.state = j.getString("state");
+      r.description = data.getString("description");
+      r.url = data.getString("url");
+      r.runtime = data.getString("runtime");
+      r.state = data.getString("state");
       r.instanceCount = j.getInteger("instanceCount");
       r.tags = getStrings(j, "tags");
 

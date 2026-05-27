@@ -38,14 +38,14 @@ class TaskProviderController : ManageController {
             CreateTaskProviderRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.providerType = j.getString("providerType");
-            r.authType = j.getString("authType");
-            r.endpointUrl = j.getString("endpointUrl");
-            r.authEndpointUrl = j.getString("authEndpointUrl");
-            r.clientId = j.getString("clientId");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.providerType = data.getString("providerType");
+            r.authType = data.getString("authType");
+            r.endpointUrl = data.getString("endpointUrl");
+            r.authEndpointUrl = data.getString("authEndpointUrl");
+            r.clientId = data.getString("clientId");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -113,12 +113,12 @@ class TaskProviderController : ManageController {
             UpdateTaskProviderRequest r;
             r.tenantId = tenantId;
             r.id = id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.endpointUrl = j.getString("endpointUrl");
-            r.authEndpointUrl = j.getString("authEndpointUrl");
-            r.clientId = j.getString("clientId");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.endpointUrl = data.getString("endpointUrl");
+            r.authEndpointUrl = data.getString("authEndpointUrl");
+            r.clientId = data.getString("clientId");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.update(r);
             if (result.hasError)

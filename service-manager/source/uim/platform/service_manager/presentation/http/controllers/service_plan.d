@@ -67,13 +67,13 @@ class ServicePlanController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServicePlanRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.catalogName = j.getString("catalogName");
-            r.offeringId = j.getString("offeringId");
-            r.pricing = j.getString("pricing");
-            r.schemas = j.getString("schemas");
-            r.metadata = j.getString("metadata");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.catalogName = data.getString("catalogName");
+            r.offeringId = data.getString("offeringId");
+            r.pricing = data.getString("pricing");
+            r.schemas = data.getString("schemas");
+            r.metadata = data.getString("metadata");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -89,10 +89,10 @@ class ServicePlanController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateServicePlanRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.schemas = j.getString("schemas");
-            r.metadata = j.getString("metadata");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.schemas = data.getString("schemas");
+            r.metadata = data.getString("metadata");
 
             auto result = usecase.update(req.getTenantId, ServicePlanId(id), r);
             if (result.hasError)

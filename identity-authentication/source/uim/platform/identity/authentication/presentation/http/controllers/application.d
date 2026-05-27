@@ -38,13 +38,13 @@ class ApplicationController : ManageController {
       auto j = req.json;
       CreateAppRequest request;
       request.tenantId = tenantId;
-      request.name = j.getString("name");
-      request.description = j.getString("description");
+      request.name = data.getString("name");
+      request.description = data.getString("description");
       request.protocol = SsoProtocol.oidc;
       request.redirectUris = getStrings(j, "redirectUris");
       request.allowedScopes = getStrings(j, "allowedScopes");
-      request.samlEntityId = j.getString("samlEntityId");
-      request.samlAcsUrl = j.getString("samlAcsUrl");
+      request.samlEntityId = data.getString("samlEntityId");
+      request.samlAcsUrl = data.getString("samlAcsUrl");
 
       auto result = useCase.createApplication(request);
 
@@ -120,7 +120,7 @@ class ApplicationController : ManageController {
       UpdateAppRequest request;
       request.tenantId = tenantId;
       request.applicationId = appId;
-      request.name = j.getString("name");
+      request.name = data.getString("name");
       request.redirectUris = getStrings(j, "redirectUris");
       request.allowedScopes = getStrings(j, "allowedScopes");
 

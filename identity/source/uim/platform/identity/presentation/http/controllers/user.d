@@ -58,17 +58,17 @@ class UserController : ManageController {
             UserDTO dto;
             dto.userId = UserId(precheck.id);
             dto.tenantId = tenantId;
-            dto.userName = j.getString("userName");
-            dto.email = j.getString("email");
-            dto.displayName = j.getString("displayName");
-            dto.firstName = j.getString("firstName");
-            dto.lastName = j.getString("lastName");
-            dto.phoneNumber = j.getString("phoneNumber");
-            dto.language = j.getString("language");
-            dto.locale = j.getString("locale");
-            dto.timeZone = j.getString("timeZone");
-            dto.type_ = j.getString("type");
-            dto.password = j.getString("password");
+            dto.userName = data.getString("userName");
+            dto.email = data.getString("email");
+            dto.displayName = data.getString("displayName");
+            dto.firstName = data.getString("firstName");
+            dto.lastName = data.getString("lastName");
+            dto.phoneNumber = data.getString("phoneNumber");
+            dto.language = data.getString("language");
+            dto.locale = data.getString("locale");
+            dto.timeZone = data.getString("timeZone");
+            dto.type_ = data.getString("type");
+            dto.password = data.getString("password");
 
             auto result = usecase.createUser(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -83,14 +83,14 @@ class UserController : ManageController {
             UserDTO dto;
             dto.userId = Userprecheck.id);
             dto.tenantId = tenantId;
-            dto.displayName = j.getString("displayName");
-            dto.firstName = j.getString("firstName");
-            dto.lastName = j.getString("lastName");
-            dto.phoneNumber = j.getString("phoneNumber");
-            dto.language = j.getString("language");
-            dto.locale = j.getString("locale");
-            dto.timeZone = j.getString("timeZone");
-            dto.status = j.getString("status");
+            dto.displayName = data.getString("displayName");
+            dto.firstName = data.getString("firstName");
+            dto.lastName = data.getString("lastName");
+            dto.phoneNumber = data.getString("phoneNumber");
+            dto.language = data.getString("language");
+            dto.locale = data.getString("locale");
+            dto.timeZone = data.getString("timeZone");
+            dto.status = data.getString("status");
 
             auto result = usecase.updateUser(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

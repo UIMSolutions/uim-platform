@@ -36,15 +36,15 @@ class DataControllerController : ManageController {
       auto j = req.json;
       CreateDataControllerRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.legalEntityName = j.getString("legalEntityName");
-      r.contactEmail = j.getString("contactEmail");
-      r.contactPhone = j.getString("contactPhone");
-      r.address = j.getString("address");
-      r.country = j.getString("country");
-      r.dpoName = j.getString("dpoName");
-      r.dpoEmail = j.getString("dpoEmail");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.legalEntityName = data.getString("legalEntityName");
+      r.contactEmail = data.getString("contactEmail");
+      r.contactPhone = data.getString("contactPhone");
+      r.address = data.getString("address");
+      r.country = data.getString("country");
+      r.dpoName = data.getString("dpoName");
+      r.dpoEmail = data.getString("dpoEmail");
 
       auto result = usecase.createController(r);
       if (result.isSuccess()) {
@@ -98,15 +98,15 @@ class DataControllerController : ManageController {
       UpdateDataControllerRequest r;
       r.tenantId = tenantId;
       r.controllerId = DataControllerId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.legalEntityName = j.getString("legalEntityName");
-      r.contactEmail = j.getString("contactEmail");
-      r.contactPhone = j.getString("contactPhone");
-      r.address = j.getString("address");
-      r.country = j.getString("country");
-      r.dpoName = j.getString("dpoName");
-      r.dpoEmail = j.getString("dpoEmail");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.legalEntityName = data.getString("legalEntityName");
+      r.contactEmail = data.getString("contactEmail");
+      r.contactPhone = data.getString("contactPhone");
+      r.address = data.getString("address");
+      r.country = data.getString("country");
+      r.dpoName = data.getString("dpoName");
+      r.dpoEmail = data.getString("dpoEmail");
 
       auto result = usecase.updateController(r);
       if (result.isSuccess()) {

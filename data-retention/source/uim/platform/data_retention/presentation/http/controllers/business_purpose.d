@@ -30,13 +30,13 @@ class BusinessPurposeController : ManageController {
 
             CreateBusinessPurposeRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
-            r.dataSubjectRoleId = DataSubjectRoleId(j.getString("dataSubjectRoleId"));
-            r.legalEntityId = LegalEntityId(j.getString("legalEntityId"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+            r.dataSubjectRoleId = DataSubjectRoleId(data.getString("dataSubjectRoleId"));
+            r.legalEntityId = LegalEntityId(data.getString("legalEntityId"));
             r.referenceDate = jsonLong(j, "referenceDate");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createBusinessPurpose(r);
             if (result.hasError)
@@ -111,11 +111,11 @@ class BusinessPurposeController : ManageController {
             UpdateBusinessPurposeRequest r;
             r.tenantId = tenantId;
             r.businessPurposeId = id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
-            r.dataSubjectRoleId = DataSubjectRoleId(j.getString("dataSubjectRoleId"));
-            r.legalEntityId = LegalEntityId(j.getString("legalEntityId"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+            r.dataSubjectRoleId = DataSubjectRoleId(data.getString("dataSubjectRoleId"));
+            r.legalEntityId = LegalEntityId(data.getString("legalEntityId"));
             r.referenceDate = jsonLong(j, "referenceDate");
 
             auto result = usecase.updateBusinessPurpose(r);

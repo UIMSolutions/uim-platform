@@ -58,13 +58,13 @@ class ApplicationController : ManageController {
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.protocol = j.getString("protocol");
-            dto.clientId = j.getString("clientId");
-            dto.authScheme = j.getString("authScheme");
-            dto.logoUrl = j.getString("logoUrl");
-            dto.homepageUrl = j.getString("homepageUrl");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.protocol = data.getString("protocol");
+            dto.clientId = data.getString("clientId");
+            dto.authScheme = data.getString("authScheme");
+            dto.logoUrl = data.getString("logoUrl");
+            dto.homepageUrl = data.getString("homepageUrl");
             dto.multiTenantEnabled = j.getBoolean("multiTenantEnabled");
             dto.riskBasedAuthEnabled = j.getBoolean("riskBasedAuthEnabled");
 
@@ -81,11 +81,11 @@ class ApplicationController : ManageController {
             ApplicationDTO dto;
             dto.applicationId = Applicationprecheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.status = j.getString("status");
-            dto.logoUrl = j.getString("logoUrl");
-            dto.homepageUrl = j.getString("homepageUrl");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.status = data.getString("status");
+            dto.logoUrl = data.getString("logoUrl");
+            dto.homepageUrl = data.getString("homepageUrl");
             dto.multiTenantEnabled = j.getBoolean("multiTenantEnabled");
             dto.riskBasedAuthEnabled = j.getBoolean("riskBasedAuthEnabled");
 

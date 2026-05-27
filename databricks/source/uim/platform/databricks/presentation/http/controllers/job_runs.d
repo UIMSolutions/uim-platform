@@ -26,11 +26,11 @@ public:
       CreateJobRunRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = precheck.id;
-      r.jobId       = j.getString("jobId");
-      r.workspaceId = j.getString("workspaceId");
-      r.clusterId   = j.getString("clusterId");
-      r.runType     = j.getString("runType");
-      auto trigStr  = j.getString("triggerType");
+      r.jobId       = data.getString("jobId");
+      r.workspaceId = data.getString("workspaceId");
+      r.clusterId   = data.getString("clusterId");
+      r.runType     = data.getString("runType");
+      auto trigStr  = data.getString("triggerType");
       if (trigStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.triggerType = trigStr.to!RunTrigger; } catch (ConvException) {}
@@ -65,9 +65,9 @@ public:
       UpdateJobRunRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];
-      r.stateMessage= j.getString("stateMessage");
-      r.resultState = j.getString("resultState");
-      auto stateStr = j.getString("state");
+      r.stateMessage= data.getString("stateMessage");
+      r.resultState = data.getString("resultState");
+      auto stateStr = data.getString("state");
       if (stateStr.length > 0) {
         import std.conv : ConvException;
         try { r.state = stateStr.to!RunState; } catch (ConvException) {}

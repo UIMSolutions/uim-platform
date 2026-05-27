@@ -37,10 +37,10 @@ class AppVersionController : ManageController {
 
       CreateAppVersionRequest r;
       r.tenantId = tenantId;
-      r.appId = AppVersionId(j.getString("appId"));
-      r.versionCode = j.getString("versionCode");
-      r.description = j.getString("description");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.appId = AppVersionId(data.getString("appId"));
+      r.versionCode = data.getString("versionCode");
+      r.description = data.getString("description");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createAppVersion(r);
       if (result.isSuccess()) {
@@ -123,8 +123,8 @@ class AppVersionController : ManageController {
         return;
       }
       UpdateAppVersionRequest r;
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

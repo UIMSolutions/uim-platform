@@ -42,12 +42,12 @@ class ProxySystemController : ManageController {
       auto j = req.json;
       auto r = CreateProxySystemRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.systemType = parseSystemType(j.getString("systemType"));
-      r.connectionConfig = j.getString("connectionConfig");
-      r.sourceSystemId = j.getString("sourceSystemId");
-      r.targetSystemId = j.getString("targetSystemId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.systemType = parseSystemType(data.getString("systemType"));
+      r.connectionConfig = data.getString("connectionConfig");
+      r.sourceSystemId = data.getString("sourceSystemId");
+      r.targetSystemId = data.getString("targetSystemId");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createProxySystem(r);
@@ -104,9 +104,9 @@ class ProxySystemController : ManageController {
       auto r = UpdateProxySystemRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.connectionConfig = j.getString("connectionConfig");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.connectionConfig = data.getString("connectionConfig");
 
       auto result = usecase.updateProxySystem(r);
       if (result.isSuccess) {

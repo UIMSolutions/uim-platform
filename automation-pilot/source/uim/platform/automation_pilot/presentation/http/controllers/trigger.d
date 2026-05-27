@@ -70,14 +70,14 @@ class TriggerController : ManageController {
             TriggerDTO dto;
             dto.triggerId = TriggerId(precheck.id);
             dto.tenantId = tenantId;
-            dto.commandId = j.getString("commandId");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.eventType = j.getString("eventType");
-            dto.eventSource = j.getString("eventSource");
-            dto.filterExpression = j.getString("filterExpression");
-            dto.inputMapping = j.getString("inputMapping");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.commandId = data.getString("commandId");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.eventType = data.getString("eventType");
+            dto.eventSource = data.getString("eventSource");
+            dto.filterExpression = data.getString("filterExpression");
+            dto.inputMapping = data.getString("inputMapping");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createTrigger(dto);
             if (result.hasError)
@@ -104,12 +104,12 @@ class TriggerController : ManageController {
             TriggerDTO dto;
             dto.tenantId = tenantId;
             dto.triggerId = TriggerId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.eventType = j.getString("eventType");
-            dto.eventSource = j.getString("eventSource");
-            dto.filterExpression = j.getString("filterExpression");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.eventType = data.getString("eventType");
+            dto.eventSource = data.getString("eventSource");
+            dto.filterExpression = data.getString("filterExpression");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateTrigger(dto);
             if (result.hasError)

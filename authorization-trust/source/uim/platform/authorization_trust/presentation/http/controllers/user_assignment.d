@@ -33,10 +33,10 @@ class UserAssignmentController : ManageController {
       auto j = req.json;
       CreateUserAssignmentRequest r;
       r.tenantId = tenantId;
-      r.userId = UserId(j.getString("userId"));
-      r.userEmail = j.getString("userEmail");
-      r.roleCollectionId = RoleCollectionId(j.getString("roleCollectionId"));
-      r.origin = j.getString("origin");
+      r.userId = UserId(data.getString("userId"));
+      r.userEmail = data.getString("userEmail");
+      r.roleCollectionId = RoleCollectionId(data.getString("roleCollectionId"));
+      r.origin = data.getString("origin");
 
       auto result = usecase.createUserAssignment(r);
       if (result.success)

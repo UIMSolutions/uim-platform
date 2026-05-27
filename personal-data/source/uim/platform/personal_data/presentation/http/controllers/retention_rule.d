@@ -35,14 +35,14 @@ class RetentionRuleController : ManageController {
             CreateRetentionRuleRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.retentionPeriod = j.getString("retentionPeriod");
-            r.periodUnit = j.getString("periodUnit");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.retentionPeriod = data.getString("retentionPeriod");
+            r.periodUnit = data.getString("periodUnit");
             r.autoDelete = j.getBoolean("autoDelete");
             r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
-            r.notifyDaysBefore = j.getString("notifyDaysBefore");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.notifyDaysBefore = data.getString("notifyDaysBefore");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -106,14 +106,14 @@ class RetentionRuleController : ManageController {
             UpdateRetentionRuleRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.retentionPeriod = j.getString("retentionPeriod");
-            r.periodUnit = j.getString("periodUnit");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.retentionPeriod = data.getString("retentionPeriod");
+            r.periodUnit = data.getString("periodUnit");
             r.autoDelete = j.getBoolean("autoDelete");
             r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
-            r.notifyDaysBefore = j.getString("notifyDaysBefore");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.notifyDaysBefore = data.getString("notifyDaysBefore");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.update(r);
             if (result.hasError)

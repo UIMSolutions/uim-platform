@@ -27,9 +27,9 @@ class DataSubjectRoleController : ManageController {
 
             CreateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataSubjectRole(r);
             if (result.hasError)
@@ -94,8 +94,8 @@ class DataSubjectRoleController : ManageController {
             auto j = req.json;
             UpdateDataSubjectRoleRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateDataSubjectRole(tenantId, id, r);

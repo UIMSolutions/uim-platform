@@ -38,10 +38,10 @@ class WorkpageController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateWorkpageRequest();
-      r.workspaceId = j.getString("workspaceId");
+      r.workspaceId = data.getString("workspaceId");
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.description = j.getString("description");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
       r.isDefault = j.getBoolean("isDefault");
 
@@ -101,8 +101,8 @@ class WorkpageController : ManageController {
       auto r = UpdateWorkpageRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.description = j.getString("description");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
       r.visible = j.getBoolean("visible", true);
 

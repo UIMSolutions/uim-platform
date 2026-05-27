@@ -39,13 +39,13 @@ class NavigationItemController : ManageController {
       auto j = req.json;
       auto r = CreateNavigationItemRequest();
       r.tenantId = tenantId;
-      r.siteId = j.getString("siteId");
-      r.title = j.getString("title");
-      r.icon = j.getString("icon");
-      r.targetUrl = j.getString("targetUrl");
-      r.targetAppId = j.getString("targetAppId");
-      r.targetPageId = j.getString("targetPageId");
-      r.parentId = j.getString("parentId");
+      r.siteId = data.getString("siteId");
+      r.title = data.getString("title");
+      r.icon = data.getString("icon");
+      r.targetUrl = data.getString("targetUrl");
+      r.targetAppId = data.getString("targetAppId");
+      r.targetPageId = data.getString("targetPageId");
+      r.parentId = data.getString("parentId");
       r.sortOrder = j.getInteger("sortOrder");
       r.openInNewWindow = j.getBoolean("openInNewWindow");
 
@@ -106,9 +106,9 @@ class NavigationItemController : ManageController {
       auto r = UpdateNavigationItemRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.icon = j.getString("icon");
-      r.targetUrl = j.getString("targetUrl");
+      r.title = data.getString("title");
+      r.icon = data.getString("icon");
+      r.targetUrl = data.getString("targetUrl");
       r.sortOrder = j.getInteger("sortOrder");
       r.visible = j.getBoolean("visible", true);
 

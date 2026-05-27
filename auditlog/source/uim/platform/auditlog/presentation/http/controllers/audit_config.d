@@ -105,7 +105,7 @@ class AuditConfigController : ManageController {
     auto r = UpdateAuditConfigRequest();
     r.id = AuditConfigId(precheck.id);
     r.tenantId = tenantId;
-    r.name = j.getString("name");
+    r.name = data.getString("name");
     r.logDataAccess = j.getBoolean("logDataAccess", true);
     r.logDataModification = j.getBoolean("logDataModification", true);
     r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
@@ -115,9 +115,9 @@ class AuditConfigController : ManageController {
     r.excludedServices = getStrings(j, "excludedServices");
     r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
-    r.status = j.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
+    r.status = data.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
 
-    auto sevStr = j.getString("minimumSeverity");
+    auto sevStr = data.getString("minimumSeverity");
     if (sevStr == "warning")
       r.minimumSeverity = AuditSeverity.warning;
     else if (sevStr == "error")

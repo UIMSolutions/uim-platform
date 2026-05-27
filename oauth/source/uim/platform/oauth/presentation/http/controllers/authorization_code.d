@@ -75,13 +75,13 @@ class AuthorizationCodeController : ManageController {
             AuthorizationCodeDTO dto;
             dto.codeId = AuthorizationCodeId(precheck.id);
             dto.tenantId = tenantId;
-            dto.code = j.getString("code");
-            dto.clientId = j.getString("clientId");
-            dto.userId = j.getString("userId");
-            dto.redirectUri = j.getString("redirectUri");
-            dto.scopes = j.getString("scopes");
+            dto.code = data.getString("code");
+            dto.clientId = data.getString("clientId");
+            dto.userId = data.getString("userId");
+            dto.redirectUri = data.getString("redirectUri");
+            dto.scopes = data.getString("scopes");
             dto.expiresAt = 0;
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createCode(dto);
             if (result.hasError)

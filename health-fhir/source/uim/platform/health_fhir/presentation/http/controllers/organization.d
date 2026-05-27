@@ -42,7 +42,7 @@ class OrganizationController : ManageController {
       CreateOrganizationRequest r;
       r.tenantId        = tenantId;
       r.organizationId  = OrganizationId(precheck.id);
-      r.name_           = j.getString("name");
+      r.name_           = data.getString("name");
       r.active_         = j.get("active", Json(true)).get!bool;
       auto result = usecase.createOrganization(r);
       if (result.success)
@@ -90,7 +90,7 @@ class OrganizationController : ManageController {
       UpdateOrganizationRequest r;
       r.tenantId = tenantId;
       r.organizationId = id;
-      r.name_   = j.getString("name");
+      r.name_   = data.getString("name");
       r.active_ = j.get("active", Json(true)).get!bool;
       auto result = usecase.updateOrganization(r);
       if (result.success)

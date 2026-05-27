@@ -37,9 +37,9 @@ class RuleSetController : ManageController {
       auto j = req.json;
       CreateRuleSetRequest r;
       r.tenantId = tenantId;
-      r.contextId = j.getString("businessContextId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.contextId = data.getString("businessContextId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.priority = cast(int)jsonLong(j, "priority");
 
       auto result = usecase.createRuleSet(r);
@@ -95,8 +95,8 @@ class RuleSetController : ManageController {
       UpdateRuleSetRequest r;
       r.tenantId = tenantId;
       r.setId = RuleSetId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.priority = j.getInteger("priority");
 
       auto result = usecase.updateRuleSet(r);

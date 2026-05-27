@@ -40,13 +40,13 @@ class ModelController : ManageController {
       auto j = req.json;
       auto r = CreateModelConfigRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.modelType = parseModelType(j.getString("modelType"));
-      r.targetColumns = j.getString("targetColumns");
-      r.featureColumns = j.getString("featureColumns");
-      r.hyperparameters = j.getString("hyperparameters");
+      r.datasetId = data.getString("datasetId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.modelType = parseModelType(data.getString("modelType"));
+      r.targetColumns = data.getString("targetColumns");
+      r.featureColumns = data.getString("featureColumns");
+      r.hyperparameters = data.getString("hyperparameters");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createModelConfig(r);
@@ -109,12 +109,12 @@ class ModelController : ManageController {
       auto r = UpdateModelConfigRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.modelType = parseModelType(j.getString("modelType"));
-      r.targetColumns = j.getString("targetColumns");
-      r.featureColumns = j.getString("featureColumns");
-      r.hyperparameters = j.getString("hyperparameters");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.modelType = parseModelType(data.getString("modelType"));
+      r.targetColumns = data.getString("targetColumns");
+      r.featureColumns = data.getString("featureColumns");
+      r.hyperparameters = data.getString("hyperparameters");
 
       auto result = usecase.updateModelConfig(r);
       if (result.isSuccess) {

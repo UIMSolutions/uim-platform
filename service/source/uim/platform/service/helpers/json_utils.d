@@ -253,7 +253,7 @@ size_t jsonUint(Json j, string key, size_t default_ = 0) {
 /// Read an int field from JSON.
 /// Parse an enum from a JSON string field.
 T jsonEnum(T)(Json j, string key, T default_ = T.init) {
-  auto str = j.getString(key);
+  auto str = data.getString(key);
   if (str.length == 0)
     return default_;
   

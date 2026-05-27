@@ -67,12 +67,12 @@ class ServiceAccountController : ManageController {
             dto.tenantId = tenantId;
             dto.serviceAccountId = ServiceAccountId(precheck.id);
             dto.tenantId = req.getTenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.clientId = j.getString("clientId");
-            dto.permissions = j.getString("permissions");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.clientId = data.getString("clientId");
+            dto.permissions = data.getString("permissions");
             dto.expiresAt = j.getLong("expiresAt");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createServiceAccount(dto);
             if (result.hasError)
@@ -98,10 +98,10 @@ class ServiceAccountController : ManageController {
             ServiceAccountDTO dto;
             dto.tenantId = tenantId;
             dto.serviceAccountId = ServiceAccountId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.permissions = j.getString("permissions");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.permissions = data.getString("permissions");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateServiceAccount(dto);
             if (result.hasError)

@@ -38,14 +38,14 @@ class FlexApplicationsController : ManageController {
       CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = FlexApplicationId(precheck.id);
-      r.namespace_     = j.getString("namespace");
-      r.appId          = j.getString("appId");
-      r.description_   = j.getString("description");
+      r.namespace_     = data.getString("namespace");
+      r.appId          = data.getString("appId");
+      r.description_   = data.getString("description");
       r.isActive_      = j.get("isActive", Json(true)).get!bool;
-      r.validFrom_     = j.getString("validFrom");
-      r.validTo_       = j.getString("validTo");
-      r.owner_         = j.getString("owner");
-      r.version_       = j.getString("version");
+      r.validFrom_     = data.getString("validFrom");
+      r.validTo_       = data.getString("validTo");
+      r.owner_         = data.getString("owner");
+      r.version_       = data.getString("version");
       auto result = usecase.createApplication(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
@@ -93,12 +93,12 @@ class FlexApplicationsController : ManageController {
       UpdateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = id;
-      r.description_   = j.getString("description");
+      r.description_   = data.getString("description");
       r.isActive_      = j.get("isActive", Json(true)).get!bool;
-      r.validFrom_     = j.getString("validFrom");
-      r.validTo_       = j.getString("validTo");
-      r.owner_         = j.getString("owner");
-      r.version_       = j.getString("version");
+      r.validFrom_     = data.getString("validFrom");
+      r.validTo_       = data.getString("validTo");
+      r.owner_         = data.getString("owner");
+      r.version_       = data.getString("version");
       auto result = usecase.updateApplication(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);

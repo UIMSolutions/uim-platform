@@ -37,12 +37,12 @@ class TaskController : ManageController {
       CreateTaskRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.targetObjectId = j.getString("targetObjectId");
-      r.scheduleExpression = j.getString("scheduleExpression");
-      r.scheduleFrequency = j.getString("scheduleFrequency");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.targetObjectId = data.getString("targetObjectId");
+      r.scheduleExpression = data.getString("scheduleExpression");
+      r.scheduleFrequency = data.getString("scheduleFrequency");
       r.maxRetries = j.getInteger("maxRetries", 3);
 
       auto now = Clock.currTime();

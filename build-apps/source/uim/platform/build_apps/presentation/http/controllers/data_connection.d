@@ -93,18 +93,18 @@ class DataConnectionController : ManageController {
             DataConnectionDTO dto;
             dto.tenantId = tenantId;
             dto.dataConnectionId = dataConnectionId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.connectionType = j.getString("connectionType");
-            dto.authMethod = j.getString("authMethod");
-            dto.baseUrl = j.getString("baseUrl");
-            dto.basePath = j.getString("basePath");
-            dto.headers = j.getString("headers");
-            dto.queryParams = j.getString("queryParams");
-            dto.responseMapping = j.getString("responseMapping");
-            dto.destinationName = j.getString("destinationName");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = ApplicationId(data.getString("applicationId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.connectionType = data.getString("connectionType");
+            dto.authMethod = data.getString("authMethod");
+            dto.baseUrl = data.getString("baseUrl");
+            dto.basePath = data.getString("basePath");
+            dto.headers = data.getString("headers");
+            dto.queryParams = data.getString("queryParams");
+            dto.responseMapping = data.getString("responseMapping");
+            dto.destinationName = data.getString("destinationName");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataConnection(dto);
             if (result.hasError)
@@ -132,11 +132,11 @@ class DataConnectionController : ManageController {
             DataConnectionDTO dto;
             dto.dataConnectionId = DataConnectionId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.baseUrl = j.getString("baseUrl");
-            dto.basePath = j.getString("basePath");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.baseUrl = data.getString("baseUrl");
+            dto.basePath = data.getString("basePath");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDataConnection(dto);
             if (result.hasError)

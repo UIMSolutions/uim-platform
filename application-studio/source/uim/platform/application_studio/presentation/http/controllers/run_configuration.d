@@ -75,15 +75,15 @@ class RunConfigurationController : ManageController {
             RunConfigurationDTO dto;
             dto.runConfigurationId = RunConfigurationId(precheck.id);
             dto.tenantId = tenantId;
-            dto.projectId = ProjectId(j.getString("projectId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.entryPoint = j.getString("entryPoint");
-            dto.arguments = j.getString("arguments");
-            dto.environmentVars = j.getString("environmentVars");
-            dto.port = j.getString("port");
-            dto.debugPort = j.getString("debugPort");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.projectId = ProjectId(data.getString("projectId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.entryPoint = data.getString("entryPoint");
+            dto.arguments = data.getString("arguments");
+            dto.environmentVars = data.getString("environmentVars");
+            dto.port = data.getString("port");
+            dto.debugPort = data.getString("debugPort");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createRunConfiguration(dto);
             if (result.hasError)
@@ -110,11 +110,11 @@ class RunConfigurationController : ManageController {
             RunConfigurationDTO dto;
             dto.tenantId = tenantId;
             dto.runConfigurationId = RunConfigurationId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.entryPoint = j.getString("entryPoint");
-            dto.arguments = j.getString("arguments");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.entryPoint = data.getString("entryPoint");
+            dto.arguments = data.getString("arguments");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateRunConfiguration(dto);
             if (result.hasError)

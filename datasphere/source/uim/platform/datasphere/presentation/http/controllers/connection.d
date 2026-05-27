@@ -37,13 +37,13 @@ class ConnectionController : ManageController {
       CreateConnectionRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.host = j.getString("host");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.host = data.getString("host");
       r.port = j.getInteger("port", 0);
-      r.database = j.getString("database");
-      r.user = j.getString("user");
+      r.database = data.getString("database");
+      r.user = data.getString("user");
 
       auto result = usecase.createConnection(r);
       if (result.hasError)

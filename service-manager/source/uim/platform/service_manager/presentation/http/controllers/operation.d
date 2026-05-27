@@ -71,10 +71,10 @@ class OperationController : ManageController {
 
             CreateOperationRequest r;
             r.tenantId = tenantId;
-            r.resourceId = j.getString("resourceId");
-            r.resourceType = j.getString("resourceType");
-            r.type = j.getString("type");
-            r.description = j.getString("description");
+            r.resourceId = data.getString("resourceId");
+            r.resourceType = data.getString("resourceType");
+            r.type = data.getString("type");
+            r.description = data.getString("description");
 
             auto result = usecase.createOperation(r);
             if (result.hasError)
@@ -92,8 +92,8 @@ class OperationController : ManageController {
             UpdateOperationRequest r;
             r.tenantId = tenantId;
             r.operationId = id;
-            r.status = j.getString("status");
-            r.errorMessage = j.getString("errorMessage");
+            r.status = data.getString("status");
+            r.errorMessage = data.getString("errorMessage");
 
             auto result = usecase.updateOperation(r);
             if (result.hasError)

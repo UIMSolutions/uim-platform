@@ -37,11 +37,11 @@ class ContentCacheController : ManageController {
       auto j = req.json;
       CreateContentCacheRequest r;
       r.tenantId = tenantId;
-      r.fileId = j.getString("fileId");
-      r.filePath = j.getString("filePath");
-      r.contentType = j.getString("contentType");
-      r.data = j.getString("data");
-      r.etag = j.getString("etag");
+      r.fileId = data.getString("fileId");
+      r.filePath = data.getString("filePath");
+      r.contentType = data.getString("contentType");
+      r.data = data.getString("data");
+      r.etag = data.getString("etag");
       r.ttlSeconds = jsonLong(j, "ttlSeconds");
 
       auto result = usecase.create(r);

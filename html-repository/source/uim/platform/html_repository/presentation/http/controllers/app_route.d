@@ -38,12 +38,12 @@ class AppRouteController : ManageController {
       CreateAppRouteRequest request;
       with (request) {
         tenantId = tenantId;
-        appId = j.getString("appId");
-        pathPrefix = j.getString("pathPrefix");
-        targetPath = j.getString("targetPath");
+        appId = data.getString("appId");
+        pathPrefix = data.getString("pathPrefix");
+        targetPath = data.getString("targetPath");
         authRequired = j.getBoolean("authRequired");
         cacheEnabled = j.getBoolean("cacheEnabled");
-        createdBy = UserId(j.getString("createdBy"));
+        createdBy = UserId(data.getString("createdBy"));
       }
 
       auto result = usecase.createAppRoute(request);
@@ -128,9 +128,9 @@ class AppRouteController : ManageController {
       UpdateAppRouteRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = j.getString("description");
-      r.targetUrl = j.getString("targetUrl");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.description = data.getString("description");
+      r.targetUrl = data.getString("targetUrl");
+      r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.updateAppRoute(r);
       if (result.isSuccess()) {

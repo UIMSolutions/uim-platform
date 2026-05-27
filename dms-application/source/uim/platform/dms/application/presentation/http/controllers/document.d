@@ -43,15 +43,15 @@ class DocumentController : ManageController {
       auto j = req.json;
       auto r = CreateDocumentRequest();
       r.tenantId = tenanId;
-      r.repositoryId = j.getString("repositoryId");
-      r.folderId = j.getString("folderId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.contentCategory = j.getString("contentCategory").to!ContentCategory;
-      r.mimeType = j.getString("mimeType");
+      r.repositoryId = data.getString("repositoryId");
+      r.folderId = data.getString("folderId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.contentCategory = data.getString("contentCategory").to!ContentCategory;
+      r.mimeType = data.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.tags = j.getString("tags");
-      r.properties = j.getString("properties");
+      r.tags = data.getString("tags");
+      r.properties = data.getString("properties");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createDocument(r);
@@ -138,10 +138,10 @@ class DocumentController : ManageController {
       auto r = UpdateDocumentRequest();
       r.documentId = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.tags = j.getString("tags");
-      r.properties = j.getString("properties");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.tags = data.getString("tags");
+      r.properties = data.getString("properties");
 
       auto result = usecase.updateDocument(r);
       if (result.isSuccess) {
@@ -166,7 +166,7 @@ class DocumentController : ManageController {
       auto r = MoveDocumentRequest();
       r.documentId = id;
       r.tenantId = tenantId;
-      r.newFolderId = j.getString("newFolderId");
+      r.newFolderId = data.getString("newFolderId");
 
       auto result = usecase.moveDocument(r);
       if (result.isSuccess) {

@@ -91,7 +91,7 @@ class MtaOperationController : ManageController {
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/abort")];
             r.operationId = extractIdFromPath(bare);
-            r.abortedBy   = j.getString("abortedBy");
+            r.abortedBy   = data.getString("abortedBy");
 
             auto result = usecase.abortOperation(r);
             if (result.hasError)

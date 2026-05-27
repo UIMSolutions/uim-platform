@@ -37,10 +37,10 @@ class DataFlowController : ManageController {
       CreateDataFlowRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.scheduleExpression = j.getString("scheduleExpression");
-      r.scheduleFrequency = j.getString("scheduleFrequency");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.scheduleExpression = data.getString("scheduleExpression");
+      r.scheduleFrequency = data.getString("scheduleFrequency");
 
       auto result = usecase.create(r);
       if (result.hasError)

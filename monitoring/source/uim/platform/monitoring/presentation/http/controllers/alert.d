@@ -81,7 +81,7 @@ class AlertController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       AcknowledgeAlertRequest r;
-      r.alertId = AlertId(j.getString("alertId"));
+      r.alertId = AlertId(data.getString("alertId"));
       r.tenantId = tenantId;
       r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -107,7 +107,7 @@ class AlertController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       ResolveAlertRequest r;
-      r.alertId = AlertId(j.getString("alertId"));
+      r.alertId = AlertId(data.getString("alertId"));
       r.tenantId = tenantId;
       r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 

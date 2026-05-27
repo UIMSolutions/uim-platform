@@ -53,11 +53,11 @@ class ServiceBindingController : ManageController {
 
     CreateServiceBindingRequest r;
     r.tenantId = tenantId;
-    r.systemInstanceId = j.getString("systemInstanceId");
-    r.serviceDefinitionId = j.getString("serviceDefinitionId");
-    r.name = j.getString("name");
-    r.description = j.getString("description");
-    r.bindingType = j.getString("bindingType");
+    r.systemInstanceId = data.getString("systemInstanceId");
+    r.serviceDefinitionId = data.getString("serviceDefinitionId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.bindingType = data.getString("bindingType");
 
     auto result = usecase.createServiceBinding(r);
     if (result.hasError()) {
@@ -97,8 +97,8 @@ class ServiceBindingController : ManageController {
     UpdateServiceBindingRequest r;
     r.tenantId = tenantId;
     r.serviceBindingId = id;
-    r.description = j.getString("description");
-    r.status = j.getString("status");
+    r.description = data.getString("description");
+    r.status = data.getString("status");
 
     auto result = usecase.updateServiceBinding(r);
     if (result.hasError()) {

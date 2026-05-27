@@ -37,12 +37,12 @@ class SubstitutionRuleController : ManageController {
             CreateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.userId = UserId(j.getString("userId"));
-            r.substituteId = UserId(j.getString("substituteId"));
-            r.taskDefinitionId = j.getString("taskDefinitionId");
-            r.startDate = j.getString("startDate");
-            r.endDate = j.getString("endDate");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.userId = UserId(data.getString("userId"));
+            r.substituteId = UserId(data.getString("substituteId"));
+            r.taskDefinitionId = data.getString("taskDefinitionId");
+            r.startDate = data.getString("startDate");
+            r.endDate = data.getString("endDate");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createSubstitutionRule(r);
             if (result.hasError)
@@ -118,11 +118,11 @@ class SubstitutionRuleController : ManageController {
             UpdateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
             r.id = id;
-            r.substituteId = UserId(j.getString("substituteId"));
-            r.taskDefinitionId = j.getString("taskDefinitionId");
-            r.startDate = j.getString("startDate");
-            r.endDate = j.getString("endDate");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.substituteId = UserId(data.getString("substituteId"));
+            r.taskDefinitionId = data.getString("taskDefinitionId");
+            r.startDate = data.getString("startDate");
+            r.endDate = data.getString("endDate");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateSubstitutionRule(r);
             if (result.hasError)

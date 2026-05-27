@@ -33,18 +33,18 @@ class SecurityEventController : PlatformController {
       auto j = req.json;
       auto r = WriteSecurityEventRequest();
       r.tenantId = tenantId;
-      r.userId = j.getString("userId");
-      r.userName = j.getString("userName");
-      r.eventType = j.getString("eventType");
-      r.ipAddress = j.getString("ipAddress");
-      r.userAgent = j.getString("userAgent");
-      r.clientId = j.getString("clientId");
-      r.identityProvider = j.getString("identityProvider");
-      r.authMethod = j.getString("authMethod");
-      r.failureReason = j.getString("failureReason");
-      r.riskLevel = j.getString("riskLevel");
+      r.userId = data.getString("userId");
+      r.userName = data.getString("userName");
+      r.eventType = data.getString("eventType");
+      r.ipAddress = data.getString("ipAddress");
+      r.userAgent = data.getString("userAgent");
+      r.clientId = data.getString("clientId");
+      r.identityProvider = data.getString("identityProvider");
+      r.authMethod = data.getString("authMethod");
+      r.failureReason = data.getString("failureReason");
+      r.riskLevel = data.getString("riskLevel");
 
-      auto outcomeStr = j.getString("outcome");
+      auto outcomeStr = data.getString("outcome");
       if (outcomeStr == "failure")
         r.outcome = AuditOutcome.failure;
       else if (outcomeStr == "denied")

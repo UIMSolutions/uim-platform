@@ -34,13 +34,13 @@ class GeofenceController : ManageController {
       CreateGeofenceZoneRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.shapeType = j.getString("shapeType");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.shapeType = data.getString("shapeType");
       r.centerLat = jsonDouble(j, "centerLat");
       r.centerLon = jsonDouble(j, "centerLon");
       r.radiusMeters = jsonDouble(j, "radiusMeters");
-      r.polygon = j.getString("polygon");
+      r.polygon = data.getString("polygon");
       r.active = j.getBoolean("active");
       r.metadata = jsonKeyValuePairs(j, "metadata");
 
@@ -101,10 +101,10 @@ class GeofenceController : ManageController {
       UpdateGeofenceZoneRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.radiusMeters = jsonDouble(j, "radiusMeters");
-      r.polygon = j.getString("polygon");
+      r.polygon = data.getString("polygon");
       r.active = j.getBoolean("active");
 
       auto result = usecase.update(r);
@@ -141,7 +141,7 @@ class GeofenceController : ManageController {
       auto j = req.json;
       GeofenceCheckRequest r;
       r.tenantId = tenantId;
-      r.zoneId = j.getString("zoneId");
+      r.zoneId = data.getString("zoneId");
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");
 

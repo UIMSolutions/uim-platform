@@ -46,12 +46,12 @@ class DataSourceConfigController : ManageController {
     CreateDataSourceConfigRequest r;
     r.tenantId          = req.getTenantId;
     r.id                = precheck.id;
-    r.dataProductId     = j.getString("dataProductId");
-    r.providerId        = j.getString("providerId");
-    r.qualityRank       = j.getString("qualityRank");
-    r.timestampFormat   = j.getString("timestampFormat");
-    r.timestampField    = j.getString("timestampField");
-    r.timestampCustomPattern = j.getString("timestampCustomPattern");
+    r.dataProductId     = data.getString("dataProductId");
+    r.providerId        = data.getString("providerId");
+    r.qualityRank       = data.getString("qualityRank");
+    r.timestampFormat   = data.getString("timestampFormat");
+    r.timestampField    = data.getString("timestampField");
+    r.timestampCustomPattern = data.getString("timestampCustomPattern");
     r.enabled           = j.getBoolean("enabled");
     r.disabledRuleIds   = j.getStrings("disabledRuleIds");
     auto result = usecase.create(r);
@@ -66,10 +66,10 @@ class DataSourceConfigController : ManageController {
     UpdateDataSourceConfigRequest r;
     r.tenantId          = req.getTenantId;
     r.id                = extractIdFromPath(req.requestPath.to!string);
-    r.qualityRank       = j.getString("qualityRank");
-    r.timestampFormat   = j.getString("timestampFormat");
-    r.timestampField    = j.getString("timestampField");
-    r.timestampCustomPattern = j.getString("timestampCustomPattern");
+    r.qualityRank       = data.getString("qualityRank");
+    r.timestampFormat   = data.getString("timestampFormat");
+    r.timestampField    = data.getString("timestampField");
+    r.timestampCustomPattern = data.getString("timestampCustomPattern");
     r.enabled           = j.getBoolean("enabled");
     r.disabledRuleIds   = j.getStrings("disabledRuleIds");
     auto result = usecase.update(r);
@@ -82,10 +82,10 @@ class DataSourceConfigController : ManageController {
     AddIdentifierMappingRequest r;
     r.tenantId           = req.getTenantId;
     r.configId           = extractIdFromPath(req.requestPath.to!string);
-    r.ruleId             = j.getString("ruleId");
-    r.ruleAttributeName  = j.getString("ruleAttributeName");
-    r.sourceAttributeName = j.getString("sourceAttributeName");
-    r.transformationType = j.getString("transformationType");
+    r.ruleId             = data.getString("ruleId");
+    r.ruleAttributeName  = data.getString("ruleAttributeName");
+    r.sourceAttributeName = data.getString("sourceAttributeName");
+    r.transformationType = data.getString("transformationType");
     auto result = usecase.addIdentifierMapping(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

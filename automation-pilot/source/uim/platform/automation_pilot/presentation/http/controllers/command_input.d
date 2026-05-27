@@ -59,13 +59,13 @@ class CommandInputController : ManageController {
         CommandInputDTO dto;
         dto.commandInputId = CommandInputId(precheck.id);
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.keys = j.getString("keys");
-        dto.values = j.getString("values");
-        dto.version_ = j.getString("version");
-        dto.commandId = j.getString("commandId");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.keys = data.getString("keys");
+        dto.values = data.getString("values");
+        dto.version_ = data.getString("version");
+        dto.commandId = data.getString("commandId");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = commandInputs.createCommandInput(dto);
         if (result.hasError)

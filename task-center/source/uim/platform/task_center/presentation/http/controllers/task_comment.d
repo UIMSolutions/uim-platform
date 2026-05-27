@@ -35,9 +35,9 @@ class TaskCommentController : ManageController {
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
             r.taskCommentId = TaskCommentId(precheck.id);
-            r.taskId = TaskId(j.getString("taskId"));
-            r.author = j.getString("author");
-            r.content = j.getString("content");
+            r.taskId = TaskId(data.getString("taskId"));
+            r.author = data.getString("author");
+            r.content = data.getString("content");
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -103,7 +103,7 @@ class TaskCommentController : ManageController {
             UpdateTaskCommentRequest r;
             r.tenantId = tenantId;
             r.taskCommentId = id;
-            r.content = j.getString("content");
+            r.content = data.getString("content");
 
             auto result = usecase.update(r);
             if (result.hasError)

@@ -37,10 +37,10 @@ class BlockingController : ManageController {
       auto j = req.json;
       CreateBlockingRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = j.getString("dataSubjectId");
-      r.requestedBy = j.getString("requestedBy");
+      r.dataSubjectId = data.getString("dataSubjectId");
+      r.requestedBy = data.getString("requestedBy");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.reason = j.getString("reason");
+      r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
@@ -99,7 +99,7 @@ class BlockingController : ManageController {
       UpdateBlockingStatusRequest r;
       r.id = BlockingRequestId(precheck.id);
       r.tenantId = tenantId;
-      r.status = j.getString("status");
+      r.status = data.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

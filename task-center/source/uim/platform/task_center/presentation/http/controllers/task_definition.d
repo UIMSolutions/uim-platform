@@ -37,12 +37,12 @@ class TaskDefinitionController : ManageController {
             CreateTaskDefinitionRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.providerId = j.getString("providerId");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.taskSchema = j.getString("taskSchema");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.providerId = data.getString("providerId");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.taskSchema = data.getString("taskSchema");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createTaskDefinition(r);
             if (result.hasError)
@@ -113,11 +113,11 @@ class TaskDefinitionController : ManageController {
             UpdateTaskDefinitionRequest r;
             r.tenantId = tenantId;
             r.id = id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.taskSchema = j.getString("taskSchema");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.taskSchema = data.getString("taskSchema");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateTaskDefinition(r);
             if (result.hasError)

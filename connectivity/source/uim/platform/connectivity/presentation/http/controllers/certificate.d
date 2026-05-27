@@ -38,14 +38,14 @@ class CertificateController : ManageController {
       auto j = req.json;
       auto r = CreateCertificateRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.certType = j.getString("type");
-      r.usage = j.getString("usage");
-      r.subjectDN = j.getString("subjectDN");
-      r.issuerDN = j.getString("issuerDN");
-      r.serialNumber = j.getString("serialNumber");
-      r.fingerprint = j.getString("fingerprint");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.certType = data.getString("type");
+      r.usage = data.getString("usage");
+      r.subjectDN = data.getString("subjectDN");
+      r.issuerDN = data.getString("issuerDN");
+      r.serialNumber = data.getString("serialNumber");
+      r.fingerprint = data.getString("fingerprint");
       r.validFrom = jsonLong(j, "validFrom");
       r.validTo = jsonLong(j, "validTo");
 
@@ -106,7 +106,7 @@ class CertificateController : ManageController {
       auto r = UpdateCertificateRequest();
       r.certificateId = CertificateId(precheck.id);
       r.tenantId = tenantId;
-      r.description = j.getString("description");
+      r.description = data.getString("description");
       r.active = j.getBoolean("active", true);
 
       auto result = usecase.updateCertificate(r);

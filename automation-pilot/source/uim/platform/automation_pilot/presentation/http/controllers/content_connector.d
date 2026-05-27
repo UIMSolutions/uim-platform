@@ -66,12 +66,12 @@ class ContentConnectorController : ManageController {
             ContentConnectorDTO dto;
             dto.contentConnectorId = ContentConnectorId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.repositoryUrl = j.getString("repositoryUrl");
-            dto.branch = j.getString("branch");
-            dto.path = j.getString("path");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.repositoryUrl = data.getString("repositoryUrl");
+            dto.branch = data.getString("branch");
+            dto.path = data.getString("path");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createContentConnector(dto);
             if (result.hasError)
@@ -96,12 +96,12 @@ class ContentConnectorController : ManageController {
             auto j = req.json;
             ContentConnectorDTO dto;
             dto.contentConnectorId = ContentConnectorId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.repositoryUrl = j.getString("repositoryUrl");
-            dto.branch = j.getString("branch");
-            dto.path = j.getString("path");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.repositoryUrl = data.getString("repositoryUrl");
+            dto.branch = data.getString("branch");
+            dto.path = data.getString("path");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateContentConnector(dto);
             if (result.hasError)

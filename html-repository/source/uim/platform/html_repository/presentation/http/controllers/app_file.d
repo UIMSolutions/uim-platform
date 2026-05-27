@@ -37,12 +37,12 @@ class AppFileController : ManageController {
 
       UploadAppFileRequest r;
       r.tenantId = tenantId;
-      r.versionId = j.getString("versionId");
-      r.filePath = j.getString("filePath");
-      r.contentType = j.getString("contentType");
-      r.data = j.getString("data");
-      r.encoding = j.getString("encoding");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.versionId = data.getString("versionId");
+      r.filePath = data.getString("filePath");
+      r.contentType = data.getString("contentType");
+      r.data = data.getString("data");
+      r.encoding = data.getString("encoding");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.uploadAppFile(r);
       if (result.isSuccess()) {
@@ -131,9 +131,9 @@ class AppFileController : ManageController {
         return;
       }
       UpdateAppFileRequest r;
-      r.contentType = j.getString("contentType");
-      r.data = j.getString("data");
-      r.encoding = j.getString("encoding");
+      r.contentType = data.getString("contentType");
+      r.data = data.getString("data");
+      r.encoding = data.getString("encoding");
 
       auto result = usecase.updateAppFile(r);
       if (result.isSuccess()) {

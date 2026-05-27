@@ -37,12 +37,12 @@ class FilterRuleController : ManageController {
       auto j = req.json;
       CreateFilterRuleRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
-      r.dataModelId = j.getString("dataModelId");
-      r.objectType = j.getString("objectType");
-      r.logicOperator = j.getString("logicOperator");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
+      r.dataModelId = data.getString("dataModelId");
+      r.objectType = data.getString("objectType");
+      r.logicOperator = data.getString("logicOperator");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.conditions = parseConditions(j);
 
@@ -109,9 +109,9 @@ class FilterRuleController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateFilterRuleRequest r;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.logicOperator = j.getString("logicOperator");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.logicOperator = data.getString("logicOperator");
       r.isActive = j.getBoolean("isActive", true);
       r.conditions = parseConditions(j);
 
@@ -144,12 +144,12 @@ class FilterRuleController : ManageController {
     auto condsArr = jsonObjArray(j, "conditions");
     foreach (cj; condsArr) {
       FilterConditionDto c;
-      c.fieldName = cj.getString("fieldName");
-      c.operator = cj.getString("operator");
-      c.value = cj.getString("value");
+      c.fieldName = cdata.getString("fieldName");
+      c.operator = cdata.getString("operator");
+      c.value = cdata.getString("value");
       c.valueList = getStrings(cj, "valueList");
-      c.lowerBound = cj.getString("lowerBound");
-      c.upperBound = cj.getString("upperBound");
+      c.lowerBound = cdata.getString("lowerBound");
+      c.upperBound = cdata.getString("upperBound");
       conditions ~= c;
     }
     return conditions;

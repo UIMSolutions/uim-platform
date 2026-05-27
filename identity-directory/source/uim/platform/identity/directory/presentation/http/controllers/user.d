@@ -39,10 +39,10 @@ class UserController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("externalId"), j.getString("userName"), j.parseUserName,
-        j.getString("displayName"), j.getString("userType"),
-        j.getString("preferredLanguage"), j.getString("locale"),
-        j.getString("timezone"), j.getString("password"), parseEmails(j),
+        data.getString("externalId"), data.getString("userName"), j.parseUserName,
+        data.getString("displayName"), data.getString("userType"),
+        data.getString("preferredLanguage"), data.getString("locale"),
+        data.getString("timezone"), data.getString("password"), parseEmails(j),
         parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
         getStrings(j, "schemas"),);
 
@@ -104,9 +104,9 @@ class UserController : ManageController {
       auto userId = precheck.id;
       auto j = req.json;
 
-      auto updateReq = UpdateUserRequest(userId, j.parseUserName, j.getString("displayName"),
-        j.getString("userType"), j.getString("preferredLanguage"),
-        j.getString("locale"), j.getString("timezone"),
+      auto updateReq = UpdateUserRequest(userId, j.parseUserName, data.getString("displayName"),
+        data.getString("userType"), data.getString("preferredLanguage"),
+        data.getString("locale"), data.getString("timezone"),
         j.getBoolean("active", true), parseEmails(j), parsePhoneNumbers(j),
         j.toAddresses, [], // extendedAttributes
 
@@ -146,8 +146,8 @@ class UserController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto error = useCase.changePassword(j.getString("userId"),
-        j.getString("currentPassword"), j.getString("newPassword"));
+      auto error = useCase.changePassword(data.getString("userId"),
+        data.getString("currentPassword"), data.getString("newPassword"));
       if (error.length > 0) {
         writeScimError(res, 400, error);
       } else {

@@ -71,16 +71,16 @@ class BrandingConfigController : ManageController {
             BrandingConfigDTO dto;
             dto.configId = BrandingConfigId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.logoUrl = j.getString("logoUrl");
-            dto.backgroundUrl = j.getString("backgroundUrl");
-            dto.primaryColor = j.getString("primaryColor");
-            dto.secondaryColor = j.getString("secondaryColor");
-            dto.pageTitle = j.getString("pageTitle");
-            dto.footerText = j.getString("footerText");
-            dto.customCss = j.getString("customCss");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.logoUrl = data.getString("logoUrl");
+            dto.backgroundUrl = data.getString("backgroundUrl");
+            dto.primaryColor = data.getString("primaryColor");
+            dto.secondaryColor = data.getString("secondaryColor");
+            dto.pageTitle = data.getString("pageTitle");
+            dto.footerText = data.getString("footerText");
+            dto.customCss = data.getString("customCss");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createConfig(dto);
             if (result.hasError)
@@ -107,16 +107,16 @@ class BrandingConfigController : ManageController {
             BrandingConfigDTO dto;
             dto.tenantId = tenantId;
             dto.configId = BrandingConfigId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.logoUrl = j.getString("logoUrl");
-            dto.backgroundUrl = j.getString("backgroundUrl");
-            dto.primaryColor = j.getString("primaryColor");
-            dto.secondaryColor = j.getString("secondaryColor");
-            dto.pageTitle = j.getString("pageTitle");
-            dto.footerText = j.getString("footerText");
-            dto.customCss = j.getString("customCss");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.logoUrl = data.getString("logoUrl");
+            dto.backgroundUrl = data.getString("backgroundUrl");
+            dto.primaryColor = data.getString("primaryColor");
+            dto.secondaryColor = data.getString("secondaryColor");
+            dto.pageTitle = data.getString("pageTitle");
+            dto.footerText = data.getString("footerText");
+            dto.customCss = data.getString("customCss");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateConfig(dto);
             if (result.hasError)

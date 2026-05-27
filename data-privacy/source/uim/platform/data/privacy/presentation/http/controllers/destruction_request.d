@@ -37,12 +37,12 @@ class DestructionRequestController : ManageController {
 
       CreateDestructionRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.requestedBy = UserId(j.getString("requestedBy"));
+      r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.requestedBy = UserId(data.getString("requestedBy"));
       r.targetSystems = getStrings(j, "targetSystems");
-      r.archiveRequestId = j.getString("archiveRequestId");
-      r.blockingRequestId = j.getString("blockingRequestId");
-      r.reason = j.getString("reason");
+      r.archiveRequestId = data.getString("archiveRequestId");
+      r.blockingRequestId = data.getString("blockingRequestId");
+      r.reason = data.getString("reason");
       r.scheduledAt = jsonLong(j, "scheduledAt");
 
       auto result = usecase.createRequest(r);
@@ -97,7 +97,7 @@ class DestructionRequestController : ManageController {
       UpdateDestructionStatusRequest r;
       r.requestId = DestructionRequestId(precheck.id);
       r.tenantId = tenantId;
-      r.status = j.getString("status");
+      r.status = data.getString("status");
 
       auto result = usecase.updateStatus(r);
       if (result.isSuccess()) {

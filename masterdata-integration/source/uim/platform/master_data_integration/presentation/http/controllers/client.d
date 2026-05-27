@@ -39,19 +39,19 @@ class ClientController : ManageController {
       auto j = req.json;
       CreateClientRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.clientType = j.getString("clientType");
-      r.systemUrl = j.getString("systemUrl");
-      r.destinationName = j.getString("destinationName");
-      r.communicationArrangement = j.getString("communicationArrangement");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.clientType = data.getString("clientType");
+      r.systemUrl = data.getString("systemUrl");
+      r.destinationName = data.getString("destinationName");
+      r.communicationArrangement = data.getString("communicationArrangement");
       r.supportedCategories = getStrings(j, "supportedCategories");
       r.supportsInitialLoad = j.getBoolean("supportsInitialLoad");
       r.supportsDeltaReplication = j.getBoolean("supportsDeltaReplication");
       r.supportsKeyMapping = j.getBoolean("supportsKeyMapping");
-      r.authType = j.getString("authType");
-      r.clientIdRef = j.getString("clientIdRef");
-      r.certificateRef = j.getString("certificateRef");
+      r.authType = data.getString("authType");
+      r.clientIdRef = data.getString("clientIdRef");
+      r.certificateRef = data.getString("certificateRef");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -117,16 +117,16 @@ class ClientController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateClientRequest r;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.status = j.getString("status");
-      r.systemUrl = j.getString("systemUrl");
-      r.destinationName = j.getString("destinationName");
-      r.communicationArrangement = j.getString("communicationArrangement");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
+      r.systemUrl = data.getString("systemUrl");
+      r.destinationName = data.getString("destinationName");
+      r.communicationArrangement = data.getString("communicationArrangement");
       r.supportedCategories = getStrings(j, "supportedCategories");
-      r.authType = j.getString("authType");
-      r.clientIdRef = j.getString("clientIdRef");
-      r.certificateRef = j.getString("certificateRef");
+      r.authType = data.getString("authType");
+      r.clientIdRef = data.getString("clientIdRef");
+      r.certificateRef = data.getString("certificateRef");
 
       auto result = usecase.updateClient(id, r);
       if (result.hasError)

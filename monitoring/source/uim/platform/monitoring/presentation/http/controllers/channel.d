@@ -40,17 +40,17 @@ class ChannelController : ManageController {
       auto j = req.json;
       CreateNotificationChannelRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.channelType = j.getString("channelType");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.channelType = data.getString("channelType");
       r.emailRecipients = getStrings(j, "emailRecipients");
-      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
-      r.webhookUrl = j.getString("webhookUrl");
-      r.webhookSecret = j.getString("webhookSecret");
-      r.webhookMethod = j.getString("webhookMethod");
-      r.onPremiseHost = j.getString("onPremiseHost");
+      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+      r.webhookUrl = data.getString("webhookUrl");
+      r.webhookSecret = data.getString("webhookSecret");
+      r.webhookMethod = data.getString("webhookMethod");
+      r.onPremiseHost = data.getString("onPremiseHost");
       r.onPremisePort = j.getInteger("onPremisePort");
-      r.onPremiseProtocol = j.getString("onPremiseProtocol");
+      r.onPremiseProtocol = data.getString("onPremiseProtocol");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createChannel(r);
@@ -110,15 +110,15 @@ class ChannelController : ManageController {
       UpdateNotificationChannelRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.description = j.getString("description");
-      r.state = j.getString("state");
+      r.description = data.getString("description");
+      r.state = data.getString("state");
       r.emailRecipients = getStrings(j, "emailRecipients");
-      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
-      r.webhookUrl = j.getString("webhookUrl");
-      r.webhookSecret = j.getString("webhookSecret");
-      r.onPremiseHost = j.getString("onPremiseHost");
+      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+      r.webhookUrl = data.getString("webhookUrl");
+      r.webhookSecret = data.getString("webhookSecret");
+      r.onPremiseHost = data.getString("onPremiseHost");
       r.onPremisePort = j.getInteger("onPremisePort");
-      r.onPremiseProtocol = j.getString("onPremiseProtocol");
+      r.onPremiseProtocol = data.getString("onPremiseProtocol");
 
       auto result = usecase.updateChannel(r);
       if (result.hasError)

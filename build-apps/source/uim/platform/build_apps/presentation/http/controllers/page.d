@@ -68,16 +68,16 @@ class PageController : ManageController {
             PageDTO dto;
             dto.pageId = PageId(precheck.id);
             dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(j.getString("applicationId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.pageType = j.getString("pageType");
-            dto.route = j.getString("route");
-            dto.layoutConfig = j.getString("layoutConfig");
-            dto.componentTree = j.getString("componentTree");
-            dto.styleOverrides = j.getString("styleOverrides");
-            dto.pageVariables = j.getString("pageVariables");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = ApplicationId(data.getString("applicationId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.pageType = data.getString("pageType");
+            dto.route = data.getString("route");
+            dto.layoutConfig = data.getString("layoutConfig");
+            dto.componentTree = data.getString("componentTree");
+            dto.styleOverrides = data.getString("styleOverrides");
+            dto.pageVariables = data.getString("pageVariables");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createPage(dto);
             if (result.hasError)
@@ -104,12 +104,12 @@ class PageController : ManageController {
             PageDTO dto;
             dto.tenantId = tenantId;
             dto.pageId = PageId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.route = j.getString("route");
-            dto.layoutConfig = j.getString("layoutConfig");
-            dto.componentTree = j.getString("componentTree");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.route = data.getString("route");
+            dto.layoutConfig = data.getString("layoutConfig");
+            dto.componentTree = data.getString("componentTree");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updatePage(dto);
             if (result.hasError)

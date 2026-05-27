@@ -70,15 +70,15 @@ class ExtensionController : ManageController {
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.publisher = j.getString("publisher");
-            dto.category = j.getString("category");
-            dto.dependencies = j.getString("dependencies");
-            dto.capabilities = j.getString("capabilities");
-            dto.iconUrl = j.getString("iconUrl");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.publisher = data.getString("publisher");
+            dto.category = data.getString("category");
+            dto.dependencies = data.getString("dependencies");
+            dto.capabilities = data.getString("capabilities");
+            dto.iconUrl = data.getString("iconUrl");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto tenantId = precheck.tenantId;
             auto result = usecase.createExtension(tenantId, dto);
@@ -105,10 +105,10 @@ class ExtensionController : ManageController {
             
             ExtensionDTO dto;
             dto.extensionId = ExtensionId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateExtension(tenantId, dto);
             if (result.hasError)

@@ -41,8 +41,8 @@ class DeploymentController : ManageController {
       auto j = req.json;
       auto r = CreateDeploymentRequest();
       r.tenantId = tenantId;
-      r.trainingJobId = j.getString("trainingJobId");
-      r.name = j.getString("name");
+      r.trainingJobId = data.getString("trainingJobId");
+      r.name = data.getString("name");
       r.replicas = j.getInteger("replicas", 1);
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 

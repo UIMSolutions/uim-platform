@@ -36,12 +36,12 @@ class OAuthClientController : ManageController {
 
       CreateOAuthClientRequest r;
       r.tenantId = tenantId;
-      r.clientId = j.getString("clientId");
-      r.clientSecret = j.getString("clientSecret");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.clientType = j.getString("clientType");
-      r.appId = j.getString("appId");
+      r.clientId = data.getString("clientId");
+      r.clientSecret = data.getString("clientSecret");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.clientType = data.getString("clientType");
+      r.appId = data.getString("appId");
 
       auto gtArr = j["grantTypes"];
       if (gtArr.type == Json.Type.array)
@@ -123,8 +123,8 @@ class OAuthClientController : ManageController {
       UpdateOAuthClientRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto gtArr = j["grantTypes"];
       if (gtArr.type == Json.Type.array)

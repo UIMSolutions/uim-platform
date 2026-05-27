@@ -42,10 +42,10 @@ class ProvisioningJobController : PlatformController {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
-      r.sourceSystemId = j.getString("sourceSystemId");
-      r.targetSystemId = j.getString("targetSystemId");
-      r.jobType = parseJobType(j.getString("jobType"));
-      r.schedule = j.getString("schedule");
+      r.sourceSystemId = data.getString("sourceSystemId");
+      r.targetSystemId = data.getString("targetSystemId");
+      r.jobType = parseJobType(data.getString("jobType"));
+      r.schedule = data.getString("schedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createJob(r);
@@ -127,10 +127,10 @@ class ProvisioningJobController : PlatformController {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
-      r.sourceSystemId = j.getString("sourceSystemId");
-      r.targetSystemId = j.getString("targetSystemId");
-      r.jobType = parseJobType(j.getString("jobType"));
-      r.schedule = j.getString("schedule");
+      r.sourceSystemId = data.getString("sourceSystemId");
+      r.targetSystemId = data.getString("targetSystemId");
+      r.jobType = parseJobType(data.getString("jobType"));
+      r.schedule = data.getString("schedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createAndRunJob(r);

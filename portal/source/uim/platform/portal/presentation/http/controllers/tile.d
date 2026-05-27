@@ -40,11 +40,11 @@ class TileController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateTileRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("catalogId"), j.getString("title"), j.getString("subtitle"),
-        j.getString("description"), j.getString("icon"), j.getString("info"),
+        data.getString("catalogId"), data.getString("title"), data.getString("subtitle"),
+        data.getString("description"), data.getString("icon"), data.getString("info"),
         jsonEnum!TileType(j, "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType
           .url),
-        j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
+        data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
           "navigationTarget", NavigationTarget.inPlace), getStrings(j,
           "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
 
@@ -107,11 +107,11 @@ class TileController : ManageController {
     try {
       auto tileId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateTileRequest(tileId, j.getString("title"),
-        j.getString("subtitle"), j.getString("description"),
-        j.getString("icon"), j.getString("info"), jsonEnum!TileType(j,
+      auto updateReq = UpdateTileRequest(tileId, data.getString("title"),
+        data.getString("subtitle"), data.getString("description"),
+        data.getString("icon"), data.getString("info"), jsonEnum!TileType(j,
           "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
-        j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
+        data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
           "navigationTarget", NavigationTarget.inPlace), getStrings(j,
           "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
 

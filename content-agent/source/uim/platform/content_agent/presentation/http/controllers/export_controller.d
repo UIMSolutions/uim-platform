@@ -38,9 +38,9 @@ class ExportController : PlatformController {
       auto j = req.json;
       auto r = StartExportRequest();
       r.tenantId = tenantId;
-      r.packageId = j.getString("packageId");
-      r.transportRequestId = j.getString("transportRequestId");
-      r.queueId = j.getString("queueId");
+      r.packageId = data.getString("packageId");
+      r.transportRequestId = data.getString("transportRequestId");
+      r.queueId = data.getString("queueId");
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.startExport(r);

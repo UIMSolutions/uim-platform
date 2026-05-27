@@ -37,15 +37,15 @@ class KeystoreController : ManageController {
     auto j = req.json;
     UploadKeystoreRequest r;
     r.tenantId = tenantId;
-    r.accountId = j.getString("accountId");
-    r.applicationId = j.getString("applicationId");
-    r.subscriptionId = j.getString("subscriptionId");
-    r.level = j.getString("level");
-    r.name = j.getString("name");
-    r.description = j.getString("description");
-    r.format = j.getString("format");
-    r.content = j.getString("content");
-    r.createdBy = UserId(j.getString("createdBy"));
+    r.accountId = data.getString("accountId");
+    r.applicationId = data.getString("applicationId");
+    r.subscriptionId = data.getString("subscriptionId");
+    r.level = data.getString("level");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.format = data.getString("format");
+    r.content = data.getString("content");
+    r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = usecase.uploadKeystore(r);
     if (result.hasError) 
@@ -61,15 +61,15 @@ class KeystoreController : ManageController {
 
       UploadKeystoreRequest r;
       r.tenantId = tenantId;
-      r.accountId = j.getString("accountId");
-      r.applicationId = j.getString("applicationId");
-      r.subscriptionId = j.getString("subscriptionId");
-      r.level = j.getString("level");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.format = j.getString("format");
-      r.content = j.getString("content");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.accountId = data.getString("accountId");
+      r.applicationId = data.getString("applicationId");
+      r.subscriptionId = data.getString("subscriptionId");
+      r.level = data.getString("level");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.format = data.getString("format");
+      r.content = data.getString("content");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.uploadKeystore(r);
       if (result.hasError)
@@ -164,9 +164,9 @@ class KeystoreController : ManageController {
       UpdateKeystoreRequest r;
       r.tenantId = tenantId;
       r.keystoreId = id;
-      r.description = j.getString("description");
-      r.content = j.getString("content");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.description = data.getString("description");
+      r.content = data.getString("content");
+      r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.updateKeystore(r);
       if (result.hasError)

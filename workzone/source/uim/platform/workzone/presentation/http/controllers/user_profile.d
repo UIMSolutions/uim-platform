@@ -39,15 +39,15 @@ class UserProfileController : ManageController {
       auto j = req.json;
       auto r = CreateUserProfileRequest();
       r.tenantId = tenantId;
-      r.userId = j.getString("userId");
-      r.displayName = j.getString("displayName");
-      r.email = j.getString("email");
-      r.firstName = j.getString("firstName");
-      r.lastName = j.getString("lastName");
-      r.jobTitle = j.getString("jobTitle");
-      r.department = j.getString("department");
-      r.timezone = j.getString("timezone");
-      r.language = j.getString("language");
+      r.userId = data.getString("userId");
+      r.displayName = data.getString("displayName");
+      r.email = data.getString("email");
+      r.firstName = data.getString("firstName");
+      r.lastName = data.getString("lastName");
+      r.jobTitle = data.getString("jobTitle");
+      r.department = data.getString("department");
+      r.timezone = data.getString("timezone");
+      r.language = data.getString("language");
 
       auto result = useCase.createUserProfile(r);
       if (result.isSuccess()) {
@@ -105,10 +105,10 @@ class UserProfileController : ManageController {
       auto r = UpdateUserProfileRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.displayName = j.getString("displayName");
-      r.email = j.getString("email");
-      r.jobTitle = j.getString("jobTitle");
-      r.avatarUrl = j.getString("avatarUrl");
+      r.displayName = data.getString("displayName");
+      r.email = data.getString("email");
+      r.jobTitle = data.getString("jobTitle");
+      r.avatarUrl = data.getString("avatarUrl");
 
       auto result = useCase.updateUserProfile(r);
       if (result.isSuccess())

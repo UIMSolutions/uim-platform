@@ -43,20 +43,20 @@ class FileServicePlanRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServicePlan e;
-            e.id               = ServicePlanId(j.getString("id", ""));
+            e.id               = ServicePlanId(data.getString("id", ""));
             e.tenantId         = t;
-            e.name             = j.getString("name", "");
-            e.description      = j.getString("description", "");
-            e.tier             = j.getString("tier", "standard").to!PlanTier;
+            e.name             = data.getString("name", "");
+            e.description      = data.getString("description", "");
+            e.tier             = data.getString("tier", "standard").to!PlanTier;
             e.memoryGb         = j.getLong("memoryGb", 4);
             e.storageGb        = j.getLong("storageGb", 20);
             e.maxConnections   = j.getLong("maxConnections", 100);
             e.multiAzSupported = j.getBoolean("multiAzSupported", false);
             e.available        = j.getBoolean("available", true);
-            e.pricingUnit      = j.getString("pricingUnit", "");
+            e.pricingUnit      = data.getString("pricingUnit", "");
             e.createdAt        = j.getLong("createdAt", 0);
-            e.createdBy        = UserId(j.getString("createdBy", ""));
-            e.updatedBy        = UserId(j.getString("updatedBy", ""));
+            e.createdBy        = UserId(data.getString("createdBy", ""));
+            e.updatedBy        = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

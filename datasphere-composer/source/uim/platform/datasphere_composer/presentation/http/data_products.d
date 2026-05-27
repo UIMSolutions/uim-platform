@@ -59,11 +59,11 @@ class DataProductController : ManageController {
     CreateDataProductRequest r;
     r.tenantId     = req.getTenantId;
     r.id           = precheck.id;
-    r.providerId   = j.getString("providerId");
-    r.name         = j.getString("name");
-    r.description  = j.getString("description");
-    r.schemaVersion = j.getString("schemaVersion");
-    r.namespace    = j.getString("namespace");
+    r.providerId   = data.getString("providerId");
+    r.name         = data.getString("name");
+    r.description  = data.getString("description");
+    r.schemaVersion = data.getString("schemaVersion");
+    r.namespace    = data.getString("namespace");
     r.enabled      = j.getBoolean("enabled");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -77,9 +77,9 @@ class DataProductController : ManageController {
     UpdateDataProductRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
-    r.status      = j.getString("status");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
+    r.status      = data.getString("status");
     r.enabled     = j.getBoolean("enabled");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

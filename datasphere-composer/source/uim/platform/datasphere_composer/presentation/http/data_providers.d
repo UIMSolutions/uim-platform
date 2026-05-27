@@ -48,11 +48,11 @@ class DataProviderController : ManageController {
     CreateDataProviderRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = precheck.id;
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
-    r.systemType  = j.getString("systemType");
-    r.connectionUrl = j.getString("connectionUrl");
-    r.region      = j.getString("region");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
+    r.systemType  = data.getString("systemType");
+    r.connectionUrl = data.getString("connectionUrl");
+    r.region      = data.getString("region");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -65,11 +65,11 @@ class DataProviderController : ManageController {
     UpdateDataProviderRequest r;
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.name        = j.getString("name");
-    r.description = j.getString("description");
-    r.status      = j.getString("status");
-    r.connectionUrl = j.getString("connectionUrl");
-    r.region      = j.getString("region");
+    r.name        = data.getString("name");
+    r.description = data.getString("description");
+    r.status      = data.getString("status");
+    r.connectionUrl = data.getString("connectionUrl");
+    r.region      = data.getString("region");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

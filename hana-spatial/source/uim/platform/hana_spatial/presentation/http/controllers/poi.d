@@ -33,22 +33,22 @@ class PoiController : ManageController {
       CreatePoiRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");
-      r.street = j.getString("street");
-      r.houseNumber = j.getString("houseNumber");
-      r.city = j.getString("city");
-      r.postalCode = j.getString("postalCode");
-      r.country = j.getString("country");
-      r.countryCode = j.getString("countryCode");
-      r.phoneNumber = j.getString("phoneNumber");
-      r.website = j.getString("website");
-      r.openingHours = j.getString("openingHours");
-      r.providerId = j.getString("providerId");
-      r.externalId = j.getString("externalId");
+      r.street = data.getString("street");
+      r.houseNumber = data.getString("houseNumber");
+      r.city = data.getString("city");
+      r.postalCode = data.getString("postalCode");
+      r.country = data.getString("country");
+      r.countryCode = data.getString("countryCode");
+      r.phoneNumber = data.getString("phoneNumber");
+      r.website = data.getString("website");
+      r.openingHours = data.getString("openingHours");
+      r.providerId = data.getString("providerId");
+      r.externalId = data.getString("externalId");
       r.attributes = jsonKeyValuePairs(j, "attributes");
 
       auto result = usecase.create(r);
@@ -110,14 +110,14 @@ class PoiController : ManageController {
       UpdatePoiRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");
-      r.phoneNumber = j.getString("phoneNumber");
-      r.website = j.getString("website");
-      r.openingHours = j.getString("openingHours");
+      r.phoneNumber = data.getString("phoneNumber");
+      r.website = data.getString("website");
+      r.openingHours = data.getString("openingHours");
 
       auto result = usecase.update(r);
       if (result.hasError)

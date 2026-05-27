@@ -37,12 +37,12 @@ class DatabaseUserController : ManageController {
 
       CreateDatabaseUserRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.userName = j.getString("userName");
-      r.password = j.getString("password");
-      r.authType = j.getString("authType");
-      r.defaultSchema = j.getString("defaultSchema");
+      r.userName = data.getString("userName");
+      r.password = data.getString("password");
+      r.authType = data.getString("authType");
+      r.defaultSchema = data.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
       r.roles = getStrings(j, "roles");
@@ -125,8 +125,8 @@ class DatabaseUserController : ManageController {
       UpdateDatabaseUserRequest r;
       r.tenantId = tenantId;
       r.id = DatabaseUserprecheck.id);
-      r.password = j.getString("password");
-      r.defaultSchema = j.getString("defaultSchema");
+      r.password = data.getString("password");
+      r.defaultSchema = data.getString("defaultSchema");
       r.isRestricted = j.getBoolean("isRestricted");
       r.forcePasswordChange = j.getBoolean("forcePasswordChange");
       r.roles = getStrings(j, "roles");

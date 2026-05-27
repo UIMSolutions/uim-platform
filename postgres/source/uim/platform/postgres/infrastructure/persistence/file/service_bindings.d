@@ -43,21 +43,21 @@ class FileServiceBindingRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServiceBinding e;
-            e.id          = ServiceBindingId(j.getString("id", ""));
+            e.id          = ServiceBindingId(data.getString("id", ""));
             e.tenantId    = t;
-            e.instanceId  = ServiceInstanceId(j.getString("instanceId", ""));
-            e.appId       = j.getString("appId", "");
-            e.name        = j.getString("name", "");
-            e.status      = j.getString("status", "active").to!BindingStatus;
-            e.bindingHost = j.getString("bindingHost", "");
+            e.instanceId  = ServiceInstanceId(data.getString("instanceId", ""));
+            e.appId       = data.getString("appId", "");
+            e.name        = data.getString("name", "");
+            e.status      = data.getString("status", "active").to!BindingStatus;
+            e.bindingHost = data.getString("bindingHost", "");
             e.bindingPort = cast(ushort) j.getLong("bindingPort", 5432);
-            e.username    = j.getString("username", "");
-            e.database    = j.getString("database", "");
-            e.sslMode     = j.getString("sslMode", "require").to!SslMode;
+            e.username    = data.getString("username", "");
+            e.database    = data.getString("database", "");
+            e.sslMode     = data.getString("sslMode", "require").to!SslMode;
             e.expiresAt   = j.getLong("expiresAt", 0);
             e.createdAt   = j.getLong("createdAt", 0);
-            e.createdBy   = UserId(j.getString("createdBy", ""));
-            e.updatedBy   = UserId(j.getString("updatedBy", ""));
+            e.createdBy   = UserId(data.getString("createdBy", ""));
+            e.updatedBy   = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

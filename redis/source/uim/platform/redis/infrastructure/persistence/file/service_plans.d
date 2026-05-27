@@ -42,17 +42,17 @@ class FileServicePlanRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServicePlan p;
-            p.id          = ServicePlanId(j.getString("id", ""));
+            p.id          = ServicePlanId(data.getString("id", ""));
             p.tenantId    = tenantId;
-            p.name        = j.getString("name", "");
-            p.description = j.getString("description", "");
-            p.tier        = j.getString("tier", "basic").to!PlanTier;
+            p.name        = data.getString("name", "");
+            p.description = data.getString("description", "");
+            p.tier        = data.getString("tier", "basic").to!PlanTier;
             p.memoryMb    = j.getLong("memoryMb", 256);
             p.maxConnections = j.getLong("maxConnections", 1000);
             p.haEnabled   = j.getBoolean("haEnabled", false);
             p.persistenceEnabled = j.getBoolean("persistenceEnabled", false);
             p.tlsEnabled  = j.getBoolean("tlsEnabled", true);
-            p.pricingUnit = j.getString("pricingUnit", "");
+            p.pricingUnit = data.getString("pricingUnit", "");
             p.available   = j.getBoolean("available", true);
             p.createdAt   = j.getLong("createdAt", 0);
             super.save(p);

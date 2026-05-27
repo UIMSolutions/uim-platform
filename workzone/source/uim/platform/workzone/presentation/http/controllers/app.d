@@ -39,12 +39,12 @@ class AppController : ManageController {
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.launchUrl = j.getString("launchUrl");
-      r.icon = j.getString("icon");
-      r.vendor = j.getString("vendor");
-      r.version_ = j.getString("version");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.launchUrl = data.getString("launchUrl");
+      r.icon = data.getString("icon");
+      r.vendor = data.getString("vendor");
+      r.version_ = data.getString("version");
       r.supportedPlatforms = getStrings(j, "supportedPlatforms");
       r.tags = getStrings(j, "tags");
       r.appConfig = parseAppConfig(j);
@@ -105,13 +105,13 @@ class AppController : ManageController {
       auto r = UpdateAppRequest();
       r.id = AppId(precheck.id);
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.launchUrl = j.getString("launchUrl");
-      r.icon = j.getString("icon");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.launchUrl = data.getString("launchUrl");
+      r.icon = data.getString("icon");
       r.appConfig = parseAppConfig(j);
 
-      auto sStr = j.getString("status");
+      auto sStr = data.getString("status");
       if (sStr == "inactive")
         r.status = AppStatus.inactive;
       else if (sStr == "deprecated")

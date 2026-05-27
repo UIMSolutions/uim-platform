@@ -35,9 +35,9 @@ class RoleController : ManageController {
 
       CreateRoleRequest r;
       r.tenantId = tenantId;
-      r.name        = j.getString("name");
-      r.description = j.getString("description");
-      r.appId       = j.getString("appId");
+      r.name        = data.getString("name");
+      r.description = data.getString("description");
+      r.appId       = data.getString("appId");
 
       auto srArr = j["scopeReferences"];
       if (srArr.type == Json.Type.array)
@@ -91,7 +91,7 @@ class RoleController : ManageController {
       UpdateRoleRequest r;
       r.tenantId = tenantId;
       r.id          = id;
-      r.description = j.getString("description");
+      r.description = data.getString("description");
 
       auto srArr = j["scopeReferences"];
       if (srArr.type == Json.Type.array)

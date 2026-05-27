@@ -27,8 +27,8 @@ public:
       CreateApiProductRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = precheck.id;
-      r.name        = j.getString("name");
-      r.description = j.getString("description");
+      r.name        = data.getString("name");
+      r.description = data.getString("description");
       r.apiProxyIds = getStrings(j, "apiProxyIds");
       r.scopes      = getStrings(j, "scopes");
       r.environments= getStrings(j, "environments");
@@ -61,10 +61,10 @@ public:
       UpdateApiProductRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = extractIdFromPath(req);
-      r.name        = j.getString("name");
-      r.description = j.getString("description");
+      r.name        = data.getString("name");
+      r.description = data.getString("description");
       r.apiProxyIds = getStrings(j, "apiProxyIds");
-      r.status      = j.getString("status");
+      r.status      = data.getString("status");
       r.isPublic    = j.getBoolean("isPublic");
       r.metadata    = jsonStrMap(j, "metadata");
       auto result = _usecase.update(r);

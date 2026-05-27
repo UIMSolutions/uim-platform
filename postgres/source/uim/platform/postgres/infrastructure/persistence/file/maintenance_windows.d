@@ -43,19 +43,19 @@ class FileMaintenanceWindowRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             MaintenanceWindow e;
-            e.id                      = MaintenanceWindowId(j.getString("id", ""));
+            e.id                      = MaintenanceWindowId(data.getString("id", ""));
             e.tenantId                = t;
-            e.instanceId              = ServiceInstanceId(j.getString("instanceId", ""));
-            e.dayOfWeek               = j.getString("dayOfWeek", "Sunday");
+            e.instanceId              = ServiceInstanceId(data.getString("instanceId", ""));
+            e.dayOfWeek               = data.getString("dayOfWeek", "Sunday");
             e.startHourUtc            = j.getLong("startHourUtc", 2);
             e.durationHours           = j.getLong("durationHours", 1);
             e.autoMinorVersionUpgrade = j.getBoolean("autoMinorVersionUpgrade", true);
-            e.status                  = j.getString("status", "scheduled").to!MaintenanceStatus;
+            e.status                  = data.getString("status", "scheduled").to!MaintenanceStatus;
             e.lastMaintenanceAt       = j.getLong("lastMaintenanceAt", 0);
             e.nextMaintenanceAt       = j.getLong("nextMaintenanceAt", 0);
             e.createdAt               = j.getLong("createdAt", 0);
-            e.createdBy               = UserId(j.getString("createdBy", ""));
-            e.updatedBy               = UserId(j.getString("updatedBy", ""));
+            e.createdBy               = UserId(data.getString("createdBy", ""));
+            e.updatedBy               = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

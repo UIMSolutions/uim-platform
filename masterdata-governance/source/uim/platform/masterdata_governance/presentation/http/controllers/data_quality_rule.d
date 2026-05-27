@@ -66,22 +66,22 @@ class DataQualityRuleController : ManageController {
             DataQualityRuleDTO dto;
             dto.ruleId = DataQualityRuleId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.fieldName = j.getString("fieldName");
-            dto.fieldPath = j.getString("fieldPath");
-            dto.ruleType = j.getString("ruleType");
-            dto.severity = j.getString("severity");
-            dto.condition = j.getString("condition");
-            dto.errorMessage = j.getString("errorMessage");
-            dto.bpCategory = j.getString("bpCategory");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.fieldName = data.getString("fieldName");
+            dto.fieldPath = data.getString("fieldPath");
+            dto.ruleType = data.getString("ruleType");
+            dto.severity = data.getString("severity");
+            dto.condition = data.getString("condition");
+            dto.errorMessage = data.getString("errorMessage");
+            dto.bpCategory = data.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
             dto.weight = j.getInteger("weight");
-            dto.validValues = j.getString("validValues");
-            dto.regexPattern = j.getString("regexPattern");
-            dto.minValue = j.getString("minValue");
-            dto.maxValue = j.getString("maxValue");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.validValues = data.getString("validValues");
+            dto.regexPattern = data.getString("regexPattern");
+            dto.minValue = data.getString("minValue");
+            dto.maxValue = data.getString("maxValue");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataQualityRule(dto);
             if (result.hasError)
@@ -105,18 +105,18 @@ class DataQualityRuleController : ManageController {
             DataQualityRuleDTO dto;
             dto.ruleId = DataQualityRuleId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.condition = j.getString("condition");
-            dto.errorMessage = j.getString("errorMessage");
-            dto.bpCategory = j.getString("bpCategory");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.condition = data.getString("condition");
+            dto.errorMessage = data.getString("errorMessage");
+            dto.bpCategory = data.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
             dto.weight = j.getInteger("weight");
-            dto.validValues = j.getString("validValues");
-            dto.regexPattern = j.getString("regexPattern");
-            dto.minValue = j.getString("minValue");
-            dto.maxValue = j.getString("maxValue");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.validValues = data.getString("validValues");
+            dto.regexPattern = data.getString("regexPattern");
+            dto.minValue = data.getString("minValue");
+            dto.maxValue = data.getString("maxValue");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDataQualityRule(dto);
             if (result.hasError)

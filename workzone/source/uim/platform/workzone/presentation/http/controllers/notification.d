@@ -40,16 +40,16 @@ class NotificationController : ManageController {
       auto j = req.json;
       auto r = CreateNotificationRequest();
       r.tenantId = tenantId;
-      r.recipientId = j.getString("recipientId");
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.sourceApp = j.getString("sourceApp");
-      r.sourceObjectType = j.getString("sourceObjectType");
-      r.sourceObjectId = j.getString("sourceObjectId");
-      r.actionUrl = j.getString("actionUrl");
+      r.recipientId = data.getString("recipientId");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.sourceApp = data.getString("sourceApp");
+      r.sourceObjectType = data.getString("sourceObjectType");
+      r.sourceObjectId = data.getString("sourceObjectId");
+      r.actionUrl = data.getString("actionUrl");
       r.expiresAt = jsonLong(j, "expiresAt");
 
-      auto pStr = j.getString("priority");
+      auto pStr = data.getString("priority");
       if (pStr == "low")
         r.priority = NotificationPriority.low;
       else if (pStr == "high")

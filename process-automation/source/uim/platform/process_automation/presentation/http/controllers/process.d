@@ -38,13 +38,13 @@ class ProcessController : ManageController {
             auto j = req.json;
             CreateProcessRequest r;
             r.tenantId = tenantId;
-            r.projectId = ProjectId(j.getString("projectId"));
+            r.projectId = ProjectId(data.getString("projectId"));
             r.processId = ProcessId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.version_ = j.getString("version");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.version_ = data.getString("version");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = processUsecase.createProcess(r);
             if (result.hasError)
@@ -135,11 +135,11 @@ class ProcessController : ManageController {
             UpdateProcessRequest r;
             r.tenantId = tenantId;
             r.processId = Processprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.version_ = j.getString("version");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.version_ = data.getString("version");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = processUsecase.updateProcess(r);
             if (result.hasError)
@@ -176,7 +176,7 @@ class ProcessController : ManageController {
             DeployProcessRequest r;
             r.tenantId = tenantId;
             r.processId = id;
-            r.action = j.getString("action");
+            r.action = data.getString("action");
 
             auto result = processUsecase.deployProcess(r);
             if (result.hasError)

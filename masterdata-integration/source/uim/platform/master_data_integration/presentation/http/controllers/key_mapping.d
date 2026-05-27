@@ -43,9 +43,9 @@ class KeyMappingController : ManageController {
       auto j = req.json;
       CreateKeyMappingRequest r;
       r.tenantId = tenantId;
-      r.masterDataObjectId = j.getString("masterDataObjectId");
-      r.category = j.getString("category");
-      r.objectType = j.getString("objectType");
+      r.masterDataObjectId = data.getString("masterDataObjectId");
+      r.category = data.getString("category");
+      r.objectType = data.getString("objectType");
       r.entries = parseEntries(j);
 
       auto result = usecase.create(r);
@@ -173,10 +173,10 @@ class KeyMappingController : ManageController {
     auto entriesArr = jsonObjArray(j, "entries");
     foreach (ej; entriesArr) {
       KeyMappingEntryDto e;
-      e.clientId = ej.getString("clientId");
-      e.systemId = ej.getString("systemId");
-      e.localKey = ej.getString("localKey");
-      e.sourceType = ej.getString("sourceType");
+      e.clientId = edata.getString("clientId");
+      e.systemId = edata.getString("systemId");
+      e.localKey = edata.getString("localKey");
+      e.sourceType = edata.getString("sourceType");
       e.isPrimary = getBoolean(ej, "isPrimary");
       entries ~= e;
     }

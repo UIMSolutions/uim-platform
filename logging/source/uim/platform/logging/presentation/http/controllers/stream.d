@@ -38,11 +38,11 @@ class StreamController : ManageController {
       auto j = req.json;
       CreateLogStreamRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.sourceType = j.getString("sourceType");
-      r.retentionPolicyId = j.getString("retentionPolicyId");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.sourceType = data.getString("sourceType");
+      r.retentionPolicyId = data.getString("retentionPolicyId");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createStream(r);
       if (result.hasError)
@@ -118,8 +118,8 @@ class StreamController : ManageController {
       UpdateLogStreamRequest r;
       r.tenantId = tenantId;
       r.streamId = id;
-      r.description = j.getString("description");
-      r.retentionPolicyId = j.getString("retentionPolicyId");
+      r.description = data.getString("description");
+      r.retentionPolicyId = data.getString("retentionPolicyId");
       r.isActive = j.getBoolean("isActive", true);
 
       auto result = usecase.updateStream(r);

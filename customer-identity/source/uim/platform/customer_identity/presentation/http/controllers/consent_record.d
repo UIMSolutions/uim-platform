@@ -54,16 +54,16 @@ class ConsentRecordController : ManageController {
 
         ConsentRecordDTO dto;
         dto.tenantId = tenantId;
-        dto.customerId = CustomerId(j.getString("customerId"));
-        dto.consentType = j.getString("consentType");
-        dto.purpose = j.getString("purpose");
-        dto.legalBasis = j.getString("legalBasis");
+        dto.customerId = CustomerId(data.getString("customerId"));
+        dto.consentType = data.getString("consentType");
+        dto.purpose = data.getString("purpose");
+        dto.legalBasis = data.getString("legalBasis");
         dto.granted = j.getBoolean("granted");
-        dto.ipAddress = j.getString("ipAddress");
-        dto.userAgent = j.getString("userAgent");
-        dto.version_ = j.getString("version");
-        dto.locale = j.getString("locale");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.ipAddress = data.getString("ipAddress");
+        dto.userAgent = data.getString("userAgent");
+        dto.version_ = data.getString("version");
+        dto.locale = data.getString("locale");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = consentRecords.grantConsent(dto);
         if (result.success)

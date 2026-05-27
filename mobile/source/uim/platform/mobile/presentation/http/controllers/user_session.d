@@ -37,13 +37,13 @@ class UserSessionController : ManageController {
       auto j = req.json;
       CreateUserSessionRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.deviceId = j.getString("deviceId");
-      r.userId = j.getString("userId");
-      r.ipAddress = j.getString("ipAddress");
-      r.userAgent = j.getString("userAgent");
-      r.platform = j.getString("platform");
-      r.appVersion = j.getString("appVersion");
+      r.appId = data.getString("appId");
+      r.deviceId = data.getString("deviceId");
+      r.userId = data.getString("userId");
+      r.ipAddress = data.getString("ipAddress");
+      r.userAgent = data.getString("userAgent");
+      r.platform = data.getString("platform");
+      r.appVersion = data.getString("appVersion");
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

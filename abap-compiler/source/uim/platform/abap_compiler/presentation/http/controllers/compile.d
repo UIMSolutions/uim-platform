@@ -30,8 +30,8 @@ class CompileController : PlatformController {
             auto j = req.json;
             CompileRequest r;
             r.tenantId   = req.getTenantId;
-            r.programId  = j.getString("programId");
-            r.sourceCode = j.getString("sourceCode");
+            r.programId  = data.getString("programId");
+            r.sourceCode = data.getString("sourceCode");
 
             auto response = usecase.compile(r);
             auto status   = response.success ? 200 : 422;

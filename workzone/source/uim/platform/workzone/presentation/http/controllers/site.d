@@ -40,11 +40,11 @@ class SiteController : ManageController {
       auto j = req.json;
       auto r = CreateSiteRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.alias_ = j.getString("alias");
-      r.themeId = j.getString("themeId");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.alias_ = data.getString("alias");
+      r.themeId = data.getString("themeId");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createSite(r);
       if (result.isSuccess()) {
@@ -101,9 +101,9 @@ class SiteController : ManageController {
       auto r = UpdateSiteRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.themeId = j.getString("themeId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.themeId = data.getString("themeId");
 
       auto result = useCase.updateSite(r);
       if (result.isSuccess())

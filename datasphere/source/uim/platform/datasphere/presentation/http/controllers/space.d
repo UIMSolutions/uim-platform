@@ -38,9 +38,9 @@ class SpaceController : ManageController {
       CreateSpaceRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.businessName = j.getString("businessName");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.businessName = data.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
       auto result = usecase.createSpace(r);
@@ -122,9 +122,9 @@ class SpaceController : ManageController {
       UpdateSpaceRequest r;
       r.tenantId = tenantId;
       r.spaceId = Spaceprecheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.businessName = j.getString("businessName");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.businessName = data.getString("businessName");
       r.priority = j.getInteger("priority", 0);
 
       auto result = usecase.updateSpace(r);

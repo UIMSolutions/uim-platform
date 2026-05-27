@@ -38,14 +38,14 @@ class ArtifactController : ManageController {
             CreateArtifactRequest r;
             r.tenantId = tenantId;
             r.artifactId = ArtifactId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.version_ = j.getString("version");
-            r.author = j.getString("author");
-            r.category = j.getString("category");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.version_ = data.getString("version");
+            r.author = data.getString("author");
+            r.category = data.getString("category");
             r.tags = getStrings(j, "tags");
-            r.contentUrl = j.getString("contentUrl");
+            r.contentUrl = data.getString("contentUrl");
 
             auto result = artifactUsecase.createArtifact(r);
             if (result.hasError)
@@ -141,10 +141,10 @@ class ArtifactController : ManageController {
             UpdateArtifactRequest r;
             r.tenantId = tenantId;
             r.artifactId = Artifactprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.version_ = j.getString("version");
-            r.contentUrl = j.getString("contentUrl");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.version_ = data.getString("version");
+            r.contentUrl = data.getString("contentUrl");
 
             auto result = artifactUsecase.updateArtifact(r);
             if (result.hasError)

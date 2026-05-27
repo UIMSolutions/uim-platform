@@ -33,13 +33,13 @@ class DataAccessController : PlatformController {
       auto j = req.json;
       auto r = WriteDataAccessLogRequest();
       r.tenantId = tenantId;
-      r.accessedBy = j.getString("accessedBy");
-      r.dataSubject = j.getString("dataSubject");
-      r.dataObjectType = j.getString("dataObjectType");
-      r.dataObjectId = j.getString("dataObjectId");
+      r.accessedBy = data.getString("accessedBy");
+      r.dataSubject = data.getString("dataSubject");
+      r.dataObjectType = data.getString("dataObjectType");
+      r.dataObjectId = data.getString("dataObjectId");
       r.accessedFields = getStrings(j, "accessedFields");
-      r.purpose = j.getString("purpose");
-      r.channel = j.getString("channel");
+      r.purpose = data.getString("purpose");
+      r.channel = data.getString("channel");
 
       auto result = useCase.writeLog(r);
       if (result.isSuccess()) {

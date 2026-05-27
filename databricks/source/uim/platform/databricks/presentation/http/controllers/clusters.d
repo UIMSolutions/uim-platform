@@ -26,19 +26,19 @@ public:
       CreateClusterRequest r;
       r.tenantId              = req.getTenantId;
       r.id                    = precheck.id;
-      r.workspaceId           = j.getString("workspaceId");
-      r.name                  = j.getString("name");
-      r.nodeType              = j.getString("nodeType");
-      r.driverNodeType        = j.getString("driverNodeType");
-      r.sparkVersion          = j.getString("sparkVersion");
-      r.runtimeVersion        = j.getString("runtimeVersion");
-      r.creatorId             = j.getString("creatorId");
+      r.workspaceId           = data.getString("workspaceId");
+      r.name                  = data.getString("name");
+      r.nodeType              = data.getString("nodeType");
+      r.driverNodeType        = data.getString("driverNodeType");
+      r.sparkVersion          = data.getString("sparkVersion");
+      r.runtimeVersion        = data.getString("runtimeVersion");
+      r.creatorId             = data.getString("creatorId");
       r.numWorkers            = j.getInt("numWorkers");
       r.autoscaleEnabled      = j.getBoolean("autoscaleEnabled");
       r.autoscaleMinWorkers   = j.getInt("autoscaleMinWorkers");
       r.autoscaleMaxWorkers   = j.getInt("autoscaleMaxWorkers");
       r.autoTerminationMinutes= j.getInt("autoTerminationMinutes");
-      auto typeStr = j.getString("clusterType");
+      auto typeStr = data.getString("clusterType");
       if (typeStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.clusterType = typeStr.to!ClusterType; } catch (ConvException) {}
@@ -73,7 +73,7 @@ public:
       UpdateClusterRequest r;
       r.tenantId             = req.getTenantId;
       r.id                   = req.requestPath.to!string.split("/")[$-1];
-      r.name                 = j.getString("name");
+      r.name                 = data.getString("name");
       r.numWorkers           = j.getInt("numWorkers");
       r.autoscaleEnabled     = j.getBoolean("autoscaleEnabled");
       r.autoscaleMinWorkers  = j.getInt("autoscaleMinWorkers");

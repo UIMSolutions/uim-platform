@@ -38,7 +38,7 @@ class RoleController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
-        j.getString("name"), j.getString("description"),
+        data.getString("name"), data.getString("description"),
         jsonEnum!RoleScope(j, "scope", RoleScope.site),);
 
       auto result = useCase.createRole(createReq);
@@ -85,8 +85,8 @@ class RoleController : ManageController {
     try {
       auto roleId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateRoleRequest(roleId, j.getString("name"),
-        j.getString("description"),);
+      auto updateReq = UpdateRoleRequest(roleId, data.getString("name"),
+        data.getString("description"),);
 
       auto error = useCase.updateRole(updateReq);
       if (error.length > 0)
@@ -102,7 +102,7 @@ class RoleController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto assignReq = AssignRoleRequest(j.getString("roleId"), getStrings(j,
+      auto assignReq = AssignRoleRequest(data.getString("roleId"), getStrings(j,
           "userIds"), getStrings(j, "groupIds"),);
 
       auto error = useCase.assignRole(assignReq);

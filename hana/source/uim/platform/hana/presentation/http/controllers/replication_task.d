@@ -36,14 +36,14 @@ class ReplicationTaskController : ManageController {
       auto j = req.json;
       CreateReplicationTaskRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.mode = j.getString("mode");
-      r.sourceConnectionId = j.getString("sourceConnectionId");
-      r.targetConnectionId = j.getString("targetConnectionId");
-      r.scheduleExpression = j.getString("scheduleExpression");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.mode = data.getString("mode");
+      r.sourceConnectionId = data.getString("sourceConnectionId");
+      r.targetConnectionId = data.getString("targetConnectionId");
+      r.scheduleExpression = data.getString("scheduleExpression");
       r.mappings = jsonKeyValuePairs(j, "mappings");
 
       auto result = usecase.create(r);
@@ -130,10 +130,10 @@ class ReplicationTaskController : ManageController {
       UpdateReplicationTaskRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.mode = j.getString("mode");
-      r.scheduleExpression = j.getString("scheduleExpression");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.mode = data.getString("mode");
+      r.scheduleExpression = data.getString("scheduleExpression");
 
       auto result = usecase.update(r);
       if (result.hasError)

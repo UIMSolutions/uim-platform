@@ -40,10 +40,10 @@ class TrainingJobController : ManageController {
       CreateTrainingJobRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentTypeId = j.getString("documentTypeId");
-      r.schemaId = j.getString("schemaId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.documentTypeId = data.getString("documentTypeId");
+      r.schemaId = data.getString("schemaId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = usecase.createTrainingJob(r);
       if (result.hasError)
@@ -108,7 +108,7 @@ class TrainingJobController : ManageController {
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.trainingJobId = id;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = data.getString("targetStatus");
 
       auto result = usecase.patchTrainingJob(r);
       if (result.hasError)

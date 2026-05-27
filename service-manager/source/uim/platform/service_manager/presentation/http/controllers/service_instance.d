@@ -68,13 +68,13 @@ class ServiceInstanceController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceInstanceRequest r;
-            r.name = j.getString("name");
-            r.planId = j.getString("planId");
-            r.offeringId = j.getString("offeringId");
-            r.platformId = j.getString("platformId");
-            r.context = j.getString("context");
-            r.parameters = j.getString("parameters");
-            r.labels = j.getString("labels");
+            r.name = data.getString("name");
+            r.planId = data.getString("planId");
+            r.offeringId = data.getString("offeringId");
+            r.platformId = data.getString("platformId");
+            r.context = data.getString("context");
+            r.parameters = data.getString("parameters");
+            r.labels = data.getString("labels");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -90,10 +90,10 @@ class ServiceInstanceController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceInstanceRequest r;
-            r.name = j.getString("name");
-            r.planId = j.getString("planId");
-            r.parameters = j.getString("parameters");
-            r.labels = j.getString("labels");
+            r.name = data.getString("name");
+            r.planId = data.getString("planId");
+            r.parameters = data.getString("parameters");
+            r.labels = data.getString("labels");
 
             auto result = usecase.update(req.getTenantId, ServiceInstanceId(id), r);
             if (result.hasError)

@@ -32,14 +32,14 @@ class MtaArchiveController : ManageController {
             auto j = req.json;
             UploadMtaArchiveRequest r;
             r.tenantId     = req.getTenantId;
-            r.fileName     = j.getString("fileName");
-            r.mtaId        = j.getString("mtaId");
-            r.mtaVersion   = j.getString("mtaVersion");
+            r.fileName     = data.getString("fileName");
+            r.mtaId        = data.getString("mtaId");
+            r.mtaVersion   = data.getString("mtaVersion");
             r.fileSizeBytes = j["fileSizeBytes"].type == Json.Type.int_
                               ? j["fileSizeBytes"].get!long : 0L;
-            r.checksum     = j.getString("checksum");
-            r.uploadedBy   = j.getString("uploadedBy");
-            r.namespace_   = j.getString("namespace");
+            r.checksum     = data.getString("checksum");
+            r.uploadedBy   = data.getString("uploadedBy");
+            r.namespace_   = data.getString("namespace");
             if (j["targetPlatforms"].type == Json.Type.array)
                 foreach (p; j["targetPlatforms"])
                     r.targetPlatforms ~= p.get!string;

@@ -54,16 +54,16 @@ class AppDefinitionController : ManageController {
 
         AppDefinitionDTO dto;
         dto.definitionId = AppDefinitionId(precheck.id);
-        dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
+        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.definitionContent = j.getString("definitionContent");
-        dto.definitionFormat = j.getString("definitionFormat");
-        dto.schemaVersion = j.getString("schemaVersion");
-        dto.authoredBy = j.getString("authoredBy");
-        dto.targetPlatform = j.getString("targetPlatform");
-        dto.businessObjectModel = j.getString("businessObjectModel");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.definitionContent = data.getString("definitionContent");
+        dto.definitionFormat = data.getString("definitionFormat");
+        dto.schemaVersion = data.getString("schemaVersion");
+        dto.authoredBy = data.getString("authoredBy");
+        dto.targetPlatform = data.getString("targetPlatform");
+        dto.businessObjectModel = data.getString("businessObjectModel");
 
         auto result = usecase.createAppDefinition(dto);
         if (result.hasError)

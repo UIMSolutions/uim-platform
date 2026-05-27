@@ -36,12 +36,12 @@ class OfflineStoreController : ManageController {
       auto j = req.json;
       CreateOfflineStoreRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.storeType = j.getString("storeType");
-      r.syncPolicy = j.getString("syncPolicy");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.appId = data.getString("appId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.storeType = data.getString("storeType");
+      r.syncPolicy = data.getString("syncPolicy");
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -116,11 +116,11 @@ class OfflineStoreController : ManageController {
       auto j = req.json;
       UpdateOfflineStoreRequest r;
       r.id = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.syncPolicy = j.getString("syncPolicy");
-      r.status = j.getString("status");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.syncPolicy = data.getString("syncPolicy");
+      r.status = data.getString("status");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

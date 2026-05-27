@@ -45,12 +45,12 @@ class AttributeMappingController : ManageController {
     CreateAttributeMappingRequest r;
     r.tenantId            = req.getTenantId;
     r.id                  = precheck.id;
-    r.configId            = j.getString("configId");
-    r.sourceAttributeName = j.getString("sourceAttributeName");
-    r.sourceDataType      = j.getString("sourceDataType");
-    r.targetAttributeName = j.getString("targetAttributeName");
-    r.targetDataType      = j.getString("targetDataType");
-    r.delimiter           = j.getString("delimiter");
+    r.configId            = data.getString("configId");
+    r.sourceAttributeName = data.getString("sourceAttributeName");
+    r.sourceDataType      = data.getString("sourceDataType");
+    r.targetAttributeName = data.getString("targetAttributeName");
+    r.targetDataType      = data.getString("targetDataType");
+    r.delimiter           = data.getString("delimiter");
     r.sortOrder           = j.getInteger("sortOrder");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -64,11 +64,11 @@ class AttributeMappingController : ManageController {
     UpdateAttributeMappingRequest r;
     r.tenantId            = req.getTenantId;
     r.id                  = extractIdFromPath(req.requestPath.to!string);
-    r.sourceAttributeName = j.getString("sourceAttributeName");
-    r.sourceDataType      = j.getString("sourceDataType");
-    r.targetAttributeName = j.getString("targetAttributeName");
-    r.targetDataType      = j.getString("targetDataType");
-    r.delimiter           = j.getString("delimiter");
+    r.sourceAttributeName = data.getString("sourceAttributeName");
+    r.sourceDataType      = data.getString("sourceDataType");
+    r.targetAttributeName = data.getString("targetAttributeName");
+    r.targetDataType      = data.getString("targetDataType");
+    r.delimiter           = data.getString("delimiter");
     r.sortOrder           = j.getInteger("sortOrder");
     r.active              = j.getBoolean("active");
     auto result = usecase.update(r);

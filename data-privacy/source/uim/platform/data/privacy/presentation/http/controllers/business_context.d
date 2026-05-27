@@ -38,9 +38,9 @@ class BusinessContextController : ManageController {
 
       CreateBusinessContextRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.controllerGroupId = j.getString("controllerGroupId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.controllerGroupId = data.getString("controllerGroupId");
       r.dataCategories = j.getStrings("dataCategories");
       r.purposes = j.getStrings("purposes");
       r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");
@@ -99,8 +99,8 @@ class BusinessContextController : ManageController {
       UpdateBusinessContextRequest r;
       r.tenantId = tenantId;
       r.contextId = BusinessContextId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.dataCategories = j.getStrings("dataCategories");
       r.purposes = j.getStrings("purposes");
       r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");

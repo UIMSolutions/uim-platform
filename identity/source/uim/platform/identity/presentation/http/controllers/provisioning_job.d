@@ -62,11 +62,11 @@ class ProvisioningJobController : ManageController {
             ProvisioningJobDTO dto;
             dto.jobId = ProvisioningJobId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.sourceSystem = j.getString("sourceSystem");
-            dto.targetSystem = j.getString("targetSystem");
-            dto.type_ = j.getString("type");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.sourceSystem = data.getString("sourceSystem");
+            dto.targetSystem = data.getString("targetSystem");
+            dto.type_ = data.getString("type");
 
             auto result = usecase.createJob(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }

@@ -26,13 +26,13 @@ public:
       CreateQueueRequest r;
       r.tenantId            = req.getTenantId;
       r.id                  = precheck.id;
-      r.name                = j.getString("name");
-      r.description         = j.getString("description");
+      r.name                = data.getString("name");
+      r.description         = data.getString("description");
       r.maxMessageSize      = j.getInteger("maxMessageSize");
       r.maxQueueSize        = j.getInteger("maxQueueSize");
       r.retentionPeriod     = j.getInteger("retentionPeriod");
       r.deadLetterQueue     = j.getBoolean("deadLetterQueue");
-      r.deadLetterQueueName = j.getString("deadLetterQueueName");
+      r.deadLetterQueueName = data.getString("deadLetterQueueName");
       r.metadata            = jsonStrMap(j, "metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
@@ -62,7 +62,7 @@ public:
       UpdateQueueRequest r;
       r.tenantId        = req.getTenantId;
       r.id              = extractIdFromPath(req);
-      r.status          = j.getString("status");
+      r.status          = data.getString("status");
       r.maxMessageSize  = j.getInteger("maxMessageSize");
       r.maxQueueSize    = j.getInteger("maxQueueSize");
       r.retentionPeriod = j.getInteger("retentionPeriod");

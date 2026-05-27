@@ -43,19 +43,19 @@ class FileBackupPolicyRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             BackupPolicy e;
-            e.id              = BackupPolicyId(j.getString("id", ""));
+            e.id              = BackupPolicyId(data.getString("id", ""));
             e.tenantId        = t;
-            e.instanceId      = ServiceInstanceId(j.getString("instanceId", ""));
+            e.instanceId      = ServiceInstanceId(data.getString("instanceId", ""));
             e.retentionPeriod = j.getLong("retentionPeriod", 7);
-            e.backupWindow    = j.getString("backupWindow", "");
+            e.backupWindow    = data.getString("backupWindow", "");
             e.lastBackupAt    = j.getLong("lastBackupAt", 0);
             e.nextBackupAt    = j.getLong("nextBackupAt", 0);
-            e.status          = j.getString("status", "enabled").to!BackupStatus;
-            e.backupLocation  = j.getString("backupLocation", "");
-            e.lastError       = j.getString("lastError", "");
+            e.status          = data.getString("status", "enabled").to!BackupStatus;
+            e.backupLocation  = data.getString("backupLocation", "");
+            e.lastError       = data.getString("lastError", "");
             e.createdAt       = j.getLong("createdAt", 0);
-            e.createdBy       = UserId(j.getString("createdBy", ""));
-            e.updatedBy       = UserId(j.getString("updatedBy", ""));
+            e.createdBy       = UserId(data.getString("createdBy", ""));
+            e.updatedBy       = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

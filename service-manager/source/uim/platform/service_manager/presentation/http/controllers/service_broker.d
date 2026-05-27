@@ -63,9 +63,9 @@ class ServiceBrokerController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceBrokerRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.brokerUrl = j.getString("brokerUrl");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.brokerUrl = data.getString("brokerUrl");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -81,9 +81,9 @@ class ServiceBrokerController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceBrokerRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.brokerUrl = j.getString("brokerUrl");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.brokerUrl = data.getString("brokerUrl");
 
             auto result = usecase.update(req.getTenantId, ServiceBrokerId(id), r);
             if (result.hasError)

@@ -36,13 +36,13 @@ class DeviceRegistrationController : ManageController {
       auto j = req.json;
       RegisterDeviceRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.deviceModel = j.getString("deviceModel");
-      r.osVersion = j.getString("osVersion");
-      r.appVersion = j.getString("appVersion");
-      r.platform = j.getString("platform");
-      r.userId = j.getString("userId");
-      r.deviceToken = j.getString("deviceToken");
+      r.appId = data.getString("appId");
+      r.deviceModel = data.getString("deviceModel");
+      r.osVersion = data.getString("osVersion");
+      r.appVersion = data.getString("appVersion");
+      r.platform = data.getString("platform");
+      r.userId = data.getString("userId");
+      r.deviceToken = data.getString("deviceToken");
       auto result = usecase.register(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -115,7 +115,7 @@ class DeviceRegistrationController : ManageController {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
-      auto status = j.getString("status");
+      auto status = data.getString("status");
       auto result = usecase.updateStatus(id, status);
       if (result.hasError)
             return errorResponse(result.message, 400);

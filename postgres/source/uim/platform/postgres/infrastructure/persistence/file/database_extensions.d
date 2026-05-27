@@ -43,16 +43,16 @@ class FileDatabaseExtensionRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             DatabaseExtension e;
-            e.id               = DatabaseExtensionId(j.getString("id", ""));
+            e.id               = DatabaseExtensionId(data.getString("id", ""));
             e.tenantId         = t;
-            e.instanceId       = ServiceInstanceId(j.getString("instanceId", ""));
-            e.extensionName    = j.getString("extensionName", "");
-            e.extensionVersion = j.getString("extensionVersion", "");
-            e.status           = j.getString("status", "enabled").to!ExtensionStatus;
-            e.schema_          = j.getString("schema", "");
+            e.instanceId       = ServiceInstanceId(data.getString("instanceId", ""));
+            e.extensionName    = data.getString("extensionName", "");
+            e.extensionVersion = data.getString("extensionVersion", "");
+            e.status           = data.getString("status", "enabled").to!ExtensionStatus;
+            e.schema_          = data.getString("schema", "");
             e.createdAt        = j.getLong("createdAt", 0);
-            e.createdBy        = UserId(j.getString("createdBy", ""));
-            e.updatedBy        = UserId(j.getString("updatedBy", ""));
+            e.createdBy        = UserId(data.getString("createdBy", ""));
+            e.updatedBy        = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

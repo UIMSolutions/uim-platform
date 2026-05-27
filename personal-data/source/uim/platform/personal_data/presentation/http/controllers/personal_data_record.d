@@ -34,16 +34,16 @@ class PersonalDataRecordController : ManageController {
             CreatePersonalDataRecordRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.dataSubjectId = j.getString("dataSubjectId");
-            r.applicationId = j.getString("applicationId");
-            r.dataCategory = j.getString("dataCategory");
-            r.sensitivity = j.getString("sensitivity");
-            r.fieldName = j.getString("fieldName");
-            r.fieldValue = j.getString("fieldValue");
-            r.purposeId = j.getString("purposeId");
-            r.legalBasis = j.getString("legalBasis");
-            r.retentionRuleId = j.getString("retentionRuleId");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.dataSubjectId = data.getString("dataSubjectId");
+            r.applicationId = data.getString("applicationId");
+            r.dataCategory = data.getString("dataCategory");
+            r.sensitivity = data.getString("sensitivity");
+            r.fieldName = data.getString("fieldName");
+            r.fieldValue = data.getString("fieldValue");
+            r.purposeId = data.getString("purposeId");
+            r.legalBasis = data.getString("legalBasis");
+            r.retentionRuleId = data.getString("retentionRuleId");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)

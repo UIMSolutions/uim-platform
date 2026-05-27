@@ -40,20 +40,20 @@ class TaskController : ManageController {
       auto j = req.json;
       auto r = CreateTaskRequest();
       r.tenantId = tenantId;
-      r.assigneeId = j.getString("assigneeId");
-      r.assigneeName = j.getString("assigneeName");
-      r.creatorId = j.getString("creatorId");
-      r.creatorName = j.getString("creatorName");
-      r.title = j.getString("title");
-      r.description = j.getString("description");
-      r.sourceApp = j.getString("sourceApp");
-      r.sourceTaskId = j.getString("sourceTaskId");
-      r.actionUrl = j.getString("actionUrl");
-      r.category = j.getString("category");
+      r.assigneeId = data.getString("assigneeId");
+      r.assigneeName = data.getString("assigneeName");
+      r.creatorId = data.getString("creatorId");
+      r.creatorName = data.getString("creatorName");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
+      r.sourceApp = data.getString("sourceApp");
+      r.sourceTaskId = data.getString("sourceTaskId");
+      r.actionUrl = data.getString("actionUrl");
+      r.category = data.getString("category");
       r.tags = getStrings(j, "tags");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto pStr = j.getString("priority");
+      auto pStr = data.getString("priority");
       if (pStr == "low")
         r.priority = TaskPriority.low;
       else if (pStr == "high")
@@ -119,11 +119,11 @@ class TaskController : ManageController {
       auto r = UpdateTaskRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.description = j.getString("description");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
       r.dueDate = jsonLong(j, "dueDate");
 
-      auto sStr = j.getString("status");
+      auto sStr = data.getString("status");
       if (sStr == "inProgress")
         r.status = TaskStatus.inProgress;
       else if (sStr == "completed")
@@ -133,7 +133,7 @@ class TaskController : ManageController {
       else
         r.status = TaskStatus.open;
 
-      auto pStr = j.getString("priority");
+      auto pStr = data.getString("priority");
       if (pStr == "low")
         r.priority = TaskPriority.low;
       else if (pStr == "high")

@@ -42,9 +42,9 @@ class GroupController : ManageController {
       auto members = parseMembers(j);
       CreateGroupRequest createReq;
       createReq.tenantId = tenantId;
-      createReq.externalId = j.getString("externalId");
-      createReq.displayName = j.getString("displayName");
-      createReq.description = j.getString("description");
+      createReq.externalId = data.getString("externalId");
+      createReq.displayName = data.getString("displayName");
+      createReq.description = data.getString("description");
       createReq.members = members;
 
       auto result = useCase.createGroup(createReq);
@@ -98,8 +98,8 @@ class GroupController : ManageController {
       auto tenantId = precheck.tenantId;
       auto groupId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
-        j.getString("description"),);
+      auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
+        data.getString("description"),);
       auto error = useCase.updateGroup(updateReq);
       if (error.length > 0) {
         writeScimError(res, 404, error);
@@ -130,8 +130,8 @@ class GroupController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto addReq = AddMemberRequest(tenantId, j.getString("groupId"),
-        j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
+      auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
+        data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
       auto error = useCase.addMember(addReq);
       if (error.length > 0) {
         writeScimError(res, 400, error);
@@ -150,7 +150,7 @@ class GroupController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto removeReq = RemoveMemberRequest(tenantId, j.getString("groupId"), j.getString("memberId"),);
+      auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);
       if (error.length > 0) {
         writeScimError(res, 400, error);

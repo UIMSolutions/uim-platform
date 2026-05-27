@@ -36,13 +36,13 @@ class AutomationRuleController : ManageController {
       auto j = req.json;
       CreateAutomationRuleRequest r;
       r.tenantId = tenantId;
-      r.situationTemplateId = SituationTemplateId(j.getString("templateId"));
+      r.situationTemplateId = SituationTemplateId(data.getString("templateId"));
       r.automationRuleId = AutomationRuleId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.priority = j.getString("priority");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.priority = data.getString("priority");
       r.executionOrder = j.getInteger("executionOrder");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createAutomationRule(r);
       if (result.hasError)
@@ -134,12 +134,12 @@ class AutomationRuleController : ManageController {
       UpdateAutomationRuleRequest r;
       r.tenantId = tenantId;
       r.automationRuleId = AutomationRuleprecheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.priority = j.getString("priority");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.priority = data.getString("priority");
       r.executionOrder = j.getInteger("executionOrder");
       r.enabled = j.getBoolean("enabled", true);
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.updateAutomationRule(r);
       if (result.hasError)

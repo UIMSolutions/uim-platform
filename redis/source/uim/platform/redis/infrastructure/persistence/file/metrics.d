@@ -42,9 +42,9 @@ class FileMetricRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             Metric m;
-            m.id         = MetricId(j.getString("id", ""));
+            m.id         = MetricId(data.getString("id", ""));
             m.tenantId   = tenantId;
-            m.instanceId = ServiceInstanceId(j.getString("instanceId", ""));
+            m.instanceId = ServiceInstanceId(data.getString("instanceId", ""));
             m.timestamp_ = j.getLong("timestamp", 0);
             m.memoryUsedMb  = j.getLong("memoryUsedMb", 0);
             m.memoryTotalMb = j.getLong("memoryTotalMb", 0);

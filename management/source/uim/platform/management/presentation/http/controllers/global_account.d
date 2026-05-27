@@ -39,14 +39,14 @@ class GlobalAccountController : ManageController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateGlobalAccountRequest r;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.contractNumber = j.getString("contractNumber");
-      r.licenseType = j.getString("licenseType");
-      r.region = j.getString("region");
-      r.costCenter = j.getString("costCenter");
-      r.companyName = j.getString("companyName");
-      r.contactEmail = j.getString("contactEmail");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.contractNumber = data.getString("contractNumber");
+      r.licenseType = data.getString("licenseType");
+      r.region = data.getString("region");
+      r.costCenter = data.getString("costCenter");
+      r.companyName = data.getString("companyName");
+      r.contactEmail = data.getString("contactEmail");
       r.maxSubaccounts = j.getInteger("maxSubaccounts", 100);
       r.maxDirectories = j.getInteger("maxDirectories", 20);
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -107,10 +107,10 @@ class GlobalAccountController : ManageController {
       auto id = extractId(req.requestURI);
       auto data = precheck.data;
       UpdateGlobalAccountRequest request;
-      request.displayName = j.getString("displayName");
-      request.description = j.getString("description");
-      request.costCenter = j.getString("costCenter");
-      request.contactEmail = j.getString("contactEmail");
+      request.displayName = data.getString("displayName");
+      request.description = data.getString("description");
+      request.costCenter = data.getString("costCenter");
+      request.contactEmail = data.getString("contactEmail");
       request.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = usecase.update(id, request);

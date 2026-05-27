@@ -39,15 +39,15 @@ class PersonalDataModelController : ManageController {
 
       CreatePersonalDataModelRequest r;
       r.tenantId = tenantId;
-      r.fieldName = j.getString("fieldName");
-      r.fieldDescription = j.getString("fieldDescription");
-      r.category = j.getString("category");
-      r.sensitivity = j.getString("sensitivity");
-      r.sourceSystem = j.getString("sourceSystem");
-      r.sourceEntity = j.getString("sourceEntity");
-      r.subjectType = j.getString("subjectType");
+      r.fieldName = data.getString("fieldName");
+      r.fieldDescription = data.getString("fieldDescription");
+      r.category = data.getString("category");
+      r.sensitivity = data.getString("sensitivity");
+      r.sourceSystem = data.getString("sourceSystem");
+      r.sourceEntity = data.getString("sourceEntity");
+      r.subjectType = data.getString("subjectType");
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
-      r.legalReference = j.getString("legalReference");
+      r.legalReference = data.getString("legalReference");
 
       auto result = usecase.createModel(r);
       if (result.isSuccess()) {
@@ -128,14 +128,14 @@ class PersonalDataModelController : ManageController {
       UpdatePersonalDataModelRequest r;
       r.id = PersonalDataModelId(precheck.id);
       r.tenantId = tenantId;
-      r.fieldName = j.getString("fieldName");
-      r.fieldDescription = j.getString("fieldDescription");
-      r.category = j.getString("category");
-      r.sensitivity = j.getString("sensitivity");
-      r.sourceSystem = j.getString("sourceSystem");
-      r.sourceEntity = j.getString("sourceEntity");
+      r.fieldName = data.getString("fieldName");
+      r.fieldDescription = data.getString("fieldDescription");
+      r.category = data.getString("category");
+      r.sensitivity = data.getString("sensitivity");
+      r.sourceSystem = data.getString("sourceSystem");
+      r.sourceEntity = data.getString("sourceEntity");
       r.isSpecialCategory = j.getBoolean("isSpecialCategory");
-      r.legalReference = j.getString("legalReference");
+      r.legalReference = data.getString("legalReference");
 
       auto result = usecase.updateModel(r);
       if (result.isSuccess()) {

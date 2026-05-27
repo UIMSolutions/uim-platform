@@ -74,16 +74,16 @@ class EventMessageController : ManageController {
             EventMessageDTO dto;
             dto.messageId = EventMessageId(precheck.id);
             dto.tenantId = tenantId;
-            dto.serviceId = BrokerServiceId(j.getString("serviceId"));
-            dto.topicId = j.getString("topicId");
-            dto.queueId = j.getString("queueId"); // TODO: dto.publisherId = j.getString("publisherId");
-            dto.correlationId = j.getString("correlationId");
-            dto.contentType = j.getString("contentType");
-            dto.payload = j.getString("payload");
-            dto.topicString = j.getString("topicString");
-            dto.replyTo = j.getString("replyTo");
-            dto.timeToLive = j.getString("timeToLive");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.serviceId = BrokerServiceId(data.getString("serviceId"));
+            dto.topicId = data.getString("topicId");
+            dto.queueId = data.getString("queueId"); // TODO: dto.publisherId = data.getString("publisherId");
+            dto.correlationId = data.getString("correlationId");
+            dto.contentType = data.getString("contentType");
+            dto.payload = data.getString("payload");
+            dto.topicString = data.getString("topicString");
+            dto.replyTo = data.getString("replyTo");
+            dto.timeToLive = data.getString("timeToLive");
+            dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.publishMessage(dto);
             if (result.hasError)
                 return errorResponse(result.message, 400);

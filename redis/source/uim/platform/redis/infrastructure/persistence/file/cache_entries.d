@@ -42,12 +42,12 @@ class FileCacheEntryRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             CacheEntry e;
-            e.id          = CacheEntryId(j.getString("id", ""));
+            e.id          = CacheEntryId(data.getString("id", ""));
             e.tenantId    = tenantId;
-            e.instanceId  = ServiceInstanceId(j.getString("instanceId", ""));
-            e.key         = j.getString("key", "");
-            e.value       = j.getString("value", "");
-            e.entryType   = j.getString("entryType", "string").to!CacheEntryType;
+            e.instanceId  = ServiceInstanceId(data.getString("instanceId", ""));
+            e.key         = data.getString("key", "");
+            e.value       = data.getString("value", "");
+            e.entryType   = data.getString("entryType", "string").to!CacheEntryType;
             e.ttl         = j.getLong("ttl", -1);
             e.sizeBytes   = j.getLong("sizeBytes", 0);
             e.accessCount = j.getLong("accessCount", 0);

@@ -36,12 +36,12 @@ class DnsRecordController : ManageController {
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
             r.dnsRecordId = DnsRecordId(precheck.id);
-            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
-            r.recordType = j.getString("recordType");
-            r.hostname = j.getString("hostname");
-            r.value = j.getString("value");
+            r.customDomainId = CustomDomainId(data.getString("customDomainId"));
+            r.recordType = data.getString("recordType");
+            r.hostname = data.getString("hostname");
+            r.value = data.getString("value");
             r.ttl = j.getInteger("ttl");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDnsRecord(r);
             if (result.hasError)
@@ -131,7 +131,7 @@ class DnsRecordController : ManageController {
             UpdateDnsRecordRequest r;
             r.tenantId = tenantId;
             r.dnsRecordId = DnsRecordprecheck.id) ;
-            r.value = j.getString("value");
+            r.value = data.getString("value");
             r.ttl = j.getInteger("ttl");
 
             auto result = usecase.updateDnsRecord(r);

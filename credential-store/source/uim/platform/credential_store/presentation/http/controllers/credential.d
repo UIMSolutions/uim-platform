@@ -80,14 +80,14 @@ class CredentialController : ManageController {
 
       CreateCredentialRequest r;
       r.tenantId = tenantId;
-      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", j.getString("namespaceId")));
-      r.name = j.getString("name");
+      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+      r.name = data.getString("name");
       r.type = type;
-      r.value = j.getString("value");
-      r.metadata = j.getString("metadata");
-      r.format = j.getString("format");
-      r.username = j.getString("username");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.value = data.getString("value");
+      r.metadata = data.getString("metadata");
+      r.format = data.getString("format");
+      r.username = data.getString("username");
+      r.createdBy = UserId(data.getString("createdBy"));
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto result = usecase.createCredential(r);

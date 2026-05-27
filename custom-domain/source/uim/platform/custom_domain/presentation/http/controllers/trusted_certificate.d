@@ -35,10 +35,10 @@ class TrustedCertificateController : ManageController {
             CreateTrustedCertificateRequest r;
             r.tenantId = tenantId;
             r.trustedCertificateId = TrustedCertificateId(precheck.id);
-            r.customDomainId = CustomDomainId(j.getString("customDomainId"));
-            r.certificatePem = j.getString("certificatePem");
-            r.authMode = j.getString("authMode");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.customDomainId = CustomDomainId(data.getString("customDomainId"));
+            r.certificatePem = data.getString("certificatePem");
+            r.authMode = data.getString("authMode");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createCertificate(r);
             if (result.hasError)

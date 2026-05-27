@@ -45,11 +45,11 @@ class TenantUserController : ManageController {
     CreateTenantUserRequest r;
     r.tenantId      = req.getTenantId;
     r.id            = precheck.id;
-    r.email         = j.getString("email");
-    r.firstName     = j.getString("firstName");
-    r.lastName      = j.getString("lastName");
-    r.role          = j.getString("role");
-    r.externalUserId = j.getString("externalUserId");
+    r.email         = data.getString("email");
+    r.firstName     = data.getString("firstName");
+    r.lastName      = data.getString("lastName");
+    r.role          = data.getString("role");
+    r.externalUserId = data.getString("externalUserId");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -62,9 +62,9 @@ class TenantUserController : ManageController {
     UpdateTenantUserRequest r;
     r.tenantId  = req.getTenantId;
     r.id        = extractIdFromPath(req.requestPath.to!string);
-    r.firstName = j.getString("firstName");
-    r.lastName  = j.getString("lastName");
-    r.role      = j.getString("role");
+    r.firstName = data.getString("firstName");
+    r.lastName  = data.getString("lastName");
+    r.role      = data.getString("role");
     r.active    = j.getBoolean("active");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

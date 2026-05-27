@@ -35,14 +35,14 @@ class TranslationProjectController : ManageController {
 
             CreateTranslationProjectRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.projectType = j.getString("projectType");
-            r.sourceLanguage = j.getString("sourceLanguage");
-            r.provider = j.getString("provider");
-            r.repositoryUrl = j.getString("repositoryUrl");
-            r.baseBranch = j.getString("baseBranch");
-            r.abapSystemId = j.getString("abapSystemId");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.projectType = data.getString("projectType");
+            r.sourceLanguage = data.getString("sourceLanguage");
+            r.provider = data.getString("provider");
+            r.repositoryUrl = data.getString("repositoryUrl");
+            r.baseBranch = data.getString("baseBranch");
+            r.abapSystemId = data.getString("abapSystemId");
 
             if (j["targetLanguages"].type == Json.Type.array)
                 foreach (l; j["targetLanguages"])
@@ -122,12 +122,12 @@ class TranslationProjectController : ManageController {
             UpdateTranslationProjectRequest r;
             r.tenantId = tenantId;
             r.projectId = TranslationProjectprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.provider = j.getString("provider");
-            r.repositoryUrl = j.getString("repositoryUrl");
-            r.baseBranch = j.getString("baseBranch");
-            r.status = j.getString("status");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.provider = data.getString("provider");
+            r.repositoryUrl = data.getString("repositoryUrl");
+            r.baseBranch = data.getString("baseBranch");
+            r.status = data.getString("status");
 
             if (j["targetLanguages"].type == Json.Type.array)
                 foreach (l; j["targetLanguages"])

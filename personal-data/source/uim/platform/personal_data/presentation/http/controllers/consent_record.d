@@ -34,15 +34,15 @@ class ConsentRecordController : ManageController {
             auto j = req.json;
             CreateConsentRecordRequest r;
             r.tenantId = tenantId;
-            r.dataSubjectId = j.getString("dataSubjectId");
-            r.purposeId = j.getString("purposeId");
-            r.consentText = j.getString("consentText");
-            r.consentVersion = j.getString("consentVersion");
+            r.dataSubjectId = data.getString("dataSubjectId");
+            r.purposeId = data.getString("purposeId");
+            r.consentText = data.getString("consentText");
+            r.consentVersion = data.getString("consentVersion");
             r.expiresAt = j.getLong("expiresAt");
-            r.ipAddress = j.getString("ipAddress");
-            r.userAgent = j.getString("userAgent");
-            r.source = j.getString("source");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.ipAddress = data.getString("ipAddress");
+            r.userAgent = data.getString("userAgent");
+            r.source = data.getString("source");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -116,8 +116,8 @@ class ConsentRecordController : ManageController {
             auto j = req.json;
             WithdrawConsentRequest r;
             r.id = id;
-            r.reason = j.getString("reason");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.reason = data.getString("reason");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.withdraw(r);
             if (result.hasError)

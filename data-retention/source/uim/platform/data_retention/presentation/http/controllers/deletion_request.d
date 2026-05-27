@@ -29,11 +29,11 @@ class DeletionRequestController : ManageController {
 
             CreateDeletionRequestRequest r;
             r.tenantId = tenantId;
-            r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
-            r.actionType = j.getString("actionType").to!ActionType;
-            r.reason = j.getString("reason");
-            r.requestedBy = j.getString("requestedBy");
+            r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+            r.actionType = data.getString("actionType").to!ActionType;
+            r.reason = data.getString("reason");
+            r.requestedBy = data.getString("requestedBy");
 
             auto result = usecase.createDeletionRequest(r);
             if (result.hasError)
@@ -116,9 +116,9 @@ class DeletionRequestController : ManageController {
 
             UpdateDeletionRequestRequest r;
             r.tenantId = tenantId;
-            r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-            r.status = j.getString("status");
-            r.errorMessage = j.getString("errorMessage");
+            r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+            r.status = data.getString("status");
+            r.errorMessage = data.getString("errorMessage");
 
             auto result = usecase.updateDeletionRequest(id, r);
             if (result.hasError)

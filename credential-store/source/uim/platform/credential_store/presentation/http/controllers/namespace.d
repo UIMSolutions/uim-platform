@@ -37,9 +37,9 @@ class NamespaceController : ManageController {
 
       CreateNamespaceRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createNamespace(r);
       if (result.hasError)
@@ -117,7 +117,7 @@ class NamespaceController : ManageController {
       UpdateNamespaceRequest request;
       request.tenantId = tenantId;
       request.namespaceId = id;
-      request.description = j.getString("description");
+      request.description = data.getString("description");
 
       auto result = usecase.updateNamespace(request);
       if (result.hasError)

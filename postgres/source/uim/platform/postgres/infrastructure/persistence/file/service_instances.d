@@ -43,27 +43,27 @@ class FileServiceInstanceRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             ServiceInstance e;
-            e.id            = ServiceInstanceId(j.getString("id", ""));
+            e.id            = ServiceInstanceId(data.getString("id", ""));
             e.tenantId      = tenantId;
-            e.name          = j.getString("name", "");
-            e.description   = j.getString("description", "");
-            e.planId        = ServicePlanId(j.getString("planId", ""));
-            e.status        = j.getString("status", "provisioning").to!InstanceStatus;
-            e.hyperscaler   = j.getString("hyperscaler", "aws").to!Hyperscaler;
-            e.region        = j.getString("region", "");
-            e.engineVersion = j.getString("engineVersion", "16").to!PostgresVersion;
+            e.name          = data.getString("name", "");
+            e.description   = data.getString("description", "");
+            e.planId        = ServicePlanId(data.getString("planId", ""));
+            e.status        = data.getString("status", "provisioning").to!InstanceStatus;
+            e.hyperscaler   = data.getString("hyperscaler", "aws").to!Hyperscaler;
+            e.region        = data.getString("region", "");
+            e.engineVersion = data.getString("engineVersion", "16").to!PostgresVersion;
             e.memoryGb      = j.getLong("memoryGb", 4);
             e.storageGb     = j.getLong("storageGb", 20);
-            e.host          = j.getString("host", "");
+            e.host          = data.getString("host", "");
             e.port          = cast(ushort) j.getLong("port", 5432);
-            e.dbName        = j.getString("dbName", "");
+            e.dbName        = data.getString("dbName", "");
             e.sslEnabled    = j.getBoolean("sslEnabled", true);
             e.multiAz       = j.getBoolean("multiAz", false);
             e.provisionedAt = j.getLong("provisionedAt", 0);
             e.updatedAt     = j.getLong("updatedAt", 0);
             e.createdAt     = j.getLong("createdAt", 0);
-            e.createdBy     = UserId(j.getString("createdBy", ""));
-            e.updatedBy     = UserId(j.getString("updatedBy", ""));
+            e.createdBy     = UserId(data.getString("createdBy", ""));
+            e.updatedBy     = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

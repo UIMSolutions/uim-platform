@@ -40,10 +40,10 @@ class DataRetrievalController : ManageController {
       auto j = req.json;
       CreateDataRetrievalRequest r;
       r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.requestedBy = j.getString("requestedBy");
+      r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.requestedBy = data.getString("requestedBy");
       r.targetSystems = getStrings(j, "targetSystems");
-      r.reason = j.getString("reason");
+      r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {
@@ -101,8 +101,8 @@ class DataRetrievalController : ManageController {
       UpdateRetrievalStatusRequest r;
       r.id = DataRetrievalRequestId(precheck.id);
       r.tenantId = tenantId;
-      r.status = j.getString("status");
-      r.downloadUrl = j.getString("downloadUrl");
+      r.status = data.getString("status");
+      r.downloadUrl = data.getString("downloadUrl");
       r.totalFields = jsonLong(j, "totalFields");
 
       auto result = usecase.updateStatus(r);

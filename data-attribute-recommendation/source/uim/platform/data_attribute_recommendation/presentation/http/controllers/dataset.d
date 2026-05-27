@@ -40,10 +40,10 @@ class DatasetController : ManageController {
       auto j = req.json;
       auto r = CreateDatasetRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.dataType = parseDataType(j.getString("dataType"));
-      r.columnDefinitions = j.getString("columnDefinitions");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.dataType = parseDataType(data.getString("dataType"));
+      r.columnDefinitions = data.getString("columnDefinitions");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createDataset(r);
@@ -103,9 +103,9 @@ class DatasetController : ManageController {
       auto r = UpdateDatasetRequest();
       r.tenantId = tenantId;
       r.datasetId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.columnDefinitions = j.getString("columnDefinitions");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.columnDefinitions = data.getString("columnDefinitions");
 
       auto result = usecase.updateDataset(r);
       if (result.isSuccess) {

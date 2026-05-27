@@ -40,11 +40,11 @@ class RetentionRuleController : ManageController {
       auto j = req.json;
       CreateRetentionRuleRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.purpose = j.getString("purpose");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.purpose = data.getString("purpose");
       r.retentionDays = j.getInteger("retentionDays");
-      r.legalReference = j.getString("legalReference");
+      r.legalReference = data.getString("legalReference");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = usecase.createRule(r);
@@ -103,11 +103,11 @@ class RetentionRuleController : ManageController {
       UpdateRetentionRuleRequest r;
       r.id = RetentionRuleId(precheck.id);
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.retentionDays = j.getInteger("retentionDays");
-      r.legalReference = j.getString("legalReference");
-      r.status = j.getString("status");
+      r.legalReference = data.getString("legalReference");
+      r.status = data.getString("status");
 
       auto result = usecase.updateRule(r);
       if (result.isSuccess()) {

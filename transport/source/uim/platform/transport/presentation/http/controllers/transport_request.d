@@ -61,18 +61,18 @@ class TransportRequestController : ManageController {
             TransportRequestDTO dto;
             dto.requestId = TransportRequestId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.externalId = j.getString("externalId");
-            dto.contentType = j.getString("contentType");
-            dto.version_ = j.getString("version");
-            dto.contentSize = j.getString("contentSize");
-            dto.storageUrl = j.getString("storageUrl");
-            dto.checksum = j.getString("checksum");
-            dto.sourceNodeId = j.getString("sourceNodeId");
-            dto.namedUser = j.getString("namedUser");
-            dto.systemId = j.getString("systemId");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.externalId = data.getString("externalId");
+            dto.contentType = data.getString("contentType");
+            dto.version_ = data.getString("version");
+            dto.contentSize = data.getString("contentSize");
+            dto.storageUrl = data.getString("storageUrl");
+            dto.checksum = data.getString("checksum");
+            dto.sourceNodeId = data.getString("sourceNodeId");
+            dto.namedUser = data.getString("namedUser");
+            dto.systemId = data.getString("systemId");
+            dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.createRequest(dto);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport request created"), 201);
@@ -88,7 +88,7 @@ class TransportRequestController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = TransportRequestprecheck.id);
             auto j = req.json;
-            auto statusStr = j.getString("status");
+            auto statusStr = data.getString("status");
             if (statusStr.length > 0) {
                 import std.conv : to;
                 try {

@@ -40,17 +40,17 @@ class AlertRuleController : ManageController {
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = tenantId;
-      r.resourceId = j.getString("resourceId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.metricName = j.getString("metricName");
-      r.metricDefinitionId = j.getString("metricDefinitionId");
-      r.operator_ = j.getString("operator");
+      r.resourceId = data.getString("resourceId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.metricName = data.getString("metricName");
+      r.metricDefinitionId = data.getString("metricDefinitionId");
+      r.operator_ = data.getString("operator");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
-      r.severity = j.getString("severity");
+      r.severity = data.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -112,13 +112,13 @@ class AlertRuleController : ManageController {
       UpdateAlertRuleRequest r;
       r.tenantId = tenantId;
       r.alertRuleId = id;
-      // r.name = j.getString("name");
-      r.description = j.getString("description");
+      // r.name = data.getString("name");
+      r.description = data.getString("description");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
-      r.severity = j.getString("severity");
+      r.severity = data.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 

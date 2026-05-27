@@ -42,10 +42,10 @@ class RepositoryController : ManageController {
       auto j = req.json;
       auto r = CreateRepositoryRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
-      r.allowedFileTypes = j.getString("allowedFileTypes");
+      r.allowedFileTypes = data.getString("allowedFileTypes");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createRepository(r);
@@ -104,10 +104,10 @@ class RepositoryController : ManageController {
       auto r = UpdateRepositoryRequest();
       r.repositoryId = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
-      r.allowedFileTypes = j.getString("allowedFileTypes");
+      r.allowedFileTypes = data.getString("allowedFileTypes");
 
       auto result = usecase.updateRepository(r);
       if (result.isSuccess) {

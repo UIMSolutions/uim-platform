@@ -30,10 +30,10 @@ class DataSubjectController : ManageController {
 
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
-            r.roleId = RoleId(j.getString("roleId"));
-            r.applicationGroupId = ApplicationGroupId(j.getString("applicationGroupId"));
-            r.externalId = j.getString("externalId");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.roleId = RoleId(data.getString("roleId"));
+            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+            r.externalId = data.getString("externalId");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataSubject(r);
             if (result.hasError)
@@ -104,8 +104,8 @@ class DataSubjectController : ManageController {
             auto j = req.json;
             UpdateDataSubjectRequest r;
             r.tenantId = tenantId;
-            r.lifecycleStatus = j.getString("lifecycleStatus");
-            r.roleId = RoleId(j.getString("roleId"));
+            r.lifecycleStatus = data.getString("lifecycleStatus");
+            r.roleId = RoleId(data.getString("roleId"));
 
             auto result = usecase.updateDataSubject(id, r);
             if (result.hasError)

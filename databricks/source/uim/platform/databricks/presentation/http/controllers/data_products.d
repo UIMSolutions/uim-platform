@@ -26,16 +26,16 @@ public:
       CreateDataProductRequest r;
       r.tenantId      = req.getTenantId;
       r.id            = precheck.id;
-      r.workspaceId   = j.getString("workspaceId");
-      r.name          = j.getString("name");
-      r.description   = j.getString("description");
-      r.provider      = j.getString("provider");
-      r.version_      = j.getString("version");
-      r.targetCatalog = j.getString("targetCatalog");
-      r.targetSchema  = j.getString("targetSchema");
-      r.sourceSystemId= j.getString("sourceSystemId");
-      r.tags          = j.getString("tags");
-      auto modeStr = j.getString("shareMode");
+      r.workspaceId   = data.getString("workspaceId");
+      r.name          = data.getString("name");
+      r.description   = data.getString("description");
+      r.provider      = data.getString("provider");
+      r.version_      = data.getString("version");
+      r.targetCatalog = data.getString("targetCatalog");
+      r.targetSchema  = data.getString("targetSchema");
+      r.sourceSystemId= data.getString("sourceSystemId");
+      r.tags          = data.getString("tags");
+      auto modeStr = data.getString("shareMode");
       if (modeStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.shareMode = modeStr.to!ShareMode; } catch (ConvException) {}
@@ -70,12 +70,12 @@ public:
       UpdateDataProductRequest r;
       r.tenantId     = req.getTenantId;
       r.id           = req.requestPath.to!string.split("/")[$-1];
-      r.description  = j.getString("description");
-      r.version_     = j.getString("version");
-      r.targetCatalog= j.getString("targetCatalog");
-      r.targetSchema = j.getString("targetSchema");
-      r.tags         = j.getString("tags");
-      auto modeStr   = j.getString("shareMode");
+      r.description  = data.getString("description");
+      r.version_     = data.getString("version");
+      r.targetCatalog= data.getString("targetCatalog");
+      r.targetSchema = data.getString("targetSchema");
+      r.tags         = data.getString("tags");
+      auto modeStr   = data.getString("shareMode");
       if (modeStr.length > 0) {
         import std.conv : ConvException;
         try { r.shareMode = modeStr.to!ShareMode; } catch (ConvException) {}

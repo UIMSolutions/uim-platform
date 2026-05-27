@@ -68,14 +68,14 @@ class ScheduledExecutionController : ManageController {
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
             dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
-            dto.commandId = CommandId(j.getString("commandId"));
-            dto.cronExpression = j.getString("cronExpression");
+            dto.commandId = CommandId(data.getString("commandId"));
+            dto.cronExpression = data.getString("cronExpression");
             dto.scheduledAt = j.getLong("scheduledAt");
-            dto.inputValues = j.getString("inputValues");
-            dto.description = j.getString("description");
-            dto.maxRetries = j.getString("maxRetries");
-            dto.retryDelay = j.getString("retryDelay");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.inputValues = data.getString("inputValues");
+            dto.description = data.getString("description");
+            dto.maxRetries = data.getString("maxRetries");
+            dto.retryDelay = data.getString("retryDelay");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = scheduledExecutions.createScheduledExecution(dto);
             if (result.hasError)
@@ -102,10 +102,10 @@ class ScheduledExecutionController : ManageController {
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
             dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
-            dto.cronExpression = j.getString("cronExpression");
+            dto.cronExpression = data.getString("cronExpression");
             dto.scheduledAt = j.getLong("scheduledAt");
-            dto.description = j.getString("description");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.description = data.getString("description");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = scheduledExecutions.updateScheduledExecution(dto);
             if (result.hasError)

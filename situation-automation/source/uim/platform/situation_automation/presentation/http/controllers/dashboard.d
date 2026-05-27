@@ -37,11 +37,11 @@ class DashboardController : ManageController {
             CreateDashboardRequest r;
             r.tenantId = tenantId;
             r.dashboardId = DashboardId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDashboard(r);
             if (result.hasError)
@@ -125,10 +125,10 @@ class DashboardController : ManageController {
             UpdateDashboardRequest r;
             r.tenantId = tenantId;
             r.dashboardId = Dashboardprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
             r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDashboard(r);
             if (result.hasError)

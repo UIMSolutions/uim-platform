@@ -40,11 +40,11 @@ class SurveyController : ManageController {
       auto j = req.json;
       auto r = CreateSurveyRequest();
       r.tenantId = tenantId;
-      r.workspaceId = j.getString("workspaceId");
-      r.title = j.getString("title");
-      r.description = j.getString("description");
-      r.creatorId = j.getString("creatorId");
-      r.creatorName = j.getString("creatorName");
+      r.workspaceId = data.getString("workspaceId");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
+      r.creatorId = data.getString("creatorId");
+      r.creatorName = data.getString("creatorName");
       r.anonymous = j.getBoolean("anonymous");
       r.allowMultipleResponses = j.getBoolean("allowMultipleResponses");
       r.startsAt = jsonLong(j, "startsAt");
@@ -106,8 +106,8 @@ class SurveyController : ManageController {
       auto r = UpdateSurveyRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.description = j.getString("description");
+      r.title = data.getString("title");
+      r.description = data.getString("description");
 
       auto result = useCase.updateSurvey(r);
       if (result.isSuccess()) {

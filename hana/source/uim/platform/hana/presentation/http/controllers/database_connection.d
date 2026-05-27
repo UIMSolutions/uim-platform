@@ -34,16 +34,16 @@ class DatabaseConnectionController : ManageController {
       auto j = req.json;
       CreateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.host = j.getString("host");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.host = data.getString("host");
       r.port = j.getInteger("port", 443);
-      r.database = j.getString("database");
-      r.user = j.getString("user");
-      r.password = j.getString("password");
+      r.database = data.getString("database");
+      r.user = data.getString("user");
+      r.password = data.getString("password");
       r.useTls = j.getBoolean("useTls", true);
       r.minConnections = j.getInteger("minConnections", 1);
       r.maxConnections = j.getInteger("maxConnections", 10);
@@ -132,13 +132,13 @@ class DatabaseConnectionController : ManageController {
       UpdateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.host = j.getString("host");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.host = data.getString("host");
       r.port = j.getInteger("port", 443);
-      r.database = j.getString("database");
-      r.user = j.getString("user");
-      r.password = j.getString("password");
+      r.database = data.getString("database");
+      r.user = data.getString("user");
+      r.password = data.getString("password");
 
       auto result = usecase.update(r);
       if (result.hasError)

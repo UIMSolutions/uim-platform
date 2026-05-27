@@ -61,14 +61,14 @@ class TransportRouteController : ManageController {
             TransportRouteDTO dto;
             dto.routeId = TransportRouteId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.sourceNodeId = j.getString("sourceNodeId");
-            dto.destinationNodeId = j.getString("destinationNodeId");
-            dto.status = j.getString("status");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.sourceNodeId = data.getString("sourceNodeId");
+            dto.destinationNodeId = data.getString("destinationNodeId");
+            dto.status = data.getString("status");
             dto.isSequential = getBoolean(j, "isSequential");
             dto.sequence = cast(int) j.getLong("sequence");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.createRoute(dto);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route created"), 201);
@@ -84,7 +84,7 @@ class TransportRouteController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = TransportRouteprecheck.id);
             auto j = req.json;
-            auto action = j.getString("action");
+            auto action = data.getString("action");
             if (action == "enable") {
                 auto result = usecase.enableRoute(tenantId, id);
                 if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route enabled"), 200);
@@ -100,11 +100,11 @@ class TransportRouteController : ManageController {
             TransportRouteDTO dto;
             dto.routeId = id;
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
             dto.isSequential = getBoolean(j, "isSequential");
             dto.sequence = cast(int) j.getLong("sequence");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.updatedBy = UserId(data.getString("updatedBy"));
             auto result = usecase.updateRoute(dto);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route updated"), 200);
             else writeError(res, 400, result.message);

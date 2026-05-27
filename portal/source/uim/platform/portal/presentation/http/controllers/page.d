@@ -40,9 +40,9 @@ class PageController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto createReq = CreatePageRequest(j.getString("siteId"),
-        req.headers.get("X-Tenant-Id", ""), j.getString("title"),
-        j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
+      auto createReq = CreatePageRequest(data.getString("siteId"),
+        req.headers.get("X-Tenant-Id", ""), data.getString("title"),
+        data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
           "layout", PageLayout.freeform), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
@@ -95,8 +95,8 @@ class PageController : ManageController {
     try {
       auto pageId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdatePageRequest(pageId, j.getString("title"),
-        j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
+      auto updateReq = UpdatePageRequest(pageId, data.getString("title"),
+        data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
           "layout", PageLayout.freeform), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
@@ -114,7 +114,7 @@ class PageController : ManageController {
     try {
       auto pageId = precheck.id;
       auto j = req.json;
-      auto siteId = j.getString("siteId");
+      auto siteId = data.getString("siteId");
       auto error = useCase.deletePage(pageId, siteId);
       if (error.length > 0)
         writeApiError(res, 404, error);

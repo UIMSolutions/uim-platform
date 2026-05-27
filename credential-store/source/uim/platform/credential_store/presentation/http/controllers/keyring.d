@@ -38,12 +38,12 @@ class KeyringController : ManageController {
 
       CreateKeyringRequest r;
       r.tenantId = tenantId;
-      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
-      r.name = j.getString("name");
-      r.metadata = j.getString("metadata");
-      r.format = j.getString("format");
+      r.namespaceId = req.headers.get("X-Namespace-Id", data.getString("namespaceId"));
+      r.name = data.getString("name");
+      r.metadata = data.getString("metadata");
+      r.format = data.getString("format");
       r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createKeyring(r);
       if (result.hasError)
@@ -129,7 +129,7 @@ class KeyringController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       RotateKeyringRequest r;
-      r.keyringId = j.getString("keyringId");
+      r.keyringId = data.getString("keyringId");
       r.tenantId = tenantId;
 
       auto result = usecase.rotateKeyring(r);
@@ -151,7 +151,7 @@ class KeyringController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto keyringId = CredentialId(j.getString("keyringId"));
+      auto keyringId = CredentialId(data.getString("keyringId"));
 
       auto result = usecase.disableCredential(tenantId, keyringId);
       if (result.hasError)

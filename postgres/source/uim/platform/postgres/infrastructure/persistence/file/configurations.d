@@ -42,22 +42,22 @@ class FileConfigurationRepository
         if (!arr.isArray) return;
         foreach (j; arr.byValue()) {
             Configuration e;
-            e.id                       = ConfigurationId(j.getString("id", ""));
+            e.id                       = ConfigurationId(data.getString("id", ""));
             e.tenantId                 = t;
-            e.instanceId               = ServiceInstanceId(j.getString("instanceId", ""));
-            e.auditLogLevels           = j.getString("auditLogLevels", "");
+            e.instanceId               = ServiceInstanceId(data.getString("instanceId", ""));
+            e.auditLogLevels           = data.getString("auditLogLevels", "");
             e.backupRetentionPeriod    = j.getLong("backupRetentionPeriod", 7);
-            e.locale                   = j.getString("locale", "en_US");
+            e.locale                   = data.getString("locale", "en_US");
             e.maxConnections           = j.getLong("maxConnections", 100);
             e.workMem                  = j.getLong("workMem", 4096);
             e.sharedBuffersMb          = j.getLong("sharedBuffersMb", 128);
-            e.maintenanceWindowDay     = j.getString("maintenanceWindowDay", "");
+            e.maintenanceWindowDay     = data.getString("maintenanceWindowDay", "");
             e.maintenanceWindowStartHour = j.getLong("maintenanceWindowStartHour", 0);
             e.maintenanceWindowDuration  = j.getLong("maintenanceWindowDuration", 1);
-            e.activeVersion            = j.getString("activeVersion", "");
+            e.activeVersion            = data.getString("activeVersion", "");
             e.createdAt                = j.getLong("createdAt", 0);
-            e.createdBy                = UserId(j.getString("createdBy", ""));
-            e.updatedBy                = UserId(j.getString("updatedBy", ""));
+            e.createdBy                = UserId(data.getString("createdBy", ""));
+            e.updatedBy                = UserId(data.getString("updatedBy", ""));
             super.save(e);
         }
     }

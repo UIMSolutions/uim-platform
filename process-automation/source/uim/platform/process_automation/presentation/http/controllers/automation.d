@@ -37,14 +37,14 @@ class AutomationController : ManageController {
             auto j = req.json;
             CreateAutomationRequest r;
             r.tenantId = tenantId;
-            r.projectId = ProjectId(j.getString("projectId"));
+            r.projectId = ProjectId(data.getString("projectId"));
             r.automationId = AutomationId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.targetApplication = j.getString("targetApplication");
-            r.version_ = j.getString("version");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.targetApplication = data.getString("targetApplication");
+            r.version_ = data.getString("version");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = automationUsecase.createAutomation(r);
             if (result.hasError)
@@ -137,12 +137,12 @@ class AutomationController : ManageController {
             UpdateAutomationRequest r;
             r.tenantId = tenantId;
             r.automationId = Automationprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.targetApplication = j.getString("targetApplication");
-            r.version_ = j.getString("version");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.targetApplication = data.getString("targetApplication");
+            r.version_ = data.getString("version");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = automationUsecase.updateAutomation(r);
             if (result.hasError)

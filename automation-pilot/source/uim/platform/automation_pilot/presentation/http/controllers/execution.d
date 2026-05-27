@@ -70,10 +70,10 @@ class ExecutionController : ManageController {
             ExecutionDTO dto;
             dto.executionId = ExecutionId(precheck.id);
             dto.tenantId = tenantId;
-            dto.commandId = CommandId(j.getString("commandId"));
-            dto.inputValues = j.getString("inputValues");
-            dto.triggeredBy = UserId(j.getString("triggeredBy"));
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.commandId = CommandId(data.getString("commandId"));
+            dto.inputValues = data.getString("inputValues");
+            dto.triggeredBy = UserId(data.getString("triggeredBy"));
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = executions.createExecution(dto);
             if (result.hasError)

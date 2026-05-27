@@ -36,13 +36,13 @@ class AddressController : PlatformController {
 
       auto r = CleanseAddressRequest();
       r.tenantId = tenantId;
-      r.sourceRecordId = j.getString("sourceRecordId");
-      r.line1 = j.getString("line1");
-      r.line2 = j.getString("line2");
-      r.city = j.getString("city");
-      r.region = j.getString("region");
-      r.postalCode = j.getString("postalCode");
-      r.country = j.getString("country");
+      r.sourceRecordId = data.getString("sourceRecordId");
+      r.line1 = data.getString("line1");
+      r.line2 = data.getString("line2");
+      r.city = data.getString("city");
+      r.region = data.getString("region");
+      r.postalCode = data.getString("postalCode");
+      r.country = data.getString("country");
 
       auto result = usecase.cleanse(r);
       res.writeJsonBody(result.toJson, 200);

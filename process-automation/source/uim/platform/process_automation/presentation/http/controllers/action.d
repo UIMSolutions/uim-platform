@@ -37,18 +37,18 @@ class ActionController : ManageController {
             auto j = req.json;
             CreateActionRequest r;
             r.tenantId = tenantId;
-            r.projectId = ProjectId(j.getString("projectId"));
+            r.projectId = ProjectId(data.getString("projectId"));
             r.actionId = ActionId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.method = j.getString("method");
-            r.baseUrl = j.getString("baseUrl");
-            r.path = j.getString("path");
-            r.authType = j.getString("authType");
-            r.destinationName = j.getString("destinationName");
-            r.version_ = j.getString("version");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.method = data.getString("method");
+            r.baseUrl = data.getString("baseUrl");
+            r.path = data.getString("path");
+            r.authType = data.getString("authType");
+            r.destinationName = data.getString("destinationName");
+            r.version_ = data.getString("version");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = actionUsecase.createAction(r);
             if (result.hasError)
@@ -141,14 +141,14 @@ class ActionController : ManageController {
             UpdateActionRequest r;
             r.tenantId = tenantId;
             r.actionId = Actionprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.baseUrl = j.getString("baseUrl");
-            r.path = j.getString("path");
-            r.authType = j.getString("authType");
-            r.destinationName = j.getString("destinationName");
-            r.version_ = j.getString("version");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.baseUrl = data.getString("baseUrl");
+            r.path = data.getString("path");
+            r.authType = data.getString("authType");
+            r.destinationName = data.getString("destinationName");
+            r.version_ = data.getString("version");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = actionUsecase.updateAction(r);
             if (result.hasError)

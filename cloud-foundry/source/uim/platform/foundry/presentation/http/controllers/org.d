@@ -41,13 +41,13 @@ class OrgController : ManageController {
       auto j = req.json;
       auto r = CreateOrgRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
+      r.name = data.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
       r.totalRoutes = j.getInteger("totalRoutes", 0);
       r.totalServices = j.getInteger("totalServices", 0);
       r.totalAppInstances = j.getInteger("totalAppInstances", 0);
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createOrg(r);
       if (result.isSuccess()) {
@@ -110,7 +110,7 @@ class OrgController : ManageController {
       auto r = UpdateOrgRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
+      r.name = data.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
       r.totalRoutes = j.getInteger("totalRoutes", 0);

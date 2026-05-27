@@ -34,15 +34,15 @@ class DataProcessingLogController : ManageController {
             CreateDataProcessingLogRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.dataSubjectId = j.getString("dataSubjectId");
-            r.requestId = j.getString("requestId");
-            r.applicationId = j.getString("applicationId");
-            r.entryType = j.getString("entryType");
-            r.severity = j.getString("severity");
-            r.action = j.getString("action");
-            r.details = j.getString("details");
-            r.ipAddress = j.getString("ipAddress");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.dataSubjectId = data.getString("dataSubjectId");
+            r.requestId = data.getString("requestId");
+            r.applicationId = data.getString("applicationId");
+            r.entryType = data.getString("entryType");
+            r.severity = data.getString("severity");
+            r.action = data.getString("action");
+            r.details = data.getString("details");
+            r.ipAddress = data.getString("ipAddress");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createProcessingLog(r);
             if (result.hasError)

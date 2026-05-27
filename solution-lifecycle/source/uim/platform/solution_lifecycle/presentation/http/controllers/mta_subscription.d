@@ -63,11 +63,11 @@ class MtaSubscriptionController : ManageController {
             auto j = req.json;
             SubscribeMtaRequest r;
             r.tenantId            = req.getTenantId;
-            r.providerMtaId       = j.getString("providerMtaId");
-            r.providerTenantId    = j.getString("providerTenantId");
-            r.providerSpaceId     = j.getString("providerSpaceId");
-            r.subscribedBy        = j.getString("subscribedBy");
-            r.extensionDescriptor = j.getString("extensionDescriptor");
+            r.providerMtaId       = data.getString("providerMtaId");
+            r.providerTenantId    = data.getString("providerTenantId");
+            r.providerSpaceId     = data.getString("providerSpaceId");
+            r.subscribedBy        = data.getString("subscribedBy");
+            r.extensionDescriptor = data.getString("extensionDescriptor");
 
             auto result = usecase.subscribe(r);
             if (result.hasError)

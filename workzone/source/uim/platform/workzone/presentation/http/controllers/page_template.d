@@ -39,9 +39,9 @@ class PageTemplateController : ManageController {
       auto j = req.json;
       auto r = CreatePageTemplateRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.thumbnailUrl = j.getString("thumbnailUrl");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.thumbnailUrl = data.getString("thumbnailUrl");
       r.isDefault = j.getBoolean("isDefault");
       r.isPublic = j.getBoolean("isPublic");
 
@@ -101,8 +101,8 @@ class PageTemplateController : ManageController {
       auto r = UpdatePageTemplateRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isDefault = j.getBoolean("isDefault");
       r.isPublic = j.getBoolean("isPublic");
 

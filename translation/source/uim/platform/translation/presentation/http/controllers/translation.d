@@ -31,18 +31,18 @@ class TranslationController : PlatformController {
 
             TranslateTextRequest r;
             r.tenantId = tenantId;
-            r.sourceLanguage = j.getString("sourceLanguage");
-            r.targetLanguage = j.getString("targetLanguage");
-            r.domainName = j.getString("domain");
-            r.textType = j.getString("textType");
-            r.provider = j.getString("provider");
+            r.sourceLanguage = data.getString("sourceLanguage");
+            r.targetLanguage = data.getString("targetLanguage");
+            r.domainName = data.getString("domain");
+            r.textType = data.getString("textType");
+            r.provider = data.getString("provider");
 
             // Accept either "texts" (array) or "text" (single string)
             if (j["texts"].type == Json.Type.array) {
                 foreach (item; j["texts"])
                     r.texts ~= item.get!string;
             } else if (j["text"].type == Json.Type.string) {
-                r.texts ~= j.getString("text");
+                r.texts ~= data.getString("text");
             }
 
             auto result = usecase.translateTexts(r);

@@ -66,13 +66,13 @@ class PrintClientController : ManageController {
             PrintClientDTO dto;
             dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.hostName = j.getString("hostName");
-            dto.ipAddress = j.getString("ipAddress");
-            dto.osType = j.getString("osType");
-            dto.osVersion = j.getString("osVersion");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.hostName = data.getString("hostName");
+            dto.ipAddress = data.getString("ipAddress");
+            dto.osType = data.getString("osType");
+            dto.osVersion = data.getString("osVersion");
 
             auto result = usecase.registerPrintClient(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -94,10 +94,10 @@ class PrintClientController : ManageController {
             PrintClientDTO dto;
             dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.version_ = j.getString("version");
-            dto.ipAddress = j.getString("ipAddress");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.version_ = data.getString("version");
+            dto.ipAddress = data.getString("ipAddress");
 
             auto result = usecase.updatePrintClient(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

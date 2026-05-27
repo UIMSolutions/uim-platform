@@ -42,12 +42,12 @@ class MetricDefinitionController : ManageController {
 
       CreateMetricDefinitionRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
-      r.unit = j.getString("unit");
-      r.aggregation = j.getString("aggregation");
+      r.name = data.getString("name");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
+      r.unit = data.getString("unit");
+      r.aggregation = data.getString("aggregation");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createDefinition(r);
@@ -108,9 +108,9 @@ class MetricDefinitionController : ManageController {
       UpdateMetricDefinitionRequest request;
       request.tenantId = tenantId;
       request.id = id;
-      request.displayName = j.getString("displayName");
-      request.description = j.getString("description");
-      request.aggregation = j.getString("aggregation");
+      request.displayName = data.getString("displayName");
+      request.description = data.getString("description");
+      request.aggregation = data.getString("aggregation");
       request.isEnabled = j.getBoolean("isEnabled", true);
 
       auto result = usecase.updateDefinition(request);

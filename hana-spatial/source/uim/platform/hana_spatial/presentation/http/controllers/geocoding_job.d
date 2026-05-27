@@ -33,11 +33,11 @@ class GeocodingJobController : ManageController {
       CreateGeocodingJobRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.providerId = j.getString("providerId");
-      r.language = j.getString("language");
-      r.countryCode = j.getString("countryCode");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.providerId = data.getString("providerId");
+      r.language = data.getString("language");
+      r.countryCode = data.getString("countryCode");
       r.addresses = getStrings(j, "addresses");
       r.externalRefs = getStrings(j, "externalRefs");
 
@@ -100,7 +100,7 @@ class GeocodingJobController : ManageController {
       GeocodingJobActionRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.action = j.getString("action");
+      r.action = data.getString("action");
 
       auto result = usecase.performAction(r);
       if (result.hasError)

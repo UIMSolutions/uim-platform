@@ -37,14 +37,14 @@ class AppVersionController : ManageController {
       auto j = req.json;
       CreateAppVersionRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.versionCode = j.getString("versionCode");
+      r.appId = data.getString("appId");
+      r.versionCode = data.getString("versionCode");
       r.buildNumber = j.getInteger("buildNumber");
-      r.platform = j.getString("platform");
-      r.releaseNotes = j.getString("releaseNotes");
-      r.downloadUrl = j.getString("downloadUrl");
+      r.platform = data.getString("platform");
+      r.releaseNotes = data.getString("releaseNotes");
+      r.downloadUrl = data.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -123,11 +123,11 @@ class AppVersionController : ManageController {
       auto j = req.json;
       UpdateAppVersionRequest r;
       r.id = id;
-      r.releaseNotes = j.getString("releaseNotes");
-      r.downloadUrl = j.getString("downloadUrl");
+      r.releaseNotes = data.getString("releaseNotes");
+      r.downloadUrl = data.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
-      r.status = j.getString("status");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.status = data.getString("status");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

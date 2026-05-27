@@ -37,14 +37,14 @@ class NotificationController : ManageController {
 
             CreateNotificationRequest r;
             r.tenantId = tenantId;
-            r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
+            r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
             r.notificationId = NotificationId(precheck.id);
-            r.recipientId = j.getString("recipientId");
-            r.title = j.getString("title");
-            r.message = j.getString("message");
-            r.channel = j.getString("channel");
-            r.priority = j.getString("priority");
-            r.actionUrl = j.getString("actionUrl");
+            r.recipientId = data.getString("recipientId");
+            r.title = data.getString("title");
+            r.message = data.getString("message");
+            r.channel = data.getString("channel");
+            r.priority = data.getString("priority");
+            r.actionUrl = data.getString("actionUrl");
 
             auto result = usecase.createNotification(r);
             if (result.hasError)
@@ -136,7 +136,7 @@ class NotificationController : ManageController {
             UpdateNotificationRequest r;
             r.tenantId = tenantId;
             r.notificationId = Notificationprecheck.id);
-            r.status = j.getString("status");
+            r.status = data.getString("status");
 
             auto result = usecase.updateNotification(r);
             if (result.hasError)

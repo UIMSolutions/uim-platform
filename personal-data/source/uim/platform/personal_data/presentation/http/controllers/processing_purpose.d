@@ -35,13 +35,13 @@ class ProcessingPurposeController : ManageController {
             CreateProcessingPurposeRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.legalBasis = j.getString("legalBasis");
-            r.retentionPeriod = j.getString("retentionPeriod");
-            r.dataProtectionOfficer = j.getString("dataProtectionOfficer");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.legalBasis = data.getString("legalBasis");
+            r.retentionPeriod = data.getString("retentionPeriod");
+            r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
             r.requiresConsent = j.getBoolean("requiresConsent");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -105,13 +105,13 @@ class ProcessingPurposeController : ManageController {
             UpdateProcessingPurposeRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.legalBasis = j.getString("legalBasis");
-            r.retentionPeriod = j.getString("retentionPeriod");
-            r.dataProtectionOfficer = j.getString("dataProtectionOfficer");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.legalBasis = data.getString("legalBasis");
+            r.retentionPeriod = data.getString("retentionPeriod");
+            r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
             r.requiresConsent = j.getBoolean("requiresConsent");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.update(r);
             if (result.hasError)

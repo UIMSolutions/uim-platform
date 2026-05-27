@@ -41,14 +41,14 @@ class ModuleController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       EnableModuleRequest r;
-      r.environmentId = j.getString("environmentId");
+      r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.moduleType = j.getString("moduleType");
-      r.version_ = j.getString("version");
-      r.channel = j.getString("channel");
-      r.customResourcePolicy = j.getString("customResourcePolicy");
-      r.configurationJson = j.getString("configuration");
+      r.name = data.getString("name");
+      r.moduleType = data.getString("moduleType");
+      r.version_ = data.getString("version");
+      r.channel = data.getString("channel");
+      r.customResourcePolicy = data.getString("customResourcePolicy");
+      r.configurationJson = data.getString("configuration");
       r.enabledBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.enableModule(r);
@@ -108,10 +108,10 @@ class ModuleController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateModuleRequest r;
-      r.version_ = j.getString("version");
-      r.channel = j.getString("channel");
-      r.customResourcePolicy = j.getString("customResourcePolicy");
-      r.configurationJson = j.getString("configuration");
+      r.version_ = data.getString("version");
+      r.channel = data.getString("channel");
+      r.customResourcePolicy = data.getString("customResourcePolicy");
+      r.configurationJson = data.getString("configuration");
 
       auto result = usecase.updateModule(KymaModuleId(id), r);
       if (result.success)

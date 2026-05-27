@@ -36,16 +36,16 @@ class AlertController : ManageController {
       auto j = req.json;
       CreateAlertRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.severity = j.getString("severity");
-      r.category = j.getString("category");
-      r.metricName = j.getString("metricName");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.severity = data.getString("severity");
+      r.category = data.getString("category");
+      r.metricName = data.getString("metricName");
       r.warningValue = getDouble(j, "warningValue");
       r.criticalValue = getDouble(j, "criticalValue");
-      r.unit = j.getString("unit");
+      r.unit = data.getString("unit");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -129,9 +129,9 @@ class AlertController : ManageController {
       UpdateAlertRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.severity = j.getString("severity");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.severity = data.getString("severity");
       r.warningValue = getDouble(j, "warningValue");
       r.criticalValue = getDouble(j, "criticalValue");
 
@@ -169,7 +169,7 @@ class AlertController : ManageController {
       AcknowledgeAlertRequest r;
       r.tenantId = tenantId;
       r.id = id;
-      r.acknowledgedBy = j.getString("acknowledgedBy");
+      r.acknowledgedBy = data.getString("acknowledgedBy");
 
       auto result = usecase.acknowledge(r);
       if (result.hasError)

@@ -35,15 +35,15 @@ class UsageReportController : ManageController {
       auto j = req.json;
       CreateUsageReportRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.deviceId = j.getString("deviceId");
-      r.userId = j.getString("userId");
-      r.metricType = j.getString("metricType");
-      r.metricKey = j.getString("metricKey");
-      r.metricValue = j.getString("metricValue");
-      r.sessionId = j.getString("sessionId");
-      r.platform = j.getString("platform");
-      r.appVersion = j.getString("appVersion");
+      r.appId = data.getString("appId");
+      r.deviceId = data.getString("deviceId");
+      r.userId = data.getString("userId");
+      r.metricType = data.getString("metricType");
+      r.metricKey = data.getString("metricKey");
+      r.metricValue = data.getString("metricValue");
+      r.sessionId = data.getString("sessionId");
+      r.platform = data.getString("platform");
+      r.appVersion = data.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
       auto result = usecase.report(r);
       if (result.hasError)

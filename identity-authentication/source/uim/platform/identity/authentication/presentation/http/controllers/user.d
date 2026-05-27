@@ -39,12 +39,12 @@ class UserController : ManageController {
       auto j = req.json;
       CreateUserRequest request;
       request.tenantId = tenantId;
-      request.userName = j.getString("userName");
-      request.email = j.getString("email");
-      request.firstName = j.getString("firstName");
-      request.lastName = j.getString("lastName");
-      request.password = j.getString("password");
-      request.phoneNumber = j.getString("phoneNumber");
+      request.userName = data.getString("userName");
+      request.email = data.getString("email");
+      request.firstName = data.getString("firstName");
+      request.lastName = data.getString("lastName");
+      request.password = data.getString("password");
+      request.phoneNumber = data.getString("phoneNumber");
 
       auto result = useCase.createUser(request);
       auto response = Json.emptyObject;
@@ -114,8 +114,8 @@ auto tenantId = precheck.tenantId;
       auto userId = extractIdFromPath(path);
       auto j = req.json;
 
-      auto updateReq = UpdateUserRequest(tenantId, userId, j.getString("firstName"),
-        j.getString("lastName"), j.getString("phoneNumber"));
+      auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
+        data.getString("lastName"), data.getString("phoneNumber"));
 
       auto error = useCase.updateUser(updateReq);
       if (error.length > 0) {
@@ -139,8 +139,8 @@ auto tenantId = precheck.tenantId;
     try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto error = useCase.changePassword(tenantId, j.getString("userId"),
-        j.getString("oldPassword"), j.getString("newPassword"));
+      auto error = useCase.changePassword(tenantId, data.getString("userId"),
+        data.getString("oldPassword"), data.getString("newPassword"));
 
       if (error.length > 0) {
         auto errRes = Json.emptyObject;

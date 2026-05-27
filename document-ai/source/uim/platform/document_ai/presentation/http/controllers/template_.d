@@ -38,10 +38,10 @@ class TemplateController : ManageController {
       CreateTemplateRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.schemaId = j.getString("schemaId");
-      r.documentTypeId = j.getString("documentTypeId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.schemaId = data.getString("schemaId");
+      r.documentTypeId = data.getString("documentTypeId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.regions = jsonRegionArray(j, "regions");
 
       auto result = usecase.create(r);
@@ -109,9 +109,9 @@ class TemplateController : ManageController {
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.templateId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
 
       auto result = usecase.update(r);
       if (result.hasError)

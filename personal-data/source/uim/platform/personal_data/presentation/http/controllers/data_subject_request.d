@@ -35,13 +35,13 @@ class DataSubjectRequestController : ManageController {
             CreateDataSubjectRequestRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.dataSubjectId = j.getString("dataSubjectId");
-            r.requestType = j.getString("requestType");
-            r.priority = j.getString("priority");
-            r.description = j.getString("description");
-            r.assignedTo = j.getString("assignedTo");
-            r.dueDate = j.getString("dueDate");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.dataSubjectId = data.getString("dataSubjectId");
+            r.requestType = data.getString("requestType");
+            r.priority = data.getString("priority");
+            r.description = data.getString("description");
+            r.assignedTo = data.getString("assignedTo");
+            r.dueDate = data.getString("dueDate");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -119,13 +119,13 @@ class DataSubjectRequestController : ManageController {
             UpdateDataSubjectRequestRequest r;
             r.tenantId = tenantId;
             r.dataSubjectRequestId = DataSubjectRequestprecheck.id);
-            r.status = j.getString("status");
-            r.priority = j.getString("priority");
-            r.assignedTo = j.getString("assignedTo");
-            r.dueDate = j.getString("dueDate");
-            r.comment = j.getString("comment");
-            r.rejectionReason = j.getString("rejectionReason");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.status = data.getString("status");
+            r.priority = data.getString("priority");
+            r.assignedTo = data.getString("assignedTo");
+            r.dueDate = data.getString("dueDate");
+            r.comment = data.getString("comment");
+            r.rejectionReason = data.getString("rejectionReason");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.update(r);
             if (result.hasError)

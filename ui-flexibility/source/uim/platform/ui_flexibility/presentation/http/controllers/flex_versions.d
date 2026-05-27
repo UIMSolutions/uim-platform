@@ -39,10 +39,10 @@ class FlexVersionsController : ManageController {
       CreateFlexVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = FlexVersionId(precheck.id);
-      r.appId       = j.getString("appId");
-      r.displayName_ = j.getString("displayName");
-      r.description_ = j.getString("description");
-      r.activatedBy_ = j.getString("activatedBy");
+      r.appId       = data.getString("appId");
+      r.displayName_ = data.getString("displayName");
+      r.description_ = data.getString("description");
+      r.activatedBy_ = data.getString("activatedBy");
       auto idsArr = j.get("changeIds", Json.emptyArray);
       foreach (cid; idsArr) r.changeIds_ ~= cid.get!string;
       auto result = usecase.createVersion(r);
@@ -69,8 +69,8 @@ class FlexVersionsController : ManageController {
       ActivateVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = id;
-      r.appId       = j.getString("appId");
-      r.activatedBy_ = j.getString("activatedBy");
+      r.appId       = data.getString("appId");
+      r.activatedBy_ = data.getString("activatedBy");
       auto result = usecase.activateVersion(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "activated"), 200);
@@ -118,8 +118,8 @@ class FlexVersionsController : ManageController {
       UpdateFlexVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = id;
-      r.displayName_ = j.getString("displayName");
-      r.description_ = j.getString("description");
+      r.displayName_ = data.getString("displayName");
+      r.description_ = data.getString("description");
       r.status_ = VersionStatus.draft_;
       auto result = usecase.updateVersion(r);
       if (result.success)

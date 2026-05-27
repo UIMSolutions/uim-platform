@@ -59,13 +59,13 @@ class QueueSubscriptionController : ManageController {
             QueueSubscriptionDTO dto;
             dto.subscriptionId = QueueSubscriptionId(precheck.id);
             dto.tenantId       = tenantId;
-            dto.queueId        = QueueId(j.getString("queueId"));
-            dto.serviceId      = MessagingServiceId(j.getString("serviceId"));
-            dto.name           = j.getString("name");
-            dto.description    = j.getString("description");
-            dto.topicPattern   = j.getString("topicPattern");
-            dto.namespace      = j.getString("namespace");
-            dto.createdBy      = UserId(j.getString("createdBy"));
+            dto.queueId        = QueueId(data.getString("queueId"));
+            dto.serviceId      = MessagingServiceId(data.getString("serviceId"));
+            dto.name           = data.getString("name");
+            dto.description    = data.getString("description");
+            dto.topicPattern   = data.getString("topicPattern");
+            dto.namespace      = data.getString("namespace");
+            dto.createdBy      = UserId(data.getString("createdBy"));
             auto result = usecase.createSubscription(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
@@ -82,10 +82,10 @@ class QueueSubscriptionController : ManageController {
             QueueSubscriptionDTO dto;
             dto.tenantId       = tenantId;
             dto.subscriptionId = subscriptionId;
-            dto.description    = j.getString("description");
-            dto.topicPattern   = j.getString("topicPattern");
-            dto.namespace      = j.getString("namespace");
-            dto.updatedBy      = UserId(j.getString("updatedBy"));
+            dto.description    = data.getString("description");
+            dto.topicPattern   = data.getString("topicPattern");
+            dto.namespace      = data.getString("namespace");
+            dto.updatedBy      = UserId(data.getString("updatedBy"));
             auto result = usecase.updateSubscription(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);

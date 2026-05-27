@@ -38,10 +38,10 @@ class PurposeRecordController : ManageController {
 
       CreatePurposeRecordRequest r;
       r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.contextId = BusinessContextId(j.getString("businessContextId"));
-      r.purpose = j.getString("purpose");
-      r.legalBasis = j.getString("legalBasis");
+      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.contextId = BusinessContextId(data.getString("businessContextId"));
+      r.purpose = data.getString("purpose");
+      r.legalBasis = data.getString("legalBasis");
       r.residenceDays = j.getInteger("residenceDays");
       r.retentionDays = j.getInteger("retentionDays");
       r.validFrom = j.getLong("validFrom");

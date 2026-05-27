@@ -37,8 +37,8 @@ class AnonymizationConfigController : ManageController {
       auto j = req.json;
       CreateAnonymizationConfigRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
       r.targetSystems = getStrings(j, "targetSystems");
 
@@ -94,8 +94,8 @@ class AnonymizationConfigController : ManageController {
       UpdateAnonymizationConfigRequest r;
       r.configId = AnonymizationConfigId(precheck.id);
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
       r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
 

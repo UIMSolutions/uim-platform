@@ -33,11 +33,11 @@ class KeyPasswordController : ManageController {
       auto alias_ = extractIdFromPath(req.requestURI.to!string);
       auto j      = req.json;
       SetPasswordRequest r;
-      r.accountId     = j.getString("accountId");
-      r.applicationId = j.getString("applicationId");
-      r.tenantId      = j.getString("tenantId");
+      r.accountId     = data.getString("accountId");
+      r.applicationId = data.getString("applicationId");
+      r.tenantId      = data.getString("tenantId");
       r.alias_        = alias_;
-      r.passwordValue = j.getString("passwordValue");
+      r.passwordValue = data.getString("passwordValue");
 
       auto result = usecase.setPassword(r);
       if (result.hasError)

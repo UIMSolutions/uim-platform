@@ -39,9 +39,9 @@ class ScenarioController : ManageController {
       SyncScenarioRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.scenarioId = ScenarioId(j.getString("scenarioId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.scenarioId = ScenarioId(data.getString("scenarioId"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.labels = getStrings(j, "labels");
 
       auto result = usecase.syncScenario(r);

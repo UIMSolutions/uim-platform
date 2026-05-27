@@ -38,9 +38,9 @@ class CustomMetricController : ManageController {
         foreach (mj; metricsJ.byValue) {
           SubmitCustomMetricRequest r;
           r.appId      = appId;
-          r.metricName = mj.getString("name");
+          r.metricName = mdata.getString("name");
           r.value      = mj.type == Json.Type.object ? mj["value"].get!double : 0.0;
-          r.unit       = mj.getString("unit");
+          r.unit       = mdata.getString("unit");
           r.timestamp  = mj.type == Json.Type.object && mj["timestamp"].type == Json.Type.int_
             ? mj["timestamp"].get!long : 0;
           usecase.submit(r);
@@ -49,9 +49,9 @@ class CustomMetricController : ManageController {
       } else {
         SubmitCustomMetricRequest r;
         r.appId      = appId;
-        r.metricName = j.getString("name");
+        r.metricName = data.getString("name");
         r.value      = j["value"].type == Json.Type.float_ ? j["value"].get!double : 0.0;
-        r.unit       = j.getString("unit");
+        r.unit       = data.getString("unit");
         r.timestamp  = j["timestamp"].type == Json.Type.int_ ? j["timestamp"].get!long : 0;
         auto result = usecase.submit(r);
         if (result.success)

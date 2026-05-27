@@ -35,10 +35,10 @@ class DataLakeController : ManageController {
       auto j = req.json;
       CreateDataLakeRequest r;
       r.tenantId = tenantId;
-      r.instanceId = j.getString("instanceId");
+      r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.computeNodes = j.getInteger("computeNodes", 1);
       r.storage = jsonKeyValuePairs(j, "storage");
 
@@ -120,8 +120,8 @@ class DataLakeController : ManageController {
       UpdateDataLakeRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.computeNodes = j.getInteger("computeNodes", 1);
 
       auto result = usecase.update(r);

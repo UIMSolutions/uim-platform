@@ -26,15 +26,15 @@ public:
       CreateDeltaTableRequest r;
       r.tenantId         = req.getTenantId;
       r.id               = precheck.id;
-      r.workspaceId      = j.getString("workspaceId");
-      r.catalogName      = j.getString("catalogName");
-      r.schemaName       = j.getString("schemaName");
-      r.tableName        = j.getString("tableName");
-      r.storageLocation  = j.getString("storageLocation");
-      r.comment          = j.getString("comment");
-      r.ownerId          = j.getString("ownerId");
-      r.dataSourceFormat = j.getString("dataSourceFormat");
-      auto typeStr = j.getString("tableType");
+      r.workspaceId      = data.getString("workspaceId");
+      r.catalogName      = data.getString("catalogName");
+      r.schemaName       = data.getString("schemaName");
+      r.tableName        = data.getString("tableName");
+      r.storageLocation  = data.getString("storageLocation");
+      r.comment          = data.getString("comment");
+      r.ownerId          = data.getString("ownerId");
+      r.dataSourceFormat = data.getString("dataSourceFormat");
+      auto typeStr = data.getString("tableType");
       if (typeStr.length > 0) {
         import std.conv : to, ConvException;
         try { r.tableType = typeStr.to!TableType; } catch (ConvException) {}
@@ -69,8 +69,8 @@ public:
       UpdateDeltaTableRequest r;
       r.tenantId        = req.getTenantId;
       r.id              = req.requestPath.to!string.split("/")[$-1];
-      r.comment         = j.getString("comment");
-      r.storageLocation = j.getString("storageLocation");
+      r.comment         = data.getString("comment");
+      r.storageLocation = data.getString("storageLocation");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(serializeToJson(result.data));
       else writeError(res, 404, result.message);

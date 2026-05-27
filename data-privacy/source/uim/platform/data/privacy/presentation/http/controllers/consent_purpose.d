@@ -37,13 +37,13 @@ class ConsentPurposeController : ManageController {
 
       CreateConsentPurposeRequest r;
       r.tenantId = tenantId;
-      r.controllerId = DataControllerId(j.getString("controllerId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.purpose = j.getString("purpose");
+      r.controllerId = DataControllerId(data.getString("controllerId"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.purpose = data.getString("purpose");
       r.dataCategories = getStrings(j, "dataCategories");
-      r.consentFormTemplate = j.getString("consentFormTemplate");
-      r.version_ = j.getString("version");
+      r.consentFormTemplate = data.getString("consentFormTemplate");
+      r.version_ = data.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
@@ -100,10 +100,10 @@ class ConsentPurposeController : ManageController {
       UpdateConsentPurposeRequest r;
       r.tenantId = tenantId;
       r.purposeId = ConsentPurposeId(precheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.consentFormTemplate = j.getString("consentFormTemplate");
-      r.version_ = j.getString("version");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.consentFormTemplate = data.getString("consentFormTemplate");
+      r.version_ = data.getString("version");
       r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
 
       auto result = usecase.updatePurpose(r);

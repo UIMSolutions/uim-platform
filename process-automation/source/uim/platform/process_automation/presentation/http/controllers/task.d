@@ -39,16 +39,16 @@ class TaskController : ManageController {
       auto j = req.json;
       CreateTaskRequest r;
       r.tenantId = tenantId;
-      r.processInstanceId = j.getString("processInstanceId");
+      r.processInstanceId = data.getString("processInstanceId");
       r.taskId = precheck.id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.type = j.getString("type");
-      r.priority = j.getString("priority");
-      r.assignee = j.getString("assignee");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.type = data.getString("type");
+      r.priority = data.getString("priority");
+      r.assignee = data.getString("assignee");
       r.candidateUsers = getStrings(j, "candidateUsers");
       r.candidateGroups = getStrings(j, "candidateGroups");
-      r.formId = j.getString("formId");
+      r.formId = data.getString("formId");
       r.dueDate = jsonLong(j, "dueDate");
 
       auto result = taskUsecase.createTask(r);
@@ -142,10 +142,10 @@ class TaskController : ManageController {
       UpdateTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = Taskprecheck.id);
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.priority = j.getString("priority");
-      r.assignee = j.getString("assignee");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.priority = data.getString("priority");
+      r.assignee = data.getString("assignee");
       r.dueDate = jsonLong(j, "dueDate");
 
       auto result = taskUsecase.updateTask(r);
@@ -182,7 +182,7 @@ class TaskController : ManageController {
       ClaimTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = id;
-      r.userId = j.getString("userId");
+      r.userId = data.getString("userId");
 
       auto result = taskUsecase.claimTask(r);
       if (result.hasError)
@@ -219,9 +219,9 @@ class TaskController : ManageController {
       CompleteTaskRequest r;
       r.tenantId = tenantId;
       r.taskId = id;
-      r.completedBy = UserId(j.getString("completedBy"));
-      r.outcome = j.getString("outcome");
-      r.formData = j.getString("formData");
+      r.completedBy = UserId(data.getString("completedBy"));
+      r.outcome = data.getString("outcome");
+      r.formData = data.getString("formData");
 
       auto result = taskUsecase.completeTask(r);
       if (result.hasError)

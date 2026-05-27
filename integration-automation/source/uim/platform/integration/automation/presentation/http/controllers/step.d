@@ -124,7 +124,7 @@ class StepController : ManageController {
       r.id = id;
       r.tenantId = tenantId;
       r.completedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.result = j.getString("result");
+      r.result = data.getString("result");
 
       auto result = useCase.completeStep(r);
       if (result.isSuccess()) {
@@ -151,7 +151,7 @@ class StepController : ManageController {
       r.id = id;
       r.tenantId = tenantId;
       r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.errorMessage = j.getString("errorMessage");
+      r.errorMessage = data.getString("errorMessage");
 
       auto result = useCase.failStep(r);
       if (result.isSuccess()) {
@@ -178,7 +178,7 @@ class StepController : ManageController {
       r.id = id;
       r.tenantId = tenantId;
       r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.reason = j.getString("reason");
+      r.reason = data.getString("reason");
 
       auto result = useCase.skipStep(r);
       if (result.isSuccess()) {
@@ -204,8 +204,8 @@ class StepController : ManageController {
       auto r = AssignStepRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.assignedTo = UserId(j.getString("assignedTo"));
-      r.assignedRole = j.getString("assignedRole");
+      r.assignedTo = UserId(data.getString("assignedTo"));
+      r.assignedRole = data.getString("assignedRole");
 
       auto result = useCase.assignStep(r);
       if (result.isSuccess()) {

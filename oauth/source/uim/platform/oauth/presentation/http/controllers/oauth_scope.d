@@ -73,10 +73,10 @@ class OAuthScopeController : ManageController {
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
             dto.scopeId = OAuthScopeId(precheck.id);
-            dto.applicationId = j.getString("applicationId");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.applicationId = data.getString("applicationId");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createScope(dto);
             if (result.hasError)
@@ -102,9 +102,9 @@ class OAuthScopeController : ManageController {
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
             dto.scopeId = OAuthScopeId(precheck.id);
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateScope(dto);
             if (result.hasError)

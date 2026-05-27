@@ -33,10 +33,10 @@ class GeocodingController : ManageController {
       GeocodeAddressRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
-      r.address = j.getString("address");
-      r.language = j.getString("language");
-      r.countryCode = j.getString("countryCode");
-      r.providerId = j.getString("providerId");
+      r.address = data.getString("address");
+      r.language = data.getString("language");
+      r.countryCode = data.getString("countryCode");
+      r.providerId = data.getString("providerId");
 
       auto result = usecase.geocodeAddress(r);
       if (result.hasError)
@@ -59,8 +59,8 @@ class GeocodingController : ManageController {
       r.id = precheck.id;
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");
-      r.language = j.getString("language");
-      r.providerId = j.getString("providerId");
+      r.language = data.getString("language");
+      r.providerId = data.getString("providerId");
 
       auto result = usecase.reverseGeocode(r);
       if (result.hasError)

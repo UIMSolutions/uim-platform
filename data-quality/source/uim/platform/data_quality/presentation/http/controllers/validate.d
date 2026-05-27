@@ -39,8 +39,8 @@ class ValidateController : PlatformController {
       auto j = req.json;
       auto r = ValidateRecordRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.recordId = j.getString("recordId");
+      r.datasetId = data.getString("datasetId");
+      r.recordId = data.getString("recordId");
       r.fieldValues = jsonStrMap(j, "fieldValues");
 
       auto result = usecase.validateRecord(r);
@@ -56,7 +56,7 @@ class ValidateController : PlatformController {
       auto j = req.json;
       auto r = ValidateBatchRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
+      r.datasetId = data.getString("datasetId");
 
       foreach (item; j.getArray("records")) {
         if (item.isObject) {

@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.destination.presentation.http.controllers.destination;
 
-
-
 // import uim.platform.destination.application.usecases.manage.destinations;
 // import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination;
@@ -31,43 +29,67 @@ class DestinationController : ManageController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto j = req.json;
-      CreateDestinationRequest r;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
+    auto instanceId = ServiceInstanceId(req.params.get("serviceInstanceId", ""));
+
+    Destination[] destinations = instanceId.isEmpty
+      ? usecase.listDestinations(tenantId, subaccountId) : usecase.listDestinations(tenantId, instanceId);
+    auto arr = destinations.map!(d => d.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", destinations.length);
+
+    return successResponse("Destination list retrieved successfully", "Retrieved", 200, resp);
+  }
+
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        CreateDestinationRequest r;
       r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-      r.serviceInstanceId = j.getString("serviceInstanceId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.destinationType = j.getString("type");
-      r.url = j.getString("url");
-      r.authenticationType = j.getString("authentication");
-      r.proxyType = j.getString("proxyType");
-      r.level = j.getString("level");   
-      r.urlPath = j.getString("urlPath");
-      r.httpMethod = j.getString("httpMethod");
+      r.serviceInstanceId = data.getString("serviceInstanceId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.destinationType = data.getString("type");
+      r.url = data.getString("url");
+      r.authenticationType = data.getString("authentication");
+      r.proxyType = data.getString("proxyType");
+      r.level = data.getString("level");
+      r.urlPath = data.getString("urlPath");
+      r.httpMethod = data.getString("httpMethod");
 
-      r.user = j.getString("user");
-      r.password = j.getString("password");
-      r.clientId = j.getString("clientId");
-      r.clientSecret = j.getString("clientSecret");
-      r.tokenServiceUrl = j.getString("tokenServiceURL");
-      r.tokenServiceUser = j.getString("tokenServiceUser");
-      r.tokenServicePassword = j.getString("tokenServicePassword");
-      r.audience = j.getString("audience");
-      r.systemUser = j.getString("systemUser");
-      r.samlAudience = j.getString("samlAudience");
-      r.nameIdFormat = j.getString("nameIdFormat");
-      r.authnContextClassRef = j.getString("authnContextClassRef");
+      r.user = data.getString("user");
+      r.password = data.getString("password");
+      r.clientId = data.getString("clientId");
+      r.clientSecret = data.getString("clientSecret");
+      r.tokenServiceUrl = data.getString("tokenServiceURL");
+      r.tokenServiceUser = data.getString("tokenServiceUser");
+      r.tokenServicePassword = data.getString("tokenServicePassword");
+      r.audience = data.getString("audience");
+      r.systemUser = data.getString("systemUser");
+      r.samlAudience = data.getString("samlAudience");
+      r.nameIdFormat = data.getString("nameIdFormat");
+      r.authnContextClassRef = data.getString("authnContextClassRef");
 
-      r.keystoreId = j.getString("keystoreId");
-      r.keystorePassword = j.getString("keystorePassword");
-      r.truststoreId = j.getString("truststoreId");
+      r.keystoreId = data.getString("keystoreId");
+      r.keystorePassword = data.getString("keystorePassword");
+      r.truststoreId = data.getString("truststoreId");
 
-      r.locationId = j.getString("locationId");
-      r.sccVirtualHost = j.getString("sccVirtualHost");
+      r.locationId = data.getString("locationId");
+      r.sccVirtualHost = data.getString("sccVirtualHost");
       r.sccVirtualPort = j.getInteger("sccVirtualPort");
 
       r.properties = jsonStrMap(j, "properties");
@@ -76,124 +98,95 @@ class DestinationController : ManageController {
 
       auto result = usecase.createDestination(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Destination created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      auto instanceId = ServiceInstanceId(req.params.get("serviceInstanceId", ""));
-
-      Destination[] destinations = instanceId.isEmpty
-        ? usecase.listDestinations(tenantId, subaccountId) 
-        : usecase.listDestinations(tenantId, instanceId);
-
-      auto arr = destinations.map!(d => d.toJson).array.toJson;
-
+        return errorResponse(result.message, 400);
       auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", destinations.length)
-        .set("message", "Destinations retrieved successfully");
+        .set("id", result.id)
+        .set("message", "Destination created successfully");
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+      res.writeJsonBody(resp, 201);
+    } else {
+      writeError(res, 400, result.message);
+    }
+ catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = DestinationId(precheck.id);
+    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto tenantId = precheck.tenantId;
+        auto id = DestinationId(precheck.id);
 
-      auto d = usecase.getDestination(tenantId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Destination not found");
-        return;
-      }
-      res.writeJsonBody(d.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+        auto d = usecase.getDestination(tenantId, id);
+        if (d.isNull) {
+          writeError(res, 404, "Destination not found");
+          return;
+          res.writeJsonBody(d.toJson, 200);
+        } catch (Exception e) {
+          writeError(res, 500, "Internal server error");
+        }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = DestinationId(precheck.id);
-      auto j = req.json;
+        override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+          try {
+            auto tenantId = precheck.tenantId;
+            auto id = DestinationId(precheck.id);
+            auto j = req.json;
 
-      UpdateDestinationRequest r;
-      r.tenantId = tenantId;
-      r.destinationId = id;
-      r.description = j.getString("description");
-      r.url = j.getString("url");
-      r.authenticationType = j.getString("authentication");
-      r.proxyType = j.getString("proxyType");
-      r.user = j.getString("user");
-      r.password = j.getString("password");
-      r.clientId = j.getString("clientId");
-      r.clientSecret = j.getString("clientSecret");
-      r.tokenServiceUrl = j.getString("tokenServiceURL");
-      r.tokenServiceUser = j.getString("tokenServiceUser");
-      r.tokenServicePassword = j.getString("tokenServicePassword");
-      r.audience = j.getString("audience");
-      r.keystoreId = j.getString("keystoreId");
-      r.keystorePassword = j.getString("keystorePassword");
-      r.truststoreId = j.getString("truststoreId");
-      r.locationId = j.getString("locationId");
-      r.sccVirtualHost = j.getString("sccVirtualHost");
-      r.sccVirtualPort = j.getInteger("sccVirtualPort");
-      r.status = j.getString("status");
-      r.properties = jsonStrMap(j, "properties");
-      r.fragmentIds = getStrings(j, "fragmentIds");
+            UpdateDestinationRequest r;
+            r.tenantId = tenantId;
+            r.destinationId = id;
+            r.description = data.getString("description");
+            r.url = data.getString("url");
+            r.authenticationType = data.getString("authentication");
+            r.proxyType = data.getString("proxyType");
+            r.user = data.getString("user");
+            r.password = data.getString("password");
+            r.clientId = data.getString("clientId");
+            r.clientSecret = data.getString("clientSecret");
+            r.tokenServiceUrl = data.getString("tokenServiceURL");
+            r.tokenServiceUser = data.getString("tokenServiceUser");
+            r.tokenServicePassword = data.getString("tokenServicePassword");
+            r.audience = data.getString("audience");
+            r.keystoreId = data.getString("keystoreId");
+            r.keystorePassword = data.getString("keystorePassword");
+            r.truststoreId = data.getString("truststoreId");
+            r.locationId = data.getString("locationId");
+            r.sccVirtualHost = data.getString("sccVirtualHost");
+            r.sccVirtualPort = j.getInteger("sccVirtualPort");
+            r.status = data.getString("status");
+            r.properties = jsonStrMap(j, "properties");
+            r.fragmentIds = getStrings(j, "fragmentIds");
 
-      auto result = usecase.updateDestination(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Destination updated successfully");
+            auto result = usecase.updateDestination(r);
+            if (result.hasError)
+              return errorResponse(result.message, 400);
+            auto resp = Json.emptyObject
+              .set("id", result.id)
+              .set("message", "Destination updated successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Destination not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+            res.writeJsonBody(resp, 200);
+          } else {
+            writeError(res, result.message == "Destination not found" ? 404 : 400, result.message);
+          } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+          }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = DestinationId(precheck.id);
-      
-      auto result = usecase.deleteDestination(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("deleted", true);
+          override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+            try {
+              auto tenantId = precheck.tenantId;
+              auto id = DestinationId(precheck.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+              auto result = usecase.deleteDestination(tenantId, id);
+              if (result.hasError)
+                return errorResponse(result.message, 400);
+              auto resp = Json.emptyObject
+                .set("deleted", true);
 
-}
+              res.writeJsonBody(resp, 200);
+            } else {
+              writeError(res, 404, result.message);
+            }
+ catch (Exception e) {
+              writeError(res, 500, "Internal server error");
+            }
+
+          }

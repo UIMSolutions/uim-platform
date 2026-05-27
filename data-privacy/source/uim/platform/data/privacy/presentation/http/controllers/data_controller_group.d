@@ -36,8 +36,8 @@ class DataControllerGroupController : ManageController {
       auto j = req.json;
       CreateDataControllerGroupRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.controllerIds = getStrings(j, "controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.createGroup(r);
@@ -94,8 +94,8 @@ class DataControllerGroupController : ManageController {
       UpdateDataControllerGroupRequest r;
       r.groupId = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.controllerIds = j.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
 
       auto result = usecase.updateGroup(r);

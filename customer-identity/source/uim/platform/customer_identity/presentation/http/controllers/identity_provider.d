@@ -54,17 +54,17 @@ class IdentityProviderController : ManageController {
 
         IdentityProviderDTO dto;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.providerType = j.getString("providerType");
-        dto.clientId = j.getString("clientId");
-        dto.clientSecret = j.getString("clientSecret");
-        dto.issuerUrl = j.getString("issuerUrl");
-        dto.metadataUrl = j.getString("metadataUrl");
-        dto.redirectUri = j.getString("redirectUri");
-        dto.attributeMapping = j.getString("attributeMapping");
-        dto.scopes = j.getString("scopes");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.providerType = data.getString("providerType");
+        dto.clientId = data.getString("clientId");
+        dto.clientSecret = data.getString("clientSecret");
+        dto.issuerUrl = data.getString("issuerUrl");
+        dto.metadataUrl = data.getString("metadataUrl");
+        dto.redirectUri = data.getString("redirectUri");
+        dto.attributeMapping = data.getString("attributeMapping");
+        dto.scopes = data.getString("scopes");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = identityProviders.createIdentityProvider(dto);
         if (result.success)
@@ -105,14 +105,14 @@ class IdentityProviderController : ManageController {
         IdentityProviderDTO dto;
         dto.identityProviderId = id;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.issuerUrl = j.getString("issuerUrl");
-        dto.metadataUrl = j.getString("metadataUrl");
-        dto.redirectUri = j.getString("redirectUri");
-        dto.attributeMapping = j.getString("attributeMapping");
-        dto.scopes = j.getString("scopes");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.issuerUrl = data.getString("issuerUrl");
+        dto.metadataUrl = data.getString("metadataUrl");
+        dto.redirectUri = data.getString("redirectUri");
+        dto.attributeMapping = data.getString("attributeMapping");
+        dto.scopes = data.getString("scopes");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = identityProviders.updateIdentityProvider(dto);
         if (result.success)

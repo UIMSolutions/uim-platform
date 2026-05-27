@@ -43,9 +43,9 @@ class DataRecordController : ManageController {
 
       auto r = CreateDataRecordRequest();
       r.tenantId = tenantId;
-      r.datasetId = j.getString("datasetId");
-      r.attributes = j.getString("attributes");
-      r.labels = j.getString("labels");
+      r.datasetId = data.getString("datasetId");
+      r.attributes = data.getString("attributes");
+      r.labels = data.getString("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createDataRecord(r);

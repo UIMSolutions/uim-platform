@@ -41,13 +41,13 @@ class ServiceInstanceController : ManageController {
     auto j = req.json;
     auto r = CreateServiceInstanceRequest();
     r.tenantId = tenantId;
-    r.name = j.getString("name");
-    r.description = j.getString("description");
-    r.resourceId = j.getString("resourceId");
-    r.iaasProvider = j.getString("iaasProvider");
-    r.plan = j.getString("plan");
-    r.region = j.getString("region");
-    r.subaccountId = j.getString("subaccountId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.resourceId = data.getString("resourceId");
+    r.iaasProvider = data.getString("iaasProvider");
+    r.plan = data.getString("plan");
+    r.region = data.getString("region");
+    r.subaccountId = data.getString("subaccountId");
 
     auto result = usecase.createInstance(r);
     if (result.hasError())
@@ -74,8 +74,8 @@ class ServiceInstanceController : ManageController {
     auto r = UpdateServiceInstanceRequest();
     r.tenantId = tenantId;
     r.instanceId = id;
-    r.description = j.getString("description");
-    r.statusMessage = j.getString("statusMessage");
+    r.description = data.getString("description");
+    r.statusMessage = data.getString("statusMessage");
 
     auto result = usecase.updateInstance(r);
     if (result.hasError()) {

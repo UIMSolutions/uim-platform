@@ -36,9 +36,9 @@ class UserTaskFilterController : ManageController {
             CreateUserTaskFilterRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.userId = j.getString("userId");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
+            r.userId = data.getString("userId");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -113,8 +113,8 @@ class UserTaskFilterController : ManageController {
             UpdateUserTaskFilterRequest r;
             r.tenantId = tenantId;
             r.userTaskFilterId = id;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
 
             auto result = usecase.update(r);
             if (result.hasError)

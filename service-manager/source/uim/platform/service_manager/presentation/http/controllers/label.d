@@ -65,10 +65,10 @@ class LabelController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateLabelRequest r;
-            r.resourceId = j.getString("resourceId");
-            r.resourceType = j.getString("resourceType");
-            r.key = j.getString("key");
-            r.value = j.getString("value");
+            r.resourceId = data.getString("resourceId");
+            r.resourceType = data.getString("resourceType");
+            r.key = data.getString("key");
+            r.value = data.getString("value");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -84,8 +84,8 @@ class LabelController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateLabelRequest r;
-            r.key = j.getString("key");
-            r.value = j.getString("value");
+            r.key = data.getString("key");
+            r.value = data.getString("value");
 
             auto result = usecase.update(req.getTenantId, LabelId(id), r);
             if (result.hasError)

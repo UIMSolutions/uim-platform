@@ -39,11 +39,11 @@ class ForumTopicController : ManageController {
       auto j = req.json;
       auto r = CreateForumTopicRequest();
       r.tenantId = tenantId;
-      r.workspaceId = j.getString("workspaceId");
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.authorId = j.getString("authorId");
-      r.authorName = j.getString("authorName");
+      r.workspaceId = data.getString("workspaceId");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.authorId = data.getString("authorId");
+      r.authorName = data.getString("authorName");
       r.tags = getStrings(j, "tags");
 
       auto result = useCase.createForumTopic(r);
@@ -103,8 +103,8 @@ class ForumTopicController : ManageController {
       auto r = UpdateForumTopicRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
       r.pinned = j.getBoolean("pinned");
       r.locked = j.getBoolean("locked");
 

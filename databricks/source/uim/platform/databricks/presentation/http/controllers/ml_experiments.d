@@ -26,11 +26,11 @@ public:
       CreateMlExperimentRequest r;
       r.tenantId         = req.getTenantId;
       r.id               = precheck.id;
-      r.workspaceId      = j.getString("workspaceId");
-      r.name             = j.getString("name");
-      r.artifactLocation = j.getString("artifactLocation");
-      r.ownerId          = j.getString("ownerId");
-      r.tags             = j.getString("tags");
+      r.workspaceId      = data.getString("workspaceId");
+      r.name             = data.getString("name");
+      r.artifactLocation = data.getString("artifactLocation");
+      r.ownerId          = data.getString("ownerId");
+      r.tags             = data.getString("tags");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(serializeToJson(result.data), 201);
       else writeError(res, 400, result.message);
@@ -61,8 +61,8 @@ public:
       UpdateMlExperimentRequest r;
       r.tenantId = req.getTenantId;
       r.id       = req.requestPath.to!string.split("/")[$-1];
-      r.name     = j.getString("name");
-      r.tags     = j.getString("tags");
+      r.name     = data.getString("name");
+      r.tags     = data.getString("tags");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(serializeToJson(result.data));
       else writeError(res, 404, result.message);

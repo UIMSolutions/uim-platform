@@ -53,19 +53,19 @@ class DeviceController : ManageController {
 
         DeviceDTO dto;
         dto.deviceId = DeviceId(precheck.id);
-        dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
+        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
         dto.tenantId = tenantId;
-        dto.deviceName = j.getString("deviceName");
-        dto.deviceModel = j.getString("deviceModel");
-        dto.manufacturer = j.getString("manufacturer");
-        dto.osVersion = j.getString("osVersion");
-        dto.appVersionInstalled = j.getString("appVersionInstalled");
-        dto.pushToken = j.getString("pushToken");
-        dto.userId = j.getString("userId");
-        dto.userEmail = j.getString("userEmail");
-        dto.groupName = j.getString("groupName");
+        dto.deviceName = data.getString("deviceName");
+        dto.deviceModel = data.getString("deviceModel");
+        dto.manufacturer = data.getString("manufacturer");
+        dto.osVersion = data.getString("osVersion");
+        dto.appVersionInstalled = data.getString("appVersionInstalled");
+        dto.pushToken = data.getString("pushToken");
+        dto.userId = data.getString("userId");
+        dto.userEmail = data.getString("userEmail");
+        dto.groupName = data.getString("groupName");
         dto.isManaged = j.getBoolean("isManaged");
-        dto.mdmDeviceId = j.getString("mdmDeviceId");
+        dto.mdmDeviceId = data.getString("mdmDeviceId");
 
         auto result = usecase.enrollDevice(dto);
         if (result.hasError)

@@ -27,11 +27,11 @@ class LegalEntityController : ManageController {
 
             CreateLegalEntityRequest r;
             r.tenantId = tenantId;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.country = j.getString("country");
-            r.region = j.getString("region");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.country = data.getString("country");
+            r.region = data.getString("region");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createLegalEntity(r);
             if (result.hasError)
@@ -84,10 +84,10 @@ class LegalEntityController : ManageController {
             auto j = req.json;
 
             UpdateLegalEntityRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.country = j.getString("country");
-            r.region = j.getString("region");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.country = data.getString("country");
+            r.region = data.getString("region");
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateLegalEntity(r);

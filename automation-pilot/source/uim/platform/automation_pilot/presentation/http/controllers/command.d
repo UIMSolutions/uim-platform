@@ -110,13 +110,13 @@ class CommandController : ManageController {
         CommandDTO dto;
         dto.tenantId = tenantId;
         dto.commandId = CommandId(precheck.id);
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.inputSchema = j.getString("inputSchema");
-        dto.outputSchema = j.getString("outputSchema");
-        dto.steps = j.getString("steps");
-        dto.timeout = j.getString("timeout");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.inputSchema = data.getString("inputSchema");
+        dto.outputSchema = data.getString("outputSchema");
+        dto.steps = data.getString("steps");
+        dto.timeout = data.getString("timeout");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = commands.updateCommand(dto);
         if (result.hasError)

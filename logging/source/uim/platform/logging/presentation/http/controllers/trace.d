@@ -36,14 +36,14 @@ class TraceController : PlatformController {
       auto j = req.json;
       IngestSpanRequest r;
       r.tenantId = tenantId;
-      r.traceId = j.getString("traceId");
-      r.parentSpanId = j.getString("parentSpanId");
-      r.operationName = j.getString("operationName");
-      r.serviceName = j.getString("serviceName");
+      r.traceId = data.getString("traceId");
+      r.parentSpanId = data.getString("parentSpanId");
+      r.operationName = data.getString("operationName");
+      r.serviceName = data.getString("serviceName");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
-      r.status = j.getString("status");
-      r.kind = j.getString("kind");
+      r.status = data.getString("status");
+      r.kind = data.getString("kind");
       r.attributes = jsonStrMap(j, "attributes");
       r.resourceAttributes = jsonStrMap(j, "resourceAttributes");
 

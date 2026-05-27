@@ -39,10 +39,10 @@ class TagController : ManageController {
       auto j = req.json;
       auto r = CreateTagRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.color = j.getString("color");
-      r.parentTagId = j.getString("parentTagId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.color = data.getString("color");
+      r.parentTagId = data.getString("parentTagId");
 
       auto result = useCase.createTag(r);
       if (result.isSuccess()) {
@@ -103,9 +103,9 @@ class TagController : ManageController {
       auto r = UpdateTagRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.color = j.getString("color");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.color = data.getString("color");
 
       auto result = useCase.updateTag(r);
       if (result.isSuccess()) {

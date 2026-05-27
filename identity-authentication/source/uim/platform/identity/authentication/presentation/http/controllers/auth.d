@@ -36,9 +36,9 @@ class AuthController : PlatformController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto authReq = AuthRequest(j.getString("tenantId"), j.getString("applicationId"),
-          j.getString("email"), j.getString("password"),
-          j.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
+      auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
+          data.getString("email"), data.getString("password"),
+          data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
 
       auto result = authUseCase.execute(authReq);
       auto response = Json.emptyObject;
@@ -71,8 +71,8 @@ class AuthController : PlatformController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto tokenReq = TokenRequest(j.getString("sessionId"), j.getString("clientId"),
-          j.getString("clientSecret"), getStrings(j, "scopes"));
+      auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
+          data.getString("clientSecret"), getStrings(j, "scopes"));
 
       auto result = tokenUseCase.execute(tokenReq);
       auto response = Json.emptyObject;

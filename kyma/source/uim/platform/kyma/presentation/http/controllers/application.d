@@ -42,12 +42,12 @@ class ApplicationController : ManageController {
       auto j = req.json;
       RegisterApplicationRequest r;
       with (r) {
-        environmentId = j.getString("environmentId");
+        environmentId = data.getString("environmentId");
         tenantId = req.getTenantId;
-        name = j.getString("name");
-        description = j.getString("description");
-        registrationType = j.getString("registrationType");
-        connectorUrl = j.getString("connectorUrl");
+        name = data.getString("name");
+        description = data.getString("description");
+        registrationType = data.getString("registrationType");
+        connectorUrl = data.getString("connectorUrl");
         boundNamespaces = getStrings(j, "boundNamespaces");
         labels = jsonStrMap(j, "labels");
         createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -113,8 +113,8 @@ class ApplicationController : ManageController {
       auto id = ApplicationId(precheck.id);
       auto j = req.json;
       UpdateApplicationRequest r;
-      r.description = j.getString("description");
-      r.connectorUrl = j.getString("connectorUrl");
+      r.description = data.getString("description");
+      r.connectorUrl = data.getString("connectorUrl");
       r.boundNamespaces = getStrings(j, "boundNamespaces");
       r.labels = jsonStrMap(j, "labels");
       r.apis = j.toApis;

@@ -37,12 +37,12 @@ class InformationReportController : ManageController {
 
       CreateInformationReportRequest r;
       r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(j.getString("dataSubjectId"));
-      r.requestedBy = UserId(j.getString("requestedBy"));
-      r.format = j.getString("format");
+      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+      r.requestedBy = UserId(data.getString("requestedBy"));
+      r.format = data.getString("format");
       r.targetSystems = getStrings(j, "targetSystems");
       r.categories = getStrings(j, "categories");
-      r.reason = j.getString("reason");
+      r.reason = data.getString("reason");
 
       auto result = usecase.createReport(r);
       if (result.isSuccess()) {
@@ -100,8 +100,8 @@ class InformationReportController : ManageController {
       UpdateInformationReportStatusRequest r;
       r.reportId = InformationReportId(precheck.id);
       r.tenantId = tenantId;
-      r.status = j.getString("status");
-      r.downloadUrl = j.getString("downloadUrl");
+      r.status = data.getString("status");
+      r.downloadUrl = data.getString("downloadUrl");
       r.totalRecords = j.getLong("totalRecords");
 
       auto result = usecase.updateReportStatus(r);

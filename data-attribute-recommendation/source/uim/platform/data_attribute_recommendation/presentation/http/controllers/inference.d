@@ -40,8 +40,8 @@ class InferenceController : PlatformController {
       auto j = req.json;
       auto r = SubmitInferenceRequest();
       r.tenantId = tenantId;
-      r.deploymentId = j.getString("deploymentId");
-      r.inputData = j.getString("inputData");
+      r.deploymentId = data.getString("deploymentId");
+      r.inputData = data.getString("inputData");
 
       auto result = usecase.submitInference(r);
       if (result.isSuccess) {

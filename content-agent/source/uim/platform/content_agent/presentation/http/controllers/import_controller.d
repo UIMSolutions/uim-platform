@@ -35,9 +35,9 @@ class ImportController : PlatformController {
       auto j = req.json;
       auto r = StartImportRequest();
       r.tenantId = tenantId;
-      r.packageId = ContentPackageId(j.getString("packageId"));
-      r.transportRequestId = TransportRequestId(j.getString("transportRequestId"));
-      r.sourceFilePath = j.getString("sourceFilePath");
+      r.packageId = ContentPackageId(data.getString("packageId"));
+      r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
+      r.sourceFilePath = data.getString("sourceFilePath");
       r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.startImport(r);

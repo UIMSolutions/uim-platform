@@ -26,12 +26,12 @@ public:
       CreateMlModelRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = precheck.id;
-      r.workspaceId = j.getString("workspaceId");
-      r.name        = j.getString("name");
-      r.description = j.getString("description");
-      r.ownerId     = j.getString("ownerId");
-      r.source      = j.getString("source");
-      r.tags        = j.getString("tags");
+      r.workspaceId = data.getString("workspaceId");
+      r.name        = data.getString("name");
+      r.description = data.getString("description");
+      r.ownerId     = data.getString("ownerId");
+      r.source      = data.getString("source");
+      r.tags        = data.getString("tags");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(serializeToJson(result.data), 201);
       else writeError(res, 400, result.message);
@@ -62,9 +62,9 @@ public:
       UpdateMlModelRequest r;
       r.tenantId    = req.getTenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];
-      r.description = j.getString("description");
-      r.tags        = j.getString("tags");
-      auto stageStr = j.getString("latestStage");
+      r.description = data.getString("description");
+      r.tags        = data.getString("tags");
+      auto stageStr = data.getString("latestStage");
       if (stageStr.length > 0) {
         import std.conv : ConvException;
         try { r.latestStage = stageStr.to!ModelStage; } catch (ConvException) {}

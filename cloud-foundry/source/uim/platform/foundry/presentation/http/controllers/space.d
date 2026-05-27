@@ -43,10 +43,10 @@ class SpaceController : ManageController {
       auto j = req.json;
       auto r = CreateSpaceRequest();
       r.tenantId = tenantId;
-      r.orgId = OrgId(j.getString("orgId"));
-      r.name = j.getString("name");
+      r.orgId = OrgId(data.getString("orgId"));
+      r.name = data.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createSpace(r);
       if (result.isSuccess()) {
@@ -108,7 +108,7 @@ class SpaceController : ManageController {
       auto r = UpdateSpaceRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
+      r.name = data.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
 
       auto result = useCase.updateSpace(r);

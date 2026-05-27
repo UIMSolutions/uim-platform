@@ -38,12 +38,12 @@ class VisibilityController : ManageController {
             CreateVisibilityRequest r;
             r.tenantId = tenantId;
             r.visibilityId = VisibilityId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.dashboardType = j.getString("dashboardType");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.dashboardType = data.getString("dashboardType");
             r.processIds = getStrings(j, "processIds");
-            r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.refreshIntervalSeconds = data.getString("refreshIntervalSeconds");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = visibilityUsecase.createVisibility(r);
             if (result.hasError)
@@ -129,10 +129,10 @@ class VisibilityController : ManageController {
             UpdateVisibilityRequest r;
             r.tenantId = tenantId;
             r.visibilityId = Visibilityprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.refreshIntervalSeconds = data.getString("refreshIntervalSeconds");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = visibilityUsecase.updateVisibility(r);
             if (result.hasError)

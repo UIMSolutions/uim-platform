@@ -69,20 +69,20 @@ class EquipmentController : ManageController {
             EquipmentDTO dto;
             dto.equipmentId = EquipmentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.customerId = CustomerId(j.getString("customerId"))  ;
-            dto.serialNumber = j.getString("serialNumber");
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.equipmentType = j.getString("equipmentType");
-            dto.manufacturer = j.getString("manufacturer");
-            dto.model = j.getString("model");
-            dto.installationDate = j.getString("installationDate");
-            dto.warrantyEndDate = j.getString("warrantyEndDate");
-            dto.locationAddress = j.getString("locationAddress");
-            dto.latitude = j.getString("latitude");
-            dto.longitude = j.getString("longitude");
-            dto.measuringPoint = j.getString("measuringPoint");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.customerId = CustomerId(data.getString("customerId"))  ;
+            dto.serialNumber = data.getString("serialNumber");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.equipmentType = data.getString("equipmentType");
+            dto.manufacturer = data.getString("manufacturer");
+            dto.model = data.getString("model");
+            dto.installationDate = data.getString("installationDate");
+            dto.warrantyEndDate = data.getString("warrantyEndDate");
+            dto.locationAddress = data.getString("locationAddress");
+            dto.latitude = data.getString("latitude");
+            dto.longitude = data.getString("longitude");
+            dto.measuringPoint = data.getString("measuringPoint");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createEquipment(dto);
             if (result.hasError)
@@ -109,14 +109,14 @@ class EquipmentController : ManageController {
             EquipmentDTO dto;
             dto.equipmentId = EquipmentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.manufacturer = j.getString("manufacturer");
-            dto.model = j.getString("model");
-            dto.locationAddress = j.getString("locationAddress");
-            dto.lastServiceDate = j.getString("lastServiceDate");
-            dto.nextServiceDate = j.getString("nextServiceDate");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.manufacturer = data.getString("manufacturer");
+            dto.model = data.getString("model");
+            dto.locationAddress = data.getString("locationAddress");
+            dto.lastServiceDate = data.getString("lastServiceDate");
+            dto.nextServiceDate = data.getString("nextServiceDate");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateEquipment(dto);
             if (result.hasError)

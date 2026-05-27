@@ -36,12 +36,12 @@ class RoutingController : ManageController {
       r.originLon = jsonDouble(j, "originLon");
       r.destinationLat = jsonDouble(j, "destinationLat");
       r.destinationLon = jsonDouble(j, "destinationLon");
-      r.originLabel = j.getString("originLabel");
-      r.destinationLabel = j.getString("destinationLabel");
-      r.travelMode = j.getString("travelMode");
-      r.optimization = j.getString("optimization");
-      r.language = j.getString("language");
-      r.providerId = j.getString("providerId");
+      r.originLabel = data.getString("originLabel");
+      r.destinationLabel = data.getString("destinationLabel");
+      r.travelMode = data.getString("travelMode");
+      r.optimization = data.getString("optimization");
+      r.language = data.getString("language");
+      r.providerId = data.getString("providerId");
 
       auto result = usecase.calculateRoute(r);
       if (result.hasError)

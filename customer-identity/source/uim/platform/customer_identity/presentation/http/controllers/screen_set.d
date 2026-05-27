@@ -54,15 +54,15 @@ class ScreenSetController : ManageController {
 
         ScreenSetDTO dto;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.flowType = j.getString("flowType");
-        dto.htmlContent = j.getString("htmlContent");
-        dto.cssContent = j.getString("cssContent");
-        dto.jsContent = j.getString("jsContent");
-        dto.locale = j.getString("locale");
-        dto.version_ = j.getString("version");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.flowType = data.getString("flowType");
+        dto.htmlContent = data.getString("htmlContent");
+        dto.cssContent = data.getString("cssContent");
+        dto.jsContent = data.getString("jsContent");
+        dto.locale = data.getString("locale");
+        dto.version_ = data.getString("version");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = screenSets.createScreenSet(dto);
         if (result.success)
@@ -103,14 +103,14 @@ class ScreenSetController : ManageController {
         ScreenSetDTO dto;
         dto.screenSetId = id;
         dto.tenantId = tenantId;
-        dto.name = j.getString("name");
-        dto.description = j.getString("description");
-        dto.htmlContent = j.getString("htmlContent");
-        dto.cssContent = j.getString("cssContent");
-        dto.jsContent = j.getString("jsContent");
-        dto.locale = j.getString("locale");
-        dto.version_ = j.getString("version");
-        dto.updatedBy = UserId(j.getString("updatedBy"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.htmlContent = data.getString("htmlContent");
+        dto.cssContent = data.getString("cssContent");
+        dto.jsContent = data.getString("jsContent");
+        dto.locale = data.getString("locale");
+        dto.version_ = data.getString("version");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = screenSets.updateScreenSet(dto);
         if (result.success)

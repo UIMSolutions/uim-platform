@@ -34,10 +34,10 @@ class IsolineController : ManageController {
       r.id = precheck.id;
       r.centerLat = jsonDouble(j, "centerLat");
       r.centerLon = jsonDouble(j, "centerLon");
-      r.mode = j.getString("mode");
+      r.mode = data.getString("mode");
       r.rangeValue = jsonDouble(j, "rangeValue");
-      r.travelMode = j.getString("travelMode");
-      r.providerId = j.getString("providerId");
+      r.travelMode = data.getString("travelMode");
+      r.providerId = data.getString("providerId");
 
       auto result = usecase.calculate(r);
       if (result.hasError)

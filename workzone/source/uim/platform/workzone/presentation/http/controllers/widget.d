@@ -39,16 +39,16 @@ class WidgetController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateWidgetRequest();
-      r.pageId = j.getString("pageId");
+      r.pageId = data.getString("pageId");
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.cardId = j.getString("cardId");
-      r.appId = j.getString("appId");
+      r.title = data.getString("title");
+      r.cardId = data.getString("cardId");
+      r.appId = data.getString("appId");
       r.row = j.getInteger("row");
       r.col = j.getInteger("col");
       r.sortOrder = j.getInteger("sortOrder");
 
-      auto sStr = j.getString("size");
+      auto sStr = data.getString("size");
       if (sStr == "small")
         r.size = WidgetSize.small;
       else if (sStr == "large")
@@ -116,14 +116,14 @@ class WidgetController : ManageController {
       auto r = UpdateWidgetRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
+      r.title = data.getString("title");
       r.row = j.getInteger("row");
       r.col = j.getInteger("col");
       r.sortOrder = j.getInteger("sortOrder");
       r.visible = j.getBoolean("visible", true);
       r.config = parseWidgetConfig(j);
 
-      auto sStr = j.getString("size");
+      auto sStr = data.getString("size");
       if (sStr == "small")
         r.size = WidgetSize.small;
       else if (sStr == "large")

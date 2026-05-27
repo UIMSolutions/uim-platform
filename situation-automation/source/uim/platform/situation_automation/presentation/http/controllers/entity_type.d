@@ -37,12 +37,12 @@ class EntityTypeController : ManageController {
             
             CreateEntityTypeRequest r;
             r.tenantId = tenantId;
-            r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.sourceSystem = j.getString("sourceSystem");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.sourceSystem = data.getString("sourceSystem");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createEntityType(r);
             if (result.hasError)
@@ -128,10 +128,10 @@ class EntityTypeController : ManageController {
             UpdateEntityTypeRequest r;
             r.tenantId = tenantId;
             r.entityTypeId = EntityTypeprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.category = j.getString("category");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.category = data.getString("category");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateEntityType(r);
             if (result.hasError)

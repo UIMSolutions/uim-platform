@@ -43,10 +43,10 @@ class FolderController : ManageController {
       auto j = req.json;
       auto r = CreateFolderRequest();
       r.tenantId = tenantId;
-      r.repositoryId = j.getString("repositoryId");
-      r.parentFolderId = j.getString("parentFolderId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.repositoryId = data.getString("repositoryId");
+      r.parentFolderId = data.getString("parentFolderId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createFolder(r);
@@ -108,8 +108,8 @@ class FolderController : ManageController {
       auto r = UpdateFolderRequest();
       r.folderId = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = usecase.updateFolder(r);
       if (result.isSuccess) {
@@ -135,7 +135,7 @@ class FolderController : ManageController {
       auto r = MoveFolderRequest();
       r.folderId = id;
       r.tenantId = tenantId;
-      r.newParentFolderId = j.getString("newParentFolderId");
+      r.newParentFolderId = data.getString("newParentFolderId");
 
       auto result = usecase.moveFolder(r);
       if (result.isSuccess) {

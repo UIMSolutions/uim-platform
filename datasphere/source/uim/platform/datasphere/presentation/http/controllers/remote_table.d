@@ -37,12 +37,12 @@ class RemoteTableController : ManageController {
       CreateRemoteTableRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.connectionId = ConnectionId(j.getString("connectionId"));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.remoteSchema = j.getString("remoteSchema");
-      r.remoteObjectName = j.getString("remoteObjectName");
-      r.replicationMode = j.getString("replicationMode");
+      r.connectionId = ConnectionId(data.getString("connectionId"));
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.remoteSchema = data.getString("remoteSchema");
+      r.remoteObjectName = data.getString("remoteObjectName");
+      r.replicationMode = data.getString("replicationMode");
 
       auto result = usecase.createRemoteTable(r);
       if (result.hasError)

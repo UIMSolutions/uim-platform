@@ -35,7 +35,7 @@ class ResourceGroupController : ManageController {
       auto j = req.json;
       CreateResourceGroupRequest r;
       r.tenantId = tenantId;
-      r.resourceGroupId = j.getString("resourceGroupId");
+      r.resourceGroupId = data.getString("resourceGroupId");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = groups.createResourceGroup(r);

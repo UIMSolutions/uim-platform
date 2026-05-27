@@ -86,8 +86,8 @@ class RunLogController : ManageController {
             UpdateRunLogRequest r;
             r.runLogId = runLogId;
             r.tenantId = tenantId;
-            r.status = j.getString("status");
-            r.statusMessage = j.getString("statusMessage");
+            r.status = data.getString("status");
+            r.statusMessage = data.getString("statusMessage");
             r.httpStatus = j.getInteger("httpStatus");
             r.completedAt = jsonLong(j, "completedAt");
             r.executionDurationMs = jsonLong(j, "executionDurationMs");

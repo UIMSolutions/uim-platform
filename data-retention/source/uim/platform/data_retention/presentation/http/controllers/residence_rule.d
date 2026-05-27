@@ -29,11 +29,11 @@ class ResidenceRuleController : ManageController {
 
             CreateResidenceRuleRequest r;
             r.tenantId = tenantId;
-            r.businessPurposeId = BusinessPurposeId(j.getString("businessPurposeId"));
-            r.legalGroundId = LegalGroundId(j.getString("legalGroundId"));
+            r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
+            r.legalGroundId = LegalGroundId(data.getString("legalGroundId"));
             r.duration = jsonInt(j, "duration");
-            r.periodUnit = j.getString("periodUnit");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.periodUnit = data.getString("periodUnit");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createResidenceRule(r);
             if (result.hasError)
@@ -115,7 +115,7 @@ class ResidenceRuleController : ManageController {
             auto j = req.json;
             UpdateResidenceRuleRequest r;
             r.duration = jsonInt(j, "duration");
-            r.periodUnit = j.getString("periodUnit");
+            r.periodUnit = data.getString("periodUnit");
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateResidenceRule(id, r);

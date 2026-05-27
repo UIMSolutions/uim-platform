@@ -65,12 +65,12 @@ class SyncSessionController : ManageController {
             auto j = req.json;
             SyncSessionDTO dto;
             dto.syncSessionId = SyncSessionId(precheck.id);
-            dto.deviceId = DeviceId(j.getString("deviceId"));
-            dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
-            dto.backendConnectionId = BackendConnectionId(j.getString("backendConnectionId"));
+            dto.deviceId = DeviceId(data.getString("deviceId"));
+            dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
+            dto.backendConnectionId = BackendConnectionId(data.getString("backendConnectionId"));
             dto.tenantId = tenantId;
-            dto.triggeredBy = j.getString("triggeredBy");
-            dto.clientAppVersion = j.getString("clientAppVersion");
+            dto.triggeredBy = data.getString("triggeredBy");
+            dto.clientAppVersion = data.getString("clientAppVersion");
 
             auto result = usecase.createSyncSession(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -92,7 +92,7 @@ class SyncSessionController : ManageController {
             SyncSessionDTO dto;
             dto.syncSessionId = SyncSessionId(precheck.id);
             dto.tenantId = tenantId;
-            dto.status = j.getString("status");
+            dto.status = data.getString("status");
 
             auto result = usecase.updateSyncSession(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

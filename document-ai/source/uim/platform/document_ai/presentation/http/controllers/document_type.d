@@ -40,10 +40,10 @@ class DocumentTypeController : ManageController {
       CreateDocumentTypeRequest r;
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
-      r.defaultSchemaId = j.getString("defaultSchemaId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
+      r.defaultSchemaId = data.getString("defaultSchemaId");
       r.supportedFileTypes = getStrings(j, "supportedFileTypes");
 
       auto result = usecase.createDocumentType(r);
@@ -116,10 +116,10 @@ class DocumentTypeController : ManageController {
       r.tenantId = tenantId;
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.documentTypeId = id;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.category = j.getString("category");
-      r.defaultSchemaId = j.getString("defaultSchemaId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.category = data.getString("category");
+      r.defaultSchemaId = data.getString("defaultSchemaId");
 
       auto result = usecase.updateDocumentType(r);
       if (result.hasError)

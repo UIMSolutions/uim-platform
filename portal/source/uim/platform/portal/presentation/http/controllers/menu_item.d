@@ -38,10 +38,10 @@ class MenuItemController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto createReq = CreateMenuItemRequest(j.getString("siteId"),
-        req.headers.get("X-Tenant-Id", ""), j.getString("title"),
-        j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
-        j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
+      auto createReq = CreateMenuItemRequest(data.getString("siteId"),
+        req.headers.get("X-Tenant-Id", ""), data.getString("title"),
+        data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
+        data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
@@ -92,9 +92,9 @@ class MenuItemController : ManageController {
     try {
       auto menuItemId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateMenuItemRequest(menuItemId, j.getString("title"),
-        j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
-        j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
+      auto updateReq = UpdateMenuItemRequest(menuItemId, data.getString("title"),
+        data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
+        data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
@@ -112,7 +112,7 @@ class MenuItemController : ManageController {
     try {
       auto menuItemId = precheck.id;
       auto j = req.json;
-      auto siteId = j.getString("siteId");
+      auto siteId = data.getString("siteId");
       auto error = useCase.deleteMenuItem(menuItemId, siteId);
       if (error.length > 0)
         writeApiError(res, 404, error);

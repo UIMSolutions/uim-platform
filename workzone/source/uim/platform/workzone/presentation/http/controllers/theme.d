@@ -39,12 +39,12 @@ class ThemeController : ManageController {
       auto j = req.json;
       auto r = CreateThemeRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.baseTheme = j.getString("baseTheme");
-      r.logoUrl = j.getString("logoUrl");
-      r.faviconUrl = j.getString("faviconUrl");
-      r.customCss = j.getString("customCss");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.baseTheme = data.getString("baseTheme");
+      r.logoUrl = data.getString("logoUrl");
+      r.faviconUrl = data.getString("faviconUrl");
+      r.customCss = data.getString("customCss");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createTheme(r);
@@ -103,9 +103,9 @@ class ThemeController : ManageController {
       auto r = UpdateThemeRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.customCss = j.getString("customCss");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.customCss = data.getString("customCss");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.updateTheme(r);

@@ -29,12 +29,12 @@ class RetentionRuleController : ManageController {
 
             CreateRetentionRuleRequest r;
             r.tenantId = tenantId;
-            r.businessPurposeId = j.getString("businessPurposeId");
-            r.legalGroundId = j.getString("legalGroundId");
+            r.businessPurposeId = data.getString("businessPurposeId");
+            r.legalGroundId = data.getString("legalGroundId");
             r.duration = jsonInt(j, "duration");
-            r.periodUnit = j.getString("periodUnit");
-            r.actionOnExpiry = j.getString("actionOnExpiry");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.periodUnit = data.getString("periodUnit");
+            r.actionOnExpiry = data.getString("actionOnExpiry");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createRetentionRule(r);
             if (result.hasError)
@@ -112,8 +112,8 @@ class RetentionRuleController : ManageController {
             r.retentionRuleId = id;
             r.tenantId = tenantId;
             r.duration = jsonInt(j, "duration");
-            r.periodUnit = j.getString("periodUnit");
-            r.actionOnExpiry = j.getString("actionOnExpiry");
+            r.periodUnit = data.getString("periodUnit");
+            r.actionOnExpiry = data.getString("actionOnExpiry");
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = usecase.updateRetentionRule(r);

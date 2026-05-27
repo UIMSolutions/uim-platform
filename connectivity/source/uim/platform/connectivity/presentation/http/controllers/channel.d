@@ -39,13 +39,13 @@ class ChannelController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateChannelRequest();
-      r.connectorId = j.getString("connectorId");
+      r.connectorId = data.getString("connectorId");
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.channelType = j.getString("type");
-      r.virtualHost = j.getString("virtualHost");
+      r.name = data.getString("name");
+      r.channelType = data.getString("type");
+      r.virtualHost = data.getString("virtualHost");
       r.virtualPort = getUshort(j, "virtualPort");
-      r.backendHost = j.getString("backendHost");
+      r.backendHost = data.getString("backendHost");
       r.backendPort = getUshort(j, "backendPort");
 
       auto result = usecase.createChannel(r);

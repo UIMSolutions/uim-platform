@@ -58,9 +58,9 @@ class GroupController : ManageController {
             GroupDTO dto;
             dto.groupId = GroupId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.type_ = j.getString("type");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.type_ = data.getString("type");
 
             auto result = usecase.createGroup(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -75,8 +75,8 @@ class GroupController : ManageController {
             GroupDTO dto;
             dto.groupId = Groupprecheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
 
             auto result = usecase.updateGroup(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

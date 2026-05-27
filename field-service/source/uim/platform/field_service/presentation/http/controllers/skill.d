@@ -69,16 +69,16 @@ class SkillController : ManageController {
             SkillDTO dto;
             dto.skillId = SkillId(precheck.id);
             dto.tenantId = tenantId;
-            dto.technicianId = TechnicianId(j.getString("technicianId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.category = j.getString("category");
-            dto.proficiencyLevel = j.getString("proficiencyLevel");
-            dto.certificationDate = j.getString("certificationDate");
-            dto.expirationDate = j.getString("expirationDate");
-            dto.certificationNumber = j.getString("certificationNumber");
-            dto.issuingAuthority = j.getString("issuingAuthority");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.technicianId = TechnicianId(data.getString("technicianId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.category = data.getString("category");
+            dto.proficiencyLevel = data.getString("proficiencyLevel");
+            dto.certificationDate = data.getString("certificationDate");
+            dto.expirationDate = data.getString("expirationDate");
+            dto.certificationNumber = data.getString("certificationNumber");
+            dto.issuingAuthority = data.getString("issuingAuthority");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createSkill(dto);
             if (result.hasError)
@@ -104,12 +104,12 @@ class SkillController : ManageController {
             SkillDTO dto;
             dto.skillId = SkillId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.certificationDate = j.getString("certificationDate");
-            dto.expirationDate = j.getString("expirationDate");
-            dto.issuingAuthority = j.getString("issuingAuthority");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.certificationDate = data.getString("certificationDate");
+            dto.expirationDate = data.getString("expirationDate");
+            dto.issuingAuthority = data.getString("issuingAuthority");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateSkill(dto);
             if (result.hasError)

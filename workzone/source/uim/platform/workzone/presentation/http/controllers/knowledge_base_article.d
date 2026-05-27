@@ -39,15 +39,15 @@ class KnowledgeBaseArticleController : ManageController {
       auto j = req.json;
       auto r = CreateKBArticleRequest();
       r.tenantId = tenantId;
-      r.workspaceId = j.getString("workspaceId");
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.summary = j.getString("summary");
-      r.authorId = j.getString("authorId");
-      r.authorName = j.getString("authorName");
-      r.category = j.getString("category");
+      r.workspaceId = data.getString("workspaceId");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.summary = data.getString("summary");
+      r.authorId = data.getString("authorId");
+      r.authorName = data.getString("authorName");
+      r.category = data.getString("category");
       r.tags = getStrings(j, "tags");
-      r.language = j.getString("language");
+      r.language = data.getString("language");
 
       auto result = useCase.createArticle(r);
       if (result.isSuccess()) {
@@ -107,10 +107,10 @@ class KnowledgeBaseArticleController : ManageController {
       auto r = UpdateKBArticleRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.body_ = j.getString("body");
-      r.summary = j.getString("summary");
-      r.category = j.getString("category");
+      r.title = data.getString("title");
+      r.body_ = data.getString("body");
+      r.summary = data.getString("summary");
+      r.category = data.getString("category");
       r.tags = getStrings(j, "tags");
 
       auto result = useCase.updateArticle(r);

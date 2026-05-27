@@ -65,13 +65,13 @@ class PrintDocumentController : ManageController {
             PrintDocumentDTO dto;
             dto.documentId = PrintDocumentId(precheck.id);
             dto.tenantId = tenantId;
-            dto.fileName = j.getString("fileName");
-            dto.mimeType = j.getString("mimeType");
-            dto.format = j.getString("format");
+            dto.fileName = data.getString("fileName");
+            dto.mimeType = data.getString("mimeType");
+            dto.format = data.getString("format");
             dto.sizeBytes = j.getInt("sizeBytes");
-            dto.storageUri = j.getString("storageUri");
-            dto.checksum = j.getString("checksum");
-            dto.description = j.getString("description");
+            dto.storageUri = data.getString("storageUri");
+            dto.checksum = data.getString("checksum");
+            dto.description = data.getString("description");
             dto.expiresAt = j.getInt("expiresAt");
 
             auto result = usecase.createPrintDocument(dto);

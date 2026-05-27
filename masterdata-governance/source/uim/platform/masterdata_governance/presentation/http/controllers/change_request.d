@@ -66,16 +66,16 @@ class ChangeRequestController : ManageController {
             ChangeRequestDTO dto;
             dto.changeRequestId = ChangeRequestId(precheck.id);
             dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
-            dto.subject = j.getString("subject");
-            dto.description = j.getString("description");
-            dto.changedFields = j.getString("changedFields");
-            dto.proposedValues = j.getString("proposedValues");
-            dto.currentValues = j.getString("currentValues");
-            dto.comments = j.getString("comments");
-            dto.dueDate = j.getString("dueDate");
-            dto.externalReference = j.getString("externalReference");
-            dto.requestedBy = UserId(j.getString("requestedBy"));
+            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
+            dto.subject = data.getString("subject");
+            dto.description = data.getString("description");
+            dto.changedFields = data.getString("changedFields");
+            dto.proposedValues = data.getString("proposedValues");
+            dto.currentValues = data.getString("currentValues");
+            dto.comments = data.getString("comments");
+            dto.dueDate = data.getString("dueDate");
+            dto.externalReference = data.getString("externalReference");
+            dto.requestedBy = UserId(data.getString("requestedBy"));
 
             auto result = usecase.createChangeRequest(dto);
             if (result.hasError)
@@ -97,9 +97,9 @@ class ChangeRequestController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             auto id = ChangeRequestId(precheck.id);
-            auto action = j.getString("action");
-            auto userId = UserId(j.getString("userId"));
-            auto comments = j.getString("comments");
+            auto action = data.getString("action");
+            auto userId = UserId(data.getString("userId"));
+            auto comments = data.getString("comments");
 
             CommandResult result;
             if (action == "submit") {

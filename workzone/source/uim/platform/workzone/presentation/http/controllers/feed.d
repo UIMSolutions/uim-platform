@@ -37,15 +37,15 @@ class FeedController : ManageController {
       try {
         auto j = req.json;
         auto r = CreateFeedEntryRequest();
-        r.workspaceId = j.getString("workspaceId");
+        r.workspaceId = data.getString("workspaceId");
         r.tenantId = tenantId;
-        r.actorId = j.getString("actorId");
-        r.actorName = j.getString("actorName");
-        r.action = j.getString("action");
-        r.objectType = j.getString("objectType");
-        r.objectId = j.getString("objectId");
-        r.objectTitle = j.getString("objectTitle");
-        r.message = j.getString("message");
+        r.actorId = data.getString("actorId");
+        r.actorName = data.getString("actorName");
+        r.action = data.getString("action");
+        r.objectType = data.getString("objectType");
+        r.objectId = data.getString("objectId");
+        r.objectTitle = data.getString("objectTitle");
+        r.message = data.getString("message");
 
         auto result = useCase.createEntry(r);
         if (result.isSuccess()) {

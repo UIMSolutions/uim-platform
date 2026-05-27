@@ -66,16 +66,16 @@ class ReplicationController : ManageController {
             ReplicationDTO dto;
             dto.replicationId = ReplicationId(precheck.id);
             dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
-            dto.targetSystem = j.getString("targetSystem");
-            dto.targetSystemType = j.getString("targetSystemType");
-            dto.replicationType = j.getString("replicationType");
+            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
+            dto.targetSystem = data.getString("targetSystem");
+            dto.targetSystemType = data.getString("targetSystemType");
+            dto.replicationType = data.getString("replicationType");
             dto.scheduledAt = j.getLong("scheduledAt");
-            dto.replicatedFields = j.getString("replicatedFields");
+            dto.replicatedFields = data.getString("replicatedFields");
             dto.maxRetries = j.getInteger("maxRetries");
-            dto.correlationId = j.getString("correlationId");
-            dto.batchId = j.getString("batchId");
-            dto.triggeredBy = UserId(j.getString("triggeredBy"));
+            dto.correlationId = data.getString("correlationId");
+            dto.batchId = data.getString("batchId");
+            dto.triggeredBy = UserId(data.getString("triggeredBy"));
 
             auto result = usecase.createReplication(dto);
             if (result.hasError)
@@ -97,7 +97,7 @@ class ReplicationController : ManageController {
             auto path = req.requestURI.to!string;
             auto j = req.json;
             auto id = ReplicationId(precheck.id);
-            auto action = j.getString("action");
+            auto action = data.getString("action");
 
             CommandResult result;
             if (action == "cancel") {

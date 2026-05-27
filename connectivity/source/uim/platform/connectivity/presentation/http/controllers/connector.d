@@ -38,14 +38,14 @@ class ConnectorController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = RegisterConnectorRequest();
-      r.subaccountId = j.getString("subaccountId");
+      r.subaccountId = data.getString("subaccountId");
       r.tenantId = tenantId;
-      r.locationId = j.getString("locationId");
-      r.description = j.getString("description");
-      r.connectorVersion = j.getString("connectorVersion");
-      r.host = j.getString("host");
+      r.locationId = data.getString("locationId");
+      r.description = data.getString("description");
+      r.connectorVersion = data.getString("connectorVersion");
+      r.host = data.getString("host");
       r.port = getUshort(j, "port");
-      r.tunnelEndpoint = j.getString("tunnelEndpoint");
+      r.tunnelEndpoint = data.getString("tunnelEndpoint");
 
       auto result = usecase.registerConnector(r);
       if (result.hasError)
@@ -110,7 +110,7 @@ class ConnectorController : ManageController {
       auto j = req.json;
       auto r = HeartbeatRequest();
       auto tenantId = precheck.tenantId;
-      r.connectorVersion = j.getString("connectorVersion");
+      r.connectorVersion = data.getString("connectorVersion");
 
       auto result = usecase.heartbeat(tenantId, connectorId, r);
       if (result.hasError)

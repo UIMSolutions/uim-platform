@@ -66,19 +66,19 @@ class PrinterController : ManageController {
             PrinterDTO dto;
             dto.printerId = PrinterId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.host = j.getString("host");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.host = data.getString("host");
             auto portVal = cast(int) j.getInt("port");
             dto.port = portVal > 0 ? cast(ushort) portVal : 631;
-            dto.queue = j.getString("queue");
-            dto.location = j.getString("location");
-            dto.model = j.getString("model");
-            dto.vendor = j.getString("vendor");
-            dto.protocol = j.getString("protocol");
+            dto.queue = data.getString("queue");
+            dto.location = data.getString("location");
+            dto.model = data.getString("model");
+            dto.vendor = data.getString("vendor");
+            dto.protocol = data.getString("protocol");
             dto.colorCapable = j.getBoolean("colorCapable");
             dto.duplexCapable = j.getBoolean("duplexCapable");
-            dto.clientId = j.getString("clientId");
+            dto.clientId = data.getString("clientId");
 
             auto result = usecase.createPrinter(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -100,11 +100,11 @@ class PrinterController : ManageController {
             PrinterDTO dto;
             dto.printerId = PrinterId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.host = j.getString("host");
-            dto.location = j.getString("location");
-            dto.status = j.getString("status");
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.host = data.getString("host");
+            dto.location = data.getString("location");
+            dto.status = data.getString("status");
 
             auto result = usecase.updatePrinter(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

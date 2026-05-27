@@ -41,18 +41,18 @@ class SystemController : ManageController {
       auto j = req.json;
       auto r = CreateSystemRequest();
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.systemType = parseSystemType(j.getString("systemType"));
-      r.host = j.getString("host");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.systemType = parseSystemType(data.getString("systemType"));
+      r.host = data.getString("host");
       r.port = getUshort(j, "port");
-      r.client = j.getString("client");
-      r.protocol = j.getString("protocol");
-      r.environment = j.getString("environment");
-      r.region = j.getString("region");
-      r.systemId = j.getString("systemId");
-      r.tenant = j.getString("tenant");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.client = data.getString("client");
+      r.protocol = data.getString("protocol");
+      r.environment = data.getString("environment");
+      r.region = data.getString("region");
+      r.systemId = data.getString("systemId");
+      r.tenant = data.getString("tenant");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createSystem(r);
       if (result.isSuccess()) {
@@ -110,18 +110,18 @@ class SystemController : ManageController {
       auto r = UpdateSystemRequest();
       r.id = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.systemType = parseSystemType(j.getString("systemType"));
-      r.host = j.getString("host");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.systemType = parseSystemType(data.getString("systemType"));
+      r.host = data.getString("host");
       r.port = getUshort(j, "port");
-      r.client = j.getString("client");
-      r.protocol = j.getString("protocol");
-      r.status = parseConnectionStatus(j.getString("status"));
-      r.environment = j.getString("environment");
-      r.region = j.getString("region");
-      r.systemId = j.getString("systemId");
-      r.tenant = j.getString("tenant");
+      r.client = data.getString("client");
+      r.protocol = data.getString("protocol");
+      r.status = parseConnectionStatus(data.getString("status"));
+      r.environment = data.getString("environment");
+      r.region = data.getString("region");
+      r.systemId = data.getString("systemId");
+      r.tenant = data.getString("tenant");
 
       auto result = useCase.updateSystem(r);
       if (result.isSuccess()) {

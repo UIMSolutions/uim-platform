@@ -43,12 +43,12 @@ class WorkflowController : ManageController {
       auto j = req.json;
       auto r = CreateWorkflowRequest();
       r.tenantId = tenantId;
-      r.scenarioId = j.getString("scenarioId");
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.sourceSystemConnectionId = j.getString("sourceSystemConnectionId");
-      r.targetSystemConnectionId = j.getString("targetSystemConnectionId");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.scenarioId = data.getString("scenarioId");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.sourceSystemConnectionId = data.getString("sourceSystemConnectionId");
+      r.targetSystemConnectionId = data.getString("targetSystemConnectionId");
+      r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createWorkflow(r);
       if (result.isSuccess()) {

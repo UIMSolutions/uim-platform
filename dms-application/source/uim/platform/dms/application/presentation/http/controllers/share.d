@@ -41,10 +41,10 @@ class ShareController : ManageController {
       auto j = req.json;
       auto r = CreateShareRequest();
       r.tenantId = tenantId;
-      r.documentId = DocumentId(j.getString("documentId"));
-      r.shareType = j.getString("shareType").to!ShareType;
-      r.sharedWith = j.getString("sharedWith");
-      r.permissionLevel = j.getString("permissionLevel").to!PermissionLevel;
+      r.documentId = DocumentId(data.getString("documentId"));
+      r.shareType = data.getString("shareType").to!ShareType;
+      r.sharedWith = data.getString("sharedWith");
+      r.permissionLevel = data.getString("permissionLevel").to!PermissionLevel;
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 

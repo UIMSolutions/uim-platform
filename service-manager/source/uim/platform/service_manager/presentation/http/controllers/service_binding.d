@@ -62,12 +62,12 @@ class ServiceBindingController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceBindingRequest r;
-            r.name = j.getString("name");
-            r.instanceId = j.getString("instanceId");
-            r.parameters = j.getString("parameters");
-            r.bindResource = j.getString("bindResource");
-            r.context = j.getString("context");
-            r.labels = j.getString("labels");
+            r.name = data.getString("name");
+            r.instanceId = data.getString("instanceId");
+            r.parameters = data.getString("parameters");
+            r.bindResource = data.getString("bindResource");
+            r.context = data.getString("context");
+            r.labels = data.getString("labels");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -83,9 +83,9 @@ class ServiceBindingController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdateServiceBindingRequest r;
-            r.name = j.getString("name");
-            r.parameters = j.getString("parameters");
-            r.labels = j.getString("labels");
+            r.name = data.getString("name");
+            r.parameters = data.getString("parameters");
+            r.labels = data.getString("labels");
 
             auto result = usecase.update(req.getTenantId, ServiceBindingId(id), r);
             if (result.hasError)

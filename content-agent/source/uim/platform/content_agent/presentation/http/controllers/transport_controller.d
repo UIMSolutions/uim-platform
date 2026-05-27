@@ -40,12 +40,12 @@ class TransportController : ManageController {
       auto j = req.json;
       auto r = CreateTransportRequest();
       r.tenantId = tenantId;
-      r.sourceSubaccount = j.getString("sourceSubaccount");
-      r.targetSubaccount = j.getString("targetSubaccount");
-      r.description = j.getString("description");
-      r.mode = j.getString("mode");
+      r.sourceSubaccount = data.getString("sourceSubaccount");
+      r.targetSubaccount = data.getString("targetSubaccount");
+      r.description = data.getString("description");
+      r.mode = data.getString("mode");
       r.packageIds = getStrings(j, "packageIds");
-      r.queueId = j.getString("queueId");
+      r.queueId = data.getString("queueId");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createTransportRequest(r);
@@ -102,7 +102,7 @@ class TransportController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = ReleaseTransportRequest();
-      r.requestId = j.getString("requestId");
+      r.requestId = data.getString("requestId");
       r.tenantId = tenantId;
       r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -127,7 +127,7 @@ class TransportController : ManageController {
         try {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
-      auto requestId = j.getString("requestId");
+      auto requestId = data.getString("requestId");
 
       auto result = usecase.cancelTransport(requestId);
       if (result.hasError)

@@ -38,12 +38,12 @@ class ModelController : ManageController {
 
       RegisterModelRequest r;
       r.connectionId = connectionId;
-      r.name = j.getString("name");
-      r.version_ = j.getString("version");
-      r.description = j.getString("description");
-      r.scenarioId = j.getString("scenarioId");
-      r.executionId = j.getString("executionId");
-      r.url = j.getString("url");
+      r.name = data.getString("name");
+      r.version_ = data.getString("version");
+      r.description = data.getString("description");
+      r.scenarioId = data.getString("scenarioId");
+      r.executionId = data.getString("executionId");
+      r.url = data.getString("url");
       r.size = jsonLong(j, "size");
       r.labels = getStrings(j, "labels");
 
@@ -114,8 +114,8 @@ class ModelController : ManageController {
       r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.modelId = id;
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
 
       auto result = usecase.patchModel(r);
       if (result.hasError)

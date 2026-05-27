@@ -41,8 +41,8 @@ class ExecutionController : ManageController {
       CreateExecutionRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.configurationId = j.getString("configurationId");
-      r.resourceGroupId = j.getString("resourceGroupId");
+      r.configurationId = data.getString("configurationId");
+      r.resourceGroupId = data.getString("resourceGroupId");
 
       auto result = usecase.createExecution(r);
       if (result.hasError)
@@ -116,7 +116,7 @@ class ExecutionController : ManageController {
       r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.executionId = id;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = data.getString("targetStatus");
 
       auto result = usecase.patchExecution(r);
       if (result.hasError)
@@ -144,7 +144,7 @@ class ExecutionController : ManageController {
       r.tenantId = tenantId;
       r.connectionId = connectionId;
       r.executionIds = getStrings(j, "executionIds").map!(s => ExecutionId(s)).array;
-      r.targetStatus = j.getString("targetStatus");
+      r.targetStatus = data.getString("targetStatus");
 
       auto results = usecase.bulkPatchExecution(r);
       auto jarr = Json.emptyArray;

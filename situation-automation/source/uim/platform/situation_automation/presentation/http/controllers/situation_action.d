@@ -39,18 +39,18 @@ class SituationActionController : ManageController {
             CreateSituationActionRequest r;
             r.tenantId = tenantId;
             r.situationActionId = SituationActionId(precheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.baseUrl = j.getString("baseUrl");
-            r.path = j.getString("path");
-            r.method = j.getString("method");
-            r.authType = j.getString("authType");
-            r.destinationName = j.getString("destinationName");
-            r.webhookUrl = j.getString("webhookUrl");
-            r.emailTemplate = j.getString("emailTemplate");
-            r.scriptContent = j.getString("scriptContent");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.baseUrl = data.getString("baseUrl");
+            r.path = data.getString("path");
+            r.method = data.getString("method");
+            r.authType = data.getString("authType");
+            r.destinationName = data.getString("destinationName");
+            r.webhookUrl = data.getString("webhookUrl");
+            r.emailTemplate = data.getString("emailTemplate");
+            r.scriptContent = data.getString("scriptContent");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createSituationAction(r);
             if (result.hasError)
@@ -147,15 +147,15 @@ class SituationActionController : ManageController {
             UpdateSituationActionRequest r;
             r.tenantId = tenantId;
             r.situationActionId = SituationActionprecheck.id);
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.baseUrl = j.getString("baseUrl");
-            r.path = j.getString("path");
-            r.authType = j.getString("authType");
-            r.destinationName = j.getString("destinationName");
-            r.webhookUrl = j.getString("webhookUrl");
-            r.emailTemplate = j.getString("emailTemplate");
-            r.updatedBy = UserId(j.getString("updatedBy"));
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.baseUrl = data.getString("baseUrl");
+            r.path = data.getString("path");
+            r.authType = data.getString("authType");
+            r.destinationName = data.getString("destinationName");
+            r.webhookUrl = data.getString("webhookUrl");
+            r.emailTemplate = data.getString("emailTemplate");
+            r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateSituationAction(r);
             if (result.hasError)

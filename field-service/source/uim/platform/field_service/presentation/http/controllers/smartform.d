@@ -70,14 +70,14 @@ class SmartformController : ManageController {
             SmartformDTO dto;
             dto.smartformId = SmartformId(precheck.id);
             dto.tenantId = tenantId;
-            dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
-            dto.activityId = ActivityId(j.getString("activityId"));
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.formType = j.getString("formType");
-            dto.templateId = j.getString("templateId");
-            dto.safetyLabel = j.getString("safetyLabel");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
+            dto.activityId = ActivityId(data.getString("activityId"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.formType = data.getString("formType");
+            dto.templateId = data.getString("templateId");
+            dto.safetyLabel = data.getString("safetyLabel");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createSmartform(dto);
             if (result.hasError)
@@ -103,14 +103,14 @@ class SmartformController : ManageController {
             SmartformDTO dto;
             dto.smartformId = SmartformId(precheck.id);
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.formData = j.getString("formData");
-            dto.signatureData = j.getString("signatureData");
-            dto.submittedBy = UserId(j.getString("submittedBy"));
-            dto.submittedDate = j.getString("submittedDate");
-            dto.approvedBy = UserId(j.getString("approvedBy"));
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString("name");
+            dto.description = data.getString("description");
+            dto.formData = data.getString("formData");
+            dto.signatureData = data.getString("signatureData");
+            dto.submittedBy = UserId(data.getString("submittedBy"));
+            dto.submittedDate = data.getString("submittedDate");
+            dto.approvedBy = UserId(data.getString("approvedBy"));
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateSmartform(dto);
             if (result.hasError)

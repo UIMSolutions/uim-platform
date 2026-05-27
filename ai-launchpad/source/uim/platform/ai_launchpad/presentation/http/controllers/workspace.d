@@ -36,8 +36,8 @@ class WorkspaceController : ManageController {
       auto j = req.json;
       CreateWorkspaceRequest r;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = usecase.createWorkspace(r);
       if (result.hasError)
@@ -99,8 +99,8 @@ class WorkspaceController : ManageController {
       PatchWorkspaceRequest r;
       r.workspaceId = id;
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
 
       auto result = usecase.patchWorkspace(r);
       if (result.hasError)

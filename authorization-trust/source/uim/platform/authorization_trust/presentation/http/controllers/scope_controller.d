@@ -34,9 +34,9 @@ class ScopeController : ManageController {
       auto j = req.json;
       CreateScopeRequest r;
       r.tenantId = tenantId;
-      r.name        = j.getString("name");
-      r.description = j.getString("description");
-      r.appId       = j.getString("appId");
+      r.name        = data.getString("name");
+      r.description = data.getString("description");
+      r.appId       = data.getString("appId");
 
       auto result = usecase.createScope(r);
       if (result.success)
@@ -87,7 +87,7 @@ class ScopeController : ManageController {
       UpdateScopeRequest r;
       r.tenantId = tenantId;
       r.id          = id;
-      r.description = j.getString("description");
+      r.description = data.getString("description");
 
       auto result = usecase.updateScope(r);
       if (result.success)

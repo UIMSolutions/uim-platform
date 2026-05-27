@@ -39,16 +39,16 @@ class ServiceInstanceController : ManageController {
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
-      r.namespaceId = j.getString("namespaceId");
-      r.environmentId = j.getString("environmentId");
+      r.namespaceId = data.getString("namespaceId");
+      r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.serviceOfferingName = j.getString("serviceOfferingName");
-      r.servicePlanName = j.getString("servicePlanName");
-      r.servicePlanId = j.getString("servicePlanId");
-      r.externalName = j.getString("externalName");
-      r.parametersJson = j.getString("parameters");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.serviceOfferingName = data.getString("serviceOfferingName");
+      r.servicePlanName = data.getString("servicePlanName");
+      r.servicePlanId = data.getString("servicePlanId");
+      r.externalName = data.getString("externalName");
+      r.parametersJson = data.getString("parameters");
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -113,11 +113,11 @@ class ServiceInstanceController : ManageController {
       UpdateServiceInstanceRequest r;
       r.tenantId = tenantId;
       r.serviceInstanceId = id;
-      r.description = j.getString(
+      r.description = data.getString(
         "description");
-      r.servicePlanName = j.getString("servicePlanName");
-      r.servicePlanId = j.getString("servicePlanId");
-      r.parametersJson = j.getString(
+      r.servicePlanName = data.getString("servicePlanName");
+      r.servicePlanId = data.getString("servicePlanId");
+      r.parametersJson = data.getString(
         "parameters");
       r.labels = jsonStrMap(j, "labels");
       auto result = usecase.updateServiceInstance(

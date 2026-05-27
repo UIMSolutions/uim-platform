@@ -59,16 +59,16 @@ class EventChannelController : ManageController {
             EventChannelDTO dto;
             dto.channelId          = EventChannelId(precheck.id);
             dto.tenantId           = tenantId;
-            dto.serviceId          = MessagingServiceId(j.getString("serviceId"));
-            dto.name               = j.getString("name");
-            dto.description        = j.getString("description");
-            dto.channelType        = j.getString("channelType");
-            dto.namespace          = j.getString("namespace");
-            dto.topicName          = j.getString("topicName");
-            dto.asyncapiDefinition = j.getString("asyncapiDefinition");
-            dto.maxRetentionPeriod = j.getString("maxRetentionPeriod");
-            dto.maxPartitions      = j.getString("maxPartitions");
-            dto.createdBy          = UserId(j.getString("createdBy"));
+            dto.serviceId          = MessagingServiceId(data.getString("serviceId"));
+            dto.name               = data.getString("name");
+            dto.description        = data.getString("description");
+            dto.channelType        = data.getString("channelType");
+            dto.namespace          = data.getString("namespace");
+            dto.topicName          = data.getString("topicName");
+            dto.asyncapiDefinition = data.getString("asyncapiDefinition");
+            dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
+            dto.maxPartitions      = data.getString("maxPartitions");
+            dto.createdBy          = UserId(data.getString("createdBy"));
             auto result = usecase.createChannel(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
@@ -85,11 +85,11 @@ class EventChannelController : ManageController {
             EventChannelDTO dto;
             dto.tenantId           = tenantId;
             dto.channelId          = channelId;
-            dto.description        = j.getString("description");
-            dto.asyncapiDefinition = j.getString("asyncapiDefinition");
-            dto.maxRetentionPeriod = j.getString("maxRetentionPeriod");
-            dto.maxPartitions      = j.getString("maxPartitions");
-            dto.updatedBy          = UserId(j.getString("updatedBy"));
+            dto.description        = data.getString("description");
+            dto.asyncapiDefinition = data.getString("asyncapiDefinition");
+            dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
+            dto.maxPartitions      = data.getString("maxPartitions");
+            dto.updatedBy          = UserId(data.getString("updatedBy"));
             auto result = usecase.updateChannel(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);

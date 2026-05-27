@@ -60,13 +60,13 @@ class TransportActionController : ManageController {
             TransportActionDTO dto;
             dto.actionId = TransportActionId(precheck.id);
             dto.tenantId = tenantId;
-            dto.actionType = j.getString("actionType");
-            dto.nodeId = j.getString("nodeId");
-            dto.requestId = j.getString("requestId");
-            dto.routeId = j.getString("routeId");
-            dto.performedBy = j.getString("performedBy");
-            dto.description = j.getString("description");
-            dto.logDetails = j.getString("logDetails");
+            dto.actionType = data.getString("actionType");
+            dto.nodeId = data.getString("nodeId");
+            dto.requestId = data.getString("requestId");
+            dto.routeId = data.getString("routeId");
+            dto.performedBy = data.getString("performedBy");
+            dto.description = data.getString("description");
+            dto.logDetails = data.getString("logDetails");
             auto result = usecase.recordAction(dto);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport action recorded"), 201);
@@ -82,12 +82,12 @@ class TransportActionController : ManageController {
             auto tenantId = precheck.tenantId;
             auto id = TransportActionprecheck.id);
             auto j = req.json;
-            auto statusStr = j.getString("actionStatus");
+            auto statusStr = data.getString("actionStatus");
             if (statusStr.length > 0) {
                 import std.conv : to;
                 try {
                     auto status = statusStr.to!ActionStatus;
-                    auto errorMsg = j.getString("errorMessage");
+                    auto errorMsg = data.getString("errorMessage");
                     auto result = usecase.updateActionStatus(tenantId, id, status, errorMsg);
                     if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Action status updated"), 200);
                     else writeError(res, 400, result.message);

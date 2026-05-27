@@ -38,16 +38,16 @@ class DataSubjectController : ManageController {
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
             r.id = precheck.id;
-            r.subjectType = j.getString("subjectType");
-            r.firstName = j.getString("firstName");
-            r.lastName = j.getString("lastName");
-            r.email = j.getString("email");
-            r.phone = j.getString("phone");
-            r.dateOfBirth = j.getString("dateOfBirth");
-            r.organizationName = j.getString("organizationName");
-            r.organizationId = j.getString("organizationId");
-            r.externalId = j.getString("externalId");
-            r.createdBy = UserId(j.getString("createdBy"));
+            r.subjectType = data.getString("subjectType");
+            r.firstName = data.getString("firstName");
+            r.lastName = data.getString("lastName");
+            r.email = data.getString("email");
+            r.phone = data.getString("phone");
+            r.dateOfBirth = data.getString("dateOfBirth");
+            r.organizationName = data.getString("organizationName");
+            r.organizationId = data.getString("organizationId");
+            r.externalId = data.getString("externalId");
+            r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
             if (result.hasError)
@@ -143,14 +143,14 @@ class DataSubjectController : ManageController {
             UpdateDataSubjectRequest request;
             request.tenantId = tenantId;
             request.id = DataSubjectprecheck.id);
-            request.firstName = j.getString("firstName");
-            request.lastName = j.getString("lastName");
-            request.email = j.getString("email");
-            request.phone = j.getString("phone");
-            request.dateOfBirth = j.getString("dateOfBirth");
-            request.organizationName = j.getString("organizationName");
-            request.organizationId = j.getString("organizationId");
-            request.updatedBy = UserId(j.getString("updatedBy"));
+            request.firstName = data.getString("firstName");
+            request.lastName = data.getString("lastName");
+            request.email = data.getString("email");
+            request.phone = data.getString("phone");
+            request.dateOfBirth = data.getString("dateOfBirth");
+            request.organizationName = data.getString("organizationName");
+            request.organizationId = data.getString("organizationId");
+            request.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDataSubject(request);
             if (result.hasError)

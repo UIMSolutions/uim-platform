@@ -38,8 +38,8 @@ class TranslationController : ManageController {
       auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateTranslationRequest(tenantId,
-        j.getString("resourceType"), j.getString("resourceId"),
-        j.getString("fieldName"), j.getString("language"), j.getString("value"),);
+        data.getString("resourceType"), data.getString("resourceId"),
+        data.getString("fieldName"), data.getString("language"), data.getString("value"),);
 
       auto result = useCase.createTranslation(createReq);
       if (result.isSuccess()) {
@@ -96,7 +96,7 @@ class TranslationController : ManageController {
       auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
       auto j = req.json;
-      auto updateReq = UpdateTranslationRequest(translationId, j.getString("value"),);
+      auto updateReq = UpdateTranslationRequest(translationId, data.getString("value"),);
 
       auto error = useCase.updateTranslation(tenantId, updateReq);
       if (error.length > 0)

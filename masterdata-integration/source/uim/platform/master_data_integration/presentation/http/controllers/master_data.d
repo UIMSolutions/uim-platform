@@ -43,16 +43,16 @@ class MasterDataController : ManageController {
       auto j = req.json;
       CreateMasterDataObjectRequest r;
       r.tenantId = tenantId;
-      r.dataModelId = j.getString("dataModelId");
-      r.category = j.getString("category");
-      r.objectType = j.getString("objectType");
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.localId = j.getString("localId");
-      r.globalId = j.getString("globalId");
+      r.dataModelId = data.getString("dataModelId");
+      r.category = data.getString("category");
+      r.objectType = data.getString("objectType");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.localId = data.getString("localId");
+      r.globalId = data.getString("globalId");
       r.attributes = jsonStrMap(j, "attributes");
-      r.sourceSystem = j.getString("sourceSystem");
-      r.sourceClient = j.getString("sourceClient");
+      r.sourceSystem = data.getString("sourceSystem");
+      r.sourceClient = data.getString("sourceClient");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -135,9 +135,9 @@ class MasterDataController : ManageController {
       auto id = precheck.id;
       auto j = req.json;
       UpdateMasterDataObjectRequest r;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.status = j.getString("status");
+      r.displayName = data.getString("displayName");
+      r.description = data.getString("description");
+      r.status = data.getString("status");
       r.attributes = jsonStrMap(j, "attributes");
       r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 

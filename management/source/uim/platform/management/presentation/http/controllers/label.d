@@ -38,9 +38,9 @@ class LabelController : ManageController {
       auto data = precheck.data;
       CreateLabelRequest r;
       r.tenantId = tenantId;
-      r.resourceType = j.getString("resourceType");
-      r.resourceId = j.getString("resourceId");
-      r.key = j.getString("key");
+      r.resourceType = data.getString("resourceType");
+      r.resourceId = data.getString("resourceId");
+      r.key = data.getString("key");
       r.values = getStrings(j, "values");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 

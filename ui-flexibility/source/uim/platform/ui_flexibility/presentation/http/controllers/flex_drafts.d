@@ -38,9 +38,9 @@ class FlexDraftsController : ManageController {
       CreateFlexDraftRequest r;
       r.tenantId       = tenantId;
       r.draftId        = FlexDraftId(precheck.id);
-      r.appId          = j.getString("appId");
-      r.updatedBy_     = j.getString("updatedBy");
-      r.baseVersionId_ = j.getString("baseVersionId");
+      r.appId          = data.getString("appId");
+      r.updatedBy_     = data.getString("updatedBy");
+      r.baseVersionId_ = data.getString("baseVersionId");
       auto result = usecase.createDraft(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("id", result.id).set("status", "created"), 201);
@@ -83,7 +83,7 @@ class FlexDraftsController : ManageController {
       UpdateFlexDraftRequest r;
       r.tenantId   = tenantId;
       r.draftId    = id;
-      r.updatedBy_ = j.getString("updatedBy");
+      r.updatedBy_ = data.getString("updatedBy");
       auto idsArr = j.get("changeIds", Json.emptyArray);
       foreach (cid; idsArr) r.changeIds_ ~= cid.get!string;
       auto result = usecase.updateDraft(r);

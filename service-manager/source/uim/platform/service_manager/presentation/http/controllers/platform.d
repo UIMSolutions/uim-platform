@@ -91,13 +91,13 @@ class EnvironmentController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreatePlatformRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.brokerUrl = j.getString("brokerUrl");
-            r.credentials = j.getString("credentials");
-            r.region = j.getString("region");
-            r.subaccountId = j.getString("subaccountId");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.brokerUrl = data.getString("brokerUrl");
+            r.credentials = data.getString("credentials");
+            r.region = data.getString("region");
+            r.subaccountId = data.getString("subaccountId");
 
             auto result = usecase.create(req.getTenantId, r);
             if (result.hasError)
@@ -122,12 +122,12 @@ class EnvironmentController : ManageController {
             auto id = precheck.id;
             auto data = precheck.data;
             UpdatePlatformRequest r;
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.type = j.getString("type");
-            r.brokerUrl = j.getString("brokerUrl");
-            r.credentials = j.getString("credentials");
-            r.region = j.getString("region");
+            r.name = data.getString("name");
+            r.description = data.getString("description");
+            r.type = data.getString("type");
+            r.brokerUrl = data.getString("brokerUrl");
+            r.credentials = data.getString("credentials");
+            r.region = data.getString("region");
 
             auto result = usecase.update(req.getTenantId, PlatformId(id), r);
             if (result.hasError)

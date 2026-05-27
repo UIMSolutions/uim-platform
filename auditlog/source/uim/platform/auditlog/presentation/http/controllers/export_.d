@@ -51,11 +51,11 @@ class ExportController : ManageController {
 
     CreateExportJobRequest jobRequest = CreateExportJobRequest();
     jobRequest.tenantId = tenantId;
-    jobRequest.requestedBy = j.getString("requestedBy");
+    jobRequest.requestedBy = data.getString("requestedBy");
     jobRequest.timeFrom = jsonLong(j, "timeFrom");
     jobRequest.timeTo = jsonLong(j, "timeTo");
 
-    auto fmtStr = j.getString("format");
+    auto fmtStr = data.getString("format");
     jobRequest.format_ = fmtStr == "csv"
        ? ExportFormat.csv
        : ExportFormat.json;

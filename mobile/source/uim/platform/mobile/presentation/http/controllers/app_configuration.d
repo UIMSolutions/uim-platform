@@ -36,13 +36,13 @@ class AppConfigurationController : ManageController {
       auto j = req.json;
       CreateAppConfigurationRequest r;
       r.tenantId = tenantId;
-      r.appId = j.getString("appId");
-      r.key = j.getString("key");
-      r.value = j.getString("value");
-      r.description = j.getString("description");
+      r.appId = data.getString("appId");
+      r.key = data.getString("key");
+      r.value = data.getString("value");
+      r.description = data.getString("description");
       r.isSecret = j.getBoolean("isSecret");
-      r.platform = j.getString("platform");
-      r.createdBy = UserId(j.getString("createdBy"));
+      r.platform = data.getString("platform");
+      r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
@@ -119,11 +119,11 @@ class AppConfigurationController : ManageController {
       auto j = req.json;
       UpdateAppConfigurationRequest r;
       r.id = id;
-      r.value = j.getString("value");
-      r.description = j.getString("description");
+      r.value = data.getString("value");
+      r.description = data.getString("description");
       r.isSecret = j.getBoolean("isSecret");
-      r.platform = j.getString("platform");
-      r.updatedBy = UserId(j.getString("updatedBy"));
+      r.platform = data.getString("platform");
+      r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

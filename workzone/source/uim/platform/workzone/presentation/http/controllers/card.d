@@ -39,11 +39,11 @@ class CardController : ManageController {
       auto j = req.json;
       auto r = CreateCardRequest();
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.subtitle = j.getString("subtitle");
-      r.description = j.getString("description");
-      r.icon = j.getString("icon");
-      r.cardType = parseCardType(j.getString("cardType"));
+      r.title = data.getString("title");
+      r.subtitle = data.getString("subtitle");
+      r.description = data.getString("description");
+      r.icon = data.getString("icon");
+      r.cardType = parseCardType(data.getString("cardType"));
       r.dataSource = parseDataSource(j);
       r.manifest = parseManifest(j);
 
@@ -103,10 +103,10 @@ class CardController : ManageController {
       auto r = UpdateCardRequest();
       r.id = precheck.id;
       r.tenantId = tenantId;
-      r.title = j.getString("title");
-      r.subtitle = j.getString("subtitle");
-      r.description = j.getString("description");
-      r.icon = j.getString("icon");
+      r.title = data.getString("title");
+      r.subtitle = data.getString("subtitle");
+      r.description = data.getString("description");
+      r.icon = data.getString("icon");
       r.active = j.getBoolean("active", true);
       r.dataSource = parseDataSource(j);
       r.manifest = parseManifest(j);

@@ -66,14 +66,14 @@ class DataQualityScoreController : ManageController {
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
+            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
             dto.overallScore = j.getInteger("overallScore");
             dto.completenessScore = j.getInteger("completenessScore");
             dto.consistencyScore = j.getInteger("consistencyScore");
             dto.accuracyScore = j.getInteger("accuracyScore");
             dto.uniquenessScore = j.getInteger("uniquenessScore");
-            dto.evaluationDetails = j.getString("evaluationDetails");
-            dto.createdBy = UserId(j.getString("createdBy"));
+            dto.evaluationDetails = data.getString("evaluationDetails");
+            dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDataQualityScore(dto);
             if (result.hasError)
@@ -102,8 +102,8 @@ class DataQualityScoreController : ManageController {
             dto.consistencyScore = j.getInteger("consistencyScore");
             dto.accuracyScore = j.getInteger("accuracyScore");
             dto.uniquenessScore = j.getInteger("uniquenessScore");
-            dto.evaluationDetails = j.getString("evaluationDetails");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.evaluationDetails = data.getString("evaluationDetails");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDataQualityScore(dto);
             if (result.hasError)

@@ -38,8 +38,8 @@ class ClientController : ManageController {
 
       CreateClientRequest r;
       r.tenantId = tenantId;
-      r.clientName = j.getString("clientName");
-      r.description = j.getString("description");
+      r.clientName = data.getString("clientName");
+      r.description = data.getString("description");
 
       auto result = usecase.createClient(r);
       if (result.hasError)
@@ -104,8 +104,8 @@ class ClientController : ManageController {
       PatchClientRequest r;
       r.tenantId = tenantId;
       r.clientId = id;
-      r.clientName = j.getString("clientName");
-      r.description = j.getString("description");
+      r.clientName = data.getString("clientName");
+      r.description = data.getString("description");
 
       auto result = usecase.patchClient(r);
       if (result.hasError)

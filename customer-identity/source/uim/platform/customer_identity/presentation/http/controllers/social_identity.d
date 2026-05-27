@@ -54,16 +54,16 @@ class SocialIdentityController : ManageController {
 
         SocialIdentityDTO dto;
         dto.tenantId = tenantId;
-        dto.customerId = CustomerId(j.getString("customerId"));
-        dto.provider = j.getString("provider");
-        dto.providerUserId = j.getString("providerUserId");
-        dto.providerEmail = j.getString("providerEmail");
-        dto.displayName = j.getString("displayName");
-        dto.accessToken = j.getString("accessToken");
-        dto.refreshToken = j.getString("refreshToken");
+        dto.customerId = CustomerId(data.getString("customerId"));
+        dto.provider = data.getString("provider");
+        dto.providerUserId = data.getString("providerUserId");
+        dto.providerEmail = data.getString("providerEmail");
+        dto.displayName = data.getString("displayName");
+        dto.accessToken = data.getString("accessToken");
+        dto.refreshToken = data.getString("refreshToken");
         dto.tokenExpiresAt = j.getInteger("tokenExpiresAt");
-        dto.profileData = j.getString("profileData");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.profileData = data.getString("profileData");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = socialIdentities.linkSocialIdentity(dto);
         if (result.success)

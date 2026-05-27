@@ -44,22 +44,22 @@ class AuditLogController : PlatformController {
 
     auto r = WriteAuditLogRequest();
     r.tenantId = tenantId;
-    r.userId = j.getString("userId");
-    r.userName = j.getString("userName");
-    r.serviceId = j.getString("serviceId");
-    r.serviceName = j.getString("serviceName");
-    r.category = j.getString("category").to!AuditCategory;
-    r.severity = j.getString("severity").to!AuditSeverity;
-    r.action = j.getString("action").to!AuditAction;
-    r.outcome = j.getString("outcome").to!AuditOutcome;
-    r.objectType = j.getString("objectType");
-    r.objectId = j.getString("objectId");
-    r.message = j.getString("message");
+    r.userId = data.getString("userId");
+    r.userName = data.getString("userName");
+    r.serviceId = data.getString("serviceId");
+    r.serviceName = data.getString("serviceName");
+    r.category = data.getString("category").to!AuditCategory;
+    r.severity = data.getString("severity").to!AuditSeverity;
+    r.action = data.getString("action").to!AuditAction;
+    r.outcome = data.getString("outcome").to!AuditOutcome;
+    r.objectType = data.getString("objectType");
+    r.objectId = data.getString("objectId");
+    r.message = data.getString("message");
     r.attributes = parseAttributes(j);
-    r.ipAddress = j.getString("ipAddress");
-    r.userAgent = j.getString("userAgent");
-    r.correlationId = j.getString("correlationId");
-    r.originApp = j.getString("originApp");
+    r.ipAddress = data.getString("ipAddress");
+    r.userAgent = data.getString("userAgent");
+    r.correlationId = data.getString("correlationId");
+    r.originApp = data.getString("originApp");
 
     auto result = writeUsecase.writeAuditLog(r);
     if (result.hasError)
