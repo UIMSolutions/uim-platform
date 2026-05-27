@@ -35,7 +35,7 @@ struct MonthlyUsageReportResponse {
   int reportingYear;
   int reportingMonth;
   string reportingPeriod;
-  string generatedAt;
+  long generatedAt;
   string status;
   MetricUsageItemResponse[] usageItems;
 

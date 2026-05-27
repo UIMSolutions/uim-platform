@@ -65,7 +65,7 @@ class WebhookController : ManageController {
             dto.description      = j.getString("description");
             dto.url              = j.getString("url");
             dto.headers          = j.getString("headers");
-            dto.exemptHandshake  = j.getBool("exemptHandshake");
+            dto.exemptHandshake  = j.getBoolean("exemptHandshake");
             dto.authenticationType = j.getString("authenticationType");
             dto.credentialsType  = j.getString("credentialsType");
             dto.credentialGrant  = j.getString("credentialGrant");

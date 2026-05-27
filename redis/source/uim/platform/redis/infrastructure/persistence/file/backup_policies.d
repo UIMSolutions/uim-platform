@@ -45,7 +45,7 @@ class FileBackupPolicyRepository
             p.id          = BackupPolicyId(j.getString("id", ""));
             p.tenantId    = tenantId;
             p.instanceId  = ServiceInstanceId(j.getString("instanceId", ""));
-            p.enabled     = j.getBool("enabled", false);
+            p.enabled     = j.getBoolean("enabled", false);
             p.intervalHours = j.getLong("intervalHours", 24);
             p.retentionDays = j.getLong("retentionDays", 7);
             p.lastBackupAt = j.getLong("lastBackupAt", 0);

@@ -60,7 +60,7 @@ class MaintenanceWindowController : ManageController {
         dto.dayOfWeek                 = data.getString("dayOfWeek", "Sunday");
         dto.startHourUtc              = data.getLong("startHourUtc", 2);
         dto.durationHours             = data.getLong("durationHours", 1);
-        dto.autoMinorVersionUpgrade   = data.getBool("autoMinorVersionUpgrade", true);
+        dto.autoMinorVersionUpgrade   = data.getBoolean("autoMinorVersionUpgrade", true);
         dto.createdBy                 = UserId(data.getString("createdBy", ""));
         auto result = maintenanceWindows.createMaintenanceWindow(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
@@ -78,7 +78,7 @@ class MaintenanceWindowController : ManageController {
         dto.dayOfWeek               = data.getString("dayOfWeek", "");
         dto.startHourUtc            = data.getLong("startHourUtc", -1);
         dto.durationHours           = data.getLong("durationHours", 0);
-        dto.autoMinorVersionUpgrade = data.getBool("autoMinorVersionUpgrade", true);
+        dto.autoMinorVersionUpgrade = data.getBoolean("autoMinorVersionUpgrade", true);
         dto.updatedBy               = UserId(data.getString("updatedBy", ""));
         auto result = maintenanceWindows.updateMaintenanceWindow(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);

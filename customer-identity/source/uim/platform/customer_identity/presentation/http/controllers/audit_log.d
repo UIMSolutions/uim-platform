@@ -60,7 +60,7 @@ class AuditLogController : ManageController {
         dto.ipAddress = j.getString("ipAddress");
         dto.userAgent = j.getString("userAgent");
         dto.details = j.getString("details");
-        dto.success = j.getBool("success");
+        dto.success = j.getBoolean("success");
         dto.createdBy = UserId(j.getString("createdBy"));
 
         auto result = auditLogs.recordAuditEvent(dto);

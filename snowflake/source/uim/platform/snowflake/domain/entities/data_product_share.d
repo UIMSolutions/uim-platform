@@ -18,8 +18,8 @@ struct DataProductShare {
   string              dataProductId;
   string              shareName;
   ShareStatus         status;
-  string              sharedAt;
-  string              lastSyncAt;
+  long              sharedAt;
+  long              lastSyncAt;
   int                 tableCount;
   string              comment;
   string[string]      metadata;

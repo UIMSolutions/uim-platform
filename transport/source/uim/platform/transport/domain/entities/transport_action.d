@@ -22,7 +22,7 @@ struct TransportAction {
     TransportRequestId requestId;
     TransportRouteId routeId;
     string performedBy;
-    string performedAt;
+    long performedAt;
     long completedAt;
     string description;
     string errorMessage;

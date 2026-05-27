@@ -61,8 +61,8 @@ class ServicePlanController : ManageController {
         dto.memoryGb          = data.getLong("memoryGb", 4);
         dto.storageGb         = data.getLong("storageGb", 20);
         dto.maxConnections    = data.getLong("maxConnections", 100);
-        dto.multiAzSupported  = data.getBool("multiAzSupported", false);
-        dto.available         = data.getBool("available", true);
+        dto.multiAzSupported  = data.getBoolean("multiAzSupported", false);
+        dto.available         = data.getBoolean("available", true);
         dto.pricingUnit       = data.getString("pricingUnit", "");
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = plans.createServicePlan(dto);
@@ -79,7 +79,7 @@ class ServicePlanController : ManageController {
         dto.servicePlanId = ServicePlanprecheck.id);
         dto.tenantId      = tenantId;
         dto.description   = data.getString("description", "");
-        dto.available     = data.getBool("available", true);
+        dto.available     = data.getBoolean("available", true);
         dto.updatedBy     = UserId(data.getString("updatedBy", ""));
         auto result = plans.updateServicePlan(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);

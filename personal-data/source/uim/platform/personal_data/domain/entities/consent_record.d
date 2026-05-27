@@ -19,8 +19,8 @@ struct ConsentRecord {
     ConsentStatus status;
     string consentText;
     string consentVersion;
-    string givenAt;
-    string withdrawnAt;
+    long givenAt;
+    long withdrawnAt;
     long expiresAt;
     string ipAddress;
     string userAgent;

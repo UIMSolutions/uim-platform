@@ -22,7 +22,7 @@ struct DevSpace {
     string extensions;
     string owner;
     string region;
-    string lastAccessedAt;
+    long lastAccessedAt;
     string hibernateAfterDays;
     string memoryLimit;
     string diskLimit;

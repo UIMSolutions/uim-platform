@@ -49,7 +49,7 @@ class FileMaintenanceWindowRepository
             e.dayOfWeek               = j.getString("dayOfWeek", "Sunday");
             e.startHourUtc            = j.getLong("startHourUtc", 2);
             e.durationHours           = j.getLong("durationHours", 1);
-            e.autoMinorVersionUpgrade = j.getBool("autoMinorVersionUpgrade", true);
+            e.autoMinorVersionUpgrade = j.getBoolean("autoMinorVersionUpgrade", true);
             e.status                  = j.getString("status", "scheduled").to!MaintenanceStatus;
             e.lastMaintenanceAt       = j.getLong("lastMaintenanceAt", 0);
             e.nextMaintenanceAt       = j.getLong("nextMaintenanceAt", 0);

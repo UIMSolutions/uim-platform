@@ -42,7 +42,7 @@ struct MonthlyCostReportResponse {
   double totalCost;
   string commercialModel;
   string status;
-  string generatedAt;
+  long generatedAt;
   CostItemResponse[] costItems;
 
   bool isEmpty() const { return reportId.value.length == 0; }

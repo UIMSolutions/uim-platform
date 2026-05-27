@@ -19,8 +19,8 @@ struct AppVersion {
     string versionNumber;     // e.g. "2.5.1"
     string releaseNotes;
     AppVersionStatus status = AppVersionStatus.pending;
-    string builtAt;
-    string publishedAt;
+    long builtAt;
+    long publishedAt;
     string artifactUrl;
     string checksum;
     string minOsVersion;

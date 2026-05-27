@@ -20,7 +20,7 @@ struct TaskAttachment {
     string mimeType;
     AttachmentStatus status = AttachmentStatus.available;
     UserId uploadedBy;
-    string uploadedAt;
+    long uploadedAt;
 
     Json toJson() const {
         return entityToJson

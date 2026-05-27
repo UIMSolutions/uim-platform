@@ -31,7 +31,7 @@ public:
       r.maxMessageSize      = j.getInteger("maxMessageSize");
       r.maxQueueSize        = j.getInteger("maxQueueSize");
       r.retentionPeriod     = j.getInteger("retentionPeriod");
-      r.deadLetterQueue     = j.getBool("deadLetterQueue");
+      r.deadLetterQueue     = j.getBoolean("deadLetterQueue");
       r.deadLetterQueueName = j.getString("deadLetterQueueName");
       r.metadata            = jsonStrMap(j, "metadata");
       auto result = _usecase.create(r);

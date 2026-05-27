@@ -67,7 +67,7 @@ class EventFilterController : ManageController {
         dto.attribute      = data.getString("attribute", "");
         dto.operator_      = data.getString("operator", "equals").to!FilterOperator;
         dto.value          = data.getString("value", "");
-        dto.active         = data.getBool("active", true);
+        dto.active         = data.getBoolean("active", true);
         dto.createdBy      = UserId(data.getString("createdBy", ""));
         auto result = _useCase.createEventFilter(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
@@ -87,7 +87,7 @@ class EventFilterController : ManageController {
         dto.attribute      = data.getString("attribute", "");
         dto.operator_      = data.getString("operator", "equals").to!FilterOperator;
         dto.value          = data.getString("value", "");
-        dto.active         = data.getBool("active", true);
+        dto.active         = data.getBoolean("active", true);
         dto.updatedBy      = UserId(data.getString("updatedBy", ""));
         auto result = _useCase.updateEventFilter(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);

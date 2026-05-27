@@ -53,7 +53,7 @@ class WebServiceInstanceController {
         dto.name      = data.getString("name", "");
         dto.planId    = ServicePlanId(data.getString("planId", ""));
         dto.memoryGb  = data.getLong("memoryGb", 4);
-        dto.sslEnabled = data.getBool("sslEnabled", true);
+        dto.sslEnabled = data.getBoolean("sslEnabled", true);
         auto result = _useCase.createServiceInstance(dto);
         if (result.success) _model.setSuccess("Instance created: " ~ result.id);
         else                _model.setError(400, result.message);

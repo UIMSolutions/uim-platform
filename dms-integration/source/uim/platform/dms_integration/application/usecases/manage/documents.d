@@ -109,7 +109,7 @@ class ManageDocumentsUseCase {
         existing.checkedOutBy = userId;
         import std.conv : to;
         import std.datetime.systime : Clock;
-        existing.checkedOutAt = Clock.currTime.toISOExtString;
+        existing.checkedOutAt = currentTimestamp;
         existing.versioningState = VersioningState.checkedOut;
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

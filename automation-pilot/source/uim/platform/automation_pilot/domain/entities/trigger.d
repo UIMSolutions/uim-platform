@@ -24,7 +24,7 @@ struct Trigger {
     string filterExpression;
     string inputMapping;
     string webhookUrl;
-    string lastTriggeredAt;
+    long lastTriggeredAt;
 
     Json toJson() const {
         return entityToJson

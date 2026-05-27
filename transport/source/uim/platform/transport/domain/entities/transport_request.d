@@ -30,8 +30,8 @@ struct TransportRequest {
     string namedUser;
     string systemId;
     string description2;
-    string queuedAt;
-    string importedAt;
+    long queuedAt;
+    long importedAt;
     string errorMessage;
 
     Json toJson() const {

@@ -25,7 +25,7 @@ struct AuditEntry {
     string       payload;
 
     UserId       performedBy;
-    string       performedAt;  /// ISO-8601 timestamp
+    long       performedAt;  /// ISO-8601 timestamp
 
     bool isNull() const { return id.isNull; }
 }

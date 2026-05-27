@@ -1,5 +1,3 @@
-module uim.platform.dms_integration.application.usecases.manage.folders;
-
 /****************************************************************************************************************
 * Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
@@ -41,9 +39,7 @@ class ManageFoldersUseCase {
     }
 
     CommandResult createFolder(FolderDTO dto) {
-        Folder folder;
-        folder.id = dto.folderId;
-        folder.tenantId = dto.tenantId;
+        auto folder = Folder(dto.tenantId);
         folder.repositoryId = dto.repositoryId;
         folder.parentFolderId = dto.parentFolderId;
         folder.name = dto.name;
@@ -63,6 +59,7 @@ class ManageFoldersUseCase {
         }
         if (!DmsValidator.isValidFolder(folder))
             return CommandResult(false, "", "Invalid folder: name and repositoryId are required");
+        
         repo.save(folder);
         return CommandResult(true, folder.id.value, "");
     }

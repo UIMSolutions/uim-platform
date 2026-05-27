@@ -21,7 +21,7 @@ struct AuthorizationCode {
     string scopes;
     AuthCodeStatus status = AuthCodeStatus.active;
     long expiresAt;
-    string issuedAt;
+    long issuedAt;
 
     Json toJson() const {
         return entityToJson

@@ -20,7 +20,7 @@ struct Deployment {
     DeploymentScope scope_ = DeploymentScope.tenant;
     string targetDeviceId;
     string targetGroupName;
-    string scheduledAt;
+    long scheduledAt;
     long startedAt;
     long completedAt;
     string rollbackVersionId;

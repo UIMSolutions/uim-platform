@@ -22,7 +22,7 @@ struct FlagRowViewModel {
     string state_;
     string defaultVariant;
     string instanceId;
-    string updatedAt;
+    long updatedAt;
 }
 
 struct FlagDetailViewModel {
@@ -33,8 +33,8 @@ struct FlagDetailViewModel {
     string state_;
     string instanceId;
     string defaultVariant;
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     string createdBy;
     string updatedBy;
     VariantViewModel[]      variants;

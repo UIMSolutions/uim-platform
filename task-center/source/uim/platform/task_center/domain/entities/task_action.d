@@ -18,7 +18,7 @@ struct TaskAction {
 
     ActionType actionType = ActionType.approve;
     UserId performedBy;
-    string performedAt;
+    long performedAt;
     string forwardTo;
     string comment;
 

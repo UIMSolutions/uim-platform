@@ -33,80 +33,92 @@ class PermissionController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            Permission[] items;
-            auto documentId = req.query.get("documentId", "");
-            auto folderId = req.query.get("folderId", "");
-            auto principalId = req.query.get("principalId", "");
-            if (documentId.length > 0) {
-                items = usecase.listPermissionsByDocument(tenantId, DocumentId(documentId));
-            } else if (folderId.length > 0) {
-                items = usecase.listPermissionsByFolder(tenantId, FolderId(folderId));
-            } else if (principalId.length > 0) {
-                items = usecase.listPermissionsByPrincipal(tenantId, principalId);
-            } else {
-                items = usecase.listPermissions(tenantId);
-            }
-            auto jarr = items.map!(e => e.toJson).array.toJson;
-            auto resp = Json.emptyObject.set("count", items.length).set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        Permission[] items;
+        auto documentId = req.query.get("documentId", "");
+        auto folderId = req.query.get("folderId", "");
+        auto principalId = req.query.get("principalId", "");
+        if (documentId.length > 0) {
+            items = usecase.listPermissionsByDocument(tenantId, DocumentId(documentId));
+        } else if (folderId.length > 0) {
+            items = usecase.listPermissionsByFolder(tenantId, FolderId(folderId));
+        } else if (principalId.length > 0) {
+            items = usecase.listPermissionsByPrincipal(tenantId, principalId);
+        } else {
+            items = usecase.listPermissions(tenantId);
         }
+        auto jarr = items.map!(e => e.toJson).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+        return successResponse("Permission list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = PermissionId(precheck.id);
-            auto item = usecase.getPermission(tenantId, id);
-            if (item.isNull) { writeError(res, 404, "Permission not found"); return; }
-            res.writeJsonBody(item.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            PermissionDTO dto;
-            dto.permissionId = PermissionId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.repositoryId = RepositoryId(j.getString("repositoryId"));
-            dto.documentId = DocumentId(j.getString("documentId"));
-            dto.folderId = FolderId(j.getString("folderId"));
-            dto.principalId = j.getString("principalId");
-            dto.principalType = j.getString("principalType");
-            dto.permissionType = j.getString("permissionType");
-            dto.isInherited = j.getBool("isInherited");
-            dto.isDirect = j.getBool("isDirect");
-            dto.expiresAt = j.getLong("expiresAt");
-            dto.description = j.getString("description");
-            dto.grantedBy = UserId(j.getString("grantedBy"));
-            auto result = usecase.grantPermission(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        PermissionDTO dto;
+        dto.permissionId = PermissionId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.repositoryId = RepositoryId(data.getString("repositoryId"));
+        dto.documentId = DocumentId(data.getString("documentId"));
+        dto.folderId = FolderId(data.getString("folderId"));
+        dto.principalId = data.getString("principalId");
+        dto.principalType = data.getString("principalType");
+        dto.permissionType = data.getString("permissionType");
+        dto.isInherited = data.getBoolean("isInherited");
+        dto.isDirect = data.getBoolean("isDirect");
+        dto.expiresAt = data.getLong("expiresAt");
+        dto.description = data.getString("description");
+        dto.grantedBy = UserId(data.getString("grantedBy"));
+
+        auto result = usecase.grantPermission(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Permission granted"), 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Permission granted successfully", "Created", 201, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = PermissionId(precheck.id);
-            auto result = usecase.deletePermission(tenantId, id);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Permission revoked"), 200);
-            else writeError(res, 404, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = PermissionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid permission ID", 400);
+
+        auto item = usecase.getPermission(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Permission not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Permission retrieved successfully", "Retrieved", 200, responseData);
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = PermissionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid permission ID", 400);
+
+        auto result = usecase.deletePermission(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Permission deleted successfully", "Deleted", 200, responseData);
     }
 }

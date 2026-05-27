@@ -74,11 +74,11 @@ class ServicePlanController : ManageController {
         dto.description         = data.getString("description", "");
         dto.memoryMb            = data.getLong("memoryMb", 256);
         dto.maxConnections      = data.getLong("maxConnections", 100);
-        dto.haEnabled           = data.getBool("haEnabled", false);
-        dto.persistenceEnabled  = data.getBool("persistenceEnabled", false);
-        dto.tlsEnabled          = data.getBool("tlsEnabled", true);
+        dto.haEnabled           = data.getBoolean("haEnabled", false);
+        dto.persistenceEnabled  = data.getBoolean("persistenceEnabled", false);
+        dto.tlsEnabled          = data.getBoolean("tlsEnabled", true);
         dto.pricingUnit         = data.getString("pricingUnit", "");
-        dto.available           = data.getBool("available", true);
+        dto.available           = data.getBoolean("available", true);
         dto.createdBy           = UserId(data.getString("createdBy", ""));
 
         auto result = plans.createServicePlan(dto);

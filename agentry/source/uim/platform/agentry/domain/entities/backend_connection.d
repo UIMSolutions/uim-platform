@@ -26,7 +26,7 @@ struct BackendConnection {
     string client;
     string language;
     string destinationName;
-    string lastTestedAt;
+    long lastTestedAt;
     string lastTestedBy;
     bool sslEnabled;
     string certificateFingerprint;

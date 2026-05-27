@@ -23,8 +23,8 @@ struct BuildConfiguration {
     string deployCommand;
     string artifactPath;
     string mtaDescriptor;
-    string lastBuildAt;
-    string lastDeployAt;
+    long lastBuildAt;
+    long lastDeployAt;
     string buildLog;
 
     Json toJson() const {

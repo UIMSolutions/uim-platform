@@ -22,7 +22,7 @@ struct ProvisioningRequest {
   ProvisioningStatus  status;
   string              resultAccountId;
   string              errorMessage;
-  string              completedAt;
+  long              completedAt;
   string[string]      metadata;
 
   Json toJson() const {

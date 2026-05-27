@@ -64,18 +64,18 @@ class DocumentVersionController : ManageController {
         auto data = precheck.data;
         DocumentVersionDTO dto;
         dto.tenantId = tenantId;
-        dto.documentId = DocumentId(j.getString("documentId"));
-        dto.repositoryId = RepositoryId(j.getString("repositoryId"));
-        dto.versionLabel = j.getString("versionLabel");
-        dto.isMajorVersion = j.getBool("isMajorVersion");
-        dto.comment = j.getString("comment");
-        dto.fileSizeBytes = j.getLong("fileSizeBytes");
-        dto.mimeType = j.getString("mimeType");
-        dto.fileName = j.getString("fileName");
-        dto.checksum = j.getString("checksum");
-        dto.contentStreamId = j.getString("contentStreamId");
-        dto.checkinComment = j.getString("checkinComment");
-        dto.createdBy = UserId(j.getString("createdBy"));
+        dto.documentId = DocumentId(data.getString("documentId"));
+        dto.repositoryId = RepositoryId(data.getString("repositoryId"));
+        dto.versionLabel = data.getString("versionLabel");
+        dto.isMajorVersion = data.getBoolean("isMajorVersion");
+        dto.comment = data.getString("comment");
+        dto.fileSizeBytes = data.getLong("fileSizeBytes");
+        dto.mimeType = data.getString("mimeType");
+        dto.fileName = data.getString("fileName");
+        dto.checksum = data.getString("checksum");
+        dto.contentStreamId = data.getString("contentStreamId");
+        dto.checkinComment = data.getString("checkinComment");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createDocumentVersion(dto);
         if (result.hasError)

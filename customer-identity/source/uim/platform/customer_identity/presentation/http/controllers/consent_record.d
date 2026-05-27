@@ -58,7 +58,7 @@ class ConsentRecordController : ManageController {
         dto.consentType = j.getString("consentType");
         dto.purpose = j.getString("purpose");
         dto.legalBasis = j.getString("legalBasis");
-        dto.granted = j.getBool("granted");
+        dto.granted = j.getBoolean("granted");
         dto.ipAddress = j.getString("ipAddress");
         dto.userAgent = j.getString("userAgent");
         dto.version_ = j.getString("version");

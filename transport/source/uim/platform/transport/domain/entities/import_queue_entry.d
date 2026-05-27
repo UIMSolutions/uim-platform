@@ -20,7 +20,7 @@ struct ImportQueueEntry {
     TransportRequestId requestId;
     ImportStatus status = ImportStatus.initial;
     int queuePosition = 0;
-    string queuedAt;
+    long queuedAt;
     long startedAt;
     long completedAt;
     string errorMessage;

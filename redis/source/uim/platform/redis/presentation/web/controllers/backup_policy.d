@@ -50,7 +50,7 @@ class WebBackupPolicyController {
         BackupPolicyDTO dto;
         dto.tenantId      = tenantId;
         dto.instanceId    = ServiceInstanceId(data.getString("instanceId", ""));
-        dto.enabled       = data.getBool("enabled", true);
+        dto.enabled       = data.getBoolean("enabled", true);
         dto.intervalHours = data.getLong("intervalHours", 24);
         dto.retentionDays = data.getLong("retentionDays", 7);
         dto.backupLocation = data.getString("backupLocation", "");

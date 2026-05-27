@@ -24,7 +24,7 @@ struct RunConfiguration {
     string environmentVars;
     string port;
     string debugPort;
-    string lastRunAt;
+    long lastRunAt;
 
     Json toJson() {
         return entityToJson

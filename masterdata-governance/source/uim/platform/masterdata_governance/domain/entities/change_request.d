@@ -31,9 +31,9 @@ struct ChangeRequest {
     UserId decidedBy;
 
     string dueDate;
-    string submittedAt;
-    string reviewStartedAt;
-    string decidedAt;
+    long submittedAt;
+    long reviewStartedAt;
+    long decidedAt;
 
     int priority;
     string externalReference;

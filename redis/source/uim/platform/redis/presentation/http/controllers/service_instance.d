@@ -76,8 +76,8 @@ class ServiceInstanceController : ManageController {
         dto.region            = data.getString("region", "");
         dto.memoryMb          = data.getLong("memoryMb", 256);
         dto.maxConnections    = data.getLong("maxConnections", 100);
-        dto.tlsEnabled        = data.getBool("tlsEnabled", true);
-        dto.haEnabled         = data.getBool("haEnabled", false);
+        dto.tlsEnabled        = data.getBoolean("tlsEnabled", true);
+        dto.haEnabled         = data.getBoolean("haEnabled", false);
         dto.createdBy         = UserId(data.getString("createdBy", ""));
 
         auto result = instances.createServiceInstance(dto);

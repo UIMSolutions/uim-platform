@@ -71,7 +71,7 @@ class BackupPolicyController : ManageController {
         dto.backupPolicyId  = BackupPolicyId(data.getString("backupPolicyId", ""));
         dto.tenantId        = tenantId;
         dto.instanceId      = ServiceInstanceId(data.getString("instanceId", ""));
-        dto.enabled         = data.getBool("enabled", true);
+        dto.enabled         = data.getBoolean("enabled", true);
         dto.intervalHours   = data.getLong("intervalHours", 24);
         dto.retentionDays   = data.getLong("retentionDays", 7);
         dto.backupLocation  = data.getString("backupLocation", "");
@@ -99,7 +99,7 @@ class BackupPolicyController : ManageController {
         BackupPolicyDTO dto;
         dto.backupPolicyId  = BackupPolicyprecheck.id);
         dto.tenantId        = tenantId;
-        dto.enabled         = data.getBool("enabled", true);
+        dto.enabled         = data.getBoolean("enabled", true);
         dto.intervalHours   = data.getLong("intervalHours", 0);
         dto.retentionDays   = data.getLong("retentionDays", 0);
         dto.backupLocation  = data.getString("backupLocation", "");

@@ -61,14 +61,14 @@ class SitePolicyController : ManageController {
         dto.passwordComplexity = j.getString("passwordComplexity");
         dto.passwordRequirements = j.getString("passwordRequirements");
         dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
-        dto.mfaRequired = j.getBool("mfaRequired");
+        dto.mfaRequired = j.getBoolean("mfaRequired");
         dto.mfaMethod = j.getString("mfaMethod");
-        dto.captchaEnabled = j.getBool("captchaEnabled");
-        dto.socialLoginEnabled = j.getBool("socialLoginEnabled");
-        dto.progressiveProfilingEnabled = j.getBool("progressiveProfilingEnabled");
+        dto.captchaEnabled = j.getBoolean("captchaEnabled");
+        dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
+        dto.progressiveProfilingEnabled = j.getBoolean("progressiveProfilingEnabled");
         dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
         dto.lockoutDurationSeconds = j.getInteger("lockoutDurationSeconds");
-        dto.emailVerificationRequired = j.getBool("emailVerificationRequired");
+        dto.emailVerificationRequired = j.getBoolean("emailVerificationRequired");
         dto.version_ = j.getString("version");
         dto.createdBy = UserId(j.getString("createdBy"));
 
@@ -115,9 +115,9 @@ class SitePolicyController : ManageController {
         dto.description = j.getString("description");
         dto.passwordMinLength = j.getInteger("passwordMinLength");
         dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
-        dto.mfaRequired = j.getBool("mfaRequired");
-        dto.captchaEnabled = j.getBool("captchaEnabled");
-        dto.socialLoginEnabled = j.getBool("socialLoginEnabled");
+        dto.mfaRequired = j.getBoolean("mfaRequired");
+        dto.captchaEnabled = j.getBoolean("captchaEnabled");
+        dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
         dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
         dto.updatedBy = UserId(j.getString("updatedBy"));
 

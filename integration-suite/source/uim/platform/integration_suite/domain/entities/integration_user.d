@@ -13,7 +13,7 @@ struct IntegrationUser {
   IntegrationUserRole  role;
   bool                 active;
   string               externalUserId;
-  string               lastLoginAt;
+  long               lastLoginAt;
 
   Json toJson() const {
     auto j = entityToJson();

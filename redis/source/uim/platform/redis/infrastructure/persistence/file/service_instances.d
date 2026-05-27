@@ -62,8 +62,8 @@ class FileServiceInstanceRepository
             inst.maxConnections = j.getLong("maxConnections", 10000);
             inst.host        = j.getString("host", "");
             inst.port        = cast(ushort) j.getLong("port", 6379);
-            inst.tlsEnabled  = j.getBool("tlsEnabled", true);
-            inst.haEnabled   = j.getBool("haEnabled", false);
+            inst.tlsEnabled  = j.getBoolean("tlsEnabled", true);
+            inst.haEnabled   = j.getBoolean("haEnabled", false);
             inst.persistenceMode = j.getString("persistenceMode", "none").to!PersistenceMode;
             inst.provisionedAt = j.getLong("provisionedAt", 0);
             inst.updatedAt   = j.getLong("updatedAt", 0);

@@ -22,8 +22,8 @@ struct Device {
     string osVersion;
     string appVersionInstalled;
     DeviceStatus status = DeviceStatus.enrolled;
-    string enrolledAt;
-    string lastSeenAt;
+    long enrolledAt;
+    long lastSeenAt;
     string pushToken;
     string userId;
     string userEmail;

@@ -21,8 +21,8 @@ struct ContentConnector {
     string repositoryUrl;
     string branch;
     string path;
-    string lastBackupAt;
-    string lastRestoreAt;
+    long lastBackupAt;
+    long lastRestoreAt;
     BackupStatus backupStatus = BackupStatus.pending;
 
     Json toJson() const {

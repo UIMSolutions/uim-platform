@@ -51,8 +51,8 @@ class FileServicePlanRepository
             e.memoryGb         = j.getLong("memoryGb", 4);
             e.storageGb        = j.getLong("storageGb", 20);
             e.maxConnections   = j.getLong("maxConnections", 100);
-            e.multiAzSupported = j.getBool("multiAzSupported", false);
-            e.available        = j.getBool("available", true);
+            e.multiAzSupported = j.getBoolean("multiAzSupported", false);
+            e.available        = j.getBoolean("available", true);
             e.pricingUnit      = j.getString("pricingUnit", "");
             e.createdAt        = j.getLong("createdAt", 0);
             e.createdBy        = UserId(j.getString("createdBy", ""));

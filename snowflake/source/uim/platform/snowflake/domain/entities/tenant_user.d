@@ -19,7 +19,7 @@ struct SnowflakeTenantUser {
   TenantUserRole  role;
   bool            active;
   string          externalUserId;
-  string          lastLoginAt;
+  long          lastLoginAt;
 
   Json toJson() const {
     return entityToJson()

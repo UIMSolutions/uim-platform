@@ -21,8 +21,8 @@ struct ProjectMember {
     MemberRole role = MemberRole.viewer;
     MemberStatus status = MemberStatus.invited;
     string permissions;
-    string invitedAt;
-    string joinedAt;
+    long invitedAt;
+    long joinedAt;
 
     Json toJson() {
         return entityToJson()

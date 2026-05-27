@@ -48,10 +48,10 @@ class FileConfigurationRepository
             c.maxMemoryPolicy = j.getString("maxMemoryPolicy", "allkeys-lru").to!MaxMemoryPolicy;
             c.timeout         = j.getLong("timeout", 0);
             c.maxConnections  = j.getLong("maxConnections", 10000);
-            c.tlsEnabled      = j.getBool("tlsEnabled", true);
+            c.tlsEnabled      = j.getBoolean("tlsEnabled", true);
             c.persistenceMode = j.getString("persistenceMode", "none").to!PersistenceMode;
             c.maxMemoryMb     = j.getLong("maxMemoryMb", 256);
-            c.notifyKeyspaceEvents = j.getBool("notifyKeyspaceEvents", false);
+            c.notifyKeyspaceEvents = j.getBoolean("notifyKeyspaceEvents", false);
             c.activeVersion   = j.getString("activeVersion", "");
             c.createdAt       = j.getLong("createdAt", 0);
             super.save(c);

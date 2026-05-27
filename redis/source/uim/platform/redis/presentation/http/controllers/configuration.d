@@ -73,9 +73,9 @@ class ConfigurationController : ManageController {
         dto.instanceId              = ServiceInstanceId(data.getString("instanceId", ""));
         dto.timeout_                = data.getLong("timeout", 300);
         dto.maxConnections          = data.getLong("maxConnections", 100);
-        dto.tlsEnabled              = data.getBool("tlsEnabled", true);
+        dto.tlsEnabled              = data.getBoolean("tlsEnabled", true);
         dto.maxMemoryMb             = data.getLong("maxMemoryMb", 0);
-        dto.notifyKeyspaceEvents    = data.getBool("notifyKeyspaceEvents", false);
+        dto.notifyKeyspaceEvents    = data.getBoolean("notifyKeyspaceEvents", false);
         dto.activeVersion           = data.getString("activeVersion", "");
         dto.createdBy               = UserId(data.getString("createdBy", ""));
 
@@ -103,9 +103,9 @@ class ConfigurationController : ManageController {
         dto.tenantId             = tenantId;
         dto.timeout_             = data.getLong("timeout", 0);
         dto.maxConnections       = data.getLong("maxConnections", 0);
-        dto.tlsEnabled           = data.getBool("tlsEnabled", false);
+        dto.tlsEnabled           = data.getBoolean("tlsEnabled", false);
         dto.maxMemoryMb          = data.getLong("maxMemoryMb", 0);
-        dto.notifyKeyspaceEvents = data.getBool("notifyKeyspaceEvents", false);
+        dto.notifyKeyspaceEvents = data.getBoolean("notifyKeyspaceEvents", false);
         dto.activeVersion        = data.getString("activeVersion", "");
         dto.updatedBy            = UserId(data.getString("updatedBy", ""));
 

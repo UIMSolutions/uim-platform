@@ -24,7 +24,7 @@ string getString(Json j, string key, string def = "") {
     return def;
 }
 
-bool getBool(Json j, string key, bool def = false) {
+bool getBoolean(Json j, string key, bool def = false) {
     if (j.type != Json.Type.object) return def;
     auto v = j[key];
     if (v.type == Json.Type.bool_) return v.get!bool;

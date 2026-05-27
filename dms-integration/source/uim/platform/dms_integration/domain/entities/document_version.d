@@ -27,7 +27,7 @@ struct DocumentVersion {
     string contentStreamId;
     string checkinComment;
     UserId createdByVersion;
-    string versionedAt;
+    long versionedAt;
 
     Json toJson() const {
         return entityToJson

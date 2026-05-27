@@ -24,7 +24,7 @@ struct DailyUsageReportResponse {
   string globalAccountId;
   string subaccountId;
   string reportDate;
-  string generatedAt;
+  long generatedAt;
   string status;
   MetricUsageItemResponse[] usageItems;
 

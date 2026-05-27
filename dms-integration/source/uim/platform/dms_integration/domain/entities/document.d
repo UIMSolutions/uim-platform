@@ -30,7 +30,7 @@ struct Document {
     bool isMajorVersion = true;
     bool isLatestVersion = true;
     UserId checkedOutBy;
-    string checkedOutAt;
+    long checkedOutAt;
     string contentStreamId;
     string checksum;
     string language;

@@ -25,7 +25,7 @@ struct RegisteredApplication {
     string contactName;
     UserId registeredBy;
     UserId updatedBy;
-    string registeredAt;
+    long registeredAt;
 
     Json toJson() const {
         return entityToJson()

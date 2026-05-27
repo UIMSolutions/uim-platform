@@ -22,7 +22,7 @@ struct Permission {
     PermissionType permissionType = PermissionType.read;
     bool isInherited = false;
     bool isDirect = true;
-    string grantedAt;
+    long grantedAt;
     UserId grantedBy;
     long expiresAt;
     string description;

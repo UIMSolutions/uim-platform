@@ -30,8 +30,8 @@ public:
       r.name                    = j.getString("name");
       r.numClusters             = j.getInt("numClusters");
       r.autoStopMinutes         = j.getInt("autoStopMinutes");
-      r.enablePhoton            = j.getBool("enablePhoton");
-      r.enableServerlessCompute = j.getBool("enableServerlessCompute");
+      r.enablePhoton            = j.getBoolean("enablePhoton");
+      r.enableServerlessCompute = j.getBoolean("enableServerlessCompute");
       r.creatorId               = j.getString("creatorId");
       auto typeStr = j.getString("warehouseType");
       if (typeStr.length > 0) {
@@ -76,7 +76,7 @@ public:
       r.name            = j.getString("name");
       r.numClusters     = j.getInt("numClusters");
       r.autoStopMinutes = j.getInt("autoStopMinutes");
-      r.enablePhoton    = j.getBool("enablePhoton");
+      r.enablePhoton    = j.getBoolean("enablePhoton");
       auto sizeStr = j.getString("size");
       if (sizeStr.length > 0) {
         import std.conv : ConvException;

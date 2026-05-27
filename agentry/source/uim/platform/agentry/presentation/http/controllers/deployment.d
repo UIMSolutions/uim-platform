@@ -60,7 +60,7 @@ class DeploymentController : ManageController {
         dto.scope_ = j.getString("scope");
         dto.targetDeviceId = j.getString("targetDeviceId");
         dto.targetGroupName = j.getString("targetGroupName");
-        dto.scheduledAt = j.getString("scheduledAt");
+        dto.scheduledAt = j.getLong("scheduledAt");
         dto.deployedBy = j.getString("deployedBy");
         dto.notes = j.getString("notes");
 
@@ -110,7 +110,7 @@ class DeploymentController : ManageController {
         dto.deploymentId = id;
         dto.tenantId = tenantId;
         dto.notes = j.getString("notes");
-        dto.scheduledAt = j.getString("scheduledAt");
+        dto.scheduledAt = j.getLong("scheduledAt");
 
         auto result = usecase.updateDeployment(dto);
         if (result.hasError)

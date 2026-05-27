@@ -21,7 +21,7 @@ struct SnowflakeAccount {
   string          adminLastName;
   string          organizationUrl;
   string          activationUrl;
-  string          activatedAt;
+  long          activatedAt;
   string          entitlementSystemId;
   string[string]  metadata;
 

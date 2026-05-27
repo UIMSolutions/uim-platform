@@ -19,7 +19,7 @@ struct ServiceAccount {
     ServiceAccountStatus status = ServiceAccountStatus.active;
     string clientId;
     string permissions;
-    string lastUsedAt;
+    long lastUsedAt;
     long expiresAt;
 
     Json toJson() const {

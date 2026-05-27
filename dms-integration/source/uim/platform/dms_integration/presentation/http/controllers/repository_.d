@@ -34,115 +34,137 @@ class RepositoryController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listRepositories(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listRepositories(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+
+        return successResponse("Repository list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = RepositoryId(precheck.id);
-            auto item = usecase.getRepository(tenantId, id);
-            if (item.isNull) { writeError(res, 404, "Repository not found"); return; }
-            res.writeJsonBody(item.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            RepositoryDTO dto;
-            dto.repositoryId = RepositoryId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.repositoryType = j.getString("repositoryType");
-            dto.externalUrl = j.getString("externalUrl");
-            dto.cmisVersion = j.getString("cmisVersion");
-            dto.encryptionEnabled = j.getBool("encryptionEnabled");
-            dto.capacityLimitBytes = j.getLong("capacityLimitBytes");
-            dto.repositoryKey = j.getString("repositoryKey");
-            dto.externalRepositoryId = j.getString("externalRepositoryId");
-            dto.region = j.getString("region");
-            dto.isDefault = j.getBool("isDefault");
-            dto.isReadOnly = j.getBool("isReadOnly");
-            dto.versioningEnabled = j.getBool("versioningEnabled");
-            dto.fullTextSearchEnabled = j.getBool("fullTextSearchEnabled");
-            dto.createdBy = UserId(j.getString("createdBy"));
-            auto result = usecase.createRepository(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        RepositoryDTO dto;
+        dto.repositoryId = RepositoryId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.repositoryType = data.getString("repositoryType");
+        dto.externalUrl = data.getString("externalUrl");
+        dto.cmisVersion = data.getString("cmisVersion");
+        dto.encryptionEnabled = data.getBoolean("encryptionEnabled");
+        dto.capacityLimitBytes = data.getLong("capacityLimitBytes");
+        dto.repositoryKey = data.getString("repositoryKey");
+        dto.externalRepositoryId = data.getString("externalRepositoryId");
+        dto.region = data.getString("region");
+        dto.isDefault = data.getBoolean("isDefault");
+        dto.isReadOnly = data.getBoolean("isReadOnly");
+        dto.versioningEnabled = data.getBoolean("versioningEnabled");
+        dto.fullTextSearchEnabled = data.getBoolean("fullTextSearchEnabled");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createRepository(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository created"), 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Repository created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            auto action = j.getString("action");
-            auto id = RepositoryId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            if (action == "activate") {
-                auto result = usecase.activateRepository(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository activated"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
-            if (action == "deactivate") {
-                auto result = usecase.deactivateRepository(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository deactivated"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
+        auto tenantId = precheck.tenantId;
 
+        auto id = RepositoryId(precheck.id);
+        auto item = usecase.getRepository(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Repository not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Repository retrieved successfully", "Retrieved", 200, responseData);
+    }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = RepositoryId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid repository ID", 400);
+
+        auto data = precheck.data;
+        auto action = data.getString("action");
+        switch (action) {
+        case "activate":
+            auto result = usecase.activateRepository(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", id);
+            return successResponse("Repository updated successfully", "Updated", 200, responseData);
+
+        case "deactivate":
+            auto result = usecase.deactivateRepository(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", id);
+            return successResponse("Repository updated successfully", "Updated", 200, responseData);
+        default:
             RepositoryDTO dto;
             dto.repositoryId = id;
             dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.externalUrl = j.getString("externalUrl");
-            dto.region = j.getString("region");
-            dto.isDefault = j.getBool("isDefault");
-            dto.isReadOnly = j.getBool("isReadOnly");
-            dto.versioningEnabled = j.getBool("versioningEnabled");
-            dto.fullTextSearchEnabled = j.getBool("fullTextSearchEnabled");
-            dto.updatedBy = UserId(j.getString("updatedBy"));
+            dto.name = data.getString(
+                "name");
+            dto.description = data.getString("description");
+            dto.externalUrl = data.getString(
+                "externalUrl");
+            dto.region = data.getString("region");
+            dto.isDefault = data.getBoolean(
+                "isDefault");
+            dto.isReadOnly = data.getBoolean("isReadOnly");
+            dto.versioningEnabled = data.getBoolean(
+                "versioningEnabled");
+            dto.fullTextSearchEnabled = data.getBoolean("fullTextSearchEnabled");
+            dto.updatedBy = UserId(data.getString("updatedBy"));
+
             auto result = usecase.updateRepository(dto);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository updated"), 200);
-            else writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", id);
+            return successResponse("Repository updated successfully", "Updated", 200, responseData);
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = RepositoryId(precheck.id);
-            auto result = usecase.deleteRepository(tenantId, id);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Repository deleted"), 200);
-            else writeError(res, 404, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = RepositoryId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid repository ID", 400);
+
+        auto result = usecase.deleteRepository(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Repository deleted successfully", "Deleted", 200, responseData);
     }
 }

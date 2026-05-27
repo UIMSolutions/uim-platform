@@ -21,7 +21,7 @@ struct RefreshToken {
     string scopes;
     string accessTokenId;
     long expiresAt;
-    string issuedAt;
+    long issuedAt;
 
     Json toJson() const {
         return entityToJson

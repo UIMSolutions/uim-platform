@@ -19,7 +19,7 @@ struct IntegrationFlow {
   string               senderEndpoint;
   string               receiverEndpoint;
   string[]             steps;
-  string               deployedAt;
+  long               deployedAt;
   string               deployedBy;
   string[string]       metadata;
 

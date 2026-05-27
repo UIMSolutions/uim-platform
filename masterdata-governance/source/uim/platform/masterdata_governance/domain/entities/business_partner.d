@@ -68,7 +68,7 @@ struct BusinessPartner {
     string externalBpId;
     string sourceSystem;
     int qualityScore;
-    string lastReplicatedAt;
+    long lastReplicatedAt;
     string searchTerms;
     string language;
 

@@ -38,8 +38,8 @@ struct FeatureFlag {
     string[string] labels;
 
     /// ISO-8601 creation / update timestamps (strings for portability)
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     UserId createdBy;
     UserId updatedBy;
 

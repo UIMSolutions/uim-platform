@@ -81,7 +81,7 @@ class AppVersionController : ManageController {
         dto.checksum = data.getString("checksum");
         dto.minOsVersion = data.getString("minOsVersion");
         dto.changeLog = data.getString("changeLog");
-        dto.isMandatoryUpdate = data.getBool("isMandatoryUpdate");
+        dto.isMandatoryUpdate = data.getBoolean("isMandatoryUpdate");
 
         auto result = usecase.createAppVersion(dto);
         if (result.hasError)

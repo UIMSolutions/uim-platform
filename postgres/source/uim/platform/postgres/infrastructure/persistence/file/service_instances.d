@@ -57,8 +57,8 @@ class FileServiceInstanceRepository
             e.host          = j.getString("host", "");
             e.port          = cast(ushort) j.getLong("port", 5432);
             e.dbName        = j.getString("dbName", "");
-            e.sslEnabled    = j.getBool("sslEnabled", true);
-            e.multiAz       = j.getBool("multiAz", false);
+            e.sslEnabled    = j.getBoolean("sslEnabled", true);
+            e.multiAz       = j.getBoolean("multiAz", false);
             e.provisionedAt = j.getLong("provisionedAt", 0);
             e.updatedAt     = j.getLong("updatedAt", 0);
             e.createdAt     = j.getLong("createdAt", 0);

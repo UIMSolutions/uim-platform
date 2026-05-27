@@ -41,7 +41,7 @@ struct UsageRecordResponse {
   string metricName;
   double metricValue;
   string environment;
-  string reportedAt;
+  long reportedAt;
   string chargebackPeriod;
 
   bool isEmpty() const { return recordId.value.length == 0; }

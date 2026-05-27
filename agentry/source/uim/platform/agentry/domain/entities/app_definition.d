@@ -28,7 +28,7 @@ struct AppDefinition {
     string businessObjectModel;  // linked backend BOM
     bool validationPassed;
     string validationErrors;
-    string publishedAt;
+    long publishedAt;
 
     Json toJson() const {
         auto j = entityToJson

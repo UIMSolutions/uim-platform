@@ -29,7 +29,7 @@ struct TransportNode {
     bool isForwardEnabled = true;
     bool autoImport = false;
     string autoImportSchedule;
-    string lastCheckedAt;
+    long lastCheckedAt;
     string connectionStatus;
 
     Json toJson() const {

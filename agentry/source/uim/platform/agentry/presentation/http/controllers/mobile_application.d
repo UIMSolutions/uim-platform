@@ -80,8 +80,8 @@ class MobileApplicationController : ManageController {
         dto.vendor = data.getString("vendor");
         dto.contactEmail = data.getString("contactEmail");
         dto.backendSystemId = data.getString("backendSystemId");
-        dto.offlineCapable = data.getBool("offlineCapable");
-        dto.pushNotificationsEnabled = data.getBool("pushNotificationsEnabled");
+        dto.offlineCapable = data.getBoolean("offlineCapable");
+        dto.pushNotificationsEnabled = data.getBoolean("pushNotificationsEnabled");
         dto.minOsVersion = data.getString("minOsVersion");
         dto.packageName = data.getString("packageName");
 

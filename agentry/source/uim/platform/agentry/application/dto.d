@@ -149,7 +149,7 @@ struct DeploymentDTO {
     string scope_;
     string targetDeviceId;
     string targetGroupName;
-    string scheduledAt;
+    long scheduledAt;
     string deployedBy;
     string notes;
     UserId createdBy;

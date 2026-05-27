@@ -19,8 +19,8 @@ struct ScheduledExecution {
     ScheduleStatus status = ScheduleStatus.active;
     string cronExpression;
     long scheduledAt;
-    string lastRunAt;
-    string nextRunAt;
+    long lastRunAt;
+    long nextRunAt;
     string inputValues;
     string description;
     string maxRetries;

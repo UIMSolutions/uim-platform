@@ -83,7 +83,7 @@ class BackendConnectionController : ManageController {
         dto.client = data.getString("client");
         dto.language = data.getString("language");
         dto.destinationName = data.getString("destinationName");
-        dto.sslEnabled = data.getBool("sslEnabled");
+        dto.sslEnabled = data.getBoolean("sslEnabled");
         dto.certificateFingerprint = data.getString("certificateFingerprint");
 
         auto result = usecase.createBackendConnection(dto);

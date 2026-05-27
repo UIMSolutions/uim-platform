@@ -62,8 +62,8 @@ class ServiceInstanceController : ManageController {
         dto.region            = data.getString("region", "");
         dto.memoryGb          = data.getLong("memoryGb", 4);
         dto.storageGb         = data.getLong("storageGb", 20);
-        dto.sslEnabled        = data.getBool("sslEnabled", true);
-        dto.multiAz           = data.getBool("multiAz", false);
+        dto.sslEnabled        = data.getBoolean("sslEnabled", true);
+        dto.multiAz           = data.getBoolean("multiAz", false);
         dto.createdBy         = UserId(data.getString("createdBy", ""));
         auto result = instances.createServiceInstance(dto);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);

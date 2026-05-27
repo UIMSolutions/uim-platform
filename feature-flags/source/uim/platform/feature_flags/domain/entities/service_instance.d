@@ -26,8 +26,8 @@ struct ServiceInstance {
     /// Arbitrary key/value labels
     string[string] labels;
 
-    string createdAt;
-    string updatedAt;
+    long createdAt;
+    long updatedAt;
     UserId createdBy;
     UserId updatedBy;
 

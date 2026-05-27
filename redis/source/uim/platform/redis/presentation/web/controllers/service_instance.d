@@ -54,7 +54,7 @@ class WebServiceInstanceController {
         dto.name       = data.getString("name", "");
         dto.planId     = ServicePlanId(data.getString("planId", ""));
         dto.memoryMb   = data.getLong("memoryMb", 256);
-        dto.tlsEnabled = data.getBool("tlsEnabled", true);
+        dto.tlsEnabled = data.getBoolean("tlsEnabled", true);
         auto result = _useCase.createServiceInstance(dto);
         if (result.success) _model.setSuccess("Instance created: " ~ result.id);
         else                _model.setError(400, result.message);

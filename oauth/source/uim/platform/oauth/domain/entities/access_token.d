@@ -21,7 +21,7 @@ struct AccessToken {
     UserId userId;
     string scopes;
     long expiresAt;
-    string issuedAt;
+    long issuedAt;
 
     Json toJson() const {
         return entityToJson

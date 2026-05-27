@@ -24,7 +24,7 @@ struct TaskProvider {
     string authEndpointUrl;
     string clientId;
 
-    string lastSyncAt;
+    long lastSyncAt;
     string lastSyncError;
     long taskCount;
 

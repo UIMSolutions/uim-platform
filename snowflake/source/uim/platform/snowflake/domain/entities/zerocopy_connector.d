@@ -18,7 +18,7 @@ struct ZerocopyConnector {
   ConnectorStatus    status;
   string             invitationLink;
   string             bdcTenantId;
-  string             enrolledAt;
+  long             enrolledAt;
   string             description;
   string[string]     metadata;
 

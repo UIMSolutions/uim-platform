@@ -26,8 +26,8 @@ struct AppBuild {
     string deployUrl;
     string buildConfig;
     string signingConfig;
-    string lastBuildAt;
-    string lastDeployAt;
+    long lastBuildAt;
+    long lastDeployAt;
     
     Json toJson() const {
         auto j = entityToJson

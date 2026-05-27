@@ -21,7 +21,7 @@ struct DataQualityScore {
     int accuracyScore;
     int uniquenessScore;
     QualityStatus qualityStatus = QualityStatus.fair;
-    string lastEvaluatedAt;
+    long lastEvaluatedAt;
     string evaluationDetails;
     string failedRules;
     string passedRules;

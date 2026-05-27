@@ -63,8 +63,8 @@ class IdentityProviderController : ManageController {
     r.ssoUrl = data.getString("ssoUrl");
     r.sloUrl = data.getString("sloUrl");
     r.signingCert = data.getString("signingCert");
-    r.isActive = data.getBool("isActive");
-    r.isDefault = data.getBool("isDefault");
+    r.isActive = data.getBoolean("isActive");
+    r.isDefault = data.getBoolean("isDefault");
 
     auto result = usecase.createIdentityProvider(r);
     if (result.hasError)
@@ -117,8 +117,8 @@ class IdentityProviderController : ManageController {
     r.ssoUrl = data.getString("ssoUrl");
     r.sloUrl = data.getString("sloUrl");
     r.signingCert = data.getString("signingCert");
-    r.isActive = data.getBool("isActive");
-    r.isDefault = data.getBool("isDefault");
+    r.isActive = data.getBoolean("isActive");
+    r.isDefault = data.getBoolean("isDefault");
 
     auto result = usecase.updateIdentityProvider(r);
     if (result.hasError)
