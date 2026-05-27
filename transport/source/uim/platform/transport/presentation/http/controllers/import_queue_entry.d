@@ -35,7 +35,7 @@ class ImportQueueEntryController : ManageController {
         auto tenantId = precheck.tenantId;
 
             auto items = usecase.listEntries(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
+            auto list = items.map!(e => e.toJson).array.toJson;
             res.writeJsonBody(Json.emptyObject.set("count", items.length).set("resources", jarr), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

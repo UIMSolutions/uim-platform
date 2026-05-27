@@ -46,7 +46,7 @@ class PermissionController : ManageController {
         } else {
             items = usecase.listPermissions(tenantId);
         }
-        auto jarr = items.map!(e => e.toJson).array.toJson;
+        auto list = items.map!(e => e.toJson).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", items.length)

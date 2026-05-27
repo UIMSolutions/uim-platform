@@ -36,7 +36,7 @@ class SubscriptionController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listSubscriptions(tenantId);
-        auto jarr = items.map!(e => e.toJson).array.toJson;
+        auto list = items.map!(e => e.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("count", items.length)

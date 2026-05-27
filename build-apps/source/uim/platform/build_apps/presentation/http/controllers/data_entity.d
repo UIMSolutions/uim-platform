@@ -33,7 +33,7 @@ class DataEntityController : ManageController {
             auto tenantId = req.getTenantId();
 
             auto items = usecase.listDataEntities(tenantId);
-            auto jarr = items.map!(e => e.dataEntityToJson()).array.toJson;
+            auto list = items.map!(e => e.dataEntityToJson()).array.toJson;
 
             auto resp = Json.emptyObject
                 .set("count", items.length)

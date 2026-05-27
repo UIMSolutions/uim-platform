@@ -32,7 +32,7 @@ class ServiceAccountController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto items = usecase.listServiceAccounts(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+            auto list = items.map!(e => e.toJson()).array.toJson;
 
             auto resp = Json.emptyObject
               .set("count", items.length)

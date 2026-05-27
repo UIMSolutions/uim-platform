@@ -45,7 +45,7 @@ class DocumentVersionController : ManageController {
                 items = usecase.listVersionsByDocument(tenantId, DocumentId(documentId));
             }
         }
-        auto jarr = items.map!(e => e.toJson).array.toJson;
+        auto list = items.map!(e => e.toJson).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", items.length)

@@ -31,7 +31,7 @@ class DevSpaceController : ManageController {
     override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto items = usecase.listDevSpaces();
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
+            auto list = items.map!(e => e.toJson()).array.toJson;
             
             auto resp = Json.emptyObject
               .set("count", items.length)
