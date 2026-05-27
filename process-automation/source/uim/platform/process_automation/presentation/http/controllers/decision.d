@@ -87,7 +87,7 @@ class DecisionController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", decisions.length)
-                .set("resources", jarr);
+                .set("resources", list);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

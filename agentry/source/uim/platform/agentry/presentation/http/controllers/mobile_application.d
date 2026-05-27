@@ -38,7 +38,7 @@ class MobileApplicationController : ManageController {
         auto list = items.map!(e => e.toJson()).array.toJson;
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Mobile application list retrieved successfully", "Retrieved", 200, resp);
     }

@@ -92,7 +92,7 @@ class SituationTemplateController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", templates.length)
-                .set("resources", jarr);
+                .set("resources", list);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

@@ -51,7 +51,7 @@ class DocumentController : ManageController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Document list retrieved successfully", "Retrieved", 200, resp);
     }

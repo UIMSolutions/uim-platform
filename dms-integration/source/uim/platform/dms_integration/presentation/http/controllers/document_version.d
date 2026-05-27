@@ -49,7 +49,7 @@ class DocumentVersionController : ManageController {
 
         auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Document version list retrieved successfully", "Retrieved", 200, responseData);
     }

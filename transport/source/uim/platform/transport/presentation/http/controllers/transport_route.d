@@ -66,7 +66,7 @@ class TransportRouteController : ManageController {
             dto.sourceNodeId = data.getString("sourceNodeId");
             dto.destinationNodeId = data.getString("destinationNodeId");
             dto.status = data.getString("status");
-            dto.isSequential = getBoolean(j, "isSequential");
+            dto.isSequential = data.getBoolean("isSequential");
             dto.sequence = cast(int) data.getLong("sequence");
             dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.createRoute(dto);
@@ -102,7 +102,7 @@ class TransportRouteController : ManageController {
             dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
-            dto.isSequential = getBoolean(j, "isSequential");
+            dto.isSequential = data.getBoolean("isSequential");
             dto.sequence = cast(int) data.getLong("sequence");
             dto.updatedBy = UserId(data.getString("updatedBy"));
             auto result = usecase.updateRoute(dto);

@@ -77,7 +77,7 @@ class HDIContainerController : ManageController {
 
       auto resp = Json.emptyObject
         .set("count", Json(containers.length))
-        .set("resources", jarr);
+        .set("resources", list);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

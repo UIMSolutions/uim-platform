@@ -91,7 +91,7 @@ class SituationActionController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", actions.length)
-                .set("resources", jarr);
+                .set("resources", list);
                 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

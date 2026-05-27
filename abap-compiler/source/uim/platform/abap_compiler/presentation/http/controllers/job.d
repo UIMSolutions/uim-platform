@@ -36,11 +36,11 @@ class JobController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto jobs = usecase.listJobs(tenantId);
-        auto jarr = jobs.map!(j => j.toJson).array.toJson;
+        auto list = jobs.map!(j => j.toJson).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", jobs.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Job list retrieved successfully", "Retrieved", 200, responseData);
     }

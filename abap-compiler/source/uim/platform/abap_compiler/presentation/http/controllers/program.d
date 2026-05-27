@@ -45,7 +45,7 @@ class ProgramController : ManageController {
 
         auto responseData = Json.emptyObject
             .set("count", programs.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Program list retrieved successfully", "Retrieved", 200, responseData);
     }

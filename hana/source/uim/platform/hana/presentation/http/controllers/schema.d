@@ -77,7 +77,7 @@ class SchemaController : ManageController {
 
       auto resp = Json.emptyObject
         .set("count", schemas.length)
-        .set("resources", jarr);
+        .set("resources", list);
         
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

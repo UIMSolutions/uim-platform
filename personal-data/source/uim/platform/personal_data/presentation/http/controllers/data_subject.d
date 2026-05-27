@@ -78,7 +78,7 @@ class DataSubjectController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", subjects.length)
-                .set("resources", jarr);
+                .set("resources", list);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -107,7 +107,7 @@ class DataSubjectController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", results.length)
-                .set("resources", jarr);
+                .set("resources", list);
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

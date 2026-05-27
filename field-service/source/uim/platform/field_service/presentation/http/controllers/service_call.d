@@ -40,7 +40,7 @@ class ServiceCallController : ManageController {
             
             auto resp = Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr);
+                .set("resources", list);
                 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

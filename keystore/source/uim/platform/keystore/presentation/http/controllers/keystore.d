@@ -100,7 +100,7 @@ class KeystoreController : ManageController {
 
     auto responseData = Json.emptyObject
       .set("count", keystores.length)
-      .set("resources", jarr);
+      .set("resources", list);
     return successResponse("Keystore list retrieved successfully", "Retrieved", 200, responseData);
   }
 

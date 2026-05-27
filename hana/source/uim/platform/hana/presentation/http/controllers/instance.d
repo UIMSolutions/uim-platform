@@ -93,7 +93,7 @@ class InstanceController : ManageController {
 
       auto resp = Json.emptyObject
         .set("count", Json(instances.length))
-        .set("resources", jarr);
+        .set("resources", list);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

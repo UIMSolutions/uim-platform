@@ -86,7 +86,7 @@ class NotificationController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", notifications.length)
-                .set("resources", jarr);
+                .set("resources", list);
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

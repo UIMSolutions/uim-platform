@@ -40,7 +40,7 @@ class EventMessageController : ManageController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Event message list retrieved successfully", "Retrieved", 200, resp);
     }

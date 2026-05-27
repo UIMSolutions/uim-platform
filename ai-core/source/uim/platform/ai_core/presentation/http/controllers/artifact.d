@@ -71,7 +71,7 @@ class ArtifactController : ManageController {
 
     auto resp = Json.emptyObject
       .set("count", artifacts.length)
-      .set("resources", jarr);
+      .set("resources", list);
 
     return successResponse("Artifact list retrieved successfully", "Retrieved", 200, resp);
   }

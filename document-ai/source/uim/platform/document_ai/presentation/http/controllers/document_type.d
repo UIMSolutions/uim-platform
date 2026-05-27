@@ -69,7 +69,7 @@ class DocumentTypeController : ManageController {
       auto jarr = types.map!(dt => dt.toJson).array.toJson;
       auto resp = Json.emptyObject
         .set("count", Json(types.length))
-        .set("resources", jarr);
+        .set("resources", list);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

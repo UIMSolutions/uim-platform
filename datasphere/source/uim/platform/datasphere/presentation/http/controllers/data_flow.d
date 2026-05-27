@@ -77,7 +77,7 @@ class DataFlowController : ManageController {
 
       auto resp = Json.emptyObject
         .set("count", flows.length)
-        .set("resources", jarr);
+        .set("resources", list);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
