@@ -38,7 +38,7 @@ class ConsentRecordController : ManageController {
             r.purposeId = data.getString("purposeId");
             r.consentText = data.getString("consentText");
             r.consentVersion = data.getString("consentVersion");
-            r.expiresAt = j.getLong("expiresAt");
+            r.expiresAt = data.getLong("expiresAt");
             r.ipAddress = data.getString("ipAddress");
             r.userAgent = data.getString("userAgent");
             r.source = data.getString("source");

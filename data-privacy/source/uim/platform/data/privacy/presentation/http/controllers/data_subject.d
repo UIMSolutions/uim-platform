@@ -105,7 +105,7 @@ class DataSubjectController : ManageController {
       r.sourceSystem = data.getString("sourceSystem");
       r.country = data.getString("country");
       r.subjectType = parseSubjectType(data.getString("subjectType"));
-      r.isActive = j.getBoolean("isActive", true);
+      r.isActive = data.getBoolean("isActive", true);
 
       auto result = usecase.updateSubject(r);
       if (result.isSuccess()) {

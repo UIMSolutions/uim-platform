@@ -102,8 +102,8 @@ class BuildpackController : ManageController {
       r.position = data.getInteger("position");
       r.stack = data.getString("stack");
       r.filename = data.getString("filename");
-      r.enabled = j.getBoolean("enabled", true);
-      r.locked = j.getBoolean("locked");
+      r.enabled = data.getBoolean("enabled", true);
+      r.locked = data.getBoolean("locked");
 
       auto result = useCase.updateBuildpack(r);
       if (result.isSuccess()) {

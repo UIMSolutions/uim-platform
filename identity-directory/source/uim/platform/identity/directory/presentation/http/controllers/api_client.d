@@ -23,108 +23,101 @@ class ApiClientController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/api-clients", &handleCreate);
     router.get("/api/v1/api-clients", &handleList);
     router.get("/api/v1/api-clients/*", &handleGet);
     router.delete_("/api/v1/api-clients/*", &handleRevoke);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
-          data.getString("name"), data.getString("description"), getStrings(j,
-            "scopes"), jsonLong(j, "expiresAt"),);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = useCase.createClient(createReq);
-      auto response = Json.emptyObject;
+    auto tenantId = precheck.tenantId;
+    auto clients = useCase.listClients(tenantId);
 
-      if (result.isSuccess()) {
-        response["clientId"] = Json(result.clientId);
-        response["clientSecret"] = Json(result.clientSecret);
-        res.writeJsonBody(response, 201);
-      }
-      else
-      {
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 400);
-      }
+    // Serialize without clientSecret
+    auto arr = Json.emptyArray;
+    foreach (c; clients) {
+      auto j = toJsonValue(c);
+      j.remove("clientSecret");
+      arr ~= j;
     }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+
+    auto response = Json.emptyObject
+      .set("resources", arr)
+      .set("totalResults", clients.length);
+
+    return successResponse("API client list retrieved successfully", "Retrieved", 200, response);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto clients = useCase.listClients(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(clients.length);
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      // Serialize without clientSecret
-      auto arr = Json.emptyArray;
-      foreach (c; clients) {
-        auto j = toJsonValue(c);
-        j.remove("clientSecret");
-        arr ~= j;
-      }
-      response["resources"] = arr;
-      res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    CreateApiClientRequest createReq;
+    createReq.tenantId = tenantId;
+    createReq.name = data.getString("name");
+    createReq.description = data.getString("description");
+    createReq.scopes = getStrings(j, "scopes");
+    createReq.expiresAt = jsonLong(j, "expiresAt");
+
+    auto result = useCase.createClient(createReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("API client created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto clientId = precheck.id;
-      auto client = useCase.getClient(clientId);
-      if (client == ApiClient.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("API client not found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
-      auto response = toJsonValue(client);
-      response.remove("clientSecret");
-      res.writeJsonBody(response, 200);
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = ApiClientId(precheck.id);
+    auto client = useCase.getClient(tenantId, id);
+    if (client.isNull)
+      return errorResponse("API client not found", 404);
+
+    auto responseData = client.toJson();
+    return successResponse("API client retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json revokeHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ApiClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid API client ID", 400);
+
+    auto result = useCase.revokeClient(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("status", "revoked");
+    return successResponse("API client revoked successfully", "Revoked", 200, responseData);
   }
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto clientId = precheck.id;
-      auto error = useCase.revokeClient(clientId);
-      if (error.length > 0) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json(error);
-        res.writeJsonBody(errRes, 404);
-      }
-      else
-      {
-        auto resp = Json.emptyObject
-          .set("status", "revoked");
-
-        res.writeJsonBody(resp, 200);
-      }
-    }
-    catch (Exception e) {
+      auto response = revokeHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
       auto errRes = Json.emptyObject
         .set("error", "Internal server error");
-      
+
       res.writeJsonBody(errRes, 500);
     }
   }

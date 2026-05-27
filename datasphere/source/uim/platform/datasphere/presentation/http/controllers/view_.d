@@ -41,7 +41,7 @@ class ViewController : ManageController {
       r.businessName = data.getString("businessName");
       r.semantic = data.getString("semantic");
       r.sqlExpression = data.getString("sqlExpression");
-      r.isExposed = j.getBoolean("isExposed", false);
+      r.isExposed = data.getBoolean("isExposed", false);
 
       auto now = Clock.currTime();
       // r.createdAt = now;
@@ -136,8 +136,8 @@ class ViewController : ManageController {
       r.description = data.getString("description");
       r.businessName = data.getString("businessName");
       r.sqlExpression = data.getString("sqlExpression");
-      r.isExposed = j.getBoolean("isExposed", false);
-      r.isPersisted = j.getBoolean("isPersisted", false);
+      r.isExposed = data.getBoolean("isExposed", false);
+      r.isPersisted = data.getBoolean("isPersisted", false);
 
       auto result = usecase.update(r);
       if (result.hasError)

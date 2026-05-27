@@ -42,7 +42,7 @@ class QueueController : ManageController {
       r.queueType = data.getString("queueType");
       r.endpoint = data.getString("endpoint");
       r.authToken = data.getString("authToken");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.createQueue(r);
@@ -103,7 +103,7 @@ class QueueController : ManageController {
       r.description = data.getString("description");
       r.endpoint = data.getString("endpoint");
       r.authToken = data.getString("authToken");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = usecase.updateQueue(id, r);
       if (result.hasError)

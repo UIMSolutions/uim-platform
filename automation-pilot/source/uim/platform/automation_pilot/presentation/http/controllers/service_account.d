@@ -70,7 +70,7 @@ class ServiceAccountController : ManageController {
             dto.description = data.getString("description");
             dto.clientId = data.getString("clientId");
             dto.permissions = data.getString("permissions");
-            dto.expiresAt = j.getLong("expiresAt");
+            dto.expiresAt = data.getLong("expiresAt");
             dto.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createServiceAccount(dto);

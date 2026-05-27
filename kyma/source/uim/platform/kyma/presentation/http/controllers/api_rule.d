@@ -49,9 +49,9 @@ class ApiRuleController : ManageController {
       r.servicePort = data.getInteger("servicePort");
       r.gateway = data.getString("gateway");
       r.host = data.getString("host");
-      r.tlsEnabled = j.getBoolean("tlsEnabled", true);
+      r.tlsEnabled = data.getBoolean("tlsEnabled", true);
       r.tlsSecretName = data.getString("tlsSecretName");
-      r.corsEnabled = j.getBoolean("corsEnabled");
+      r.corsEnabled = data.getBoolean("corsEnabled");
       r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
       r.corsAllowMethods = data.getStrings("corsAllowMethods");
       r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
@@ -128,9 +128,9 @@ class ApiRuleController : ManageController {
       r.serviceName = data.getString("serviceName");
       r.servicePort = data.getInteger("servicePort");
       r.host = data.getString("host");
-      r.tlsEnabled = j.getBoolean("tlsEnabled", true);
+      r.tlsEnabled = data.getBoolean("tlsEnabled", true);
       r.tlsSecretName = data.getString("tlsSecretName");
-      r.corsEnabled = j.getBoolean("corsEnabled");
+      r.corsEnabled = data.getBoolean("corsEnabled");
       r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
       r.corsAllowMethods = data.getStrings("corsAllowMethods");
       r.corsAllowHeaders = data.getStrings("corsAllowHeaders");

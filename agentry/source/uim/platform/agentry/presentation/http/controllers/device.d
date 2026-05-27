@@ -63,7 +63,7 @@ class DeviceController : ManageController {
         dto.userId = data.getString("userId");
         dto.userEmail = data.getString("userEmail");
         dto.groupName = data.getString("groupName");
-        dto.isManaged = j.getBoolean("isManaged");
+        dto.isManaged = data.getBoolean("isManaged");
         dto.mdmDeviceId = data.getString("mdmDeviceId");
 
         auto result = usecase.enrollDevice(dto);

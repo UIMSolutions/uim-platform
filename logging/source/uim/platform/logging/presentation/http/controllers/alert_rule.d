@@ -133,7 +133,7 @@ class AlertRuleController : ManageController {
       r.thresholdOperator = data.getString("thresholdOperator");
       r.evaluationWindowSeconds = data.getInteger("evaluationWindowSeconds");
       r.severity = data.getString("severity");
-      r.isEnabled = j.getBoolean("isEnabled", true);
+      r.isEnabled = data.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
 
       auto result = usecase.updateAlertRule(r);

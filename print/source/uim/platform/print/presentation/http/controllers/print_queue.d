@@ -71,7 +71,7 @@ class PrintQueueController : ManageController {
             dto.printerId = data.getString("printerId");
             dto.location = data.getString("location");
             dto.costCenter = data.getString("costCenter");
-            dto.isDefault = j.getBoolean("isDefault");
+            dto.isDefault = data.getBoolean("isDefault");
             dto.maxRetries = cast(int) j.getInt("maxRetries");
             dto.retentionDays = cast(int) j.getInt("retentionDays");
 

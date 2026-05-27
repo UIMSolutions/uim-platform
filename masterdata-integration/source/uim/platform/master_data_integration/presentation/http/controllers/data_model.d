@@ -54,8 +54,8 @@ class DataModelController : ManageController {
         fd.name = fdata.getString("name");
         fd.displayName = fdata.getString("displayName");
         fd.type_ = fdata.getString("type");
-        fd.isRequired = fj.getBoolean("isRequired");
-        fd.isKey = fj.getBoolean("isKey");
+        fd.isRequired = fdata.getBoolean("isRequired");
+        fd.isKey = fdata.getBoolean("isKey");
         fd.defaultValue = fdata.getString("defaultValue");
         fd.maxLength = jsonInt(fj, "maxLength");
         fd.referenceModel = fdata.getString("referenceModel");
@@ -133,8 +133,8 @@ class DataModelController : ManageController {
         fd.name = fdata.getString("name");
         fd.displayName = fdata.getString("displayName");
         fd.type_ = fdata.getString("type");
-        fd.isRequired = fj.getBoolean("isRequired");
-        fd.isKey = fj.getBoolean("isKey");
+        fd.isRequired = fdata.getBoolean("isRequired");
+        fd.isKey = fdata.getBoolean("isKey");
         fd.defaultValue = fdata.getString("defaultValue");
         fd.maxLength = jsonInt(fj, "maxLength");
         fd.referenceModel = fdata.getString("referenceModel");

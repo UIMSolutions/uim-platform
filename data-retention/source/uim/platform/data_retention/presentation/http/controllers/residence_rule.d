@@ -115,7 +115,7 @@ class ResidenceRuleController : ManageController {
             UpdateResidenceRuleRequest r;
             r.duration = jsonInt(j, "duration");
             r.periodUnit = data.getString("periodUnit");
-            r.isActive = j.getBoolean("isActive", true);
+            r.isActive = data.getBoolean("isActive", true);
 
             auto result = usecase.updateResidenceRule(id, r);
             if (result.hasError)

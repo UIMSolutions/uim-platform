@@ -138,7 +138,7 @@ class AutomationRuleController : ManageController {
       r.description = data.getString("description");
       r.priority = data.getString("priority");
       r.executionOrder = data.getInteger("executionOrder");
-      r.enabled = j.getBoolean("enabled", true);
+      r.enabled = data.getBoolean("enabled", true);
       r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.updateAutomationRule(r);

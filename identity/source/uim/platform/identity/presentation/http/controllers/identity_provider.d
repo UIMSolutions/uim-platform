@@ -66,7 +66,7 @@ class IdentityProviderController : ManageController {
             dto.sloUrl = data.getString("sloUrl");
             dto.metadataUrl = data.getString("metadataUrl");
             dto.clientId = data.getString("clientId");
-            dto.isDefault = j.getBoolean("isDefault");
+            dto.isDefault = data.getBoolean("isDefault");
 
             auto result = usecase.createIdentityProvider(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -87,7 +87,7 @@ class IdentityProviderController : ManageController {
             dto.sloUrl = data.getString("sloUrl");
             dto.metadataUrl = data.getString("metadataUrl");
             dto.status = data.getString("status");
-            dto.isDefault = j.getBoolean("isDefault");
+            dto.isDefault = data.getBoolean("isDefault");
 
             auto result = usecase.updateIdentityProvider(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

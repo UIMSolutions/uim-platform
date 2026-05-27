@@ -43,8 +43,8 @@ class PurposeRecordController : ManageController {
       r.legalBasis = data.getString("legalBasis");
       r.residenceDays = data.getInteger("residenceDays");
       r.retentionDays = data.getInteger("retentionDays");
-      r.validFrom = j.getLong("validFrom");
-      r.validUntil = j.getLong("validUntil");
+      r.validFrom = data.getLong("validFrom");
+      r.validUntil = data.getLong("validUntil");
 
       auto result = usecase.createRecord(r);
       if (result.isSuccess()) {

@@ -41,7 +41,7 @@ class FeatureRestrictionController : ManageController {
       r.featureKey = data.getString("featureKey");
       r.description = data.getString("description");
       r.type = data.getString("type");
-      r.enabled = j.getBoolean("enabled");
+      r.enabled = data.getBoolean("enabled");
       r.percentage = data.getInteger("percentage");
       r.whitelist = data.getStrings("whitelist");
       r.metadata = data.getString("metadata");
@@ -125,7 +125,7 @@ class FeatureRestrictionController : ManageController {
       r.id = id;
       r.description = data.getString("description");
       r.type = data.getString("type");
-      r.enabled = j.getBoolean("enabled");
+      r.enabled = data.getBoolean("enabled");
       r.percentage = data.getInteger("percentage");
       r.whitelist = data.getStrings("whitelist");
       r.metadata = data.getString("metadata");

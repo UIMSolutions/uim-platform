@@ -179,7 +179,7 @@ class RouteController : ManageController {
       r.ownerOrgId = data.getString("ownerOrgId");
       r.name = data.getString("name");
       r.scope_ = parseDomainScope(data.getString("scope"));
-      r.isInternal = j.getBoolean("isInternal");
+      r.isInternal = data.getBoolean("isInternal");
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createDomain(r);

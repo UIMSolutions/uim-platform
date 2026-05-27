@@ -35,115 +35,124 @@ class ChangeRequestController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listChangeRequests(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listChangeRequests(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+
+        return successResponse("Change request list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ChangeRequestId(precheck.id);
-            auto cr = usecase.getChangeRequest(tenantId, id);
-            if (cr.isNull) { writeError(res, 404, "Change request not found"); return; }
-            res.writeJsonBody(cr.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = ChangeRequestId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid change request ID", 400);
+
+        auto cr = usecase.getChangeRequest(tenantId, id);
+        if (cr.isNull)
+            return errorResponse("Change request not found", 404);
+
+        auto responseData = cr.toJson();
+        return successResponse("Change request retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            ChangeRequestDTO dto;
-            dto.changeRequestId = ChangeRequestId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
-            dto.subject = data.getString("subject");
-            dto.description = data.getString("description");
-            dto.changedFields = data.getString("changedFields");
-            dto.proposedValues = data.getString("proposedValues");
-            dto.currentValues = data.getString("currentValues");
-            dto.comments = data.getString("comments");
-            dto.dueDate = data.getString("dueDate");
-            dto.externalReference = data.getString("externalReference");
-            dto.requestedBy = UserId(data.getString("requestedBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createChangeRequest(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ChangeRequestDTO dto;
+        dto.tenantId = tenantId;
+        dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
+        dto.subject = data.getString("subject");
+        dto.description = data.getString("description");
+        dto.changedFields = data.getString("changedFields");
+        dto.proposedValues = data.getString("proposedValues");
+        dto.currentValues = data.getString("currentValues");
+        dto.comments = data.getString("comments");
+        dto.dueDate = data.getString("dueDate");
+        dto.externalReference = data.getString("externalReference");
+        dto.requestedBy = UserId(data.getString("requestedBy"));
+
+        auto result = usecase.createChangeRequest(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Change request created"), 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Change request created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            auto id = ChangeRequestId(precheck.id);
-            auto action = data.getString("action");
-            auto userId = UserId(data.getString("userId"));
-            auto comments = data.getString("comments");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            CommandResult result;
-            if (action == "submit") {
-                result = usecase.submitChangeRequest(tenantId, id, userId);
-            } else if (action == "approve") {
-                result = usecase.approveChangeRequest(tenantId, id, userId, comments);
-            } else if (action == "reject") {
-                result = usecase.rejectChangeRequest(tenantId, id, userId, comments);
-            } else if (action == "requestRevision") {
-                result = usecase.requestRevision(tenantId, id, userId, comments);
-            } else if (action == "withdraw") {
-                result = usecase.withdrawChangeRequest(tenantId, id);
-            } else {
-                writeError(res, 400, "Unknown action. Use: submit, approve, reject, requestRevision, withdraw");
-                return;
-            }
+        auto tenantId = precheck.tenantId;
+        auto id = ChangeRequestId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid change request ID", 400);
 
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Change request updated"), 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto data = precheck.data;
+        auto userId = UserId(data.getString("userId"));
+        auto comments = data.getString("comments");
+
+        auto action = data.getString("action");
+        CommandResult result;
+        switch (action) {
+        case "submit":
+            result = usecase.submitChangeRequest(tenantId, id, userId);
+            break;
+        case "approve":
+            result = usecase.approveChangeRequest(tenantId, id, userId, comments);
+            break;
+        case "reject":
+            result = usecase.rejectChangeRequest(tenantId, id, userId, comments);
+            break;
+        case "requestRevision":
+            result = usecase.requestRevision(tenantId, id, userId, comments);
+            break;
+        case "withdraw":
+            result = usecase.withdrawChangeRequest(tenantId, id, userId);
+            break;
+        default:
+            return errorResponse("Unknown action. Use: submit, approve, reject, requestRevision, withdraw", 400);
         }
+
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Change request updated");
+        return successResponse("Change request updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ChangeRequestId(precheck.id);
-            auto result = usecase.deleteChangeRequest(tenantId, id);
-            if (result.hasError)
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ChangeRequestId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid change request ID", 400);
+
+        auto result = usecase.deleteChangeRequest(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("message", "Change request deleted"), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Change request deleted successfully", "Deleted", 200, responseData);
     }
 }

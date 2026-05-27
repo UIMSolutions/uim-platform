@@ -42,8 +42,8 @@ class ArchiveRequestController : ManageController {
       r.categories = j.getStrings("categories");
       r.archiveLocation = data.getString("archiveLocation");
       r.reason = data.getString("reason");
-      r.isTestMode = j.getBoolean("isTestMode", false);
-      r.scheduledAt = j.getLong("scheduledAt");
+      r.isTestMode = data.getBoolean("isTestMode", false);
+      r.scheduledAt = data.getLong("scheduledAt");
 
       auto result = usecase.createRequest(r);
       if (result.isSuccess()) {

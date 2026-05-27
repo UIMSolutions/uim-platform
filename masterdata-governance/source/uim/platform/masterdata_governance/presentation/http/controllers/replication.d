@@ -35,105 +35,102 @@ class ReplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listReplications(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listReplications(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+        return successResponse("Replication list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ReplicationId(precheck.id);
-            auto rep = usecase.getReplication(tenantId, id);
-            if (rep.isNull) { writeError(res, 404, "Replication not found"); return; }
-            res.writeJsonBody(rep.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            ReplicationDTO dto;
-            dto.replicationId = ReplicationId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
-            dto.targetSystem = data.getString("targetSystem");
-            dto.targetSystemType = data.getString("targetSystemType");
-            dto.replicationType = data.getString("replicationType");
-            dto.scheduledAt = j.getLong("scheduledAt");
-            dto.replicatedFields = data.getString("replicatedFields");
-            dto.maxRetries = data.getInteger("maxRetries");
-            dto.correlationId = data.getString("correlationId");
-            dto.batchId = data.getString("batchId");
-            dto.triggeredBy = UserId(data.getString("triggeredBy"));
+        auto tenantId = precheck.tenantId;
 
-            auto result = usecase.createReplication(dto);
-            if (result.hasError)
+        auto data = precheck.data;
+        ReplicationDTO dto;
+        dto.tenantId = tenantId;
+        dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
+        dto.targetSystem = data.getString("targetSystem");
+        dto.targetSystemType = data.getString("targetSystemType");
+        dto.replicationType = data.getString("replicationType");
+        dto.scheduledAt = data.getLong("scheduledAt");
+        dto.replicatedFields = data.getString("replicatedFields");
+        dto.maxRetries = data.getInteger("maxRetries");
+        dto.correlationId = data.getString("correlationId");
+        dto.batchId = data.getString("batchId");
+        dto.triggeredBy = UserId(data.getString("triggeredBy"));
+
+        auto result = usecase.createReplication(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Replication created"), 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Replication created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            auto id = ReplicationId(precheck.id);
-            auto action = data.getString("action");
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            CommandResult result;
-            if (action == "cancel") {
-                result = usecase.cancelReplication(tenantId, id);
-            } else {
-                writeError(res, 400, "Unknown action. Use: cancel");
-                return;
-            }
+        auto tenantId = precheck.tenantId;
 
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Replication updated"), 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = ReplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid replication ID", 400);
+
+        auto rep = usecase.getReplication(tenantId, id);
+        if (rep.isNull)
+            return errorResponse("Replication not found", 404);
+
+        auto responseData = rep.toJson();
+        return successResponse("Replication retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ReplicationId(precheck.id);
-            auto result = usecase.deleteReplication(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("message", "Replication deleted"), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        auto id = ReplicationId(precheck.id);
+        auto action = data.getString("action");
+
+        CommandResult result;
+        if (action == "cancel") {
+            result = usecase.cancelReplication(tenantId, id);
+        } else {
+            return errorResponse("Unknown action. Use: cancel", 400);
         }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Replication updated successfully", "Updated", 200, responseData);
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ReplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid replication ID", 400);
+
+        auto result = usecase.deleteReplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Replication deleted successfully", "Deleted", 200, responseData);
     }
 }

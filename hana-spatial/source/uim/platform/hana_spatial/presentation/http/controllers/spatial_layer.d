@@ -37,7 +37,7 @@ class SpatialLayerController : ManageController {
       r.description = data.getString("description");
       r.type = data.getString("type");
       r.coordinateSystem = data.getString("coordinateSystem");
-      r.isPublic = j.getBoolean("isPublic");
+      r.isPublic = data.getBoolean("isPublic");
       r.metadata = jsonKeyValuePairs(j, "metadata");
 
       auto result = usecase.create(r);
@@ -100,7 +100,7 @@ class SpatialLayerController : ManageController {
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isPublic = j.getBoolean("isPublic");
+      r.isPublic = data.getBoolean("isPublic");
 
       auto result = usecase.update(r);
       if (result.hasError)

@@ -58,16 +58,16 @@ class FileServiceInstanceRepository
             inst.hyperscaler = data.getString("hyperscaler", "aws").to!Hyperscaler;
             inst.region      = data.getString("region", "");
             inst.redisVersion = data.getString("redisVersion", "7.x").to!RedisVersion;
-            inst.memoryMb    = j.getLong("memoryMb", 256);
-            inst.maxConnections = j.getLong("maxConnections", 10000);
+            inst.memoryMb    = data.getLong("memoryMb", 256);
+            inst.maxConnections = data.getLong("maxConnections", 10000);
             inst.host        = data.getString("host", "");
-            inst.port        = cast(ushort) j.getLong("port", 6379);
-            inst.tlsEnabled  = j.getBoolean("tlsEnabled", true);
-            inst.haEnabled   = j.getBoolean("haEnabled", false);
+            inst.port        = cast(ushort) data.getLong("port", 6379);
+            inst.tlsEnabled  = data.getBoolean("tlsEnabled", true);
+            inst.haEnabled   = data.getBoolean("haEnabled", false);
             inst.persistenceMode = data.getString("persistenceMode", "none").to!PersistenceMode;
-            inst.provisionedAt = j.getLong("provisionedAt", 0);
-            inst.updatedAt   = j.getLong("updatedAt", 0);
-            inst.createdAt   = j.getLong("createdAt", 0);
+            inst.provisionedAt = data.getLong("provisionedAt", 0);
+            inst.updatedAt   = data.getLong("updatedAt", 0);
+            inst.createdAt   = data.getLong("createdAt", 0);
             super.save(inst);
         }
     }

@@ -40,7 +40,7 @@ class CatalogController : ManageController {
       auto data = precheck.data;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("title"), data.getString("description"), data.getString("providerId"),
-        data.getStrings("allowedRoleIds"), j.getBoolean("active", true),);
+        data.getStrings("allowedRoleIds"), data.getBoolean("active", true),);
 
       auto result = useCase.createCatalog(createReq);
       if (result.isSuccess()) {
@@ -91,7 +91,7 @@ class CatalogController : ManageController {
       auto data = precheck.data;
       auto updateReq = UpdateCatalogRequest(catalogId, data.getString("title"),
         data.getString("description"), data.getStrings("allowedRoleIds"),
-        j.getBoolean("active", true),);
+        data.getBoolean("active", true),);
 
       auto error = useCase.updateCatalog(updateReq);
       if (error.length > 0)

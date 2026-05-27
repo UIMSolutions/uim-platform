@@ -45,7 +45,7 @@ class PersonalDataModelController : ManageController {
       r.sourceSystem = data.getString("sourceSystem");
       r.sourceEntity = data.getString("sourceEntity");
       r.subjectType = data.getString("subjectType");
-      r.isSpecialCategory = j.getBoolean("isSpecialCategory");
+      r.isSpecialCategory = data.getBoolean("isSpecialCategory");
       r.legalReference = data.getString("legalReference");
 
       auto result = usecase.createModel(r);
@@ -132,7 +132,7 @@ class PersonalDataModelController : ManageController {
       r.sensitivity = data.getString("sensitivity");
       r.sourceSystem = data.getString("sourceSystem");
       r.sourceEntity = data.getString("sourceEntity");
-      r.isSpecialCategory = j.getBoolean("isSpecialCategory");
+      r.isSpecialCategory = data.getBoolean("isSpecialCategory");
       r.legalReference = data.getString("legalReference");
 
       auto result = usecase.updateModel(r);

@@ -46,7 +46,7 @@ class EventController : ManageController {
       r.meetingUrl = data.getString("meetingUrl");
       r.organizerId = data.getString("organizerId");
       r.organizerName = data.getString("organizerName");
-      r.allDay = j.getBoolean("allDay");
+      r.allDay = data.getBoolean("allDay");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
       r.timezone = data.getString("timezone");

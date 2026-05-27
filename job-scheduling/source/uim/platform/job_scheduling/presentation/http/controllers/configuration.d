@@ -55,8 +55,8 @@ class ConfigurationController : ManageController {
             r.defaultRetries = data.getInteger("defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);
-            r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);
-            r.enableAlertNotifications = j.getBoolean("enableAlertNotifications", false);
+            r.enableAsyncMode = data.getBoolean("enableAsyncMode", true);
+            r.enableAlertNotifications = data.getBoolean("enableAlertNotifications", false);
 
             auto result = usecase.updateConfiguration(r);
             if (result.hasError)

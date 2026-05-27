@@ -48,7 +48,7 @@ class FileAccessControlRepository
             a.cidr        = data.getString("cidr", "");
             a.description = data.getString("description", "");
             a.status      = data.getString("status", "active").to!AccessControlStatus;
-            a.createdAt   = j.getLong("createdAt", 0);
+            a.createdAt   = data.getLong("createdAt", 0);
             super.save(a);
         }
     }

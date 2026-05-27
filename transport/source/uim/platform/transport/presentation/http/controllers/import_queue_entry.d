@@ -63,9 +63,9 @@ class ImportQueueEntryController : ManageController {
             dto.tenantId = tenantId;
             dto.nodeId = data.getString("nodeId");
             dto.requestId = data.getString("requestId");
-            dto.queuePosition = cast(int) j.getLong("queuePosition");
+            dto.queuePosition = cast(int) data.getLong("queuePosition");
             dto.isSelected = getBoolean(j, "isSelected");
-            dto.scheduledAt = j.getLong("scheduledAt");
+            dto.scheduledAt = data.getLong("scheduledAt");
             dto.createdBy = UserId(data.getString("createdBy"));
             auto result = usecase.enqueue(dto);
             if (result.success)

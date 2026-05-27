@@ -42,8 +42,8 @@ class PageTemplateController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.thumbnailUrl = data.getString("thumbnailUrl");
-      r.isDefault = j.getBoolean("isDefault");
-      r.isPublic = j.getBoolean("isPublic");
+      r.isDefault = data.getBoolean("isDefault");
+      r.isPublic = data.getBoolean("isPublic");
 
       auto result = useCase.createPageTemplate(r);
       if (result.isSuccess()) {
@@ -103,8 +103,8 @@ class PageTemplateController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isDefault = j.getBoolean("isDefault");
-      r.isPublic = j.getBoolean("isPublic");
+      r.isDefault = data.getBoolean("isDefault");
+      r.isPublic = data.getBoolean("isPublic");
 
       auto result = useCase.updatePageTemplate(r);
       if (result.isSuccess()) {

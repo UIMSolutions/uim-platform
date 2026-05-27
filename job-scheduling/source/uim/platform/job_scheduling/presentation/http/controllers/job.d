@@ -47,7 +47,7 @@ class JobController : ManageController {
             r.actionUrl = data.getString("action");
             r.httpMethod = data.getString("httpMethod");
             r.type = data.getString("type");
-            r.active = j.getBoolean("active", true);
+            r.active = data.getBoolean("active", true);
             r.startTime = getLong(j, "startTime");
             r.endTime = getLong(j, "endTime");
 
@@ -136,7 +136,7 @@ class JobController : ManageController {
             r.description = data.getString("description");
             r.actionUrl = data.getString("action");
             r.httpMethod = data.getString("httpMethod");
-            r.active = j.getBoolean("active", true);
+            r.active = data.getBoolean("active", true);
             r.startTime = getLong(j, "startTime");
             r.endTime = getLong(j, "endTime");
 

@@ -129,7 +129,7 @@ class ContentController : ManageController {
       r.body_ = data.getString("body");
       r.summary = data.getString("summary");
       r.tags = data.getStrings("tags");
-      r.pinned = j.getBoolean("pinned");
+      r.pinned = data.getBoolean("pinned");
 
       auto statusStr = data.getString("status");
       if (statusStr == "published")

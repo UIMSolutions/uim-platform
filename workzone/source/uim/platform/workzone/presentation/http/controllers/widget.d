@@ -120,7 +120,7 @@ class WidgetController : ManageController {
       r.row = data.getInteger("row");
       r.col = data.getInteger("col");
       r.sortOrder = data.getInteger("sortOrder");
-      r.visible = j.getBoolean("visible", true);
+      r.visible = data.getBoolean("visible", true);
       r.config = parseWidgetConfig(j);
 
       auto sStr = data.getString("size");

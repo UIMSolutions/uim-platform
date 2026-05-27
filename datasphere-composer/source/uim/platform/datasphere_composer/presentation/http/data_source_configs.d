@@ -52,7 +52,7 @@ class DataSourceConfigController : ManageController {
     r.timestampFormat   = data.getString("timestampFormat");
     r.timestampField    = data.getString("timestampField");
     r.timestampCustomPattern = data.getString("timestampCustomPattern");
-    r.enabled           = j.getBoolean("enabled");
+    r.enabled           = data.getBoolean("enabled");
     r.disabledRuleIds   = j.getStrings("disabledRuleIds");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -70,7 +70,7 @@ class DataSourceConfigController : ManageController {
     r.timestampFormat   = data.getString("timestampFormat");
     r.timestampField    = data.getString("timestampField");
     r.timestampCustomPattern = data.getString("timestampCustomPattern");
-    r.enabled           = j.getBoolean("enabled");
+    r.enabled           = data.getBoolean("enabled");
     r.disabledRuleIds   = j.getStrings("disabledRuleIds");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

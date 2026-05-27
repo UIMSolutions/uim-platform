@@ -41,7 +41,7 @@ class GeofenceController : ManageController {
       r.centerLon = jsonDouble(j, "centerLon");
       r.radiusMeters = jsonDouble(j, "radiusMeters");
       r.polygon = data.getString("polygon");
-      r.active = j.getBoolean("active");
+      r.active = data.getBoolean("active");
       r.metadata = jsonKeyValuePairs(j, "metadata");
 
       auto result = usecase.create(r);
@@ -105,7 +105,7 @@ class GeofenceController : ManageController {
       r.description = data.getString("description");
       r.radiusMeters = jsonDouble(j, "radiusMeters");
       r.polygon = data.getString("polygon");
-      r.active = j.getBoolean("active");
+      r.active = data.getBoolean("active");
 
       auto result = usecase.update(r);
       if (result.hasError)

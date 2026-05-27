@@ -43,7 +43,7 @@ class WorkpageController : ManageController {
       r.title = data.getString("title");
       r.description = data.getString("description");
       r.sortOrder = data.getInteger("sortOrder");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = useCase.createWorkpage(r);
       if (result.isSuccess()) {
@@ -104,7 +104,7 @@ class WorkpageController : ManageController {
       r.title = data.getString("title");
       r.description = data.getString("description");
       r.sortOrder = data.getInteger("sortOrder");
-      r.visible = j.getBoolean("visible", true);
+      r.visible = data.getBoolean("visible", true);
 
       auto result = useCase.updateWorkpage(r);
       if (result.isSuccess()) {

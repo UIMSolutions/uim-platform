@@ -118,7 +118,7 @@ class AlertRuleController : ManageController {
       r.evaluationPeriodSeconds = data.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = data.getInteger("consecutiveBreaches");
       r.severity = data.getString("severity");
-      r.isEnabled = j.getBoolean("isEnabled", true);
+      r.isEnabled = data.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
       auto result = usecase.updateRule(r);

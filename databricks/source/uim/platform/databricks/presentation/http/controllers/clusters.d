@@ -34,7 +34,7 @@ public:
       r.runtimeVersion        = data.getString("runtimeVersion");
       r.creatorId             = data.getString("creatorId");
       r.numWorkers            = j.getInt("numWorkers");
-      r.autoscaleEnabled      = j.getBoolean("autoscaleEnabled");
+      r.autoscaleEnabled      = data.getBoolean("autoscaleEnabled");
       r.autoscaleMinWorkers   = j.getInt("autoscaleMinWorkers");
       r.autoscaleMaxWorkers   = j.getInt("autoscaleMaxWorkers");
       r.autoTerminationMinutes= j.getInt("autoTerminationMinutes");
@@ -75,7 +75,7 @@ public:
       r.id                   = req.requestPath.to!string.split("/")[$-1];
       r.name                 = data.getString("name");
       r.numWorkers           = j.getInt("numWorkers");
-      r.autoscaleEnabled     = j.getBoolean("autoscaleEnabled");
+      r.autoscaleEnabled     = data.getBoolean("autoscaleEnabled");
       r.autoscaleMinWorkers  = j.getInt("autoscaleMinWorkers");
       r.autoscaleMaxWorkers  = j.getInt("autoscaleMaxWorkers");
       r.autoTerminationMinutes = j.getInt("autoTerminationMinutes");

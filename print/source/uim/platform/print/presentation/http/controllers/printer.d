@@ -76,8 +76,8 @@ class PrinterController : ManageController {
             dto.model = data.getString("model");
             dto.vendor = data.getString("vendor");
             dto.protocol = data.getString("protocol");
-            dto.colorCapable = j.getBoolean("colorCapable");
-            dto.duplexCapable = j.getBoolean("duplexCapable");
+            dto.colorCapable = data.getBoolean("colorCapable");
+            dto.duplexCapable = data.getBoolean("duplexCapable");
             dto.clientId = data.getString("clientId");
 
             auto result = usecase.createPrinter(dto);

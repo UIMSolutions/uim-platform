@@ -64,7 +64,7 @@ class DataProductController : ManageController {
     r.description  = data.getString("description");
     r.schemaVersion = data.getString("schemaVersion");
     r.namespace    = data.getString("namespace");
-    r.enabled      = j.getBoolean("enabled");
+    r.enabled      = data.getBoolean("enabled");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -80,7 +80,7 @@ class DataProductController : ManageController {
     r.name        = data.getString("name");
     r.description = data.getString("description");
     r.status      = data.getString("status");
-    r.enabled     = j.getBoolean("enabled");
+    r.enabled     = data.getBoolean("enabled");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

@@ -41,7 +41,7 @@ class RetentionController : ManageController {
       r.dataType = data.getString("dataType");
       r.retentionDays = data.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createRetentionPolicy(r);
@@ -122,8 +122,8 @@ class RetentionController : ManageController {
       r.description = data.getString("description");
       r.retentionDays = data.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
-      r.isDefault = j.getBoolean("isDefault");
-      r.isActive = j.getBoolean("isActive", true);
+      r.isDefault = data.getBoolean("isDefault");
+      r.isActive = data.getBoolean("isActive", true);
       r.tenantId = tenantId;
 
       auto result = usecase.updateRetentionPolicy(r);

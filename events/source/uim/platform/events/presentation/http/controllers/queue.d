@@ -71,8 +71,8 @@ class QueueController : ManageController {
             dto.messageExpiryTimer = data.getString("messageExpiryTimer");
             dto.owner              = data.getString("owner");
             dto.permission         = data.getString("permission");
-            dto.egressEnabled      = j.getBoolean("egressEnabled");
-            dto.ingressEnabled     = j.getBoolean("ingressEnabled");
+            dto.egressEnabled      = data.getBoolean("egressEnabled");
+            dto.ingressEnabled     = data.getBoolean("ingressEnabled");
             dto.createdBy          = UserId(data.getString("createdBy"));
             auto result = usecase.createQueue(dto);
             if (result.hasError)

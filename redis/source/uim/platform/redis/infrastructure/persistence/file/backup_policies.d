@@ -45,16 +45,16 @@ class FileBackupPolicyRepository
             p.id          = BackupPolicyId(data.getString("id", ""));
             p.tenantId    = tenantId;
             p.instanceId  = ServiceInstanceId(data.getString("instanceId", ""));
-            p.enabled     = j.getBoolean("enabled", false);
-            p.intervalHours = j.getLong("intervalHours", 24);
-            p.retentionDays = j.getLong("retentionDays", 7);
-            p.lastBackupAt = j.getLong("lastBackupAt", 0);
-            p.nextBackupAt = j.getLong("nextBackupAt", 0);
+            p.enabled     = data.getBoolean("enabled", false);
+            p.intervalHours = data.getLong("intervalHours", 24);
+            p.retentionDays = data.getLong("retentionDays", 7);
+            p.lastBackupAt = data.getLong("lastBackupAt", 0);
+            p.nextBackupAt = data.getLong("nextBackupAt", 0);
             p.status      = data.getString("status", "disabled").to!BackupStatus;
             p.backupLocation = data.getString("backupLocation", "");
             p.lastBackupId = data.getString("lastBackupId", "");
             p.lastError   = data.getString("lastError", "");
-            p.createdAt   = j.getLong("createdAt", 0);
+            p.createdAt   = data.getLong("createdAt", 0);
             super.save(p);
         }
     }

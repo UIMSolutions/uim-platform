@@ -44,8 +44,8 @@ class ServicePlanController : ManageController {
       r.description = data.getString("description");
       r.category = data.getString("category");
       r.pricingModel = data.getString("pricingModel");
-      r.isFree = j.getBoolean("isFree");
-      r.isBeta = j.getBoolean("isBeta");
+      r.isFree = data.getBoolean("isFree");
+      r.isBeta = data.getBoolean("isBeta");
       r.availableRegions = data.getStrings("availableRegions");
       r.maxQuota = data.getInteger("maxQuota");
       r.unit = data.getString("unit");
@@ -118,8 +118,8 @@ class ServicePlanController : ManageController {
       r.description = data.getString("description");
       r.availableRegions = data.getStrings("availableRegions");
       r.maxQuota = data.getInteger("maxQuota");
-      r.isBeta = j.getBoolean("isBeta");
-      r.provisionable = j.getBoolean("provisionable", true);
+      r.isBeta = data.getBoolean("isBeta");
+      r.provisionable = data.getBoolean("provisionable", true);
       r.metadata = data.jsonStrMap("metadata");
 
       auto result = usecase.update(id, r);

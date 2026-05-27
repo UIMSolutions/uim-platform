@@ -42,7 +42,7 @@ class RoleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.permissions = data.getStrings("permissions");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = useCase.createRole(r);
       if (result.isSuccess()) {

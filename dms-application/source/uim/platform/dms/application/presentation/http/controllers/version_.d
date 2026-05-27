@@ -66,7 +66,7 @@ class VersionController : ManageController {
       r.documentId = DocumentId(data.getString("documentId"));
       r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
-      r.isMajor = j.getBoolean("isMajor", true);
+      r.isMajor = data.getBoolean("isMajor", true);
       r.comment = data.getString("comment");
       r.fileName = data.getString("fileName");
       r.mimeType = data.getString("mimeType");

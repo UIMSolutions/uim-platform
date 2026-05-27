@@ -106,7 +106,7 @@ class UserController : ManageController {
       auto updateReq = UpdateUserRequest(userId, j.parseUserName, data.getString("displayName"),
         data.getString("userType"), data.getString("preferredLanguage"),
         data.getString("locale"), data.getString("timezone"),
-        j.getBoolean("active", true), parseEmails(j), parsePhoneNumbers(j),
+        data.getBoolean("active", true), parseEmails(j), parsePhoneNumbers(j),
         j.toAddresses, [], // extendedAttributes
 
         

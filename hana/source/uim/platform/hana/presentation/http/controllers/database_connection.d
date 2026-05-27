@@ -44,7 +44,7 @@ class DatabaseConnectionController : ManageController {
       r.database = data.getString("database");
       r.user = data.getString("user");
       r.password = data.getString("password");
-      r.useTls = j.getBoolean("useTls", true);
+      r.useTls = data.getBoolean("useTls", true);
       r.minConnections = data.getInteger("minConnections", 1);
       r.maxConnections = data.getInteger("maxConnections", 10);
       r.properties = jsonKeyValuePairs(j, "properties");

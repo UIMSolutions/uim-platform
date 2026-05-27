@@ -43,7 +43,7 @@ class MenuItemController : ManageController {
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
         data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), data.getStrings("allowedRoleIds"),
-        data.getInteger("sortOrder"), j.getBoolean("visible", true),);
+        data.getInteger("sortOrder"), data.getBoolean("visible", true),);
 
       auto result = useCase.createMenuItem(createReq);
       if (result.isSuccess()) {
@@ -96,7 +96,7 @@ class MenuItemController : ManageController {
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
         data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), data.getStrings("allowedRoleIds"),
-        data.getInteger("sortOrder"), j.getBoolean("visible", true),);
+        data.getInteger("sortOrder"), data.getBoolean("visible", true),);
 
       auto error = useCase.updateMenuItem(updateReq);
       if (error.length > 0)

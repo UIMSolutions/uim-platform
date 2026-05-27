@@ -65,7 +65,7 @@ public:
       r.description = data.getString("description");
       r.apiProxyIds = data.getStrings("apiProxyIds");
       r.status      = data.getString("status");
-      r.isPublic    = j.getBoolean("isPublic");
+      r.isPublic    = data.getBoolean("isPublic");
       r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);

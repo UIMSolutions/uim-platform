@@ -60,14 +60,14 @@ class SitePolicyController : ManageController {
         dto.passwordComplexity = data.getString("passwordComplexity");
         dto.passwordRequirements = data.getString("passwordRequirements");
         dto.sessionTimeoutSeconds = data.getInteger("sessionTimeoutSeconds");
-        dto.mfaRequired = j.getBoolean("mfaRequired");
+        dto.mfaRequired = data.getBoolean("mfaRequired");
         dto.mfaMethod = data.getString("mfaMethod");
-        dto.captchaEnabled = j.getBoolean("captchaEnabled");
-        dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
-        dto.progressiveProfilingEnabled = j.getBoolean("progressiveProfilingEnabled");
+        dto.captchaEnabled = data.getBoolean("captchaEnabled");
+        dto.socialLoginEnabled = data.getBoolean("socialLoginEnabled");
+        dto.progressiveProfilingEnabled = data.getBoolean("progressiveProfilingEnabled");
         dto.maxLoginAttempts = data.getInteger("maxLoginAttempts");
         dto.lockoutDurationSeconds = data.getInteger("lockoutDurationSeconds");
-        dto.emailVerificationRequired = j.getBoolean("emailVerificationRequired");
+        dto.emailVerificationRequired = data.getBoolean("emailVerificationRequired");
         dto.version_ = data.getString("version");
         dto.createdBy = UserId(data.getString("createdBy"));
 
@@ -114,9 +114,9 @@ class SitePolicyController : ManageController {
         dto.description = data.getString("description");
         dto.passwordMinLength = data.getInteger("passwordMinLength");
         dto.sessionTimeoutSeconds = data.getInteger("sessionTimeoutSeconds");
-        dto.mfaRequired = j.getBoolean("mfaRequired");
-        dto.captchaEnabled = j.getBoolean("captchaEnabled");
-        dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
+        dto.mfaRequired = data.getBoolean("mfaRequired");
+        dto.captchaEnabled = data.getBoolean("captchaEnabled");
+        dto.socialLoginEnabled = data.getBoolean("socialLoginEnabled");
         dto.maxLoginAttempts = data.getInteger("maxLoginAttempts");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 

@@ -107,7 +107,7 @@ class CertificateController : ManageController {
       r.certificateId = CertificateId(precheck.id);
       r.tenantId = tenantId;
       r.description = data.getString("description");
-      r.active = j.getBoolean("active", true);
+      r.active = data.getBoolean("active", true);
 
       auto result = usecase.updateCertificate(r);
       if (result.hasError)

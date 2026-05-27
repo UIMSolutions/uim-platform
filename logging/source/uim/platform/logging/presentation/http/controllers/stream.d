@@ -120,7 +120,7 @@ class StreamController : ManageController {
       r.streamId = id;
       r.description = data.getString("description");
       r.retentionPolicyId = data.getString("retentionPolicyId");
-      r.isActive = j.getBoolean("isActive", true);
+      r.isActive = data.getBoolean("isActive", true);
 
       auto result = usecase.updateStream(r);
       if (result.hasError)

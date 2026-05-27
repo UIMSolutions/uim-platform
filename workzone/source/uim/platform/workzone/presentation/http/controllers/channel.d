@@ -111,7 +111,7 @@ class ChannelController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.active = j.getBoolean("active", true);
+      r.active = data.getBoolean("active", true);
       r.config = parseChannelConfig(j);
 
       auto result = useCase.updateChannel(r);

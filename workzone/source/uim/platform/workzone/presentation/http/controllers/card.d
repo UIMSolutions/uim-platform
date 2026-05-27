@@ -107,7 +107,7 @@ class CardController : ManageController {
       r.subtitle = data.getString("subtitle");
       r.description = data.getString("description");
       r.icon = data.getString("icon");
-      r.active = j.getBoolean("active", true);
+      r.active = data.getBoolean("active", true);
       r.dataSource = parseDataSource(j);
       r.manifest = parseManifest(j);
 

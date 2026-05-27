@@ -95,7 +95,7 @@ class DataSubjectRoleController : ManageController {
             r.tenantId = tenantId;
             r.name = data.getString("name");
             r.description = data.getString("description");
-            r.isActive = j.getBoolean("isActive", true);
+            r.isActive = data.getBoolean("isActive", true);
 
             auto result = usecase.updateDataSubjectRole(tenantId, id, r);
             if (result.hasError)

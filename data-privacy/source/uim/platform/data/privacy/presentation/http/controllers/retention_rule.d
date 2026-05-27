@@ -45,7 +45,7 @@ class RetentionRuleController : ManageController {
       r.purpose = data.getString("purpose");
       r.retentionDays = data.getInteger("retentionDays");
       r.legalReference = data.getString("legalReference");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = usecase.createRule(r);
       if (result.isSuccess()) {

@@ -47,7 +47,7 @@ class NavigationItemController : ManageController {
       r.targetPageId = data.getString("targetPageId");
       r.parentId = data.getString("parentId");
       r.sortOrder = data.getInteger("sortOrder");
-      r.openInNewWindow = j.getBoolean("openInNewWindow");
+      r.openInNewWindow = data.getBoolean("openInNewWindow");
 
       auto result = useCase.createNavigationItem(r);
       if (result.isSuccess()) {
@@ -110,7 +110,7 @@ class NavigationItemController : ManageController {
       r.icon = data.getString("icon");
       r.targetUrl = data.getString("targetUrl");
       r.sortOrder = data.getInteger("sortOrder");
-      r.visible = j.getBoolean("visible", true);
+      r.visible = data.getBoolean("visible", true);
 
       auto result = useCase.updateNavigationItem(r);
       if (result.isSuccess())

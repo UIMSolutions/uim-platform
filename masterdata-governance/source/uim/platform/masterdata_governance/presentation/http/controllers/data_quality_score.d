@@ -35,104 +35,110 @@ class DataQualityScoreController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listDataQualityScores(tenantId);
-            auto jarr = items.map!(e => e.toJson).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listDataQualityScores(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+
+        return successResponse("Data quality scores list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DataQualityScoreId(precheck.id);
-            auto score = usecase.getDataQualityScore(tenantId, id);
-            if (score.isNull) { writeError(res, 404, "Data quality score not found"); return; }
-            res.writeJsonBody(score.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = DataQualityScoreId(precheck.id);
+        auto score = usecase.getDataQualityScore(tenantId, id);
+        if (score.isNull)
+            return errorResponse("Data quality score not found", 404);
+
+        auto responseData = score.toJson();
+        return successResponse("Data quality score retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            DataQualityScoreDTO dto;
-            dto.scoreId = DataQualityScoreId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
-            dto.overallScore = data.getInteger("overallScore");
-            dto.completenessScore = data.getInteger("completenessScore");
-            dto.consistencyScore = data.getInteger("consistencyScore");
-            dto.accuracyScore = data.getInteger("accuracyScore");
-            dto.uniquenessScore = data.getInteger("uniquenessScore");
-            dto.evaluationDetails = data.getString("evaluationDetails");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createDataQualityScore(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        DataQualityScoreDTO dto;
+        dto.tenantId = tenantId;
+        dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
+        dto.overallScore = data.getInteger("overallScore");
+        dto.completenessScore = data.getInteger("completenessScore");
+        dto.consistencyScore = data.getInteger("consistencyScore");
+        dto.accuracyScore = data.getInteger("accuracyScore");
+        dto.uniquenessScore = data.getInteger("uniquenessScore");
+        dto.evaluationDetails = data.getString("evaluationDetails");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createDataQualityScore(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data quality score created"), 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Data quality score created");
+        return successResponse("Data quality score created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            DataQualityScoreDTO dto;
-            dto.scoreId = DataQualityScoreId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.overallScore = data.getInteger("overallScore");
-            dto.completenessScore = data.getInteger("completenessScore");
-            dto.consistencyScore = data.getInteger("consistencyScore");
-            dto.accuracyScore = data.getInteger("accuracyScore");
-            dto.uniquenessScore = data.getInteger("uniquenessScore");
-            dto.evaluationDetails = data.getString("evaluationDetails");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateDataQualityScore(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto id = DataQualityScoreId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data quality score ID", 400);
+
+        autodata = precheck.data;
+        DataQualityScoreDTO dto;
+        dto.scoreId = DataQualityScoreId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.overallScore = data.getInteger("overallScore");
+        dto.completenessScore = data.getInteger("completenessScore");
+        dto.consistencyScore = data.getInteger("consistencyScore");
+        dto.accuracyScore = data.getInteger("accuracyScore");
+        dto.uniquenessScore = data.getInteger("uniquenessScore");
+        dto.evaluationDetails = data.getString("evaluationDetails");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateDataQualityScore(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data quality score updated"), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject
+            .set("id", id);
+        return successResponse("Data quality score updated successfully", "Updated", 200, responseData);
+
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DataQualityScoreId(precheck.id);
-            auto result = usecase.deleteDataQualityScore(tenantId, id);
-            if (result.hasError)
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = DataQualityScoreId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data quality score ID", 400);
+
+        auto result = usecase.deleteDataQualityScore(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("message", "Data quality score deleted"), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject
+            .set("id", id);
+        return successResponse("Data quality score deleted successfully", "Deleted", 200, responseData);
     }
 }

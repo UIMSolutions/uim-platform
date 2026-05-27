@@ -43,7 +43,7 @@ class BusinessContextController : ManageController {
       r.dataCategories = j.getStrings("dataCategories");
       r.purposes = j.getStrings("purposes");
       r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");
-      r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
+      r.isCrossRoleEnabled = data.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.createContext(r);
       if (result.isSuccess()) {
@@ -102,7 +102,7 @@ class BusinessContextController : ManageController {
       r.dataCategories = j.getStrings("dataCategories");
       r.purposes = j.getStrings("purposes");
       r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");
-      r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
+      r.isCrossRoleEnabled = data.getBoolean("isCrossRoleEnabled", false);
 
       auto result = usecase.updateContext(r);
       if (result.isSuccess()) {

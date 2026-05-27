@@ -50,9 +50,9 @@ class UnificationRuleController : ManageController {
     r.description = data.getString("description");
     r.priority    = data.getInteger("priority");
     r.model       = data.getString("model");
-    r.unique_     = j.getBoolean("unique");
-    r.triggerMerge  = j.getBoolean("triggerMerge");
-    r.preventMerge  = j.getBoolean("preventMerge");
+    r.unique_     = data.getBoolean("unique");
+    r.triggerMerge  = data.getBoolean("triggerMerge");
+    r.preventMerge  = data.getBoolean("preventMerge");
     r.identifierAttributes = j.getStrings("identifierAttributes");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -94,10 +94,10 @@ class UnificationRuleController : ManageController {
     r.description = data.getString("description");
     r.priority    = data.getInteger("priority");
     r.model       = data.getString("model");
-    r.unique_     = j.getBoolean("unique");
-    r.triggerMerge  = j.getBoolean("triggerMerge");
-    r.preventMerge  = j.getBoolean("preventMerge");
-    r.active      = j.getBoolean("active");
+    r.unique_     = data.getBoolean("unique");
+    r.triggerMerge  = data.getBoolean("triggerMerge");
+    r.preventMerge  = data.getBoolean("preventMerge");
+    r.active      = data.getBoolean("active");
     r.identifierAttributes = j.getStrings("identifierAttributes");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

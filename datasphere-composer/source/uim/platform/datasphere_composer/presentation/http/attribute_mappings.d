@@ -70,7 +70,7 @@ class AttributeMappingController : ManageController {
     r.targetDataType      = data.getString("targetDataType");
     r.delimiter           = data.getString("delimiter");
     r.sortOrder           = data.getInteger("sortOrder");
-    r.active              = j.getBoolean("active");
+    r.active              = data.getBoolean("active");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

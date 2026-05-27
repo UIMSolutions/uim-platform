@@ -50,7 +50,7 @@ class FileDatabaseExtensionRepository
             e.extensionVersion = data.getString("extensionVersion", "");
             e.status           = data.getString("status", "enabled").to!ExtensionStatus;
             e.schema_          = data.getString("schema", "");
-            e.createdAt        = j.getLong("createdAt", 0);
+            e.createdAt        = data.getLong("createdAt", 0);
             e.createdBy        = UserId(data.getString("createdBy", ""));
             e.updatedBy        = UserId(data.getString("updatedBy", ""));
             super.save(e);

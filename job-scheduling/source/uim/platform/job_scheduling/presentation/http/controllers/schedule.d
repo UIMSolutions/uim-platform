@@ -47,7 +47,7 @@ class ScheduleController : ManageController {
             r.description = data.getString("description");
             r.type = data.getString("type");
             r.format = data.getString("format");
-            r.active = j.getBoolean("active", true);
+            r.active = data.getBoolean("active", true);
             r.cronExpression = data.getString("cron");
             r.humanReadableSchedule = data.getString("humanReadableSchedule");
             r.repeatInterval = getLong(j, "repeatInterval");
@@ -128,7 +128,7 @@ class ScheduleController : ManageController {
             r.jobId = JobId(ids[0]);
             r.scheduleId = ScheduleId(ids[1]);
             r.description = data.getString("description");
-            r.active = j.getBoolean("active", true);
+            r.active = data.getBoolean("active", true);
             r.cronExpression = data.getString("cron");
             r.humanReadableSchedule = data.getString("humanReadableSchedule");
             r.repeatInterval = getLong(j, "repeatInterval");
@@ -180,7 +180,7 @@ class ScheduleController : ManageController {
             ActivateAllSchedulesRequest r;
             r.tenantId = tenantId;
             r.jobId = jobId;
-            r.active = j.getBoolean("active", true);
+            r.active = data.getBoolean("active", true);
 
             auto result = usecase.activateAllSchedules(r);
             if (result.hasError)

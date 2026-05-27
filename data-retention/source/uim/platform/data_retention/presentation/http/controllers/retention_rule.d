@@ -112,7 +112,7 @@ class RetentionRuleController : ManageController {
             r.duration = jsonInt(j, "duration");
             r.periodUnit = data.getString("periodUnit");
             r.actionOnExpiry = data.getString("actionOnExpiry");
-            r.isActive = j.getBoolean("isActive", true);
+            r.isActive = data.getBoolean("isActive", true);
 
             auto result = usecase.updateRetentionRule(r);
             if (result.hasError)

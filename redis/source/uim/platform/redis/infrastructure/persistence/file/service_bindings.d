@@ -50,9 +50,9 @@ class FileServiceBindingRepository
             b.name       = data.getString("name", "");
             b.status     = data.getString("status", "active").to!BindingStatus;
             b.bindingHost = data.getString("bindingHost", "");
-            b.bindingPort = cast(ushort) j.getLong("bindingPort", 6379);
-            b.expiresAt  = j.getLong("expiresAt", 0);
-            b.createdAt  = j.getLong("createdAt", 0);
+            b.bindingPort = cast(ushort) data.getLong("bindingPort", 6379);
+            b.expiresAt  = data.getLong("expiresAt", 0);
+            b.createdAt  = data.getLong("createdAt", 0);
             super.save(b);
         }
     }

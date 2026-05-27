@@ -40,7 +40,7 @@ class BackupController : ManageController {
       r.name = data.getString("name");
       r.type = data.getString("type");
       r.destination = data.getString("destination");
-      r.encrypted = j.getBoolean("encrypted");
+      r.encrypted = data.getBoolean("encrypted");
       r.cronExpression = data.getString("cronExpression");
       r.retentionDays = data.getInteger("retentionDays", 30);
 

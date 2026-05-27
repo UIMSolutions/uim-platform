@@ -114,7 +114,7 @@ class CheckController : ManageController {
       UpdateHealthCheckRequest r;
       r.tenantId = tenantId;
       r.description = data.getString("description");
-      r.isEnabled = j.getBoolean("isEnabled", true);
+      r.isEnabled = data.getBoolean("isEnabled", true);
       r.intervalSeconds = data.getInteger("intervalSeconds");
       r.url = data.getString("url");
       r.expectedStatus = data.getString("expectedStatus");

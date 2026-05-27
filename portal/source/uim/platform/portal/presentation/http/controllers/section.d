@@ -38,7 +38,7 @@ class SectionController : ManageController {
       auto data = precheck.data;
       auto createReq = CreateSectionRequest(data.getString("pageId"),
         req.headers.get("X-Tenant-Id", ""), data.getString("title"), jsonInt(j,
-          "sortOrder"), j.getBoolean("visible", true), data.getInteger("columns", 3),);
+          "sortOrder"), data.getBoolean("visible", true), data.getInteger("columns", 3),);
 
       auto result = useCase.createSection(createReq);
       if (result.isSuccess()) {
@@ -85,7 +85,7 @@ class SectionController : ManageController {
       auto sectionId = precheck.id;
       auto data = precheck.data;
       auto updateReq = UpdateSectionRequest(sectionId, data.getString("title"),
-        data.getInteger("sortOrder"), j.getBoolean("visible", true), data.getInteger("columns", 3),);
+        data.getInteger("sortOrder"), data.getBoolean("visible", true), data.getInteger("columns", 3),);
 
       auto error = useCase.updateSection(updateReq);
       if (error.length > 0)

@@ -47,7 +47,7 @@ class DistributionController : ManageController {
       r.categories = data.getStrings("categories");
       r.dataModelIds = data.getStrings("dataModelIds");
       r.filterRuleIds = data.getStrings("filterRuleIds");
-      r.autoReplicate = j.getBoolean("autoReplicate");
+      r.autoReplicate = data.getBoolean("autoReplicate");
       r.cronSchedule = data.getString("cronSchedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -118,7 +118,7 @@ class DistributionController : ManageController {
       r.categories = data.getStrings("categories");
       r.dataModelIds = data.getStrings("dataModelIds");
       r.filterRuleIds = data.getStrings("filterRuleIds");
-      r.autoReplicate = j.getBoolean("autoReplicate");
+      r.autoReplicate = data.getBoolean("autoReplicate");
       r.cronSchedule = data.getString("cronSchedule");
 
       auto result = usecase.updateModel(id, r);

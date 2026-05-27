@@ -39,7 +39,7 @@ class AnonymizationConfigController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isReversible = j.getBoolean("isReversible", false);
+      r.isReversible = data.getBoolean("isReversible", false);
       r.targetSystems = data.getStrings("targetSystems");
 
       auto result = usecase.createConfig(r);
@@ -96,7 +96,7 @@ class AnonymizationConfigController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isReversible = j.getBoolean("isReversible", false);
+      r.isReversible = data.getBoolean("isReversible", false);
       r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
 
       auto result = usecase.updateConfig(r);

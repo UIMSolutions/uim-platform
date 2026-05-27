@@ -40,7 +40,7 @@ class ProcessingPurposeController : ManageController {
             r.legalBasis = data.getString("legalBasis");
             r.retentionPeriod = data.getString("retentionPeriod");
             r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
-            r.requiresConsent = j.getBoolean("requiresConsent");
+            r.requiresConsent = data.getBoolean("requiresConsent");
             r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.create(r);
@@ -110,7 +110,7 @@ class ProcessingPurposeController : ManageController {
             r.legalBasis = data.getString("legalBasis");
             r.retentionPeriod = data.getString("retentionPeriod");
             r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
-            r.requiresConsent = j.getBoolean("requiresConsent");
+            r.requiresConsent = data.getBoolean("requiresConsent");
             r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.update(r);

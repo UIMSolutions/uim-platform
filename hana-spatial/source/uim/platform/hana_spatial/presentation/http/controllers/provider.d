@@ -38,11 +38,11 @@ class ProviderController : ManageController {
       r.type = data.getString("type");
       r.apiKey = data.getString("apiKey");
       r.baseUrl = data.getString("baseUrl");
-      r.supportsGeocoding = j.getBoolean("supportsGeocoding");
-      r.supportsRouting = j.getBoolean("supportsRouting");
-      r.supportsMapping = j.getBoolean("supportsMapping");
-      r.supportsIsoline = j.getBoolean("supportsIsoline");
-      r.supportsPoi = j.getBoolean("supportsPoi");
+      r.supportsGeocoding = data.getBoolean("supportsGeocoding");
+      r.supportsRouting = data.getBoolean("supportsRouting");
+      r.supportsMapping = data.getBoolean("supportsMapping");
+      r.supportsIsoline = data.getBoolean("supportsIsoline");
+      r.supportsPoi = data.getBoolean("supportsPoi");
       r.supportedRegions = data.getStrings("supportedRegions");
       r.config = jsonKeyValuePairs(j, "config");
 
@@ -109,11 +109,11 @@ class ProviderController : ManageController {
       r.status = data.getString("status");
       r.apiKey = data.getString("apiKey");
       r.baseUrl = data.getString("baseUrl");
-      r.supportsGeocoding = j.getBoolean("supportsGeocoding");
-      r.supportsRouting = j.getBoolean("supportsRouting");
-      r.supportsMapping = j.getBoolean("supportsMapping");
-      r.supportsIsoline = j.getBoolean("supportsIsoline");
-      r.supportsPoi = j.getBoolean("supportsPoi");
+      r.supportsGeocoding = data.getBoolean("supportsGeocoding");
+      r.supportsRouting = data.getBoolean("supportsRouting");
+      r.supportsMapping = data.getBoolean("supportsMapping");
+      r.supportsIsoline = data.getBoolean("supportsIsoline");
+      r.supportsPoi = data.getBoolean("supportsPoi");
 
       auto result = usecase.update(r);
       if (result.hasError)

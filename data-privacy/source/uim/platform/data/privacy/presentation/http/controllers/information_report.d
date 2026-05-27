@@ -100,7 +100,7 @@ class InformationReportController : ManageController {
       r.tenantId = tenantId;
       r.status = data.getString("status");
       r.downloadUrl = data.getString("downloadUrl");
-      r.totalRecords = j.getLong("totalRecords");
+      r.totalRecords = data.getLong("totalRecords");
 
       auto result = usecase.updateReportStatus(r);
       if (result.isSuccess()) {

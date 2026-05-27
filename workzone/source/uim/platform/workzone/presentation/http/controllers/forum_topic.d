@@ -105,8 +105,8 @@ class ForumTopicController : ManageController {
       r.tenantId = tenantId;
       r.title = data.getString("title");
       r.body_ = data.getString("body");
-      r.pinned = j.getBoolean("pinned");
-      r.locked = j.getBoolean("locked");
+      r.pinned = data.getBoolean("pinned");
+      r.locked = data.getBoolean("locked");
 
       auto result = useCase.updateForumTopic(r);
       if (result.isSuccess()) {

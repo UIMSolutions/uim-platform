@@ -40,7 +40,7 @@ class DashboardController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
       r.createdBy = UserId(data.getString("createdBy"));
 
       foreach (pj; j.getArray("panels")) {
@@ -144,7 +144,7 @@ class DashboardController : ManageController {
       r.dashboardId = id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = usecase.updateDashboard(r);
       if (result.hasError)

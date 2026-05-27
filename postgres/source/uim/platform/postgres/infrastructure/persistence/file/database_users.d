@@ -49,7 +49,7 @@ class FileDatabaseUserRepository
             e.username   = data.getString("username", "");
             e.roles      = data.getString("roles", "readonly");
             e.status     = data.getString("status", "active").to!UserStatus;
-            e.createdAt  = j.getLong("createdAt", 0);
+            e.createdAt  = data.getLong("createdAt", 0);
             e.createdBy  = UserId(data.getString("createdBy", ""));
             e.updatedBy  = UserId(data.getString("updatedBy", ""));
             super.save(e);

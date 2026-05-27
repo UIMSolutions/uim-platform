@@ -42,8 +42,8 @@ class DatabaseUserController : ManageController {
       r.password = data.getString("password");
       r.authType = data.getString("authType");
       r.defaultSchema = data.getString("defaultSchema");
-      r.isRestricted = j.getBoolean("isRestricted");
-      r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
+      r.isRestricted = data.getBoolean("isRestricted");
+      r.forcePasswordChange = data.getBoolean("forcePasswordChange", true);
       r.roles = data.getStrings("roles");
 
       auto result = usecase.createDatabaseUser(r);
@@ -126,8 +126,8 @@ class DatabaseUserController : ManageController {
       r.id = DatabaseUserprecheck.id);
       r.password = data.getString("password");
       r.defaultSchema = data.getString("defaultSchema");
-      r.isRestricted = j.getBoolean("isRestricted");
-      r.forcePasswordChange = j.getBoolean("forcePasswordChange");
+      r.isRestricted = data.getBoolean("isRestricted");
+      r.forcePasswordChange = data.getBoolean("forcePasswordChange");
       r.roles = data.getStrings("roles");
 
       auto result = usecase.updateDatabaseUser(r);

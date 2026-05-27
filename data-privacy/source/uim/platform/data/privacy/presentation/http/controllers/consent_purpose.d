@@ -43,7 +43,7 @@ class ConsentPurposeController : ManageController {
       r.dataCategories = data.getStrings("dataCategories");
       r.consentFormTemplate = data.getString("consentFormTemplate");
       r.version_ = data.getString("version");
-      r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
+      r.requiresExplicitConsent = data.getBoolean("requiresExplicitConsent", true);
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
 
@@ -103,7 +103,7 @@ class ConsentPurposeController : ManageController {
       r.description = data.getString("description");
       r.consentFormTemplate = data.getString("consentFormTemplate");
       r.version_ = data.getString("version");
-      r.requiresExplicitConsent = j.getBoolean("requiresExplicitConsent", true);
+      r.requiresExplicitConsent = data.getBoolean("requiresExplicitConsent", true);
 
       auto result = usecase.updatePurpose(r);
       if (result.isSuccess()) {

@@ -110,7 +110,7 @@ class MetricDefinitionController : ManageController {
       request.displayName = data.getString("displayName");
       request.description = data.getString("description");
       request.aggregation = data.getString("aggregation");
-      request.isEnabled = j.getBoolean("isEnabled", true);
+      request.isEnabled = data.getBoolean("isEnabled", true);
 
       auto result = usecase.updateDefinition(request);
       if (result.hasError)

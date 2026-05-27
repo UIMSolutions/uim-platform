@@ -37,9 +37,9 @@ class PasswordPolicyController : ManageController {
       auto data = precheck.data;
       auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
           data.getString("name"), data.getString("description"), jsonUint(j,
-            "minLength", 8), jsonUint(j, "maxLength", 128), j.getBoolean("requireUppercase",
-            true), j.getBoolean("requireLowercase", true), j.getBoolean("requireDigit",
-            true), j.getBoolean("requireSpecialChar"), jsonUint(j, "minUniqueChars"), jsonUint(j,
+            "minLength", 8), jsonUint(j, "maxLength", 128), data.getBoolean("requireUppercase",
+            true), data.getBoolean("requireLowercase", true), data.getBoolean("requireDigit",
+            true), data.getBoolean("requireSpecialChar"), jsonUint(j, "minUniqueChars"), jsonUint(j,
             "maxRepeatedChars"), jsonUint(j, "passwordHistoryCount", 5), jsonUint(j,
             "maxFailedAttempts", 5), jsonUint(j, "lockoutDurationMinutes", 30),
           jsonUint(j, "expiryDays"),);

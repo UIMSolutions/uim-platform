@@ -42,8 +42,8 @@ class LegalGroundController : ManageController {
       r.purpose = data.getString("purpose");
       r.description = data.getString("description");
       r.legalReference = data.getString("legalReference");
-      r.validFrom = j.getLong("validFrom");
-      r.validUntil = j.getLong("validUntil");
+      r.validFrom = data.getLong("validFrom");
+      r.validUntil = data.getLong("validUntil");
 
       auto result = usecase.createGround(r);
       if (result.isSuccess()) {
@@ -111,8 +111,8 @@ class LegalGroundController : ManageController {
       r.tenantId = tenantId;
       r.description = data.getString("description");
       r.legalReference = data.getString("legalReference");
-      r.isActive = j.getBoolean("isActive", true);
-      r.validUntil = j.getLong("validUntil");
+      r.isActive = data.getBoolean("isActive", true);
+      r.validUntil = data.getLong("validUntil");
 
       auto result = usecase.updateGround(r);
       if (result.isSuccess()) {

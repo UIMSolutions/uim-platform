@@ -65,8 +65,8 @@ class ApplicationController : ManageController {
             dto.authScheme = data.getString("authScheme");
             dto.logoUrl = data.getString("logoUrl");
             dto.homepageUrl = data.getString("homepageUrl");
-            dto.multiTenantEnabled = j.getBoolean("multiTenantEnabled");
-            dto.riskBasedAuthEnabled = j.getBoolean("riskBasedAuthEnabled");
+            dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
+            dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
             auto result = usecase.createApplication(dto);
             if (!result.success) { writeError(res, 400, result.message); return; }
@@ -86,8 +86,8 @@ class ApplicationController : ManageController {
             dto.status = data.getString("status");
             dto.logoUrl = data.getString("logoUrl");
             dto.homepageUrl = data.getString("homepageUrl");
-            dto.multiTenantEnabled = j.getBoolean("multiTenantEnabled");
-            dto.riskBasedAuthEnabled = j.getBoolean("riskBasedAuthEnabled");
+            dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
+            dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
             auto result = usecase.updateApplication(dto);
             if (!result.success) { writeError(res, 404, result.message); return; }

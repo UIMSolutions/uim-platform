@@ -50,7 +50,7 @@ class ReplicationController : ManageController {
       r.categories = data.getStrings("categories");
       r.sourceClientId = data.getString("sourceClientId");
       r.targetClientIds = data.getStrings("targetClientIds");
-      r.isInitialLoad = j.getBoolean("isInitialLoad");
+      r.isInitialLoad = data.getBoolean("isInitialLoad");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);

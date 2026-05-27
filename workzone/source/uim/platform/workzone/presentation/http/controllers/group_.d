@@ -101,7 +101,7 @@ class GroupController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.active = j.getBoolean("active", true);
+      r.active = data.getBoolean("active", true);
 
       auto result = useCase.updateGroup(r);
       if (result.isSuccess()) {

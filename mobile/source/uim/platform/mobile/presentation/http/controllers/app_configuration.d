@@ -40,7 +40,7 @@ class AppConfigurationController : ManageController {
       r.key = data.getString("key");
       r.value = data.getString("value");
       r.description = data.getString("description");
-      r.isSecret = j.getBoolean("isSecret");
+      r.isSecret = data.getBoolean("isSecret");
       r.platform = data.getString("platform");
       r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
@@ -121,7 +121,7 @@ class AppConfigurationController : ManageController {
       r.id = id;
       r.value = data.getString("value");
       r.description = data.getString("description");
-      r.isSecret = j.getBoolean("isSecret");
+      r.isSecret = data.getBoolean("isSecret");
       r.platform = data.getString("platform");
       r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);

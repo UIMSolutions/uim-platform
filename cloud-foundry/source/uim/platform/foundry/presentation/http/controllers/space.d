@@ -45,7 +45,7 @@ class SpaceController : ManageController {
       r.tenantId = tenantId;
       r.orgId = OrgId(data.getString("orgId"));
       r.name = data.getString("name");
-      r.allowSsh = j.getBoolean("allowSsh", true);
+      r.allowSsh = data.getBoolean("allowSsh", true);
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createSpace(r);
@@ -109,7 +109,7 @@ class SpaceController : ManageController {
       r.id = id;
       r.tenantId = tenantId;
       r.name = data.getString("name");
-      r.allowSsh = j.getBoolean("allowSsh", true);
+      r.allowSsh = data.getBoolean("allowSsh", true);
 
       auto result = useCase.updateSpace(r);
       if (result.isSuccess()) {

@@ -86,7 +86,7 @@ class LegalEntityController : ManageController {
             r.description = data.getString("description");
             r.country = data.getString("country");
             r.region = data.getString("region");
-            r.isActive = j.getBoolean("isActive", true);
+            r.isActive = data.getBoolean("isActive", true);
 
             auto result = usecase.updateLegalEntity(r);
             if (result.hasError)

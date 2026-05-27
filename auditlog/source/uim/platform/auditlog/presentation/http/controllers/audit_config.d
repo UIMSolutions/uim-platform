@@ -106,11 +106,11 @@ class AuditConfigController : ManageController {
     r.id = AuditConfigId(precheck.id);
     r.tenantId = tenantId;
     r.name = data.getString("name");
-    r.logDataAccess = j.getBoolean("logDataAccess", true);
-    r.logDataModification = j.getBoolean("logDataModification", true);
-    r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
-    r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
-    r.enableDataMasking = j.getBoolean("enableDataMasking");
+    r.logDataAccess = data.getBoolean("logDataAccess", true);
+    r.logDataModification = data.getBoolean("logDataModification", true);
+    r.logSecurityEvents = data.getBoolean("logSecurityEvents", true);
+    r.logConfigurationChanges = data.getBoolean("logConfigurationChanges", true);
+    r.enableDataMasking = data.getBoolean("enableDataMasking");
     r.maskedFields = data.getStrings("maskedFields");
     r.excludedServices = data.getStrings("excludedServices");
     r.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);

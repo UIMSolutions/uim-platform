@@ -48,11 +48,11 @@ class FileCacheEntryRepository
             e.key         = data.getString("key", "");
             e.value       = data.getString("value", "");
             e.entryType   = data.getString("entryType", "string").to!CacheEntryType;
-            e.ttl         = j.getLong("ttl", -1);
-            e.sizeBytes   = j.getLong("sizeBytes", 0);
-            e.accessCount = j.getLong("accessCount", 0);
-            e.lastAccessedAt = j.getLong("lastAccessedAt", 0);
-            e.createdAt   = j.getLong("createdAt", 0);
+            e.ttl         = data.getLong("ttl", -1);
+            e.sizeBytes   = data.getLong("sizeBytes", 0);
+            e.accessCount = data.getLong("accessCount", 0);
+            e.lastAccessedAt = data.getLong("lastAccessedAt", 0);
+            e.createdAt   = data.getLong("createdAt", 0);
             super.save(e);
         }
     }

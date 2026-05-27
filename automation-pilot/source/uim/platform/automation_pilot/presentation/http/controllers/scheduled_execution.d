@@ -69,7 +69,7 @@ class ScheduledExecutionController : ManageController {
             dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
             dto.commandId = CommandId(data.getString("commandId"));
             dto.cronExpression = data.getString("cronExpression");
-            dto.scheduledAt = j.getLong("scheduledAt");
+            dto.scheduledAt = data.getLong("scheduledAt");
             dto.inputValues = data.getString("inputValues");
             dto.description = data.getString("description");
             dto.maxRetries = data.getString("maxRetries");
@@ -102,7 +102,7 @@ class ScheduledExecutionController : ManageController {
             dto.tenantId = tenantId;
             dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
             dto.cronExpression = data.getString("cronExpression");
-            dto.scheduledAt = j.getLong("scheduledAt");
+            dto.scheduledAt = data.getLong("scheduledAt");
             dto.description = data.getString("description");
             dto.updatedBy = UserId(data.getString("updatedBy"));
 

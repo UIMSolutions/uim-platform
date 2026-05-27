@@ -124,7 +124,7 @@ class DestinationController : ManageController {
       r.tokenServiceUser = data.getString("tokenServiceUser");
       r.audience = data.getString("audience");
       r.scope_ = data.getString("scope");
-      r.isEnabled = j.getBoolean("isEnabled", true);
+      r.isEnabled = data.getBoolean("isEnabled", true);
 
       auto result = useCase.updateDestination(r);
       if (result.isSuccess()) {

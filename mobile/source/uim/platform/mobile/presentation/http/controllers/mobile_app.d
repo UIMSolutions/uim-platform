@@ -42,8 +42,8 @@ class MobileAppController : ManageController {
       r.platform = data.getString("platform");
       r.securityConfig = data.getString("securityConfig");
       r.authProvider = data.getString("authProvider");
-      r.pushEnabled = j.getBoolean("pushEnabled");
-      r.offlineEnabled = j.getBoolean("offlineEnabled");
+      r.pushEnabled = data.getBoolean("pushEnabled");
+      r.offlineEnabled = data.getBoolean("offlineEnabled");
       r.iconUrl = data.getString("iconUrl");
       r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
@@ -127,8 +127,8 @@ class MobileAppController : ManageController {
       r.securityConfig = data.getString("securityConfig");
       r.authProvider = data.getString("authProvider");
       r.status = data.getString("status");
-      r.pushEnabled = j.getBoolean("pushEnabled");
-      r.offlineEnabled = j.getBoolean("offlineEnabled");
+      r.pushEnabled = data.getBoolean("pushEnabled");
+      r.offlineEnabled = data.getBoolean("offlineEnabled");
       r.iconUrl = data.getString("iconUrl");
       r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);

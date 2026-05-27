@@ -67,7 +67,7 @@ public:
       r.contactEmail = data.getString("contactEmail");
       r.contactName  = data.getString("contactName");
       r.standard     = data.getString("standard");
-      r.active       = j.getBoolean("active");
+      r.active       = data.getBoolean("active");
       r.metadata     = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);

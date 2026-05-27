@@ -45,8 +45,8 @@ class SurveyController : ManageController {
       r.description = data.getString("description");
       r.creatorId = data.getString("creatorId");
       r.creatorName = data.getString("creatorName");
-      r.anonymous = j.getBoolean("anonymous");
-      r.allowMultipleResponses = j.getBoolean("allowMultipleResponses");
+      r.anonymous = data.getBoolean("anonymous");
+      r.allowMultipleResponses = data.getBoolean("allowMultipleResponses");
       r.startsAt = jsonLong(j, "startsAt");
       r.endsAt = jsonLong(j, "endsAt");
 

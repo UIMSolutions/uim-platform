@@ -46,14 +46,14 @@ class FileConfigurationRepository
             c.tenantId        = tenantId;
             c.instanceId      = ServiceInstanceId(data.getString("instanceId", ""));
             c.maxMemoryPolicy = data.getString("maxMemoryPolicy", "allkeys-lru").to!MaxMemoryPolicy;
-            c.timeout         = j.getLong("timeout", 0);
-            c.maxConnections  = j.getLong("maxConnections", 10000);
-            c.tlsEnabled      = j.getBoolean("tlsEnabled", true);
+            c.timeout         = data.getLong("timeout", 0);
+            c.maxConnections  = data.getLong("maxConnections", 10000);
+            c.tlsEnabled      = data.getBoolean("tlsEnabled", true);
             c.persistenceMode = data.getString("persistenceMode", "none").to!PersistenceMode;
-            c.maxMemoryMb     = j.getLong("maxMemoryMb", 256);
-            c.notifyKeyspaceEvents = j.getBoolean("notifyKeyspaceEvents", false);
+            c.maxMemoryMb     = data.getLong("maxMemoryMb", 256);
+            c.notifyKeyspaceEvents = data.getBoolean("notifyKeyspaceEvents", false);
             c.activeVersion   = data.getString("activeVersion", "");
-            c.createdAt       = j.getLong("createdAt", 0);
+            c.createdAt       = data.getLong("createdAt", 0);
             super.save(c);
         }
     }

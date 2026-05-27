@@ -112,7 +112,7 @@ class FilterRuleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.logicOperator = data.getString("logicOperator");
-      r.isActive = j.getBoolean("isActive", true);
+      r.isActive = data.getBoolean("isActive", true);
       r.conditions = parseConditions(j);
 
       auto result = usecase.updateRule(id, r);

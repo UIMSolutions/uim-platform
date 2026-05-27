@@ -45,19 +45,19 @@ class FileMetricRepository
             m.id         = MetricId(data.getString("id", ""));
             m.tenantId   = tenantId;
             m.instanceId = ServiceInstanceId(data.getString("instanceId", ""));
-            m.timestamp_ = j.getLong("timestamp", 0);
-            m.memoryUsedMb  = j.getLong("memoryUsedMb", 0);
-            m.memoryTotalMb = j.getLong("memoryTotalMb", 0);
-            m.connectedClients = j.getLong("connectedClients", 0);
-            m.commandsPerSecond = j.getLong("commandsPerSecond", 0);
+            m.timestamp_ = data.getLong("timestamp", 0);
+            m.memoryUsedMb  = data.getLong("memoryUsedMb", 0);
+            m.memoryTotalMb = data.getLong("memoryTotalMb", 0);
+            m.connectedClients = data.getLong("connectedClients", 0);
+            m.commandsPerSecond = data.getLong("commandsPerSecond", 0);
             m.hitRate    = j.getDouble("hitRate", 0.0);
-            m.evictedKeys = j.getLong("evictedKeys", 0);
-            m.expiredKeys = j.getLong("expiredKeys", 0);
-            m.totalCommandsProcessed = j.getLong("totalCommandsProcessed", 0);
+            m.evictedKeys = data.getLong("evictedKeys", 0);
+            m.expiredKeys = data.getLong("expiredKeys", 0);
+            m.totalCommandsProcessed = data.getLong("totalCommandsProcessed", 0);
             m.cpuUsagePercent = j.getDouble("cpuUsagePercent", 0.0);
-            m.networkInputKbs = j.getLong("networkInputKbs", 0);
-            m.networkOutputKbs = j.getLong("networkOutputKbs", 0);
-            m.createdAt  = j.getLong("createdAt", 0);
+            m.networkInputKbs = data.getLong("networkInputKbs", 0);
+            m.networkOutputKbs = data.getLong("networkOutputKbs", 0);
+            m.createdAt  = data.getLong("createdAt", 0);
             super.save(m);
         }
     }

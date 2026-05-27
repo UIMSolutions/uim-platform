@@ -40,8 +40,8 @@ class AppRouteController : ManageController {
         appId = data.getString("appId");
         pathPrefix = data.getString("pathPrefix");
         targetPath = data.getString("targetPath");
-        authRequired = j.getBoolean("authRequired");
-        cacheEnabled = j.getBoolean("cacheEnabled");
+        authRequired = data.getBoolean("authRequired");
+        cacheEnabled = data.getBoolean("cacheEnabled");
         createdBy = UserId(data.getString("createdBy"));
       }
 

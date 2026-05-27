@@ -127,7 +127,7 @@ class PipelineController : ManageController {
       r.description = data.getString("description");
       r.format = data.getString("format");
       r.targetStreamId = data.getString("targetStreamId");
-      r.isActive = j.getBoolean("isActive", true);
+      r.isActive = data.getBoolean("isActive", true);
       r.tenantId = tenantId;
 
       auto result = usecase.updatePipeline(r);

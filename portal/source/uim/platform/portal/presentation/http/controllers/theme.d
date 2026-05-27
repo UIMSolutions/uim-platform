@@ -41,7 +41,7 @@ class ThemeController : ManageController {
       auto createReq = CreateThemeRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"), jsonEnum!ThemeMode(j,
           "mode", ThemeMode.light), data.getString("baseTheme"), parseColors(j),
-        parseFonts(j), data.getString("customCss"), j.getBoolean("isDefault", false),);
+        parseFonts(j), data.getString("customCss"), data.getBoolean("isDefault", false),);
 
       auto result = useCase.createTheme(createReq);
       if (result.isSuccess()) {
@@ -106,7 +106,7 @@ class ThemeController : ManageController {
       auto updateReq = UpdateThemeRequest(themeId, data.getString("name"),
         data.getString("description"), jsonEnum!ThemeMode(j, "mode",
           ThemeMode.light), parseColors(j), parseFonts(j),
-        data.getString("customCss"), j.getBoolean("isDefault", false),);
+        data.getString("customCss"), data.getBoolean("isDefault", false),);
 
       auto error = useCase.updateTheme(updateReq);
       if (error.length > 0)

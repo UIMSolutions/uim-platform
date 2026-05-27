@@ -89,7 +89,7 @@ class ProviderController : ManageController {
       auto data = precheck.data;
       auto updateReq = UpdateProviderRequest(providerId, data.getString("name"),
         data.getString("description"), data.getString("contentEndpointUrl"),
-        data.getString("authToken"), j.getBoolean("active", true),);
+        data.getString("authToken"), data.getBoolean("active", true),);
 
       auto error = useCase.updateProvider(updateReq);
       if (error.length > 0)

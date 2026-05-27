@@ -48,8 +48,8 @@ class SubaccountController : ManageController {
       r.subdomain = data.getString("subdomain");
       r.region = data.getString("region");
       r.usage = data.getString("usage");
-      r.betaEnabled = j.getBoolean("betaEnabled");
-      r.usedForProduction = j.getBoolean("usedForProduction");
+      r.betaEnabled = data.getBoolean("betaEnabled");
+      r.usedForProduction = data.getBoolean("usedForProduction");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.labels = data.jsonStrMap("labels");
       r.customProperties = data.jsonStrMap("customProperties");
@@ -119,8 +119,8 @@ class SubaccountController : ManageController {
       r.displayName = data.getString("displayName");
       r.description = data.getString("description");
       r.usage = data.getString("usage");
-      r.betaEnabled = j.getBoolean("betaEnabled");
-      r.usedForProduction = j.getBoolean("usedForProduction");
+      r.betaEnabled = data.getBoolean("betaEnabled");
+      r.usedForProduction = data.getBoolean("usedForProduction");
       r.labels = data.jsonStrMap("labels");
       r.customProperties = data.jsonStrMap("customProperties");
 

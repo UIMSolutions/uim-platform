@@ -73,8 +73,8 @@ class PrintTaskController : ManageController {
             dto.copies = cast(int) j.getInt("copies");
             if (dto.copies < 1) dto.copies = 1;
             dto.paperFormat = data.getString("paperFormat");
-            dto.colorPrint = j.getBoolean("colorPrint");
-            dto.duplexPrint = j.getBoolean("duplexPrint");
+            dto.colorPrint = data.getBoolean("colorPrint");
+            dto.duplexPrint = data.getBoolean("duplexPrint");
             dto.tray = data.getString("tray");
 
             auto result = usecase.createPrintTask(dto);

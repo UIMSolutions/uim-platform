@@ -39,8 +39,8 @@ class RetentionRuleController : ManageController {
             r.description = data.getString("description");
             r.retentionPeriod = data.getString("retentionPeriod");
             r.periodUnit = data.getString("periodUnit");
-            r.autoDelete = j.getBoolean("autoDelete");
-            r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
+            r.autoDelete = data.getBoolean("autoDelete");
+            r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = data.getString("notifyDaysBefore");
             r.createdBy = UserId(data.getString("createdBy"));
 
@@ -110,8 +110,8 @@ class RetentionRuleController : ManageController {
             r.description = data.getString("description");
             r.retentionPeriod = data.getString("retentionPeriod");
             r.periodUnit = data.getString("periodUnit");
-            r.autoDelete = j.getBoolean("autoDelete");
-            r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
+            r.autoDelete = data.getBoolean("autoDelete");
+            r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = data.getString("notifyDaysBefore");
             r.updatedBy = UserId(data.getString("updatedBy"));
 

@@ -46,14 +46,14 @@ class FileBackupPolicyRepository
             e.id              = BackupPolicyId(data.getString("id", ""));
             e.tenantId        = t;
             e.instanceId      = ServiceInstanceId(data.getString("instanceId", ""));
-            e.retentionPeriod = j.getLong("retentionPeriod", 7);
+            e.retentionPeriod = data.getLong("retentionPeriod", 7);
             e.backupWindow    = data.getString("backupWindow", "");
-            e.lastBackupAt    = j.getLong("lastBackupAt", 0);
-            e.nextBackupAt    = j.getLong("nextBackupAt", 0);
+            e.lastBackupAt    = data.getLong("lastBackupAt", 0);
+            e.nextBackupAt    = data.getLong("nextBackupAt", 0);
             e.status          = data.getString("status", "enabled").to!BackupStatus;
             e.backupLocation  = data.getString("backupLocation", "");
             e.lastError       = data.getString("lastError", "");
-            e.createdAt       = j.getLong("createdAt", 0);
+            e.createdAt       = data.getLong("createdAt", 0);
             e.createdBy       = UserId(data.getString("createdBy", ""));
             e.updatedBy       = UserId(data.getString("updatedBy", ""));
             super.save(e);

@@ -65,7 +65,7 @@ class TenantUserController : ManageController {
     r.firstName = data.getString("firstName");
     r.lastName  = data.getString("lastName");
     r.role      = data.getString("role");
-    r.active    = j.getBoolean("active");
+    r.active    = data.getBoolean("active");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

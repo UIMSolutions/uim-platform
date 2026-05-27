@@ -50,10 +50,10 @@ class CleansingRuleController : ManageController {
       r.defaultValue = data.getString("defaultValue");
       r.lookupDataset = data.getString("lookupDataset");
       r.lookupField = data.getString("lookupField");
-      r.trimWhitespace = j.getBoolean("trimWhitespace");
-      r.normalizeCase = j.getBoolean("normalizeCase");
+      r.trimWhitespace = data.getBoolean("trimWhitespace");
+      r.normalizeCase = data.getBoolean("normalizeCase");
       r.caseMode = data.getString("caseMode");
-      r.removeDiacritics = j.getBoolean("removeDiacritics");
+      r.removeDiacritics = data.getBoolean("removeDiacritics");
       r.category = data.getString("category");
       r.priority = data.getInteger("priority");
 
@@ -122,10 +122,10 @@ class CleansingRuleController : ManageController {
       r.defaultValue = data.getString("defaultValue");
       r.lookupDataset = data.getString("lookupDataset");
       r.lookupField = data.getString("lookupField");
-      r.trimWhitespace = j.getBoolean("trimWhitespace");
-      r.normalizeCase = j.getBoolean("normalizeCase");
+      r.trimWhitespace = data.getBoolean("trimWhitespace");
+      r.normalizeCase = data.getBoolean("normalizeCase");
       r.caseMode = data.getString("caseMode");
-      r.removeDiacritics = j.getBoolean("removeDiacritics");
+      r.removeDiacritics = data.getBoolean("removeDiacritics");
       r.category = data.getString("category");
       r.priority = data.getInteger("priority");
 

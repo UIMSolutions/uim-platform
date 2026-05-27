@@ -42,9 +42,9 @@ struct RetentionPolicy {
     //
     // p.categories = j.getArray("categories").map!(c => toAuditCategory(c.getString)).array.toJson;
     p.status = data.getString("status").to!RetentionStatus;
-    p.isDefault = j.getBoolean("isDefault");
-    p.createdAt = j.getLong("createdAt");
-    p.updatedAt = j.getLong("updatedAt");
+    p.isDefault = data.getBoolean("isDefault");
+    p.createdAt = data.getLong("createdAt");
+    p.updatedAt = data.getLong("updatedAt");
     return p;
   }
 }

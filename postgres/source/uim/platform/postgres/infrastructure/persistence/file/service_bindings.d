@@ -50,12 +50,12 @@ class FileServiceBindingRepository
             e.name        = data.getString("name", "");
             e.status      = data.getString("status", "active").to!BindingStatus;
             e.bindingHost = data.getString("bindingHost", "");
-            e.bindingPort = cast(ushort) j.getLong("bindingPort", 5432);
+            e.bindingPort = cast(ushort) data.getLong("bindingPort", 5432);
             e.username    = data.getString("username", "");
             e.database    = data.getString("database", "");
             e.sslMode     = data.getString("sslMode", "require").to!SslMode;
-            e.expiresAt   = j.getLong("expiresAt", 0);
-            e.createdAt   = j.getLong("createdAt", 0);
+            e.expiresAt   = data.getLong("expiresAt", 0);
+            e.createdAt   = data.getLong("createdAt", 0);
             e.createdBy   = UserId(data.getString("createdBy", ""));
             e.updatedBy   = UserId(data.getString("updatedBy", ""));
             super.save(e);

@@ -45,7 +45,7 @@ class ThemeController : ManageController {
       r.logoUrl = data.getString("logoUrl");
       r.faviconUrl = data.getString("faviconUrl");
       r.customCss = data.getString("customCss");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = useCase.createTheme(r);
       if (result.isSuccess()) {
@@ -106,7 +106,7 @@ class ThemeController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.customCss = data.getString("customCss");
-      r.isDefault = j.getBoolean("isDefault");
+      r.isDefault = data.getBoolean("isDefault");
 
       auto result = useCase.updateTheme(r);
       if (result.isSuccess())

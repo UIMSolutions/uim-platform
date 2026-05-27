@@ -47,14 +47,14 @@ class FileServicePlanRepository
             p.name        = data.getString("name", "");
             p.description = data.getString("description", "");
             p.tier        = data.getString("tier", "basic").to!PlanTier;
-            p.memoryMb    = j.getLong("memoryMb", 256);
-            p.maxConnections = j.getLong("maxConnections", 1000);
-            p.haEnabled   = j.getBoolean("haEnabled", false);
-            p.persistenceEnabled = j.getBoolean("persistenceEnabled", false);
-            p.tlsEnabled  = j.getBoolean("tlsEnabled", true);
+            p.memoryMb    = data.getLong("memoryMb", 256);
+            p.maxConnections = data.getLong("maxConnections", 1000);
+            p.haEnabled   = data.getBoolean("haEnabled", false);
+            p.persistenceEnabled = data.getBoolean("persistenceEnabled", false);
+            p.tlsEnabled  = data.getBoolean("tlsEnabled", true);
             p.pricingUnit = data.getString("pricingUnit", "");
-            p.available   = j.getBoolean("available", true);
-            p.createdAt   = j.getLong("createdAt", 0);
+            p.available   = data.getBoolean("available", true);
+            p.createdAt   = data.getLong("createdAt", 0);
             super.save(p);
         }
     }
