@@ -30,7 +30,7 @@ class ExecutableController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateExecutableRequest r;
@@ -62,7 +62,7 @@ class ExecutableController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
@@ -96,7 +96,7 @@ class ExecutableController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Executableprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
@@ -126,7 +126,7 @@ class ExecutableController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Executableprecheck.id);
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 

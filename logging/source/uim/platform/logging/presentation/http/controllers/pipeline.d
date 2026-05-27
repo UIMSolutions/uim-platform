@@ -32,7 +32,7 @@ class PipelineController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreatePipelineRequest r;
       r.tenantId = tenantId;
@@ -70,7 +70,7 @@ class PipelineController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto pipelines = usecase.listPipelines(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -95,7 +95,7 @@ class PipelineController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Pipelineprecheck.id);
       auto p = usecase.getPipeline(tenantId, id);
       if (p.isNull) {
@@ -119,7 +119,7 @@ class PipelineController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Pipelineprecheck.id);
       auto j = req.json;
 
@@ -149,7 +149,7 @@ class PipelineController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto pipelineId = Pipelineprecheck.id);
       
       usecase.deletePipeline(tenantId, pipelineId);

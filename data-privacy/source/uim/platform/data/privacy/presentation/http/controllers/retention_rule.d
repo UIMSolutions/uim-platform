@@ -36,7 +36,7 @@ class RetentionRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateRetentionRuleRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class RetentionRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       RetentionRule[] items = purposeParam.length > 0 
@@ -83,7 +83,7 @@ class RetentionRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RetentionRuleId(precheck.id);
 
       auto entry = usecase.getRule(tenantId, id);
@@ -98,7 +98,7 @@ class RetentionRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       UpdateRetentionRuleRequest r;
       r.id = RetentionRuleId(precheck.id);
@@ -124,7 +124,7 @@ class RetentionRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RetentionRuleId(precheck.id);
 
       usecase.deleteRule(tenantId, id);

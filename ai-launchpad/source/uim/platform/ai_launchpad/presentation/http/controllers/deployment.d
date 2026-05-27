@@ -34,7 +34,7 @@ class DeploymentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -63,7 +63,7 @@ class DeploymentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
@@ -86,7 +86,7 @@ class DeploymentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -107,7 +107,7 @@ class DeploymentController : ManageController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
       auto j = req.json;
@@ -138,7 +138,7 @@ class DeploymentController : ManageController {
 
   protected void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -172,7 +172,7 @@ class DeploymentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Deploymentprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 

@@ -38,7 +38,7 @@ class DataRecordController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       auto r = CreateDataRecordRequest();
@@ -66,7 +66,7 @@ class DataRecordController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto record = usecase.getDataRecord(tenantId, id);
@@ -83,7 +83,7 @@ class DataRecordController : ManageController {
 
   override protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto datasetId = DatasetId(precheck.id);
       
       auto items = usecase.listDataRecords(tenantId, datasetId);
@@ -103,7 +103,7 @@ class DataRecordController : ManageController {
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataRecordId(precheck.id);
 
       auto result = usecase.validateDataRecord(tenantId, id);
@@ -125,7 +125,7 @@ class DataRecordController : ManageController {
 
   protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataRecordId(precheck.id);
       
       auto result = usecase.rejectDataRecord(tenantId, id);
@@ -147,7 +147,7 @@ class DataRecordController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataRecordId(precheck.id);
 
       auto result = usecase.deleteDataRecord(tenantId, id);

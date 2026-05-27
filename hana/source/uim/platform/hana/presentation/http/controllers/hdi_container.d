@@ -31,7 +31,7 @@ class HDIContainerController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateHDIContainerRequest r;
@@ -61,7 +61,7 @@ class HDIContainerController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto containers = usecase.listHDIContainers(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -88,7 +88,7 @@ class HDIContainerController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto c = usecase.getById(tenantId, id);
       if (c.isNull) {
@@ -118,7 +118,7 @@ class HDIContainerController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateHDIContainerRequest r;
@@ -146,7 +146,7 @@ class HDIContainerController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = HDIContainerprecheck.id);
 
       auto result = usecase.deleteHDIContainer(tenantId, id);

@@ -37,7 +37,7 @@ class ValidationRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateValidationRuleRequest();
       r.tenantId = tenantId;
@@ -77,7 +77,7 @@ class ValidationRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rules = usecase.listByTenant(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -94,7 +94,7 @@ class ValidationRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto rule = usecase.getById(tenantId, id);
       if (rule.isNull) {
@@ -110,7 +110,7 @@ class ValidationRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
       r.id = precheck.id;
@@ -152,9 +152,9 @@ class ValidationRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.deleteValidationRule(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

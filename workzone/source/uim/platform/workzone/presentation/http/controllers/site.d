@@ -36,7 +36,7 @@ class SiteController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateSiteRequest();
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class SiteController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto sites = useCase.listSites(tenantId);
       auto arr = sites.map!(s => s.toJson).array.toJson;
 
@@ -80,9 +80,9 @@ class SiteController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto s = useCase.getSite(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Site not found");
@@ -96,7 +96,7 @@ class SiteController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateSiteRequest();
       r.id = precheck.id;
@@ -117,9 +117,9 @@ class SiteController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteSite(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

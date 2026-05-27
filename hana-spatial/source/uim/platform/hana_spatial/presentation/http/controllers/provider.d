@@ -28,7 +28,7 @@ class ProviderController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateProviderRequest r;
       r.tenantId = tenantId;
@@ -60,7 +60,7 @@ class ProviderController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -83,7 +83,7 @@ class ProviderController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto item = usecase.getById(tenantId, id);
       if (item.isNull) {
@@ -98,7 +98,7 @@ class ProviderController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateProviderRequest r;
@@ -129,7 +129,7 @@ class ProviderController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)

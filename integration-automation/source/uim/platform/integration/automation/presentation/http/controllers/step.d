@@ -39,7 +39,7 @@ class StepController : ManageController {
 
   override protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
       auto steps = useCase.listSteps(tenantId, workflowId);
 
@@ -59,9 +59,9 @@ class StepController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto step = useCase.getStep(tenantId, id);
       if (step.isNull) {
         writeError(res, 404, "Step not found");
@@ -75,7 +75,7 @@ class StepController : ManageController {
 
   protected void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
@@ -94,9 +94,9 @@ class StepController : ManageController {
 
   protected void handlert(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto userId = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = useCase.startStep(tenantId, id, userId);
@@ -117,7 +117,7 @@ class StepController : ManageController {
 
   protected void handleplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = CompleteStepRequest();
@@ -144,7 +144,7 @@ class StepController : ManageController {
 
   protected void handlel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = FailStepRequest();
@@ -171,7 +171,7 @@ class StepController : ManageController {
 
   protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = SkipStepRequest();
@@ -198,7 +198,7 @@ class StepController : ManageController {
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = AssignStepRequest();

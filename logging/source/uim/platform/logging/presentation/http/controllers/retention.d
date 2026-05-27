@@ -32,7 +32,7 @@ class RetentionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateRetentionPolicyRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class RetentionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policies = usecase.listRetentionPolicies(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -89,7 +89,7 @@ class RetentionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policyId = RetentionPolicyprecheck.id);
       auto policy = usecase.getRetentionPolicy(tenantId, policyId);
       if (policy.isNull) {
@@ -114,7 +114,7 @@ class RetentionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policyId = RetentionPolicyprecheck.id);
       auto j = req.json;
 
@@ -145,7 +145,7 @@ class RetentionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policyId = RetentionPolicyprecheck.id);
       usecase.deleteRetentionPolicy(tenantId, policyId);
 

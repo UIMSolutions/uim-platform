@@ -33,7 +33,7 @@ class TranslationJobController : ManageController {
 
     protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             SubmitTranslationJobRequest r;
@@ -90,7 +90,7 @@ class TranslationJobController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TranslationJobprecheck.id);
             auto job = usecase.getJob(tenantId, id);
             if (job.isNull) {
@@ -111,7 +111,7 @@ class TranslationJobController : ManageController {
 
     protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             // Path is /api/v1/translation/jobs/{id}/cancel — extract id from second-to-last segment
             auto path = req.requestURI.to!string;
             auto parts = path.split("/");

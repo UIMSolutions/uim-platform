@@ -32,7 +32,7 @@ class DecisionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateDecisionRequest r;
@@ -98,7 +98,7 @@ class DecisionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Decisionprecheck.id);
             auto d = decisionUsecase.getDecision(tenantId, id);
@@ -129,7 +129,7 @@ class DecisionController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateDecisionRequest r;
@@ -160,7 +160,7 @@ class DecisionController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Decisionprecheck.id);
             auto result = decisionUsecase.deleteDecision(tenantId, id);

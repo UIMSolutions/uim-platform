@@ -33,7 +33,7 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     
     auto configs = useCase.listAuditConfigs(tenantId);
     auto arr = configs.map!(c => c.toJson).array.toJson;
@@ -85,7 +85,7 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto cfg = useCase.getAuditConfig(tenantId);
     if (cfg.isNull) {
@@ -99,7 +99,7 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto j = req.json;
     auto r = UpdateAuditConfigRequest();
@@ -140,7 +140,7 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AuditConfigId(precheck.id);
 
       useCase.deleteAuditConfig(tenantId, id);

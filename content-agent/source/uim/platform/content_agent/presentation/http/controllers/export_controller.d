@@ -34,7 +34,7 @@ class ExportController : PlatformController {
 
   protected void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = StartExportRequest();
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class ExportController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto jobs = usecase.listExportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -80,7 +80,7 @@ class ExportController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto job = usecase.getExportJob(id);
       if (job.isNull) {

@@ -37,7 +37,7 @@ class TileController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateTileRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("catalogId"), j.getString("title"), j.getString("subtitle"),
@@ -63,7 +63,7 @@ class TileController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto tiles = useCase.listTiles(tenantId);
       auto response = Json.emptyObject
       .set("totalResults", tiles.length)
@@ -77,7 +77,7 @@ class TileController : ManageController {
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto query = req.headers.get("X-Search-Query", "");
       auto tiles = useCase.searchTiles(tenantId, query);
       auto response = Json.emptyObject;

@@ -38,7 +38,7 @@ class TargetSystemController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateTargetSystemRequest();
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class TargetSystemController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listTargetSystems(tenantId);
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -80,9 +80,9 @@ class TargetSystemController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto sys = usecase.getTargetSystem(tenantId, id);
       if (sys.isNull) {
         writeError(res, 404, "Target system not found");
@@ -96,7 +96,7 @@ class TargetSystemController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateTargetSystemRequest();
@@ -123,9 +123,9 @@ class TargetSystemController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -144,9 +144,9 @@ class TargetSystemController : ManageController {
 
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -163,9 +163,9 @@ class TargetSystemController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.deleteTargetSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

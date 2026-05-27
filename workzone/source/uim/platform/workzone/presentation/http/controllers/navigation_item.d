@@ -35,7 +35,7 @@ class NavigationItemController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateNavigationItemRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class NavigationItemController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(tenantId, siteId);
       auto arr = items.map!(n => n.toJson).array.toJson;
@@ -84,9 +84,9 @@ class NavigationItemController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto n = useCase.getNavigationItem(tenantId, id);
       if (n.isNull) {
         writeError(res, 404, "Navigation item not found");
@@ -100,7 +100,7 @@ class NavigationItemController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateNavigationItemRequest();
@@ -124,9 +124,9 @@ class NavigationItemController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteNavigationItem(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

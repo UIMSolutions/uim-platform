@@ -28,7 +28,7 @@ class OverviewController : PlatformController {
 
   override protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
       if (summary.isNull) {
         writeError(res, 404, "Overview not available");

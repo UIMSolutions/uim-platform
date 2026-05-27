@@ -67,7 +67,7 @@ class QueueController : PlatformController {
 
     override protected void handleDeleteEntry(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto result   = _usecase.deleteQueueEntry(tenantId, id);
             if (result.success)

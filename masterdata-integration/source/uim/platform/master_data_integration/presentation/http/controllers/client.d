@@ -35,7 +35,7 @@ class ClientController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateClientRequest r;
       r.tenantId = tenantId;
@@ -71,7 +71,7 @@ class ClientController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto status = req.params.get("status", "");
       auto type = req.params.get("type", "");
 
@@ -98,7 +98,7 @@ class ClientController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto client = usecase.getClient(id);
       if (client.isNull) {
@@ -113,7 +113,7 @@ class ClientController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateClientRequest r;
@@ -143,7 +143,7 @@ class ClientController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteClient(id);
       if (result.hasError)
@@ -160,7 +160,7 @@ class ClientController : ManageController {
 
   protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.connect(id);
       if (result.success)
@@ -174,7 +174,7 @@ class ClientController : ManageController {
 
   protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.disconnect(id);
       if (result.success)

@@ -37,7 +37,7 @@ class PractitionerController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreatePractitionerRequest r;
       r.tenantId        = tenantId;
@@ -57,7 +57,7 @@ class PractitionerController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto practitioners = usecase.listPractitioners(tenantId);
       auto entries = Json.emptyArray;
       foreach (p; practitioners) entries ~= p.toJson();
@@ -73,7 +73,7 @@ class PractitionerController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Practitionerprecheck.id);
       auto p = usecase.getPractitioner(tenantId, id);
       if (p.isNull) { writeFhirError(res, 404, "Practitioner not found"); return; }
@@ -85,7 +85,7 @@ class PractitionerController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Practitionerprecheck.id);
       auto j = req.json;
       UpdatePractitionerRequest r;
@@ -105,7 +105,7 @@ class PractitionerController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Practitionerprecheck.id);
       auto result = usecase.deletePractitioner(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

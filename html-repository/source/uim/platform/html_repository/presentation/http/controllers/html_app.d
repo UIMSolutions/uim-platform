@@ -31,7 +31,7 @@ class HtmlAppController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateHtmlAppRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class HtmlAppController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -81,9 +81,9 @@ class HtmlAppController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "App not found");
         return;
@@ -114,10 +114,10 @@ class HtmlAppController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "App not found");
         return;
@@ -144,9 +144,9 @@ class HtmlAppController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "App not found");
         return;

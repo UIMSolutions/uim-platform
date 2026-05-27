@@ -32,7 +32,7 @@ class AppFileController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UploadAppFileRequest r;
@@ -58,7 +58,7 @@ class AppFileController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto versionId = getString(req.json, "versionId");
       if (versionId.isEmpty)
         versionId = req.headers.get("X-Version-Id", "");
@@ -88,9 +88,9 @@ class AppFileController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppFileprecheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (isNull) {
         writeError(res, 404, "File not found");
         return;
@@ -121,11 +121,11 @@ class AppFileController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto id = AppFileprecheck.id);
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "File not found");
         return;
@@ -150,7 +150,7 @@ class AppFileController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppFileprecheck.id);
       if (id.isNull) {
         writeError(res, 404, "File not found");

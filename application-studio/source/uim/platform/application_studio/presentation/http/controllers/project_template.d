@@ -51,7 +51,7 @@ class ProjectTemplateController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(precheck.id);
 
@@ -68,7 +68,7 @@ class ProjectTemplateController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             ProjectTemplateDTO dto;
             dto.projectTemplateId = ProjectTemplateId(precheck.id);
@@ -100,7 +100,7 @@ class ProjectTemplateController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
 
@@ -132,7 +132,7 @@ class ProjectTemplateController : ManageController {
         try {
             auto path = req.requestURI.to!string;
             auto id = ProjectTemplateId(precheck.id);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto result = usecase.deleteProjectTemplate(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

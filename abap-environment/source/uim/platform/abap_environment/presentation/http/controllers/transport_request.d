@@ -39,7 +39,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
     auto requests = usecase.listTransportRequests(tenantId, systemId);
@@ -133,7 +133,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = TransportRequestId(precheck.id);
     auto result = usecase.releaseTransportRequest(tenantId, id);
     if (result.hasError)
@@ -156,7 +156,7 @@ class TransportRequestController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto requestId = TransportRequestId(j.getString("requestId"));
     if (requestId.isNull)

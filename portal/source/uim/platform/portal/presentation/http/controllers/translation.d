@@ -35,7 +35,7 @@ class TranslationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateTranslationRequest(tenantId,
         j.getString("resourceType"), j.getString("resourceId"),
@@ -57,7 +57,7 @@ class TranslationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto language = req.headers.get("X-Language", "");
       auto resourceType = req.headers.get("X-Resource-Type", "");
       auto resourceId = req.headers.get("X-Resource-Id", "");
@@ -78,7 +78,7 @@ class TranslationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
       auto translation = useCase.getTranslation(tenantId, translationId);
       if (translation == Translation.init) {
@@ -93,7 +93,7 @@ class TranslationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateTranslationRequest(translationId, j.getString("value"),);
@@ -110,7 +110,7 @@ class TranslationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
       auto error = useCase.deleteTranslation(tenantId, translationId);
       if (error.length > 0)

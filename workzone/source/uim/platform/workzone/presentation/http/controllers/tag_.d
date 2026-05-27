@@ -35,7 +35,7 @@ class TagController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateTagRequest();
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class TagController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto tags = useCase.listTags(tenantId);
       auto arr = tags.map!(t => t.toJson).array.toJson;
 
@@ -80,9 +80,9 @@ class TagController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto t = useCase.getTag(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Tag not found");
@@ -97,7 +97,7 @@ class TagController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateTagRequest();
@@ -123,9 +123,9 @@ class TagController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteTag(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

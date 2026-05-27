@@ -46,7 +46,7 @@ class ProvisioningJobController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = ProvisioningJobId(precheck.id);
             auto e = usecase.getJob(tenantId, id);
@@ -57,7 +57,7 @@ class ProvisioningJobController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             ProvisioningJobDTO dto;
             dto.jobId = ProvisioningJobId(precheck.id);
@@ -81,7 +81,7 @@ class ProvisioningJobController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = ProvisioningJobId(precheck.id);
             auto result = usecase.deleteJob(tenantId, id);
@@ -92,7 +92,7 @@ class ProvisioningJobController : ManageController {
 
     private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             // path: /api/v1/ips/provisioning-jobs/{id}/start
             auto parts = req.requestURI.to!string.split("/");
             string id = parts.length >= 6 ? parts[$ - 2] : "";
@@ -105,7 +105,7 @@ class ProvisioningJobController : ManageController {
 
     private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto parts = req.requestURI.to!string.split("/");
             string id = parts.length >= 6 ? parts[$ - 2] : "";
             if (id.length == 0) { writeError(res, 400, "Missing job ID"); return; }

@@ -36,7 +36,7 @@ class ServiceBindingController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = tenantId;
@@ -70,7 +70,7 @@ class ServiceBindingController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto nsId = NamespaceId(req.params.get("namespaceId"));
       auto instId = ServiceInstanceId(req.params.get("serviceInstanceId"));
 
@@ -95,7 +95,7 @@ class ServiceBindingController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto b = usecase.getBinding(ServiceBindingId(tenantId, id));
       if (b.isNull) {
@@ -111,7 +111,7 @@ class ServiceBindingController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceBindingId(tenantId, precheck.id);
       auto j = req.json;
       UpdateServiceBindingRequest r;
@@ -135,7 +135,7 @@ class ServiceBindingController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceBindingId(tenantId, precheck.id);
 
       auto result = usecase.deleteBinding(tenantId, id);

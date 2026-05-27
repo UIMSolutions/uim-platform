@@ -33,7 +33,7 @@ class TaskProviderController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateTaskProviderRequest r;
             r.tenantId = tenantId;
@@ -92,7 +92,7 @@ class TaskProviderController : ManageController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith("/sync")) return;
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = extractIdFromPath(path);
             auto p = usecase.getById(tenantId, id);
             if (p.isNull) {
@@ -138,11 +138,11 @@ class TaskProviderController : ManageController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.activate(tenantId, id);
             if (result.hasError)
@@ -162,11 +162,11 @@ class TaskProviderController : ManageController {
 
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.deactivate(tenantId, id);
             if (result.hasError)
@@ -186,11 +186,11 @@ class TaskProviderController : ManageController {
 
     protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 5]; // remove "/sync"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.sync(tenantId, id);
             if (result.hasError)
@@ -211,7 +211,7 @@ class TaskProviderController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto result = usecase.deleteTaskProvider(tenantId, TaskProviderId(id));
             if (result.hasError)

@@ -48,7 +48,7 @@ class ProjectMemberController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = ProjectMemberId(precheck.id);
 

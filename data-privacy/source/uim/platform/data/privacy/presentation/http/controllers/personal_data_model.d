@@ -34,7 +34,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreatePersonalDataModelRequest r;
@@ -66,7 +66,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
 
       PersonalDataModel[] items = catParam.length > 0
@@ -88,7 +88,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listSpecialCategories(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -106,7 +106,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PersonalDataModelId(precheck.id);
 
       auto entry = usecase.getModel(tenantId, id);
@@ -122,7 +122,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdatePersonalDataModelRequest r;
@@ -154,7 +154,7 @@ class PersonalDataModelController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PersonalDataModelId(precheck.id);
  
       usecase.deleteModel(tenantId, id);

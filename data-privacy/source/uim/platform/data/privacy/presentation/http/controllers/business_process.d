@@ -32,7 +32,7 @@ class BusinessProcessController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateBusinessProcessRequest r;
       r.tenantId = tenantId;
@@ -58,7 +58,7 @@ class BusinessProcessController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listProcesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -75,7 +75,7 @@ class BusinessProcessController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BusinessProcessId(precheck.id);
 
       auto entry = usecase.getProcess(tenantId, id);
@@ -90,7 +90,7 @@ class BusinessProcessController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       
       UpdateBusinessProcessRequest r;
@@ -117,7 +117,7 @@ class BusinessProcessController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BusinessProcessId(precheck.id);
 
       usecase.deleteProcess(tenantId, id);

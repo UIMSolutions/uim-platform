@@ -29,7 +29,7 @@ class UserAssignmentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateUserAssignmentRequest r;
       r.tenantId = tenantId;
@@ -50,7 +50,7 @@ class UserAssignmentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto userId = UserId(req.params.get("userId", ""));
 
       auto assignments =
@@ -72,7 +72,7 @@ class UserAssignmentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = UserAssignmentId(extractIdFromPath(req));
 
       auto ua = usecase.getUserAssignment(tenantId, id);
@@ -93,7 +93,7 @@ class UserAssignmentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = UserAssignmentId(extractIdFromPath(req));
 
       auto result = usecase.deleteUserAssignment(tenantId, id);

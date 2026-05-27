@@ -29,7 +29,7 @@ class EncryptionController : PlatformController {
   }
 
   protected Json generateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
 
@@ -61,7 +61,7 @@ class EncryptionController : PlatformController {
   }
 
   protected Json encryptHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
 
@@ -93,7 +93,7 @@ class EncryptionController : PlatformController {
   }
 
   protected Json decryptHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
 

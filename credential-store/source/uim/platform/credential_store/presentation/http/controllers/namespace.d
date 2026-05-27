@@ -32,7 +32,7 @@ class NamespaceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateNamespaceRequest r;
@@ -59,7 +59,7 @@ class NamespaceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto namespaces = usecase.listNamespaces(tenantId);
       auto jarr = Json.emptyArray;
@@ -84,7 +84,7 @@ class NamespaceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Namespaceprecheck.id);
 
       auto ns = usecase.getNamespace(tenantId, id);
@@ -110,7 +110,7 @@ class NamespaceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Namespaceprecheck.id);
       auto j = req.json;
 
@@ -137,7 +137,7 @@ class NamespaceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Namespaceprecheck.id);
 
       auto result = usecase.deleteNamespace(tenantId, id);

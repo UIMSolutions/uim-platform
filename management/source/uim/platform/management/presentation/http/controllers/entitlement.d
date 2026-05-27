@@ -35,7 +35,7 @@ class EntitlementController : ManageController {
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       AssignEntitlementRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -64,7 +64,7 @@ class EntitlementController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto dirId = req.params.get("directoryId");
@@ -91,7 +91,7 @@ class EntitlementController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto ent = usecase.getEntitlement(tenantId, id);
       if (ent.isNull) {
@@ -105,7 +105,7 @@ class EntitlementController : ManageController {
 
   override protected void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EntitlementId(extractId(req.requestURI));
 
       auto data = precheck.data;
@@ -126,7 +126,7 @@ class EntitlementController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EntitlementId(extractId(req.requestURI));
 
       auto result = usecase.revokeEntitlement(tenantId, id);
@@ -140,7 +140,7 @@ class EntitlementController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EntitlementId(extractId(req.requestURI));
 
       auto result = usecase.deleteEntitlement(tenantId, id);

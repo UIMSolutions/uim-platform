@@ -36,7 +36,7 @@ class FragmentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFragmentRequest r;
       r.tenantId = tenantId;
@@ -76,7 +76,7 @@ class FragmentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto fragments = usecase.listBySubaccount(tenantId, subaccountId);
       auto arr = fragments.map!(f => f.toJson).array.toJson;
@@ -94,7 +94,7 @@ class FragmentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationFragmentId(precheck.id);
       auto f = usecase.getFragment(tenantId, id);
       if (f.isNull) {
@@ -109,7 +109,7 @@ class FragmentController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationFragmentId(precheck.id);
       auto j = req.json;
       UpdateFragmentRequest r;
@@ -147,7 +147,7 @@ class FragmentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationFragmentId(precheck.id);
 
       auto result = usecase.deleteFragment(tenantId, id);

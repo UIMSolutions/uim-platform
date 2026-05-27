@@ -35,7 +35,7 @@ class ProfileController : PlatformController {
 
   protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = ProfileDatasetRequest();
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class ProfileController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto profiles = usecase.listByTenant(tenantId);
       auto arr = profiles.map!(p => p.toJson).array.toJson;
@@ -81,9 +81,9 @@ class ProfileController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto profile = usecase.getById(tenantId, id);
       if (profile.isNull) {
         writeError(res, 404, "Data profile not found");

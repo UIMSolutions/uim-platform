@@ -25,7 +25,7 @@ class BusinessPurposeController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateBusinessPurposeRequest r;
@@ -81,7 +81,7 @@ class BusinessPurposeController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = BusinessPurposeControllerprecheck.id);
 
             auto bp = usecase.getBusinessPurpose(tenantId, id);
@@ -104,7 +104,7 @@ class BusinessPurposeController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = BusinessPurposeControllerprecheck.id);
 
             auto j = req.json;
@@ -141,7 +141,7 @@ class BusinessPurposeController : ManageController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto path = req.requestURI.to!string;
             // path: /api/v1/data-retention/business-purposes/{id}/activate
@@ -169,7 +169,7 @@ class BusinessPurposeController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = BusinessPurposeControllerprecheck.id);
             auto result = usecase.deleteBusinessPurpose(tenantId, id);
 

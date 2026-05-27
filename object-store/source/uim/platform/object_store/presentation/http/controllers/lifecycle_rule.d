@@ -38,7 +38,7 @@ class LifecycleRuleController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     auto request = CreateLifecycleRuleRequest();

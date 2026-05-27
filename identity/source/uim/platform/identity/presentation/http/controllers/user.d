@@ -43,7 +43,7 @@ class UserController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Userprecheck.id);
             auto e = usecase.getUser(tenantId, id);
             if (e.isNull) { writeError(res, 404, "User not found"); return; }
@@ -53,7 +53,7 @@ class UserController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             UserDTO dto;
             dto.userId = UserId(precheck.id);
@@ -78,7 +78,7 @@ class UserController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             UserDTO dto;
             dto.userId = Userprecheck.id);
@@ -100,7 +100,7 @@ class UserController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Userprecheck.id);
             auto result = usecase.deleteUser(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

@@ -34,7 +34,7 @@ class SchemaController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateSchemaRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), parseSchemaAttributes(j),);
@@ -58,7 +58,7 @@ class SchemaController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto schemas = useCase.listSchemas(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(schemas.length);

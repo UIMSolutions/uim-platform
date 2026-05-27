@@ -41,7 +41,7 @@ class AppController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
@@ -76,7 +76,7 @@ class AppController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto apps = useCase.listApps(tenantId);
 
       auto arr = apps.map!(a => a.toJson).array.toJson;
@@ -94,7 +94,7 @@ class AppController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto app = useCase.getApp(tenantId, appId);
       if (app.isNull) {
         writeError(res, 404, "Application not found");
@@ -144,7 +144,7 @@ class AppController : ManageController {
   protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.startApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -162,7 +162,7 @@ class AppController : ManageController {
   protected void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.stopApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -179,7 +179,7 @@ class AppController : ManageController {
   protected void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto appId = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.restartApp(tenantId, appId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -218,9 +218,9 @@ class AppController : ManageController {
 
   protected void handleEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto env = useCase.getEnvironment(tenantId, id);
 
       auto resp = Json.emptyObject
@@ -235,9 +235,9 @@ class AppController : ManageController {
 
   protected void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
@@ -256,9 +256,9 @@ class AppController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

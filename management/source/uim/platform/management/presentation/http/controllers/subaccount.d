@@ -37,7 +37,7 @@ class SubaccountController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateSubaccountRequest r;
       r.tenantId = tenantId;
@@ -69,7 +69,7 @@ class SubaccountController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto gaId = req.params.get("globalAccountId");
       auto dirId = req.params.get("directoryId");
       auto region = req.params.get("region");
@@ -96,7 +96,7 @@ class SubaccountController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto s = usecase.getById(tenantId, id);
       if (s.isNull) {
@@ -110,7 +110,7 @@ class SubaccountController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto data = precheck.data;
       UpdateSubaccountRequest r;
@@ -135,7 +135,7 @@ class SubaccountController : ManageController {
 
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto data = precheck.data;
       MoveSubaccountRequest r;
@@ -155,7 +155,7 @@ class SubaccountController : ManageController {
 
   protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto result = usecase.suspendSubaccount(tenantId, id);
       if (result.success)
@@ -168,7 +168,7 @@ class SubaccountController : ManageController {
 
   protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto result = usecase.reactivateSubaccount(tenantId, id);
       if (result.success)
@@ -181,7 +181,7 @@ class SubaccountController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubaccountId(extractId(req.requestURI));
       auto result = usecase.deleteSubaccount(tenantId, id);
       if (result.success)

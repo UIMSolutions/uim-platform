@@ -32,7 +32,7 @@ class DeviceRegistrationController : ManageController {
 
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RegisterDeviceRequest r;
       r.tenantId = tenantId;
@@ -60,7 +60,7 @@ class DeviceRegistrationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
@@ -84,7 +84,7 @@ class DeviceRegistrationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.get(id);
       if (result.hasError)
@@ -112,7 +112,7 @@ class DeviceRegistrationController : ManageController {
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto status = j.getString("status");
@@ -133,7 +133,7 @@ class DeviceRegistrationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
       if (result.hasError)

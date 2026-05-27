@@ -42,7 +42,7 @@ class MessageClientController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getClient(tenantId, MessageClientId(id));
             if (e.isNull) { writeError(res, 404, "Message client not found"); return; }
@@ -54,7 +54,7 @@ class MessageClientController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             MessageClientDTO dto;
             dto.clientId           = MessageClientId(precheck.id);
@@ -77,7 +77,7 @@ class MessageClientController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto clientId = MessageClientprecheck.id);
             auto j = req.json;
             MessageClientDTO dto;
@@ -98,7 +98,7 @@ class MessageClientController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = MessageClientprecheck.id);
             auto result = usecase.deleteClient(tenantId, id);
             if (result.hasError)

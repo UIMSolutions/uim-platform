@@ -32,7 +32,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateWorkspaceRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto workspaces = usecase.listWorkspaces(tenantId);
 
@@ -75,7 +75,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Workspaceprecheck.id);
 
       auto w = usecase.getWorkspace(tenantId, id);
@@ -92,7 +92,7 @@ class WorkspaceController : ManageController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Workspaceprecheck.id);
       auto j = req.json;
 
@@ -119,7 +119,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Workspaceprecheck.id);
 
       auto result = usecase.deleteWorkspace(tenantId, id);

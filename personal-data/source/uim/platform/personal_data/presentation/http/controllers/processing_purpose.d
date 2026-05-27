@@ -30,7 +30,7 @@ class ProcessingPurposeController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateProcessingPurposeRequest r;
             r.tenantId = tenantId;

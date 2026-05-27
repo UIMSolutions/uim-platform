@@ -39,7 +39,7 @@ class SpaceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateSpaceRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class SpaceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto spaces = useCase.listSpaces(tenantId);
       auto arr = spaces.map!(s => s.toJson).array.toJson;
@@ -85,9 +85,9 @@ class SpaceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SpaceId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto space = useCase.getSpace(tenantId, id);
       if (space.isNull) {
         writeError(res, 404, "Space not found");
@@ -102,7 +102,7 @@ class SpaceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SpaceId(precheck.id);
       auto j = req.json;
       auto r = UpdateSpaceRequest();
@@ -129,9 +129,9 @@ class SpaceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SpaceId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteSpace(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

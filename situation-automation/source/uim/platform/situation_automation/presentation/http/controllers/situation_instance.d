@@ -33,7 +33,7 @@ class SituationInstanceController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateSituationInstanceRequest r;
@@ -103,7 +103,7 @@ class SituationInstanceController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = SituationInstanceprecheck.id);
 
             auto i = usecase.getSituationInstance(tenantId, id);
@@ -145,7 +145,7 @@ class SituationInstanceController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = SituationInstanceprecheck.id);
             auto j = req.json;
 
@@ -175,7 +175,7 @@ class SituationInstanceController : ManageController {
     protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.string : lastIndexOf;
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto path = req.requestURI.to!string;
             auto resolveIdx = lastIndexOf(path, "/resolve");
@@ -214,7 +214,7 @@ class SituationInstanceController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = SituationInstanceprecheck.id);
             

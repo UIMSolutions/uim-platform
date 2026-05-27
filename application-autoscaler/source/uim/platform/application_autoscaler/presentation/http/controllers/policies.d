@@ -101,7 +101,7 @@ class ScalingPolicyController : ManageController {
   // GET /api/v1/policies
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policies = usecase.listPolicies(tenantId);
       auto arr = Json.emptyArray;
       foreach (p; policies) arr ~= p.toJson();
@@ -117,7 +117,7 @@ class ScalingPolicyController : ManageController {
   // GET /api/v1/policies/{id}
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
       auto p = usecase.getPolicy(tenantId, id);
       if (p.isNull) {
@@ -133,7 +133,7 @@ class ScalingPolicyController : ManageController {
   // PUT /api/v1/policies/{id}
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
       auto j = req.json;
 
@@ -171,7 +171,7 @@ class ScalingPolicyController : ManageController {
   // DELETE /api/v1/policies/{id}
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScalingPolicyId(extractIdFromPath(req));
       auto result = usecase.deletePolicy(tenantId, id);
       if (result.success)

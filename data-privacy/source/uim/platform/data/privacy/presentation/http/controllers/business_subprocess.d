@@ -32,7 +32,7 @@ class BusinessSubprocessController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateBusinessSubprocessRequest r;
@@ -59,7 +59,7 @@ class BusinessSubprocessController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listSubprocesses(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class BusinessSubprocessController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BusinessSubprocessId(precheck.id);
 
       auto entry = usecase.getSubprocess(tenantId, id);
@@ -91,7 +91,7 @@ class BusinessSubprocessController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateBusinessSubprocessRequest r;
@@ -118,7 +118,7 @@ class BusinessSubprocessController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BusinessSubprocessId(precheck.id);
 
       usecase.deleteSubprocess(tenantId, id);

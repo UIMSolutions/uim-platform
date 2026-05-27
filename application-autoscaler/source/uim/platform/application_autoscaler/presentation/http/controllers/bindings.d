@@ -64,7 +64,7 @@ class AppBindingController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppBindingId(extractIdFromPath(req));
 
       auto b = usecase.getBinding(tenantId, id);
@@ -80,7 +80,7 @@ class AppBindingController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppBindingId(extractIdFromPath(req));
       auto result = usecase.deleteBinding(tenantId, id);
       if (result.success)
@@ -94,7 +94,7 @@ class AppBindingController : ManageController {
 
   protected void handleAttachPolicy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto bindingId = AppBindingId(extractIdFromPath(req));
       auto j = req.json;
       auto policyId = j.getString("policy_id");

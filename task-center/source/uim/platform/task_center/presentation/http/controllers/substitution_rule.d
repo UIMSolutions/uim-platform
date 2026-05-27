@@ -32,7 +32,7 @@ class SubstitutionRuleController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
@@ -96,7 +96,7 @@ class SubstitutionRuleController : ManageController {
             if (path.endsWith("/activate") || path.endsWith("/deactivate"))
                 return;
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = extractIdFromPath(path);
             auto r = usecase.getById(tenantId, id);
             if (r.isNull) {
@@ -111,7 +111,7 @@ class SubstitutionRuleController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = SubstitutionRuleprecheck.id);
             auto j = req.json;
@@ -147,7 +147,7 @@ class SubstitutionRuleController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = SubstitutionRuleId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.activateSubstitutionRule(tenantId, id);
             if (result.hasError)
@@ -167,7 +167,7 @@ class SubstitutionRuleController : ManageController {
 
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = SubstitutionRuleId(extractIdFromPath(stripped));
@@ -190,7 +190,7 @@ class SubstitutionRuleController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {            
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = SubstitutionRuleprecheck.id);
             auto result = usecase.deleteSubstitutionRule(tenantId, id);
             if (result.hasError)

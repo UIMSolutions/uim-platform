@@ -35,7 +35,7 @@ class TenantController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateTenantRequest(j.getString("name"),
         j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);

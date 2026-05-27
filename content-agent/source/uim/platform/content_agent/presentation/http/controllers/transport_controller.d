@@ -36,7 +36,7 @@ class TransportController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateTransportRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class TransportController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto transports = usecase.listTransportRequests(tenantId);
       auto arr = transports.map!(t => t.toJson).array.toJson;
@@ -84,7 +84,7 @@ class TransportController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tr = usecase.getTransportRequest(id);
       if (tr.isNull) {
@@ -99,7 +99,7 @@ class TransportController : ManageController {
 
   protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = ReleaseTransportRequest();
       r.requestId = j.getString("requestId");
@@ -125,7 +125,7 @@ class TransportController : ManageController {
 
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto requestId = j.getString("requestId");
 

@@ -29,7 +29,7 @@ class TaskAttachmentController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateTaskAttachmentRequest r;
             r.tenantId = tenantId;
@@ -84,7 +84,7 @@ class TaskAttachmentController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskAttachmentprecheck.id);
             
             auto a = usecase.getById(tenantId, id);
@@ -100,7 +100,7 @@ class TaskAttachmentController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskAttachmentprecheck.id);
 
             auto result = usecase.deleteTaskAttachment(tenantId, id);

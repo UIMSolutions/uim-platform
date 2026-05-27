@@ -42,7 +42,7 @@ class MonitoringController : PlatformController {
 
   override protected void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto logs = usecase.listLogs(tenantId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -60,7 +60,7 @@ class MonitoringController : PlatformController {
 
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto response = Json.emptyObject

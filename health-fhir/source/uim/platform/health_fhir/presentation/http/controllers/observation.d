@@ -37,7 +37,7 @@ class ObservationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateObservationRequest r;
       r.tenantId        = tenantId;
@@ -61,7 +61,7 @@ class ObservationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       Observation[] observations;
       auto patientParam = req.query.get("subject", "");
       if (patientParam.length > 0)
@@ -83,7 +83,7 @@ class ObservationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Observationprecheck.id);
       auto o = usecase.getObservation(tenantId, id);
       if (o.isNull) { writeFhirError(res, 404, "Observation not found"); return; }
@@ -95,7 +95,7 @@ class ObservationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Observationprecheck.id);
       auto j = req.json;
       
@@ -120,7 +120,7 @@ class ObservationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Observationprecheck.id);
       auto result = usecase.deleteObservation(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

@@ -118,7 +118,6 @@ class DeploymentController : ManageController {
 
         auto responseData = Json.emptyObject.set("id", id);
         return successResponse("Deployment updated successfully", "Updated", 200, responseData);
-
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {

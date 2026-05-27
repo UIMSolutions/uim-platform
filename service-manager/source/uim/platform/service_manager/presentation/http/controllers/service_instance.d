@@ -46,7 +46,7 @@ class ServiceInstanceController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceInstanceId(id));
             if (e.isNull) { writeError(res, 404, "Service instance not found"); return; }
@@ -65,7 +65,7 @@ class ServiceInstanceController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceInstanceRequest r;
             r.name = j.getString("name");

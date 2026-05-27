@@ -32,7 +32,7 @@ class InstanceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateInstanceRequest r;
       r.tenantId = tenantId;
@@ -72,7 +72,7 @@ class InstanceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto instances = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -103,7 +103,7 @@ class InstanceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto instance = usecase.getById(tenantId, id);
       if (instance.isNull) {
@@ -210,7 +210,7 @@ class InstanceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Instanceprecheck.id);
       auto result = usecase.deleteInstance(id);
       if (result.hasError)

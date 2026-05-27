@@ -37,7 +37,7 @@ class ResourceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RegisterResourceRequest r;
       r.tenantId = tenantId;
@@ -70,7 +70,7 @@ class ResourceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resources = usecase.listResources(tenantId);
 
       auto arr = resources.map!(resource => resource.toJson).array.toJson;
@@ -88,7 +88,7 @@ class ResourceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MonitoredResourceId(precheck.id);
 
       if (!usecase.existsResource(tenantId, id)) {
@@ -105,7 +105,7 @@ class ResourceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MonitoredResourceId(precheck.id);
       auto j = req.json;
 
@@ -137,7 +137,7 @@ class ResourceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MonitoredResourceId(precheck.id);
 
       auto result = usecase.deleteMonitoredResource(tenantId, id);

@@ -35,7 +35,7 @@ class DistributionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDistributionModelRequest r;
       r.tenantId = tenantId;
@@ -68,7 +68,7 @@ class DistributionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto status = req.params.get("status", "");
 
       DistributionModel[] models;
@@ -92,7 +92,7 @@ class DistributionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto model = usecase.getModel(id);
       if (model.isNull) {
@@ -107,7 +107,7 @@ class DistributionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateDistributionModelRequest r;
@@ -138,7 +138,7 @@ class DistributionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteModel(id);
       if (result.hasError)
@@ -157,7 +157,7 @@ class DistributionController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.activate(id);
       if (result.hasError)
@@ -176,7 +176,7 @@ class DistributionController : ManageController {
 
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deactivate(id);
       if (result.success)

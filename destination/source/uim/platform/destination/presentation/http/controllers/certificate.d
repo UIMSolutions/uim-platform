@@ -32,10 +32,17 @@ class CertificateController : ManageController {
     router.post("/api/v1/certificates/validate/*", &handleValidate);
   }
 
+  protected Json uploadHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+  }
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
-      auto j = req.json;
+      auto tenantId = precheck.tenantId;
+
+      auto data = precheck.data;
       UploadCertificateRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
@@ -48,8 +55,8 @@ class CertificateController : ManageController {
       r.subject = j.getString("subject");
       r.issuer = j.getString("issuer");
       r.serialNumber = j.getString("serialNumber");
-      r.validFrom = jsonLong(j, "validFrom");
-      r.validTo = jsonLong(j, "validTo");
+      r.validFrom = j.getLong("validFrom");
+      r.validTo = j.getLong("validTo");
       r.uploadedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.upload(r);
@@ -92,7 +99,7 @@ class CertificateController : ManageController {
 
   protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto now = Clock.currTime().toUnixTime();
       auto thirtyDays = now + 30 * 86_400;
@@ -183,7 +190,7 @@ class CertificateController : ManageController {
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = CertificateId(precheck.id);
       auto result = usecase.validateCertificate(tenantId, id);
 

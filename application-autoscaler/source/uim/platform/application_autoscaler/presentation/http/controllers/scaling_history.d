@@ -28,7 +28,7 @@ class ScalingHistoryController : ManageController {
   // GET /api/v1/apps/{appId}/scaling-history
   override protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto appId = AppId(extractIdFromPath(req));
       long since = 0;
       foreach (kv; req.query.byKeyValue()) {
@@ -52,7 +52,7 @@ class ScalingHistoryController : ManageController {
   // GET /api/v1/scaling-history/{id}
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScalingHistoryId(extractIdFromPath(req));
 
       auto evt = usecase.getEvent(tenantId, id);

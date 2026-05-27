@@ -32,7 +32,7 @@ class ArchiveRequestController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateArchiveRequest r;
@@ -61,7 +61,7 @@ class ArchiveRequestController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listRequests(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -78,7 +78,7 @@ class ArchiveRequestController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ArchiveRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
@@ -93,7 +93,7 @@ class ArchiveRequestController : ManageController {
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateArchiveStatusRequest r;
@@ -116,7 +116,7 @@ class ArchiveRequestController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ArchiveRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);

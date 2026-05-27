@@ -48,7 +48,7 @@ class PrintTaskController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintTaskId(precheck.id);
             auto e = usecase.getPrintTask(tenantId, id);
@@ -61,7 +61,7 @@ class PrintTaskController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             PrintTaskDTO dto;
             dto.taskId = PrintTaskId(precheck.id);
@@ -91,7 +91,7 @@ class PrintTaskController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintTaskId(precheck.id);
             auto j = req.json;
@@ -112,7 +112,7 @@ class PrintTaskController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintTaskId(precheck.id);
             auto result = usecase.deletePrintTask(tenantId, id);

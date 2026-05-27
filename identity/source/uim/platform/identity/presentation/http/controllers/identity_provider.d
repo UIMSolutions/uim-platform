@@ -43,7 +43,7 @@ class IdentityProviderController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = IdentityProviderprecheck.id);
             auto e = usecase.getIdentityProvider(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Identity provider not found"); return; }
@@ -53,7 +53,7 @@ class IdentityProviderController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderId(precheck.id);
@@ -76,7 +76,7 @@ class IdentityProviderController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderprecheck.id);
@@ -97,7 +97,7 @@ class IdentityProviderController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = IdentityProviderprecheck.id);
             auto result = usecase.deleteIdentityProvider(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

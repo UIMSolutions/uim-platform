@@ -36,7 +36,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateEnvironmentRequest r;
       r.tenantId = tenantId;
@@ -72,7 +72,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
 
       KymaEnvironment[] envs = subaccountId.isEmpty ?
@@ -93,7 +93,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
       if (!usecase.hasEnvironment(tenantId, id)) {
         writeError(res, 404, "Environment not found");
@@ -109,7 +109,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
       auto j = req.json;
       UpdateEnvironmentRequest r;
@@ -137,7 +137,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
       auto result = usecase.deleteEnvironment(tenantId, id);
       if (result.success)

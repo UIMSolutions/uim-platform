@@ -38,7 +38,7 @@ class EventSubscriptionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateEventSubscriptionRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -103,7 +103,7 @@ class EventSubscriptionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto sub = usecase.getSubscription(tenantId, id);
       if (sub.isNull) {
@@ -119,7 +119,7 @@ class EventSubscriptionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateEventSubscriptionRequest r;
@@ -146,7 +146,7 @@ class EventSubscriptionController : ManageController {
 
   protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.pauseSubscription(tenantId, id);
       if (result.success)
@@ -161,7 +161,7 @@ class EventSubscriptionController : ManageController {
 
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.resumeSubscription(tenantId, id);
       if (result.success)
@@ -176,7 +176,7 @@ class EventSubscriptionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteSubscription(tenantId, id);
       if (result.success)

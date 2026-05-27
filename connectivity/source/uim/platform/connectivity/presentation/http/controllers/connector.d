@@ -35,7 +35,7 @@ class ConnectorController : ManageController {
 
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = RegisterConnectorRequest();
       r.subaccountId = j.getString("subaccountId");
@@ -65,7 +65,7 @@ class ConnectorController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto conns = usecase.listByTenant(tenantId);
 
       auto arr = conns.map!(c => c.toJson).array.toJson;
@@ -83,7 +83,7 @@ class ConnectorController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConnectorId(precheck.id);
       auto cc = usecase.getConnector(tenantId, id);
       if (cc.isNull) {
@@ -109,7 +109,7 @@ class ConnectorController : ManageController {
 
       auto j = req.json;
       auto r = HeartbeatRequest();
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       r.connectorVersion = j.getString("connectorVersion");
 
       auto result = usecase.heartbeat(tenantId, connectorId, r);
@@ -130,7 +130,7 @@ class ConnectorController : ManageController {
 
   protected void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConnectorId(precheck.id);
       auto result = usecase.unregister(tenantId, id);
       if (result.hasError)

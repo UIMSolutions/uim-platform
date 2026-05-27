@@ -33,7 +33,7 @@ class DeletionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDeletionRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class DeletionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
@@ -83,7 +83,7 @@ class DeletionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DeletionRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
@@ -98,7 +98,7 @@ class DeletionController : ManageController {
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateDeletionStatusRequest r;
@@ -122,7 +122,7 @@ class DeletionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DeletionRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);

@@ -33,7 +33,7 @@ class FilterRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFilterRuleRequest r;
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class FilterRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto category = req.params.get("category", "");
       auto activeOnly = req.params.get("active", "");
 
@@ -90,7 +90,7 @@ class FilterRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto rule = usecase.getRule(id);
       if (rule.isNull) {
@@ -105,7 +105,7 @@ class FilterRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateFilterRuleRequest r;
@@ -127,7 +127,7 @@ class FilterRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteRule(id);
       if (result.success)

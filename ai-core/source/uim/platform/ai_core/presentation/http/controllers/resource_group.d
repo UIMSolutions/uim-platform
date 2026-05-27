@@ -31,7 +31,7 @@ class ResourceGroupController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateResourceGroupRequest r;
       r.tenantId = tenantId;
@@ -113,7 +113,7 @@ class ResourceGroupController : ManageController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ResourceGroupprecheck.id);
       auto j = req.json;
 
@@ -140,7 +140,7 @@ class ResourceGroupController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ResourceGroupprecheck.id);
 
       auto result = groups.deleteResourceGroup(tenantId, id);

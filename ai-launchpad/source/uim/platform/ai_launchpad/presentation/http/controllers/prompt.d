@@ -31,7 +31,7 @@ class PromptController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreatePromptRequest r;
@@ -67,7 +67,7 @@ r.tenantId = tenantId;
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto collectionId = PromptCollectionId(req.headers.get("X-Collection-Id", ""));
 
       auto prompts = collectionId.isEmpty
@@ -88,7 +88,7 @@ r.tenantId = tenantId;
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Promptprecheck.id);
 
       auto p = usecase.getPrompt(tenantId, id);
@@ -105,7 +105,7 @@ r.tenantId = tenantId;
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Promptprecheck.id);
       auto j = req.json;
 

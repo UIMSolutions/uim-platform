@@ -29,7 +29,7 @@ class TaskActionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             PerformTaskActionRequest r;
             r.tenantId = tenantId;
@@ -85,7 +85,7 @@ class TaskActionController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskActionprecheck.id);
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
@@ -100,7 +100,7 @@ class TaskActionController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskActionprecheck.id);
             auto result = usecase.deleteTaskAction(tenantId, id);
             if (result.hasError)

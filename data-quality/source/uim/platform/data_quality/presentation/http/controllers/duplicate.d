@@ -32,7 +32,7 @@ class DuplicateController : PlatformController {
 
   protected void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       auto r = DetectDuplicatesRequest();
@@ -67,7 +67,7 @@ class DuplicateController : PlatformController {
 
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       auto r = ResolveDuplicateRequest();
@@ -93,7 +93,7 @@ class DuplicateController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto groups = usecase.getUnresolved(tenantId);
       auto arr = groups.map!(g => g.toJson).array.toJson;
 
@@ -110,9 +110,9 @@ class DuplicateController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto group = usecase.getById(tenantId, id);
       if (group.isNull) {
         writeError(res, 404, "Match group not found");

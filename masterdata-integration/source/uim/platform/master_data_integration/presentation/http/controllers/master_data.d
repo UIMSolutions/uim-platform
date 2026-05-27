@@ -39,7 +39,7 @@ class MasterDataController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateMasterDataObjectRequest r;
       r.tenantId = tenantId;
@@ -72,7 +72,7 @@ class MasterDataController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto category = req.params.get("category", "");
 
       MasterDataObject[] objs;
@@ -96,7 +96,7 @@ class MasterDataController : ManageController {
 
   protected void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto globalId = req.params.get("globalId", "");
       if (globalId.isEmpty) {
         writeError(res, 400, "globalId query parameter is required");
@@ -116,7 +116,7 @@ class MasterDataController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto obj = usecase.getObject(id);
       if (obj.isNull) {
@@ -131,7 +131,7 @@ class MasterDataController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateMasterDataObjectRequest r;
@@ -153,7 +153,7 @@ class MasterDataController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteObject(id);
       if (result.success)

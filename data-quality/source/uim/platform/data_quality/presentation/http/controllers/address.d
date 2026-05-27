@@ -31,7 +31,7 @@ class AddressController : PlatformController {
 
   protected void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       auto r = CleanseAddressRequest();
@@ -53,7 +53,7 @@ class AddressController : PlatformController {
 
   protected void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto batchReq = CleanseBatchAddressRequest();
       batchReq.tenantId = req.getTenantId;
@@ -89,7 +89,7 @@ class AddressController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto records = usecase.getByTenant(tenantId);
       auto arr = records.map!(r => r.toJson).array.toJson;

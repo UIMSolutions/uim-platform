@@ -48,7 +48,7 @@ class RouteController : ManageController {
 
   override protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateRouteRequest();
       r.tenantId = tenantId;
@@ -76,7 +76,7 @@ class RouteController : ManageController {
 
   override protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = useCase.listRoutes(tenantId);
 
       auto arr = items.map!(r => r.toJson).array.toJson;
@@ -92,9 +92,9 @@ class RouteController : ManageController {
 
   protected void handleRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RouteId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto r = useCase.getRoute(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Route not found");
@@ -108,9 +108,9 @@ class RouteController : ManageController {
 
   override protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RouteId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -126,7 +126,7 @@ class RouteController : ManageController {
 
   protected void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = RouteId(precheck.id);
@@ -172,7 +172,7 @@ class RouteController : ManageController {
 
   override protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateDomainRequest();
       r.tenantId = tenantId;
@@ -198,7 +198,7 @@ class RouteController : ManageController {
 
   override protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = useCase.listDomains(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -216,9 +216,9 @@ class RouteController : ManageController {
 
   override protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DomainId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

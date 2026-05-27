@@ -38,7 +38,7 @@ class TransformationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateTransformationRequest();
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class TransformationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listTransformations(tenantId);
 
       auto arr = items.map!(t => t.toJson).array.toJson;
@@ -81,9 +81,9 @@ class TransformationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto t = usecase.getTransformation(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Transformation not found");
@@ -97,7 +97,7 @@ class TransformationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateTransformationRequest();
@@ -124,7 +124,7 @@ class TransformationController : ManageController {
 
   protected void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto systemId = j.getString("systemId");
       auto inputAttributes = j.getString("inputAttributes");
@@ -145,9 +145,9 @@ class TransformationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.deleteTransformation(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject

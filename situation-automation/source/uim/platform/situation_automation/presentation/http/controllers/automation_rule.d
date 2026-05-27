@@ -32,7 +32,7 @@ class AutomationRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateAutomationRuleRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class AutomationRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rules = usecase.listAutomationRules(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -93,7 +93,7 @@ class AutomationRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto id = AutomationRuleprecheck.id);
       auto r = usecase.getAutomationRule(tenantId, id);
@@ -128,7 +128,7 @@ class AutomationRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       UpdateAutomationRuleRequest r;
@@ -159,7 +159,7 @@ class AutomationRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto id = AutomationRuleprecheck.id);
       auto result = usecase.deleteAutomationRule(tenantId, id);

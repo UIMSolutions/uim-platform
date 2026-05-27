@@ -31,7 +31,7 @@ class ProcessInstanceController : ManageController {
 
     protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             StartProcessInstanceRequest r;
@@ -95,7 +95,7 @@ class ProcessInstanceController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = ProcessInstanceprecheck.id);
             auto i = processInstanceUsecase.getProcessInstance(tenantId, id);
@@ -126,7 +126,7 @@ class ProcessInstanceController : ManageController {
 
     protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             import std.string : lastIndexOf;
 
             auto path = req.requestURI.to!string;
@@ -161,7 +161,7 @@ class ProcessInstanceController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = ProcessInstanceprecheck.id);
             
             auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);

@@ -34,7 +34,7 @@ class StreamController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateLogStreamRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class StreamController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto streams = usecase.listStreams(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -87,7 +87,7 @@ class StreamController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = LogStreamprecheck.id);
       auto s = usecase.getStream(tenantId, id);
 
@@ -112,7 +112,7 @@ class StreamController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = LogStreamprecheck.id);
       auto j = req.json;
       UpdateLogStreamRequest r;
@@ -140,7 +140,7 @@ class StreamController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto streamId = LogStreamprecheck.id);
       usecase.deleteStream(tenantId, streamId);
 

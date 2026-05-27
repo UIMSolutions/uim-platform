@@ -160,7 +160,7 @@ class CustomDomainController : ManageController {
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
@@ -190,7 +190,7 @@ class CustomDomainController : ManageController {
     }
 
     protected Json deactivateHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 

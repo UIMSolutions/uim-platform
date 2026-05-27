@@ -32,7 +32,7 @@ class ArtifactController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateArtifactRequest r;
@@ -101,7 +101,7 @@ class ArtifactController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Artifactprecheck.id);
             auto a = artifactUsecase.getArtifact(tenantId, id);
@@ -135,7 +135,7 @@ class ArtifactController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateArtifactRequest r;
@@ -165,7 +165,7 @@ class ArtifactController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Artifactprecheck.id);
             
             auto result = artifactUsecase.deleteArtifact(tenantId, id);

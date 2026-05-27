@@ -34,7 +34,7 @@ class ServiceBindingController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
 
     auto bindings = usecase.listServiceBindings(tenantId, systemId);
@@ -48,7 +48,7 @@ class ServiceBindingController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
 
     CreateServiceBindingRequest r;
@@ -73,7 +73,7 @@ class ServiceBindingController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
 
     auto binding = usecase.getServiceBinding(tenantId, id);
@@ -90,7 +90,7 @@ class ServiceBindingController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
     auto j = req.json;
 
@@ -113,7 +113,7 @@ class ServiceBindingController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
 
     auto result = usecase.deleteServiceBinding(tenantId, id);

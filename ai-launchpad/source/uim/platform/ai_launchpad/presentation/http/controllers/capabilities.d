@@ -28,7 +28,7 @@ class CapabilitiesController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto cap = usecase.getCapabilities();
 
       // auto resp = Json.emptyObject

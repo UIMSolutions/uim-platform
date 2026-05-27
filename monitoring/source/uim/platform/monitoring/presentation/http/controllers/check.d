@@ -35,7 +35,7 @@ class CheckController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       
       CreateHealthCheckRequest r;
@@ -74,7 +74,7 @@ class CheckController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto checks = usecase.listChecks(tenantId);
       auto arr = checks.map!(c => c.toJson).array.toJson;
 
@@ -91,7 +91,7 @@ class CheckController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = HealthCheckId(precheck.id);
 
       auto c = usecase.getCheck(tenantId, id);
@@ -107,7 +107,7 @@ class CheckController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = HealthCheckId(precheck.id);
 
       auto j = req.json;
@@ -140,7 +140,7 @@ class CheckController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = HealthCheckId(precheck.id);
 
       auto result = usecase.deleteCheck(tenantId, id);
@@ -162,7 +162,7 @@ class CheckController : ManageController {
 
   protected void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RecordCheckResultRequest r;
       r.tenantId = tenantId;
@@ -192,7 +192,7 @@ class CheckController : ManageController {
 
   protected void handleResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto checkId = HealthCheckId(precheck.id);
       auto results = usecase.getResults(tenantId, checkId);
 

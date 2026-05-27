@@ -36,7 +36,7 @@ class CleansingRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateCleansingRuleRequest();
       r.tenantId = tenantId;
@@ -74,7 +74,7 @@ class CleansingRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rules = usecase.listCleansingRules(tenantId);
       auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -91,7 +91,7 @@ class CleansingRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto rule = usecase.getCleansingRule(tenantId, id);
       if (rule.isNull) {
@@ -106,7 +106,7 @@ class CleansingRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateCleansingRuleRequest();
       r.id = precheck.id;
@@ -146,7 +146,7 @@ class CleansingRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto result = usecase.deleteCleansingRule(tenantId, id);

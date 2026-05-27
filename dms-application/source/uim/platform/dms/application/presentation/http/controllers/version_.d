@@ -38,7 +38,7 @@ class VersionController : ManageController {
   protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.checkOut(tenantId, docId, userId);
@@ -60,7 +60,7 @@ class VersionController : ManageController {
 
   protected void handleckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CheckInRequest();
       r.documentId = DocumentId(j.getString("documentId"));
@@ -94,7 +94,7 @@ class VersionController : ManageController {
   protected void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto result = usecase.cancelCheckOut(tenantId, docId);
       if (result.isSuccess) {
@@ -116,7 +116,7 @@ class VersionController : ManageController {
   protected void handleAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto versions = usecase.getAllVersions(tenantId, docId);
       auto arr = versions.map!(v => v.toJson).array.toJson;
 
@@ -135,7 +135,7 @@ class VersionController : ManageController {
   override protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto ver = usecase.getCurrentVersion(tenantId, docId);
       if (ver.isNull) {
         writeError(res, 404, "No current version found");

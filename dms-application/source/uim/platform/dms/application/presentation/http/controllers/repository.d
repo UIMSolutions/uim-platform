@@ -38,7 +38,7 @@ class RepositoryController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateRepositoryRequest();
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class RepositoryController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listRepositories(tenantId);
 
       auto arr = items.map!(item => item.toJson).array.toJson;
@@ -82,7 +82,7 @@ class RepositoryController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
 
       auto repository = usecase.getRepository(tenantId, id);
@@ -98,7 +98,7 @@ class RepositoryController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
@@ -127,7 +127,7 @@ class RepositoryController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       
       auto result = usecase.activateRepository(tenantId, id);
@@ -147,7 +147,7 @@ class RepositoryController : ManageController {
 
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       
       auto result = usecase.archiveRepository(tenantId, id);
@@ -166,7 +166,7 @@ class RepositoryController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       
       auto result = usecase.deleteRepository(tenantId, id);

@@ -33,7 +33,7 @@ class BlockingController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateBlockingRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class BlockingController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
       BlockingRequest[] items = statusParam.length > 0
@@ -78,7 +78,7 @@ class BlockingController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BlockingRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
@@ -93,7 +93,7 @@ class BlockingController : ManageController {
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateBlockingStatusRequest r;
@@ -116,7 +116,7 @@ class BlockingController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = BlockingRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);

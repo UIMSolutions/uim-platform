@@ -49,7 +49,7 @@ class PlatformController {
       return errorResponse("Request is required", 400);
 
     if (requiredTenant()) {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (tenantId.isNull)
         return errorResponse("Tenant ID is required", 400);
 

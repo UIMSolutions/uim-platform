@@ -32,7 +32,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateEnvironmentInstanceRequest r;
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subId = req.params.get("subaccountId");
       auto envType = req.params.get("environmentType");
 
@@ -90,7 +90,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));
       auto inst = usecase.getEnvironmentInstance(tenantId, id);
       if (inst.isNull) {
@@ -104,7 +104,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));
       auto data = precheck.data;
       UpdateEnvironmentInstanceRequest request;
@@ -128,7 +128,7 @@ class EnvironmentController : ManageController {
 
   override protected void handleGetDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = EnvironmentInstanceId(extractId(req.requestURI));
       auto result = usecase.deprovisionEnvironmentInstance(tenantId, id);
       if (result.success)

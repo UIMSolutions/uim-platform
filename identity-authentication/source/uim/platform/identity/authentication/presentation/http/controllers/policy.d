@@ -33,7 +33,7 @@ class PolicyController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       PolicyRule[] rules;
@@ -67,7 +67,7 @@ class PolicyController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(policies.length);
@@ -91,7 +91,7 @@ class PolicyController : ManageController {
       auto idx = path.lastIndexOf('/');
       auto policyId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policy = useCase.getPolicy(tenantId, policyId);
       if (policy == AuthorizationPolicy.init) {
         auto errRes = Json.emptyObject;

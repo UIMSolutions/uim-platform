@@ -33,7 +33,7 @@ class KeyringController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateKeyringRequest r;
@@ -63,7 +63,7 @@ class KeyringController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
       
       auto rings = usecase.listCredentials(tenantId, namespaceId);
@@ -89,7 +89,7 @@ class KeyringController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Credentialprecheck.id);
       auto k = usecase.getCredential(tenantId, id);
 
@@ -126,7 +126,7 @@ class KeyringController : ManageController {
 
   protected void handleRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RotateKeyringRequest r;
       r.keyringId = j.getString("keyringId");
@@ -149,7 +149,7 @@ class KeyringController : ManageController {
 
   protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto keyringId = CredentialId(j.getString("keyringId"));
 
@@ -170,7 +170,7 @@ class KeyringController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Credentialprecheck.id);
 
       auto result = usecase.deleteCredential(tenantId, id);

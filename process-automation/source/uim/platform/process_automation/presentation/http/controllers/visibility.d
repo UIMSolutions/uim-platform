@@ -32,7 +32,7 @@ class VisibilityController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateVisibilityRequest r;
@@ -94,7 +94,7 @@ class VisibilityController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Visibilityprecheck.id);
             auto v = visibilityUsecase.getVisibility(tenantId, id);
             if (v.isNull) {
@@ -123,7 +123,7 @@ class VisibilityController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateVisibilityRequest r;
@@ -153,7 +153,7 @@ class VisibilityController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Visibilityprecheck.id);
             auto result = visibilityUsecase.deleteVisibility(tenantId, id);

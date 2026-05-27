@@ -29,7 +29,7 @@ class TokenController : PlatformController {
   // Accepts form-encoded or JSON body with grant_type, client_id, client_secret, scope
   override protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       string grantType;
       string clientId;
       string clientSecret;

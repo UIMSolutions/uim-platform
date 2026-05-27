@@ -37,7 +37,7 @@ class ConsentController : ManageController {
 
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateConsentRecordRequest r;
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class ConsentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
@@ -90,7 +90,7 @@ class ConsentController : ManageController {
 
   override protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       ConsentRecord[] items;
@@ -113,7 +113,7 @@ class ConsentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConsentRecordId(precheck.id);
 
       auto entry = usecase.getConsent(tenantId, id);
@@ -131,7 +131,7 @@ class ConsentController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RevokeConsentRequest r;
       r.id = ConsentRecordId(precheck.id);
@@ -152,7 +152,7 @@ class ConsentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConsentRecordId(precheck.id);
 
       usecase.deleteConsent(tenantId, id);

@@ -87,7 +87,7 @@ class CallController : PlatformController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto call     = _manageUC.getCall(tenantId, id);
             if (call.isNull()) { writeError(res, 404, "RFC call not found"); return; }
@@ -97,7 +97,7 @@ class CallController : PlatformController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto result   = _manageUC.deleteCall(tenantId, id);
             if (result.success)

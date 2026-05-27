@@ -75,7 +75,7 @@ class CredentialController : ManageController {
 
   protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateCredentialRequest r;
@@ -108,7 +108,7 @@ class CredentialController : ManageController {
 
   protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
       Credential[] creds;
@@ -140,7 +140,7 @@ class CredentialController : ManageController {
 
   protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Credentialprecheck.id);
 
       // Support conditional read via If-None-Match
@@ -183,7 +183,7 @@ class CredentialController : ManageController {
 
   protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Credentialprecheck.id);
 
       usecase.deleteCredential(tenantId, id);

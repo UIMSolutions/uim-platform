@@ -35,7 +35,7 @@ class AppController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class AppController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto apps = useCase.listApps(tenantId);
       auto arr = apps.map!(a => a.toJson).array.toJson;
 
@@ -84,9 +84,9 @@ class AppController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AppId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto app = useCase.getApp(tenantId, id);
       if (app.isNull) {
         writeError(res, 404, "App not found");
@@ -100,7 +100,7 @@ class AppController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateAppRequest();
       r.id = AppId(precheck.id);
@@ -136,9 +136,9 @@ class AppController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

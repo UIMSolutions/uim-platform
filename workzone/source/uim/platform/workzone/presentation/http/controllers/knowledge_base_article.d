@@ -35,7 +35,7 @@ class KnowledgeBaseArticleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateKBArticleRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class KnowledgeBaseArticleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
 
       auto articles = useCase.listByWorkspace(tenantId, workspaceId);
@@ -85,9 +85,9 @@ class KnowledgeBaseArticleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto a = useCase.getArticle(tenantId, id);
       if (a.isNull) {
         writeError(res, 404, "Article not found");
@@ -101,7 +101,7 @@ class KnowledgeBaseArticleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateKBArticleRequest();
@@ -128,9 +128,9 @@ class KnowledgeBaseArticleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteArticle(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

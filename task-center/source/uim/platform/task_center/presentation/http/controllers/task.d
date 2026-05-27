@@ -35,7 +35,7 @@ class TaskController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateTaskRequest r;
             r.tenantId = tenantId;
@@ -111,7 +111,7 @@ class TaskController : ManageController {
             if (pathEndsWithAction(path))
                 return;
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskId(precheck.id);
             auto t = usecase.getById(tenantId, id);
             if (t.isNull) {
@@ -126,7 +126,7 @@ class TaskController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Taskprecheck.id);
             auto j = req.json;
             UpdateTaskRequest r;
@@ -160,7 +160,7 @@ class TaskController : ManageController {
                 auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = TaskId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             auto userId = j.getString("userId");
 
@@ -185,7 +185,7 @@ class TaskController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
             auto id = TaskId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.releaseTask(tenantId, id);
             if (result.hasError)
@@ -205,7 +205,7 @@ class TaskController : ManageController {
 
     protected void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = TaskId(extractIdFromPath(stripped));
@@ -236,7 +236,7 @@ class TaskController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
             auto id = TaskId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.completeTask(tenantId, id)(tenantId, id);
             if (result.hasError)
@@ -259,7 +259,7 @@ class TaskController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
             auto id = TaskId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.cancelTask(tenantId, id)(tenantId, id);
             if (result.hasError)
@@ -280,7 +280,7 @@ class TaskController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto id = Taskprecheck.id);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto result = usecase.deleteTask(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

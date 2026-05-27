@@ -31,7 +31,7 @@ class TaskController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       CreateTaskRequest r;
@@ -67,7 +67,7 @@ class TaskController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tasks = usecase.listTasks(tenantId, spaceId);
@@ -95,7 +95,7 @@ class TaskController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Taskprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -128,7 +128,7 @@ class TaskController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = Taskprecheck.id);
 

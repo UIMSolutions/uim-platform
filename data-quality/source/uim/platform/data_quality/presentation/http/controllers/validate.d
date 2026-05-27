@@ -35,7 +35,7 @@ class ValidateController : PlatformController {
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = ValidateRecordRequest();
       r.tenantId = tenantId;
@@ -52,7 +52,7 @@ class ValidateController : PlatformController {
 
   protected void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = ValidateBatchRequest();
       r.tenantId = tenantId;
@@ -84,7 +84,7 @@ class ValidateController : PlatformController {
   override protected void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto recordId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.getResultByRecord(tenantId, recordId);
       if (result.isNull) {
         writeError(res, 404, "Validation result not found");

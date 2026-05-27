@@ -25,7 +25,7 @@ class FlexChangesWebController : ManageController {
 
   override protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto changes = usecase.listChanges(tenantId);
       auto html = FlexChangesHtmlView.render(changes);
       res.writeBody(html, cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
@@ -50,7 +50,7 @@ class FlexVariantsWebController : ManageController {
 
   override protected void handleListPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto variants = usecase.listVariants(tenantId);
       auto html = FlexVariantsHtmlView.render(variants);
       res.writeBody(html, cast(int) HTTPStatus.ok, "text/html; charset=utf-8");

@@ -33,7 +33,7 @@ class ChannelController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -70,7 +70,7 @@ class ChannelController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto channels = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = channels.map!(c => c.toJson).array.toJson;
@@ -88,9 +88,9 @@ class ChannelController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto ch = useCase.getChannel(tenantId, id);
       if (ch.isNull) {
         writeError(res, 404, "Channel not found");
@@ -104,7 +104,7 @@ class ChannelController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateChannelRequest();
       r.id = precheck.id;
@@ -132,9 +132,9 @@ class ChannelController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       useCase.deleteChannel(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {

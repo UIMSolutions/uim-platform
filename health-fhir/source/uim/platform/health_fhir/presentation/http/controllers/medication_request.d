@@ -50,7 +50,7 @@ class MedicationRequestController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateMedicationOrderRequest r;
       r.tenantId              = tenantId;
@@ -75,7 +75,7 @@ class MedicationRequestController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       MedicationRequest[] requests;
       auto patientParam = req.query.get("subject", "");
       if (patientParam.length > 0)
@@ -96,7 +96,7 @@ class MedicationRequestController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MedicationRequestprecheck.id);
       auto mr = usecase.getMedicationRequest(tenantId, id);
       if (mr.isNull) { writeFhirError(res, 404, "MedicationRequest not found"); return; }
@@ -108,7 +108,7 @@ class MedicationRequestController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MedicationRequestprecheck.id);
       auto j = req.json;
       UpdateMedicationOrderRequest r;
@@ -131,7 +131,7 @@ class MedicationRequestController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MedicationRequestprecheck.id);
       auto result = usecase.deleteMedicationRequest(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

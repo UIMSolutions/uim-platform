@@ -47,7 +47,7 @@ class ServiceController : ManageController {
 
   override protected void handleCreate(Instance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = tenantId;
@@ -75,7 +75,7 @@ class ServiceController : ManageController {
 
   override protected void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = useCase.listInstances(tenantId);
 
       auto arr = items.map!(si => si.toJson).array.toJson;
@@ -93,9 +93,9 @@ class ServiceController : ManageController {
 
   override protected void handleGetGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto si = useCase.getInstance(tenantId, id);
       if (si.isNull) {
         writeError(res, 404, "Service instance not found");
@@ -112,7 +112,7 @@ class ServiceController : ManageController {
 
   override protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(precheck.id);
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
@@ -138,9 +138,9 @@ class ServiceController : ManageController {
 
   override protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -159,7 +159,7 @@ class ServiceController : ManageController {
 
   override protected void handleCreate(Binding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = tenantId;
@@ -185,7 +185,7 @@ class ServiceController : ManageController {
 
   override protected void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = useCase.listBindings(tenantId);
 
       auto arr = items.map!(b => b.toJson).array.toJson;
@@ -203,9 +203,9 @@ class ServiceController : ManageController {
 
   override protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceBindingId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

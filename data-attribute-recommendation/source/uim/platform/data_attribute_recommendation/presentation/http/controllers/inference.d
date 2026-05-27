@@ -36,7 +36,7 @@ class InferenceController : PlatformController {
 
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = SubmitInferenceRequest();
       r.tenantId = tenantId;
@@ -62,9 +62,9 @@ class InferenceController : PlatformController {
 
   protected void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       // Try as inference request
       auto requests = usecase.listByDeployment(tenantId, id);
@@ -89,9 +89,9 @@ class InferenceController : PlatformController {
 
   protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.getResult(tenantId, id);
       if (result.isNull) {
         // Try by request id
@@ -110,7 +110,7 @@ class InferenceController : PlatformController {
 
   override protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listRequests(tenantId);
       auto arr = items.map!(r => r.toJson).array.toJson;
 

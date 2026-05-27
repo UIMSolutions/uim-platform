@@ -52,7 +52,7 @@ class OAuthClientController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = OAuthClientId(precheck.id);
 
@@ -69,7 +69,7 @@ class OAuthClientController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             OAuthClientDTO dto;
@@ -108,7 +108,7 @@ class OAuthClientController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
 
@@ -141,7 +141,7 @@ class OAuthClientController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto path = req.requestURI.to!string;
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = OAuthClientId(precheck.id);
             
             auto result = usecase.deleteClient(tenantId, id);

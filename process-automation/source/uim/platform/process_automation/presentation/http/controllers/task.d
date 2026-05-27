@@ -34,7 +34,7 @@ class TaskController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       CreateTaskRequest r;
@@ -69,7 +69,7 @@ class TaskController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto results = taskUsecase.listTasks(tenantId);
 
@@ -99,7 +99,7 @@ class TaskController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto id = Taskprecheck.id);
       auto t = taskUsecase.getTask(tenantId, id);
@@ -136,7 +136,7 @@ class TaskController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       UpdateTaskRequest r;
@@ -167,7 +167,7 @@ class TaskController : ManageController {
   protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto path = req.requestURI.to!string;
       auto claimIdx = lastIndexOf(path, "/claim");
@@ -202,7 +202,7 @@ class TaskController : ManageController {
 
   protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       import std.string : lastIndexOf;
 
@@ -241,7 +241,7 @@ class TaskController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto id = Taskprecheck.id);
       auto result = taskUsecase.deleteTask(tenantId, id);

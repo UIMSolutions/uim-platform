@@ -36,7 +36,7 @@ class WidgetController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateWidgetRequest();
       r.pageId = j.getString("pageId");
@@ -77,7 +77,7 @@ class WidgetController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(tenantId, pageId);
       auto arr = widgets.map!(w => w.toJson).array.toJson;
@@ -95,9 +95,9 @@ class WidgetController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto w = useCase.getWidget(tenantId, id);
       if (w.isNull) {
         writeError(res, 404, "Widget not found");
@@ -111,7 +111,7 @@ class WidgetController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateWidgetRequest();
       r.id = precheck.id;
@@ -150,9 +150,9 @@ class WidgetController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteWidget(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

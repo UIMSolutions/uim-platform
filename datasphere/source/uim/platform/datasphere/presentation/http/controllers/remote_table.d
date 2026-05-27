@@ -31,7 +31,7 @@ class RemoteTableController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateRemoteTableRequest r;
@@ -62,7 +62,7 @@ class RemoteTableController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tables = usecase.listRemoteTables(tenantId, spaceId);
@@ -93,7 +93,7 @@ class RemoteTableController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RemoteTableprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -124,7 +124,7 @@ class RemoteTableController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RemoteTableprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

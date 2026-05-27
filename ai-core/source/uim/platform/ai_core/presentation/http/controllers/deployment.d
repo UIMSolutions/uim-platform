@@ -98,7 +98,7 @@ class DeploymentController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto data = prceheck.data;
     auto id = DeploymentId(extractIdFromPath(precheck.path));
     if (id.isNull)

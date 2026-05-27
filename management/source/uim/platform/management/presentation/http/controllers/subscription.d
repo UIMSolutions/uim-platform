@@ -35,7 +35,7 @@ class SubscriptionController : ManageController {
 
   protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateSubscriptionRequest r;
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class SubscriptionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resourceType = req.params.get("resourceType");
       auto resourceId = req.params.get("resourceId");
       auto subId = req.params.get("subaccountId");
@@ -85,7 +85,7 @@ class SubscriptionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto s = usecase.getSubscription(tenantId, id);
       if (s.isNull) {
@@ -99,7 +99,7 @@ class SubscriptionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubscriptionId(extractId(req.requestURI));
       auto data = precheck.data;
       UpdateSubscriptionRequest r;
@@ -118,7 +118,7 @@ class SubscriptionController : ManageController {
 
   protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SubscriptionId(extractId(req.requestURI));
       auto result = usecase.unsubscribeSubscription(tenantId, id);
       if (result.success)

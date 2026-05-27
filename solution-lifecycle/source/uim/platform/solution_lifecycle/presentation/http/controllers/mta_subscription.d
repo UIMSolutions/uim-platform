@@ -48,7 +48,7 @@ class MtaSubscriptionController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = MtaSubscriptionprecheck.id);
             auto s = usecase.getSubscription(tenantId, id);
             if (s.isNull) { writeError(res, 404, "Subscription not found"); return; }

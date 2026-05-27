@@ -31,7 +31,7 @@ class ViewController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateViewRequest r;
       r.tenantId = tenantId;
@@ -94,7 +94,7 @@ class ViewController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Viewprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

@@ -42,7 +42,7 @@ class WebhookController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getWebhook(tenantId, WebhookId(id));
             if (e.isNull) { writeError(res, 404, "Webhook not found"); return; }
@@ -54,7 +54,7 @@ class WebhookController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             WebhookDTO dto;
             dto.webhookId        = WebhookId(precheck.id);
@@ -107,7 +107,7 @@ class WebhookController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Webhookprecheck.id);
             auto result = usecase.deleteWebhook(tenantId, id);
             if (result.hasError)

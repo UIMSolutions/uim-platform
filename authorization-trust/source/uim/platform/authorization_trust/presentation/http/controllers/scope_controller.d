@@ -30,7 +30,7 @@ class ScopeController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateScopeRequest r;
       r.tenantId = tenantId;
@@ -50,7 +50,7 @@ class ScopeController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto scopes = usecase.listScopes(tenantId);
       auto jarr = Json.emptyArray;
@@ -64,7 +64,7 @@ class ScopeController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScopeId(extractIdFromPath(req));
 
       auto s = usecase.getScope(tenantId, id);
@@ -80,7 +80,7 @@ class ScopeController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScopeId(extractIdFromPath(req));
 
       auto j = req.json;
@@ -101,7 +101,7 @@ class ScopeController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ScopeId(extractIdFromPath(req));
 
       auto result = usecase.deleteScope(tenantId, id);

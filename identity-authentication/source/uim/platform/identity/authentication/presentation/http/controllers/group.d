@@ -34,7 +34,7 @@ class GroupController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateGroupRequest(j.getString("tenantId"),
         j.getString("name"), j.getString("description"));
@@ -58,7 +58,7 @@ class GroupController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
@@ -75,7 +75,7 @@ class GroupController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
@@ -99,7 +99,7 @@ class GroupController : ManageController {
 
   protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       auto error = useCase.addMember(j.getString("groupId"), j.getString("userId"));

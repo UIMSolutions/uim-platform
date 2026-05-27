@@ -30,7 +30,7 @@ class DashboardController : PlatformController {
 
   protected void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject

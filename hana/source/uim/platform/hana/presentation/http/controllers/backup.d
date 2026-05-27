@@ -31,7 +31,7 @@ class BackupController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateBackupRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class BackupController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto backups = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -89,7 +89,7 @@ class BackupController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto b = usecase.getById(tenantId, id);
       if (b.isNull) {
@@ -147,7 +147,7 @@ class BackupController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Backupprecheck.id);
       auto result = usecase.deleteBackup(id);
       if (result.hasError)

@@ -52,7 +52,7 @@ class RefreshTokenController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = RefreshTokenId(precheck.id);
 
@@ -66,7 +66,7 @@ class RefreshTokenController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             RefreshTokenDTO dto;
@@ -98,7 +98,7 @@ class RefreshTokenController : ManageController {
 
     protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = RefreshTokenId(precheck.id);
 
@@ -119,7 +119,7 @@ class RefreshTokenController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = RefreshTokenId(precheck.id);
 

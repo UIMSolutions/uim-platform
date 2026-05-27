@@ -36,7 +36,7 @@ class ChannelController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.connectorId = j.getString("connectorId");
@@ -66,7 +66,7 @@ class ChannelController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto channels = usecase.listByTenant(tenantId);
       auto arr = channels.map!(ch => ch.toJson).array.toJson;
@@ -84,7 +84,7 @@ class ChannelController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ChannelId(precheck.id);
       auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
@@ -105,7 +105,7 @@ class ChannelController : ManageController {
         return;
       }
       auto channelId = ChannelId(parts[$ - 2]);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto result = usecase.openChannel(tenantId, channelId);
       if (result.hasError)
@@ -131,7 +131,7 @@ class ChannelController : ManageController {
         writeError(res, 400, "Invalid path");
         return;
       }
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto channelId = ChannelId(parts[$ - 2]);
 
       auto result = usecase.closeChannel(tenantId, channelId);
@@ -153,7 +153,7 @@ class ChannelController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ChannelId(precheck.id);
       auto result = usecase.deleteChannel(tenantId, id);
       if (result.hasError)

@@ -36,7 +36,7 @@ class AlertController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto state = req.params.get("state", "");
       auto severity = req.params.get("severity", "");
 
@@ -63,7 +63,7 @@ class AlertController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AlertId(precheck.id);
       auto a = usecase.getAlert(tenantId, id);
       if (a.isNull) {
@@ -78,7 +78,7 @@ class AlertController : ManageController {
 
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
@@ -104,7 +104,7 @@ class AlertController : ManageController {
 
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = AlertId(j.getString("alertId"));
@@ -130,7 +130,7 @@ class AlertController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AlertId(precheck.id);
       auto result = usecase.deleteAlert(tenantId, id);
       if (result.hasError)

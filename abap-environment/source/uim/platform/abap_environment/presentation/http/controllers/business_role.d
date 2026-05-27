@@ -76,7 +76,7 @@ class BusinessRoleController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     if (tenantId.isNull) {
       return Json.emptyObject
         .set("status", "error")
@@ -104,7 +104,7 @@ class BusinessRoleController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     if (tenantId.isNull) {
       return Json.emptyObject
         .set("status", "error")

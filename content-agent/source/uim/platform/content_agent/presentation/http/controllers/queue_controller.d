@@ -33,7 +33,7 @@ class QueueController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateQueueRequest();
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class QueueController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto queues = usecase.listQueues(tenantId);
       auto arr = queues.map!(q => q.toJson).array.toJson;
@@ -81,7 +81,7 @@ class QueueController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = QueueId(precheck.id);
       auto queue = usecase.getQueue(id);
       if (queue.isNull) {
@@ -96,7 +96,7 @@ class QueueController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = QueueId(precheck.id);
       auto j = req.json;
       auto r = UpdateQueueRequest();
@@ -123,7 +123,7 @@ class QueueController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = QueueId(precheck.id);
       auto result = usecase.deleteQueue(id);
       if (result.hasError)

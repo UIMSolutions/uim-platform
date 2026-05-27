@@ -32,7 +32,7 @@ class FormController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateFormRequest r;
@@ -94,7 +94,7 @@ class FormController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Formprecheck.id);
             auto f = formUsecase.getForm(tenantId, id);
@@ -124,7 +124,7 @@ class FormController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateFormRequest r;
@@ -154,7 +154,7 @@ class FormController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Formprecheck.id);
             auto result = formUsecase.deleteForm(tenantId, id);

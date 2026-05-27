@@ -33,7 +33,7 @@ class ProcessController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateProcessRequest r;
@@ -98,7 +98,7 @@ class ProcessController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Processprecheck.id);
             auto p = processUsecase.getProcess(tenantId, id);
@@ -129,7 +129,7 @@ class ProcessController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateProcessRequest r;
@@ -159,7 +159,7 @@ class ProcessController : ManageController {
 
     protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             import std.string : lastIndexOf;
 
@@ -196,7 +196,7 @@ class ProcessController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Processprecheck.id);
             auto result = processUsecase.deleteProcess(tenantId, id);

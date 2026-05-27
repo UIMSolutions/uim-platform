@@ -30,7 +30,7 @@ class ConsentRecordController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateConsentRecordRequest r;
             r.tenantId = tenantId;
@@ -88,7 +88,7 @@ class ConsentRecordController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
                 return;
@@ -137,7 +137,7 @@ class ConsentRecordController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = ConsentRecordprecheck.id);
 
             auto result = usecase.deleteConsentRecord(tenantId, id);

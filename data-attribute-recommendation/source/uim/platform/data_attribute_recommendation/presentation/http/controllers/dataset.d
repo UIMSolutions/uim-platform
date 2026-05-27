@@ -36,7 +36,7 @@ class DatasetController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateDatasetRequest();
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class DatasetController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listDatasets(tenantId);
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -80,7 +80,7 @@ class DatasetController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto ds = usecase.getDataset(tenantId, id);
@@ -96,7 +96,7 @@ class DatasetController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
 
@@ -125,7 +125,7 @@ class DatasetController : ManageController {
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto result = usecase.validateDataset(tenantId, id);
@@ -147,7 +147,7 @@ class DatasetController : ManageController {
 
   protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto result = usecase.processDataset(tenantId, id);
@@ -169,7 +169,7 @@ class DatasetController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
 
       auto result = usecase.deleteDataset(tenantId, id);

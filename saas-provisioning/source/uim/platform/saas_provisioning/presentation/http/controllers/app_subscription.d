@@ -70,7 +70,7 @@ class AppSubscriptionController : ManageController {
 
     protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto body_    = req.json;
 
             SubscribeRequest dto;
@@ -91,7 +91,7 @@ class AppSubscriptionController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = AppSubscriptionprecheck.id);
             auto sub = usecase.getSubscription(tenantId, id);
             if (sub.isNull) { writeError(res, 404, "Subscription not found"); return; }
@@ -103,7 +103,7 @@ class AppSubscriptionController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = AppSubscriptionprecheck.id);
             auto body_    = req.json;
 

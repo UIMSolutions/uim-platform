@@ -32,7 +32,7 @@ class CatalogAssetController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateCatalogAssetRequest r;
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class CatalogAssetController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto assets = assets.listCatalogAssets(tenantId, spaceId);
 
@@ -92,7 +92,7 @@ class CatalogAssetController : ManageController {
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto query = req.params.get("q", "");
 
@@ -121,7 +121,7 @@ class CatalogAssetController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = CatalogAssetprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -152,7 +152,7 @@ class CatalogAssetController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = CatalogAssetprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 

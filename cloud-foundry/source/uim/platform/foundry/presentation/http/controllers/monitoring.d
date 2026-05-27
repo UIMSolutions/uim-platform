@@ -31,7 +31,7 @@ class MonitoringController : PlatformController {
 
   override protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
       auto items = useCase.listAppHealth(tenantId);
 
       auto arr = items.map!(h => h.toJson()).array.toJson;
@@ -50,10 +50,10 @@ class MonitoringController : PlatformController {
 
   protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = MonitoringId(precheck.id);
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto h = useCase.getAppHealth(tenantId, id);
       if (h.appId.isEmpty) {
         writeError(res, 404, "Application not found");
@@ -69,7 +69,7 @@ class MonitoringController : PlatformController {
   protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto spaceId = SpaceId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto u = useCase.getSpaceUsage(tenantId, spaceId);
 
       auto j = Json.emptyObject

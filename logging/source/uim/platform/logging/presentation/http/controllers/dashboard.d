@@ -34,7 +34,7 @@ class DashboardController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDashboardRequest r;
       r.tenantId = tenantId;
@@ -74,7 +74,7 @@ class DashboardController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto dashboards = usecase.listDashboards(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -100,7 +100,7 @@ class DashboardController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Dashboardprecheck.id);
 
       auto d = usecase.getDashboard(tenantId, id);
@@ -136,7 +136,7 @@ class DashboardController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Dashboardprecheck.id);
       auto j = req.json;
 
@@ -165,7 +165,7 @@ class DashboardController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Dashboardprecheck.id);
 
       usecase.deleteDashboard(tenantId, id);

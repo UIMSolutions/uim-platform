@@ -29,7 +29,7 @@ class MetricController : PlatformController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       PatchMetricsRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class MetricController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       auto execId = ExecutionId(req.params.get("executionId", ""));
 

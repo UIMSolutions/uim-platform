@@ -42,7 +42,7 @@ class EventChannelController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getChannel(tenantId, EventChannelId(id));
             if (e.isNull) { writeError(res, 404, "Event channel not found"); return; }
@@ -54,7 +54,7 @@ class EventChannelController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             EventChannelDTO dto;
             dto.channelId          = EventChannelId(precheck.id);
@@ -79,7 +79,7 @@ class EventChannelController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto channelId = EventChannelprecheck.id);
             auto j = req.json;
             EventChannelDTO dto;
@@ -100,7 +100,7 @@ class EventChannelController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = EventChannelprecheck.id);
             auto result = usecase.deleteChannel(tenantId, id);
             if (result.hasError)

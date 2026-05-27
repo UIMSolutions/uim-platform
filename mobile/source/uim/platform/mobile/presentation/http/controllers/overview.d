@@ -28,7 +28,7 @@ class OverviewController : PlatformController {
 
   override protected void handleGetGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
       auto resp = Json.emptyObject
         .set("totalApps", Json(summary.totalApps))

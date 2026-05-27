@@ -44,7 +44,7 @@ class TransportNodeController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TransportNodeprecheck.id);
             auto item = usecase.getNode(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Transport node not found"); return; }
@@ -56,7 +56,7 @@ class TransportNodeController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             TransportNodeDTO dto;
             dto.nodeId = TransportNodeId(precheck.id);
@@ -86,7 +86,7 @@ class TransportNodeController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TransportNodeprecheck.id);
             auto j = req.json;
             auto action = j.getString("action");
@@ -123,7 +123,7 @@ class TransportNodeController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TransportNodeprecheck.id);
             auto result = usecase.deleteNode(tenantId, id);
             if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node deleted"), 200);

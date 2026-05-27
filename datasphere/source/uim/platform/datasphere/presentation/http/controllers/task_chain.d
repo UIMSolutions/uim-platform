@@ -31,7 +31,7 @@ class TaskChainController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateTaskChainRequest r;
@@ -91,7 +91,7 @@ class TaskChainController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = TaskChainprecheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
@@ -121,7 +121,7 @@ class TaskChainController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = TaskChainprecheck.id);
 

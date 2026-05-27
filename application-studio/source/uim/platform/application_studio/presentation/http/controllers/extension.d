@@ -51,7 +51,7 @@ class ExtensionController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {   
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(precheck.id);
             auto e = usecase.getExtension(tenantId, id);
@@ -64,7 +64,7 @@ class ExtensionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             ExtensionDTO dto;
@@ -80,7 +80,7 @@ class ExtensionController : ManageController {
             dto.iconUrl = j.getString("iconUrl");
             dto.createdBy = UserId(j.getString("createdBy"));
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto result = usecase.createExtension(tenantId, dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
@@ -99,7 +99,7 @@ class ExtensionController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             
@@ -128,7 +128,7 @@ class ExtensionController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             
             auto path = req.requestURI.to!string;
             auto id = ExtensionId(precheck.id);

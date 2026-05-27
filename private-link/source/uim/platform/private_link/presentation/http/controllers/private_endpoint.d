@@ -28,7 +28,7 @@ class PrivateEndpointController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto items = usecase.listEndpoints(tenantId);
     return Json.emptyObject
         .set("items", items.map!(e => e.toJson).array.toJson)
@@ -38,7 +38,7 @@ class PrivateEndpointController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto r = CreatePrivateEndpointRequest();
     r.tenantId = tenantId;
@@ -61,7 +61,7 @@ class PrivateEndpointController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
     auto ep = usecase.getEndpoint(tenantId, id);
     if (ep.id.value.length == 0)
@@ -70,7 +70,7 @@ class PrivateEndpointController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
     auto j = req.json;
     auto r = UpdatePrivateEndpointStatusRequest();
@@ -88,7 +88,7 @@ class PrivateEndpointController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
     auto result = usecase.deleteEndpoint(tenantId, id);
     if (result.hasError()) {
@@ -100,7 +100,7 @@ class PrivateEndpointController : ManageController {
 
   /// POST /api/v1/private-endpoints/:id/approve
   private void handleApprove(HTTPServerRequest req, HTTPServerResponse res) @safe {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     // path: /api/v1/private-endpoints/<id>/approve
     auto path = req.requestURI;
     auto parts = path.split("/");

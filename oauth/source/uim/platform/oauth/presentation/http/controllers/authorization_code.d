@@ -52,7 +52,7 @@ class AuthorizationCodeController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
@@ -69,7 +69,7 @@ class AuthorizationCodeController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             AuthorizationCodeDTO dto;
@@ -101,7 +101,7 @@ class AuthorizationCodeController : ManageController {
 
     protected void handleMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = AuthorizationCodeId(precheck.id);
 
@@ -123,7 +123,7 @@ class AuthorizationCodeController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = AuthorizationCodeId(precheck.id);
             auto result = usecase.deleteCode(tenantId, id);

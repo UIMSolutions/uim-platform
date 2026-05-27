@@ -30,7 +30,7 @@ class RoleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateRoleRequest r;
@@ -56,7 +56,7 @@ class RoleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto roles = usecase.listRoles(tenantId);
       auto jarr = Json.emptyArray;
       foreach (role; roles)
@@ -69,7 +69,7 @@ class RoleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RoleId(extractIdFromPath(req));
       
       auto role = usecase.getRole(tenantId, id);
@@ -85,7 +85,7 @@ class RoleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RoleId(extractIdFromPath(req));
       auto j = req.json;
       UpdateRoleRequest r;
@@ -110,7 +110,7 @@ class RoleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RoleId(extractIdFromPath(req));
       
       auto result = usecase.deleteRole(tenantId, id);

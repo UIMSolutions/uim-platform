@@ -46,7 +46,7 @@ class LabelController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getById(tenantId, LabelId(id));
             if (e.isNull) { writeError(res, 404, "Label not found"); return; }
@@ -62,7 +62,7 @@ class LabelController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateLabelRequest r;
             r.resourceId = j.getString("resourceId");

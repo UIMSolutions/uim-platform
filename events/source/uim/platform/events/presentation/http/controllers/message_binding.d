@@ -42,7 +42,7 @@ class MessageBindingController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getBinding(tenantId, MessageBindingId(id));
             if (e.isNull) { writeError(res, 404, "Message binding not found"); return; }
@@ -54,7 +54,7 @@ class MessageBindingController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             MessageBindingDTO dto;
             dto.bindingId   = MessageBindingId(precheck.id);
@@ -78,7 +78,7 @@ class MessageBindingController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto bindingId = MessageBindingprecheck.id);
             auto j = req.json;
             MessageBindingDTO dto;
@@ -97,7 +97,7 @@ class MessageBindingController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = MessageBindingprecheck.id);
             auto result = usecase.deleteBinding(tenantId, id);
             if (result.hasError)

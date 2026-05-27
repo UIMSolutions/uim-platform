@@ -30,7 +30,7 @@ class TaskCommentController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
@@ -83,7 +83,7 @@ class TaskCommentController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskCommentprecheck.id);
             auto c = usecase.getById(tenantId, id);
             if (c.isNull) {
@@ -123,7 +123,7 @@ class TaskCommentController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskCommentprecheck.id);
             auto result = usecase.deleteTaskComment(tenantId, id);
             if (result.hasError)

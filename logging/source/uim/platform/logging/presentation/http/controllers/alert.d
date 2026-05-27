@@ -90,7 +90,7 @@ class AlertController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     AcknowledgeAlertRequest r;
@@ -122,7 +122,7 @@ class AlertController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     ResolveAlertRequest r;

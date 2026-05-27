@@ -46,7 +46,7 @@ class ServicePlanController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServicePlanId(id));
             if (e.isNull) { writeError(res, 404, "Service plan not found"); return; }
@@ -64,7 +64,7 @@ class ServicePlanController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServicePlanRequest r;
             r.name = j.getString("name");

@@ -36,7 +36,7 @@ class MonitoringController : PlatformController {
 
   override protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listJobSummaries(tenantId);
 
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -54,9 +54,9 @@ class MonitoringController : PlatformController {
 
   override protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getJobSummary(tenantId, id);
       if (summary.jobId.isEmpty) {
         writeError(res, 404, "Job not found");
@@ -71,7 +71,7 @@ class MonitoringController : PlatformController {
   protected void handleJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto jobId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto logs = usecase.getJobLogs(tenantId, jobId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -90,7 +90,7 @@ class MonitoringController : PlatformController {
 
   override protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listProvisionedEntities(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -108,7 +108,7 @@ class MonitoringController : PlatformController {
 
   protected void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject

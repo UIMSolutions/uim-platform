@@ -36,7 +36,7 @@ class GroupController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       auto members = parseMembers(j);
@@ -66,7 +66,7 @@ class GroupController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject
       .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
@@ -80,7 +80,7 @@ class GroupController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto groupId = precheck.id;
       auto group = useCase.getGroup(groupId);
       if (group == Group.init) {
@@ -95,7 +95,7 @@ class GroupController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto groupId = precheck.id;
       auto j = req.json;
       auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
@@ -128,7 +128,7 @@ class GroupController : ManageController {
 
   protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto addReq = AddMemberRequest(tenantId, j.getString("groupId"),
         j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
@@ -148,7 +148,7 @@ class GroupController : ManageController {
 
   override protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto removeReq = RemoveMemberRequest(tenantId, j.getString("groupId"), j.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);

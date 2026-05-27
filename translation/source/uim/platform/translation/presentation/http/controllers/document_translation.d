@@ -29,7 +29,7 @@ class DocumentTranslationController : PlatformController {
     /// Translate document content synchronously — returns translated content in the response.
     protected void handleSyncTranslate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             TranslateDocumentRequest r;

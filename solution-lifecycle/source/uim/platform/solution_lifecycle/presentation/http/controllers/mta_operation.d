@@ -49,7 +49,7 @@ class MtaOperationController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             // /api/v1/slm/operations/{id}  — exclude sub-paths like /poll /abort /logs
             auto id = MtaOperationId(precheck.id);
@@ -63,7 +63,7 @@ class MtaOperationController : ManageController {
 
     protected void handlePoll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             // path: /api/v1/slm/operations/{id}/poll  — strip /poll suffix
             import std.string : indexOf;
@@ -107,7 +107,7 @@ class MtaOperationController : ManageController {
 
     protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/logs")];

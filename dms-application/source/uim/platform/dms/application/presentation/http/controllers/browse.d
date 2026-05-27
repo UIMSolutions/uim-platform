@@ -40,7 +40,7 @@ class BrowseController : PlatformController {
   override protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = FolderId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto contents = usecase.browseFolderContents(tenantId, folderId);
 
       auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
@@ -62,7 +62,7 @@ class BrowseController : PlatformController {
   protected void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = RepositoryId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
       if (summary.repositoryId.isEmpty) {
@@ -86,7 +86,7 @@ class BrowseController : PlatformController {
 
   protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateFavoriteRequest();
       r.tenantId = tenantId;
@@ -110,7 +110,7 @@ class BrowseController : PlatformController {
 
   override protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
       auto items = usecase.getFavorites(tenantId, userId);
 
@@ -129,7 +129,7 @@ class BrowseController : PlatformController {
 
   override protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FavoriteId(precheck.id);
       
       auto result = usecase.deleteFavorite(tenantId, id);

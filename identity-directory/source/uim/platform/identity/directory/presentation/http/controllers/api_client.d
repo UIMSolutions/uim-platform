@@ -32,7 +32,7 @@ class ApiClientController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), getStrings(j,
@@ -61,7 +61,7 @@ class ApiClientController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto clients = useCase.listClients(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(clients.length);

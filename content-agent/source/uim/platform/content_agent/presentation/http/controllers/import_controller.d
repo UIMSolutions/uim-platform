@@ -31,7 +31,7 @@ class ImportController : PlatformController {
 
   protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = StartImportRequest();
       r.tenantId = tenantId;
@@ -59,7 +59,7 @@ class ImportController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto jobs = usecase.listImportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -77,7 +77,7 @@ class ImportController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ImportJobId(precheck.id);
       auto job = usecase.getImportJob(tenantId, id);
       if (job.isNull) {

@@ -48,7 +48,7 @@ class DataQualityScoreController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = DataQualityScoreId(precheck.id);
             auto score = usecase.getDataQualityScore(tenantId, id);
@@ -61,7 +61,7 @@ class DataQualityScoreController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(precheck.id);
@@ -91,7 +91,7 @@ class DataQualityScoreController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             DataQualityScoreDTO dto;
@@ -121,7 +121,7 @@ class DataQualityScoreController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = DataQualityScoreId(precheck.id);
             auto result = usecase.deleteDataQualityScore(tenantId, id);

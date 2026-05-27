@@ -142,7 +142,7 @@ class ApplicationJobController : ManageController {
 
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ApplicationJobId(precheck.id);
 
       auto result = usecase.cancelApplicationJob(tenantId, id);

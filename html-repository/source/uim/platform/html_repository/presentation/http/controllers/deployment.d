@@ -33,7 +33,7 @@ class DeploymentController : PlatformController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       DeployApplicationRequest r;
@@ -59,7 +59,7 @@ class DeploymentController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = getHistory.getByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,9 +84,9 @@ class DeploymentController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "Deployment not found");
         return;

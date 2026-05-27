@@ -36,7 +36,7 @@ class MetricController : ManageController {
 
   protected void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       PushMetricRequest r;
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class MetricController : ManageController {
 
   protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       PushMetricBatchRequest batchReq;
@@ -96,7 +96,7 @@ class MetricController : ManageController {
 
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resourceId = req.params.get("resourceId", "");
       auto metricName = req.params.get("name", "");
 
@@ -121,7 +121,7 @@ class MetricController : ManageController {
 
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
       auto metricName = req.params.get("name", "");
 

@@ -32,7 +32,7 @@ class SituationTemplateController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateSituationTemplateRequest r;
@@ -103,7 +103,7 @@ class SituationTemplateController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = SituationTemplateprecheck.id);
 
             auto t = usecase.getSituationTemplate(tenantId, id);
@@ -138,7 +138,7 @@ class SituationTemplateController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = SituationTemplateprecheck.id);
 
             auto j = req.json;
@@ -173,7 +173,7 @@ class SituationTemplateController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = SituationTemplateprecheck.id);
             auto result = usecase.deleteSituationTemplate(tenantId, id);

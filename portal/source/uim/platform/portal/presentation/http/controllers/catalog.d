@@ -36,7 +36,7 @@ class CatalogController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("title"), j.getString("description"), j.getString("providerId"),
@@ -58,7 +58,7 @@ class CatalogController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto catalogs = useCase.listCatalogs(tenantId);
       auto response = Json.emptyObject
         .set("totalResults", catalogs.length)

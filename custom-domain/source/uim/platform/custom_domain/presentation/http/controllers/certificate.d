@@ -133,7 +133,7 @@ class CertificateController : ManageController {
     }
 
     protected Json uploadChainHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
@@ -169,7 +169,7 @@ class CertificateController : ManageController {
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
@@ -204,7 +204,7 @@ class CertificateController : ManageController {
     }
 
     protected Json deactivateHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         if (tenantId.isNull) return errorResponse("Tenant ID is required", 400);
 
         const path = req.requestURI.to!string;

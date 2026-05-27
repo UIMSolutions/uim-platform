@@ -36,7 +36,7 @@ class UserController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("externalId"), j.getString("userName"), j.parseUserName,
@@ -68,7 +68,7 @@ class UserController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto users = useCase.listUsers(tenantId);
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;
@@ -144,7 +144,7 @@ class UserController : ManageController {
 
   protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto error = useCase.changePassword(j.getString("userId"),
         j.getString("currentPassword"), j.getString("newPassword"));
@@ -163,7 +163,7 @@ class UserController : ManageController {
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto filter = req.params.get("filter", "");
       auto users = useCase.searchUsers(tenantId, filter);
       auto response = Json.emptyObject

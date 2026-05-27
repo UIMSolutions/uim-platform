@@ -38,7 +38,7 @@ class PageController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreatePageRequest(j.getString("siteId"),
         req.headers.get("X-Tenant-Id", ""), j.getString("title"),

@@ -32,7 +32,7 @@ class DatabaseUserController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateDatabaseUserRequest r;
@@ -65,7 +65,7 @@ class DatabaseUserController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto users = usecase.listDatabaseUsers(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -91,7 +91,7 @@ class DatabaseUserController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DatabaseUserprecheck.id);
 
       auto u = usecase.getDatabaseUser(tenantId, id);
@@ -149,7 +149,7 @@ class DatabaseUserController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DatabaseUserprecheck.id);
 
       auto result = usecase.deleteDatabaseUser(tenantId, id);

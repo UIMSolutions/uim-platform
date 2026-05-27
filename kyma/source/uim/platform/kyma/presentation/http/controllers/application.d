@@ -38,7 +38,7 @@ class ApplicationController : ManageController {
 
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       RegisterApplicationRequest r;
       with (r) {
@@ -72,7 +72,7 @@ class ApplicationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto envId = req.params.get("environmentId");
 
       Application[] items = envId.isEmpty 
@@ -93,7 +93,7 @@ class ApplicationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
 
       if (!usecase.hasApplication(tenantId, id)) {
@@ -120,7 +120,7 @@ class ApplicationController : ManageController {
       r.apis = j.toApis;
       r.events = parseEvents(j);
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = usecase.updateApplication(tenantId, id, r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -133,7 +133,7 @@ class ApplicationController : ManageController {
 
   protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
       auto result = usecase.connectApplication(tenantId, id);
       if (result.success)
@@ -147,7 +147,7 @@ class ApplicationController : ManageController {
 
   protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
       auto result = usecase.disconnectApplication(tenantId, id);
       if (result.success)
@@ -161,7 +161,7 @@ class ApplicationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
       auto result = usecase.deleteApplication(tenantId, id);
       if (result.success)

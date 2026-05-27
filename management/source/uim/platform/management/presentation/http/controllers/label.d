@@ -34,7 +34,7 @@ class LabelController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateLabelRequest r;
       r.tenantId = tenantId;
@@ -60,7 +60,7 @@ class LabelController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resourceType = req.params.get("resourceType");
       auto resourceId = req.params.get("resourceId");
       auto key = req.params.get("key");
@@ -85,7 +85,7 @@ class LabelController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto l = usecase.getById(tenantId, id);
       if (l.isNull) {
@@ -99,7 +99,7 @@ class LabelController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto data = precheck.data;
       UpdateLabelRequest r;
@@ -117,7 +117,7 @@ class LabelController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = LabelId(extractId(req.requestURI));
       auto result = usecase.deleteLabel(tenantId, id);
       if (result.success)

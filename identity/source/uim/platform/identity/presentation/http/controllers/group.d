@@ -43,7 +43,7 @@ class GroupController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Groupprecheck.id);
             auto e = usecase.getGroup(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Group not found"); return; }
@@ -53,7 +53,7 @@ class GroupController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             GroupDTO dto;
             dto.groupId = GroupId(precheck.id);
@@ -70,7 +70,7 @@ class GroupController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             GroupDTO dto;
             dto.groupId = Groupprecheck.id);
@@ -86,7 +86,7 @@ class GroupController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Groupprecheck.id);
             auto result = usecase.deleteGroup(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

@@ -35,7 +35,7 @@ class PageTemplateController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreatePageTemplateRequest();
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class PageTemplateController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto templates = useCase.listPageTemplates(tenantId);
       auto arr = templates.map!(t => t.toJson).array.toJson;
 
@@ -79,9 +79,9 @@ class PageTemplateController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto t = useCase.getPageTemplate(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "Page template not found");
@@ -95,7 +95,7 @@ class PageTemplateController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdatePageTemplateRequest();
@@ -122,9 +122,9 @@ class PageTemplateController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deletePageTemplate(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

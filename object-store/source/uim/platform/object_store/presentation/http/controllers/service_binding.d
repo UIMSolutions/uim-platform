@@ -96,7 +96,7 @@ class ServiceBindingController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       // /api/v1/service-bindings/{id}/revoke
       auto path = req.requestURI;
       // import std.string : indexOf;

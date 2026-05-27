@@ -34,7 +34,7 @@ class ApplicationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateAppRequest request;
       request.tenantId = tenantId;
@@ -68,7 +68,7 @@ class ApplicationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto apps = useCase.listApplications(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = apps.length.toJson;
@@ -84,7 +84,7 @@ class ApplicationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       // import std.string : lastIndexOf;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
@@ -111,7 +111,7 @@ class ApplicationController : ManageController {
     try {
       // import std.string : lastIndexOf;
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";

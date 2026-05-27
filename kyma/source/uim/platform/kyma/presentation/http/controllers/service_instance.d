@@ -35,7 +35,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
@@ -68,7 +68,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto nsId = NamespaceId(req.params.get("namespaceId"));
       auto envId = KymaEnvironmentId(req.params.get("environmentId"));
 
@@ -91,7 +91,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto inst = usecase.getServiceInstance(tenantId, id);
       if (inst.isNull) {
@@ -106,7 +106,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(tenantId, extractIdFromPath(
           req.requestURI));
       auto j = req.json;
@@ -133,7 +133,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(
         precheck.id);
       auto result = usecase.deleteServiceInstance(tenantId, id);

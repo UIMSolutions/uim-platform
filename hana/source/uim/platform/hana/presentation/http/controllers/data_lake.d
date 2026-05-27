@@ -31,7 +31,7 @@ class DataLakeController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDataLakeRequest r;
       r.tenantId = tenantId;
@@ -60,7 +60,7 @@ class DataLakeController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto lakes = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -88,7 +88,7 @@ class DataLakeController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto d = usecase.getById(tenantId, id);
       if (d.isNull) {
@@ -142,7 +142,7 @@ class DataLakeController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataLakeprecheck.id);
       auto result = usecase.deleteDataLake(id);
       if (result.hasError)

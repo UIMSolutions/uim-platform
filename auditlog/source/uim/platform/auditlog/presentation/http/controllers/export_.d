@@ -33,7 +33,7 @@ class ExportController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto jobs = useCase.listExports(tenantId);
     auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -46,7 +46,7 @@ class ExportController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
 
     CreateExportJobRequest jobRequest = CreateExportJobRequest();
@@ -80,7 +80,7 @@ class ExportController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     ExportJobId jobId = ExportJobId(precheck.id);
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto job = useCase.getExport(tenantId, jobId);
     if (job.isNull) {
@@ -95,7 +95,7 @@ class ExportController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     ExportJobId jobId = ExportJobId(precheck.id);
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto result = useCase.deleteExport(tenantId, jobId);
     if (result.hasError()) {

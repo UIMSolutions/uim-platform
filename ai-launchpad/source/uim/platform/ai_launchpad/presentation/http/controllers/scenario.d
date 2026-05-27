@@ -32,7 +32,7 @@ class ScenarioController : ManageController {
 
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -62,7 +62,7 @@ class ScenarioController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto scenarios = connectionId.isEmpty
@@ -83,7 +83,7 @@ class ScenarioController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Scenarioprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -104,7 +104,7 @@ class ScenarioController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Scenarioprecheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 

@@ -36,7 +36,7 @@ class ContentController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateContentRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -80,7 +80,7 @@ class ContentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto query = req.params.get("q", "");
       ContentItem[] items;
@@ -104,9 +104,9 @@ class ContentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto item = useCase.getContent(tenantId, id);
       if (item.isNull) {
         writeError(res, 404, "Content not found");
@@ -120,7 +120,7 @@ class ContentController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateContentRequest();
       r.id = precheck.id;
@@ -156,9 +156,9 @@ class ContentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       useCase.deleteContent(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {
@@ -168,9 +168,9 @@ class ContentController : ManageController {
 
   protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.publishContent(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

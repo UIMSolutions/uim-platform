@@ -31,7 +31,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
@@ -55,7 +55,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -79,9 +79,9 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -112,10 +112,10 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -140,7 +140,7 @@ class ServiceInstanceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       if (id.isNull) {
         writeError(res, 404, "Service instance not found");
         return;

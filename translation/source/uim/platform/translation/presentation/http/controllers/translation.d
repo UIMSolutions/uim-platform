@@ -26,7 +26,7 @@ class TranslationController : PlatformController {
 
     protected void handleTranslate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             TranslateTextRequest r;

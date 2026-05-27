@@ -43,7 +43,7 @@ class ApplicationController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Applicationprecheck.id);
             auto e = usecase.getApplication(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Application not found"); return; }
@@ -53,7 +53,7 @@ class ApplicationController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(precheck.id);
@@ -76,7 +76,7 @@ class ApplicationController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             ApplicationDTO dto;
             dto.applicationId = Applicationprecheck.id);
@@ -97,7 +97,7 @@ class ApplicationController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Applicationprecheck.id);
             auto result = usecase.deleteApplication(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

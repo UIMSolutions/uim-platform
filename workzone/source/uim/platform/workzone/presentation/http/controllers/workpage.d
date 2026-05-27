@@ -35,7 +35,7 @@ class WorkpageController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateWorkpageRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -62,7 +62,7 @@ class WorkpageController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = pages.map!(p => p.toJson).array.toJson;
@@ -80,9 +80,9 @@ class WorkpageController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto page = useCase.getWorkpage(tenantId, id);
       if (page.isNull) {
         writeError(res, 404, "Page not found");
@@ -96,7 +96,7 @@ class WorkpageController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateWorkpageRequest();
       r.id = precheck.id;
@@ -122,9 +122,9 @@ class WorkpageController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteWorkpage(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

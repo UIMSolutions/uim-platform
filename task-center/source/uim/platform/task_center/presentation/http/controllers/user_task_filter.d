@@ -31,7 +31,7 @@ class UserTaskFilterController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateUserTaskFilterRequest r;
             r.tenantId = tenantId;
@@ -91,7 +91,7 @@ class UserTaskFilterController : ManageController {
             if (path.endsWith("/default"))
                 return;
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = UserTaskFilterId(precheck.id);
             auto f = usecase.getUserTaskFilter(tenantId, id);
             if (f.isNull) {
@@ -139,7 +139,7 @@ class UserTaskFilterController : ManageController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
             auto id = UserTaskFilterId(extractIdFromPath(stripped));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
             if (result.hasError)
@@ -159,7 +159,7 @@ class UserTaskFilterController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = UserTaskFilterprecheck.id);
             auto result = usecase.deleteUserTaskFilter(tenantId, id);
             if (result.hasError)

@@ -37,7 +37,7 @@ class ProviderController : ManageController {
 
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = RegisterProviderRequest();
       r.tenantId = tenantId;
@@ -65,7 +65,7 @@ class ProviderController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto providers = usecase.listProviders(tenantId);
 
       auto arr = providers.map!(p => p.toJson).array.toJson;
@@ -83,7 +83,7 @@ class ProviderController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto provider = usecase.getProvider(id);
       if (provider.isNull) {
@@ -98,7 +98,7 @@ class ProviderController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateProviderRequest();
@@ -124,7 +124,7 @@ class ProviderController : ManageController {
 
   protected void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deregisterProvider(id);
       if (result.hasError)
@@ -144,7 +144,7 @@ class ProviderController : ManageController {
 
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto providerId = j.getString("providerId");
 

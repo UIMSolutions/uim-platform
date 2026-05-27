@@ -36,7 +36,7 @@ class TaskController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateTaskRequest();
       r.tenantId = tenantId;
@@ -80,7 +80,7 @@ class TaskController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto assigneeId = AssigneeId(req.params.get("assigneeId", ""));
       auto tasks = useCase.listByAssignee(tenantId, assigneeId);
       auto arr = tasks.map!(t => t.toJson).array.toJson;
@@ -98,9 +98,9 @@ class TaskController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto t = useCase.getTask(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "WZTask not found");
@@ -114,7 +114,7 @@ class TaskController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateTaskRequest();
       r.id = precheck.id;
@@ -160,9 +160,9 @@ class TaskController : ManageController {
 
   protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.completeTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -180,9 +180,9 @@ class TaskController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

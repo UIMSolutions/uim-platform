@@ -31,7 +31,7 @@ class AuditController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto events = useCase.listEvents(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(events.length);

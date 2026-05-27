@@ -35,7 +35,7 @@ class BuildpackController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateBuildpackRequest();
       r.tenantId = tenantId;
@@ -61,7 +61,7 @@ class BuildpackController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = useCase.listBuildpacks(tenantId);
 
       auto arr = items.map!(bp => bp.toJson()).array.toJson;
@@ -79,7 +79,7 @@ class BuildpackController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto bp = useCase.getBuildpack(tenantId, buildpackId);
       if (bp.isNull) {
         writeError(res, 404, "Buildpack not found");
@@ -122,7 +122,7 @@ class BuildpackController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto buildpackId = BuildpackId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteBuildpack(tenantId, buildpackId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

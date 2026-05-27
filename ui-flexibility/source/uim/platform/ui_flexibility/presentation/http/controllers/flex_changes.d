@@ -34,7 +34,7 @@ class FlexChangesController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
@@ -61,7 +61,7 @@ class FlexChangesController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       FlexChange[] changes;
       auto appParam = req.query.get("appId", "");
       if (appParam.length > 0)
@@ -78,7 +78,7 @@ class FlexChangesController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexChangeprecheck.id);
       auto c = usecase.getChange(tenantId, id);
       if (c.isNull) { writeError(res, 404, "FlexChange not found"); return; }
@@ -90,7 +90,7 @@ class FlexChangesController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexChangeprecheck.id);
       auto j = req.json;
       UpdateFlexChangeRequest r;
@@ -113,7 +113,7 @@ class FlexChangesController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexChangeprecheck.id);
       auto result = usecase.deleteChange(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

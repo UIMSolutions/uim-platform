@@ -33,7 +33,7 @@ class DataSubjectController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDataSubjectRequest r;
       r.tenantId = tenantId;
@@ -59,7 +59,7 @@ class DataSubjectController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
       DataSubject[] items = typeParam.length > 0
@@ -80,7 +80,7 @@ class DataSubjectController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataSubjectId(precheck.id);
 
       auto entry = usecase.getSubject(tenantId, id);
@@ -95,7 +95,7 @@ class DataSubjectController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       UpdateDataSubjectRequest r;
       r.id = DataSubjectId(precheck.id);
@@ -122,7 +122,7 @@ class DataSubjectController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataSubjectId(precheck.id);
 
       usecase.deleteSubject(tenantId, id);

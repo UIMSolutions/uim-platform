@@ -36,7 +36,7 @@ class ThemeController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateThemeRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("name"), j.getString("description"), jsonEnum!ThemeMode(j,
@@ -59,7 +59,7 @@ class ThemeController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto themes = useCase.listThemes(tenantId);
       auto response = Json.emptyObject
         .set("totalResults", themes.length)
@@ -73,7 +73,7 @@ class ThemeController : ManageController {
 
   override protected void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto theme = useCase.getDefaultTheme(tenantId);
       if (theme == Theme.init) {
         writeApiError(res, 404, "No default theme found");

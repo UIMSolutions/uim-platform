@@ -35,7 +35,7 @@ class DocumentController : PlatformController {
 
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UploadDocumentRequest r;
@@ -87,7 +87,7 @@ class DocumentController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
@@ -105,7 +105,7 @@ class DocumentController : PlatformController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
@@ -123,7 +123,7 @@ class DocumentController : PlatformController {
 
   protected void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       ConfirmDocumentRequest r;

@@ -33,7 +33,7 @@ class AnonymizationConfigController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateAnonymizationConfigRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class AnonymizationConfigController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listConfigs(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -74,7 +74,7 @@ class AnonymizationConfigController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AnonymizationConfigId(precheck.id);
 
       auto entry = usecase.getConfig(tenantId, id);
@@ -89,7 +89,7 @@ class AnonymizationConfigController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
       r.configId = AnonymizationConfigId(precheck.id);
@@ -113,7 +113,7 @@ class AnonymizationConfigController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AnonymizationConfigId(precheck.id);
 
       auto result = usecase.activateConfig(tenantId, id);
@@ -130,7 +130,7 @@ class AnonymizationConfigController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AnonymizationConfigId(precheck.id);
 
       usecase.deleteConfig(tenantId, id);

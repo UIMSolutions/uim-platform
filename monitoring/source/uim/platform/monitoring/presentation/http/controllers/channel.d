@@ -36,7 +36,7 @@ class ChannelController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateNotificationChannelRequest r;
       r.tenantId = tenantId;
@@ -71,7 +71,7 @@ class ChannelController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto channels = usecase.listChannels(tenantId);
       auto arr = channels.map!(channel => channel.toJson).array.toJson;
 
@@ -88,7 +88,7 @@ class ChannelController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = NotificationChannelId(precheck.id);
       auto ch = usecase.getChannel(tenantId, id);
       if (ch.isNull) {
@@ -103,7 +103,7 @@ class ChannelController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = NotificationChannelId(precheck.id);
       auto j = req.json;
       
@@ -138,7 +138,7 @@ class ChannelController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = NotificationChannelId(precheck.id);
 
       auto result = usecase.deleteChannel(tenantId, id);

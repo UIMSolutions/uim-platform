@@ -41,7 +41,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto r = CreateObjectRequest();
 
@@ -69,7 +69,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto bucketId = BucketId(extractBucketIdFromPath(req.requestURI));
     auto prefix = queryParam(req, "prefix");
 
@@ -100,7 +100,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = StorageObjectId(precheck.id);
     // Check if this is a versions request
     if (id.value == "versions" || id.value == "copy")
@@ -154,7 +154,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = extractIdFromPath(precheck.path);
 
     auto result = usecase.deleteObject(tenantId, id);
@@ -174,7 +174,7 @@ class ObjectController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto r = CopyObjectRequest();
     r.tenantId = tenantId;

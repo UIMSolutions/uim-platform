@@ -34,7 +34,7 @@ class SectionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateSectionRequest(j.getString("pageId"),
         req.headers.get("X-Tenant-Id", ""), j.getString("title"), jsonInt(j,

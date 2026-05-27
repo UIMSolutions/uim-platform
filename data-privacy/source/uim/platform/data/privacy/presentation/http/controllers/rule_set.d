@@ -33,7 +33,7 @@ class RuleSetController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateRuleSetRequest r;
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class RuleSetController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listRuleSets(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -74,7 +74,7 @@ class RuleSetController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RuleSetId(precheck.id);
 
       auto entry = usecase.getRuleSet(tenantId, id);
@@ -89,7 +89,7 @@ class RuleSetController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateRuleSetRequest r;
@@ -114,7 +114,7 @@ class RuleSetController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RuleSetId(precheck.id);
 
       auto result = usecase.activateRuleSet(tenantId, id);
@@ -132,7 +132,7 @@ class RuleSetController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = RuleSetId(precheck.id);
 
       usecase.deleteRuleSet(tenantId, id);

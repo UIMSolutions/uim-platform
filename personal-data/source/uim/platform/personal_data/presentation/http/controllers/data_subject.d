@@ -33,7 +33,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
@@ -88,7 +88,7 @@ class DataSubjectController : ManageController {
 
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto params = req.queryParams();
             auto firstName = params.get("firstName", "");
             auto lastName = params.get("lastName", "");
@@ -116,7 +116,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             if (path.length > 6 && path[$ - 6 .. $] == "/block")
                 return;
@@ -138,7 +138,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             UpdateDataSubjectRequest request;
             request.tenantId = tenantId;
@@ -170,7 +170,7 @@ class DataSubjectController : ManageController {
 
     protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/block"
             auto id = DataSubjectId(extractIdFromPath(stripped));
@@ -193,7 +193,7 @@ class DataSubjectController : ManageController {
 
     protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/erase"
             auto id = DataSubjectId(extractIdFromPath(stripped));
@@ -216,7 +216,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = DataSubjectprecheck.id);
             auto result = usecase.deleteDataSubject(tenantId, id);
             if (result.hasError)

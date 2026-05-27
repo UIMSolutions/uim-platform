@@ -36,7 +36,7 @@ class ScheduleController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
@@ -101,7 +101,7 @@ class ScheduleController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
@@ -120,7 +120,7 @@ class ScheduleController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             auto j = req.json;
@@ -157,7 +157,7 @@ class ScheduleController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
 
@@ -175,7 +175,7 @@ class ScheduleController : ManageController {
 
     protected void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto jobId = JobId(extractJobIdFromSchedulePath(path));
             auto j = req.json;
@@ -203,7 +203,7 @@ class ScheduleController : ManageController {
 
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto query = req.params.get("q", "");
 
             auto schedules = usecase.searchSchedules(query, tenantId, query);

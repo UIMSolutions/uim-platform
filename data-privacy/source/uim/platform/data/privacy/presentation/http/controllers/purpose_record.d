@@ -33,7 +33,7 @@ class PurposeRecordController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreatePurposeRecordRequest r;
@@ -62,7 +62,7 @@ class PurposeRecordController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listRecords(tenantId);
       auto arr = items.map!(record => record.toJson).array.toJson;
@@ -79,7 +79,7 @@ class PurposeRecordController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto recordId = PurposeRecordId(precheck.id);
 
       auto record = usecase.getRecord(tenantId, recordId);
@@ -94,7 +94,7 @@ class PurposeRecordController : ManageController {
 
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       DeactivatePurposeRecordRequest r;
       r.tenantId = tenantId;
       r.recordId = PurposeRecordId(precheck.id);
@@ -113,7 +113,7 @@ class PurposeRecordController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto recordId = PurposeRecordId(precheck.id);
 
       usecase.deleteRecord(tenantId, recordId);

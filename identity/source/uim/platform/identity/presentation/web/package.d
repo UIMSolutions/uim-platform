@@ -84,7 +84,7 @@ class IdentityWebController {
 
     private void handleUsers(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto users = userUseCase.listUsers(tenantId);
             res.writeBody(view.renderUserList(users), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
         } catch (Exception e) {
@@ -94,7 +94,7 @@ class IdentityWebController {
 
     private void handleGroups(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto groups = groupUseCase.listGroups(tenantId);
             res.writeBody(view.renderGroupList(groups), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
         } catch (Exception e) {
@@ -104,7 +104,7 @@ class IdentityWebController {
 
     private void handleApplications(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto apps = appUseCase.listApplications(tenantId);
             res.writeBody(view.renderApplicationList(apps), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
         } catch (Exception e) {

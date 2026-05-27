@@ -29,7 +29,7 @@ class ConfigurationController : ManageController {
   }
 
   protected override Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
@@ -89,7 +89,7 @@ class ConfigurationController : ManageController {
   }
 
   protected override Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = Configurationprecheck.id);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
@@ -111,7 +111,7 @@ class ConfigurationController : ManageController {
   }
 
   protected override Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = Configurationprecheck.id);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 

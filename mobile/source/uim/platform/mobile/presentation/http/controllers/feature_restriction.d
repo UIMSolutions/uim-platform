@@ -33,7 +33,7 @@ class FeatureRestrictionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
@@ -63,7 +63,7 @@ class FeatureRestrictionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
@@ -88,7 +88,7 @@ class FeatureRestrictionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.get(id);
       if (result.hasError)
@@ -118,7 +118,7 @@ class FeatureRestrictionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateFeatureRestrictionRequest r;
@@ -148,7 +148,7 @@ class FeatureRestrictionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FeatureRestrictionprecheck.id);
       auto result = usecase.deleteFeatureRestriction(id);
       if (result.hasError)
@@ -164,7 +164,7 @@ class FeatureRestrictionController : ManageController {
 
   protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto featureId = j.getString("featureId");
       auto userId = j.getString("userId");

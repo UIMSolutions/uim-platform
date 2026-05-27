@@ -51,7 +51,7 @@ class SkillController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = SkillId(precheck.id);
             auto e = usecase.getSkill(tenantId, id);
@@ -64,7 +64,7 @@ class SkillController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             SkillDTO dto;
             dto.skillId = SkillId(precheck.id);
@@ -98,7 +98,7 @@ class SkillController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             SkillDTO dto;
@@ -129,7 +129,7 @@ class SkillController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = SkillId(precheck.id);
             auto result = usecase.deleteSkill(tenantId, id);

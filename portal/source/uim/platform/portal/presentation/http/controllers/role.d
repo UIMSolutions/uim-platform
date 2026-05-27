@@ -35,7 +35,7 @@ class RoleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("name"), j.getString("description"),
@@ -56,7 +56,7 @@ class RoleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto roles = useCase.listRoles(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(roles.length);
@@ -100,7 +100,7 @@ class RoleController : ManageController {
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto assignReq = AssignRoleRequest(j.getString("roleId"), getStrings(j,
           "userIds"), getStrings(j, "groupIds"),);

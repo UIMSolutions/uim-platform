@@ -37,7 +37,7 @@ class SiteController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreateSiteRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("name"), j.getString("description"),
@@ -59,7 +59,7 @@ class SiteController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto sites = useCase.listSites(tenantId);
       auto response = Json.emptyObject
       .set("totalResults", sites.length)

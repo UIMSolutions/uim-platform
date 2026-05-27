@@ -37,7 +37,7 @@ class PermissionController : ManageController {
 
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreatePermissionRequest();
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class PermissionController : ManageController {
   override protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto resourceId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
       auto resourceType = resourceTypeStr.to!ResourceType;
 
@@ -88,7 +88,7 @@ class PermissionController : ManageController {
   override protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = UserId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = permissions.listByUser(tenantId, userId);
       auto arr = items.map!(item => item.toJson).array.toJson;
@@ -107,7 +107,7 @@ class PermissionController : ManageController {
 
   protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto resourceId = j.getString("resourceId");
       auto resourceType = j.getString("resourceType").to!ResourceType;
@@ -133,7 +133,7 @@ class PermissionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PermissionId(precheck.id);
       auto j = req.json;
       auto r = UpdatePermissionRequest();
@@ -159,7 +159,7 @@ class PermissionController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PermissionId(precheck.id);
       
       auto result = permissions.revokePermission(tenantId, id);

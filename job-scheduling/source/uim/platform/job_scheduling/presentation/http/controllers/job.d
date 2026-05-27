@@ -38,7 +38,7 @@ class JobController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateJobRequest r;
@@ -109,7 +109,7 @@ class JobController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Jobprecheck.id);
 
             auto job = usecase.getJob(tenantId, id);
@@ -127,7 +127,7 @@ class JobController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto jobId = Jobprecheck.id);
             auto j = req.json;
 
@@ -160,7 +160,7 @@ class JobController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto jobId = Jobprecheck.id);
 
             // Delete all schedules first
@@ -179,7 +179,7 @@ class JobController : ManageController {
 
     protected void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto resp = Json.emptyObject
                 .set("total", usecase.countJobs(tenantId))
@@ -194,7 +194,7 @@ class JobController : ManageController {
 
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto query = req.params.get("q", "");
 
             auto jobs = usecase.searchJobs(tenantId, query);

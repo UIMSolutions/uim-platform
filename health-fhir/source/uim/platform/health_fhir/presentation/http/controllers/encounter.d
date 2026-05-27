@@ -51,7 +51,7 @@ class EncounterController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateEncounterRequest r;
       r.tenantId    = tenantId;
@@ -74,7 +74,7 @@ class EncounterController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       Encounter[] encounters;
       auto patientParam = req.query.get("subject", "");
       if (patientParam.length > 0)
@@ -95,7 +95,7 @@ class EncounterController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Encounterprecheck.id);
       auto enc = usecase.getEncounter(tenantId, id);
       if (enc.isNull) { writeFhirError(res, 404, "Encounter not found"); return; }
@@ -107,7 +107,7 @@ class EncounterController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Encounterprecheck.id);
       auto j = req.json;
       UpdateEncounterRequest r;
@@ -131,7 +131,7 @@ class EncounterController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Encounterprecheck.id);
       auto result = usecase.deleteEncounter(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

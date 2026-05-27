@@ -36,7 +36,7 @@ class GlobalAccountController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateGlobalAccountRequest r;
       r.displayName = j.getString("displayName");
@@ -88,7 +88,7 @@ class GlobalAccountController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       if (!usecase.existsById(id)) {
         writeError(res, 404, "Global account not found");
@@ -103,7 +103,7 @@ class GlobalAccountController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto data = precheck.data;
       UpdateGlobalAccountRequest request;
@@ -124,7 +124,7 @@ class GlobalAccountController : ManageController {
 
   protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.suspend(id);
       if (result.success)
@@ -137,7 +137,7 @@ class GlobalAccountController : ManageController {
 
   protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto result = usecase.reactivate(id);
       if (result.success)
@@ -150,7 +150,7 @@ class GlobalAccountController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = GlobalAccountId(extractId(req.requestURI));
       auto result = usecase.deleteGlobalAccount(id);
       if (result.success)

@@ -37,7 +37,7 @@ class RunLogController : ManageController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto ids = extractIds(path);
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto logs = usecase.listRunLogs(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
 
@@ -60,7 +60,7 @@ class RunLogController : ManageController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto jobId = JobId(extractJobId(path));
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto logs = usecase.listRunLogs(tenantId, jobId);
 
@@ -78,7 +78,7 @@ class RunLogController : ManageController {
 
     override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto runLogId = RunLogId(precheck.id);
             auto j = req.json;

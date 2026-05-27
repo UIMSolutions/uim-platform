@@ -34,7 +34,7 @@ class FlexVersionsController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFlexVersionRequest r;
       r.tenantId    = tenantId;
@@ -57,7 +57,7 @@ class FlexVersionsController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       // Path: /keyuser/v2/versions/{id}/activate — extract id from segment before /activate
       auto fullPath = req.requestURI.to!string;
       import std.string : lastIndexOf;
@@ -83,7 +83,7 @@ class FlexVersionsController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       FlexVersion[] versions;
       auto appParam = req.query.get("appId", "");
       if (appParam.length > 0)
@@ -100,7 +100,7 @@ class FlexVersionsController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexVersionprecheck.id);
       auto v = usecase.getVersion(tenantId, id);
       if (v.isNull) { writeError(res, 404, "FlexVersion not found"); return; }
@@ -112,7 +112,7 @@ class FlexVersionsController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexVersionprecheck.id);
       auto j = req.json;
       UpdateFlexVersionRequest r;
@@ -133,7 +133,7 @@ class FlexVersionsController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexVersionprecheck.id);
       auto result = usecase.deleteVersion(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

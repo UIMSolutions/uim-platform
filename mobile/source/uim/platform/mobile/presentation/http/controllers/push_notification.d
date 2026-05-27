@@ -31,7 +31,7 @@ class PushNotificationController : ManageController {
 
   protected void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       SendPushNotificationRequest r;
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class PushNotificationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
@@ -86,7 +86,7 @@ class PushNotificationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.get(id);
       if (result.hasError)
@@ -119,7 +119,7 @@ class PushNotificationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PushNotificationprecheck.id);
       auto result = usecase.deletePushNotification(id);
       if (result.hasError)

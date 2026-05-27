@@ -37,7 +37,7 @@ class PackageController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreatePackageRequest();
       r.tenantId = tenantId;
@@ -68,7 +68,7 @@ class PackageController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto packages = usecase.listPackages(tenantId);
 
       auto arr = packages.map!(p => p.toJson).array.toJson;
@@ -86,7 +86,7 @@ class PackageController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PackageId(precheck.id);
       auto pkg = usecase.getPackage(id);
       if (pkg.isNull) {
@@ -104,7 +104,7 @@ class PackageController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PackageId(precheck.id);
       auto j = req.json;
       auto r = UpdatePackageRequest();
@@ -131,7 +131,7 @@ class PackageController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PackageId(precheck.id);
       auto result = usecase.deletePackage(id);
       if (result.hasError)
@@ -151,7 +151,7 @@ class PackageController : ManageController {
 
   protected void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = AssemblePackageRequest();
       r.packageId = j.getString("packageId");

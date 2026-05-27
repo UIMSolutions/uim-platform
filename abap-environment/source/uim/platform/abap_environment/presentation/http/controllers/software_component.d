@@ -34,7 +34,7 @@ class SoftwareComponentController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto systemId = SystemInstanceId(req.json.getString("systemInstanceId"));
     if (systemId.isEmpty)
       systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
@@ -51,7 +51,7 @@ class SoftwareComponentController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
 
     CreateSoftwareComponentRequest request;
@@ -82,7 +82,7 @@ class SoftwareComponentController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = SoftwareComponentId(precheck.id);
 
     auto comp = usecase.getSoftwareComponent(tenantId, id);
@@ -103,7 +103,7 @@ class SoftwareComponentController : ManageController {
 
   protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SoftwareComponentId(precheck.id);
       auto j = req.json;
       
@@ -131,7 +131,7 @@ class SoftwareComponentController : ManageController {
 
   protected void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SoftwareComponentId(precheck.id);
       auto j = req.json;
 
@@ -156,7 +156,7 @@ class SoftwareComponentController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = SoftwareComponentId(precheck.id);
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);

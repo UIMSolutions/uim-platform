@@ -35,7 +35,7 @@ class FunctionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFunctionRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -75,7 +75,7 @@ class FunctionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
 
@@ -99,7 +99,7 @@ class FunctionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       if (!usecase.hasFunction(ServerlessFunctionId(tenantId, id))) {
         writeError(res, 404, "Function not found");
@@ -114,7 +114,7 @@ class FunctionController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateFunctionRequest r;
@@ -145,7 +145,7 @@ class FunctionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteFunction(ServerlessFunctionId(tenantId, id));
       if (result.success)

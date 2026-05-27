@@ -36,7 +36,7 @@ class AlertRuleController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = tenantId;
@@ -72,7 +72,7 @@ class AlertRuleController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto rules = usecase.listRules(tenantId);
 
       auto arr = rules.map!(r => r.toJson()).array.toJson;
@@ -90,7 +90,7 @@ class AlertRuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AlertRuleId(precheck.id);
       auto r = usecase.getRule(tenantId, id);
       if (r.isNull) {
@@ -105,7 +105,7 @@ class AlertRuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AlertRuleId(precheck.id);
       auto j = req.json;
 
@@ -140,7 +140,7 @@ class AlertRuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = AlertRuleId(precheck.id);
       auto result = usecase.deleteRule(tenantId, id);
       if (result.hasError)

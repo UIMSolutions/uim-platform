@@ -43,7 +43,7 @@ class MessagingServiceController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getService(tenantId, MessagingServiceId(id));
             if (e.isNull) { writeError(res, 404, "Messaging service not found"); return; }
@@ -55,7 +55,7 @@ class MessagingServiceController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             MessagingServiceDTO dto;
             dto.serviceId   = MessagingServiceId(precheck.id);
@@ -106,7 +106,7 @@ class MessagingServiceController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = MessagingServiceprecheck.id);
             auto result = usecase.deleteService(tenantId, id);
             if (result.hasError)

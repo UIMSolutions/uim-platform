@@ -42,7 +42,7 @@ class QueueController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getQueue(tenantId, QueueId(id));
             if (e.isNull) { writeError(res, 404, "Queue not found"); return; }
@@ -54,7 +54,7 @@ class QueueController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             QueueDTO dto;
             dto.queueId            = QueueId(precheck.id);
@@ -84,7 +84,7 @@ class QueueController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto queueId  = Queueprecheck.id);
             auto j = req.json;
             QueueDTO dto;
@@ -107,7 +107,7 @@ class QueueController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Queueprecheck.id);
             auto result = usecase.deleteQueue(tenantId, id);
             if (result.hasError)

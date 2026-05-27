@@ -46,7 +46,7 @@ class OperationController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Operationprecheck.id);
 
             auto e = usecase.getOperation(tenantId, (id));
@@ -66,7 +66,7 @@ class OperationController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
 
             CreateOperationRequest r;
@@ -86,7 +86,7 @@ class OperationController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Operationprecheck.id);
             auto data = precheck.data;
             UpdateOperationRequest r;
@@ -105,7 +105,7 @@ class OperationController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Operationprecheck.id);
 
             auto result = usecase.deleteOperation(tenantId, id);

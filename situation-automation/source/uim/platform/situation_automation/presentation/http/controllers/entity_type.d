@@ -32,7 +32,7 @@ class EntityTypeController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             
             CreateEntityTypeRequest r;
@@ -93,7 +93,7 @@ class EntityTypeController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto entityTypeId = EntityTypeprecheck.id);
 
             auto et = usecase.getEntityType(tenantId, entityTypeId);
@@ -122,7 +122,7 @@ class EntityTypeController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             
             UpdateEntityTypeRequest r;
@@ -151,7 +151,7 @@ class EntityTypeController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = EntityTypeprecheck.id);
 
             auto result = usecase.deleteEntityType(tenantId, id);

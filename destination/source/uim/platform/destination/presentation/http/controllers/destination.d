@@ -33,7 +33,7 @@ class DestinationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDestinationRequest r;
       r.tenantId = tenantId;
@@ -92,7 +92,7 @@ class DestinationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto instanceId = ServiceInstanceId(req.params.get("serviceInstanceId", ""));
 
@@ -115,7 +115,7 @@ class DestinationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationId(precheck.id);
 
       auto d = usecase.getDestination(tenantId, id);
@@ -131,7 +131,7 @@ class DestinationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationId(precheck.id);
       auto j = req.json;
 
@@ -178,7 +178,7 @@ class DestinationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DestinationId(precheck.id);
       
       auto result = usecase.deleteDestination(tenantId, id);

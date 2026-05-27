@@ -31,7 +31,7 @@ class SchemaController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateSchemaRequest r;
       r.tenantId = tenantId;
@@ -59,7 +59,7 @@ class SchemaController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto schemas = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -87,7 +87,7 @@ class SchemaController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto s = usecase.getById(tenantId, id);
       if (s.isNull) {
@@ -141,7 +141,7 @@ class SchemaController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Schemaprecheck.id);
       auto result = usecase.deleteSchema(id);
       if (result.hasError)

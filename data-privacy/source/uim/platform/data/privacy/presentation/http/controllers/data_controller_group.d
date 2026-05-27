@@ -32,7 +32,7 @@ class DataControllerGroupController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateDataControllerGroupRequest r;
       r.tenantId = tenantId;
@@ -55,7 +55,7 @@ class DataControllerGroupController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listGroups(tenantId);
 
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -72,7 +72,7 @@ class DataControllerGroupController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataControllerGroupId(precheck.id);
 
       auto entry = usecase.getGroup(tenantId, id);
@@ -87,7 +87,7 @@ class DataControllerGroupController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataControllerGroupId(precheck.id);
       auto j = req.json;
 
@@ -113,7 +113,7 @@ class DataControllerGroupController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DataControllerGroupId(precheck.id);
 
       usecase.deleteGroup(tenantId, id);

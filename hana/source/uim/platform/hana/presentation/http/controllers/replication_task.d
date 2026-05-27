@@ -32,7 +32,7 @@ class ReplicationTaskController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateReplicationTaskRequest r;
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class ReplicationTaskController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto tasks = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -91,7 +91,7 @@ class ReplicationTaskController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto t = usecase.getById(tenantId, id);
       if (t.isNull) {
@@ -153,7 +153,7 @@ class ReplicationTaskController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ReplicationTaskprecheck.id);
       auto result = usecase.deleteReplicationTask(id);
       if (result.hasError)

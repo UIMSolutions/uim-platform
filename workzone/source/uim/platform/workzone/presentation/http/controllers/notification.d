@@ -36,7 +36,7 @@ class NotificationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateNotificationRequest();
       r.tenantId = tenantId;
@@ -76,7 +76,7 @@ class NotificationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto recipientId = req.params.get("recipientId", "");
       auto unreadOnly = req.params.get("unread", "") == "true";
 
@@ -101,9 +101,9 @@ class NotificationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto n = useCase.getNotification(tenantId, id);
       if (n.isNull) {
         writeError(res, 404, "Notification not found");
@@ -117,9 +117,9 @@ class NotificationController : ManageController {
 
   protected void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.markAsRead(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -137,9 +137,9 @@ class NotificationController : ManageController {
 
   protected void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -157,9 +157,9 @@ class NotificationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       useCase.deleteNotification(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {

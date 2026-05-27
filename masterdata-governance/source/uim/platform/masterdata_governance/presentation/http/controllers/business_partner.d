@@ -48,7 +48,7 @@ class BusinessPartnerController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = BusinessPartnerId(precheck.id);
             auto bp = usecase.getBusinessPartner(tenantId, id);
@@ -61,7 +61,7 @@ class BusinessPartnerController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             BusinessPartnerDTO dto;
             dto.businessPartnerId = BusinessPartnerId(precheck.id);
@@ -119,7 +119,7 @@ class BusinessPartnerController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             BusinessPartnerDTO dto;
@@ -160,7 +160,7 @@ class BusinessPartnerController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = BusinessPartnerId(precheck.id);
             auto result = usecase.deleteBusinessPartner(tenantId, id);

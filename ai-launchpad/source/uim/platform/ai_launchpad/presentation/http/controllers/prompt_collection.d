@@ -33,7 +33,7 @@ class PromptCollectionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreatePromptCollectionRequest r;
@@ -60,7 +60,7 @@ class PromptCollectionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto collections = workspaceId.isEmpty
@@ -82,7 +82,7 @@ class PromptCollectionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PromptCollectionprecheck.id);
 
       auto c = usecase.getCollection(tenantId, id);
@@ -99,7 +99,7 @@ class PromptCollectionController : ManageController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PromptCollectionprecheck.id);
       auto j = req.json;
 
@@ -127,7 +127,7 @@ class PromptCollectionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = PromptCollectionprecheck.id);
 
       auto result = usecase.deleteCollection(tenantId, id);

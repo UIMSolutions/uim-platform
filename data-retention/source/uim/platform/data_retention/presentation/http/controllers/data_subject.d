@@ -25,7 +25,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateDataSubjectRequest r;
@@ -73,7 +73,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
 
             auto ds = usecase.getDataSubject(tenantId, id);
@@ -98,7 +98,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = DataSubjectprecheck.id);
 
             auto j = req.json;
@@ -121,7 +121,7 @@ class DataSubjectController : ManageController {
 
     protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto parts = path.split("/");
             string id = "";
@@ -148,7 +148,7 @@ class DataSubjectController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = DataSubjectprecheck.id);
 
             usecase.deleteDataSubject(tenantId, id);

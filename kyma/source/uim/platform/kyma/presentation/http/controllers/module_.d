@@ -38,7 +38,7 @@ class ModuleController : ManageController {
 
   protected void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       EnableModuleRequest r;
       r.environmentId = j.getString("environmentId");
@@ -88,7 +88,7 @@ class ModuleController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto m = usecase.getModule(id);
       if (m.isNull) {
@@ -104,7 +104,7 @@ class ModuleController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateModuleRequest r;
@@ -126,7 +126,7 @@ class ModuleController : ManageController {
 
   protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.disableModule(id);
       if (result.success)
@@ -141,7 +141,7 @@ class ModuleController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteModule(id);
       if (result.success)

@@ -36,7 +36,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
       r.tenantId = tenantId;
@@ -76,7 +76,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = workspaces.map!(w => w.toJson).array.toJson;
 
@@ -93,7 +93,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       // Check for sub-resources
       if (id == "members") {
@@ -101,7 +101,7 @@ class WorkspaceController : ManageController {
         return;
       }
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto ws = useCase.getWorkspace(tenantId, id);
       if (ws.isNull) {
         writeError(res, 404, "Workspace not found");
@@ -115,7 +115,7 @@ class WorkspaceController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateWorkspaceRequest();
       r.id = precheck.id;
@@ -142,9 +142,9 @@ class WorkspaceController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       useCase.deleteWorkspace(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {
@@ -154,7 +154,7 @@ class WorkspaceController : ManageController {
 
   protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = AddMemberRequest();
       r.workspaceId = j.getString("workspaceId");

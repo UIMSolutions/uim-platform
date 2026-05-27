@@ -33,7 +33,7 @@ class FlexApplicationsController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
@@ -58,7 +58,7 @@ class FlexApplicationsController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       FlexApplication[] apps;
       auto activeParam = req.query.get("active", "");
       if (activeParam == "true")
@@ -75,7 +75,7 @@ class FlexApplicationsController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexApplicationprecheck.id);
       auto a = usecase.getApplication(tenantId, id);
       if (a.isNull) { writeError(res, 404, "FlexApplication not found"); return; }
@@ -87,7 +87,7 @@ class FlexApplicationsController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexApplicationprecheck.id);
       auto j = req.json;
       UpdateFlexApplicationRequest r;
@@ -111,7 +111,7 @@ class FlexApplicationsController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexApplicationprecheck.id);
       auto result = usecase.deleteApplication(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

@@ -35,7 +35,7 @@ class RegisteredApplicationController : ManageController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
 
         auto apps = usecase.listApplications(tenantId);
         auto jarr = apps.map!(a => appToJson(a)).array.toJson;

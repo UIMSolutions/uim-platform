@@ -24,7 +24,7 @@ class ResidenceRuleController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateResidenceRuleRequest r;
@@ -87,7 +87,7 @@ class ResidenceRuleController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = ResidenceRuleprecheck.id);
 
             auto rr = usecase.getResidenceRule(tenantId, id);
@@ -109,7 +109,7 @@ class ResidenceRuleController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = ResidenceRuleprecheck.id);
 
             auto j = req.json;
@@ -138,7 +138,7 @@ class ResidenceRuleController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = ResidenceRuleprecheck.id);
             usecase.deleteResidenceRule(id);
             res.writeJsonBody(Json.emptyObject, 204);

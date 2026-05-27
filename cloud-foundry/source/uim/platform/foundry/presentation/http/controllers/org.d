@@ -37,7 +37,7 @@ class OrgController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateOrgRequest();
       r.tenantId = tenantId;
@@ -67,7 +67,7 @@ class OrgController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
     auto orgs = useCase.listOrgs(tenantId);
 
@@ -87,9 +87,9 @@ class OrgController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OrgId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto org = useCase.getOrg(tenantId, id);
       if (org.isNull) {
         writeError(res, 404, "Organization not found");
@@ -104,7 +104,7 @@ class OrgController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OrgId(precheck.id);
       auto j = req.json;
       auto r = UpdateOrgRequest();
@@ -135,9 +135,9 @@ class OrgController : ManageController {
 
   protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OrgId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.suspendOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -156,9 +156,9 @@ class OrgController : ManageController {
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OrgId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.activateOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
@@ -177,9 +177,9 @@ class OrgController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OrgId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

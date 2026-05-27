@@ -33,7 +33,7 @@ class PasswordPolicyController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), jsonUint(j,
@@ -66,7 +66,7 @@ class PasswordPolicyController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(policies.length);
@@ -82,7 +82,7 @@ class PasswordPolicyController : ManageController {
 
   protected void handleActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto policy = useCase.getActivePolicy(tenantId);
       if (policy == PasswordPolicy.init) {
         auto errRes = Json.emptyObject;

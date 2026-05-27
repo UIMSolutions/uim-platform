@@ -34,7 +34,7 @@ class CertificateController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateCertificateRequest();
       r.tenantId = tenantId;
@@ -67,7 +67,7 @@ class CertificateController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       
       auto certs = usecase.listCertificates(tenantId);
       auto arr = certs.map!(c => c.toJson).array.toJson;
@@ -85,7 +85,7 @@ class CertificateController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;  
+      auto tenantId = precheck.tenantId;  
       auto id = CertificateId(precheck.id);
 
       auto cert = usecase.getCertificate(tenantId, id);
@@ -101,7 +101,7 @@ class CertificateController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateCertificateRequest();
       r.certificateId = CertificateId(precheck.id);
@@ -127,7 +127,7 @@ class CertificateController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = CertificateId(precheck.id);
       auto result = usecase.deleteCertificate(tenantId, id);
       if (result.hasError)

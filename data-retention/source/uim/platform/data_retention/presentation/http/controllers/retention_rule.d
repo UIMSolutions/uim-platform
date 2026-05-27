@@ -24,7 +24,7 @@ class RetentionRuleController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             CreateRetentionRuleRequest r;
@@ -81,7 +81,7 @@ class RetentionRuleController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto rr = usecase.getRetentionRule(tenantId, id);
             if (rr.isNull) {
@@ -104,7 +104,7 @@ class RetentionRuleController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = RetentionRuleprecheck.id);
             auto j = req.json;
 
@@ -130,7 +130,7 @@ class RetentionRuleController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = RetentionRuleprecheck.id);
             
             usecase.deleteRetentionRule(tenantId, id);

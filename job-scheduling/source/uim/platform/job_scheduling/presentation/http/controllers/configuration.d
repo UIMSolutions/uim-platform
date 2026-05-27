@@ -30,7 +30,7 @@ class ConfigurationController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto config = usecase.getConfiguration(tenantId);
 
             auto resp = Json.emptyObject
@@ -48,7 +48,7 @@ class ConfigurationController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             UpdateConfigurationRequest r;

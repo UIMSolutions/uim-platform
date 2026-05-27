@@ -32,7 +32,7 @@ class ConsentPurposeController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateConsentPurposeRequest r;
@@ -63,7 +63,7 @@ class ConsentPurposeController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       
       auto items = usecase.listPurposes(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -80,7 +80,7 @@ class ConsentPurposeController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConsentPurposeId(precheck.id);
 
       auto entry = usecase.getPurpose(tenantId, id);
@@ -95,7 +95,7 @@ class ConsentPurposeController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       UpdateConsentPurposeRequest r;
       r.tenantId = tenantId;
@@ -120,7 +120,7 @@ class ConsentPurposeController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ConsentPurposeId(precheck.id);
 
       usecase.deletePurpose(tenantId, id);

@@ -35,7 +35,7 @@ class MonitoringController : PlatformController {
 
   protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto logs = useCase.getAllLogs(tenantId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -55,7 +55,7 @@ class MonitoringController : PlatformController {
   protected void handleWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto logs = useCase.getWorkflowLogs(tenantId, workflowId);
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -75,7 +75,7 @@ class MonitoringController : PlatformController {
   protected void handleStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto stepId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto logs = useCase.getStepLogs(tenantId, stepId);
 
       auto arr = logs.map!(l => l.toJson).array.toJson;
@@ -94,7 +94,7 @@ class MonitoringController : PlatformController {
 
   protected void handleFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       
       auto items = useCase.getFailures(tenantId);
       auto arr = items.map!(l => l.toJson).array.toJson;
@@ -114,7 +114,7 @@ class MonitoringController : PlatformController {
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = useCase.getWorkflowSummary(tenantId, workflowId);
 
       auto j = Json.emptyObject

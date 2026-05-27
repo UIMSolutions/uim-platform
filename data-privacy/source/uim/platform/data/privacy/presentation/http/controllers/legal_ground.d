@@ -33,7 +33,7 @@ class LegalGroundController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateLegalGroundRequest r;
@@ -61,7 +61,7 @@ class LegalGroundController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto basisParam = req.headers.get("X-Basis-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -90,7 +90,7 @@ class LegalGroundController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = LegalGroundId(precheck.id);
 
       auto entry = usecase.getGround(tenantId, id);
@@ -105,7 +105,7 @@ class LegalGroundController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateLegalGroundRequest r;
@@ -131,7 +131,7 @@ class LegalGroundController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = LegalGroundId(precheck.id);
 
       usecase.deleteGround(tenantId, id);

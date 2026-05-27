@@ -33,7 +33,7 @@ class KeystoreController : ManageController {
   }
 
   protected Json uploadHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     UploadKeystoreRequest r;
     r.tenantId = tenantId;
@@ -56,7 +56,7 @@ class KeystoreController : ManageController {
   // POST /api/v1/keystores
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UploadKeystoreRequest r;
@@ -89,7 +89,7 @@ class KeystoreController : ManageController {
   // GET /api/v1/keystores?accountId=...&applicationId=...
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto namespaceId = req.headers.get("X-Namespace-Id", req.params.get("namespaceId", ""));
       auto accountId = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");
@@ -126,7 +126,7 @@ class KeystoreController : ManageController {
   // GET /api/v1/keystores/{id}
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Keystoreprecheck.id);
 
       auto ks = usecase.getKeystore(tenantId, id);
@@ -157,7 +157,7 @@ class KeystoreController : ManageController {
   // PUT /api/v1/keystores/{id}
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Keystoreprecheck.id);
 
       auto j = req.json;
@@ -183,7 +183,7 @@ class KeystoreController : ManageController {
   // DELETE /api/v1/keystores/{id}
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Keystoreprecheck.id);
       auto result = usecase.deleteKeystore(tenantId, id);
       if (result.hasError)
@@ -200,7 +200,7 @@ class KeystoreController : ManageController {
   // GET /api/v1/keystores/resolve?name=...&accountId=...&applicationId=...&subscriptionId=...
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto name = req.params.get("name", "");
       auto accountId = req.params.get("accountId", "");
       auto applicationId = req.params.get("applicationId", "");

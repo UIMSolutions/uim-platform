@@ -50,7 +50,7 @@ class FlexPersonalizationsController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
@@ -73,7 +73,7 @@ class FlexPersonalizationsController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       FlexPersonalization[] ps;
       auto appParam  = req.query.get("appId", "");
       auto userParam = req.query.get("userId", "");
@@ -91,7 +91,7 @@ class FlexPersonalizationsController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexPersonalizationprecheck.id);
       auto p = usecase.getPersonalization(tenantId, id);
       if (p.isNull) { writeError(res, 404, "FlexPersonalization not found"); return; }
@@ -103,7 +103,7 @@ class FlexPersonalizationsController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexPersonalizationprecheck.id);
       auto j = req.json;
       UpdateFlexPersonalizationRequest r;
@@ -123,7 +123,7 @@ class FlexPersonalizationsController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FlexPersonalizationprecheck.id);
       auto result = usecase.deletePersonalization(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

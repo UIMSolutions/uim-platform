@@ -32,7 +32,7 @@ class ActionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateActionRequest r;
@@ -102,7 +102,7 @@ class ActionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = Actionprecheck.id);
 
             auto a = actionUsecase.getAction(tenantId, id);
@@ -136,7 +136,7 @@ class ActionController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             UpdateActionRequest r;
             r.tenantId = tenantId;
@@ -168,7 +168,7 @@ class ActionController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Actionprecheck.id);
             auto result = actionUsecase.deleteAction(tenantId, id);

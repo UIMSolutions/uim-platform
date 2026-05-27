@@ -44,7 +44,7 @@ class ServiceBindingController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getById(tenantId, ServiceBindingId(id));
             if (e.isNull) { writeError(res, 404, "Service binding not found"); return; }
@@ -59,7 +59,7 @@ class ServiceBindingController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateServiceBindingRequest r;
             r.name = j.getString("name");

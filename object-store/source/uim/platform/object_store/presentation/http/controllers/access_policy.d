@@ -38,7 +38,7 @@ class AccessPolicyController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     auto r = CreateAccessPolicyRequest();
@@ -64,7 +64,7 @@ class AccessPolicyController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto bucketId = BucketId(extractBucketIdFromPoliciesPath(req.requestURI));
     if (bucketId.isNull)
       return errorResponse("Invalid bucket ID", 400);
@@ -93,7 +93,7 @@ class AccessPolicyController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = AccessPolicyId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);
@@ -110,7 +110,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = AccessPolicyId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid access policy ID", 400);

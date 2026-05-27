@@ -34,7 +34,7 @@ class ServicePlanController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       CreateServicePlanRequest r;
       r.serviceName = j.getString("serviceName");
@@ -96,7 +96,7 @@ class ServicePlanController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto p = usecase.getById(tenantId, id);
       if (p.isNull) {
@@ -110,7 +110,7 @@ class ServicePlanController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto data = precheck.data;
       UpdateServicePlanRequest r;
@@ -133,7 +133,7 @@ class ServicePlanController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ServicePlanId(extractId(req.requestURI));
       auto result = usecase.deleteServicePlan(id);
       if (result.success)

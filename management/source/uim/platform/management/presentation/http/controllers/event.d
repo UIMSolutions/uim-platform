@@ -30,7 +30,7 @@ class EventController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto category = req.params.get("category");
@@ -60,7 +60,7 @@ class EventController : PlatformController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = extractId(req.requestURI);
       auto ev = usecase.getEvent(tenantId, id);
       if (ev.isNull) {

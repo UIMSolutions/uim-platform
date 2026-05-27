@@ -31,7 +31,7 @@ class OAuthClientController : ManageController {
   // POST /api/v1/oauth/clients
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateOAuthClientRequest r;
@@ -74,7 +74,7 @@ class OAuthClientController : ManageController {
   // GET /api/v1/oauth/clients
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto appId = AppId(req.params.get("appId", ""));
       auto clients = appId.length > 0
         ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
@@ -95,7 +95,7 @@ class OAuthClientController : ManageController {
   // GET /api/v1/oauth/clients/{id}
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OAuthClientId(extractIdFromPath(req));
 
       auto c = usecase.getOAuthClient(tenantId, id);
@@ -116,7 +116,7 @@ class OAuthClientController : ManageController {
   // PUT /api/v1/oauth/clients/{id}
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OAuthClientId(extractIdFromPath(req));
 
       auto j = req.json;
@@ -157,7 +157,7 @@ class OAuthClientController : ManageController {
   // DELETE /api/v1/oauth/clients/{id}
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = OAuthClientId(extractIdFromPath(req));
 
       auto result = usecase.deleteOAuthClient(tenantId, id);

@@ -37,7 +37,7 @@ class DestinationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateDestinationRequest();
       r.tenantId = tenantId;
@@ -72,7 +72,7 @@ class DestinationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto destinations = useCase.listDestinations(tenantId);
 
       auto arr = destinations.map!(d => d.toJson).array.toJson;
@@ -89,9 +89,9 @@ class DestinationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto dest = useCase.getDestination(tenantId, id);
       if (dest.isNull) {
         writeError(res, 404, "Destination not found");
@@ -105,7 +105,7 @@ class DestinationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateDestinationRequest();
@@ -142,9 +142,9 @@ class DestinationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteDestination(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

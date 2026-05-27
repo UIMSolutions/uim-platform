@@ -39,7 +39,7 @@ class FolderController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateFolderRequest();
       r.tenantId = tenantId;
@@ -65,7 +65,7 @@ class FolderController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listFolders(tenantId);
 
       auto arr = items.map!(f => f.toJson).array.toJson;
@@ -82,7 +82,7 @@ class FolderController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
       
       auto folder = usecase.getFolder(tenantId, id);
@@ -102,7 +102,7 @@ class FolderController : ManageController {
     */
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
       auto j = req.json;
       auto r = UpdateFolderRequest();
@@ -129,7 +129,7 @@ class FolderController : ManageController {
 
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
       auto j = req.json;
       auto r = MoveFolderRequest();
@@ -156,7 +156,7 @@ class FolderController : ManageController {
   override protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = FolderId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto subfolders = usecase.listSubfolders(tenantId, parentId);
       auto arr = subfolders.map!(f => f.toJson).array.toJson;
@@ -174,7 +174,7 @@ class FolderController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = FolderId(precheck.id);
       auto result = usecase.deleteFolder(req.getTenantId, id);
 

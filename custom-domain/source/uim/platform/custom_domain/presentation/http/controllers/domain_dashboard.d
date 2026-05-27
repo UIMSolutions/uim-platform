@@ -50,7 +50,7 @@ class DomainDashboardController : ManageController {
     }
 
     protected Json refreshHandler(HTTPServerRequest req) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         RefreshDashboardRequest r;
         r.tenantId = tenantId;
 

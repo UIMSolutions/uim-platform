@@ -32,7 +32,7 @@ class ActivityController : PlatformController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto activities = usecase.listActivities(tenantId);
       auto arr = activities.map!(a => a.toJson).array.toJson;
@@ -50,7 +50,7 @@ class ActivityController : PlatformController {
 
   override protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject

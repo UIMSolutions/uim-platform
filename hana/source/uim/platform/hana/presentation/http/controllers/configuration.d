@@ -31,7 +31,7 @@ class ConfigurationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateConfigurationRequest r;
       r.tenantId = tenantId;
@@ -62,7 +62,7 @@ class ConfigurationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto configs = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -89,7 +89,7 @@ class ConfigurationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto c = usecase.getById(tenantId, id);
       if (c.isNull) {
@@ -144,7 +144,7 @@ class ConfigurationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Configurationprecheck.id);
       auto result = usecase.deleteConfiguration(id);
       if (result.hasError)

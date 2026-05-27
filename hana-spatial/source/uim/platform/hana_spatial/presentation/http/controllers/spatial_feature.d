@@ -28,7 +28,7 @@ class SpatialFeatureController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateSpatialFeatureRequest r;
       r.tenantId = tenantId;
@@ -54,7 +54,7 @@ class SpatialFeatureController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto layerId = req.query.get("layerId", "");
       SpatialFeature[] items;
       if (layerId.length > 0) {
@@ -81,7 +81,7 @@ class SpatialFeatureController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto item = usecase.getById(tenantId, id);
       if (item.isNull) {
@@ -96,7 +96,7 @@ class SpatialFeatureController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       UpdateSpatialFeatureRequest r;
@@ -121,7 +121,7 @@ class SpatialFeatureController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)

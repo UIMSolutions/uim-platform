@@ -28,7 +28,7 @@ class DataProviderController : ManageController {
   }
 
   void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto items = usecase.list(tenantId);
     auto arr = Json.emptyArray;
     foreach (item; items) arr ~= item.toJson();
@@ -36,7 +36,7 @@ class DataProviderController : ManageController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = extractIdFromPath(req.requestPath.to!string);
     auto item = usecase.getById(tenantId, id);
     if (item.isNull) { writeError(res, 404, "Data provider not found"); return; }
@@ -76,7 +76,7 @@ class DataProviderController : ManageController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = extractIdFromPath(req.requestPath.to!string);
     auto result = usecase.remove(tenantId, id);
     if (!result.success) { writeError(res, 404, result.message); return; }

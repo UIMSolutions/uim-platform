@@ -30,7 +30,7 @@ class AuditController : PlatformController {
 
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;  
+      auto tenantId = precheck.tenantId;  
       auto namespaceId = req.params.get("namespaceId", "");
       auto resourceType = req.params.get("resourceType", "");
 
@@ -67,7 +67,7 @@ class AuditController : PlatformController {
 
   protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;  
+      auto tenantId = precheck.tenantId;  
       auto id = AuditLogEntryprecheck.id);
       auto auditLog = auditLogs.getLog(tenantId, id);
 

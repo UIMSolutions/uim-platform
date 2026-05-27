@@ -65,7 +65,7 @@ class EnvironmentController : ManageController {
         try {
             
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getById(tenantId, PlatformId(id));
             if (e.isNull) {
@@ -88,7 +88,7 @@ class EnvironmentController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreatePlatformRequest r;
             r.name = j.getString("name");

@@ -31,7 +31,7 @@ class CleansingJobController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateCleansingJobRequest();
       r.tenantId = tenantId;
@@ -57,7 +57,7 @@ class CleansingJobController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto jobs = usecase.listCleansingJobs(tenantId);
       auto arr = jobs.map!(j => j.toJson).array.toJson;
@@ -75,7 +75,7 @@ class CleansingJobController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = CleansingJobId(precheck.id);
 
       auto job = usecase.getCleansingJob(tenantId, id);

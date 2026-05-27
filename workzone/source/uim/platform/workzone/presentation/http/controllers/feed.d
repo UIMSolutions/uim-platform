@@ -64,7 +64,7 @@ class FeedController : ManageController {
 
     override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         auto workspaceId = req.params.get("workspaceId", "");
         auto entries = useCase.listByWorkspace(workspacetenantId, id);
         auto arr = entries.map!(e => e.toJson).array.toJson;
@@ -83,7 +83,7 @@ class FeedController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto id = precheck.id;
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         auto entry = useCase.getEntry(tenantId, id);
         if (entry.isNull) {
           writeError(res, 404, "Feed entry not found");
@@ -98,7 +98,7 @@ class FeedController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto id = precheck.id;
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         useCase.deleteEntry(tenantId, id);
         res.writeBody("", 204);
       } catch (Exception e) {

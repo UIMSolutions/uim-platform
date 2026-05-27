@@ -32,7 +32,7 @@ class ConnectionController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateConnectionRequest r;
       r.tenantId = tenantId;
@@ -59,7 +59,7 @@ class ConnectionController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
       auto connections = workspaceId.isEmpty
@@ -81,7 +81,7 @@ class ConnectionController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Connectionprecheck.id);
 
       auto connection = usecase.getConnection(tenantId, id);
@@ -98,7 +98,7 @@ class ConnectionController : ManageController {
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Connectionprecheck.id);
       auto j = req.json;
 
@@ -126,7 +126,7 @@ class ConnectionController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Connectionprecheck.id);
 
       auto result = usecase.deleteConnection(tenantId, id);

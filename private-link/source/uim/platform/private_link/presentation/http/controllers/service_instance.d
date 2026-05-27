@@ -27,7 +27,7 @@ class ServiceInstanceController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto items = usecase.listInstances(tenantId);
     return Json.emptyObject
         .set("items", items.map!(i => i.toJson).array.toJson)
@@ -37,7 +37,7 @@ class ServiceInstanceController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto r = CreateServiceInstanceRequest();
     r.tenantId = tenantId;
@@ -59,7 +59,7 @@ class ServiceInstanceController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
     auto inst = usecase.getInstance(tenantId, id);
     if (inst.id.value.length == 0)
@@ -68,7 +68,7 @@ class ServiceInstanceController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
     auto j = req.json;
     auto r = UpdateServiceInstanceRequest();
@@ -86,7 +86,7 @@ class ServiceInstanceController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
     auto result = usecase.deleteInstance(tenantId, id);
     if (result.hasError()) {

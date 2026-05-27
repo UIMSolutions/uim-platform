@@ -30,7 +30,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
 
     auto dests = usecase.listDestinations(tenantId);
     auto arr = dests.map!(d => d.toJson).array.toJson;
@@ -43,7 +43,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto j = req.json;
     auto r = CreateDestinationRequest();
     r.tenantId = tenantId;
@@ -89,7 +89,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
 
     auto dest = usecase.getDestination(tenantId, id);
@@ -104,7 +104,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
     auto j = req.json;
 
@@ -150,7 +150,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
 
     auto result = usecase.deleteDestination(tenantId, id);

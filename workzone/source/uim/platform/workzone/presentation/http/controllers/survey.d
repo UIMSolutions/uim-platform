@@ -36,7 +36,7 @@ class SurveyController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateSurveyRequest();
       r.tenantId = tenantId;
@@ -67,7 +67,7 @@ class SurveyController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto workspaceId = WorkspaceId(req.params.get("workspaceId", ""));
       auto surveys = useCase.listByWorkspace(tenantId, workspaceId);
       auto arr = surveys.map!(s => s.toJson).array.toJson;
@@ -85,9 +85,9 @@ class SurveyController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SurveyId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto s = useCase.getSurvey(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Survey not found");
@@ -101,7 +101,7 @@ class SurveyController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = UpdateSurveyRequest();
       r.id = precheck.id;
@@ -126,9 +126,9 @@ class SurveyController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = SurveyId(precheck.id);
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteSurvey(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject

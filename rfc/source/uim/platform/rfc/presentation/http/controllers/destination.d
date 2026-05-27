@@ -73,7 +73,7 @@ class DestinationController : PlatformController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto dest     = _usecase.getDestination(tenantId, id);
             if (dest.isNull()) { writeError(res, 404, "Destination not found"); return; }
@@ -104,7 +104,7 @@ class DestinationController : PlatformController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto result   = _usecase.deleteDestination(tenantId, id);
             if (result.success)

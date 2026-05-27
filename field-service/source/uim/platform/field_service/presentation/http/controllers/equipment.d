@@ -51,7 +51,7 @@ class EquipmentController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = EquipmentId(precheck.id);
             auto equipment = usecase.getEquipment(tenantId, id);
@@ -64,7 +64,7 @@ class EquipmentController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             EquipmentDTO dto;
             dto.equipmentId = EquipmentId(precheck.id);
@@ -102,7 +102,7 @@ class EquipmentController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
 
@@ -136,7 +136,7 @@ class EquipmentController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = EquipmentId(precheck.id);
             auto result = usecase.deleteEquipment(tenantId, id);

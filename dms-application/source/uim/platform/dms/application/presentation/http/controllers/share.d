@@ -37,7 +37,7 @@ class ShareController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateShareRequest();
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class ShareController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto shares = usecase.listShares(tenantId);
 
       auto arr = shares.map!(share => share.toJson).array.toJson;
@@ -81,7 +81,7 @@ class ShareController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
       
       auto share = usecase.getShare(tenantId, id);
@@ -97,7 +97,7 @@ class ShareController : ManageController {
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
       
       auto result = usecase.revokeShare(tenantId, id);
@@ -117,7 +117,7 @@ class ShareController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
       
       auto result = usecase.deleteShare(tenantId, id);

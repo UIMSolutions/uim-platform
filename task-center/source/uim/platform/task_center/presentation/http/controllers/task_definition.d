@@ -32,7 +32,7 @@ class TaskDefinitionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             CreateTaskDefinitionRequest r;
             r.tenantId = tenantId;
@@ -92,7 +92,7 @@ class TaskDefinitionController : ManageController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskDefinitionId(precheck.id);
             auto d = usecase.getTaskDefinition(tenantId, id);
             if (d.isNull) {
@@ -107,7 +107,7 @@ class TaskDefinitionController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = TaskDefinitionprecheck.id);
             auto j = req.json;
             UpdateTaskDefinitionRequest r;
@@ -137,7 +137,7 @@ class TaskDefinitionController : ManageController {
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
@@ -161,7 +161,7 @@ class TaskDefinitionController : ManageController {
 
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
@@ -187,7 +187,7 @@ class TaskDefinitionController : ManageController {
         try {
             
             auto id = precheck.id;
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
             if (result.hasError)
             return errorResponse(result.message, 400);

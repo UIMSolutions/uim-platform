@@ -37,7 +37,7 @@ class MedicationController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateMedicationRequest r;
       r.tenantId    = tenantId;
@@ -54,7 +54,7 @@ class MedicationController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto meds = usecase.listMedications(tenantId);
       auto entries = Json.emptyArray;
       foreach (m; meds) entries ~= m.toJson();
@@ -70,7 +70,7 @@ class MedicationController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Medicationprecheck.id);
       auto m = usecase.getMedication(tenantId, id);
       if (m.isNull) { writeFhirError(res, 404, "Medication not found"); return; }
@@ -82,7 +82,7 @@ class MedicationController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Medicationprecheck.id);
       auto j = req.json;
       UpdateMedicationRequest r;
@@ -100,7 +100,7 @@ class MedicationController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Medicationprecheck.id);
       auto result = usecase.deleteMedication(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");

@@ -68,7 +68,7 @@ class EventMessageController : ManageController {
 
     protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
 
             EventMessageDTO dto;
@@ -104,7 +104,7 @@ class EventMessageController : ManageController {
 
     protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req
                 .requestURI.to!string;
             auto id = EventMessageId(precheck.id);

@@ -29,7 +29,7 @@ class LogController : PlatformController {
 
   protected void handleIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       IngestLogRequest r;
       r.tenantId = tenantId;
@@ -66,7 +66,7 @@ class LogController : PlatformController {
 
   protected void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       IngestLogBatchRequest batchReq;

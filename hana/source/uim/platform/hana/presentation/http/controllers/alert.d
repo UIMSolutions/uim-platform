@@ -32,7 +32,7 @@ class AlertController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       CreateAlertRequest r;
       r.tenantId = tenantId;
@@ -65,7 +65,7 @@ class AlertController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto alerts = usecase.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -92,7 +92,7 @@ class AlertController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto a = usecase.getById(tenantId, id);
       if (a.isNull) {
@@ -189,7 +189,7 @@ class AlertController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = Alertprecheck.id);
       auto result = usecase.deleteAlert(id);
       if (result.hasError)

@@ -32,7 +32,7 @@ class InformationReportController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateInformationReportRequest r;
@@ -59,7 +59,7 @@ class InformationReportController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listReports(tenantId);
       auto arr = items.map!(e => e.toJson).array.toJson;
@@ -76,7 +76,7 @@ class InformationReportController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = InformationReportId(precheck.id);
 
       auto entry = usecase.getReport(tenantId, id);
@@ -94,7 +94,7 @@ class InformationReportController : ManageController {
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       UpdateInformationReportStatusRequest r;
@@ -118,7 +118,7 @@ class InformationReportController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = InformationReportId(precheck.id);
 
       usecase.deleteReport(tenantId, id);

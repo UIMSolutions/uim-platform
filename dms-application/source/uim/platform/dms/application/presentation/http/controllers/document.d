@@ -69,7 +69,7 @@ class DocumentController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto items = usecase.listDocuments(tenantId);
 
       auto arr = items.map!(d => d.toJson).array.toJson;
@@ -86,7 +86,7 @@ class DocumentController : ManageController {
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto query = req.headers.get("X-Search-Query", "");
       if (query.length == 0) {
         // Try query param
@@ -116,7 +116,7 @@ class DocumentController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
       
       auto doc = usecase.getDocument(tenantId, id);
@@ -132,7 +132,7 @@ class DocumentController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
       auto j = req.json;
       auto r = UpdateDocumentRequest();
@@ -160,7 +160,7 @@ class DocumentController : ManageController {
 
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
       auto j = req.json;
       auto r = MoveDocumentRequest();
@@ -185,7 +185,7 @@ class DocumentController : ManageController {
 
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
       
       auto result = usecase.archiveDocument(tenantId, id);
@@ -204,7 +204,7 @@ class DocumentController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
       
       auto result = usecase.deleteDocument(tenantId, id);

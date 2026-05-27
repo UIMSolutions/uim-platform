@@ -32,7 +32,7 @@ class TraceController : PlatformController {
 
   protected void handleIngestSpan(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       IngestSpanRequest r;
       r.tenantId = tenantId;
@@ -64,7 +64,7 @@ class TraceController : PlatformController {
 
   protected void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       IngestSpanBatchRequest batchReq;
@@ -100,7 +100,7 @@ class TraceController : PlatformController {
   protected void handleTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
 
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto traceid = precheck.id;
 
       auto spans = usecase.getTrace(tenantId, traceId);

@@ -32,7 +32,7 @@ class AppRouteController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
 
       CreateAppRouteRequest request;
@@ -61,7 +61,7 @@ class AppRouteController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = usecase.listAppRoutes(tenantId);
       auto arr = Json.emptyArray;
@@ -85,7 +85,7 @@ class AppRouteController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto id = precheck.id;
       if (id.isNull) {
@@ -117,7 +117,7 @@ class AppRouteController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto j = req.json;
       auto id = precheck.id;
@@ -147,7 +147,7 @@ class AppRouteController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       if (id.isNull) {
         writeError(res, 404, "Route not found");

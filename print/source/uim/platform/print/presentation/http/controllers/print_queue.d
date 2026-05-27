@@ -48,7 +48,7 @@ class PrintQueueController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintQueueId(precheck.id);
             auto e = usecase.getPrintQueue(tenantId, id);
@@ -61,7 +61,7 @@ class PrintQueueController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
@@ -89,7 +89,7 @@ class PrintQueueController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto j = req.json;
             PrintQueueDTO dto;
@@ -115,7 +115,7 @@ class PrintQueueController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintQueueId(precheck.id);
             auto result = usecase.deletePrintQueue(tenantId, id);

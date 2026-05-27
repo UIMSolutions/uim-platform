@@ -42,7 +42,7 @@ class QueueSubscriptionController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getSubscription(tenantId, QueueSubscriptionId(id));
             if (e.isNull) { writeError(res, 404, "Queue subscription not found"); return; }
@@ -54,7 +54,7 @@ class QueueSubscriptionController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto j = req.json;
             QueueSubscriptionDTO dto;
             dto.subscriptionId = QueueSubscriptionId(precheck.id);
@@ -96,7 +96,7 @@ class QueueSubscriptionController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
             auto id = QueueSubscriptionprecheck.id);
             auto result = usecase.deleteSubscription(tenantId, id);
             if (result.hasError)

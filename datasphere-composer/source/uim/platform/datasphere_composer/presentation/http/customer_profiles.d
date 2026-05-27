@@ -40,7 +40,7 @@ class CustomerProfileController : ManageController {
 
   void handleSearch(HTTPServerRequest req, HTTPServerResponse res) {
     auto j = req.json;
-    auto tenantId = req.getTenantId;
+    auto tenantId = precheck.tenantId;
     auto email = j.getString("email");
     auto externalId = j.getString("externalId");
 

@@ -32,7 +32,7 @@ class TriggerController : ManageController {
 
     override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             CreateTriggerRequest r;
@@ -100,7 +100,7 @@ class TriggerController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Triggerprecheck.id);
             auto t = triggerUsecase.getTrigger(tenantId, id);
@@ -133,7 +133,7 @@ class TriggerController : ManageController {
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto j = req.json;
             UpdateTriggerRequest r;
@@ -163,7 +163,7 @@ class TriggerController : ManageController {
 
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            auto tenantId = precheck.tenantId;
 
             auto id = Triggerprecheck.id);
             auto result = triggerUsecase.deleteTrigger(tenantId, id);

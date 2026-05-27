@@ -61,13 +61,13 @@ class PrintWebController {
     }
 
     private void handleQueueList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         auto queues = queueUseCase.listPrintQueues(tenantId);
         res.writeBody(view.renderQueueList(queues), "text/html; charset=utf-8");
     }
 
     private void handleTaskList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        auto tenantId = req.getTenantId;
+        auto tenantId = precheck.tenantId;
         auto tasks = taskUseCase.listPrintTasks(tenantId);
         res.writeBody(view.renderTaskList(tasks), "text/html; charset=utf-8");
     }

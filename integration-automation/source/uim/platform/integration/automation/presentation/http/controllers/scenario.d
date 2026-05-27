@@ -36,7 +36,7 @@ class ScenarioController : ManageController {
 
   override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto j = req.json;
       auto r = CreateScenarioRequest();
       r.tenantId = tenantId;
@@ -67,7 +67,7 @@ class ScenarioController : ManageController {
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
 
       auto items = useCase.listScenarios(tenantId);
       auto arr = items.map!(s => s.toJson).array.toJson;
@@ -85,9 +85,9 @@ class ScenarioController : ManageController {
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto scenario = useCase.getScenario(tenantId, id);
       if (scenario.isNull) {
         writeError(res, 404, "Scenario not found");
@@ -101,7 +101,7 @@ class ScenarioController : ManageController {
 
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto j = req.json;
       auto r = UpdateScenarioRequest();
@@ -134,9 +134,9 @@ class ScenarioController : ManageController {
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto tenantId = req.getTenantId;
+      auto tenantId = precheck.tenantId;
       auto result = useCase.deleteScenario(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
