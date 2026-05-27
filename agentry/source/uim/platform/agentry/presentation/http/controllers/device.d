@@ -52,7 +52,7 @@ class DeviceController : ManageController {
         auto data = precheck.data;
 
         DeviceDTO dto;
-        dto.deviceId = DeviceId(j.getString("id"));
+        dto.deviceId = DeviceId(precheck.id);
         dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
         dto.tenantId = tenantId;
         dto.deviceName = j.getString("deviceName");

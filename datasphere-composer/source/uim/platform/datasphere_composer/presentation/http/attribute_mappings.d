@@ -44,7 +44,7 @@ class AttributeMappingController : ManageController {
     auto j = req.json;
     CreateAttributeMappingRequest r;
     r.tenantId            = req.getTenantId;
-    r.id                  = j.getString("id");
+    r.id                  = precheck.id;
     r.configId            = j.getString("configId");
     r.sourceAttributeName = j.getString("sourceAttributeName");
     r.sourceDataType      = j.getString("sourceDataType");

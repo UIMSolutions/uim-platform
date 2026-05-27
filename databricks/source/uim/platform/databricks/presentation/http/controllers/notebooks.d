@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreateNotebookRequest r;
       r.tenantId    = req.getTenantId;
-      r.id          = j.getString("id");
+      r.id          = precheck.id;
       r.workspaceId = j.getString("workspaceId");
       r.path        = j.getString("path");
       r.name        = j.getString("name");

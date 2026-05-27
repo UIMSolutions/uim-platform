@@ -57,7 +57,7 @@ class WebhookController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             WebhookDTO dto;
-            dto.webhookId        = WebhookId(j.getString("id"));
+            dto.webhookId        = WebhookId(precheck.id);
             dto.tenantId         = tenantId;
             dto.serviceId        = MessagingServiceId(j.getString("serviceId"));
             dto.subscriptionId   = QueueSubscriptionId(j.getString("subscriptionId"));

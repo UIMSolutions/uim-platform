@@ -64,7 +64,7 @@ class DataQualityRuleController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             DataQualityRuleDTO dto;
-            dto.ruleId = DataQualityRuleId(j.getString("id"));
+            dto.ruleId = DataQualityRuleId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

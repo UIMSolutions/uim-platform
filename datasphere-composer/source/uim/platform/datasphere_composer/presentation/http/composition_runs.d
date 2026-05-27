@@ -44,7 +44,7 @@ class CompositionRunController : ManageController {
     auto j = req.json;
     StartCompositionRunRequest r;
     r.tenantId      = req.getTenantId;
-    r.id            = j.getString("id");
+    r.id            = precheck.id;
     r.name          = j.getString("name");
     r.triggeredBy   = j.getString("triggeredBy");
     r.dataProductIds = j.getStrings("dataProductIds");

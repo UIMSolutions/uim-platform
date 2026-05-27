@@ -33,7 +33,7 @@ class PersonalDataRecordController : ManageController {
             auto j = req.json;
             CreatePersonalDataRecordRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.dataSubjectId = j.getString("dataSubjectId");
             r.applicationId = j.getString("applicationId");
             r.dataCategory = j.getString("dataCategory");

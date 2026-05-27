@@ -64,7 +64,7 @@ class PrintTaskController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PrintTaskDTO dto;
-            dto.taskId = PrintTaskId(j.getString("id"));
+            dto.taskId = PrintTaskId(precheck.id);
             dto.tenantId = tenantId;
             dto.queueId = j.getString("queueId");
             dto.documentId = j.getString("documentId");

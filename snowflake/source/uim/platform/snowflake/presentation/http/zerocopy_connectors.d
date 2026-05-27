@@ -36,7 +36,7 @@ class ZerocopyConnectorController : ManageController {
     auto j = req.json;
     CreateConnectorRequest r;
     r.tenantId       = req.getTenantId;
-    r.id             = j.getString("id");
+    r.id             = precheck.id;
     r.accountId      = j.getString("accountId");
     r.name           = j.getString("name");
     r.invitationLink = j.getString("invitationLink");

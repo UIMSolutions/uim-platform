@@ -47,7 +47,7 @@ class DataProviderController : ManageController {
     auto j = req.json;
     CreateDataProviderRequest r;
     r.tenantId    = req.getTenantId;
-    r.id          = j.getString("id");
+    r.id          = precheck.id;
     r.name        = j.getString("name");
     r.description = j.getString("description");
     r.systemType  = j.getString("systemType");

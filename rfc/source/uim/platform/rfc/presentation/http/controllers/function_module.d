@@ -51,7 +51,7 @@ class FunctionModuleController : PlatformController {
             auto j = req.json;
             CreateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
-            r.id            = j.getString("id");
+            r.id            = precheck.id;
             r.functionGroup = j.getString("functionGroup", "");
             r.shortText     = j.getString("shortText", "");
             r.remoteEnabled = j.getString("remoteEnabled", "ENABLED");

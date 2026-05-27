@@ -37,7 +37,7 @@ class DataSubjectController : ManageController {
             auto j = req.json;
             CreateDataSubjectRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.subjectType = j.getString("subjectType");
             r.firstName = j.getString("firstName");
             r.lastName = j.getString("lastName");

@@ -32,7 +32,7 @@ struct RetentionPolicy {
 
   static RetentionPolicy fromJson(Json j) {
     RetentionPolicy p;
-    p.id = RetentionPolicyId(j.getString("id"));
+    p.id = RetentionPolicyId(precheck.id);
     p.tenantId = TenantId(j.getString("tenantId"));
     p.name = j.getString("name");
     p.description = j.getString("description");

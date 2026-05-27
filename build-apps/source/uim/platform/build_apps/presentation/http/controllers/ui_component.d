@@ -65,7 +65,7 @@ class UIComponentController : ManageController {
             auto j = req.json;
 
             UIComponentDTO dto;
-            dto.uiComponentId = UIComponentId(j.getString("id"));
+            dto.uiComponentId = UIComponentId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

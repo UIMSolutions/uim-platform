@@ -64,7 +64,7 @@ class DataQualityScoreController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             DataQualityScoreDTO dto;
-            dto.scoreId = DataQualityScoreId(j.getString("id"));
+            dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
             dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
             dto.overallScore = j.getInteger("overallScore");

@@ -36,7 +36,7 @@ class SubstitutionRuleController : ManageController {
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.userId = UserId(j.getString("userId"));
             r.substituteId = UserId(j.getString("substituteId"));
             r.taskDefinitionId = j.getString("taskDefinitionId");

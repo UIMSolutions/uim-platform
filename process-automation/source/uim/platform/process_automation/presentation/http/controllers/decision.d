@@ -38,7 +38,7 @@ class DecisionController : ManageController {
             CreateDecisionRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.decisionId = DecisionId(j.getString("id"));
+            r.decisionId = DecisionId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

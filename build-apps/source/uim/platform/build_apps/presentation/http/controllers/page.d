@@ -66,7 +66,7 @@ class PageController : ManageController {
             auto j = req.json;
 
             PageDTO dto;
-            dto.pageId = PageId(j.getString("id"));
+            dto.pageId = PageId(precheck.id);
             dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");

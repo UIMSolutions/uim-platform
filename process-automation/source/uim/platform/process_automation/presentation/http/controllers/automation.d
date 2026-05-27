@@ -38,7 +38,7 @@ class AutomationController : ManageController {
             CreateAutomationRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.automationId = AutomationId(j.getString("id"));
+            r.automationId = AutomationId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

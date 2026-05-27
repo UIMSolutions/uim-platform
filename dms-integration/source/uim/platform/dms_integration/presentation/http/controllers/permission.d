@@ -72,7 +72,7 @@ class PermissionController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PermissionDTO dto;
-            dto.permissionId = PermissionId(j.getString("id"));
+            dto.permissionId = PermissionId(precheck.id);
             dto.tenantId = tenantId;
             dto.repositoryId = RepositoryId(j.getString("repositoryId"));
             dto.documentId = DocumentId(j.getString("documentId"));

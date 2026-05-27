@@ -64,7 +64,7 @@ class ContentConnectorController : ManageController {
             auto tenantId = req.getTenantId();
             auto j = req.json;
             ContentConnectorDTO dto;
-            dto.contentConnectorId = ContentConnectorId(j.getString("id"));
+            dto.contentConnectorId = ContentConnectorId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

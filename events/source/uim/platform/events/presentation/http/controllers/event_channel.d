@@ -57,7 +57,7 @@ class EventChannelController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             EventChannelDTO dto;
-            dto.channelId          = EventChannelId(j.getString("id"));
+            dto.channelId          = EventChannelId(precheck.id);
             dto.tenantId           = tenantId;
             dto.serviceId          = MessagingServiceId(j.getString("serviceId"));
             dto.name               = j.getString("name");

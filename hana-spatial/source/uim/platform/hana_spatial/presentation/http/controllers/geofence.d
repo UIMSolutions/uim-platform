@@ -33,7 +33,7 @@ class GeofenceController : ManageController {
       auto j = req.json;
       CreateGeofenceZoneRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.shapeType = j.getString("shapeType");

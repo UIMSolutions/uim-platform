@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreateDataProductRequest r;
       r.tenantId      = req.getTenantId;
-      r.id            = j.getString("id");
+      r.id            = precheck.id;
       r.workspaceId   = j.getString("workspaceId");
       r.name          = j.getString("name");
       r.description   = j.getString("description");

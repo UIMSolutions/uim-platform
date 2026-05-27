@@ -38,7 +38,7 @@ class FlexChangesController : ManageController {
       auto j = req.json;
       CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
-      r.changeId   = FlexChangeId(j.getString("id"));
+      r.changeId   = FlexChangeId(precheck.id);
       r.appId      = j.getString("appId");
       r.namespace_ = j.getString("namespace");
       r.layer_     = toChangeLayer(j.getString("layer"));

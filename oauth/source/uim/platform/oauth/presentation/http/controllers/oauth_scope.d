@@ -72,7 +72,7 @@ class OAuthScopeController : ManageController {
 
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
-            dto.scopeId = OAuthScopeId(j.getString("id"));
+            dto.scopeId = OAuthScopeId(precheck.id);
             dto.applicationId = j.getString("applicationId");
             dto.name = j.getString("name");
             dto.description = j.getString("description");

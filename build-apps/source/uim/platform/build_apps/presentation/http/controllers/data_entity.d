@@ -69,7 +69,7 @@ class DataEntityController : ManageController {
             auto tenantId = req.getTenantId();
             auto j = req.json;
             DataEntityDTO dto;
-            dto.dataEntityId = DataEntityId(j.getString("id"));
+            dto.dataEntityId = DataEntityId(precheck.id);
             dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.name = j.getString("name");

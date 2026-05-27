@@ -34,7 +34,7 @@ class TrustedCertificateController : ManageController {
 
             CreateTrustedCertificateRequest r;
             r.tenantId = tenantId;
-            r.trustedCertificateId = TrustedCertificateId(j.getString("id"));
+            r.trustedCertificateId = TrustedCertificateId(precheck.id);
             r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.certificatePem = j.getString("certificatePem");
             r.authMode = j.getString("authMode");

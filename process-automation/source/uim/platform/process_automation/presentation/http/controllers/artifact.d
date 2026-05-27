@@ -37,7 +37,7 @@ class ArtifactController : ManageController {
             auto j = req.json;
             CreateArtifactRequest r;
             r.tenantId = tenantId;
-            r.artifactId = ArtifactId(j.getString("id"));
+            r.artifactId = ArtifactId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

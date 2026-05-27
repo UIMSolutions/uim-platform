@@ -64,7 +64,7 @@ class SyncSessionController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             SyncSessionDTO dto;
-            dto.syncSessionId = SyncSessionId(j.getString("id"));
+            dto.syncSessionId = SyncSessionId(precheck.id);
             dto.deviceId = DeviceId(j.getString("deviceId"));
             dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
             dto.backendConnectionId = BackendConnectionId(j.getString("backendConnectionId"));

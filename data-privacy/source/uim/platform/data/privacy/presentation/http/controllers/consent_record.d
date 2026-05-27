@@ -134,7 +134,7 @@ class ConsentController : ManageController {
       auto tenantId = req.getTenantId;
       auto j = req.json;
       RevokeConsentRequest r;
-      r.id = ConsentRecordId(j.getString("id"));
+      r.id = ConsentRecordId(precheck.id);
       r.tenantId = tenantId;
 
       auto result = usecase.revokeConsent(r);

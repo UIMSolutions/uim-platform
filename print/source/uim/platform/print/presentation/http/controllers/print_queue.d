@@ -64,7 +64,7 @@ class PrintQueueController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PrintQueueDTO dto;
-            dto.queueId = PrintQueueId(j.getString("id"));
+            dto.queueId = PrintQueueId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

@@ -32,7 +32,7 @@ class PoiController : ManageController {
       auto j = req.json;
       CreatePoiRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.category = j.getString("category");

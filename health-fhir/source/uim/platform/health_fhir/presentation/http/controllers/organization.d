@@ -41,7 +41,7 @@ class OrganizationController : ManageController {
       auto j = req.json;
       CreateOrganizationRequest r;
       r.tenantId        = tenantId;
-      r.organizationId  = OrganizationId(j.getString("id"));
+      r.organizationId  = OrganizationId(precheck.id);
       r.name_           = j.getString("name");
       r.active_         = j.get("active", Json(true)).get!bool;
       auto result = usecase.createOrganization(r);

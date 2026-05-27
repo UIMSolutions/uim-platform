@@ -67,7 +67,7 @@ class ScheduledExecutionController : ManageController {
 
             ScheduledExecutionDTO dto;
             dto.tenantId = tenantId;
-            dto.scheduledExecutionId = ScheduledExecutionId(j.getString("id"));
+            dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
             dto.commandId = CommandId(j.getString("commandId"));
             dto.cronExpression = j.getString("cronExpression");
             dto.scheduledAt = j.getLong("scheduledAt");

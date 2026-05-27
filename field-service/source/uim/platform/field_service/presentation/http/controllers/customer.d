@@ -67,7 +67,7 @@ class CustomerController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             CustomerDTO dto;
-            dto.customerId = CustomerId(j.getString("id"));
+            dto.customerId = CustomerId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

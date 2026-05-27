@@ -36,7 +36,7 @@ class ConfigurationController : ManageController {
       CreateConfigurationRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.section = j.getString("section");
       r.key = j.getString("key");
       r.value = j.getString("value");

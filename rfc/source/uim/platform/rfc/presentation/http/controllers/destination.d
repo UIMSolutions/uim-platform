@@ -51,7 +51,7 @@ class DestinationController : PlatformController {
             auto j = req.json;
             CreateDestinationRequest r;
             r.tenantId       = req.getTenantId;
-            r.id             = j.getString("id");
+            r.id             = precheck.id;
             r.connectionType = cast(ConnectionType) j.getString("connectionType", "abapSystem").to!int;
             r.description    = j.getString("description", "");
             r.host           = j.getString("host", "");

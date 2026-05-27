@@ -41,7 +41,7 @@ class MedicationController : ManageController {
       auto j = req.json;
       CreateMedicationRequest r;
       r.tenantId    = tenantId;
-      r.medicationId = MedicationId(j.getString("id"));
+      r.medicationId = MedicationId(precheck.id);
       auto result = usecase.createMedication(r);
       if (result.success)
         res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);

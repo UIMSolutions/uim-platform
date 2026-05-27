@@ -88,7 +88,7 @@ class DataConnectionController : ManageController {
         try {
             auto tenantId = req.getTenantId();
             auto j = req.json;
-            auto dataConnectionId = DataConnectionId(j.getString("id"));
+            auto dataConnectionId = DataConnectionId(precheck.id);
 
             DataConnectionDTO dto;
             dto.tenantId = tenantId;

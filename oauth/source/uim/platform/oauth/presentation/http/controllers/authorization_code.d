@@ -73,7 +73,7 @@ class AuthorizationCodeController : ManageController {
 
             auto j = req.json;
             AuthorizationCodeDTO dto;
-            dto.codeId = AuthorizationCodeId(j.getString("id"));
+            dto.codeId = AuthorizationCodeId(precheck.id);
             dto.tenantId = tenantId;
             dto.code = j.getString("code");
             dto.clientId = j.getString("clientId");

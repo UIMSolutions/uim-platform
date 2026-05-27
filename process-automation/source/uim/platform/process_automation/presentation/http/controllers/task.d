@@ -40,7 +40,7 @@ class TaskController : ManageController {
       CreateTaskRequest r;
       r.tenantId = tenantId;
       r.processInstanceId = j.getString("processInstanceId");
-      r.taskId = j.getString("id");
+      r.taskId = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");

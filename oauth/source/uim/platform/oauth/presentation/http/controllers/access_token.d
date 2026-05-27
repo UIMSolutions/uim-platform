@@ -72,7 +72,7 @@ class AccessTokenController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             AccessTokenDTO dto;
-            dto.tokenId = AccessTokenId(j.getString("id"));
+            dto.tokenId = AccessTokenId(precheck.id);
             dto.tenantId = tenantId;
             dto.tokenValue = j.getString("tokenValue");
             dto.clientId = j.getString("clientId");

@@ -33,7 +33,7 @@ class TaskActionController : ManageController {
             auto j = req.json;
             PerformTaskActionRequest r;
             r.tenantId = tenantId;
-            r.taskActionId = TaskActionId(j.getString("id"));
+            r.taskActionId = TaskActionId(precheck.id);
             r.taskId = TaskId(j.getString("taskId"));
             r.actionType = j.getString("actionType");
             r.performedBy = UserId(j.getString("performedBy"));

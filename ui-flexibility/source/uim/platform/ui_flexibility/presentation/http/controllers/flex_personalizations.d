@@ -54,7 +54,7 @@ class FlexPersonalizationsController : ManageController {
       auto j = req.json;
       CreateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
-      r.personalizationId  = FlexPersonalizationId(j.getString("id"));
+      r.personalizationId  = FlexPersonalizationId(precheck.id);
       r.appId              = j.getString("appId");
       r.userId_            = j.getString("userId");
       r.controlId_         = j.getString("controlId");

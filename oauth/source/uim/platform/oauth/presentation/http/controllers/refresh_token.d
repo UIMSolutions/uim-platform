@@ -70,7 +70,7 @@ class RefreshTokenController : ManageController {
             auto j = req.json;
 
             RefreshTokenDTO dto;
-            dto.tokenId = j.getString("id");
+            dto.tokenId = precheck.id;
             dto.tenantId = tenantId;
             dto.tokenValue = j.getString("tokenValue");
             dto.clientId = j.getString("clientId");

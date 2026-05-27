@@ -67,7 +67,7 @@ class SkillController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             SkillDTO dto;
-            dto.skillId = SkillId(j.getString("id"));
+            dto.skillId = SkillId(precheck.id);
             dto.tenantId = tenantId;
             dto.technicianId = TechnicianId(j.getString("technicianId"));
             dto.name = j.getString("name");

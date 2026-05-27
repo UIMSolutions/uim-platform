@@ -63,7 +63,7 @@ class PrintDocumentController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PrintDocumentDTO dto;
-            dto.documentId = PrintDocumentId(j.getString("id"));
+            dto.documentId = PrintDocumentId(precheck.id);
             dto.tenantId = tenantId;
             dto.fileName = j.getString("fileName");
             dto.mimeType = j.getString("mimeType");

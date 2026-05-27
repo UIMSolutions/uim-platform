@@ -32,7 +32,7 @@ class SpatialLayerController : ManageController {
       auto j = req.json;
       CreateSpatialLayerRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");

@@ -72,7 +72,7 @@ class EventMessageController : ManageController {
             auto j = req.json;
 
             EventMessageDTO dto;
-            dto.messageId = EventMessageId(j.getString("id"));
+            dto.messageId = EventMessageId(precheck.id);
             dto.tenantId = tenantId;
             dto.serviceId = BrokerServiceId(j.getString("serviceId"));
             dto.topicId = j.getString("topicId");

@@ -57,7 +57,7 @@ class MessageBindingController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             MessageBindingDTO dto;
-            dto.bindingId   = MessageBindingId(j.getString("id"));
+            dto.bindingId   = MessageBindingId(precheck.id);
             dto.tenantId    = tenantId;
             dto.clientId    = MessageClientId(j.getString("clientId"));
             dto.serviceId   = MessagingServiceId(j.getString("serviceId"));

@@ -64,7 +64,7 @@ class ChangeRequestController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ChangeRequestDTO dto;
-            dto.changeRequestId = ChangeRequestId(j.getString("id"));
+            dto.changeRequestId = ChangeRequestId(precheck.id);
             dto.tenantId = tenantId;
             dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
             dto.subject = j.getString("subject");

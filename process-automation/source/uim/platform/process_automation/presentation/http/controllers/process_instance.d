@@ -37,7 +37,7 @@ class ProcessInstanceController : ManageController {
             StartProcessInstanceRequest r;
             r.tenantId = tenantId;
             r.processId = ProcessId(j.getString("processId"));
-            r.processInstanceId = ProcessInstanceId(j.getString("id"));
+            r.processInstanceId = ProcessInstanceId(precheck.id);
             r.startedBy = UserId(j.getString("startedBy"));
             r.priority = j.getString("priority");
             r.dueDate = jsonLong(j, "dueDate");

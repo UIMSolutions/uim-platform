@@ -64,7 +64,7 @@ class BusinessPartnerController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             BusinessPartnerDTO dto;
-            dto.businessPartnerId = BusinessPartnerId(j.getString("id"));
+            dto.businessPartnerId = BusinessPartnerId(precheck.id);
             dto.tenantId = tenantId;
             dto.bpNumber = j.getString("bpNumber");
             dto.firstName = j.getString("firstName");

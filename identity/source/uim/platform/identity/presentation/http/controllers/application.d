@@ -56,7 +56,7 @@ class ApplicationController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ApplicationDTO dto;
-            dto.applicationId = ApplicationId(j.getString("id"));
+            dto.applicationId = ApplicationId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

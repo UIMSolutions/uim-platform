@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreateSqlWarehouseRequest r;
       r.tenantId                = req.getTenantId;
-      r.id                      = j.getString("id");
+      r.id                      = precheck.id;
       r.workspaceId             = j.getString("workspaceId");
       r.name                    = j.getString("name");
       r.numClusters             = j.getInt("numClusters");

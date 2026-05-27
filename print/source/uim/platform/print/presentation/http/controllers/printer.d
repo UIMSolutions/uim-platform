@@ -64,7 +64,7 @@ class PrinterController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PrinterDTO dto;
-            dto.printerId = PrinterId(j.getString("id"));
+            dto.printerId = PrinterId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

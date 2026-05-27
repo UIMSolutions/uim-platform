@@ -38,7 +38,7 @@ class FlexVersionsController : ManageController {
       auto j = req.json;
       CreateFlexVersionRequest r;
       r.tenantId    = tenantId;
-      r.versionId   = FlexVersionId(j.getString("id"));
+      r.versionId   = FlexVersionId(precheck.id);
       r.appId       = j.getString("appId");
       r.displayName_ = j.getString("displayName");
       r.description_ = j.getString("description");

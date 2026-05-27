@@ -58,7 +58,7 @@ class TransportActionController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             TransportActionDTO dto;
-            dto.actionId = TransportActionId(j.getString("id"));
+            dto.actionId = TransportActionId(precheck.id);
             dto.tenantId = tenantId;
             dto.actionType = j.getString("actionType");
             dto.nodeId = j.getString("nodeId");

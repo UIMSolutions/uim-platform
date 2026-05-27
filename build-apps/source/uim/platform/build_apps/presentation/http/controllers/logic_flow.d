@@ -66,7 +66,7 @@ class LogicFlowController : ManageController {
             auto j = req.json;
 
             LogicFlowDTO dto;
-            dto.logicFlowId = LogicFlowId(j.getString("id"));
+            dto.logicFlowId = LogicFlowId(precheck.id);
             dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.pageId = PageId(j.getString("pageId"));

@@ -70,7 +70,7 @@ class ActivityController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ActivityDTO dto;
-            dto.activityId = ActivityId(j.getString("id"));
+            dto.activityId = ActivityId(precheck.id);
             dto.tenantId = tenantId;
             dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
             dto.technicianId = TechnicianId(j.getString("technicianId"));

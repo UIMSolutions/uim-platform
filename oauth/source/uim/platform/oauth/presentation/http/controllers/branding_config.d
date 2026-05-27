@@ -69,7 +69,7 @@ class BrandingConfigController : ManageController {
             auto j = req.json;
 
             BrandingConfigDTO dto;
-            dto.configId = BrandingConfigId(j.getString("id"));
+            dto.configId = BrandingConfigId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

@@ -68,7 +68,7 @@ class SmartformController : ManageController {
             auto j = req.json;
 
             SmartformDTO dto;
-            dto.smartformId = SmartformId(j.getString("id"));
+            dto.smartformId = SmartformId(precheck.id);
             dto.tenantId = tenantId;
             dto.serviceCallId = ServiceCallId(j.getString("serviceCallId"));
             dto.activityId = ActivityId(j.getString("activityId"));

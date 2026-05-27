@@ -55,7 +55,7 @@ class EncounterController : ManageController {
       auto j = req.json;
       CreateEncounterRequest r;
       r.tenantId    = tenantId;
-      r.encounterId = EncounterId(j.getString("id"));
+      r.encounterId = EncounterId(precheck.id);
       r.status_     = parseStatus(j.getString("status"));
       auto subjJ = j.get("subject", Json.emptyObject);
       r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));

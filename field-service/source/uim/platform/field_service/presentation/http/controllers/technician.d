@@ -65,7 +65,7 @@ class TechnicianController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             TechnicianDTO dto;
-            dto.technicianId = TechnicianId(j.getString("id"));
+            dto.technicianId = TechnicianId(precheck.id);
             dto.tenantId = tenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");

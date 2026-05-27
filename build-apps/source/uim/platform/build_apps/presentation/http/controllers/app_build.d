@@ -57,7 +57,7 @@ class AppBuildController : ManageController {
         auto j = req.json;
 
         AppBuildDTO dto;
-        dto.appBuildId = AppBuildId(j.getString("id"));
+        dto.appBuildId = AppBuildId(precheck.id);
         dto.tenantId = tenantId;
         dto.applicationId = ApplicationId(j.getString("applicationId"));
         dto.name = j.getString("name");

@@ -37,7 +37,7 @@ class FlexDraftsController : ManageController {
       auto j = req.json;
       CreateFlexDraftRequest r;
       r.tenantId       = tenantId;
-      r.draftId        = FlexDraftId(j.getString("id"));
+      r.draftId        = FlexDraftId(precheck.id);
       r.appId          = j.getString("appId");
       r.updatedBy_     = j.getString("updatedBy");
       r.baseVersionId_ = j.getString("baseVersionId");

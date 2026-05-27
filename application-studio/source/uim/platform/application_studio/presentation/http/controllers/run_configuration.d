@@ -73,7 +73,7 @@ class RunConfigurationController : ManageController {
             auto j = req.json;
 
             RunConfigurationDTO dto;
-            dto.runConfigurationId = RunConfigurationId(j.getString("id"));
+            dto.runConfigurationId = RunConfigurationId(precheck.id);
             dto.tenantId = tenantId;
             dto.projectId = ProjectId(j.getString("projectId"));
             dto.name = j.getString("name");

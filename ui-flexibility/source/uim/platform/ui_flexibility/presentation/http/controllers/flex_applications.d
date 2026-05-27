@@ -37,7 +37,7 @@ class FlexApplicationsController : ManageController {
       auto j = req.json;
       CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
-      r.applicationId  = FlexApplicationId(j.getString("id"));
+      r.applicationId  = FlexApplicationId(precheck.id);
       r.namespace_     = j.getString("namespace");
       r.appId          = j.getString("appId");
       r.description_   = j.getString("description");

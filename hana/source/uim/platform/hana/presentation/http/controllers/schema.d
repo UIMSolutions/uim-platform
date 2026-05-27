@@ -36,7 +36,7 @@ class SchemaController : ManageController {
       CreateSchemaRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.owner = j.getString("owner");
       r.type = j.getString("type");

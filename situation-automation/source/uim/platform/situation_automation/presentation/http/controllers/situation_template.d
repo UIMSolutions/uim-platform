@@ -37,7 +37,7 @@ class SituationTemplateController : ManageController {
 
             CreateSituationTemplateRequest r;
             r.tenantId = tenantId;
-            r.situationTemplateId = j.getString("id");
+            r.situationTemplateId = precheck.id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.situationCategory = j.getString("situationCategory").to!SituationCategory;

@@ -53,7 +53,7 @@ class BackendConnectionController : ManageController {
         auto id = BackendConnectionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid backend connection ID", 400);
-        
+
         auto e = usecase.getBackendConnection(tenantId, id);
         if (e.isNull)
             return errorResponse("Backend connection not found", 404);
@@ -62,82 +62,82 @@ class BackendConnectionController : ManageController {
         return successResponse("Backend connection retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            BackendConnectionDTO dto;
-            dto.connectionId = BackendConnectionId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.backendUrl = j.getString("backendUrl");
-            dto.clientId = j.getString("clientId");
-            dto.authMethod = j.getString("authMethod");
-            dto.sysId = j.getString("sysId");
-            dto.sysNumber = j.getString("sysNumber");
-            dto.client = j.getString("client");
-            dto.language = j.getString("language");
-            dto.destinationName = j.getString("destinationName");
-            dto.sslEnabled = j.getBool("sslEnabled");
-            dto.certificateFingerprint = j.getString("certificateFingerprint");
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createBackendConnection(dto);
-            if (!result.success) {
-                writeError(res, 400, result.message);
-                return;
-            }
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Backend connection created successfully");
-            res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto data = precheck.data;
+        BackendConnectionDTO dto;
+        dto.connectionId = BackendConnectionId(data.getString("id"));
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.backendUrl = data.getString("backendUrl");
+        dto.clientId = data.getString("clientId");
+        dto.authMethod = data.getString("authMethod");
+        dto.sysId = data.getString("sysId");
+        dto.sysNumber = data.getString("sysNumber");
+        dto.client = data.getString("client");
+        dto.language = data.getString("language");
+        dto.destinationName = data.getString("destinationName");
+        dto.sslEnabled = data.getBool("sslEnabled");
+        dto.certificateFingerprint = data.getString("certificateFingerprint");
+
+        auto result = usecase.createBackendConnection(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Backend connection created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            BackendConnectionDTO dto;
-            dto.connectionId = BackendConnectionId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.backendUrl = j.getString("backendUrl");
-            dto.destinationName = j.getString("destinationName");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateBackendConnection(dto);
-            if (!result.success) {
-                writeError(res, 404, result.message);
-                return;
-            }
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Backend connection updated successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = BackendConnectionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid backend connection ID", 400);
+
+        auto data = precheck.data;
+        BackendConnectionDTO dto;
+        dto.connectionId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.backendUrl = data.getString("backendUrl");
+        dto.destinationName = data.getString("destinationName");
+
+        auto result = usecase.updateBackendConnection(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Backend connection updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = BackendConnectionId(precheck.id);
-            auto result = usecase.deleteBackendConnection(tenantId, id);
-            if (!result.success) {
-                writeError(res, 404, result.message);
-                return;
-            }
-            res.writeJsonBody(Json.emptyObject.set("message", "Backend connection deleted successfully"), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = BackendConnectionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid backend connection ID", 400);
+
+        auto result = usecase.deleteBackendConnection(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Backend connection deleted successfully", "Deleted", 200, responseData);
     }
 }

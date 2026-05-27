@@ -45,7 +45,7 @@ class DataSourceConfigController : ManageController {
     auto j = req.json;
     CreateDataSourceConfigRequest r;
     r.tenantId          = req.getTenantId;
-    r.id                = j.getString("id");
+    r.id                = precheck.id;
     r.dataProductId     = j.getString("dataProductId");
     r.providerId        = j.getString("providerId");
     r.qualityRank       = j.getString("qualityRank");

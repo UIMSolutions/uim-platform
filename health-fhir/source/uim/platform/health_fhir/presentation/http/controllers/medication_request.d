@@ -54,7 +54,7 @@ class MedicationRequestController : ManageController {
       auto j = req.json;
       CreateMedicationOrderRequest r;
       r.tenantId              = tenantId;
-      r.medicationRequestId   = MedicationRequestId(j.getString("id"));
+      r.medicationRequestId   = MedicationRequestId(precheck.id);
       r.status_               = parseStatus(j.getString("status"));
       r.authoredOn_           = j.getString("authoredOn");
       r.note_                 = j.getString("note");

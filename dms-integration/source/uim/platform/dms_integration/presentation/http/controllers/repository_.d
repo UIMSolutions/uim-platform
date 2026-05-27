@@ -63,7 +63,7 @@ class RepositoryController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             RepositoryDTO dto;
-            dto.repositoryId = RepositoryId(j.getString("id"));
+            dto.repositoryId = RepositoryId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

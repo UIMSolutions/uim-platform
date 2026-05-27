@@ -57,7 +57,7 @@ class CommandInputController : ManageController {
         auto j = req.json;
 
         CommandInputDTO dto;
-        dto.commandInputId = CommandInputId(j.getString("id"));
+        dto.commandInputId = CommandInputId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = j.getString("name");
         dto.description = j.getString("description");

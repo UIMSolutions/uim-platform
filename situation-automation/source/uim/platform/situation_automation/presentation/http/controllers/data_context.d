@@ -38,7 +38,7 @@ class DataContextController : ManageController {
             CreateDataContextRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
-            r.dataContextId = DataContextId(j.getString("id"));
+            r.dataContextId = DataContextId(precheck.id);
             r.entityId = j.getString("entityId");
             r.entityTypeId = EntityTypeId(j.getString("entityTypeId"));
             r.data = jsonKeyValuePairs(j, "data");

@@ -31,7 +31,7 @@ class IsolineController : ManageController {
       auto j = req.json;
       CalculateIsolineRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.centerLat = jsonDouble(j, "centerLat");
       r.centerLon = jsonDouble(j, "centerLon");
       r.mode = j.getString("mode");

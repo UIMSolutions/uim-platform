@@ -36,7 +36,7 @@ class SnowflakeAccountController : ManageController {
     auto j = req.json;
     CreateAccountRequest r;
     r.tenantId         = req.getTenantId;
-    r.id               = j.getString("id");
+    r.id               = precheck.id;
     r.name             = j.getString("name");
     r.region           = j.getString("region");
     r.adminEmail       = j.getString("adminEmail");

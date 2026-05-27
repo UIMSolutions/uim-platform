@@ -36,7 +36,7 @@ class DataProductShareController : ManageController {
     auto j = req.json;
     CreateShareRequest r;
     r.tenantId      = req.getTenantId;
-    r.id            = j.getString("id");
+    r.id            = precheck.id;
     r.accountId     = j.getString("accountId");
     r.connectorId   = j.getString("connectorId");
     r.dataProductId = j.getString("dataProductId");

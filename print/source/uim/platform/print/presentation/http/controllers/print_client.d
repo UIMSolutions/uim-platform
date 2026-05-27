@@ -64,7 +64,7 @@ class PrintClientController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             PrintClientDTO dto;
-            dto.clientId = PrintClientId(j.getString("id"));
+            dto.clientId = PrintClientId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreateWorkspaceRequest r;
       r.tenantId      = req.getTenantId;
-      r.id            = j.getString("id");
+      r.id            = precheck.id;
       r.name          = j.getString("name");
       r.region        = j.getString("region");
       r.cloudProvider = j.getString("cloudProvider");

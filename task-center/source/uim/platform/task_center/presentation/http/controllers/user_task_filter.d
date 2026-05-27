@@ -35,7 +35,7 @@ class UserTaskFilterController : ManageController {
             auto j = req.json;
             CreateUserTaskFilterRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.userId = j.getString("userId");
             r.name = j.getString("name");
             r.description = j.getString("description");

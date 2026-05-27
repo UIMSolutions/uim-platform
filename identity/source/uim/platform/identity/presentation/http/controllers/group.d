@@ -56,7 +56,7 @@ class GroupController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             GroupDTO dto;
-            dto.groupId = GroupId(j.getString("id"));
+            dto.groupId = GroupId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

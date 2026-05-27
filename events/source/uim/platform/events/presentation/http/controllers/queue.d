@@ -57,7 +57,7 @@ class QueueController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             QueueDTO dto;
-            dto.queueId            = QueueId(j.getString("id"));
+            dto.queueId            = QueueId(precheck.id);
             dto.tenantId           = tenantId;
             dto.serviceId          = MessagingServiceId(j.getString("serviceId"));
             dto.name               = j.getString("name");

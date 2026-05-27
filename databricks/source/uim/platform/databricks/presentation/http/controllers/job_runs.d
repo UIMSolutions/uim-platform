@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreateJobRunRequest r;
       r.tenantId    = req.getTenantId;
-      r.id          = j.getString("id");
+      r.id          = precheck.id;
       r.jobId       = j.getString("jobId");
       r.workspaceId = j.getString("workspaceId");
       r.clusterId   = j.getString("clusterId");

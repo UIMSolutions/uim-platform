@@ -73,7 +73,7 @@ class ServiceBindingController : ManageController {
             auto j = req.json;
 
             ServiceBindingDTO dto;
-            dto.id = ServiceBindingId(j.getString("id"));
+            dto.id = ServiceBindingId(precheck.id);
             dto.tenantId = tenantId;
             dto.devSpaceId = DevSpaceId(j.getString("devSpaceId"));
             dto.name = j.getString("name");

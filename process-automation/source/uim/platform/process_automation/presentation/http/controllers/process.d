@@ -39,7 +39,7 @@ class ProcessController : ManageController {
             CreateProcessRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.processId = ProcessId(j.getString("id"));
+            r.processId = ProcessId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.category = j.getString("category");

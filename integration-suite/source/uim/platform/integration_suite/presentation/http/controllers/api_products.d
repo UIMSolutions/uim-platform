@@ -26,7 +26,7 @@ public:
       auto j = req.json;
       CreateApiProductRequest r;
       r.tenantId    = req.getTenantId;
-      r.id          = j.getString("id");
+      r.id          = precheck.id;
       r.name        = j.getString("name");
       r.description = j.getString("description");
       r.apiProxyIds = getStrings(j, "apiProxyIds");

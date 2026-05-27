@@ -37,7 +37,7 @@ class ProvisioningRequestController : ManageController {
     auto j = req.json;
     CreateProvisioningRequest r;
     r.tenantId       = req.getTenantId;
-    r.id             = j.getString("id");
+    r.id             = precheck.id;
     r.requestedBy    = j.getString("requestedBy");
     r.accountName    = j.getString("accountName");
     r.region         = j.getString("region");

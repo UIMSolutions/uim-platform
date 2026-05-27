@@ -41,7 +41,7 @@ class ObservationController : ManageController {
       auto j = req.json;
       CreateObservationRequest r;
       r.tenantId        = tenantId;
-      r.observationId   = ObservationId(j.getString("id"));
+      r.observationId   = ObservationId(precheck.id);
       r.status_         = parseStatus(j.getString("status"));
       r.effectiveDateTime_ = j.getString("effectiveDateTime");
       r.note_           = j.getString("note");

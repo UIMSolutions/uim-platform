@@ -37,7 +37,7 @@ class FlexVariantsController : ManageController {
       auto j = req.json;
       CreateFlexVariantRequest request;
       request.tenantId    = tenantId;
-      request.variantId   = FlexVariantId(j.getString("id"));
+      request.variantId   = FlexVariantId(precheck.id);
       request.appId       = j.getString("appId");
       request.variantType_ = j.getString("variantType");
       request.variantName_ = j.getString("variantName");

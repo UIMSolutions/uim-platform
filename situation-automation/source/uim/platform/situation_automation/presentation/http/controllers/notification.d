@@ -38,7 +38,7 @@ class NotificationController : ManageController {
             CreateNotificationRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(j.getString("instanceId"));
-            r.notificationId = NotificationId(j.getString("id"));
+            r.notificationId = NotificationId(precheck.id);
             r.recipientId = j.getString("recipientId");
             r.title = j.getString("title");
             r.message = j.getString("message");

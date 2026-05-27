@@ -70,7 +70,7 @@ class FolderController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             FolderDTO dto;
-            dto.folderId = FolderId(j.getString("id"));
+            dto.folderId = FolderId(precheck.id);
             dto.tenantId = tenantId;
             dto.repositoryId = RepositoryId(j.getString("repositoryId"));
             dto.parentFolderId = FolderId(j.getString("parentFolderId"));

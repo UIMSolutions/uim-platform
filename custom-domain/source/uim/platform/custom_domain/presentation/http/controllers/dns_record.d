@@ -35,7 +35,7 @@ class DnsRecordController : ManageController {
 
             CreateDnsRecordRequest r;
             r.tenantId = tenantId;
-            r.dnsRecordId = DnsRecordId(j.getString("id"));
+            r.dnsRecordId = DnsRecordId(precheck.id);
             r.customDomainId = CustomDomainId(j.getString("customDomainId"));
             r.recordType = j.getString("recordType");
             r.hostname = j.getString("hostname");

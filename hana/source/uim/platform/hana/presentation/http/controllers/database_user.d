@@ -38,7 +38,7 @@ class DatabaseUserController : ManageController {
       CreateDatabaseUserRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.userName = j.getString("userName");
       r.password = j.getString("password");
       r.authType = j.getString("authType");

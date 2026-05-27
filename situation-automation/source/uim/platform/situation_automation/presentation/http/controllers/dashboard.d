@@ -36,7 +36,7 @@ class DashboardController : ManageController {
             auto j = req.json;
             CreateDashboardRequest r;
             r.tenantId = tenantId;
-            r.dashboardId = DashboardId(j.getString("id"));
+            r.dashboardId = DashboardId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

@@ -25,7 +25,7 @@ public:
       auto j = req.json;
       CreatePackageRequest r;
       r.tenantId    = req.getTenantId;
-      r.id          = j.getString("id");
+      r.id          = precheck.id;
       r.name        = j.getString("name");
       r.version_    = j.getString("version");
       r.description = j.getString("description");

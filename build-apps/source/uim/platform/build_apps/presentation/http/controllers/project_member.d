@@ -66,7 +66,7 @@ class ProjectMemberController : ManageController {
             auto j = req.json;
 
             ProjectMemberDTO dto;
-            dto.projectMemberId = ProjectMemberId(j.getString("id"));
+            dto.projectMemberId = ProjectMemberId(precheck.id);
             dto.tenantId = tenantId;
             dto.applicationId = ApplicationId(j.getString("applicationId"));
             dto.userId = UserId(j.getString("userId"));

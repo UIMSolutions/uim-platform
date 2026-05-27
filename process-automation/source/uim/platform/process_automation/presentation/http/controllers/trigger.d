@@ -38,7 +38,7 @@ class TriggerController : ManageController {
             CreateTriggerRequest r;
             r.tenantId = tenantId;
             r.processId = ProcessId(j.getString("processId"));
-            r.triggerId = TriggerId(j.getString("id"));
+            r.triggerId = TriggerId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

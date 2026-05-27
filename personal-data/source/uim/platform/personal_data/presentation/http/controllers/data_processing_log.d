@@ -33,7 +33,7 @@ class DataProcessingLogController : ManageController {
             auto j = req.json;
             CreateDataProcessingLogRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.dataSubjectId = j.getString("dataSubjectId");
             r.requestId = j.getString("requestId");
             r.applicationId = j.getString("applicationId");

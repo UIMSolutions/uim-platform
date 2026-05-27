@@ -34,7 +34,7 @@ class TaskCommentController : ManageController {
             auto j = req.json;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
-            r.taskCommentId = TaskCommentId(j.getString("id"));
+            r.taskCommentId = TaskCommentId(precheck.id);
             r.taskId = TaskId(j.getString("taskId"));
             r.author = j.getString("author");
             r.content = j.getString("content");

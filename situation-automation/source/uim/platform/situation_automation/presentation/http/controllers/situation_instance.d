@@ -39,7 +39,7 @@ class SituationInstanceController : ManageController {
             CreateSituationInstanceRequest r;
             r.tenantId = tenantId;
             r.situationTemplateId = SituationTemplateId(j.getString("situationTemplateId"));
-            r.situationInstanceId = SituationInstanceId(j.getString("id"));
+            r.situationInstanceId = SituationInstanceId(precheck.id);
             r.description = j.getString("description");
             r.severity = j.getString("severity").to!SituationSeverity;
             r.entityId = j.getString("entityId");

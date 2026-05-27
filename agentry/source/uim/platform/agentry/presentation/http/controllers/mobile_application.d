@@ -34,90 +34,110 @@ class MobileApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listMobileApplications(tenantId);
-            auto jarr = items.map!(e => e.toJson()).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Mobile application list retrieved successfully");
-            res.writeJsonBody(resp, 200);
-        
+        auto items = usecase.listMobileApplications(tenantId);
+        auto jarr = items.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+
+        return successResponse("Mobile application list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = MobileApplicationId(precheck.id);
-            auto e = usecase.getMobileApplication(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Mobile application not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = MobileApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid mobile application ID", 400);
+
+        auto e = usecase.getMobileApplication(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Mobile application not found", 404);
+
+        auto responseData = e.toJson();
+        return successResponse("Mobile application retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto j = req.json;
-            MobileApplicationDTO dto;
-            dto.mobileApplicationId = MobileApplicationId(j.getString("id"));
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.iconUrl = j.getString("iconUrl");
-            dto.category = j.getString("category");
-            dto.vendor = j.getString("vendor");
-            dto.contactEmail = j.getString("contactEmail");
-            dto.backendSystemId = j.getString("backendSystemId");
-            dto.offlineCapable = j.getBool("offlineCapable");
-            dto.pushNotificationsEnabled = j.getBool("pushNotificationsEnabled");
-            dto.minOsVersion = j.getString("minOsVersion");
-            dto.packageName = j.getString("packageName");
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createMobileApplication(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Mobile application created successfully");
-            res.writeJsonBody(resp, 201);
-        
+        auto data = precheck.data;
+        MobileApplicationDTO dto;
+        dto.applicationId = MobileApplicationId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.iconUrl = data.getString("iconUrl");
+        dto.category = data.getString("category");
+        dto.vendor = data.getString("vendor");
+        dto.contactEmail = data.getString("contactEmail");
+        dto.backendSystemId = data.getString("backendSystemId");
+        dto.offlineCapable = data.getBool("offlineCapable");
+        dto.pushNotificationsEnabled = data.getBool("pushNotificationsEnabled");
+        dto.minOsVersion = data.getString("minOsVersion");
+        dto.packageName = data.getString("packageName");
+
+        auto result = usecase.createMobileApplication(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Mobile application created successfully", "Created", 201, responseData);
+
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            MobileApplicationDTO dto;
-            dto.mobileApplicationId = MobileApplicationId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = j.getString("name");
-            dto.description = j.getString("description");
-            dto.iconUrl = j.getString("iconUrl");
-            dto.category = j.getString("category");
-            dto.vendor = j.getString("vendor");
-            dto.contactEmail = j.getString("contactEmail");
-            dto.minOsVersion = j.getString("minOsVersion");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateMobileApplication(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Mobile application updated successfully");
-            res.writeJsonBody(resp, 200);
-        
+        auto id = MobileApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid mobile application ID", 400);
+
+        MobileApplicationDTO dto;
+        dto.mobileApplicationId = id;
+        dto.tenantId = tenantId;
+        dto.name = j.getString("name");
+        dto.description = j.getString("description");
+        dto.iconUrl = j.getString("iconUrl");
+        dto.category = j.getString("category");
+        dto.vendor = j.getString("vendor");
+        dto.contactEmail = j.getString("contactEmail");
+        dto.minOsVersion = j.getString("minOsVersion");
+
+        auto result = usecase.updateMobileApplication(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Mobile application updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = MobileApplicationId(precheck.id);
-            auto result = usecase.deleteMobileApplication(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "Mobile application deleted successfully"), 200);
-        
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = MobileApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid mobile application ID", 400);
+
+        auto result = usecase.deleteMobileApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Mobile application deleted successfully", "Deleted", 200, responseData);
     }
-}

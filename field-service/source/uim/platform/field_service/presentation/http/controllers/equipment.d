@@ -67,7 +67,7 @@ class EquipmentController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             EquipmentDTO dto;
-            dto.equipmentId = EquipmentId(j.getString("id"));
+            dto.equipmentId = EquipmentId(precheck.id);
             dto.tenantId = tenantId;
             dto.customerId = CustomerId(j.getString("customerId"))  ;
             dto.serialNumber = j.getString("serialNumber");

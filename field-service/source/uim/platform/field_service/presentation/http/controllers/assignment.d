@@ -71,7 +71,7 @@ class AssignmentController : ManageController {
             auto j = req.json;
 
             AssignmentDTO dto;
-            dto.assignmentId = AssignmentId(j.getString("id"));
+            dto.assignmentId = AssignmentId(precheck.id);
             dto.tenantId = tenantId;
             dto.activityId = j.getString("activityId");
             dto.technicianId = j.getString("technicianId");

@@ -62,7 +62,7 @@ class DevSpaceController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             DevSpaceDTO dto;
-            dto.id = j.getString("id");
+            dto.id = precheck.id;
             dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

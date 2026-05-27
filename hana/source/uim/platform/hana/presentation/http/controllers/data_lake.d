@@ -36,7 +36,7 @@ class DataLakeController : ManageController {
       CreateDataLakeRequest r;
       r.tenantId = tenantId;
       r.instanceId = j.getString("instanceId");
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.computeNodes = j.getInteger("computeNodes", 1);

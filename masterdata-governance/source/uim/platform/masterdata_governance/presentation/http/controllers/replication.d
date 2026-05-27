@@ -64,7 +64,7 @@ class ReplicationController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ReplicationDTO dto;
-            dto.replicationId = ReplicationId(j.getString("id"));
+            dto.replicationId = ReplicationId(precheck.id);
             dto.tenantId = tenantId;
             dto.businessPartnerId = BusinessPartnerId(j.getString("businessPartnerId"));
             dto.targetSystem = j.getString("targetSystem");

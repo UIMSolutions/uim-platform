@@ -71,7 +71,7 @@ class ProjectTemplateController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ProjectTemplateDTO dto;
-            dto.projectTemplateId = ProjectTemplateId(j.getString("id"));
+            dto.projectTemplateId = ProjectTemplateId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

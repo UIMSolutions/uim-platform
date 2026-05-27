@@ -56,7 +56,7 @@ class UserController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             UserDTO dto;
-            dto.userId = UserId(j.getString("id"));
+            dto.userId = UserId(precheck.id);
             dto.tenantId = tenantId;
             dto.userName = j.getString("userName");
             dto.email = j.getString("email");

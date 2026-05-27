@@ -37,7 +37,7 @@ class VisibilityController : ManageController {
             auto j = req.json;
             CreateVisibilityRequest r;
             r.tenantId = tenantId;
-            r.visibilityId = VisibilityId(j.getString("id"));
+            r.visibilityId = VisibilityId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.dashboardType = j.getString("dashboardType");

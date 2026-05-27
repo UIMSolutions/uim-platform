@@ -33,7 +33,7 @@ class TaskAttachmentController : ManageController {
             auto j = req.json;
             CreateTaskAttachmentRequest r;
             r.tenantId = tenantId;
-            r.taskAttachmentId = TaskAttachmentId(j.getString("id"));
+            r.taskAttachmentId = TaskAttachmentId(precheck.id);
             r.taskId = TaskId(j.getString("taskId"));
             r.fileName = j.getString("fileName");
             r.fileSize = j.getString("fileSize");

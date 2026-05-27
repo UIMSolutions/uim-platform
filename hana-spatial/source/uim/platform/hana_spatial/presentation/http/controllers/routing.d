@@ -31,7 +31,7 @@ class RoutingController : ManageController {
       auto j = req.json;
       CalculateRouteRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.originLat = jsonDouble(j, "originLat");
       r.originLon = jsonDouble(j, "originLon");
       r.destinationLat = jsonDouble(j, "destinationLat");

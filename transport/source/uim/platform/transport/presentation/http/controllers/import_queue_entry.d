@@ -59,7 +59,7 @@ class ImportQueueEntryController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ImportQueueEntryDTO dto;
-            dto.entryId = ImportQueueEntryId(j.getString("id"));
+            dto.entryId = ImportQueueEntryId(precheck.id);
             dto.tenantId = tenantId;
             dto.nodeId = j.getString("nodeId");
             dto.requestId = j.getString("requestId");

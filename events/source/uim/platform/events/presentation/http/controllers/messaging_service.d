@@ -58,7 +58,7 @@ class MessagingServiceController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             MessagingServiceDTO dto;
-            dto.serviceId   = MessagingServiceId(j.getString("id"));
+            dto.serviceId   = MessagingServiceId(precheck.id);
             dto.tenantId    = tenantId;
             dto.name        = j.getString("name");
             dto.description = j.getString("description");

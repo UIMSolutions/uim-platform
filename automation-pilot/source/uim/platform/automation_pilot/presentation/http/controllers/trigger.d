@@ -68,7 +68,7 @@ class TriggerController : ManageController {
             auto j = req.json;
 
             TriggerDTO dto;
-            dto.triggerId = TriggerId(j.getString("id"));
+            dto.triggerId = TriggerId(precheck.id);
             dto.tenantId = tenantId;
             dto.commandId = j.getString("commandId");
             dto.name = j.getString("name");

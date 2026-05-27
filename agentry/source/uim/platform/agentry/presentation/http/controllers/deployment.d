@@ -20,6 +20,7 @@ class DeploymentController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/agentry/deployments", &handleList);
         router.get("/api/v1/agentry/deployments/*", &handleGet);
         router.post("/api/v1/agentry/deployments", &handleCreate);
@@ -52,7 +53,7 @@ class DeploymentController : ManageController {
         auto data = precheck.data;
 
         DeploymentDTO dto;
-        dto.deploymentId = DeploymentId(j.getString("id"));
+        dto.deploymentId = DeploymentId(precheck.id);
         dto.mobileApplicationId = MobileApplicationId(j.getString("mobileApplicationId"));
         dto.appVersionId = AppVersionId(j.getString("appVersionId"));
         dto.tenantId = tenantId;
@@ -94,41 +95,48 @@ class DeploymentController : ManageController {
         return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto j = req.json;
-            DeploymentDTO dto;
-            dto.deploymentId = DeploymentId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.notes = j.getString("notes");
-            dto.scheduledAt = j.getString("scheduledAt");
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateDeployment(dto);
-            if (!result.success) {
-                writeError(res, 404, result.message);
-                return;
-            }
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Deployment updated successfully");
-            res.writeJsonBody(resp, 200);
-        
+        auto id = DeploymentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid deployment ID", 400);
+
+        DeploymentDTO dto;
+        dto.deploymentId = id;
+        dto.tenantId = tenantId;
+        dto.notes = j.getString("notes");
+        dto.scheduledAt = j.getString("scheduledAt");
+
+        auto result = usecase.updateDeployment(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Deployment updated successfully", "Updated", 200, responseData);
+
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DeploymentId(precheck.id);
-            auto result = usecase.deleteDeployment(tenantId, id);
-            if (!result.success) {
-                writeError(res, 404, result.message);
-                return;
-            }
-            res.writeJsonBody(Json.emptyObject.set("message", "Deployment deleted successfully"), 200);
-        
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = DeploymentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid deployment ID", 400);
+
+        auto result = usecase.deleteDeployment(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Deployment deleted successfully", "Deleted", 200, responseData);
     }
 }

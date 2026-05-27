@@ -32,7 +32,7 @@ class GeocodingController : ManageController {
       auto j = req.json;
       GeocodeAddressRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.address = j.getString("address");
       r.language = j.getString("language");
       r.countryCode = j.getString("countryCode");
@@ -56,7 +56,7 @@ class GeocodingController : ManageController {
       auto j = req.json;
       ReverseGeocodeRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");
       r.language = j.getString("language");

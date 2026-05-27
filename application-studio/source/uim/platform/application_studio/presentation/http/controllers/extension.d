@@ -68,7 +68,7 @@ class ExtensionController : ManageController {
             auto j = req.json;
 
             ExtensionDTO dto;
-            dto.extensionId = ExtensionId(j.getString("id"));
+            dto.extensionId = ExtensionId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

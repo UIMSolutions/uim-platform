@@ -73,7 +73,7 @@ class DocumentController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             DocumentDTO dto;
-            dto.documentId = DocumentId(j.getString("id"));
+            dto.documentId = DocumentId(precheck.id);
             dto.tenantId = tenantId;
             dto.repositoryId = RepositoryId(j.getString("repositoryId"));
             dto.folderId = FolderId(j.getString("folderId"));

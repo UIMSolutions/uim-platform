@@ -33,7 +33,7 @@ class PatientController : ManageController {
 
       CreatePatientRequest r;
       r.tenantId  = tenantId;
-      r.patientId = PatientId(j.getString("id"));
+      r.patientId = PatientId(precheck.id);
       r.birthDate_ = j.getString("birthDate");
       r.active_   = j.get("active", Json(true)).get!bool;
 

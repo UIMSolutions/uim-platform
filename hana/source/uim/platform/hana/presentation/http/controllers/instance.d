@@ -36,7 +36,7 @@ class InstanceController : ManageController {
       auto j = req.json;
       CreateInstanceRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");

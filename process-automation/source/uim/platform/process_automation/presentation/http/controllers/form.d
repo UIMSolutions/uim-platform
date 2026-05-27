@@ -38,7 +38,7 @@ class FormController : ManageController {
             CreateFormRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.formId = FormId(j.getString("id"));
+            r.formId = FormId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.version_ = j.getString("version");

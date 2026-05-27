@@ -38,7 +38,7 @@ class SituationActionController : ManageController {
 
             CreateSituationActionRequest r;
             r.tenantId = tenantId;
-            r.situationActionId = SituationActionId(j.getString("id"));
+            r.situationActionId = SituationActionId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

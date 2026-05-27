@@ -60,7 +60,7 @@ class ProvisioningJobController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ProvisioningJobDTO dto;
-            dto.jobId = ProvisioningJobId(j.getString("id"));
+            dto.jobId = ProvisioningJobId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

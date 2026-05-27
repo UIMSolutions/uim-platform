@@ -45,7 +45,7 @@ class UnificationRuleController : ManageController {
     auto j = req.json;
     CreateUnificationRuleRequest r;
     r.tenantId    = req.getTenantId;
-    r.id          = j.getString("id");
+    r.id          = precheck.id;
     r.name        = j.getString("name");
     r.description = j.getString("description");
     r.priority    = j.getInteger("priority");

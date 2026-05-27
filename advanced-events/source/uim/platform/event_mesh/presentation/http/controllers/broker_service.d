@@ -76,7 +76,7 @@ class BrokerServiceController : ManageController {
     auto data = precheck.data;
 
     BrokerServiceDTO dto;
-    dto.serviceId = BrokerServiceId(j.getString("id"));
+    dto.serviceId = BrokerServiceId(precheck.id);
     dto.tenantId = tenantId;
     dto.name = j.getString("name");
     dto.description = j.getString("description");

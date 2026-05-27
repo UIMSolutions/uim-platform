@@ -59,7 +59,7 @@ class TransportNodeController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             TransportNodeDTO dto;
-            dto.nodeId = TransportNodeId(j.getString("id"));
+            dto.nodeId = TransportNodeId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

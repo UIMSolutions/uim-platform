@@ -44,7 +44,7 @@ class TenantUserController : ManageController {
     auto j = req.json;
     CreateTenantUserRequest r;
     r.tenantId      = req.getTenantId;
-    r.id            = j.getString("id");
+    r.id            = precheck.id;
     r.email         = j.getString("email");
     r.firstName     = j.getString("firstName");
     r.lastName      = j.getString("lastName");

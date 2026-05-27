@@ -66,7 +66,7 @@ class ServiceCallController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             ServiceCallDTO dto;
-            dto.serviceCallId = ServiceCallId(j.getString("id"));
+            dto.serviceCallId = ServiceCallId(precheck.id);
             dto.tenantId = tenantId;
             dto.customerId = CustomerId(j.getString("customerId"));
             dto.equipmentId = EquipmentId(j.getString("equipmentId"));

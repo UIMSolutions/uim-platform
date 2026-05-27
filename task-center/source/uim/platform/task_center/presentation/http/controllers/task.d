@@ -39,7 +39,7 @@ class TaskController : ManageController {
             auto j = req.json;
             CreateTaskRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.providerId = j.getString("providerId");
             r.externalTaskId = j.getString("externalTaskId");

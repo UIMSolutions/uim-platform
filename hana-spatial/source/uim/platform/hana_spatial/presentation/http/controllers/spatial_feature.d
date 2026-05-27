@@ -32,7 +32,7 @@ class SpatialFeatureController : ManageController {
       auto j = req.json;
       CreateSpatialFeatureRequest r;
       r.tenantId = tenantId;
-      r.id = j.getString("id");
+      r.id = precheck.id;
       r.layerId = j.getString("layerId");
       r.name = j.getString("name");
       r.geometryType = j.getString("geometryType");

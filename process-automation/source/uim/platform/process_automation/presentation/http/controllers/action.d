@@ -38,7 +38,7 @@ class ActionController : ManageController {
             CreateActionRequest r;
             r.tenantId = tenantId;
             r.projectId = ProjectId(j.getString("projectId"));
-            r.actionId = ActionId(j.getString("id"));
+            r.actionId = ActionId(precheck.id);
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");

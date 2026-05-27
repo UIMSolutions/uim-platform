@@ -34,7 +34,7 @@ class ProcessingPurposeController : ManageController {
             auto j = req.json;
             CreateProcessingPurposeRequest r;
             r.tenantId = tenantId;
-            r.id = j.getString("id");
+            r.id = precheck.id;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.legalBasis = j.getString("legalBasis");

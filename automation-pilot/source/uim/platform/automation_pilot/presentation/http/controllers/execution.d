@@ -68,7 +68,7 @@ class ExecutionController : ManageController {
             auto j = req.json;
 
             ExecutionDTO dto;
-            dto.executionId = ExecutionId(j.getString("id"));
+            dto.executionId = ExecutionId(precheck.id);
             dto.tenantId = tenantId;
             dto.commandId = CommandId(j.getString("commandId"));
             dto.inputValues = j.getString("inputValues");

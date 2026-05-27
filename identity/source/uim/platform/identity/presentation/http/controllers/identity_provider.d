@@ -56,7 +56,7 @@ class IdentityProviderController : ManageController {
             auto tenantId = req.getTenantId;
             auto j = req.json;
             IdentityProviderDTO dto;
-            dto.idpId = IdentityProviderId(j.getString("id"));
+            dto.idpId = IdentityProviderId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");

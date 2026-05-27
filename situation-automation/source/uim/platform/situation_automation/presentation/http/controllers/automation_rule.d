@@ -37,7 +37,7 @@ class AutomationRuleController : ManageController {
       CreateAutomationRuleRequest r;
       r.tenantId = tenantId;
       r.situationTemplateId = SituationTemplateId(j.getString("templateId"));
-      r.automationRuleId = AutomationRuleId(j.getString("id"));
+      r.automationRuleId = AutomationRuleId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = j.getString("priority");

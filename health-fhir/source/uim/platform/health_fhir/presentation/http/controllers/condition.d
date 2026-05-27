@@ -41,7 +41,7 @@ class ConditionController : ManageController {
       auto j = req.json;
       CreateConditionRequest r;
       r.tenantId     = tenantId;
-      r.conditionId  = ConditionId(j.getString("id"));
+      r.conditionId  = ConditionId(precheck.id);
       r.note_        = j.getString("note");
       r.onsetDateTime_   = j.getString("onsetDateTime");
       r.recordedDate_    = j.getString("recordedDate");

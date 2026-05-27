@@ -37,7 +37,7 @@ class ExecutableController : ManageController {
       r.tenantId = tenantId;
       r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
       r.scenarioId = ScenarioId(j.getString("scenarioId"));
-      r.executableId = ExecutableId(j.getString("id"));
+      r.executableId = ExecutableId(precheck.id);
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.type = j.getString("type");

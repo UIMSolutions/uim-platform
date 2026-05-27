@@ -58,7 +58,7 @@ class DataProductController : ManageController {
     auto j = req.json;
     CreateDataProductRequest r;
     r.tenantId     = req.getTenantId;
-    r.id           = j.getString("id");
+    r.id           = precheck.id;
     r.providerId   = j.getString("providerId");
     r.name         = j.getString("name");
     r.description  = j.getString("description");
