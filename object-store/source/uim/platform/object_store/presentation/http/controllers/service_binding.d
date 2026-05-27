@@ -43,7 +43,7 @@ class ServiceBindingController : ManageController {
     request.bucketId = data.getString("bucketId");
     request.name = data.getString("name");
     request.permission = data.getString("permission");
-    request.expiresAt = jsonLong(data, "expiresAt");
+    request.expiresAt = data.getLong("expiresAt");
     request.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.createBinding(request);

@@ -71,7 +71,7 @@ class BindingController : ManageController {
     r.permission = data.getString("permission");
     r.allowedNamespaces = data.getArray("allowedNamespaces")
       .map!(ns => NamespaceId(ns.getString)).array;
-    r.expiresAt = jsonLong(data, "expiresAt");
+    r.expiresAt = data.getLong("expiresAt");
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto binding = bindings.createServiceBinding(r);

@@ -102,7 +102,7 @@ class EncryptionController : PlatformController {
     r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
     r.encryptedDek = data.getString("encryptedDek");
-    r.keyringVersion = jsonLong(data, "keyringVersion");
+    r.keyringVersion = data.getLong("keyringVersion");
 
     const result = usecase.decrypt(r);
     if (!result.success)

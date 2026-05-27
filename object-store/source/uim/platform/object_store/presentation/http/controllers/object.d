@@ -58,9 +58,7 @@ class ObjectController : ManageController {
     if (result.hasError)
       return errorResponse(result.errorMessage);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Object created successfully", "Created", 201, resp);
   }
 
@@ -134,9 +132,7 @@ class ObjectController : ManageController {
       return errorResponse(result.errorMessage == "Object not found" ? "Not Found" : "Bad Request", result
           .errorMessage == "Object not found" ? 404 : 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Object metadata updated successfully", "Updated", 200, resp);
   }
 

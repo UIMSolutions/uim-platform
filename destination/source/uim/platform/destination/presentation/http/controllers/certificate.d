@@ -37,39 +37,37 @@ class CertificateController : ManageController {
     if (precheck.hasError)
       return precheck;
 
-  }
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
       auto tenantId = precheck.tenantId;
 
       auto data = precheck.data;
       UploadCertificateRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.certificateType = j.getString("type");
-      r.format_ = j.getString("format");
-      r.content = j.getString("content");
-      r.password = j.getString("password");
-      r.subject = j.getString("subject");
-      r.issuer = j.getString("issuer");
-      r.serialNumber = j.getString("serialNumber");
-      r.validFrom = j.getLong("validFrom");
-      r.validTo = j.getLong("validTo");
+      r.name = data.getString("name");
+      r.description = data.getString("description");
+      r.certificateType = data.getString("type");
+      r.format_ = data.getString("format");
+      r.content = data.getString("content");
+      r.password = data.getString("password");
+      r.subject = data.getString("subject");
+      r.issuer = data.getString("issuer");
+      r.serialNumber = data.getString("serialNumber");
+      r.validFrom = data.getLong("validFrom");
+      r.validTo = data.getLong("validTo");
       r.uploadedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.upload(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Certificate uploaded");
+        return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto resp = Json.emptyObject.set("id", result.id);
+      return successResponse("Certificate uploaded successfully", 201, resp);
+  }
+
+  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = uploadHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -97,23 +95,29 @@ class CertificateController : ManageController {
     return successResponse("Certificates retrieved successfully", 200, resp);
   }
 
+  protected Json listExpiringHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto now = Clock.currTime().toUnixTime();
+    auto thirtyDays = now + 30 * 86_400;
+
+    auto certs = usecase.listExpiring(tenantId, thirtyDays);
+    auto arr = certs.map!(c => c.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", certs.length);
+
+    return successResponse("Expiring certificates retrieved successfully", 200, resp);
+  }
   protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-
-      auto now = Clock.currTime().toUnixTime();
-      auto thirtyDays = now + 30 * 86_400;
-
-      auto certs = usecase.listExpiring(tenantId, thirtyDays);
-
-      auto arr = certs.map!(c => c.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(certs.length))
-        .set("message", "Expiring certificates retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listExpiringHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -154,16 +158,14 @@ class CertificateController : ManageController {
     r.description = data.getString("description");
     r.content = data.getString("content");
     r.password = data.getString("password");
-    r.validFrom = jsonLong(data, "validFrom");
-    r.validTo = jsonLong(data, "validTo");
+    r.validFrom = data.getLong("validFrom");
+    r.validTo = data.getLong("validTo");
 
     auto result = usecase.updateCertificate(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Certificate updated successfully", 200, resp);
   }
 
@@ -182,17 +184,23 @@ class CertificateController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-    auto resp = Json.emptyObject
-      .set("id", id);
-
+    auto resp = Json.emptyObject.set("id", id);
     return successResponse("Certificate deleted successfully", 200, resp);
   }
 
-  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  protected Json validateHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
       auto tenantId = precheck.tenantId;
       auto id = CertificateId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid certificate ID", 400);
+
       auto result = usecase.validateCertificate(tenantId, id);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
 
       auto resp = Json.emptyObject
         .set("isValid", result.isValid)
@@ -201,7 +209,13 @@ class CertificateController : ManageController {
         .set("daysUntilExpiry", Json(result.daysUntilExpiry))
         .set("message", "Certificate validation completed");
 
-      res.writeJsonBody(resp, 200);
+      return successResponse("Certificate validation completed", 200, resp);
+  }
+
+  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = validateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -76,7 +76,7 @@ class TlsConfigurationController : ManageController {
         r.maxProtocolVersion = data.getString("maxProtocolVersion");
         r.http2Enabled = data.getBoolean("http2Enabled");
         r.hstsEnabled = data.getBoolean("hstsEnabled");
-        r.hstsMaxAge = jsonLong(data, "hstsMaxAge");
+        r.hstsMaxAge = data.getLong("hstsMaxAge");
         r.hstsIncludeSubDomains = data.getBoolean("hstsIncludeSubDomains");
         r.createdBy = UserId(data.getString("createdBy"));
 

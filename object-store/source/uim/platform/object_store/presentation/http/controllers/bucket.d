@@ -50,7 +50,7 @@ class BucketController : ManageController {
     r.versioningEnabled = data.getBoolean("versioningEnabled");
     r.encryptionType = data.getString("encryptionType");
     r.encryptionKeyId = data.getString("encryptionKeyId");
-    r.quotaBytes = jsonLong(data, "quotaBytes");
+    r.quotaBytes = data.getLong("quotaBytes");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.createBucket(r);
@@ -96,7 +96,7 @@ class BucketController : ManageController {
     r.versioningEnabled = data.getBoolean("versioningEnabled");
     r.encryptionType = data.getString("encryptionType");
     r.encryptionKeyId = data.getString("encryptionKeyId");
-    r.quotaBytes = jsonLong(data, "quotaBytes");
+    r.quotaBytes = data.getLong("quotaBytes");
 
     auto result = usecase.updateBucket(r);
     if (result.hasError)

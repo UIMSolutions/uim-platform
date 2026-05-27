@@ -127,9 +127,7 @@ class BrokerServiceController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Broker service updated successfully", "Updated", 200, resp);
   }
 
