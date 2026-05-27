@@ -47,11 +47,11 @@ class NamespaceController : ManageController {
       r.memoryLimit = data.getString("memoryLimit");
       r.cpuRequest = data.getString("cpuRequest");
       r.memoryRequest = data.getString("memoryRequest");
-      r.podLimit = j.getInteger("podLimit");
+      r.podLimit = data.getInteger("podLimit");
       r.quotaEnforcement = data.getString("quotaEnforcement");
       r.istioInjection = j.getBoolean("istioInjection", true);
-      r.labels = jsonStrMap(j, "labels");
-      r.annotations = jsonStrMap(j, "annotations");
+      r.labels = data.jsonStrMap("labels");
+      r.annotations = data.jsonStrMap("annotations");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -112,11 +112,11 @@ class NamespaceController : ManageController {
       r.memoryLimit = data.getString("memoryLimit");
       r.cpuRequest = data.getString("cpuRequest");
       r.memoryRequest = data.getString("memoryRequest");
-      r.podLimit = j.getInteger("podLimit");
+      r.podLimit = data.getInteger("podLimit");
       r.quotaEnforcement = data.getString("quotaEnforcement");
       r.istioInjection = j.getBoolean("istioInjection", true);
-      r.labels = jsonStrMap(j, "labels");
-      r.annotations = jsonStrMap(j, "annotations");
+      r.labels = data.jsonStrMap("labels");
+      r.annotations = data.jsonStrMap("annotations");
 
       auto result = usecase.updateNamespace(NamespaceId(id), r);
       if (result.success)

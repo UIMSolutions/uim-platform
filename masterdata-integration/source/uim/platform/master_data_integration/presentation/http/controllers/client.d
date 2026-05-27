@@ -45,7 +45,7 @@ class ClientController : ManageController {
       r.systemUrl = data.getString("systemUrl");
       r.destinationName = data.getString("destinationName");
       r.communicationArrangement = data.getString("communicationArrangement");
-      r.supportedCategories = getStrings(j, "supportedCategories");
+      r.supportedCategories = data.getStrings("supportedCategories");
       r.supportsInitialLoad = j.getBoolean("supportsInitialLoad");
       r.supportsDeltaReplication = j.getBoolean("supportsDeltaReplication");
       r.supportsKeyMapping = j.getBoolean("supportsKeyMapping");
@@ -123,7 +123,7 @@ class ClientController : ManageController {
       r.systemUrl = data.getString("systemUrl");
       r.destinationName = data.getString("destinationName");
       r.communicationArrangement = data.getString("communicationArrangement");
-      r.supportedCategories = getStrings(j, "supportedCategories");
+      r.supportedCategories = data.getStrings("supportedCategories");
       r.authType = data.getString("authType");
       r.clientIdRef = data.getString("clientIdRef");
       r.certificateRef = data.getString("certificateRef");

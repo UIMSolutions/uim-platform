@@ -43,7 +43,7 @@ class RetentionRuleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.purpose = data.getString("purpose");
-      r.retentionDays = j.getInteger("retentionDays");
+      r.retentionDays = data.getInteger("retentionDays");
       r.legalReference = data.getString("legalReference");
       r.isDefault = j.getBoolean("isDefault");
 
@@ -105,7 +105,7 @@ class RetentionRuleController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.retentionDays = j.getInteger("retentionDays");
+      r.retentionDays = data.getInteger("retentionDays");
       r.legalReference = data.getString("legalReference");
       r.status = data.getString("status");
 

@@ -60,7 +60,7 @@ class SocialIdentityController : ManageController {
         dto.displayName = data.getString("displayName");
         dto.accessToken = data.getString("accessToken");
         dto.refreshToken = data.getString("refreshToken");
-        dto.tokenExpiresAt = j.getInteger("tokenExpiresAt");
+        dto.tokenExpiresAt = data.getInteger("tokenExpiresAt");
         dto.profileData = data.getString("profileData");
         dto.createdBy = UserId(data.getString("createdBy"));
 

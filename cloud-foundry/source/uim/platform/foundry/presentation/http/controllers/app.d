@@ -47,15 +47,15 @@ class AppController : ManageController {
       r.tenantId = tenantId;
       r.spaceId = data.getString("spaceId");
       r.name = data.getString("name");
-      r.instances = j.getInteger("instances", 0);
-      r.memoryMb = j.getInteger("memoryMb");
-      r.diskMb = j.getInteger("diskMb");
+      r.instances = data.getInteger("instances", 0);
+      r.memoryMb = data.getInteger("memoryMb");
+      r.diskMb = data.getInteger("diskMb");
       r.buildpackId = data.getString("buildpackId");
       r.stack = data.getString("stack");
       r.command = data.getString("command");
       r.healthCheckType = data.getString("healthCheckType");
       r.healthCheckEndpoint = data.getString("healthCheckEndpoint");
-      r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
+      r.healthCheckTimeoutSec = data.getInteger("healthCheckTimeoutSec", 0);
       r.environmentVariables = data.getString("environmentVariables");
       r.dockerImage = data.getString("dockerImage");
       r.createdBy = UserId(data.getString("createdBy"));
@@ -115,15 +115,15 @@ class AppController : ManageController {
       r.id = appId;
       r.tenantId = tenantId;
       r.name = data.getString("name");
-      r.instances = j.getInteger("instances", 0);
-      r.memoryMb = j.getInteger("memoryMb", 0);
-      r.diskMb = j.getInteger("diskMb", 0);
+      r.instances = data.getInteger("instances", 0);
+      r.memoryMb = data.getInteger("memoryMb", 0);
+      r.diskMb = data.getInteger("diskMb", 0);
       r.buildpackId = data.getString("buildpackId");
       r.stack = data.getString("stack");
       r.command = data.getString("command");
       r.healthCheckType = data.getString("healthCheckType");
       r.healthCheckEndpoint = data.getString("healthCheckEndpoint");
-      r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
+      r.healthCheckTimeoutSec = data.getInteger("healthCheckTimeoutSec", 0);
       r.environmentVariables = data.getString("environmentVariables");
       r.dockerImage = data.getString("dockerImage");
 
@@ -200,9 +200,9 @@ class AppController : ManageController {
       auto r = ScaleAppRequest();
       r.id = appId;
       r.tenantId = tenantId;
-      r.instances = j.getInteger("instances", 0);
-      r.memoryMb = j.getInteger("memoryMb", 0);
-      r.diskMb = j.getInteger("diskMb", 0);
+      r.instances = data.getInteger("instances", 0);
+      r.memoryMb = data.getInteger("memoryMb", 0);
+      r.diskMb = data.getInteger("diskMb", 0);
 
       auto result = useCase.scaleApp(r);
       if (result.isSuccess()) {

@@ -45,8 +45,8 @@ class AppController : ManageController {
       r.icon = data.getString("icon");
       r.vendor = data.getString("vendor");
       r.version_ = data.getString("version");
-      r.supportedPlatforms = getStrings(j, "supportedPlatforms");
-      r.tags = getStrings(j, "tags");
+      r.supportedPlatforms = data.getStrings("supportedPlatforms");
+      r.tags = data.getStrings("tags");
       r.appConfig = parseAppConfig(j);
 
       auto result = useCase.createApp(r);

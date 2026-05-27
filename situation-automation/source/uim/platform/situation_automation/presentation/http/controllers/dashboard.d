@@ -40,7 +40,7 @@ class DashboardController : ManageController {
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.type = data.getString("type");
-            r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
+            r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
             r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createDashboard(r);
@@ -126,7 +126,7 @@ class DashboardController : ManageController {
             r.dashboardId = Dashboardprecheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
-            r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
+            r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
             r.updatedBy = UserId(data.getString("updatedBy"));
 
             auto result = usecase.updateDashboard(r);

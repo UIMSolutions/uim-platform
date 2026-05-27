@@ -50,7 +50,7 @@ class TaskController : ManageController {
       r.sourceTaskId = data.getString("sourceTaskId");
       r.actionUrl = data.getString("actionUrl");
       r.category = data.getString("category");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.dueDate = jsonLong(j, "dueDate");
 
       auto pStr = data.getString("priority");

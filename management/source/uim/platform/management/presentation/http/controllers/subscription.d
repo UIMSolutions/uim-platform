@@ -44,8 +44,8 @@ class SubscriptionController : ManageController {
       r.appName = data.getString("appName");
       r.planName = data.getString("planName");
       r.subscribedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.parameters = jsonStrMap(j, "parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.parameters = data.jsonStrMap("parameters");
+      r.labels = data.jsonStrMap("labels");
 
       auto result = usecase.subscribeSubscription(r);
       if (result.hasError)
@@ -105,7 +105,7 @@ class SubscriptionController : ManageController {
       UpdateSubscriptionRequest r;
       r.tenantId = tenantId;  
       r.planName = data.getString("planName");
-      r.parameters = jsonStrMap(j, "parameters");
+      r.parameters = data.jsonStrMap("parameters");
 
       auto result = usecase.updateSubscriptionPlan(tenantId, id, r);
       if (result.success)

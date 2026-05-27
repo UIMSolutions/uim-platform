@@ -56,7 +56,7 @@ class RouteController : ManageController {
       r.domainId = data.getString("domainId");
       r.host = data.getString("host");
       r.path = data.getString("path");
-      r.port = j.getInteger("port");
+      r.port = data.getInteger("port");
       r.protocol = parseRouteProtocol(data.getString("protocol"));
       r.createdBy = UserId(data.getString("createdBy"));
 

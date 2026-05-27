@@ -43,10 +43,10 @@ class DistributionController : ManageController {
       r.description = data.getString("description");
       r.direction = data.getString("direction");
       r.sourceClientId = data.getString("sourceClientId");
-      r.targetClientIds = getStrings(j, "targetClientIds");
-      r.categories = getStrings(j, "categories");
-      r.dataModelIds = getStrings(j, "dataModelIds");
-      r.filterRuleIds = getStrings(j, "filterRuleIds");
+      r.targetClientIds = data.getStrings("targetClientIds");
+      r.categories = data.getStrings("categories");
+      r.dataModelIds = data.getStrings("dataModelIds");
+      r.filterRuleIds = data.getStrings("filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = data.getString("cronSchedule");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -114,10 +114,10 @@ class DistributionController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.status = data.getString("status");
-      r.targetClientIds = getStrings(j, "targetClientIds");
-      r.categories = getStrings(j, "categories");
-      r.dataModelIds = getStrings(j, "dataModelIds");
-      r.filterRuleIds = getStrings(j, "filterRuleIds");
+      r.targetClientIds = data.getStrings("targetClientIds");
+      r.categories = data.getStrings("categories");
+      r.dataModelIds = data.getStrings("dataModelIds");
+      r.filterRuleIds = data.getStrings("filterRuleIds");
       r.autoReplicate = j.getBoolean("autoReplicate");
       r.cronSchedule = data.getString("cronSchedule");
 

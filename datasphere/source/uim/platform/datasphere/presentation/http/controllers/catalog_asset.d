@@ -43,7 +43,7 @@ class CatalogAssetController : ManageController {
       r.assetType = data.getString("assetType");
       r.sourceObjectId = data.getString("sourceObjectId");
       r.owner = data.getString("owner");
-      r.glossaryTerms = getStrings(j, "glossaryTerms");
+      r.glossaryTerms = data.getStrings("glossaryTerms");
 
       auto result = assets.createCatalogAsset(r);
       if (result.hasError)

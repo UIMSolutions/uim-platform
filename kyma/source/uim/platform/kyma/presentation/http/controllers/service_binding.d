@@ -49,7 +49,7 @@ class ServiceBindingController : ManageController {
       r.secretName = data.getString("secretName");
       r.secretNamespace = data.getString("secretNamespace");
       r.parametersJson = data.getString("parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.labels = data.jsonStrMap("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -120,7 +120,7 @@ class ServiceBindingController : ManageController {
       r.description = data.getString("description");
       r.secretName = data.getString("secretName");
       r.parametersJson = data.getString("parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.labels = data.jsonStrMap("labels");
 
       auto result = usecase.updateBinding(r);
       if (result.success)

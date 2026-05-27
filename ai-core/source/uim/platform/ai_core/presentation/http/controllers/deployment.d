@@ -41,7 +41,7 @@ class DeploymentController : ManageController {
     r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.configurationId = ConfigurationId(data.getString("configurationId"));
-    r.ttl = j.getInteger("ttl");
+    r.ttl = data.getInteger("ttl");
 
     auto result = usercase.createDeployment(r);
     if (result.hasError)
@@ -108,7 +108,7 @@ class DeploymentController : ManageController {
     request.deploymentId = id;
     request.targetStatus = data.getString("targetStatus");
     request.configurationId = data.getString("configurationId");
-    request.ttl = j.getInteger("ttl");
+    request.ttl = data.getInteger("ttl");
 
     auto result = usercase.patchDeployment(request);
     if (result.hasError)

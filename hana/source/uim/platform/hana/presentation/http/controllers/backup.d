@@ -42,7 +42,7 @@ class BackupController : ManageController {
       r.destination = data.getString("destination");
       r.encrypted = j.getBoolean("encrypted");
       r.cronExpression = data.getString("cronExpression");
-      r.retentionDays = j.getInteger("retentionDays", 30);
+      r.retentionDays = data.getInteger("retentionDays", 30);
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -127,7 +127,7 @@ class BackupController : ManageController {
       r.name = data.getString("name");
       r.destination = data.getString("destination");
       r.cronExpression = data.getString("cronExpression");
-      r.retentionDays = j.getInteger("retentionDays", 30);
+      r.retentionDays = data.getInteger("retentionDays", 30);
 
       auto result = usecase.update(r);
       if (result.hasError)

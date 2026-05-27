@@ -57,7 +57,7 @@ class CustomerSessionController : ManageController {
         dto.deviceInfo = data.getString("deviceInfo");
         dto.ipAddress = data.getString("ipAddress");
         dto.userAgent = data.getString("userAgent");
-        dto.expiresAt = j.getInteger("expiresAt");
+        dto.expiresAt = data.getInteger("expiresAt");
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = sessions.createSession(dto);

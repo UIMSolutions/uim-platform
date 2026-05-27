@@ -43,13 +43,13 @@ class ChannelController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.channelType = data.getString("channelType");
-      r.emailRecipients = getStrings(j, "emailRecipients");
+      r.emailRecipients = data.getStrings("emailRecipients");
       r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
       r.webhookUrl = data.getString("webhookUrl");
       r.webhookSecret = data.getString("webhookSecret");
       r.webhookMethod = data.getString("webhookMethod");
       r.onPremiseHost = data.getString("onPremiseHost");
-      r.onPremisePort = j.getInteger("onPremisePort");
+      r.onPremisePort = data.getInteger("onPremisePort");
       r.onPremiseProtocol = data.getString("onPremiseProtocol");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -112,12 +112,12 @@ class ChannelController : ManageController {
       r.id = id;
       r.description = data.getString("description");
       r.state = data.getString("state");
-      r.emailRecipients = getStrings(j, "emailRecipients");
+      r.emailRecipients = data.getStrings("emailRecipients");
       r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
       r.webhookUrl = data.getString("webhookUrl");
       r.webhookSecret = data.getString("webhookSecret");
       r.onPremiseHost = data.getString("onPremiseHost");
-      r.onPremisePort = j.getInteger("onPremisePort");
+      r.onPremisePort = data.getInteger("onPremisePort");
       r.onPremiseProtocol = data.getString("onPremiseProtocol");
 
       auto result = usecase.updateChannel(r);

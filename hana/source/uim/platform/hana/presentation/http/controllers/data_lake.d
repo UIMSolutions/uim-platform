@@ -39,7 +39,7 @@ class DataLakeController : ManageController {
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.computeNodes = j.getInteger("computeNodes", 1);
+      r.computeNodes = data.getInteger("computeNodes", 1);
       r.storage = jsonKeyValuePairs(j, "storage");
 
       auto result = usecase.create(r);
@@ -122,7 +122,7 @@ class DataLakeController : ManageController {
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.computeNodes = j.getInteger("computeNodes", 1);
+      r.computeNodes = data.getInteger("computeNodes", 1);
 
       auto result = usecase.update(r);
       if (result.hasError)

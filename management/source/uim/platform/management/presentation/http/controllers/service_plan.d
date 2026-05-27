@@ -46,12 +46,12 @@ class ServicePlanController : ManageController {
       r.pricingModel = data.getString("pricingModel");
       r.isFree = j.getBoolean("isFree");
       r.isBeta = j.getBoolean("isBeta");
-      r.availableRegions = getStrings(j, "availableRegions");
-      r.maxQuota = j.getInteger("maxQuota");
+      r.availableRegions = data.getStrings("availableRegions");
+      r.maxQuota = data.getInteger("maxQuota");
       r.unit = data.getString("unit");
-      r.supportedPlatforms = getStrings(j, "supportedPlatforms");
+      r.supportedPlatforms = data.getStrings("supportedPlatforms");
       r.providerDisplayName = data.getString("providerDisplayName");
-      r.metadata = jsonStrMap(j, "metadata");
+      r.metadata = data.jsonStrMap("metadata");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -116,11 +116,11 @@ class ServicePlanController : ManageController {
       UpdateServicePlanRequest r;
       r.planDisplayName = data.getString("planDisplayName");
       r.description = data.getString("description");
-      r.availableRegions = getStrings(j, "availableRegions");
-      r.maxQuota = j.getInteger("maxQuota");
+      r.availableRegions = data.getStrings("availableRegions");
+      r.maxQuota = data.getInteger("maxQuota");
       r.isBeta = j.getBoolean("isBeta");
       r.provisionable = j.getBoolean("provisionable", true);
-      r.metadata = jsonStrMap(j, "metadata");
+      r.metadata = data.jsonStrMap("metadata");
 
       auto result = usecase.update(id, r);
       if (result.success)

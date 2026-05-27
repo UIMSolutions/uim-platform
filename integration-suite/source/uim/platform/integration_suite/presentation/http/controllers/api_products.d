@@ -29,10 +29,10 @@ public:
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.description = data.getString("description");
-      r.apiProxyIds = getStrings(j, "apiProxyIds");
-      r.scopes      = getStrings(j, "scopes");
-      r.environments= getStrings(j, "environments");
-      r.metadata    = jsonStrMap(j, "metadata");
+      r.apiProxyIds = data.getStrings("apiProxyIds");
+      r.scopes      = data.getStrings("scopes");
+      r.environments= data.getStrings("environments");
+      r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -63,10 +63,10 @@ public:
       r.id          = extractIdFromPath(req);
       r.name        = data.getString("name");
       r.description = data.getString("description");
-      r.apiProxyIds = getStrings(j, "apiProxyIds");
+      r.apiProxyIds = data.getStrings("apiProxyIds");
       r.status      = data.getString("status");
       r.isPublic    = j.getBoolean("isPublic");
-      r.metadata    = jsonStrMap(j, "metadata");
+      r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

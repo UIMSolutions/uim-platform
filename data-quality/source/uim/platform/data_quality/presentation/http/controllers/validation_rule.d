@@ -50,12 +50,12 @@ class ValidationRuleController : ManageController {
       r.pattern = data.getString("pattern");
       r.minValue = data.getString("minValue");
       r.maxValue = data.getString("maxValue");
-      r.allowedValues = getStrings(j, "allowedValues");
+      r.allowedValues = data.getStrings("allowedValues");
       r.expression = data.getString("expression");
       r.referenceDataset = data.getString("referenceDataset");
       r.crossFieldName = data.getString("crossFieldName");
       r.category = data.getString("category");
-      r.priority = j.getInteger("priority");
+      r.priority = data.getInteger("priority");
 
       auto result = usecase.create(r);
       if (result.isSuccess()) {
@@ -125,12 +125,12 @@ class ValidationRuleController : ManageController {
       r.pattern = data.getString("pattern");
       r.minValue = data.getString("minValue");
       r.maxValue = data.getString("maxValue");
-      r.allowedValues = getStrings(j, "allowedValues");
+      r.allowedValues = data.getStrings("allowedValues");
       r.expression = data.getString("expression");
       r.referenceDataset = data.getString("referenceDataset");
       r.crossFieldName = data.getString("crossFieldName");
       r.category = data.getString("category");
-      r.priority = j.getInteger("priority");
+      r.priority = data.getInteger("priority");
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

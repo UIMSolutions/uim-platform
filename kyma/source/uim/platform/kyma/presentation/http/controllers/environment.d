@@ -45,15 +45,15 @@ class EnvironmentController : ManageController {
       r.description = data.getString("description");
       r.plan = data.getString("plan");
       r.region = data.getString("region");
-      r.machineCount = j.getInteger("machineCount");
+      r.machineCount = data.getInteger("machineCount");
       r.machineType = data.getString("machineType");
-      r.autoScalerMin = j.getInteger("autoScalerMin");
-      r.autoScalerMax = j.getInteger("autoScalerMax");
+      r.autoScalerMin = data.getInteger("autoScalerMin");
+      r.autoScalerMax = data.getInteger("autoScalerMax");
       r.oidcIssuerUrl = data.getString("oidcIssuerUrl");
       r.oidcClientId = data.getString("oidcClientId");
-      r.oidcGroupsClaim = getStrings(j, "oidcGroupsClaim");
-      r.oidcUsernameClaim = getStrings(j, "oidcUsernameClaim");
-      r.administrators = getStrings(j, "administrators");
+      r.oidcGroupsClaim = data.getStrings("oidcGroupsClaim");
+      r.oidcUsernameClaim = data.getStrings("oidcUsernameClaim");
+      r.administrators = data.getStrings("administrators");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -117,13 +117,13 @@ class EnvironmentController : ManageController {
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.machineCount = j.getInteger("machineCount");
+      r.machineCount = data.getInteger("machineCount");
       r.machineType = data.getString("machineType");
-      r.autoScalerMin = j.getInteger("autoScalerMin");
-      r.autoScalerMax = j.getInteger("autoScalerMax");
+      r.autoScalerMin = data.getInteger("autoScalerMin");
+      r.autoScalerMax = data.getInteger("autoScalerMax");
       r.oidcIssuerUrl = data.getString("oidcIssuerUrl");
       r.oidcClientId = data.getString("oidcClientId");
-      r.administrators = getStrings(j, "administrators");
+      r.administrators = data.getStrings("administrators");
 
       auto result = usecase.updateEnvironment(r);
       if (result.success)

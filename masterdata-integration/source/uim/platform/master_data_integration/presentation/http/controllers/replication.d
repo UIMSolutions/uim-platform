@@ -47,9 +47,9 @@ class ReplicationController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.trigger = data.getString("trigger");
-      r.categories = getStrings(j, "categories");
+      r.categories = data.getStrings("categories");
       r.sourceClientId = data.getString("sourceClientId");
-      r.targetClientIds = getStrings(j, "targetClientIds");
+      r.targetClientIds = data.getStrings("targetClientIds");
       r.isInitialLoad = j.getBoolean("isInitialLoad");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 

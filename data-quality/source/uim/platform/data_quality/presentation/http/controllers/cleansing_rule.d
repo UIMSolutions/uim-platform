@@ -55,7 +55,7 @@ class CleansingRuleController : ManageController {
       r.caseMode = data.getString("caseMode");
       r.removeDiacritics = j.getBoolean("removeDiacritics");
       r.category = data.getString("category");
-      r.priority = j.getInteger("priority");
+      r.priority = data.getInteger("priority");
 
       auto result = usecase.createCleansingRule(r);
       if (result.isSuccess()) {
@@ -127,7 +127,7 @@ class CleansingRuleController : ManageController {
       r.caseMode = data.getString("caseMode");
       r.removeDiacritics = j.getBoolean("removeDiacritics");
       r.category = data.getString("category");
-      r.priority = j.getInteger("priority");
+      r.priority = data.getInteger("priority");
 
       auto result = usecase.update(r);
       if (result.isSuccess()) {

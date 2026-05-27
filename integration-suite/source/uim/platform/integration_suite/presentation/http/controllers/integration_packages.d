@@ -31,8 +31,8 @@ public:
       r.description = data.getString("description");
       r.vendor      = data.getString("vendor");
       r.category    = data.getString("category");
-      r.tags        = getStrings(j, "tags");
-      r.metadata    = jsonStrMap(j, "metadata");
+      r.tags        = data.getStrings("tags");
+      r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -67,8 +67,8 @@ public:
       r.description = data.getString("description");
       r.status      = data.getString("status");
       r.category    = data.getString("category");
-      r.tags        = getStrings(j, "tags");
-      r.metadata    = jsonStrMap(j, "metadata");
+      r.tags        = data.getStrings("tags");
+      r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

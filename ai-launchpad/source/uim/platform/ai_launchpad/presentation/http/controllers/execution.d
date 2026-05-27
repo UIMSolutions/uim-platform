@@ -143,7 +143,7 @@ class ExecutionController : ManageController {
       BulkPatchExecutionRequest r;
       r.tenantId = tenantId;
       r.connectionId = connectionId;
-      r.executionIds = getStrings(j, "executionIds").map!(s => ExecutionId(s)).array;
+      r.executionIds = data.getStrings("executionIds").map!(s => ExecutionId(s)).array;
       r.targetStatus = data.getString("targetStatus");
 
       auto results = usecase.bulkPatchExecution(r);

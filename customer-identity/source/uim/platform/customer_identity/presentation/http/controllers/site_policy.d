@@ -56,17 +56,17 @@ class SitePolicyController : ManageController {
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.policyType = data.getString("policyType");
-        dto.passwordMinLength = j.getInteger("passwordMinLength");
+        dto.passwordMinLength = data.getInteger("passwordMinLength");
         dto.passwordComplexity = data.getString("passwordComplexity");
         dto.passwordRequirements = data.getString("passwordRequirements");
-        dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
+        dto.sessionTimeoutSeconds = data.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBoolean("mfaRequired");
         dto.mfaMethod = data.getString("mfaMethod");
         dto.captchaEnabled = j.getBoolean("captchaEnabled");
         dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
         dto.progressiveProfilingEnabled = j.getBoolean("progressiveProfilingEnabled");
-        dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
-        dto.lockoutDurationSeconds = j.getInteger("lockoutDurationSeconds");
+        dto.maxLoginAttempts = data.getInteger("maxLoginAttempts");
+        dto.lockoutDurationSeconds = data.getInteger("lockoutDurationSeconds");
         dto.emailVerificationRequired = j.getBoolean("emailVerificationRequired");
         dto.version_ = data.getString("version");
         dto.createdBy = UserId(data.getString("createdBy"));
@@ -112,12 +112,12 @@ class SitePolicyController : ManageController {
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
-        dto.passwordMinLength = j.getInteger("passwordMinLength");
-        dto.sessionTimeoutSeconds = j.getInteger("sessionTimeoutSeconds");
+        dto.passwordMinLength = data.getInteger("passwordMinLength");
+        dto.sessionTimeoutSeconds = data.getInteger("sessionTimeoutSeconds");
         dto.mfaRequired = j.getBoolean("mfaRequired");
         dto.captchaEnabled = j.getBoolean("captchaEnabled");
         dto.socialLoginEnabled = j.getBoolean("socialLoginEnabled");
-        dto.maxLoginAttempts = j.getInteger("maxLoginAttempts");
+        dto.maxLoginAttempts = data.getInteger("maxLoginAttempts");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = sitePolicies.updateSitePolicy(dto);

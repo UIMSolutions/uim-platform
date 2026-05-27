@@ -39,7 +39,7 @@ class RetentionController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.dataType = data.getString("dataType");
-      r.retentionDays = j.getInteger("retentionDays");
+      r.retentionDays = data.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = UserId(data.getString("createdBy"));
@@ -120,7 +120,7 @@ class RetentionController : ManageController {
       UpdateRetentionPolicyRequest r;
       r.policyId = policyId;
       r.description = data.getString("description");
-      r.retentionDays = j.getInteger("retentionDays");
+      r.retentionDays = data.getInteger("retentionDays");
       r.maxSizeGB = getDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.isActive = j.getBoolean("isActive", true);

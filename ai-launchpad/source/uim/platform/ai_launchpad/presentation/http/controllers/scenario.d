@@ -42,7 +42,7 @@ class ScenarioController : ManageController {
       r.scenarioId = ScenarioId(data.getString("scenarioId"));
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.labels = getStrings(j, "labels");
+      r.labels = data.getStrings("labels");
 
       auto result = usecase.syncScenario(r);
       if (result.hasError)

@@ -43,7 +43,7 @@ class DeploymentController : ManageController {
       r.connectionId = connectionId;
       r.configurationId = data.getString("configurationId");
       r.resourceGroupId = data.getString("resourceGroupId");
-      r.ttl = j.getInteger("ttl");
+      r.ttl = data.getInteger("ttl");
 
       auto result = usecase.createDeployment(r);
       if (result.hasError)
@@ -117,7 +117,7 @@ class DeploymentController : ManageController {
       r.deploymentId = id;
       r.targetStatus = data.getString("targetStatus");
       r.configurationId = data.getString("configurationId");
-      r.ttl = j.getInteger("ttl");
+      r.ttl = data.getInteger("ttl");
 
       auto result = usecase.patchDeployment(r);
       if (result.hasError)

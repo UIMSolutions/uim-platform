@@ -43,7 +43,7 @@ class ProviderController : ManageController {
       r.supportsMapping = j.getBoolean("supportsMapping");
       r.supportsIsoline = j.getBoolean("supportsIsoline");
       r.supportsPoi = j.getBoolean("supportsPoi");
-      r.supportedRegions = getStrings(j, "supportedRegions");
+      r.supportedRegions = data.getStrings("supportedRegions");
       r.config = jsonKeyValuePairs(j, "config");
 
       auto result = usecase.create(r);

@@ -42,11 +42,11 @@ class OrgController : ManageController {
       auto r = CreateOrgRequest();
       r.tenantId = tenantId;
       r.name = data.getString("name");
-      r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
-      r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
-      r.totalRoutes = j.getInteger("totalRoutes", 0);
-      r.totalServices = j.getInteger("totalServices", 0);
-      r.totalAppInstances = j.getInteger("totalAppInstances", 0);
+      r.memoryQuotaMb = data.getInteger("memoryQuotaMb", 0);
+      r.instanceMemoryLimitMb = data.getInteger("instanceMemoryLimitMb", 0);
+      r.totalRoutes = data.getInteger("totalRoutes", 0);
+      r.totalServices = data.getInteger("totalServices", 0);
+      r.totalAppInstances = data.getInteger("totalAppInstances", 0);
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createOrg(r);
@@ -111,11 +111,11 @@ class OrgController : ManageController {
       r.id = id;
       r.tenantId = tenantId;
       r.name = data.getString("name");
-      r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
-      r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
-      r.totalRoutes = j.getInteger("totalRoutes", 0);
-      r.totalServices = j.getInteger("totalServices", 0);
-      r.totalAppInstances = j.getInteger("totalAppInstances", 0);
+      r.memoryQuotaMb = data.getInteger("memoryQuotaMb", 0);
+      r.instanceMemoryLimitMb = data.getInteger("instanceMemoryLimitMb", 0);
+      r.totalRoutes = data.getInteger("totalRoutes", 0);
+      r.totalServices = data.getInteger("totalServices", 0);
+      r.totalAppInstances = data.getInteger("totalAppInstances", 0);
 
       auto result = useCase.updateOrg(r);
       if (result.isSuccess()) {

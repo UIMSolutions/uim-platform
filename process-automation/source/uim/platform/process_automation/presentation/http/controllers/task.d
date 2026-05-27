@@ -46,8 +46,8 @@ class TaskController : ManageController {
       r.type = data.getString("type");
       r.priority = data.getString("priority");
       r.assignee = data.getString("assignee");
-      r.candidateUsers = getStrings(j, "candidateUsers");
-      r.candidateGroups = getStrings(j, "candidateGroups");
+      r.candidateUsers = data.getStrings("candidateUsers");
+      r.candidateGroups = data.getStrings("candidateGroups");
       r.formId = data.getString("formId");
       r.dueDate = jsonLong(j, "dueDate");
 

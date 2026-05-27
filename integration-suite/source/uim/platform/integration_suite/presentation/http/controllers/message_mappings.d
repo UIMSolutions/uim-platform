@@ -35,7 +35,7 @@ public:
       r.sourceSchema      = data.getString("sourceSchema");
       r.targetSchema      = data.getString("targetSchema");
       r.mappingExpression = data.getString("mappingExpression");
-      r.metadata          = jsonStrMap(j, "metadata");
+      r.metadata          = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -69,7 +69,7 @@ public:
       r.version_          = data.getString("version");
       r.status            = data.getString("status");
       r.mappingExpression = data.getString("mappingExpression");
-      r.metadata          = jsonStrMap(j, "metadata");
+      r.metadata          = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

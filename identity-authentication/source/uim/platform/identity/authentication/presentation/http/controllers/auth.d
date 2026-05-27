@@ -72,7 +72,7 @@ class AuthController : PlatformController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
-          data.getString("clientSecret"), getStrings(j, "scopes"));
+          data.getString("clientSecret"), data.getStrings("scopes"));
 
       auto result = tokenUseCase.execute(tokenReq);
       auto response = Json.emptyObject;

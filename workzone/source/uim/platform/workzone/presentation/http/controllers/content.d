@@ -46,7 +46,7 @@ class ContentController : ManageController {
       r.summary = data.getString("summary");
       r.authorId = data.getString("authorId");
       r.authorName = data.getString("authorName");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.language = data.getString("language");
 
       auto ctStr = data.getString("contentType");
@@ -128,7 +128,7 @@ class ContentController : ManageController {
       r.title = data.getString("title");
       r.body_ = data.getString("body");
       r.summary = data.getString("summary");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.pinned = j.getBoolean("pinned");
 
       auto statusStr = data.getString("status");

@@ -47,10 +47,10 @@ class GlobalAccountController : ManageController {
       r.costCenter = data.getString("costCenter");
       r.companyName = data.getString("companyName");
       r.contactEmail = data.getString("contactEmail");
-      r.maxSubaccounts = j.getInteger("maxSubaccounts", 100);
-      r.maxDirectories = j.getInteger("maxDirectories", 20);
+      r.maxSubaccounts = data.getInteger("maxSubaccounts", 100);
+      r.maxDirectories = data.getInteger("maxDirectories", 20);
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.customProperties = jsonStrMap(j, "customProperties");
+      r.customProperties = data.jsonStrMap("customProperties");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -111,7 +111,7 @@ class GlobalAccountController : ManageController {
       request.description = data.getString("description");
       request.costCenter = data.getString("costCenter");
       request.contactEmail = data.getString("contactEmail");
-      request.customProperties = jsonStrMap(j, "customProperties");
+      request.customProperties = data.jsonStrMap("customProperties");
 
       auto result = usecase.update(id, request);
       if (result.success)

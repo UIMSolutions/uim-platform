@@ -46,16 +46,16 @@ class ApiRuleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.serviceName = data.getString("serviceName");
-      r.servicePort = j.getInteger("servicePort");
+      r.servicePort = data.getInteger("servicePort");
       r.gateway = data.getString("gateway");
       r.host = data.getString("host");
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = data.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = getStrings(j, "corsAllowOrigins");
-      r.corsAllowMethods = getStrings(j, "corsAllowMethods");
-      r.corsAllowHeaders = getStrings(j, "corsAllowHeaders");
-      r.labels = jsonStrMap(j, "labels");
+      r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
+      r.corsAllowMethods = data.getStrings("corsAllowMethods");
+      r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
+      r.labels = data.jsonStrMap("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       // Parse rules array
@@ -126,15 +126,15 @@ class ApiRuleController : ManageController {
       UpdateApiRuleRequest r;
       r.description = data.getString("description");
       r.serviceName = data.getString("serviceName");
-      r.servicePort = j.getInteger("servicePort");
+      r.servicePort = data.getInteger("servicePort");
       r.host = data.getString("host");
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = data.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = getStrings(j, "corsAllowOrigins");
-      r.corsAllowMethods = getStrings(j, "corsAllowMethods");
-      r.corsAllowHeaders = getStrings(j, "corsAllowHeaders");
-      r.labels = jsonStrMap(j, "labels");
+      r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
+      r.corsAllowMethods = data.getStrings("corsAllowMethods");
+      r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
+      r.labels = data.jsonStrMap("labels");
       r.rules = j.toRuleEntries;
 
       auto result = usecase.updateApiRule(tenantId, id, r);

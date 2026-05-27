@@ -44,7 +44,7 @@ class CheckController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.checkType = data.getString("checkType");
-      r.intervalSeconds = j.getInteger("intervalSeconds");
+      r.intervalSeconds = data.getInteger("intervalSeconds");
       r.url = data.getString("url");
       r.expectedStatus = data.getString("expectedStatus");
       r.mbeanName = data.getString("mbeanName");
@@ -115,7 +115,7 @@ class CheckController : ManageController {
       r.tenantId = tenantId;
       r.description = data.getString("description");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.intervalSeconds = j.getInteger("intervalSeconds");
+      r.intervalSeconds = data.getInteger("intervalSeconds");
       r.url = data.getString("url");
       r.expectedStatus = data.getString("expectedStatus");
       r.warningThreshold = getDouble(j, "warningThreshold");
@@ -171,8 +171,8 @@ class CheckController : ManageController {
       r.status = data.getString("status");
       r.value_ = getDouble(j, "value");
       r.message = data.getString("message");
-      r.responseTimeMs = j.getInteger("responseTimeMs");
-      r.httpStatusCode = j.getInteger("httpStatusCode");
+      r.responseTimeMs = data.getInteger("responseTimeMs");
+      r.httpStatusCode = data.getInteger("httpStatusCode");
 
       auto result = usecase.recordResult(r);
       if (result.hasError)

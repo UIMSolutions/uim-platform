@@ -37,7 +37,7 @@ class DataAccessController : PlatformController {
       r.dataSubject = data.getString("dataSubject");
       r.dataObjectType = data.getString("dataObjectType");
       r.dataObjectId = data.getString("dataObjectId");
-      r.accessedFields = getStrings(j, "accessedFields");
+      r.accessedFields = data.getStrings("accessedFields");
       r.purpose = data.getString("purpose");
       r.channel = data.getString("channel");
 

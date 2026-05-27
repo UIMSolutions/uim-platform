@@ -87,7 +87,7 @@ class RunLogController : ManageController {
             r.tenantId = tenantId;
             r.status = data.getString("status");
             r.statusMessage = data.getString("statusMessage");
-            r.httpStatus = j.getInteger("httpStatus");
+            r.httpStatus = data.getInteger("httpStatus");
             r.completedAt = jsonLong(j, "completedAt");
             r.executionDurationMs = jsonLong(j, "executionDurationMs");
 

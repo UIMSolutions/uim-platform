@@ -48,8 +48,8 @@ class AlertRuleController : ManageController {
       r.operator_ = data.getString("operator");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
-      r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
-      r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
+      r.evaluationPeriodSeconds = data.getInteger("evaluationPeriodSeconds");
+      r.consecutiveBreaches = data.getInteger("consecutiveBreaches");
       r.severity = data.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -115,8 +115,8 @@ class AlertRuleController : ManageController {
       r.description = data.getString("description");
       r.warningThreshold = getDouble(j, "warningThreshold");
       r.criticalThreshold = getDouble(j, "criticalThreshold");
-      r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
-      r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
+      r.evaluationPeriodSeconds = data.getInteger("evaluationPeriodSeconds");
+      r.consecutiveBreaches = data.getInteger("consecutiveBreaches");
       r.severity = data.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;

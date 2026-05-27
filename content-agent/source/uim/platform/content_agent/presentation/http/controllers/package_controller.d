@@ -46,7 +46,7 @@ class PackageController : ManageController {
       r.description = data.getString("description");
       r.version_ = data.getString("version");
       r.format = data.getString("format");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
       r.items = parseContentItems(j);
 
@@ -110,7 +110,7 @@ class PackageController : ManageController {
       auto r = UpdatePackageRequest();
       r.description = data.getString("description");
       r.version_ = data.getString("version");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.items = parseContentItems(j);
 
       auto result = usecase.updatePackage(id, r);

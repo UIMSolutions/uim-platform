@@ -36,7 +36,7 @@ struct RetentionPolicy {
     p.tenantId = TenantId(data.getString("tenantId"));
     p.name = data.getString("name");
     p.description = data.getString("description");
-    p.retentionDays = j.getInteger("retentionDays");
+    p.retentionDays = data.getInteger("retentionDays");
     foreach (c; j.getArray("categories"))
       p.categories ~= toAuditCategory(c.getString);
     //

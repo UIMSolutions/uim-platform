@@ -42,8 +42,8 @@ class MenuItemController : ManageController {
         req.headers.get("X-Tenant-Id", ""), data.getString("title"),
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
         data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
-        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
+          NavigationTarget.inPlace), data.getStrings("allowedRoleIds"),
+        data.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createMenuItem(createReq);
       if (result.isSuccess()) {
@@ -95,8 +95,8 @@ class MenuItemController : ManageController {
       auto updateReq = UpdateMenuItemRequest(menuItemId, data.getString("title"),
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),
         data.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), getStrings(j, "allowedRoleIds"),
-        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
+          NavigationTarget.inPlace), data.getStrings("allowedRoleIds"),
+        data.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updateMenuItem(updateReq);
       if (error.length > 0)

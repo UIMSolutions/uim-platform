@@ -44,7 +44,7 @@ class ArtifactController : ManageController {
             r.version_ = data.getString("version");
             r.author = data.getString("author");
             r.category = data.getString("category");
-            r.tags = getStrings(j, "tags");
+            r.tags = data.getStrings("tags");
             r.contentUrl = data.getString("contentUrl");
 
             auto result = artifactUsecase.createArtifact(r);

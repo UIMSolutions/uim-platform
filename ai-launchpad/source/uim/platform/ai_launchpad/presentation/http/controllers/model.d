@@ -45,7 +45,7 @@ class ModelController : ManageController {
       r.executionId = data.getString("executionId");
       r.url = data.getString("url");
       r.size = jsonLong(j, "size");
-      r.labels = getStrings(j, "labels");
+      r.labels = data.getStrings("labels");
 
       auto result = usecase.registerModel(r);
       if (result.hasError)

@@ -41,8 +41,8 @@ class KeyEntryController : ManageController {
     r.subject = data.getString("subject");
     r.issuer = data.getString("issuer");
     r.serialNumber = data.getString("serialNumber");
-    r.notBefore = j.getInteger("notBefore");
-    r.notAfter = j.getInteger("notAfter");
+    r.notBefore = data.getInteger("notBefore");
+    r.notAfter = data.getInteger("notAfter");
 
     auto result = usecase.importEntry(r);
     if (result.hasError)

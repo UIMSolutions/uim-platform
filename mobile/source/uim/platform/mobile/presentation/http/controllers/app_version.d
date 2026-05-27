@@ -39,7 +39,7 @@ class AppVersionController : ManageController {
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.versionCode = data.getString("versionCode");
-      r.buildNumber = j.getInteger("buildNumber");
+      r.buildNumber = data.getInteger("buildNumber");
       r.platform = data.getString("platform");
       r.releaseNotes = data.getString("releaseNotes");
       r.downloadUrl = data.getString("downloadUrl");

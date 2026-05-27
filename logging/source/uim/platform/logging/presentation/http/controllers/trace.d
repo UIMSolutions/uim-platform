@@ -44,8 +44,8 @@ class TraceController : PlatformController {
       r.endTime = jsonLong(j, "endTime");
       r.status = data.getString("status");
       r.kind = data.getString("kind");
-      r.attributes = jsonStrMap(j, "attributes");
-      r.resourceAttributes = jsonStrMap(j, "resourceAttributes");
+      r.attributes = data.jsonStrMap("attributes");
+      r.resourceAttributes = data.jsonStrMap("resourceAttributes");
 
       auto result = usecase.ingestSpan(r);
       if (result.hasError)

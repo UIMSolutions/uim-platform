@@ -43,7 +43,7 @@ class DeploymentController : ManageController {
       r.tenantId = tenantId;
       r.trainingJobId = data.getString("trainingJobId");
       r.name = data.getString("name");
-      r.replicas = j.getInteger("replicas", 1);
+      r.replicas = data.getInteger("replicas", 1);
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createDeployment(r);

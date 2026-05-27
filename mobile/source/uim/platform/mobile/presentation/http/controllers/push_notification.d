@@ -41,8 +41,8 @@ class PushNotificationController : ManageController {
       r.payload = data.getString("payload");
       r.provider = data.getString("provider");
       r.priority = data.getString("priority");
-      r.targetDevices = getStrings(j, "targetDevices");
-      r.targetTopics = getStrings(j, "targetTopics");
+      r.targetDevices = data.getStrings("targetDevices");
+      r.targetTopics = data.getStrings("targetTopics");
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = UserId(data.getString("createdBy"));

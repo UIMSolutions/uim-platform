@@ -45,7 +45,7 @@ class DatasetController : ManageController {
       r.scenarioId = data.getString("scenarioId");
       r.url = data.getString("url");
       r.size = jsonLong(j, "size");
-      r.labels = getStrings(j, "labels");
+      r.labels = data.getStrings("labels");
 
       auto result = usecase.registerDataset(r);
       if (result.hasError)

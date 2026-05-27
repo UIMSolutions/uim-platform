@@ -43,7 +43,7 @@ class TaskController : ManageController {
       r.targetObjectId = data.getString("targetObjectId");
       r.scheduleExpression = data.getString("scheduleExpression");
       r.scheduleFrequency = data.getString("scheduleFrequency");
-      r.maxRetries = j.getInteger("maxRetries", 3);
+      r.maxRetries = data.getInteger("maxRetries", 3);
 
       auto now = Clock.currTime();
       // r.createdAt = now;

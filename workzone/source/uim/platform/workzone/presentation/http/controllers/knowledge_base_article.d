@@ -46,7 +46,7 @@ class KnowledgeBaseArticleController : ManageController {
       r.authorId = data.getString("authorId");
       r.authorName = data.getString("authorName");
       r.category = data.getString("category");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
       r.language = data.getString("language");
 
       auto result = useCase.createArticle(r);
@@ -111,7 +111,7 @@ class KnowledgeBaseArticleController : ManageController {
       r.body_ = data.getString("body");
       r.summary = data.getString("summary");
       r.category = data.getString("category");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
 
       auto result = useCase.updateArticle(r);
       if (result.isSuccess()) {

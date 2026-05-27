@@ -48,8 +48,8 @@ class ApplicationController : ManageController {
         description = data.getString("description");
         registrationType = data.getString("registrationType");
         connectorUrl = data.getString("connectorUrl");
-        boundNamespaces = getStrings(j, "boundNamespaces");
-        labels = jsonStrMap(j, "labels");
+        boundNamespaces = data.getStrings("boundNamespaces");
+        labels = data.jsonStrMap("labels");
         createdBy = UserId(req.headers.get("X-User-Id", ""));
         // Parse APIs
         apis = j.toApis;
@@ -115,8 +115,8 @@ class ApplicationController : ManageController {
       UpdateApplicationRequest r;
       r.description = data.getString("description");
       r.connectorUrl = data.getString("connectorUrl");
-      r.boundNamespaces = getStrings(j, "boundNamespaces");
-      r.labels = jsonStrMap(j, "labels");
+      r.boundNamespaces = data.getStrings("boundNamespaces");
+      r.labels = data.jsonStrMap("labels");
       r.apis = j.toApis;
       r.events = parseEvents(j);
 

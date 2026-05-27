@@ -42,8 +42,8 @@ class FeatureRestrictionController : ManageController {
       r.description = data.getString("description");
       r.type = data.getString("type");
       r.enabled = j.getBoolean("enabled");
-      r.percentage = j.getInteger("percentage");
-      r.whitelist = getStrings(j, "whitelist");
+      r.percentage = data.getInteger("percentage");
+      r.whitelist = data.getStrings("whitelist");
       r.metadata = data.getString("metadata");
       r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
@@ -126,8 +126,8 @@ class FeatureRestrictionController : ManageController {
       r.description = data.getString("description");
       r.type = data.getString("type");
       r.enabled = j.getBoolean("enabled");
-      r.percentage = j.getInteger("percentage");
-      r.whitelist = getStrings(j, "whitelist");
+      r.percentage = data.getInteger("percentage");
+      r.whitelist = data.getStrings("whitelist");
       r.metadata = data.getString("metadata");
       r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);

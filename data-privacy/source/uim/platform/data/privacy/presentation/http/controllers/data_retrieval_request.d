@@ -42,7 +42,7 @@ class DataRetrievalController : ManageController {
       r.tenantId = tenantId;
       r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
       r.requestedBy = data.getString("requestedBy");
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
       r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);

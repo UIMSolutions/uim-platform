@@ -41,7 +41,7 @@ class AutomationRuleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.priority = data.getString("priority");
-      r.executionOrder = j.getInteger("executionOrder");
+      r.executionOrder = data.getInteger("executionOrder");
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createAutomationRule(r);
@@ -137,7 +137,7 @@ class AutomationRuleController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.priority = data.getString("priority");
-      r.executionOrder = j.getInteger("executionOrder");
+      r.executionOrder = data.getInteger("executionOrder");
       r.enabled = j.getBoolean("enabled", true);
       r.updatedBy = UserId(data.getString("updatedBy"));
 

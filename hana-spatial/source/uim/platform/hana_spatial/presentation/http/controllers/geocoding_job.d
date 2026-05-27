@@ -38,8 +38,8 @@ class GeocodingJobController : ManageController {
       r.providerId = data.getString("providerId");
       r.language = data.getString("language");
       r.countryCode = data.getString("countryCode");
-      r.addresses = getStrings(j, "addresses");
-      r.externalRefs = getStrings(j, "externalRefs");
+      r.addresses = data.getStrings("addresses");
+      r.externalRefs = data.getStrings("externalRefs");
 
       auto result = usecase.create(r);
       if (result.hasError)

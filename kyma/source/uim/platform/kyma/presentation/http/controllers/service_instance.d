@@ -49,7 +49,7 @@ class ServiceInstanceController : ManageController {
       r.servicePlanId = data.getString("servicePlanId");
       r.externalName = data.getString("externalName");
       r.parametersJson = data.getString("parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.labels = data.jsonStrMap("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -119,7 +119,7 @@ class ServiceInstanceController : ManageController {
       r.servicePlanId = data.getString("servicePlanId");
       r.parametersJson = data.getString(
         "parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.labels = data.jsonStrMap("labels");
       auto result = usecase.updateServiceInstance(
         r);
       if (result.success)

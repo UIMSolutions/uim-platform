@@ -41,7 +41,7 @@ class RoleController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.permissions = getStrings(j, "permissions");
+      r.permissions = data.getStrings("permissions");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createRole(r);
@@ -102,7 +102,7 @@ class RoleController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.permissions = getStrings(j, "permissions");
+      r.permissions = data.getStrings("permissions");
 
       auto result = useCase.updateRole(r);
       if (result.isSuccess())

@@ -50,7 +50,7 @@ class MasterDataController : ManageController {
       r.description = data.getString("description");
       r.localId = data.getString("localId");
       r.globalId = data.getString("globalId");
-      r.attributes = jsonStrMap(j, "attributes");
+      r.attributes = data.jsonStrMap("attributes");
       r.sourceSystem = data.getString("sourceSystem");
       r.sourceClient = data.getString("sourceClient");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -138,7 +138,7 @@ class MasterDataController : ManageController {
       r.displayName = data.getString("displayName");
       r.description = data.getString("description");
       r.status = data.getString("status");
-      r.attributes = jsonStrMap(j, "attributes");
+      r.attributes = data.jsonStrMap("attributes");
       r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.updateObject(id, r);

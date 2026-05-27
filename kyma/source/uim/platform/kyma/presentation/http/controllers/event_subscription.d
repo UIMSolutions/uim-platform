@@ -47,15 +47,15 @@ class EventSubscriptionController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.source = data.getString("source");
-      r.eventTypes = getStrings(j, "eventTypes");
+      r.eventTypes = data.getStrings("eventTypes");
       r.typeEncoding = data.getString("typeEncoding");
       r.sinkUrl = data.getString("sinkUrl");
       r.sinkServiceName = data.getString("sinkServiceName");
-      r.sinkServicePort = j.getInteger("sinkServicePort");
-      r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
+      r.sinkServicePort = data.getInteger("sinkServicePort");
+      r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
       r.exactTypeMatching = j.getBoolean("exactTypeMatching", true);
-      r.filterAttributes = jsonStrMap(j, "filterAttributes");
-      r.labels = jsonStrMap(j, "labels");
+      r.filterAttributes = data.jsonStrMap("filterAttributes");
+      r.labels = data.jsonStrMap("labels");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -124,14 +124,14 @@ class EventSubscriptionController : ManageController {
       auto data = precheck.data;
       UpdateEventSubscriptionRequest r;
       r.description = data.getString("description");
-      r.eventTypes = getStrings(j, "eventTypes");
+      r.eventTypes = data.getStrings("eventTypes");
       r.sinkUrl = data.getString("sinkUrl");
       r.sinkServiceName = data.getString("sinkServiceName");
-      r.sinkServicePort = j.getInteger("sinkServicePort");
-      r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
+      r.sinkServicePort = data.getInteger("sinkServicePort");
+      r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
       r.exactTypeMatching = j.getBoolean("exactTypeMatching", true);
-      r.filterAttributes = jsonStrMap(j, "filterAttributes");
-      r.labels = jsonStrMap(j, "labels");
+      r.filterAttributes = data.jsonStrMap("filterAttributes");
+      r.labels = data.jsonStrMap("labels");
 
       auto result = usecase.updateSubscription(tenantId, id, r);
       if (result.success)

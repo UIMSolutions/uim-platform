@@ -37,7 +37,7 @@ class LogController : PlatformController {
       r.level = data.getString("level");
       r.source = data.getString("source");
       r.message = data.getString("message");
-      r.structuredData = jsonStrMap(j, "structuredData");
+      r.structuredData = data.jsonStrMap("structuredData");
       r.traceId = data.getString("traceId");
       r.spanId = data.getString("spanId");
       r.requestId = data.getString("requestId");

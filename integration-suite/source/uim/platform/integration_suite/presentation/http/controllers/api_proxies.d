@@ -32,9 +32,9 @@ public:
       r.version_       = data.getString("version");
       r.targetEndpoint = data.getString("targetEndpoint");
       r.basePath       = data.getString("basePath");
-      r.policies       = getStrings(j, "policies");
-      r.tags           = getStrings(j, "tags");
-      r.metadata       = jsonStrMap(j, "metadata");
+      r.policies       = data.getStrings("policies");
+      r.tags           = data.getStrings("tags");
+      r.metadata       = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -67,9 +67,9 @@ public:
       r.description    = data.getString("description");
       r.status         = data.getString("status");
       r.targetEndpoint = data.getString("targetEndpoint");
-      r.policies       = getStrings(j, "policies");
-      r.tags           = getStrings(j, "tags");
-      r.metadata       = jsonStrMap(j, "metadata");
+      r.policies       = data.getStrings("policies");
+      r.tags           = data.getStrings("tags");
+      r.metadata       = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

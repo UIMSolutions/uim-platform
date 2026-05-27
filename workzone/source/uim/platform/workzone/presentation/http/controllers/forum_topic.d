@@ -44,7 +44,7 @@ class ForumTopicController : ManageController {
       r.body_ = data.getString("body");
       r.authorId = data.getString("authorId");
       r.authorName = data.getString("authorName");
-      r.tags = getStrings(j, "tags");
+      r.tags = data.getStrings("tags");
 
       auto result = useCase.createForumTopic(r);
       if (result.isSuccess()) {

@@ -48,15 +48,15 @@ class FunctionController : ManageController {
       r.handler = data.getString("handler");
       r.dependencies = data.getString("dependencies");
       r.scalingType = data.getString("scalingType");
-      r.minReplicas = j.getInteger("minReplicas");
-      r.maxReplicas = j.getInteger("maxReplicas");
+      r.minReplicas = data.getInteger("minReplicas");
+      r.maxReplicas = data.getInteger("maxReplicas");
       r.cpuRequest = data.getString("cpuRequest");
       r.cpuLimit = data.getString("cpuLimit");
       r.memoryRequest = data.getString("memoryRequest");
       r.memoryLimit = data.getString("memoryLimit");
-      r.envVars = jsonStrMap(j, "envVars");
-      r.labels = jsonStrMap(j, "labels");
-      r.timeoutSeconds = j.getInteger("timeoutSeconds");
+      r.envVars = data.jsonStrMap("envVars");
+      r.labels = data.jsonStrMap("labels");
+      r.timeoutSeconds = data.getInteger("timeoutSeconds");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -123,15 +123,15 @@ class FunctionController : ManageController {
       r.handler = data.getString("handler");
       r.dependencies = data.getString("dependencies");
       r.scalingType = data.getString("scalingType");
-      r.minReplicas = j.getInteger("minReplicas");
-      r.maxReplicas = j.getInteger("maxReplicas");
+      r.minReplicas = data.getInteger("minReplicas");
+      r.maxReplicas = data.getInteger("maxReplicas");
       r.cpuRequest = data.getString("cpuRequest");
       r.cpuLimit = data.getString("cpuLimit");
       r.memoryRequest = data.getString("memoryRequest");
       r.memoryLimit = data.getString("memoryLimit");
-      r.envVars = jsonStrMap(j, "envVars");
-      r.labels = jsonStrMap(j, "labels");
-      r.timeoutSeconds = j.getInteger("timeoutSeconds");
+      r.envVars = data.jsonStrMap("envVars");
+      r.labels = data.jsonStrMap("labels");
+      r.timeoutSeconds = data.getInteger("timeoutSeconds");
 
       auto result = usecase.updateFunction(ServerlessFunctionId(tenantId, id), r);
       if (result.success)

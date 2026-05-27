@@ -111,9 +111,9 @@ class AuditConfigController : ManageController {
     r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
     r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
     r.enableDataMasking = j.getBoolean("enableDataMasking");
-    r.maskedFields = getStrings(j, "maskedFields");
-    r.excludedServices = getStrings(j, "excludedServices");
-    r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
+    r.maskedFields = data.getStrings("maskedFields");
+    r.excludedServices = data.getStrings("excludedServices");
+    r.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
 
     r.status = data.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
 

@@ -46,7 +46,7 @@ class ScenarioController : ManageController {
       r.version_ = data.getString("version");
       r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
       r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
-      r.prerequisites = getStrings(j, "prerequisites");
+      r.prerequisites = data.getStrings("prerequisites");
       r.stepTemplates = parseStepTemplates(j);
       r.createdBy = UserId(data.getString("createdBy"));
 
@@ -114,7 +114,7 @@ class ScenarioController : ManageController {
       r.status = parseScenarioStatus(data.getString("status"));
       r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
       r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
-      r.prerequisites = getStrings(j, "prerequisites");
+      r.prerequisites = data.getStrings("prerequisites");
       r.stepTemplates = parseStepTemplates(j);
 
       auto result = useCase.updateScenario(r);

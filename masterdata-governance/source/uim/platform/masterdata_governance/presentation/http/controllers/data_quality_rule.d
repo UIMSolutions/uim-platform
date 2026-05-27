@@ -76,7 +76,7 @@ class DataQualityRuleController : ManageController {
             dto.errorMessage = data.getString("errorMessage");
             dto.bpCategory = data.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
-            dto.weight = j.getInteger("weight");
+            dto.weight = data.getInteger("weight");
             dto.validValues = data.getString("validValues");
             dto.regexPattern = data.getString("regexPattern");
             dto.minValue = data.getString("minValue");
@@ -111,7 +111,7 @@ class DataQualityRuleController : ManageController {
             dto.errorMessage = data.getString("errorMessage");
             dto.bpCategory = data.getString("bpCategory");
             dto.isActive = j.getBoolean("isActive");
-            dto.weight = j.getInteger("weight");
+            dto.weight = data.getInteger("weight");
             dto.validValues = data.getString("validValues");
             dto.regexPattern = data.getString("regexPattern");
             dto.minValue = data.getString("minValue");

@@ -36,8 +36,8 @@ public:
       r.receiverAdapterType = data.getString("receiverAdapterType");
       r.senderEndpoint      = data.getString("senderEndpoint");
       r.receiverEndpoint    = data.getString("receiverEndpoint");
-      r.steps               = getStrings(j, "steps");
-      r.metadata            = jsonStrMap(j, "metadata");
+      r.steps               = data.getStrings("steps");
+      r.metadata            = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -70,7 +70,7 @@ public:
       r.description = data.getString("description");
       r.version_    = data.getString("version");
       r.status      = data.getString("status");
-      r.metadata    = jsonStrMap(j, "metadata");
+      r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

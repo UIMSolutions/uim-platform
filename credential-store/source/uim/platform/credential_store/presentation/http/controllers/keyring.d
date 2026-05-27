@@ -41,7 +41,7 @@ class KeyringController : ManageController {
       r.name = data.getString("name");
       r.metadata = data.getString("metadata");
       r.format = data.getString("format");
-      r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
+      r.rotationPeriodDays = data.getInteger("rotationPeriodDays", 90);
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = usecase.createKeyring(r);

@@ -90,9 +90,9 @@ class DestinationController : ManageController {
 
     r.locationId = data.getString("locationId");
     r.sccVirtualHost = data.getString("sccVirtualHost");
-    r.sccVirtualPort = j.getInteger("sccVirtualPort");
+    r.sccVirtualPort = data.getInteger("sccVirtualPort");
 
-    r.properties = jsonStrMap(j, "properties");
+    r.properties = data.jsonStrMap("properties");
     r.fragmentIds = data.getStrings("fragmentIds");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -157,7 +157,7 @@ class DestinationController : ManageController {
     r.truststoreId = data.getString("truststoreId");
     r.locationId = data.getString("locationId");
     r.sccVirtualHost = data.getString("sccVirtualHost");
-    r.sccVirtualPort = j.getInteger("sccVirtualPort");
+    r.sccVirtualPort = data.getInteger("sccVirtualPort");
     r.status = data.getString("status");
     r.properties = data.jsonStrMap("properties");
     r.fragmentIds = data.getStrings("fragmentIds");

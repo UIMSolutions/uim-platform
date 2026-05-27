@@ -44,9 +44,9 @@ class WidgetController : ManageController {
       r.title = data.getString("title");
       r.cardId = data.getString("cardId");
       r.appId = data.getString("appId");
-      r.row = j.getInteger("row");
-      r.col = j.getInteger("col");
-      r.sortOrder = j.getInteger("sortOrder");
+      r.row = data.getInteger("row");
+      r.col = data.getInteger("col");
+      r.sortOrder = data.getInteger("sortOrder");
 
       auto sStr = data.getString("size");
       if (sStr == "small")
@@ -117,9 +117,9 @@ class WidgetController : ManageController {
       r.id = precheck.id;
       r.tenantId = tenantId;
       r.title = data.getString("title");
-      r.row = j.getInteger("row");
-      r.col = j.getInteger("col");
-      r.sortOrder = j.getInteger("sortOrder");
+      r.row = data.getInteger("row");
+      r.col = data.getInteger("col");
+      r.sortOrder = data.getInteger("sortOrder");
       r.visible = j.getBoolean("visible", true);
       r.config = parseWidgetConfig(j);
 

@@ -67,11 +67,11 @@ class DataQualityScoreController : ManageController {
             dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
             dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
-            dto.overallScore = j.getInteger("overallScore");
-            dto.completenessScore = j.getInteger("completenessScore");
-            dto.consistencyScore = j.getInteger("consistencyScore");
-            dto.accuracyScore = j.getInteger("accuracyScore");
-            dto.uniquenessScore = j.getInteger("uniquenessScore");
+            dto.overallScore = data.getInteger("overallScore");
+            dto.completenessScore = data.getInteger("completenessScore");
+            dto.consistencyScore = data.getInteger("consistencyScore");
+            dto.accuracyScore = data.getInteger("accuracyScore");
+            dto.uniquenessScore = data.getInteger("uniquenessScore");
             dto.evaluationDetails = data.getString("evaluationDetails");
             dto.createdBy = UserId(data.getString("createdBy"));
 
@@ -97,11 +97,11 @@ class DataQualityScoreController : ManageController {
             DataQualityScoreDTO dto;
             dto.scoreId = DataQualityScoreId(precheck.id);
             dto.tenantId = tenantId;
-            dto.overallScore = j.getInteger("overallScore");
-            dto.completenessScore = j.getInteger("completenessScore");
-            dto.consistencyScore = j.getInteger("consistencyScore");
-            dto.accuracyScore = j.getInteger("accuracyScore");
-            dto.uniquenessScore = j.getInteger("uniquenessScore");
+            dto.overallScore = data.getInteger("overallScore");
+            dto.completenessScore = data.getInteger("completenessScore");
+            dto.consistencyScore = data.getInteger("consistencyScore");
+            dto.accuracyScore = data.getInteger("accuracyScore");
+            dto.uniquenessScore = data.getInteger("uniquenessScore");
             dto.evaluationDetails = data.getString("evaluationDetails");
             dto.updatedBy = UserId(data.getString("updatedBy"));
 

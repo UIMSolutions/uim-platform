@@ -31,7 +31,7 @@ public:
       r.topicPattern = data.getString("topicPattern");
       r.protocol     = data.getString("protocol");
       r.endpoint     = data.getString("endpoint");
-      r.metadata     = jsonStrMap(j, "metadata");
+      r.metadata     = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
       if (result.success) res.writeJsonBody(result.data, 201);
       else writeError(res, 400, result.message);
@@ -68,7 +68,7 @@ public:
       r.status       = data.getString("status");
       r.topicPattern = data.getString("topicPattern");
       r.endpoint     = data.getString("endpoint");
-      r.metadata     = jsonStrMap(j, "metadata");
+      r.metadata     = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);

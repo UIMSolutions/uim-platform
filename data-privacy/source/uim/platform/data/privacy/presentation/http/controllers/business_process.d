@@ -39,8 +39,8 @@ class BusinessProcessController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.controllerId = data.getString("controllerId");
-      r.purposes = getStrings(j, "purposes");
-      r.legalBases = getStrings(j, "legalBases");
+      r.purposes = data.getStrings("purposes");
+      r.legalBases = data.getStrings("legalBases");
       r.owner = data.getString("owner");
 
       auto result = usecase.createProcess(r);
@@ -98,8 +98,8 @@ class BusinessProcessController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.purposes = getStrings(j, "purposes");
-      r.legalBases = getStrings(j, "legalBases");
+      r.purposes = data.getStrings("purposes");
+      r.legalBases = data.getStrings("legalBases");
       r.owner = data.getString("owner");
 
       auto result = usecase.updateProcess(r);

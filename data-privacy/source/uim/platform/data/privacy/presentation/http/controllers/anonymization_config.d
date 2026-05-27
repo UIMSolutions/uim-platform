@@ -40,7 +40,7 @@ class AnonymizationConfigController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = getStrings(j, "targetSystems");
+      r.targetSystems = data.getStrings("targetSystems");
 
       auto result = usecase.createConfig(r);
       if (result.isSuccess()) {

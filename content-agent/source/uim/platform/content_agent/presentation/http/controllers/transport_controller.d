@@ -44,7 +44,7 @@ class TransportController : ManageController {
       r.targetSubaccount = data.getString("targetSubaccount");
       r.description = data.getString("description");
       r.mode = data.getString("mode");
-      r.packageIds = getStrings(j, "packageIds");
+      r.packageIds = data.getStrings("packageIds");
       r.queueId = data.getString("queueId");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 

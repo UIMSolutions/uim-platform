@@ -37,7 +37,7 @@ class ScalingEngineController : PlatformController {
       r.metricType   = data.getString("metric_type");
       r.currentValue = j["current_value"].type == Json.Type.float_
         ? j["current_value"].get!double
-        : cast(double) j.getInteger("current_value");
+        : cast(double) data.getInteger("current_value");
 
       auto result = usecase.triggerScaling(r);
       if (result.success)

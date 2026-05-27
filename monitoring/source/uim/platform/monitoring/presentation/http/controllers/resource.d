@@ -48,7 +48,7 @@ class ResourceController : ManageController {
       r.url = data.getString("url");
       r.runtime = data.getString("runtime");
       r.region = data.getString("region");
-      r.instanceCount = j.getInteger("instanceCount");
+      r.instanceCount = data.getInteger("instanceCount");
       r.tags = data.getStrings("tags");
       r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -115,7 +115,7 @@ class ResourceController : ManageController {
       r.url = data.getString("url");
       r.runtime = data.getString("runtime");
       r.state = data.getString("state");
-      r.instanceCount = j.getInteger("instanceCount");
+      r.instanceCount = data.getInteger("instanceCount");
       r.tags = data.getStrings("tags");
 
       auto result = usecase.updateResource(r);

@@ -103,7 +103,7 @@ class RoleController : ManageController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto assignReq = AssignRoleRequest(data.getString("roleId"), getStrings(j,
-          "userIds"), getStrings(j, "groupIds"),);
+          "userIds"), data.getStrings("groupIds"),);
 
       auto error = useCase.assignRole(assignReq);
       if (error.length > 0)

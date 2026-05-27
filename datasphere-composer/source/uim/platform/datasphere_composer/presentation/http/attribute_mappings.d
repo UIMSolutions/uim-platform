@@ -51,7 +51,7 @@ class AttributeMappingController : ManageController {
     r.targetAttributeName = data.getString("targetAttributeName");
     r.targetDataType      = data.getString("targetDataType");
     r.delimiter           = data.getString("delimiter");
-    r.sortOrder           = j.getInteger("sortOrder");
+    r.sortOrder           = data.getInteger("sortOrder");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -69,7 +69,7 @@ class AttributeMappingController : ManageController {
     r.targetAttributeName = data.getString("targetAttributeName");
     r.targetDataType      = data.getString("targetDataType");
     r.delimiter           = data.getString("delimiter");
-    r.sortOrder           = j.getInteger("sortOrder");
+    r.sortOrder           = data.getInteger("sortOrder");
     r.active              = j.getBoolean("active");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

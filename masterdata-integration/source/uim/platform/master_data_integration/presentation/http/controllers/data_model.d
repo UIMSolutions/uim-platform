@@ -42,8 +42,8 @@ class DataModelController : ManageController {
       r.version_ = data.getString("version");
       r.description = data.getString("description");
       r.category = data.getString("category");
-      r.keyFields = getStrings(j, "keyFields");
-      r.requiredFields = getStrings(j, "requiredFields");
+      r.keyFields = data.getStrings("keyFields");
+      r.requiredFields = data.getStrings("requiredFields");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       // Parse field definitions
@@ -123,8 +123,8 @@ class DataModelController : ManageController {
       UpdateDataModelRequest r;
       r.description = data.getString("description");
       r.version_ = data.getString("version");
-      r.keyFields = getStrings(j, "keyFields");
-      r.requiredFields = getStrings(j, "requiredFields");
+      r.keyFields = data.getStrings("keyFields");
+      r.requiredFields = data.getStrings("requiredFields");
 
       auto fieldsArr = jsonObjArray(j, "fields");
       FieldDefinitionDto[] fields;

@@ -41,7 +41,7 @@ class ValidateController : PlatformController {
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
       r.recordId = data.getString("recordId");
-      r.fieldValues = jsonStrMap(j, "fieldValues");
+      r.fieldValues = data.jsonStrMap("fieldValues");
 
       auto result = usecase.validateRecord(r);
       res.writeJsonBody(result.toJson, 200);

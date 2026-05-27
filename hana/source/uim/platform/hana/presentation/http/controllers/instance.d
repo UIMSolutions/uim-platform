@@ -45,13 +45,13 @@ class InstanceController : ManageController {
       r.region = data.getString("region");
       r.availabilityZone = data.getString("availabilityZone");
       r.memoryGB = jsonLong(j, "memoryGB");
-      r.vcpus = j.getInteger("vcpus");
+      r.vcpus = data.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
       r.enableScriptServer = j.getBoolean("enableScriptServer");
       r.enableDocStore = j.getBoolean("enableDocStore");
       r.enableDataLake = j.getBoolean("enableDataLake");
       r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
-      r.whitelistedIps = getStrings(j, "whitelistedIps");
+      r.whitelistedIps = data.getStrings("whitelistedIps");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = usecase.create(r);
@@ -148,12 +148,12 @@ class InstanceController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.memoryGB = jsonLong(j, "memoryGB");
-      r.vcpus = j.getInteger("vcpus");
+      r.vcpus = data.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
       r.enableScriptServer = j.getBoolean("enableScriptServer");
       r.enableDocStore = j.getBoolean("enableDocStore");
       r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
-      r.whitelistedIps = getStrings(j, "whitelistedIps");
+      r.whitelistedIps = data.getStrings("whitelistedIps");
 
       auto result = usecase.update(r);
       if (result.hasError)

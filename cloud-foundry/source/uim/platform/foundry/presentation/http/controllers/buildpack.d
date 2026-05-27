@@ -41,7 +41,7 @@ class BuildpackController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.type_ = parseBuildpackType(data.getString("type"));
-      r.position = j.getInteger("position");
+      r.position = data.getInteger("position");
       r.stack = data.getString("stack");
       r.filename = data.getString("filename");
       r.createdBy = UserId(data.getString("createdBy"));
@@ -99,7 +99,7 @@ class BuildpackController : ManageController {
       r.id = buildpackId;
       r.tenantId = tenantId;
       r.name = data.getString("name");
-      r.position = j.getInteger("position");
+      r.position = data.getInteger("position");
       r.stack = data.getString("stack");
       r.filename = data.getString("filename");
       r.enabled = j.getBoolean("enabled", true);

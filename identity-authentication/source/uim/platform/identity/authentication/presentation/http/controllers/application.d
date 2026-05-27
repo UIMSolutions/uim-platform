@@ -41,8 +41,8 @@ class ApplicationController : ManageController {
       request.name = data.getString("name");
       request.description = data.getString("description");
       request.protocol = SsoProtocol.oidc;
-      request.redirectUris = getStrings(j, "redirectUris");
-      request.allowedScopes = getStrings(j, "allowedScopes");
+      request.redirectUris = data.getStrings("redirectUris");
+      request.allowedScopes = data.getStrings("allowedScopes");
       request.samlEntityId = data.getString("samlEntityId");
       request.samlAcsUrl = data.getString("samlAcsUrl");
 
@@ -121,8 +121,8 @@ class ApplicationController : ManageController {
       request.tenantId = tenantId;
       request.applicationId = appId;
       request.name = data.getString("name");
-      request.redirectUris = getStrings(j, "redirectUris");
-      request.allowedScopes = getStrings(j, "allowedScopes");
+      request.redirectUris = data.getStrings("redirectUris");
+      request.allowedScopes = data.getStrings("allowedScopes");
 
       auto error = useCase.updateApplication(request);
       if (error.length > 0) {

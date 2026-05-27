@@ -52,7 +52,7 @@ class ConfigurationController : ManageController {
             auto data = precheck.data;
             UpdateConfigurationRequest r;
             r.tenantId = tenantId;
-            r.defaultRetries = j.getInteger("defaultRetries", 3);
+            r.defaultRetries = data.getInteger("defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);
             r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);

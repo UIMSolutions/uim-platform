@@ -61,7 +61,7 @@ class ExportController : ManageController {
        : ExportFormat.json;
 
     // Parse category filter
-    auto cats = getStrings(j, "categories");
+    auto cats = data.getStrings("categories");
     foreach (c; cats)
       jobRequest.categories ~= toAuditCategory(c);
 

@@ -41,7 +41,7 @@ r.tenantId = tenantId;
       r.modelVersion = data.getString("modelVersion");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = getDouble(j, "temperature");
-      r.maxTokens = j.getInteger("maxTokens");
+      r.maxTokens = data.getInteger("maxTokens");
       r.topP = getDouble(j, "topP");
       r.frequencyPenalty = getDouble(j, "frequencyPenalty");
       r.presencePenalty = getDouble(j, "presencePenalty");
@@ -114,7 +114,7 @@ r.tenantId = tenantId;
       r.status = data.getString("status");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = getDouble(j, "temperature");
-      r.maxTokens = j.getInteger("maxTokens");
+      r.maxTokens = data.getInteger("maxTokens");
 
       auto result = usecase.patchPrompt(r);
       if (result.hasError)

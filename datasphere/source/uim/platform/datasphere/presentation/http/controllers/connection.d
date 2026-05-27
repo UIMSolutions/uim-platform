@@ -40,7 +40,7 @@ class ConnectionController : ManageController {
       r.description = data.getString("description");
       r.type = data.getString("type");
       r.host = data.getString("host");
-      r.port = j.getInteger("port", 0);
+      r.port = data.getInteger("port", 0);
       r.database = data.getString("database");
       r.user = data.getString("user");
 

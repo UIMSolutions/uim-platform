@@ -40,7 +40,7 @@ class ChannelController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.channelType = data.getString("channelType");
-      r.emailRecipients = getStrings(j, "emailRecipients");
+      r.emailRecipients = data.getStrings("emailRecipients");
       r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
       r.webhookUrl = data.getString("webhookUrl");
       r.webhookSecret = data.getString("webhookSecret");
@@ -122,7 +122,7 @@ class ChannelController : ManageController {
       r.tenantId = tenantId;
       r.description = data.getString("description");
       r.state = data.getString("state");
-      r.emailRecipients = getStrings(j, "emailRecipients");
+      r.emailRecipients = data.getStrings("emailRecipients");
       r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
       r.webhookUrl = data.getString("webhookUrl");
       r.webhookSecret = data.getString("webhookSecret");

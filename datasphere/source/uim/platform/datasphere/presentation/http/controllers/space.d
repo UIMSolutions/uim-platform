@@ -40,7 +40,7 @@ class SpaceController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.businessName = data.getString("businessName");
-      r.priority = j.getInteger("priority", 0);
+      r.priority = data.getInteger("priority", 0);
 
       auto result = usecase.createSpace(r);
       if (result.hasError)
@@ -123,7 +123,7 @@ class SpaceController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.businessName = data.getString("businessName");
-      r.priority = j.getInteger("priority", 0);
+      r.priority = data.getInteger("priority", 0);
 
       auto result = usecase.updateSpace(r);
       if (result.hasError)

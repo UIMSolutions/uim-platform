@@ -41,7 +41,7 @@ class VisibilityController : ManageController {
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.dashboardType = data.getString("dashboardType");
-            r.processIds = getStrings(j, "processIds");
+            r.processIds = data.getStrings("processIds");
             r.refreshIntervalSeconds = data.getString("refreshIntervalSeconds");
             r.createdBy = UserId(data.getString("createdBy"));
 

@@ -41,8 +41,8 @@ class PurposeRecordController : ManageController {
       r.contextId = BusinessContextId(data.getString("businessContextId"));
       r.purpose = data.getString("purpose");
       r.legalBasis = data.getString("legalBasis");
-      r.residenceDays = j.getInteger("residenceDays");
-      r.retentionDays = j.getInteger("retentionDays");
+      r.residenceDays = data.getInteger("residenceDays");
+      r.retentionDays = data.getInteger("retentionDays");
       r.validFrom = j.getLong("validFrom");
       r.validUntil = j.getLong("validUntil");
 

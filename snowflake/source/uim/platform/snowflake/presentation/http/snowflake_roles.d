@@ -39,7 +39,7 @@ class SnowflakeRoleController : ManageController {
     r.accountId   = data.getString("accountId");
     r.name        = data.getString("name");
     r.description = data.getString("description");
-    r.privileges  = getStrings(j, "privileges");
+    r.privileges  = data.getStrings("privileges");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -53,7 +53,7 @@ class SnowflakeRoleController : ManageController {
     r.tenantId    = req.getTenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.description = data.getString("description");
-    r.privileges  = getStrings(j, "privileges");
+    r.privileges  = data.getStrings("privileges");
     if (j["active"].type == Json.Type.bool_) r.active = j["active"].get!bool;
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }

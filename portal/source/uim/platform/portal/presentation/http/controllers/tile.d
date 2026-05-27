@@ -46,7 +46,7 @@ class TileController : ManageController {
           .url),
         data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
           "navigationTarget", NavigationTarget.inPlace), getStrings(j,
-          "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
+          "keywords"), data.getStrings("allowedRoleIds"), parseTileConfig(j),);
 
       auto result = useCase.createTile(createReq);
       if (result.isSuccess()) {
@@ -113,7 +113,7 @@ class TileController : ManageController {
           "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
         data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
           "navigationTarget", NavigationTarget.inPlace), getStrings(j,
-          "keywords"), getStrings(j, "allowedRoleIds"), parseTileConfig(j),);
+          "keywords"), data.getStrings("allowedRoleIds"), parseTileConfig(j),);
 
       auto error = useCase.updateTile(updateReq);
       if (error.length > 0)

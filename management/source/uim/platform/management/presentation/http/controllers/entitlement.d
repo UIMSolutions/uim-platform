@@ -44,7 +44,7 @@ class EntitlementController : ManageController {
       r.servicePlanId = data.getString("servicePlanId");
       r.serviceName = data.getString("serviceName");
       r.planName = data.getString("planName");
-      r.quotaAssigned = j.getInteger("quotaAssigned");
+      r.quotaAssigned = data.getInteger("quotaAssigned");
       r.unlimited = j.getBoolean("unlimited");
       r.autoAssign = j.getBoolean("autoAssign");
       r.assignedBy = UserId(req.headers.get("X-User-Id", ""));
@@ -112,7 +112,7 @@ class EntitlementController : ManageController {
       UpdateEntitlementQuotaRequest request;
       request.tenantId = tenantId;
       request.entitlementId = id;
-      request.quotaAssigned = j.getInteger("quotaAssigned");
+      request.quotaAssigned = data.getInteger("quotaAssigned");
       request.unlimited = j.getBoolean("unlimited");
 
       auto result = usecase.updateEntitlementQuota(request);

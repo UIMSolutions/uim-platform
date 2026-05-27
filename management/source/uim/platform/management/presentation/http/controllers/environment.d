@@ -43,12 +43,12 @@ class EnvironmentController : ManageController {
       r.environmentType = data.getString("environmentType");
       r.planName = data.getString("planName");
       r.landscapeLabel = data.getString("landscapeLabel");
-      r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
-      r.routeQuota = j.getInteger("routeQuota");
-      r.serviceQuota = j.getInteger("serviceQuota");
+      r.memoryQuotaMb = data.getInteger("memoryQuotaMb");
+      r.routeQuota = data.getInteger("routeQuota");
+      r.serviceQuota = data.getInteger("serviceQuota");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.parameters = jsonStrMap(j, "parameters");
-      r.labels = jsonStrMap(j, "labels");
+      r.parameters = data.jsonStrMap("parameters");
+      r.labels = data.jsonStrMap("labels");
 
       auto result = usecase.createEnvironmentInstance(r);
       if (result.hasError)
@@ -111,11 +111,11 @@ class EnvironmentController : ManageController {
       request.tenantId = tenantId;
       request.environmentInstanceId = id;
       request.description = data.getString("description");
-      request.memoryQuotaMb = j.getInteger("memoryQuotaMb");
-      request.routeQuota = j.getInteger("routeQuota");
-      request.serviceQuota = j.getInteger("serviceQuota");
-      request.parameters = jsonStrMap(j, "parameters");
-      request.labels = jsonStrMap(j, "labels");
+      request.memoryQuotaMb = data.getInteger("memoryQuotaMb");
+      request.routeQuota = data.getInteger("routeQuota");
+      request.serviceQuota = data.getInteger("serviceQuota");
+      request.parameters = data.jsonStrMap("parameters");
+      request.labels = data.jsonStrMap("labels");
 
       auto result = usecase.updateEnvironmentInstance(request);
       if (result.success)

@@ -40,13 +40,13 @@ class DatabaseConnectionController : ManageController {
       r.description = data.getString("description");
       r.type = data.getString("type");
       r.host = data.getString("host");
-      r.port = j.getInteger("port", 443);
+      r.port = data.getInteger("port", 443);
       r.database = data.getString("database");
       r.user = data.getString("user");
       r.password = data.getString("password");
       r.useTls = j.getBoolean("useTls", true);
-      r.minConnections = j.getInteger("minConnections", 1);
-      r.maxConnections = j.getInteger("maxConnections", 10);
+      r.minConnections = data.getInteger("minConnections", 1);
+      r.maxConnections = data.getInteger("maxConnections", 10);
       r.properties = jsonKeyValuePairs(j, "properties");
 
       auto result = usecase.create(r);
@@ -135,7 +135,7 @@ class DatabaseConnectionController : ManageController {
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.host = data.getString("host");
-      r.port = j.getInteger("port", 443);
+      r.port = data.getInteger("port", 443);
       r.database = data.getString("database");
       r.user = data.getString("user");
       r.password = data.getString("password");

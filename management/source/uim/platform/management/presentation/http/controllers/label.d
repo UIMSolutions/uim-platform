@@ -41,7 +41,7 @@ class LabelController : ManageController {
       r.resourceType = data.getString("resourceType");
       r.resourceId = data.getString("resourceId");
       r.key = data.getString("key");
-      r.values = getStrings(j, "values");
+      r.values = data.getStrings("values");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.create(r);
@@ -104,7 +104,7 @@ class LabelController : ManageController {
       auto data = precheck.data;
       UpdateLabelRequest r;
       r.tenantId = tenantId;
-      r.values = getStrings(j, "values");
+      r.values = data.getStrings("values");
 
       auto result = usecase.updateLabel(tenantId, id, r);
       if (result.success)

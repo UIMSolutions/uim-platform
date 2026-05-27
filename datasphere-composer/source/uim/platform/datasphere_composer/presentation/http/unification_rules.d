@@ -48,7 +48,7 @@ class UnificationRuleController : ManageController {
     r.id          = precheck.id;
     r.name        = data.getString("name");
     r.description = data.getString("description");
-    r.priority    = j.getInteger("priority");
+    r.priority    = data.getInteger("priority");
     r.model       = data.getString("model");
     r.unique_     = j.getBoolean("unique");
     r.triggerMerge  = j.getBoolean("triggerMerge");
@@ -92,7 +92,7 @@ class UnificationRuleController : ManageController {
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.name        = data.getString("name");
     r.description = data.getString("description");
-    r.priority    = j.getInteger("priority");
+    r.priority    = data.getInteger("priority");
     r.model       = data.getString("model");
     r.unique_     = j.getBoolean("unique");
     r.triggerMerge  = j.getBoolean("triggerMerge");

@@ -51,8 +51,8 @@ class SubaccountController : ManageController {
       r.betaEnabled = j.getBoolean("betaEnabled");
       r.usedForProduction = j.getBoolean("usedForProduction");
       r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.labels = jsonStrMap(j, "labels");
-      r.customProperties = jsonStrMap(j, "customProperties");
+      r.labels = data.jsonStrMap("labels");
+      r.customProperties = data.jsonStrMap("customProperties");
 
       auto result = usecase.create(r);
       if (result.hasError)
@@ -121,8 +121,8 @@ class SubaccountController : ManageController {
       r.usage = data.getString("usage");
       r.betaEnabled = j.getBoolean("betaEnabled");
       r.usedForProduction = j.getBoolean("usedForProduction");
-      r.labels = jsonStrMap(j, "labels");
-      r.customProperties = jsonStrMap(j, "customProperties");
+      r.labels = data.jsonStrMap("labels");
+      r.customProperties = data.jsonStrMap("customProperties");
 
       auto result = usecase.updateSubaccount(tenantId, id, r);
       if (result.success)

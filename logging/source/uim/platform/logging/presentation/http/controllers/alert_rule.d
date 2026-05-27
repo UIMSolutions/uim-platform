@@ -45,7 +45,7 @@ class AlertRuleController : ManageController {
       r.pattern = data.getString("pattern");
       r.thresholdValue = j.getDouble("thresholdValue");
       r.thresholdOperator = data.getString("thresholdOperator");
-      r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
+      r.evaluationWindowSeconds = data.getInteger("evaluationWindowSeconds");
       r.severity = data.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;
       r.createdBy = UserId(data.getString("createdBy"));
@@ -131,7 +131,7 @@ class AlertRuleController : ManageController {
       r.pattern = data.getString("pattern");
       r.thresholdValue = j.getDouble("thresholdValue");
       r.thresholdOperator = data.getString("thresholdOperator");
-      r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
+      r.evaluationWindowSeconds = data.getInteger("evaluationWindowSeconds");
       r.severity = data.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = j.getArray("channelIds").map!(v => NotificationChannelId(v.to!string)).array;

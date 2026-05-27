@@ -96,7 +96,7 @@ class RuleSetController : ManageController {
       r.setId = RuleSetId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.priority = j.getInteger("priority");
+      r.priority = data.getInteger("priority");
 
       auto result = usecase.updateRuleSet(r);
       if (result.isSuccess()) {

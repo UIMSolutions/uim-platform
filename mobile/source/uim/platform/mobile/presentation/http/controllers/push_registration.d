@@ -40,7 +40,7 @@ class PushRegistrationController : ManageController {
       r.deviceId = data.getString("deviceId");
       r.provider = data.getString("provider");
       r.pushToken = data.getString("pushToken");
-      r.topics = getStrings(j, "topics");
+      r.topics = data.getStrings("topics");
       auto result = usecase.register(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

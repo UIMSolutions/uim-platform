@@ -44,7 +44,7 @@ class SituationTemplateController : ManageController {
             r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
             r.sourceSystem = data.getString("sourceSystem");
             r.sourceTemplateId = data.getString("sourceTemplateId");
-            r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
+            r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = data.getString("escalationTargetUserId");
             r.createdBy = UserId(data.getString("createdBy"));
@@ -149,7 +149,7 @@ class SituationTemplateController : ManageController {
             r.situationCategory = data.getString("situationCategory").to!SituationCategory;
             r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
             r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-            r.autoResolveTimeoutMinutes = j.getInteger("autoResolveTimeoutMinutes");
+            r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
             r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = data.getString("escalationTargetUserId");
             r.updatedBy = UserId(data.getString("updatedBy"));
