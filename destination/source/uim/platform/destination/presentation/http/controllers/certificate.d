@@ -200,7 +200,7 @@ class CertificateController : ManageController {
 
       auto result = usecase.validateCertificate(tenantId, id);
       if (result.hasError)
-        return errorResponse(result.message, 400);
+        return errorResponse("Certificate validation failed", 400);
 
       auto resp = Json.emptyObject
         .set("isValid", result.isValid)

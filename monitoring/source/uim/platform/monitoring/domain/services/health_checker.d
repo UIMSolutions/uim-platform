@@ -15,6 +15,10 @@ mixin(ShowModule!());
 struct ValidationResult {
   bool valid;
   string[] errors;
+
+  bool hasError() const {
+    return !valid || errors.length > 0;
+  }
 }
 /// Domain service: validates health check configurations.
 struct HealthChecker {

@@ -13,6 +13,10 @@ mixin(ShowModule!());
 struct ValidationResult {
   bool valid;
   string error;
+
+  bool hasError() const {
+    return !valid || error.length > 0;
+  }
 }
 
 ValidationResult validateFileType(string fileName) {

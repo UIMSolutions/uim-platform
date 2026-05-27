@@ -17,6 +17,9 @@ struct ValidationResult {
   CertificateStatus status;
   string message;
   long daysUntilExpiry;
+  bool hasError() const {
+    return !isValid || (status == CertificateStatus.expiring && daysUntilExpiry <= 30);
+  }
 }
 /// Domain service: validates certificates and checks expiry.
 struct CertificateValidator {

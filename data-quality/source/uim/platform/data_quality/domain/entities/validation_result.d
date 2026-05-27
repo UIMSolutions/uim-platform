@@ -12,7 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// Result of running validation rules against a single record.
 struct ValidationResult {
-  TenantId tenantId;
+  mixin TenantEntity!ValidationResultId;
+
   RecordId recordId;
   DatasetId datasetId;
   RuleViolation[] violations;
@@ -28,8 +29,7 @@ struct ValidationResult {
       violationsJson.add(violation.toJson());
     }
 
-    return Json.emptyObject
-      .set("tenantId", tenantId.value)
+    return entityToJson()
       .set("recordId", recordId.value)
       .set("datasetId", datasetId.value)
       .set("violations", violationsJson)
