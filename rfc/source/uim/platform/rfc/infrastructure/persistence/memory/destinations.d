@@ -14,18 +14,18 @@ class MemoryDestinationRepository : DestinationRepository {
 
     private Destination[string] _store;
 
-    private static string _key(string tenantId, DestinationId id) {
+    private static string _key(TenantId tenantId, DestinationId id) {
         return tenantId ~ "|" ~ id;
     }
 
-    override Destination findById(string tenantId, DestinationId id) {
+    override Destination findById(TenantId tenantId, DestinationId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return Destination.init;
         auto d = _store[key];
         return d;
     }
 
-    override Destination[] findByTenant(string tenantId) {
+    override Destination[] findByTenant(TenantId tenantId) {
         Destination[] result;
         foreach (kv; _store.byKeyValue()) {
             if (kv.value.tenantId == tenantId) {
@@ -53,14 +53,14 @@ class MemoryDestinationRepository : DestinationRepository {
         return true;
     }
 
-    override bool remove(string tenantId, DestinationId id) {
+    override bool remove(TenantId tenantId, DestinationId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return false;
         _store.remove(key);
         return true;
     }
 
-    override size_t countByTenant(string tenantId) {
+    override size_t countByTenant(TenantId tenantId) {
         size_t n = 0;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) n++;

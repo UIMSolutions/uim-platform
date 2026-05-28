@@ -123,7 +123,7 @@ class ImportQueueEntryController : ManageController {
                 return successResponse("Import queue entry status updated successfully", "Updated", 200, responseData);
             }
         }
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Import queue entry updated successfully", "Updated", 200, responseData);
     }
 

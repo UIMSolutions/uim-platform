@@ -60,7 +60,7 @@ class CertificateController : ManageController {
       if (result.hasError)
         return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject.set("id", result.id);
+      auto responseData = Json.emptyObject.set("id", result.id);
       return successResponse("Certificate uploaded successfully", 201, resp);
   }
 
@@ -165,7 +165,7 @@ class CertificateController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Certificate updated successfully", 200, resp);
   }
 
@@ -184,7 +184,7 @@ class CertificateController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-    auto resp = Json.emptyObject.set("id", id);
+    auto responseData = Json.emptyObject.set("id", id);
     return successResponse("Certificate deleted successfully", 200, resp);
   }
 

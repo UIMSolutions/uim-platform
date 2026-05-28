@@ -22,7 +22,7 @@ public:
     _planner = planner;
   }
 
-  CommandResult createFreightOrder(string tenantId, CreateFreightOrderRequest req) {
+  CommandResult createFreightOrder(TenantId tenantId, CreateFreightOrderRequest req) {
     if (req.orderNumber.length == 0)
       return CommandResult(false, "Order number is required");
     if (req.carrierId.length > 0) {
@@ -56,7 +56,7 @@ public:
     return CommandResult(true, "", fo.id.value);
   }
 
-  CommandResult updateFreightOrder(string tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
+  CommandResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
     if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
     if (fo.status != FreightOrderStatus.draft && fo.status != FreightOrderStatus.planned)
@@ -92,7 +92,7 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult transitionFreightOrder(string tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
+  CommandResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
     if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
 
@@ -129,7 +129,7 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteFreightOrder(string tenantId, FreightOrderId id) {
+  CommandResult deleteFreightOrder(TenantId tenantId, FreightOrderId id) {
     auto fo = _repo.findById(tenantId, id);
     if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
     if (fo.status == FreightOrderStatus.inTransit)
@@ -138,19 +138,19 @@ public:
     return CommandResult(true);
   }
 
-  FreightOrder getFreightOrder(string tenantId, FreightOrderId id) {
+  FreightOrder getFreightOrder(TenantId tenantId, FreightOrderId id) {
     return _repo.findById(tenantId, id);
   }
 
-  FreightOrder[] listFreightOrders(string tenantId) {
+  FreightOrder[] listFreightOrders(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  FreightOrder[] listByStatus(string tenantId, FreightOrderStatus status) {
+  FreightOrder[] listByStatus(TenantId tenantId, FreightOrderStatus status) {
     return _repo.findByStatus(tenantId, status);
   }
 
-  FreightOrder[] listByCarrier(string tenantId, CarrierId carrierId) {
+  FreightOrder[] listByCarrier(TenantId tenantId, CarrierId carrierId) {
     return _repo.findByCarrier(tenantId, carrierId);
   }
 }

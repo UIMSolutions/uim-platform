@@ -91,7 +91,7 @@ erDiagram
 
     USER {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string userName
         string email
         string displayName
@@ -101,7 +101,7 @@ erDiagram
 
     GROUP {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string type_
     }
@@ -113,7 +113,7 @@ erDiagram
 
     APPLICATION {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string clientId
         string protocol
@@ -122,7 +122,7 @@ erDiagram
 
     IDENTITY_PROVIDER {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string entityId
         string type_
@@ -131,7 +131,7 @@ erDiagram
 
     PROVISIONING_JOB {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string sourceSystem
         string targetSystem

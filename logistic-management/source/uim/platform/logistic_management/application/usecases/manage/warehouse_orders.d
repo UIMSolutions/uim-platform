@@ -22,7 +22,7 @@ public:
     _tasks = tasks;
   }
 
-  CommandResult createWarehouseOrder(string tenantId, CreateWarehouseOrderRequest req) {
+  CommandResult createWarehouseOrder(TenantId tenantId, CreateWarehouseOrderRequest req) {
     if (req.orderNumber.length == 0)
       return CommandResult(false, "Order number is required");
 
@@ -42,7 +42,7 @@ public:
     return CommandResult(true, "", wo.id.value);
   }
 
-  CommandResult updateWarehouseOrder(string tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
+  CommandResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
     auto wo = _repo.findById(tenantId, id);
     if (wo == WarehouseOrder.init) return CommandResult(false, "Warehouse order not found");
 
@@ -67,7 +67,7 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteWarehouseOrder(string tenantId, WarehouseOrderId id) {
+  CommandResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
     auto wo = _repo.findById(tenantId, id);
     if (wo == WarehouseOrder.init) return CommandResult(false, "Warehouse order not found");
     // Cascade: remove all tasks for this order
@@ -76,19 +76,19 @@ public:
     return CommandResult(true);
   }
 
-  WarehouseOrder getWarehouseOrder(string tenantId, WarehouseOrderId id) {
+  WarehouseOrder getWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
     return _repo.findById(tenantId, id);
   }
 
-  WarehouseOrder[] listWarehouseOrders(string tenantId) {
+  WarehouseOrder[] listWarehouseOrders(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  WarehouseOrder[] listByDelivery(string tenantId, DeliveryId deliveryId) {
+  WarehouseOrder[] listByDelivery(TenantId tenantId, DeliveryId deliveryId) {
     return _repo.findByDelivery(tenantId, deliveryId);
   }
 
-  WarehouseOrder[] listByStatus(string tenantId, WarehouseOrderStatus status) {
+  WarehouseOrder[] listByStatus(TenantId tenantId, WarehouseOrderStatus status) {
     return _repo.findByStatus(tenantId, status);
   }
 }

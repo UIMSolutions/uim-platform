@@ -20,7 +20,7 @@ public:
     _repo = repo;
   }
 
-  CommandResult createCarrier(string tenantId, CreateCarrierRequest req) {
+  CommandResult createCarrier(TenantId tenantId, CreateCarrierRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "Carrier name is required");
     if (_repo.existsByName(tenantId, req.name))
@@ -48,7 +48,7 @@ public:
     return CommandResult(true, "", c.id.value);
   }
 
-  CommandResult updateCarrier(string tenantId, CarrierId id, UpdateCarrierRequest req) {
+  CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
     auto c = _repo.findById(tenantId, id);
     if (c == Carrier.init) return CommandResult(false, "Carrier not found");
 
@@ -82,22 +82,22 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteCarrier(string tenantId, CarrierId id) {
+  CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
     auto c = _repo.findById(tenantId, id);
     if (c == Carrier.init) return CommandResult(false, "Carrier not found");
     _repo.remove(tenantId, id);
     return CommandResult(true);
   }
 
-  Carrier getCarrier(string tenantId, CarrierId id) {
+  Carrier getCarrier(TenantId tenantId, CarrierId id) {
     return _repo.findById(tenantId, id);
   }
 
-  Carrier[] listCarriers(string tenantId) {
+  Carrier[] listCarriers(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  Carrier[] listByStatus(string tenantId, CarrierStatus status) {
+  Carrier[] listByStatus(TenantId tenantId, CarrierStatus status) {
     return _repo.findByStatus(tenantId, status);
   }
 }

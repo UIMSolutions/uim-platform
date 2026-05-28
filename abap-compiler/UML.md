@@ -6,7 +6,7 @@
 classDiagram
     class AbapProgram {
         +ProgramId id
-        +string tenantId
+        +TenantId tenantId
         +ProgramType programType
         +string title
         +string language
@@ -38,7 +38,7 @@ classDiagram
 
     class CompilationJob {
         +CompilationJobId id
-        +string tenantId
+        +TenantId tenantId
         +ProgramId programId
         +CompilationStatus status
         +Diagnostic[] diagnostics

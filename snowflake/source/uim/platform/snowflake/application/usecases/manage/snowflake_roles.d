@@ -20,11 +20,11 @@ class ManageSnowflakeRolesUseCase {
     return CommandResult(true, role.id.value, null);
   }
 
-  SnowflakeRole[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  SnowflakeRole[] listByAccount(string tenantId, string accountId) {
+  SnowflakeRole[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  SnowflakeRole[] listByAccount(TenantId tenantId, string accountId) {
     return repo.findByAccount(TenantId(tenantId), SnowflakeAccountId(accountId));
   }
-  SnowflakeRole getById(string tenantId, string id) {
+  SnowflakeRole getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), SnowflakeRoleId(id));
   }
 
@@ -38,7 +38,7 @@ class ManageSnowflakeRolesUseCase {
     return CommandResult(true, role.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto role = repo.findById(TenantId(tenantId), SnowflakeRoleId(id));
     if (role.isNull) return CommandResult(false, id, "Role not found");
     repo.remove(TenantId(tenantId), SnowflakeRoleId(id));

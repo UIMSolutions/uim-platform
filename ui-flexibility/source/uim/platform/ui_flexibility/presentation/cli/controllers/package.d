@@ -25,7 +25,7 @@ class FlexChangeCliController {
 
     switch (args[1]) {
       case "list":
-        string tenantId = "default";
+        TenantId tenantId = "default";
         foreach (a; args[2 .. $]) {
           if (a.length > 9 && a[0..9] == "--tenant=") tenantId = a[9 .. $];
         }
@@ -53,7 +53,7 @@ class FlexVariantCliController {
 
     switch (args[1]) {
       case "list":
-        string tenantId = "default";
+        TenantId tenantId = "default";
         foreach (a; args[2 .. $]) {
           if (a.length > 9 && a[0..9] == "--tenant=") tenantId = a[9 .. $];
         }

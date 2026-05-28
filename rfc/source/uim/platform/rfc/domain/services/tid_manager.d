@@ -23,21 +23,21 @@ struct TidManager {
     this(TidRepository repo) { _repo = repo; }
 
     /// Create and persist a new TID for the given destination.
-    Tid createTid(string tenantId, DestinationId dest) {
+    Tid createTid(TenantId tenantId, DestinationId dest) {
         auto tid = Tid.create(tenantId, dest);
         _repo.save(tid);
         return tid;
     }
 
     /// Check whether a TID exists and is already committed (duplicate detection).
-    bool isDuplicate(string tenantId, TidValue value) {
+    bool isDuplicate(TenantId tenantId, TidValue value) {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         return tid.status == LuwStatus.committed;
     }
 
     /// Mark TID as executing before dispatching calls.
-    bool beginExecution(string tenantId, TidValue value) {
+    bool beginExecution(TenantId tenantId, TidValue value) {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.executing;
@@ -47,7 +47,7 @@ struct TidManager {
     }
 
     /// Commit the LUW — mark TID as committed.
-    bool commit(string tenantId, TidValue value) {
+    bool commit(TenantId tenantId, TidValue value) {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.committed;
@@ -57,7 +57,7 @@ struct TidManager {
     }
 
     /// Roll back the LUW — mark TID as rolled back.
-    bool rollback(string tenantId, TidValue value) {
+    bool rollback(TenantId tenantId, TidValue value) {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.rolledBack;
@@ -67,7 +67,7 @@ struct TidManager {
     }
 
     /// Fetch all open TIDs for a tenant (e.g. for monitoring).
-    Tid[] listOpen(string tenantId) {
+    Tid[] listOpen(TenantId tenantId) {
         return _repo.findByStatus(tenantId, LuwStatus.open);
     }
 }

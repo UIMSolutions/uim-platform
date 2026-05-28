@@ -31,20 +31,20 @@ class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), Dir
   // #endregion ByGlobalAccount
 
   // #region ByParent
-  size_t countByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    return findByParent(tenantId, globalAccountId, parentDirectoryId).length;
+  size_t countByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
+    return findByParent(tenantId, parentDirectoryId).length;
   }
 
   Directory[] filterByParent(Directory[] dirs, DirectoryId parentDirectoryId) {
     return dirs.filter!(d => d.parentDirectoryId == parentDirectoryId).array;
   }
 
-  Directory[] findByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    return filterByParent(findByGlobalAccount(tenantId, globalAccountId), parentDirectoryId);
+  Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
+    return filterByParent(findByTenant(tenantId), parentDirectoryId);
   }
 
-  void removeByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId) {
-    findByParent(tenantId, globalAccountId, parentDirectoryId).each!(d => remove(d));
+  void removeByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
+    findByParent(tenantId, parentDirectoryId).each!(d => remove(d));
   }
 
   // #endregion ByParent

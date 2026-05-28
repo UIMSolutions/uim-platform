@@ -22,13 +22,13 @@ abstract class ControllerTestBase {
     protected HTTPServerRequest createMockRequest(
         string method = "GET", 
         string url = "/api/v1/application-vulnerability/test", 
-        string tenantId = "test-tenant", 
+        TenantId tenantId = "test-tenant", 
         Json data = Json.undefined
     ) {
         // Using vibe.d's testing utility to create a request without a server.
         auto req = createTestHTTPServerRequest(URL(url));
         req.method = httpMethodFromString(method);
-        req.headers["X-Tenant-Id"] = tenantId;
+        req.headers["X-Tenant-Id"] = tenantId.value;
         
         if (data.type != Json.Type.undefined) {
             req.json = data;

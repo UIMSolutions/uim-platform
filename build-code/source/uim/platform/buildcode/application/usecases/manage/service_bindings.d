@@ -17,7 +17,7 @@ class ManageServiceBindingsUseCase {
 
   this(ServiceBindingRepository repo) { _repo = repo; }
 
-  CommandResult create(string tenantId, CreateServiceBindingRequest req) {
+  CommandResult create(TenantId tenantId, CreateServiceBindingRequest req) {
     ServiceBinding sb;
     sb.initEntity(tenantId);
     sb.projectId    = ProjectId(req.projectId);
@@ -31,19 +31,19 @@ class ManageServiceBindingsUseCase {
     return CommandResult(true, sb.id.value, "");
   }
 
-  ServiceBinding getById(string tenantId, string id) {
+  ServiceBinding getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, ServiceBindingId(id));
   }
 
-  ServiceBinding[] list(string tenantId) {
+  ServiceBinding[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  ServiceBinding[] listByProject(string tenantId, string projectId) {
+  ServiceBinding[] listByProject(TenantId tenantId, string projectId) {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto sb = _repo.findById(tenantId, ServiceBindingId(id));
     if (sb.isNull) return CommandResult(false, "", "Service binding not found");
     _repo.remove(tenantId, ServiceBindingId(id));

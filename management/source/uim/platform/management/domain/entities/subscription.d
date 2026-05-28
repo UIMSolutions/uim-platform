@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).
 struct Subscription {
-  mixin GlobalEntity!(SubscriptionId);
+  mixin TenantEntity!SubscriptionId;
 
+  GlobalAccountId globalAccountId;
   TenantId tenantId; // subaccount ID
   SubaccountId subaccountId;
   string appName; // technical name of the SaaS app

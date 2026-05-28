@@ -25,7 +25,7 @@ class ManageProjectsUseCase {
     _quota     = QuotaService();
   }
 
-  CommandResult create(string tenantId, CreateProjectRequest req) {
+  CommandResult create(TenantId tenantId, CreateProjectRequest req) {
     auto nameErrors = _validator.validateName(req.name);
     if (nameErrors.length > 0)
       return CommandResult(false, "", nameErrors[0]);
@@ -65,15 +65,15 @@ class ManageProjectsUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  Project getById(string tenantId, string id) {
+  Project getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, ProjectId(id));
   }
 
-  Project[] list(string tenantId) {
+  Project[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  Project[] listByStatus(string tenantId, string statusStr) {
+  Project[] listByStatus(TenantId tenantId, string statusStr) {
     ProjectStatus st = ProjectStatus.active;
     static foreach (member; __traits(allMembers, ProjectStatus)) {
       if (statusStr == mixin("ProjectStatus." ~ member ~ ".to!string"))
@@ -82,7 +82,7 @@ class ManageProjectsUseCase {
     return _repo.findByStatus(tenantId, st);
   }
 
-  CommandResult update(string tenantId, string id, UpdateProjectRequest req) {
+  CommandResult update(TenantId tenantId, string id, UpdateProjectRequest req) {
     auto p = _repo.findById(tenantId, ProjectId(id));
     if (p.isNull) return CommandResult(false, "", "Project not found");
 
@@ -100,7 +100,7 @@ class ManageProjectsUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto p = _repo.findById(tenantId, ProjectId(id));
     if (p.isNull) return CommandResult(false, "", "Project not found");
     _repo.remove(tenantId, ProjectId(id));

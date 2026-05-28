@@ -22,7 +22,7 @@ public:
     _planner = planner;
   }
 
-  CommandResult createDelivery(string tenantId, CreateDeliveryRequest req) {
+  CommandResult createDelivery(TenantId tenantId, CreateDeliveryRequest req) {
     if (req.deliveryNumber.length == 0)
       return CommandResult(false, "Delivery number is required");
 
@@ -59,7 +59,7 @@ public:
     return CommandResult(true, "", d.id.value);
   }
 
-  CommandResult updateDeliveryStatus(string tenantId, DeliveryId id, UpdateDeliveryRequest req) {
+  CommandResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req) {
     auto d = _repo.findById(tenantId, id);
     if (d == Delivery.init) return CommandResult(false, "Delivery not found");
 
@@ -94,7 +94,7 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteDelivery(string tenantId, DeliveryId id) {
+  CommandResult deleteDelivery(TenantId tenantId, DeliveryId id) {
     auto d = _repo.findById(tenantId, id);
     if (d == Delivery.init) return CommandResult(false, "Delivery not found");
     // Cascade: remove warehouse orders
@@ -103,19 +103,19 @@ public:
     return CommandResult(true);
   }
 
-  Delivery getDelivery(string tenantId, DeliveryId id) {
+  Delivery getDelivery(TenantId tenantId, DeliveryId id) {
     return _repo.findById(tenantId, id);
   }
 
-  Delivery[] listDeliveries(string tenantId) {
+  Delivery[] listDeliveries(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  Delivery[] listByShipment(string tenantId, ShipmentId shipmentId) {
+  Delivery[] listByShipment(TenantId tenantId, ShipmentId shipmentId) {
     return _repo.findByShipment(tenantId, shipmentId);
   }
 
-  Delivery[] listByDirection(string tenantId, LogisticsDirection dir) {
+  Delivery[] listByDirection(TenantId tenantId, LogisticsDirection dir) {
     return _repo.findByDirection(tenantId, dir);
   }
 }

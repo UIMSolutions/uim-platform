@@ -21,7 +21,7 @@ package "Domain" {
 
   class Carrier {
     +CarrierId id
-    +String tenantId
+    +TenantId tenantId
     +String name
     +String contactEmail
     +String contactPhone
@@ -32,7 +32,7 @@ package "Domain" {
 
   class FreightOrder {
     +FreightOrderId id
-    +String tenantId
+    +TenantId tenantId
     +String orderNumber
     +String originName
     +String destinationName
@@ -45,7 +45,7 @@ package "Domain" {
 
   class Shipment {
     +ShipmentId id
-    +String tenantId
+    +TenantId tenantId
     +String shipmentNumber
     +LogisticsDirection direction
     +ShipmentStatus status
@@ -56,7 +56,7 @@ package "Domain" {
 
   class Delivery {
     +DeliveryId id
-    +String tenantId
+    +TenantId tenantId
     +String deliveryNumber
     +LogisticsDirection direction
     +DeliveryStatus status
@@ -72,7 +72,7 @@ package "Domain" {
 
   class WarehouseOrder {
     +WarehouseOrderId id
-    +String tenantId
+    +TenantId tenantId
     +String orderNumber
     +WarehouseOrderStatus status
     +DeliveryId deliveryId
@@ -82,7 +82,7 @@ package "Domain" {
 
   class WarehouseTask {
     +WarehouseTaskId id
-    +String tenantId
+    +TenantId tenantId
     +String taskNumber
     +WarehouseTaskType taskType
     +WarehouseTaskStatus status

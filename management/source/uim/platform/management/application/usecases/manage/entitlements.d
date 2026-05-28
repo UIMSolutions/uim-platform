@@ -33,14 +33,12 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service name is required");
 
     // Check current quota usage for this plan in the global account
-    auto existing = repo.findByServicePlan(request.globalAccountId, request.servicePlanId);
+    auto existing = repo.findByServicePlan(request.tenantId, request.globalAccountId, request.servicePlanId);
     int currentlyAssigned = 0;
     foreach (e; existing)
       currentlyAssigned += e.quotaAssigned;
 
-    Entitlement ent;
-    ent.initEntity(request.tenantId, request.assignedBy);
-
+    auto ent = Entitlement(request.tenantId);
     ent.globalAccountId = request.globalAccountId;
     ent.directoryId = request.directoryId;
     ent.subaccountId = request.subaccountId;
@@ -60,7 +58,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request) {
-    auto ent = repo.findById(request.tenantId, request.id);
+    auto ent = repo.findById(request.tenantId, request.entitlementId);
     if (ent.isNull)
       return CommandResult(false, "", "Entitlement not found");
 

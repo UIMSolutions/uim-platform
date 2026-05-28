@@ -32,6 +32,12 @@ mixin template TenantEntity(TId) {
     this.updatedBy = byUser;
   }
 
+  this(TenantId tenantId, UserId byUser) {
+    this(tenantId);
+    this.createdBy = byUser;
+    this.updatedBy = byUser;
+  }
+
   // Helper method to check if the entity is new (i.e. has no ID assigned yet)
   bool isNull() const {
     return id.isNull;

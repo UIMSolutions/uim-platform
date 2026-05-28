@@ -12,42 +12,42 @@ mixin(ShowModule!());
 
 class MemoryFlexApplicationRepository : TenantRepository!(FlexApplication, FlexApplicationId), FlexApplicationRepository {
 
-  bool existsById(string tenantId, FlexApplicationId id) {
+  bool existsById(TenantId tenantId, FlexApplicationId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexApplication findById(string tenantId, FlexApplicationId id) {
+  FlexApplication findById(TenantId tenantId, FlexApplicationId id) {
     foreach (a; findByTenant(tenantId))
       if (a.id_ == id) return a;
     return FlexApplication.init;
   }
 
-  bool removeById(string tenantId, FlexApplicationId id) {
+  bool removeById(TenantId tenantId, FlexApplicationId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexApplication[] findByTenantAll(string tenantId) {
+  FlexApplication[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexApplication findByAppId(string tenantId, string appId) {
+  FlexApplication findByAppId(TenantId tenantId, string appId) {
     foreach (a; findByTenant(tenantId))
       if (a.appId_ == appId) return a;
     return FlexApplication.init;
   }
 
-  FlexApplication[] findActiveByTenant(string tenantId) {
+  FlexApplication[] findActiveByTenant(TenantId tenantId) {
     FlexApplication[] result;
     foreach (a; findByTenant(tenantId))
       if (a.isActive_) result ~= a;
     return result;
   }
 
-  FlexApplication[] findByNamespace(string tenantId, string ns) {
+  FlexApplication[] findByNamespace(TenantId tenantId, string ns) {
     FlexApplication[] result;
     foreach (a; findByTenant(tenantId))
       if (a.namespace_ == ns) result ~= a;

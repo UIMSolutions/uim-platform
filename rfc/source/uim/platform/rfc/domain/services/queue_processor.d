@@ -38,7 +38,7 @@ struct QueueProcessor {
 
     /// Process all pending entries of the given queue in order.
     /// Returns the number of successfully processed entries.
-    int processQueue(string tenantId, QueueName queueName) @trusted {
+    int processQueue(TenantId tenantId, QueueName queueName) @trusted {
         import std.algorithm : sort;
         auto entries = _queueRepo.findPending(tenantId, queueName);
 

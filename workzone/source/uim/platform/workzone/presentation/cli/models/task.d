@@ -13,7 +13,7 @@ struct TaskCliModel {
     private ManageTasksUseCase _useCase;
     private string _tenantId;
 
-    this(ManageTasksUseCase useCase, string tenantId) {
+    this(ManageTasksUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
         _tenantId = tenantId;
     }

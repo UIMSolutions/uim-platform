@@ -12,35 +12,35 @@ mixin(ShowModule!());
 
 class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), FlexDraftRepository {
 
-  bool existsById(string tenantId, FlexDraftId id) {
+  bool existsById(TenantId tenantId, FlexDraftId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexDraft findById(string tenantId, FlexDraftId id) {
+  FlexDraft findById(TenantId tenantId, FlexDraftId id) {
     foreach (d; findByTenant(tenantId))
       if (d.id_ == id) return d;
     return FlexDraft.init;
   }
 
-  bool removeById(string tenantId, FlexDraftId id) {
+  bool removeById(TenantId tenantId, FlexDraftId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexDraft[] findByTenantAll(string tenantId) {
+  FlexDraft[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexDraft findByApp(string tenantId, string appId) {
+  FlexDraft findByApp(TenantId tenantId, string appId) {
     foreach (d; findByTenant(tenantId))
       if (d.appId_ == appId) return d;
     return FlexDraft.init;
   }
 
-  bool hasDraft(string tenantId, string appId) {
+  bool hasDraft(TenantId tenantId, string appId) {
     foreach (d; findByTenant(tenantId))
       if (d.appId_ == appId) return true;
     return false;

@@ -11,15 +11,15 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexDraftRepository : ITenantRepository!(FlexDraft, FlexDraftId) {
-  bool existsById(string tenantId, FlexDraftId id);
-  FlexDraft findById(string tenantId, FlexDraftId id);
-  bool removeById(string tenantId, FlexDraftId id);
-  long countByTenant(string tenantId);
-  FlexDraft[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexDraftId id);
+  FlexDraft findById(TenantId tenantId, FlexDraftId id);
+  bool removeById(TenantId tenantId, FlexDraftId id);
+  long countByTenant(TenantId tenantId);
+  FlexDraft[] findByTenantAll(TenantId tenantId);
 
   /// Find the active draft for an application (at most one per tenant+app)
-  FlexDraft findByApp(string tenantId, string appId);
+  FlexDraft findByApp(TenantId tenantId, string appId);
 
   /// Check if an active draft exists for an app
-  bool hasDraft(string tenantId, string appId);
+  bool hasDraft(TenantId tenantId, string appId);
 }

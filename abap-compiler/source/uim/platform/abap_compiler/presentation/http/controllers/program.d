@@ -110,7 +110,7 @@ class ProgramController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Program updated successfully", "Updated", 200, responseData);
     }
 
@@ -128,7 +128,7 @@ class ProgramController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Program deleted successfully", "Deleted", 200, responseData);
     }
 }

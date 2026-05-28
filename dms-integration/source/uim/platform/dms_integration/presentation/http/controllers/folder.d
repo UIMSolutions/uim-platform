@@ -127,7 +127,7 @@ class FolderController : ManageController {
             if (result.hasError)
                 return errorResponse(result.message, 400);
 
-            auto responseData = Json.emptyObject.set("id", id);
+            auto responseData = Json.emptyObject.set("id", result.id);
             return successResponse("Folder moved successfully", "Moved", 200, responseData);
         }
 
@@ -145,7 +145,7 @@ class FolderController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Folder updated successfully", "Updated", 200, responseData);
     }
 
@@ -163,7 +163,7 @@ class FolderController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Folder deleted successfully", "Deleted", 200, responseData);
     }
 }

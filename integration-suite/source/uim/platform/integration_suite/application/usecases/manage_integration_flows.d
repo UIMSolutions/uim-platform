@@ -33,14 +33,14 @@ public:
     return CommandResult(true, flow.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (f; items) arr ~= f.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto flow = _repo.getById(getTenantId(tenantId), IntegrationFlowId(id));
     if (flow.isNull) return CommandResult(false, "Flow not found");
     return CommandResult(true, flow.toJson());
@@ -69,7 +69,7 @@ public:
     return CommandResult(true, flow.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto flow = _repo.getById(getTenantId(tenantId), IntegrationFlowId(id));
     if (flow.isNull) return CommandResult(false, "Flow not found");
     _repo.remove(getTenantId(tenantId), IntegrationFlowId(id));

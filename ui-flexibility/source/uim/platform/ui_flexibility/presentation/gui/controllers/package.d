@@ -23,7 +23,7 @@ class FlexChangeGuiController {
   FlexChangeGuiModel model() { return model_; }
 
   /// Called when user selects a change in the GUI list.
-  void onSelectChange(string tenantId, FlexChangeId id) {
+  void onSelectChange(TenantId tenantId, FlexChangeId id) {
     auto c = usecase.getChange(tenantId, id);
     if (!c.isNull) model_.setValue(c);
   }
@@ -42,7 +42,7 @@ class FlexVariantGuiController {
   FlexVariantListGuiModel model() { return model_; }
 
   /// Called when user requests a refresh of the variant list.
-  void onRefresh(string tenantId) {
+  void onRefresh(TenantId tenantId) {
     auto vs = usecase.listVariants(tenantId);
     model_.setValues(vs);
   }

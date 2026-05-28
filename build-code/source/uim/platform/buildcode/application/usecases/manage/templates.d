@@ -17,7 +17,7 @@ class ManageTemplatesUseCase {
 
   this(TemplateRepository repo) { _repo = repo; }
 
-  CommandResult create(string tenantId, CreateTemplateRequest req) {
+  CommandResult create(TenantId tenantId, CreateTemplateRequest req) {
     ProjectType ptype  = ProjectType.other;
     TechStack   tstack = TechStack.other;
     static foreach (member; __traits(allMembers, ProjectType)) {
@@ -46,15 +46,15 @@ class ManageTemplatesUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  ProjectTemplate getById(string tenantId, string id) {
+  ProjectTemplate getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, TemplateId(id));
   }
 
-  ProjectTemplate[] list(string tenantId) {
+  ProjectTemplate[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  ProjectTemplate[] listByProjectType(string tenantId, string typeStr) {
+  ProjectTemplate[] listByProjectType(TenantId tenantId, string typeStr) {
     ProjectType ptype = ProjectType.other;
     static foreach (member; __traits(allMembers, ProjectType)) {
       if (typeStr == mixin("ProjectType." ~ member ~ ".to!string"))
@@ -63,11 +63,11 @@ class ManageTemplatesUseCase {
     return _repo.findByProjectType(tenantId, ptype);
   }
 
-  ProjectTemplate[] listBuiltIn(string tenantId) {
+  ProjectTemplate[] listBuiltIn(TenantId tenantId) {
     return _repo.findBuiltIn(tenantId);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto t = _repo.findById(tenantId, TemplateId(id));
     if (t.isNull) return CommandResult(false, "", "Template not found");
     _repo.remove(tenantId, TemplateId(id));

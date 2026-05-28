@@ -36,11 +36,11 @@ class ManageDataProvidersUseCase {
     return CommandResult(true, p.id.value, null);
   }
 
-  DataProvider[] list(string tenantId) {
+  DataProvider[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  DataProvider getById(string tenantId, string id) {
+  DataProvider getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), DataProviderId(id));
   }
 
@@ -61,7 +61,7 @@ class ManageDataProvidersUseCase {
     return CommandResult(true, p.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), DataProviderId(id));
     if (p.isNull) return CommandResult(false, id, "Provider not found");
     repo.remove(TenantId(tenantId), DataProviderId(id));

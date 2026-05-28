@@ -23,7 +23,7 @@ final class WorkspaceGuiModel {
     /// Fired after the workspace list is refreshed or mutated.
     void delegate() @safe onChanged;
 
-    this(ManageWorkspacesUseCase useCase, string tenantId) {
+    this(ManageWorkspacesUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
         _tenantId = tenantId;
     }

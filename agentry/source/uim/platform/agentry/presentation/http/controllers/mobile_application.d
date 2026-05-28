@@ -120,7 +120,7 @@ class MobileApplicationController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Mobile application updated successfully", "Updated", 200, responseData);
     }
 

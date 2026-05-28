@@ -33,11 +33,11 @@ class ManageProgramsUseCase {
         return CommandResult(true, program.id, "");
     }
 
-    AbapProgram getProgram(string tenantId, ProgramId id) {
+    AbapProgram getProgram(TenantId tenantId, ProgramId id) {
         return repo.findById(tenantId, id);
     }
 
-    AbapProgram[] listPrograms(string tenantId) {
+    AbapProgram[] listPrograms(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
@@ -55,7 +55,7 @@ class ManageProgramsUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    CommandResult deleteProgram(string tenantId, ProgramId id) {
+    CommandResult deleteProgram(TenantId tenantId, ProgramId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Program '" ~ id ~ "' not found");
@@ -64,7 +64,7 @@ class ManageProgramsUseCase {
         return CommandResult(true, id, "");
     }
 
-    size_t countPrograms(string tenantId) {
+    size_t countPrograms(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 }

@@ -44,29 +44,31 @@ class ManageFlexPersonalizationsUseCase {
     p.isSynced_ = r.isSynced_;
     p.updatedAt_ = "";
     repo.update(r.tenantId, p);
-    return CommandResult(true, p.id_.value);
+    return CommandResult(true, p.id_.value, "FlexPersonalization updated successfully.");
   }
 
-  FlexPersonalization getPersonalization(string tenantId, FlexPersonalizationId id) {
+  FlexPersonalization getPersonalization(TenantId tenantId, FlexPersonalizationId id) {
     return repo.findById(tenantId, id);
   }
 
-  FlexPersonalization[] listPersonalizations(string tenantId) {
+  FlexPersonalization[] listPersonalizations(TenantId tenantId) {
     return repo.findByTenantAll(tenantId);
   }
 
-  FlexPersonalization[] listByUser(string tenantId, string appId, string userId) {
+  FlexPersonalization[] listByUser(TenantId tenantId, string appId, string userId) {
     return repo.findByUser(tenantId, appId, userId);
   }
 
-  CommandResult deletePersonalization(string tenantId, FlexPersonalizationId id) {
-    if (!repo.existsById(tenantId, id)) return CommandResult(false, null, "FlexPersonalization not found");
+  CommandResult deletePersonalization(TenantId tenantId, FlexPersonalizationId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
+    return CommandResult(false, null, "FlexPersonalization not found");
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.value);
+    return CommandResult(true, id.value, "FlexPersonalization deleted successfully.");
   }
 
-  CommandResult resetUserPersonalizations(string tenantId, string appId, string userId) {
+  CommandResult resetUserPersonalizations(TenantId tenantId, string appId, string userId) {
     repo.removeByUser(tenantId, appId, userId);
-    return CommandResult(true, userId);
+    return CommandResult(true, userId, "User personalizations reset successfully.");
   }
 }

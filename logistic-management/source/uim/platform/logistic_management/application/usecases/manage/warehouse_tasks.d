@@ -20,7 +20,7 @@ public:
     _planner = planner;
   }
 
-  CommandResult createWarehouseTask(string tenantId, CreateWarehouseTaskRequest req) {
+  CommandResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req) {
     if (req.taskNumber.length == 0)
       return CommandResult(false, "Task number is required");
     if (req.productId.length == 0)
@@ -50,7 +50,7 @@ public:
     return CommandResult(true, "", wt.id.value);
   }
 
-  CommandResult confirmTask(string tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req) {
+  CommandResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req) {
     auto wt = _repo.findById(tenantId, id);
     if (wt == WarehouseTask.init) return CommandResult(false, "Warehouse task not found");
     if (!_planner.canTransitionTask(wt.status, WarehouseTaskStatus.confirmed))
@@ -78,7 +78,7 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteWarehouseTask(string tenantId, WarehouseTaskId id) {
+  CommandResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
     auto wt = _repo.findById(tenantId, id);
     if (wt == WarehouseTask.init) return CommandResult(false, "Warehouse task not found");
     if (wt.status == WarehouseTaskStatus.confirmed)
@@ -87,23 +87,23 @@ public:
     return CommandResult(true);
   }
 
-  WarehouseTask getWarehouseTask(string tenantId, WarehouseTaskId id) {
+  WarehouseTask getWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
     return _repo.findById(tenantId, id);
   }
 
-  WarehouseTask[] listWarehouseTasks(string tenantId) {
+  WarehouseTask[] listWarehouseTasks(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  WarehouseTask[] listByOrder(string tenantId, WarehouseOrderId orderId) {
+  WarehouseTask[] listByOrder(TenantId tenantId, WarehouseOrderId orderId) {
     return _repo.findByWarehouseOrder(tenantId, orderId);
   }
 
-  WarehouseTask[] listByStatus(string tenantId, WarehouseTaskStatus status) {
+  WarehouseTask[] listByStatus(TenantId tenantId, WarehouseTaskStatus status) {
     return _repo.findByStatus(tenantId, status);
   }
 
-  WarehouseTask[] listByType(string tenantId, WarehouseTaskType taskType) {
+  WarehouseTask[] listByType(TenantId tenantId, WarehouseTaskType taskType) {
     return _repo.findByTaskType(tenantId, taskType);
   }
 }

@@ -62,12 +62,12 @@ class FileServiceInstanceRepository : ServiceInstanceRepository {
 
     private:
 
-    void ensureDir(string tenantId) @trusted {
+    void ensureDir(TenantId tenantId) @trusted {
         auto dir = buildPath(basePath, tenantId);
         if (!dir.exists) mkdirRecurse(dir);
     }
 
-    string instPath(string tenantId, string id) const {
+    string instPath(TenantId tenantId, string id) const {
         return buildPath(basePath, tenantId, id ~ ".json");
     }
 

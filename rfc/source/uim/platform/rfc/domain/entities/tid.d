@@ -41,7 +41,7 @@ struct Tid {
             .set("updatedAt",     updatedAt);
     }
 
-    static Tid create(string tenantId, DestinationId dest) {
+    static Tid create(TenantId tenantId, DestinationId dest) {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;
         Tid t;

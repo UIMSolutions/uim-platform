@@ -18,7 +18,7 @@ class MonthlyUsageReportUseCases {
   }
 
   MonthlyUsageReportResponse createReport(CreateMonthlyUsageReportRequest req) {
-    auto report = MonthlyUsageReport.create(req.globalAccountId,
+    auto report = MonthlyUsageReport.create(req.accountId,
       req.reportingYear, req.reportingMonth);
     repo.save(report);
     return MonthlyUsageReportResponse.fromEntity(report);

@@ -13,5 +13,5 @@ class SystemInstanceViewModel {
   string description;
   string host;
   string systemType;
-  string tenantId;
+  TenantId tenantId;
 }

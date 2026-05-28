@@ -12,5 +12,5 @@ mixin(ShowModule!());
 @safe:
 
 interface UndeliveredEventRepository : ITenantRepository!(UndeliveredEvent, UndeliveredEventId) {
-    UndeliveredEvent[] findBySubscription(string tenantId, string subscriptionName);
+    UndeliveredEvent[] findBySubscription(TenantId tenantId, string subscriptionName);
 }

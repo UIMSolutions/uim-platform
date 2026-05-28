@@ -12,6 +12,6 @@ class ServiceBindingViewModel {
   string name;
   string description;
   string serviceType;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

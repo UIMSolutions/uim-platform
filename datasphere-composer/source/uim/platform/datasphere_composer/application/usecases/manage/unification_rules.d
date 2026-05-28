@@ -37,11 +37,11 @@ class ManageUnificationRulesUseCase {
     return CommandResult(true, rule.id.value, null);
   }
 
-  UnificationRule[] list(string tenantId) {
+  UnificationRule[] list(TenantId tenantId) {
     return repo.findByPriority(TenantId(tenantId));
   }
 
-  UnificationRule getById(string tenantId, string id) {
+  UnificationRule getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), UnificationRuleId(id));
   }
 
@@ -63,7 +63,7 @@ class ManageUnificationRulesUseCase {
     return CommandResult(true, rule.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto rule = repo.findById(TenantId(tenantId), UnificationRuleId(id));
     if (rule.isNull) return CommandResult(false, id, "Rule not found");
     repo.remove(TenantId(tenantId), UnificationRuleId(id));

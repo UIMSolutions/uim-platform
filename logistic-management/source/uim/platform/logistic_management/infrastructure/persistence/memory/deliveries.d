@@ -12,23 +12,23 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryDeliveryRepository : TenantRepository!(Delivery, DeliveryId), DeliveryRepository {
-  override Delivery[] findByShipment(string tenantId, ShipmentId shipmentId) {
+  override Delivery[] findByShipment(TenantId tenantId, ShipmentId shipmentId) {
     return findAll(tenantId).filter!(d => d.shipmentId.value == shipmentId.value).array;
   }
 
-  override Delivery[] findByStatus(string tenantId, DeliveryStatus status) {
+  override Delivery[] findByStatus(TenantId tenantId, DeliveryStatus status) {
     return findAll(tenantId).filter!(d => d.status == status).array;
   }
 
-  override Delivery[] findByDirection(string tenantId, LogisticsDirection direction) {
+  override Delivery[] findByDirection(TenantId tenantId, LogisticsDirection direction) {
     return findAll(tenantId).filter!(d => d.direction == direction).array;
   }
 
-  override Delivery[] findByPartner(string tenantId, string partnerId) {
+  override Delivery[] findByPartner(TenantId tenantId, string partnerId) {
     return findAll(tenantId).filter!(d => d.partnerId == partnerId).array;
   }
 
-  override void removeByShipment(string tenantId, ShipmentId shipmentId) {
+  override void removeByShipment(TenantId tenantId, ShipmentId shipmentId) {
     auto toRemove = findByShipment(tenantId, shipmentId);
     toRemove.each!(d => remove(tenantId, d.id));
   }

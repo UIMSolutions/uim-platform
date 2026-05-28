@@ -119,7 +119,7 @@ class SubscriptionController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Subscription updated successfully", "Updated", 200, resp);
     }
 
@@ -138,7 +138,7 @@ class SubscriptionController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -85,6 +85,8 @@ struct UpdateActionRequest {
 // ---------------------------------------------------------------------------
 
 struct CreateSubscriptionRequest {
+    TenantId tenantId;
+    GlobalAccountId globalAccountId;
     string   name;
     string   description;
     string[] conditions;
@@ -94,9 +96,13 @@ struct CreateSubscriptionRequest {
 }
 
 struct UpdateSubscriptionRequest {
+    GlobalAccountId globalAccountId;
+    TenantId tenantId;
+
     string   description;
     string[] conditions;
     string[] actions;
     string   state;
     string[] labels;
+    UserId   updatedBy;
 }

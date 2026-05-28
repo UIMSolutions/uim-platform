@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// An entitlement represents the assignment of a service plan's quota
 /// to a global account, directory, or subaccount.
 struct Entitlement {
-  mixin GlobalEntity!EntitlementId;
+  mixin TenantEntity!EntitlementId;
 
+  GlobalAccountId globalAccountId;
   DirectoryId directoryId; // optional — directory-level entitlement
   SubaccountId subaccountId; // optional — subaccount-level assignment
   ServicePlanId servicePlanId;
@@ -33,6 +34,7 @@ struct Entitlement {
 
   Json toJson() const {
     return entityToJson
+      .set("globalAccountId", globalAccountId.value)
       .set("directoryId", directoryId.value)
       .set("subaccountId", subaccountId.value)
       .set("servicePlanId", servicePlanId.value)  

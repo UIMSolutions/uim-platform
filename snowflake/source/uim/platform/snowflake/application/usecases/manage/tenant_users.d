@@ -21,14 +21,14 @@ class ManageSnowflakeTenantUsersUseCase {
     return CommandResult(true, u.id.value, null);
   }
 
-  SnowflakeTenantUser[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  SnowflakeTenantUser[] listByRole(string tenantId, string roleStr) {
+  SnowflakeTenantUser[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  SnowflakeTenantUser[] listByRole(TenantId tenantId, string roleStr) {
     import std.conv : to;
     TenantUserRole r;
     try { r = roleStr.to!TenantUserRole; } catch(Exception) { r = TenantUserRole.viewer; }
     return repo.findByRole(TenantId(tenantId), r);
   }
-  SnowflakeTenantUser getById(string tenantId, string id) {
+  SnowflakeTenantUser getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), SnowflakeTenantUserId(id));
   }
 
@@ -44,7 +44,7 @@ class ManageSnowflakeTenantUsersUseCase {
     return CommandResult(true, u.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto u = repo.findById(TenantId(tenantId), SnowflakeTenantUserId(id));
     if (u.isNull) return CommandResult(false, id, "User not found");
     repo.remove(TenantId(tenantId), SnowflakeTenantUserId(id));

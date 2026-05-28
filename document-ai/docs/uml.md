@@ -9,7 +9,7 @@ classDiagram
         +string name
         +string description
         +string status
-        +string tenantId
+        +TenantId tenantId
     }
     class DocumentType {
         +string id

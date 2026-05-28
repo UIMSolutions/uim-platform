@@ -14,7 +14,7 @@ mixin(ShowModule!());
 // ---- DataProvider DTOs ----
 
 struct CreateDataProviderRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -25,7 +25,7 @@ struct CreateDataProviderRequest {
 }
 
 struct UpdateDataProviderRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -37,7 +37,7 @@ struct UpdateDataProviderRequest {
 // ---- DataProduct DTOs ----
 
 struct CreateDataProductRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string providerId;
   string name;
@@ -49,7 +49,7 @@ struct CreateDataProductRequest {
 }
 
 struct UpdateDataProductRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -94,7 +94,7 @@ struct ReorderRulesRequest {
 // ---- DataSourceConfig DTOs ----
 
 struct CreateDataSourceConfigRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string dataProductId;
   string providerId;
@@ -107,7 +107,7 @@ struct CreateDataSourceConfigRequest {
 }
 
 struct UpdateDataSourceConfigRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string qualityRank;
   string timestampFormat;
@@ -118,7 +118,7 @@ struct UpdateDataSourceConfigRequest {
 }
 
 struct AddIdentifierMappingRequest {
-  string tenantId;
+  TenantId tenantId;
   string configId;
   string ruleId;
   string ruleAttributeName;
@@ -155,7 +155,7 @@ struct UpdateAttributeMappingRequest {
 // ---- CustomerProfile DTOs (read-heavy) ----
 
 struct SearchCustomerProfileRequest {
-  string tenantId;
+  TenantId tenantId;
   string email;
   string externalId;
   string fullName;
@@ -172,7 +172,7 @@ struct StartCompositionRunRequest {
 }
 
 struct CompositionRunActionRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string action;  /// "cancel"
 }
@@ -180,7 +180,7 @@ struct CompositionRunActionRequest {
 // ---- TenantUser DTOs ----
 
 struct CreateTenantUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string email;
   string firstName;
@@ -190,7 +190,7 @@ struct CreateTenantUserRequest {
 }
 
 struct UpdateTenantUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string firstName;
   string lastName;

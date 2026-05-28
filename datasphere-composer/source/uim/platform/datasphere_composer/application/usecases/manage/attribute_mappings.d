@@ -36,15 +36,15 @@ class ManageAttributeMappingsUseCase {
     return CommandResult(true, m.id.value, null);
   }
 
-  AttributeMapping[] list(string tenantId) {
+  AttributeMapping[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  AttributeMapping[] listByConfig(string tenantId, string configId) {
+  AttributeMapping[] listByConfig(TenantId tenantId, string configId) {
     return repo.findByConfig(TenantId(tenantId), DataSourceConfigId(configId));
   }
 
-  AttributeMapping getById(string tenantId, string id) {
+  AttributeMapping getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), AttributeMappingId(id));
   }
 
@@ -64,7 +64,7 @@ class ManageAttributeMappingsUseCase {
     return CommandResult(true, m.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto m = repo.findById(TenantId(tenantId), AttributeMappingId(id));
     if (m.isNull) return CommandResult(false, id, "Mapping not found");
     repo.remove(TenantId(tenantId), AttributeMappingId(id));

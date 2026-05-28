@@ -38,8 +38,8 @@ class MemorySubscriptionRepository : TenantRepository!(Subscription, Subscriptio
     return findByApp(tenantId, subaccountId, appName).length;
   }
 
-  Subscription[] filterByApp(Subscription[] items, SubaccountId subaccountId, string appName) {
-    return items.filter!(e => e.subaccountId == subaccountId && e.appName == appName).array;
+  Subscription[] filterByApp(Subscription[] items, string appName) {
+    return items.filter!(e => e.appName == appName).array;
   }
 
   Subscription[] findByApp(TenantId tenantId, SubaccountId subaccountId, string appName) {
@@ -54,16 +54,15 @@ class MemorySubscriptionRepository : TenantRepository!(Subscription, Subscriptio
     return findByStatus(tenantId, subaccountId, status).length;
   }
 
-  Subscription[] filterByStatus(Subscription[] items, SubaccountId subaccountId, SubscriptionStatus status) {
-    return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
+  Subscription[] filterByStatus(Subscription[] items, SubscriptionStatus status) {
+    return items.filter!(e => e.status == status).array;
   }
 
   Subscription[] findByStatus(TenantId tenantId, SubaccountId subaccountId, SubscriptionStatus status) {
-    return filterByStatus(findByTenant(tenantId), subaccountId, status);
+    return filterByStatus(findBySubaccount(tenantId, subaccountId), status);
   }
 
   void removeByStatus(TenantId tenantId, SubaccountId subaccountId, SubscriptionStatus status) {
-    findByStatus(tenantId,  subaccountId, status).each!(e => remove(e));
+    findByStatus(tenantId, subaccountId, status).each!(e => remove(e));
   }
-
 }

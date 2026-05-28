@@ -12,5 +12,5 @@ mixin(ShowModule!());
 @safe:
 
 interface MatchedEventRepository : ITenantRepository!(MatchedEvent, MatchedEventId) {
-    MatchedEvent[] findBySubscription(string tenantId, string subscriptionName);
+    MatchedEvent[] findBySubscription(TenantId tenantId, string subscriptionName);
 }

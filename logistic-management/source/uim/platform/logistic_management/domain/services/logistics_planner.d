@@ -25,7 +25,7 @@ public:
   }
 
   /// Check that the carrier exists and is active for the given tenant.
-  bool isCarrierAvailable(string tenantId, CarrierId carrierId) {
+  bool isCarrierAvailable(TenantId tenantId, CarrierId carrierId) {
     auto existing = _carriers.findById(tenantId, carrierId);
     if (existing == Carrier.init) return false;
     return existing.status == CarrierStatus.active;

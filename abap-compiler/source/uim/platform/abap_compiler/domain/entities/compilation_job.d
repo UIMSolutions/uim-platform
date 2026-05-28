@@ -39,7 +39,7 @@ struct CompilationJob {
             .set("finishedAt",    finishedAt);
     }
 
-    static CompilationJob create(string tenantId, ProgramId pid) {
+    static CompilationJob create(TenantId tenantId, ProgramId pid) {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;
         CompilationJob j;

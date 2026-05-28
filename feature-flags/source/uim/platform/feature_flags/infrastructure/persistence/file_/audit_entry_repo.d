@@ -51,12 +51,12 @@ class FileAuditEntryRepository : AuditEntryRepository {
 
     private:
 
-    void ensureDir(string tenantId) @trusted {
+    void ensureDir(TenantId tenantId) @trusted {
         auto dir = buildPath(basePath, tenantId);
         if (!dir.exists) mkdirRecurse(dir);
     }
 
-    string logPath(string tenantId) const {
+    string logPath(TenantId tenantId) const {
         return buildPath(basePath, tenantId, "audit.ndjson");
     }
 

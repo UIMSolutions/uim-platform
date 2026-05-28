@@ -11,13 +11,13 @@ mixin(ShowModule!());
 @safe:
 
 interface RfcCallRepository {
-    RfcCall   findById(string tenantId, RfcCallId id);
-    RfcCall[] findByTenant(string tenantId);
-    RfcCall[] findByDestination(string tenantId, DestinationId destId);
-    RfcCall[] findByTid(string tenantId, TidValue tid);
-    RfcCall[] findByStatus(string tenantId, RfcStatus status);
+    RfcCall   findById(TenantId tenantId, RfcCallId id);
+    RfcCall[] findByTenant(TenantId tenantId);
+    RfcCall[] findByDestination(TenantId tenantId, DestinationId destId);
+    RfcCall[] findByTid(TenantId tenantId, TidValue tid);
+    RfcCall[] findByStatus(TenantId tenantId, RfcStatus status);
     bool      save(RfcCall call);
     bool      update(RfcCall call);
-    bool      remove(string tenantId, RfcCallId id);
-    size_t    countByTenant(string tenantId);
+    bool      remove(TenantId tenantId, RfcCallId id);
+    size_t    countByTenant(TenantId tenantId);
 }

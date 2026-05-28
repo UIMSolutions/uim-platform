@@ -38,14 +38,10 @@ class GetAccountOverviewUseCase { // TODO: UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  AccountOverview getOverview(string globalAccountId) {
-    return getOverview(GlobalAccountId(globalAccountId));
-  }
-
-  AccountOverview getOverview(GlobalAccountId globalAccountId) {
+  AccountOverview getOverview(TenantId tenantId, GlobalAccountId globalAccountId) {
     AccountOverview ov;
 
-    auto subaccounts = subaccountRepo.findByGlobalAccount(globalAccountId);
+    auto subaccounts = subaccountRepo.findByGlobalAccount(tenantId, globalAccountId);
     ov.totalSubaccounts = subaccounts.length;
 
     int activeCount = 0;
@@ -55,25 +51,25 @@ class GetAccountOverviewUseCase { // TODO: UIMUseCase {
     }
     ov.activeSubaccounts = activeCount;
 
-    auto dirs = directoryRepo.findByGlobalAccount(globalAccountId);
+    auto dirs = directoryRepo.findByGlobalAccount(tenantId, globalAccountId);
     ov.totalDirectories = dirs.length;
 
-    auto ents = entitlementRepo.findByGlobalAccount(globalAccountId);
+    auto ents = entitlementRepo.findByGlobalAccount(tenantId, globalAccountId);
     ov.totalEntitlements = ents.length;
 
     // Count environments across all subaccounts
-    int envCount = 0;
-    int subCount = 0;
+    size_t envCount = 0;
+    size_t subCount = 0;
     foreach (s; subaccounts) {
-      auto envs = environmentRepo.findBySubaccount(s.id);
-      envCount += cast(int) envs.length;
-      auto subs = subscriptionRepo.findBySubaccount(s.id);
-      subCount += cast(int) subs.length;
+      auto envs = environmentRepo.findBySubaccount(tenantId, s.id);
+      envCount += envs.length;
+      auto subs = subscriptionRepo.findBySubaccount(tenantId, s.id);
+      subCount += subs.length;
     }
     ov.totalEnvironments = envCount;
     ov.totalSubscriptions = subCount;
 
-    auto events = eventRepo.findByGlobalAccount(globalAccountId);
+    auto events = eventRepo.findByGlobalAccount(tenantId, globalAccountId);
     ov.recentEventsCount = events.length;
 
     return ov;

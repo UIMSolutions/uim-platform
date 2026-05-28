@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// An environment instance represents a provisioned runtime environment
 /// (Cloud Foundry org, Kyma cluster, ABAP system, etc.) within a subaccount.
 struct EnvironmentInstance {
-  mixin GlobalEntity!(EnvironmentInstanceId);
+  mixin TenantEntity!EnvironmentInstanceId;
 
+  GlobalAccountId globalAccountId;
   EnvironmentInstanceId id;
   SubaccountId subaccountId;
   string name;
@@ -45,7 +46,7 @@ struct EnvironmentInstance {
     }
 
     return entityToJson
-      .set("id", id.value)
+      .set("globalAccountId", globalAccountId.value)
       .set("subaccountId", subaccountId.value)
       .set("name", name)
       .set("description", description)
@@ -56,7 +57,7 @@ struct EnvironmentInstance {
       .set("technicalKey", technicalKey)
       .set("dashboardUrl", dashboardUrl)
       .set("platformRegion", platformRegion)
-      .set("services", services)
+      .set("services", services.toJson())
       .set("memoryQuotaMb", memoryQuotaMb)
       .set("routeQuota", routeQuota)
       .set("serviceQuota", serviceQuota)

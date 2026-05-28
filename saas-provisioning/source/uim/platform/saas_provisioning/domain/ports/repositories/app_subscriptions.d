@@ -14,8 +14,8 @@ mixin(ShowModule!());
 /// Port: persistence contract for the AppSubscription aggregate root.
 interface AppSubscriptionRepository : ITenantRepository!(AppSubscription, AppSubscriptionId) {
     /// List all subscriptions to a specific application (provider view).
-    AppSubscription[] findByAppName(string tenantId, string appName);
+    AppSubscription[] findByAppName(TenantId tenantId, string appName);
 
     /// List all subscriptions for a specific consumer tenant (consumer view).
-    AppSubscription[] findBySubscriberTenant(string tenantId, string subscriberTenantId);
+    AppSubscription[] findBySubscriberTenant(TenantId tenantId, string subscriberTenantId);
 }

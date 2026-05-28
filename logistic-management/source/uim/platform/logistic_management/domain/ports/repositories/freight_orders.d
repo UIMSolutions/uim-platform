@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 interface FreightOrderRepository : ITenantRepository!(FreightOrder, FreightOrderId) {
-  FreightOrder[] findByStatus(string tenantId, FreightOrderStatus status);
-  FreightOrder[] findByCarrier(string tenantId, CarrierId carrierId);
-  FreightOrder[] findByOrderNumber(string tenantId, string orderNumber);
+  FreightOrder[] findByStatus(TenantId tenantId, FreightOrderStatus status);
+  FreightOrder[] findByCarrier(TenantId tenantId, CarrierId carrierId);
+  FreightOrder[] findByOrderNumber(TenantId tenantId, string orderNumber);
 }

@@ -51,7 +51,7 @@ struct UpdateFlowRequest {
   string[string] metadata;
 }
 struct DeployFlowRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string deployedBy;
 }
@@ -105,7 +105,7 @@ struct UpdateApiProductRequest {
 
 // --- Message Queues ---
 struct CreateQueueRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -117,7 +117,7 @@ struct CreateQueueRequest {
   string[string] metadata;
 }
 struct UpdateQueueRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string status;
   int    maxMessageSize;
@@ -128,7 +128,7 @@ struct UpdateQueueRequest {
 
 // --- Topic Subscriptions ---
 struct CreateSubscriptionRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string queueId;
@@ -138,12 +138,13 @@ struct CreateSubscriptionRequest {
   string[string] metadata;
 }
 struct UpdateSubscriptionRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string status;
   string topicPattern;
   string endpoint;
   string[string] metadata;
+  UserId updatedBy;
 }
 
 // --- Trading Partners ---
@@ -161,7 +162,7 @@ struct CreateTradingPartnerRequest {
   string[string] metadata;
 }
 struct UpdateTradingPartnerRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string contactEmail;
@@ -173,7 +174,7 @@ struct UpdateTradingPartnerRequest {
 
 // --- Message Mappings ---
 struct CreateMappingRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string packageId;
   string name;
@@ -187,7 +188,7 @@ struct CreateMappingRequest {
   string[string] metadata;
 }
 struct UpdateMappingRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -199,7 +200,7 @@ struct UpdateMappingRequest {
 
 // --- Integration Users ---
 struct CreateIntegrationUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string email;
   string firstName;
@@ -208,7 +209,7 @@ struct CreateIntegrationUserRequest {
   string externalUserId;
 }
 struct UpdateIntegrationUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string firstName;
   string lastName;

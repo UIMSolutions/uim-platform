@@ -22,18 +22,18 @@ class ManageDataProductSharesUseCase {
     return CommandResult(true, s.id.value, null);
   }
 
-  DataProductShare[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  DataProductShare[] listByAccount(string tenantId, string accountId) {
+  DataProductShare[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  DataProductShare[] listByAccount(TenantId tenantId, string accountId) {
     return repo.findByAccount(TenantId(tenantId), SnowflakeAccountId(accountId));
   }
-  DataProductShare[] listByConnector(string tenantId, string connectorId) {
+  DataProductShare[] listByConnector(TenantId tenantId, string connectorId) {
     return repo.findByConnector(TenantId(tenantId), ZerocopyConnectorId(connectorId));
   }
-  DataProductShare getById(string tenantId, string id) {
+  DataProductShare getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), DataProductShareId(id));
   }
 
-  CommandResult sync_(string tenantId, string id) {
+  CommandResult sync_(TenantId tenantId, string id) {
     auto s = repo.findById(TenantId(tenantId), DataProductShareId(id));
     if (s.isNull) return CommandResult(false, id, "Share not found");
     s.status = ShareStatus.syncing;
@@ -52,7 +52,7 @@ class ManageDataProductSharesUseCase {
     return CommandResult(true, s.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto s = repo.findById(TenantId(tenantId), DataProductShareId(id));
     if (s.isNull) return CommandResult(false, id, "Share not found");
     repo.remove(TenantId(tenantId), DataProductShareId(id));

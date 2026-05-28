@@ -11,18 +11,18 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexVersionRepository : ITenantRepository!(FlexVersion, FlexVersionId) {
-  bool existsById(string tenantId, FlexVersionId id);
-  FlexVersion findById(string tenantId, FlexVersionId id);
-  bool removeById(string tenantId, FlexVersionId id);
-  long countByTenant(string tenantId);
-  FlexVersion[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexVersionId id);
+  FlexVersion findById(TenantId tenantId, FlexVersionId id);
+  bool removeById(TenantId tenantId, FlexVersionId id);
+  long countByTenant(TenantId tenantId);
+  FlexVersion[] findByTenantAll(TenantId tenantId);
 
   /// All versions for an application, ordered by versionNumber desc
-  FlexVersion[] findByApp(string tenantId, string appId);
+  FlexVersion[] findByApp(TenantId tenantId, string appId);
 
   /// The currently active version for an application
-  FlexVersion findActiveByApp(string tenantId, string appId);
+  FlexVersion findActiveByApp(TenantId tenantId, string appId);
 
   /// Specific version by number
-  FlexVersion findByNumber(string tenantId, string appId, long versionNumber);
+  FlexVersion findByNumber(TenantId tenantId, string appId, long versionNumber);
 }

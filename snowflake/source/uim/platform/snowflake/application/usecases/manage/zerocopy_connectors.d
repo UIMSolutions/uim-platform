@@ -22,11 +22,11 @@ class ManageZerocopyConnectorsUseCase {
     return CommandResult(true, c.id.value, null);
   }
 
-  ZerocopyConnector[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  ZerocopyConnector[] listByAccount(string tenantId, string accountId) {
+  ZerocopyConnector[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  ZerocopyConnector[] listByAccount(TenantId tenantId, string accountId) {
     return repo.findByAccount(TenantId(tenantId), SnowflakeAccountId(accountId));
   }
-  ZerocopyConnector getById(string tenantId, string id) {
+  ZerocopyConnector getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), ZerocopyConnectorId(id));
   }
 
@@ -50,7 +50,7 @@ class ManageZerocopyConnectorsUseCase {
     return CommandResult(true, c.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto c = repo.findById(TenantId(tenantId), ZerocopyConnectorId(id));
     if (c.isNull) return CommandResult(false, id, "Connector not found");
     repo.remove(TenantId(tenantId), ZerocopyConnectorId(id));

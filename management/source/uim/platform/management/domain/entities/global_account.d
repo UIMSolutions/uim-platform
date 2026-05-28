@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// A global account is the top-level entity in the SAP BTP account model.
 /// It represents a contract with SAP and contains directories and subaccounts.
 struct GlobalAccount {
-  mixin IdEntity!GlobalAccountId;
+  mixin TenantEntity!GlobalAccountId;
   
   string displayName;
   string description;

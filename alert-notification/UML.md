@@ -33,7 +33,7 @@ classDiagram
 
     class AlertEvent {
         +AlertEventId id
-        +string tenantId
+        +TenantId tenantId
         +string eventType
         +EventCategory category
         +EventSeverity severity
@@ -50,7 +50,7 @@ classDiagram
 
     class Condition {
         +ConditionId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +PropertyKey propertyKey
@@ -64,7 +64,7 @@ classDiagram
 
     class Action {
         +ActionId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +ActionType type_
         +ResourceState state
@@ -77,7 +77,7 @@ classDiagram
 
     class Subscription {
         +SubscriptionId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string[] conditions
         +string[] actions
@@ -88,7 +88,7 @@ classDiagram
 
     class MatchedEvent {
         +MatchedEventId id
-        +string tenantId
+        +TenantId tenantId
         +string eventId
         +string subscriptionName
         +string actionName
@@ -99,7 +99,7 @@ classDiagram
 
     class UndeliveredEvent {
         +UndeliveredEventId id
-        +string tenantId
+        +TenantId tenantId
         +string eventId
         +string subscriptionName
         +string actionName

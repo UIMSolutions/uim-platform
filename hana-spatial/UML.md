@@ -49,7 +49,7 @@ graph TB
 classDiagram
     class GeocodingResult {
         +GeocodingResultId id
-        +string tenantId
+        +TenantId tenantId
         +string inputAddress
         +GeocodingType type
         +GeoCoordinate coordinate
@@ -64,7 +64,7 @@ classDiagram
 
     class Route {
         +RouteId id
-        +string tenantId
+        +TenantId tenantId
         +GeoCoordinate origin
         +GeoCoordinate destination
         +TravelMode travelMode
@@ -78,7 +78,7 @@ classDiagram
 
     class PointOfInterest {
         +PointOfInterestId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +string description
         +PoiCategory category
@@ -95,7 +95,7 @@ classDiagram
 
     class Isoline {
         +IsolineId id
-        +string tenantId
+        +TenantId tenantId
         +GeoCoordinate center
         +IsolineMode mode
         +double rangeValue
@@ -107,7 +107,7 @@ classDiagram
 
     class GeofenceZone {
         +GeofenceZoneId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +GeofenceShapeType shapeType
         +GeoCoordinate center
@@ -120,7 +120,7 @@ classDiagram
 
     class SpatialLayer {
         +SpatialLayerId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +SpatialLayerType type
         +string coordinateSystem
@@ -132,7 +132,7 @@ classDiagram
 
     class SpatialFeature {
         +SpatialFeatureId id
-        +string tenantId
+        +TenantId tenantId
         +SpatialLayerId layerId
         +string name
         +GeometryType geometryType
@@ -144,7 +144,7 @@ classDiagram
 
     class Provider {
         +ProviderId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +ProviderType type
         +ProviderStatus status
@@ -162,7 +162,7 @@ classDiagram
 
     class GeocodingJob {
         +GeocodingJobId id
-        +string tenantId
+        +TenantId tenantId
         +string name
         +SpatialJobStatus status
         +string providerId

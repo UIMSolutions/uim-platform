@@ -5,7 +5,7 @@
 ```mermaid
 classDiagram
   class TenantEntity~Id~ {
-    +string tenantId
+    +TenantId tenantId
     +Id id
   }
 

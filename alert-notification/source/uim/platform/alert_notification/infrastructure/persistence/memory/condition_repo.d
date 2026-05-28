@@ -15,7 +15,7 @@ class MemoryConditionRepository
     : TenantRepository!(Condition, ConditionId),
       ConditionRepository
 {
-    Condition findByName(string tenantId, string name) {
+    Condition findByName(TenantId tenantId, string name) {
         foreach (c; findAll(tenantId))
             if (c.name == name) return c;
         auto empty = new Condition();

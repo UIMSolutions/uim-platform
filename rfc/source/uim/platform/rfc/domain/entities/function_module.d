@@ -62,7 +62,7 @@ struct FunctionModule {
             .set("updatedAt",      updatedAt);
     }
 
-    static FunctionModule create(string id, string tenantId, string functionGroup, string shortText) {
+    static FunctionModule create(string id, TenantId tenantId, string functionGroup, string shortText) {
         import core.time : MonoTime;
         FunctionModule fm;
         fm.id            = id;

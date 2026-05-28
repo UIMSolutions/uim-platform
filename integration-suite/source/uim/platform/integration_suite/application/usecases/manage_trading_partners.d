@@ -29,14 +29,14 @@ public:
     return CommandResult(true, tp.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto tp = _repo.getById(getTenantId(tenantId), TradingPartnerId(id));
     if (tp.isNull) return CommandResult(false, "Trading partner not found");
     return CommandResult(true, tp.toJson());
@@ -55,7 +55,7 @@ public:
     return CommandResult(true, tp.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto tp = _repo.getById(getTenantId(tenantId), TradingPartnerId(id));
     if (tp.isNull) return CommandResult(false, "Trading partner not found");
     _repo.remove(getTenantId(tenantId), TradingPartnerId(id));

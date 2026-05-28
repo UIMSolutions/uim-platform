@@ -11,18 +11,18 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexApplicationRepository : ITenantRepository!(FlexApplication, FlexApplicationId) {
-  bool existsById(string tenantId, FlexApplicationId id);
-  FlexApplication findById(string tenantId, FlexApplicationId id);
-  bool removeById(string tenantId, FlexApplicationId id);
-  long countByTenant(string tenantId);
-  FlexApplication[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexApplicationId id);
+  FlexApplication findById(TenantId tenantId, FlexApplicationId id);
+  bool removeById(TenantId tenantId, FlexApplicationId id);
+  long countByTenant(TenantId tenantId);
+  FlexApplication[] findByTenantAll(TenantId tenantId);
 
   /// Find by application ID within a tenant
-  FlexApplication findByAppId(string tenantId, string appId);
+  FlexApplication findByAppId(TenantId tenantId, string appId);
 
   /// All active applications for a tenant
-  FlexApplication[] findActiveByTenant(string tenantId);
+  FlexApplication[] findActiveByTenant(TenantId tenantId);
 
   /// Find by namespace
-  FlexApplication[] findByNamespace(string tenantId, string namespace_);
+  FlexApplication[] findByNamespace(TenantId tenantId, string namespace_);
 }

@@ -23,20 +23,20 @@ class ManageAppSubscriptionsUseCase {
         this.engine  = engine;
     }
 
-    AppSubscription[] listForApp(string tenantId, string appName) {
+    AppSubscription[] listForApp(TenantId tenantId, string appName) {
         return subRepo.findByAppName(tenantId, appName);
     }
 
-    AppSubscription[] listAll(string tenantId) {
+    AppSubscription[] listAll(TenantId tenantId) {
         return subRepo.findByTenant(tenantId);
     }
 
-    AppSubscription getSubscription(string tenantId, AppSubscriptionId id) {
+    AppSubscription getSubscription(TenantId tenantId, AppSubscriptionId id) {
         return subRepo.findById(tenantId, id);
     }
 
     /// Subscribe a consumer tenant to an application via the SubscriptionEngine.
-    CommandResult subscribeConsumer(string tenantId, string appName, SubscribeRequest req) {
+    CommandResult subscribeConsumer(TenantId tenantId, string appName, SubscribeRequest req) {
         auto job = engine.beginSubscribe(tenantId, appName,
                                          req.subscriberTenantId,
                                          req.subdomain,
@@ -46,13 +46,13 @@ class ManageAppSubscriptionsUseCase {
     }
 
     /// Unsubscribe a consumer tenant from an application.
-    CommandResult unsubscribeConsumer(string tenantId, AppSubscriptionId id, string requestedBy) {
+    CommandResult unsubscribeConsumer(TenantId tenantId, AppSubscriptionId id, string requestedBy) {
         auto job = engine.beginUnsubscribe(tenantId, id.value, requestedBy);
         if (job.isNull) return CommandResult(false, "", "Subscription not found");
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult updateSubscription(string tenantId, AppSubscriptionId id,
+    CommandResult updateSubscription(TenantId tenantId, AppSubscriptionId id,
                                       UpdateSubscriptionRequest req) {
         auto sub = subRepo.findById(tenantId, id);
         if (sub.isNull) return CommandResult(false, "", "Subscription not found");

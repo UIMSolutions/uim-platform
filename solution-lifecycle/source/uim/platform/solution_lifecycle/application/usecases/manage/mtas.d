@@ -131,11 +131,11 @@ class ManageMtasUseCase {
     // ------------------------------------------------------------------
     // List / Get
     // ------------------------------------------------------------------
-    Mta[] listMtas(string tenantId) {
+    Mta[] listMtas(TenantId tenantId) {
         return mtaRepo.findByTenant(tenantId);
     }
 
-    Mta getMta(string tenantId, MtaId id) {
+    Mta getMta(TenantId tenantId, MtaId id) {
         auto mtas = mtaRepo.findByTenant(tenantId);
         foreach (m; mtas)
             if (m.id.value == id.value) return m;

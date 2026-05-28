@@ -16,28 +16,28 @@ class MemoryDevSpaceRepository : DevSpaceRepository {
 
   override void save(DevSpace entity)             { _store[entity.id.value] = entity; }
   override void update(DevSpace entity)           { _store[entity.id.value] = entity; }
-  override void remove(string tenantId, DevSpaceId id) { _store.remove(id.value); }
+  override void remove(TenantId tenantId, DevSpaceId id) { _store.remove(id.value); }
 
-  override DevSpace findById(string tenantId, DevSpaceId id) {
+  override DevSpace findById(TenantId tenantId, DevSpaceId id) {
     if (id.value in _store) return _store[id.value];
     DevSpace ds; return ds;
   }
 
-  override DevSpace[] findByTenant(string tenantId) {
+  override DevSpace[] findByTenant(TenantId tenantId) {
     DevSpace[] result;
     foreach (ds; _store.byValue)
       if (ds.tenantId == tenantId) result ~= ds;
     return result;
   }
 
-  override DevSpace[] findByProject(string tenantId, string projectId) {
+  override DevSpace[] findByProject(TenantId tenantId, string projectId) {
     DevSpace[] result;
     foreach (ds; _store.byValue)
       if (ds.tenantId == tenantId && ds.projectId.value == projectId) result ~= ds;
     return result;
   }
 
-  override DevSpace[] findByStatus(string tenantId, DevSpaceStatus status) {
+  override DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {
     DevSpace[] result;
     foreach (ds; _store.byValue)
       if (ds.tenantId == tenantId && ds.status == status) result ~= ds;

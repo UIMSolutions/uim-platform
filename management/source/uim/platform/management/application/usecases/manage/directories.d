@@ -23,7 +23,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDirectory(CreateDirectoryRequest request) {
-    if (request.globalAccountId.isEmpty)
+    if (request.accountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (request.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
@@ -33,8 +33,8 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  CommandResult updateDirectory(DirectoryId id, UpdateDirectoryRequest request) {
-    auto directory = directories.findById(tenantId, id);
+  CommandResult updateDirectory(UpdateDirectoryRequest request) {
+    auto directory = directories.findById(request.tenantId, request.directoryId);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
 
@@ -52,19 +52,19 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, directory.id.value, "");
   }
 
-  Directory getDirectoryById(DirectoryId id) {
+  Directory getDirectory(TenantId tenantId, DirectoryId id) {
     return directories.findById(tenantId, id);
   }
 
-  Directory[] listDirectoriesByGlobalAccount(GlobalAccountId gaId) {
-    return directories.findByGlobalAccount(gaId);
+  Directory[] listDirectories(TenantId tenantId, GlobalAccountId gaId) {
+    return directories.findByGlobalAccount(tenantId, gaId);
   }
 
-  Directory[] listDirectories(DirectoryId parentId) {
-    return directories.findByParent(parentId);
+  Directory[] listDirectories(TenantId tenantId, DirectoryId parentId) {
+    return directories.findByParent(tenantId, parentId);
   }
 
-  CommandResult deleteDirectory(DirectoryId id) {
+  CommandResult deleteDirectory(TenantId tenantId, DirectoryId id) {
     auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
@@ -77,7 +77,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {
-    return features.map!(f => f.to!DirectoryFeature).array.toJson;
+    return features.map!(f => f.to!DirectoryFeature).array;
   }
 
 }

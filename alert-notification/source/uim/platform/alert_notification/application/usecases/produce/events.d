@@ -40,7 +40,7 @@ class ProduceEventsUseCase {
         this.dispatcher       = dispatcher;
     }
 
-    CommandResult postEvent(string tenantId, PostAlertEventRequest req) {
+    CommandResult postEvent(TenantId tenantId, PostAlertEventRequest req) {
         import std.conv  : to;
         import std.uuid  : randomUUID;
         import std.datetime.systime : Clock;

@@ -10,8 +10,8 @@ mixin(ShowModule!());
 
 @safe:
 interface WarehouseOrderRepository : ITenantRepository!(WarehouseOrder, WarehouseOrderId) {
-  WarehouseOrder[] findByDelivery(string tenantId, DeliveryId deliveryId);
-  WarehouseOrder[] findByStatus(string tenantId, WarehouseOrderStatus status);
-  WarehouseOrder[] findByWarehouse(string tenantId, string warehouseId);
-  void removeByDelivery(string tenantId, DeliveryId deliveryId);
+  WarehouseOrder[] findByDelivery(TenantId tenantId, DeliveryId deliveryId);
+  WarehouseOrder[] findByStatus(TenantId tenantId, WarehouseOrderStatus status);
+  WarehouseOrder[] findByWarehouse(TenantId tenantId, string warehouseId);
+  void removeByDelivery(TenantId tenantId, DeliveryId deliveryId);
 }

@@ -21,7 +21,7 @@ class EvaluationCliCommand {
     }
 
     /// Evaluate a single flag and print the result.
-    void evaluate(string tenantId, string instanceId, string flagName,
+    void evaluate(TenantId tenantId, string instanceId, string flagName,
                   string userId = "", string[string] attributes = null) @safe {
         EvaluationRequest req;
         req.flagName   = flagName;
@@ -35,7 +35,7 @@ class EvaluationCliCommand {
     }
 
     /// Evaluate all flags in an instance and print results.
-    void evaluateAll(string tenantId, string instanceId,
+    void evaluateAll(TenantId tenantId, string instanceId,
                      string userId = "", string[string] attributes = null) @safe {
         BulkEvaluationRequest req;
         req.instanceId = instanceId;

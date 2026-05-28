@@ -10,9 +10,9 @@ mixin(ShowModule!());
 
 @safe:
 interface WarehouseTaskRepository : ITenantRepository!(WarehouseTask, WarehouseTaskId) {
-  WarehouseTask[] findByWarehouseOrder(string tenantId, WarehouseOrderId orderId);
-  WarehouseTask[] findByStatus(string tenantId, WarehouseTaskStatus status);
-  WarehouseTask[] findByTaskType(string tenantId, WarehouseTaskType taskType);
-  WarehouseTask[] findByAssignee(string tenantId, string assignedTo);
-  void removeByWarehouseOrder(string tenantId, WarehouseOrderId orderId);
+  WarehouseTask[] findByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId);
+  WarehouseTask[] findByStatus(TenantId tenantId, WarehouseTaskStatus status);
+  WarehouseTask[] findByTaskType(TenantId tenantId, WarehouseTaskType taskType);
+  WarehouseTask[] findByAssignee(TenantId tenantId, string assignedTo);
+  void removeByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId);
 }

@@ -17,7 +17,7 @@ final class TaskGuiModel {
 
     void delegate() @safe onChanged;
 
-    this(ManageTasksUseCase useCase, string tenantId, string assigneeId = "") {
+    this(ManageTasksUseCase useCase, TenantId tenantId, string assigneeId = "") {
         _useCase    = useCase;
         _tenantId   = tenantId;
         _assigneeId = assigneeId;

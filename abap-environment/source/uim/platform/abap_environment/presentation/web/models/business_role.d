@@ -12,7 +12,7 @@ class BusinessRoleViewModel {
   string name;
   string description;
   string roleType;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
   string[] restrictionTypes;
 }

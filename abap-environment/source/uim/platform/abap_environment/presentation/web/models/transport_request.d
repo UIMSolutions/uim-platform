@@ -13,6 +13,6 @@ class TransportRequestViewModel {
   string description;
   string status;
   string category;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

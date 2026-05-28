@@ -12,19 +12,19 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryWarehouseOrderRepository : TenantRepository!(WarehouseOrder, WarehouseOrderId), WarehouseOrderRepository {
-  override WarehouseOrder[] findByDelivery(string tenantId, DeliveryId deliveryId) {
+  override WarehouseOrder[] findByDelivery(TenantId tenantId, DeliveryId deliveryId) {
     return findAll(tenantId).filter!(wo => wo.deliveryId.value == deliveryId.value).array;
   }
 
-  override WarehouseOrder[] findByStatus(string tenantId, WarehouseOrderStatus status) {
+  override WarehouseOrder[] findByStatus(TenantId tenantId, WarehouseOrderStatus status) {
     return findAll(tenantId).filter!(wo => wo.status == status).array;
   }
 
-  override WarehouseOrder[] findByWarehouse(string tenantId, string warehouseId) {
+  override WarehouseOrder[] findByWarehouse(TenantId tenantId, string warehouseId) {
     return findAll(tenantId).filter!(wo => wo.warehouseId == warehouseId).array;
   }
 
-  override void removeByDelivery(string tenantId, DeliveryId deliveryId) {
+  override void removeByDelivery(TenantId tenantId, DeliveryId deliveryId) {
     auto toRemove = findByDelivery(tenantId, deliveryId);
     toRemove.each!(wo => remove(tenantId, wo.id));
   }

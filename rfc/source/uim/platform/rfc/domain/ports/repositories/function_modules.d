@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 
 interface FunctionModuleRepository {
-    FunctionModule   findById(string tenantId, FunctionModuleId id);
-    FunctionModule[] findByTenant(string tenantId);
-    FunctionModule[] findByFunctionGroup(string tenantId, string functionGroup);
+    FunctionModule   findById(TenantId tenantId, FunctionModuleId id);
+    FunctionModule[] findByTenant(TenantId tenantId);
+    FunctionModule[] findByFunctionGroup(TenantId tenantId, string functionGroup);
     bool             save(FunctionModule fm);
     bool             update(FunctionModule fm);
-    bool             remove(string tenantId, FunctionModuleId id);
-    size_t           countByTenant(string tenantId);
+    bool             remove(TenantId tenantId, FunctionModuleId id);
+    size_t           countByTenant(TenantId tenantId);
 }

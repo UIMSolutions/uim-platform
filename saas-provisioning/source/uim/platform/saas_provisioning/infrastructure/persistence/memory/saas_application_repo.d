@@ -16,7 +16,7 @@ class MemorySaasApplicationRepository
     : TenantRepository!(SaasApplication, SaasApplicationId),
       SaasApplicationRepository
 {
-    SaasApplication findByAppName(string tenantId, string appName) {
+    SaasApplication findByAppName(TenantId tenantId, string appName) {
         foreach (app; findByTenant(tenantId)) {
             if (app.appName == appName) return app;
         }

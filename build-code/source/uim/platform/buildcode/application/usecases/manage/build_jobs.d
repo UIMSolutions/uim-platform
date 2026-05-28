@@ -22,7 +22,7 @@ class ManageBuildJobsUseCase {
     _pipelineRepo = pipelineRepo;
   }
 
-  CommandResult trigger(string tenantId, TriggerBuildRequest req) {
+  CommandResult trigger(TenantId tenantId, TriggerBuildRequest req) {
     auto pipeline = _pipelineRepo.findById(tenantId, PipelineId(req.pipelineId));
     if (pipeline.isNull)
       return CommandResult(false, "", "Pipeline not found");
@@ -44,23 +44,23 @@ class ManageBuildJobsUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  BuildJob getById(string tenantId, string id) {
+  BuildJob getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, BuildJobId(id));
   }
 
-  BuildJob[] list(string tenantId) {
+  BuildJob[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  BuildJob[] listByPipeline(string tenantId, string pipelineId) {
+  BuildJob[] listByPipeline(TenantId tenantId, string pipelineId) {
     return _repo.findByPipeline(tenantId, pipelineId);
   }
 
-  BuildJob[] listByProject(string tenantId, string projectId) {
+  BuildJob[] listByProject(TenantId tenantId, string projectId) {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult updateStatus(string tenantId, string id, string statusStr) {
+  CommandResult updateStatus(TenantId tenantId, string id, string statusStr) {
     auto job = _repo.findById(tenantId, BuildJobId(id));
     if (job.isNull) return CommandResult(false, "", "Build job not found");
     static foreach (member; __traits(allMembers, JobStatus)) {

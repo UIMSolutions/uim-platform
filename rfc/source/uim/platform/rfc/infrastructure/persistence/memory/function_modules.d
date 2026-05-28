@@ -14,17 +14,17 @@ class MemoryFunctionModuleRepository : FunctionModuleRepository {
 
     private FunctionModule[string] _store;
 
-    private static string _key(string tenantId, FunctionModuleId id) {
+    private static string _key(TenantId tenantId, FunctionModuleId id) {
         return tenantId ~ "|" ~ id;
     }
 
-    override FunctionModule findById(string tenantId, FunctionModuleId id) {
+    override FunctionModule findById(TenantId tenantId, FunctionModuleId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return FunctionModule.init;
         return _store[key];
     }
 
-    override FunctionModule[] findByTenant(string tenantId) {
+    override FunctionModule[] findByTenant(TenantId tenantId) {
         FunctionModule[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) {
@@ -42,7 +42,7 @@ class MemoryFunctionModuleRepository : FunctionModuleRepository {
         return result;
     }
 
-    override FunctionModule[] findByFunctionGroup(string tenantId, string functionGroup) {
+    override FunctionModule[] findByFunctionGroup(TenantId tenantId, string functionGroup) {
         FunctionModule[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.functionGroup == functionGroup) {
@@ -74,14 +74,14 @@ class MemoryFunctionModuleRepository : FunctionModuleRepository {
         return true;
     }
 
-    override bool remove(string tenantId, FunctionModuleId id) {
+    override bool remove(TenantId tenantId, FunctionModuleId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return false;
         _store.remove(key);
         return true;
     }
 
-    override size_t countByTenant(string tenantId) {
+    override size_t countByTenant(TenantId tenantId) {
         size_t n = 0;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) n++;

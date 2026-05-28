@@ -120,7 +120,7 @@ private:
         writeln("  exit  — quit");
     }
 
-    void _doCall(ref Container c, string tenantId, string dest, string fm, string rfcTypeStr) @trusted {
+    void _doCall(ref Container c, TenantId tenantId, string dest, string fm, string rfcTypeStr) @trusted {
         import std.stdio : writeln;
         import std.conv  : to;
 
@@ -151,7 +151,7 @@ private:
         }
     }
 
-    void _listDestinations(ref Container c, string tenantId) @trusted {
+    void _listDestinations(ref Container c, TenantId tenantId) @trusted {
         import std.stdio : writeln;
         auto dests = c.manageDestinations.listDestinations(tenantId);
         if (dests.length == 0) { writeln("  No destinations registered."); return; }
@@ -159,7 +159,7 @@ private:
             writeln("  [" ~ (d.active ? "ON " : "OFF") ~ "] " ~ d.id ~ "\t" ~ d.host);
     }
 
-    void _listFunctions(ref Container c, string tenantId) @trusted {
+    void _listFunctions(ref Container c, TenantId tenantId) @trusted {
         import std.stdio : writeln;
         auto fms = c.manageFunctionModules.listFunctionModules(tenantId);
         if (fms.length == 0) { writeln("  No function modules registered."); return; }
@@ -167,7 +167,7 @@ private:
             writeln("  " ~ f.id ~ "\t" ~ f.functionGroup ~ "\t" ~ f.shortText);
     }
 
-    void _showStatus(ref Container c, string tenantId, string callId) @trusted {
+    void _showStatus(ref Container c, TenantId tenantId, string callId) @trusted {
         import std.stdio : writeln;
         import std.conv  : to;
         auto call = c.manageCalls.getCall(tenantId, callId);
@@ -181,7 +181,7 @@ private:
         if (call.errorMessage.length > 0) writeln("  Error     : " ~ call.errorMessage);
     }
 
-    void _addDestination(ref Container c, string tenantId, string id, string host, string ctStr) @trusted {
+    void _addDestination(ref Container c, TenantId tenantId, string id, string host, string ctStr) @trusted {
         import std.stdio : writeln;
         ConnectionType ct;
         switch (ctStr) {

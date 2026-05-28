@@ -120,7 +120,7 @@ class CommandController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Command updated successfully", "Updated", 200, responseData);
     }
 
@@ -140,7 +140,7 @@ class CommandController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Command deleted successfully", "Deleted", 200, responseData);
     }
 }

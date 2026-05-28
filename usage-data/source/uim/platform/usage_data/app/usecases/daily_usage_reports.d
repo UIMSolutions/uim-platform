@@ -18,7 +18,7 @@ class DailyUsageReportUseCases {
   }
 
   DailyUsageReportResponse createReport(CreateDailyUsageReportRequest req) {
-    auto report = DailyUsageReport.create(req.globalAccountId, req.subaccountId,
+    auto report = DailyUsageReport.create(req.accountId, req.subaccountId,
       req.reportYear, req.reportMonth, req.reportDay);
     repo.save(report);
     return DailyUsageReportResponse.fromEntity(report);

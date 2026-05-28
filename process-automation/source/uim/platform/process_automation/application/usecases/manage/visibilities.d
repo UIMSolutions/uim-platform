@@ -48,10 +48,10 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateVisibility(UpdateVisibilityRequest r) {
-        if (!repo.existsById(r.tenantId, r.visibilityId))
+        auto existing = repo.findById(r.tenantId, r.visibilityId);
+        if (existing.isNull)
             return CommandResult(false, "", "Visibility dashboard not found");
 
-        auto existing = repo.findById(r.tenantId, r.visibilityId);
         existing.name = r.name;
         existing.description = r.description;
         existing.refreshIntervalSeconds = r.refreshIntervalSeconds;

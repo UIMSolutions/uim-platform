@@ -27,7 +27,7 @@ class WorkZoneAppController {
     this(ManageWorkspacesUseCase workspacesUC,
          ManageWorkpagesUseCase  workpagesUC,
          ManageTasksUseCase      tasksUC,
-         string tenantId) {
+         TenantId tenantId) {
         _workspaceModel = new WorkspaceGuiModel(workspacesUC, tenantId);
         _workpageModel  = new WorkpageGuiModel(workpagesUC, tenantId, "");
         _taskModel      = new TaskGuiModel(tasksUC, tenantId);

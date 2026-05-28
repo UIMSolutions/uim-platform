@@ -32,7 +32,7 @@ class DeploymentEngine {
     }
 
     /// Simulate beginning an async deploy operation.
-    DeploymentResult beginDeploy(string archiveId, string mtaId, string mtaVersion, string tenantId) {
+    DeploymentResult beginDeploy(string archiveId, string mtaId, string mtaVersion, TenantId tenantId) {
         import std.conv : to;
         import core.time : MonoTime;
         auto opId = "op-" ~ tenantId[0 .. (tenantId.length > 8 ? 8 : $)]
@@ -41,7 +41,7 @@ class DeploymentEngine {
     }
 
     /// Simulate beginning an async update operation.
-    DeploymentResult beginUpdate(string archiveId, string existingMtaId, string tenantId) {
+    DeploymentResult beginUpdate(string archiveId, string existingMtaId, TenantId tenantId) {
         import std.conv : to;
         import core.time : MonoTime;
         auto opId = "op-upd-" ~ MonoTime.currTime.ticks.to!string;
@@ -49,7 +49,7 @@ class DeploymentEngine {
     }
 
     /// Simulate beginning an async delete operation.
-    DeploymentResult beginDelete(string mtaId, string tenantId) {
+    DeploymentResult beginDelete(string mtaId, TenantId tenantId) {
         import std.conv : to;
         import core.time : MonoTime;
         auto opId = "op-del-" ~ MonoTime.currTime.ticks.to!string;
@@ -65,7 +65,7 @@ class DeploymentEngine {
     }
 
     /// Simulate beginning an unsubscribe operation.
-    DeploymentResult beginUnsubscribe(string subscriptionId, string tenantId) {
+    DeploymentResult beginUnsubscribe(string subscriptionId, TenantId tenantId) {
         import std.conv : to;
         import core.time : MonoTime;
         auto opId = "op-unsub-" ~ MonoTime.currTime.ticks.to!string;

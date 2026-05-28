@@ -28,14 +28,14 @@ public:
     return CommandResult(true, prod.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
     if (prod.isNull) return CommandResult(false, "API product not found");
     return CommandResult(true, prod.toJson());
@@ -56,7 +56,7 @@ public:
     return CommandResult(true, prod.toJson());
   }
 
-  CommandResult publish(string tenantId, string id) {
+  CommandResult publish(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
     if (prod.isNull) return CommandResult(false, "API product not found");
     prod.status   = ApiProxyStatus.published;
@@ -65,7 +65,7 @@ public:
     return CommandResult(true, prod.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
     if (prod.isNull) return CommandResult(false, "API product not found");
     _repo.remove(getTenantId(tenantId), ApiProductId(id));

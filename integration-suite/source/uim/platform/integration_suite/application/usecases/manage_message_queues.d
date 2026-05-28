@@ -29,14 +29,14 @@ public:
     return CommandResult(true, q.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (q; items) arr ~= q.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto q = _repo.getById(getTenantId(tenantId), MessageQueueId(id));
     if (q.isNull) return CommandResult(false, "Queue not found");
     return CommandResult(true, q.toJson());
@@ -54,7 +54,7 @@ public:
     return CommandResult(true, q.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto q = _repo.getById(getTenantId(tenantId), MessageQueueId(id));
     if (q.isNull) return CommandResult(false, "Queue not found");
     _repo.remove(getTenantId(tenantId), MessageQueueId(id));

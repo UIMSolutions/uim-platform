@@ -61,7 +61,7 @@ class MemoryFeatureFlagRepository : FeatureFlagRepository {
         return findByInstance(tenantId, instanceId).length;
     }
 
-    private string key(string tenantId, string id) const {
+    private string key(TenantId tenantId, string id) const {
         return tenantId ~ ":" ~ id;
     }
 }

@@ -16,7 +16,7 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct UploadMtaArchiveRequest {
-    string tenantId;
+    TenantId tenantId;
     string fileName;
     string mtaId;
     string mtaVersion;
@@ -32,7 +32,7 @@ struct UploadMtaArchiveRequest {
 // ---------------------------------------------------------------------------
 
 struct DeployMtaRequest {
-    string tenantId;
+    TenantId tenantId;
     string archiveId;        /// ID of a previously uploaded MtaArchive
     string solutionType;     /// "standard" | "provided" | "subscribed"
     string spaceId;
@@ -42,7 +42,7 @@ struct DeployMtaRequest {
 }
 
 struct UpdateMtaRequest {
-    string tenantId;
+    TenantId tenantId;
     string mtaId;            /// Deployed MTA ID to update
     string archiveId;        /// New archive to deploy
     string extensionDescriptor;
@@ -50,7 +50,7 @@ struct UpdateMtaRequest {
 }
 
 struct DeleteMtaRequest {
-    string tenantId;
+    TenantId tenantId;
     string mtaId;
     string deletedBy;
 }
@@ -60,7 +60,7 @@ struct DeleteMtaRequest {
 // ---------------------------------------------------------------------------
 
 struct AbortOperationRequest {
-    string tenantId;
+    TenantId tenantId;
     string operationId;
     string abortedBy;
 }
@@ -70,7 +70,7 @@ struct AbortOperationRequest {
 // ---------------------------------------------------------------------------
 
 struct SubscribeMtaRequest {
-    string tenantId;           /// Subscriber tenant
+    TenantId tenantId;           /// Subscriber tenant
     string providerMtaId;      /// MTA ID provided by provider
     string providerTenantId;
     string providerSpaceId;
@@ -79,7 +79,7 @@ struct SubscribeMtaRequest {
 }
 
 struct UnsubscribeMtaRequest {
-    string tenantId;
+    TenantId tenantId;
     string subscriptionId;
     string unsubscribedBy;
 }

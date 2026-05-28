@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// A service plan represents an available service offering in the
 /// BTP service marketplace with its pricing and capabilities.
 struct ServicePlan {
-  mixin IdEntity!ServicePlanId;
+  mixin TenantEntity!ServicePlanId;
 
   string serviceName; // e.g. "xsuaa", "hana-cloud", "connectivity"
   string serviceDisplayName;
@@ -35,6 +35,11 @@ struct ServicePlan {
   string[string] metadata;
 
   Json toJson() const {
+    auto jMetadata = Json.emptyObject;
+    foreach (key, value; metadata) {
+      jMetadata.set(key, value);
+    }
+
     return entityToJson
       .set("serviceName", serviceName)
       .set("serviceDisplayName", serviceDisplayName)
@@ -45,14 +50,14 @@ struct ServicePlan {
       .set("pricingModel", pricingModel.to!string())
       .set("isFree", isFree)
       .set("isBeta", isBeta)
-      .set("availableRegions", availableRegions)
+      .set("availableRegions", availableRegions.toJson)
       .set("maxQuota", maxQuota)
       .set("unit", unit)
-      .set("supportedPlatforms", supportedPlatforms)
+      .set("supportedPlatforms", supportedPlatforms.toJson)
       .set("providerDisplayName", providerDisplayName)
       .set("dataCenter", dataCenter)
       .set("catalogUrl", catalogUrl)
       .set("provisionable", provisionable)
-      .set("metadata", metadata.toJson);
+      .set("metadata", jMetadata);
   }
 }

@@ -31,20 +31,20 @@ public:
     return CommandResult(true, m.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (m; items) arr ~= m.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto m = _repo.getById(getTenantId(tenantId), MessageMappingId(id));
     if (m.isNull) return CommandResult(false, "Mapping not found");
     return CommandResult(true, m.toJson());
   }
 
-  CommandResult listByPackage(string tenantId, string packageId) {
+  CommandResult listByPackage(TenantId tenantId, string packageId) {
     auto items = _repo.findByPackage(getTenantId(tenantId), IntegrationPackageId(packageId));
     auto arr = Json.emptyArray;
     foreach (m; items) arr ~= m.toJson();
@@ -64,7 +64,7 @@ public:
     return CommandResult(true, m.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto m = _repo.getById(getTenantId(tenantId), MessageMappingId(id));
     if (m.isNull) return CommandResult(false, "Mapping not found");
     _repo.remove(getTenantId(tenantId), MessageMappingId(id));

@@ -49,7 +49,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
         return findByTenant(tenantId).length;
     }
 
-    private string key(string tenantId, string id) const {
+    private string key(TenantId tenantId, string id) const {
         return tenantId ~ ":" ~ id;
     }
 }

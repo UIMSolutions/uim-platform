@@ -123,7 +123,7 @@ class RetentionController : ManageController {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError) return precheck;
 
-    useCase.deletePolicy(precheck.tenantId, RetentionPolicyId(precheck.id));
+    useCase.deletePolicy(precheck.tenantId, RetentionPolicyId(precheck.id);
     return successResponse("Retention policy deleted successfully", 200, 
       Json.emptyObject.set("status", "deleted"));
   }

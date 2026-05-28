@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management.presentation.http.controllers.overview;
 
-
 // 
 // import uim.platform.management.application.usecases.get_account_overview;
 // import uim.platform.management.application.dto;
@@ -26,17 +25,19 @@ class OverviewController : PlatformController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  override protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto gaId = req.params.get("globalAccountId");
-      if (gaId.isEmpty) {
-        writeError(res, 400, "globalAccountId query parameter is required");
-        return;
-      }
+  protected Json getOverviewHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto ov = usecase.getOverview(gaId);
+    TenantId tenantId = precheck.tenantId;
+    auto gaId = req.params.get("globalAccountId");
+    if (gaId.isEmpty)
+      return errorResponse("globalAccountId query parameter is required", 400);
 
-      auto j = Json.emptyObject
+    auto ov = usecase.getOverview(tenantId, GlobalAccountId(gaId));
+
+    auto j = Json.emptyObject
       .set("totalSubaccounts", ov.totalSubaccounts)
       .set("activeSubaccounts", ov.activeSubaccounts)
       .set("totalDirectories", ov.totalDirectories)
@@ -45,9 +46,14 @@ class OverviewController : PlatformController {
       .set("totalSubscriptions", ov.totalSubscriptions)
       .set("recentEventsCount", ov.recentEventsCount);
 
-      res.writeJsonBody(j, 200);
-    }
-    catch (Exception e)
+    return successResponse("Account overview retrieved successfully", "Retrieved", 200, j);
+  }
+
+  protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getOverviewHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }

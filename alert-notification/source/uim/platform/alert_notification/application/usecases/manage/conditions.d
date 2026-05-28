@@ -16,7 +16,7 @@ class ManageConditionsUseCase {
 
     this(ConditionRepository repo) { this.repo = repo; }
 
-    CommandResult createCondition(string tenantId, CreateConditionRequest req) {
+    CommandResult createCondition(TenantId tenantId, CreateConditionRequest req) {
         import std.conv : to;
         import std.uuid : randomUUID;
 
@@ -39,21 +39,21 @@ class ManageConditionsUseCase {
         return CommandResult(true, cond.toJson().toString());
     }
 
-    QueryResult getCondition(string tenantId, string id) {
+    QueryResult getCondition(TenantId tenantId, string id) {
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond is null || cond.isNull())
             return QueryResult(false, "Condition not found", Json.emptyObject);
         return QueryResult(true, "", cond.toJson());
     }
 
-    QueryResult listConditions(string tenantId) {
+    QueryResult listConditions(TenantId tenantId) {
         auto items = repo.findAll(tenantId);
         auto arr   = Json.emptyArray;
         foreach (c; items) arr ~= c.toJson();
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateCondition(string tenantId, string id, UpdateConditionRequest req) {
+    CommandResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req) {
         import std.conv : to;
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond is null || cond.isNull())
@@ -70,7 +70,7 @@ class ManageConditionsUseCase {
         return CommandResult(true, cond.toJson().toString());
     }
 
-    CommandResult deleteCondition(string tenantId, string id) {
+    CommandResult deleteCondition(TenantId tenantId, string id) {
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond is null || cond.isNull())
             return CommandResult(false, "Condition not found");

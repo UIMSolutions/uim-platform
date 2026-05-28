@@ -11,21 +11,21 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexVariantRepository : ITenantRepository!(FlexVariant, FlexVariantId) {
-  bool existsById(string tenantId, FlexVariantId id);
-  FlexVariant findById(string tenantId, FlexVariantId id);
-  bool removeById(string tenantId, FlexVariantId id);
-  long countByTenant(string tenantId);
-  FlexVariant[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexVariantId id);
+  FlexVariant findById(TenantId tenantId, FlexVariantId id);
+  bool removeById(TenantId tenantId, FlexVariantId id);
+  long countByTenant(TenantId tenantId);
+  FlexVariant[] findByTenantAll(TenantId tenantId);
 
   /// All variants for an application
-  FlexVariant[] findByApp(string tenantId, string appId);
+  FlexVariant[] findByApp(TenantId tenantId, string appId);
 
   /// Variants of a specific type (filterBar, table, chart)
-  FlexVariant[] findByType(string tenantId, string appId, VariantType variantType);
+  FlexVariant[] findByType(TenantId tenantId, string appId, VariantType variantType);
 
   /// Public/shared variants
-  FlexVariant[] findPublicByApp(string tenantId, string appId);
+  FlexVariant[] findPublicByApp(TenantId tenantId, string appId);
 
   /// Default variant for a given app + type combination
-  FlexVariant findDefaultByApp(string tenantId, string appId, VariantType variantType);
+  FlexVariant findDefaultByApp(TenantId tenantId, string appId, VariantType variantType);
 }

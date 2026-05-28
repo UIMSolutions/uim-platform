@@ -22,51 +22,51 @@ class MongoFlexChangeRepository : FlexChangeRepository {
     delegate_ = new MemoryFlexChangeRepository();
   }
 
-  FlexChangeId save(string tenantId, FlexChange c) {
+  FlexChangeId save(TenantId tenantId, FlexChange c) {
     return delegate_.save(tenantId, c);
   }
 
-  bool update(string tenantId, FlexChange c) {
+  bool update(TenantId tenantId, FlexChange c) {
     return delegate_.update(tenantId, c);
   }
 
-  bool remove(string tenantId, FlexChangeId id) {
+  bool remove(TenantId tenantId, FlexChangeId id) {
     return delegate_.remove(tenantId, id);
   }
 
-  FlexChange[] findByTenant(string tenantId) {
+  FlexChange[] findByTenant(TenantId tenantId) {
     return delegate_.findByTenant(tenantId);
   }
 
-  bool existsById(string tenantId, FlexChangeId id) {
+  bool existsById(TenantId tenantId, FlexChangeId id) {
     return delegate_.existsById(tenantId, id);
   }
 
-  FlexChange findById(string tenantId, FlexChangeId id) {
+  FlexChange findById(TenantId tenantId, FlexChangeId id) {
     return delegate_.findById(tenantId, id);
   }
 
-  bool removeById(string tenantId, FlexChangeId id) {
+  bool removeById(TenantId tenantId, FlexChangeId id) {
     return delegate_.removeById(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return delegate_.countByTenant(tenantId);
   }
 
-  FlexChange[] findByTenantAll(string tenantId) {
+  FlexChange[] findByTenantAll(TenantId tenantId) {
     return delegate_.findByTenantAll(tenantId);
   }
 
-  FlexChange[] findByApp(string tenantId, string appId) {
+  FlexChange[] findByApp(TenantId tenantId, string appId) {
     return delegate_.findByApp(tenantId, appId);
   }
 
-  FlexChange[] findByLayer(string tenantId, string appId, ChangeLayer layer) {
+  FlexChange[] findByLayer(TenantId tenantId, string appId, ChangeLayer layer) {
     return delegate_.findByLayer(tenantId, appId, layer);
   }
 
-  FlexChange[] findByChangeType(string tenantId, string appId, ChangeType changeType) {
+  FlexChange[] findByChangeType(TenantId tenantId, string appId, ChangeType changeType) {
     return delegate_.findByChangeType(tenantId, appId, changeType);
   }
 }

@@ -21,19 +21,19 @@ class ManageSaasApplicationsUseCase {
         this.repo = repo;
     }
 
-    SaasApplication[] listApplications(string tenantId) {
+    SaasApplication[] listApplications(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    SaasApplication getApplication(string tenantId, SaasApplicationId id) {
+    SaasApplication getApplication(TenantId tenantId, SaasApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
-    SaasApplication getApplicationByName(string tenantId, string appName) {
+    SaasApplication getApplicationByName(TenantId tenantId, string appName) {
         return repo.findByAppName(tenantId, appName);
     }
 
-    CommandResult registerApplication(string tenantId, RegisterAppRequest req) {
+    CommandResult registerApplication(TenantId tenantId, RegisterAppRequest req) {
         long   now   = MonoTime.currTime.ticks;
         string newId = now.to!string ~ "-app-" ~ req.appName;
 
@@ -46,7 +46,7 @@ class ManageSaasApplicationsUseCase {
         app.category                    = req.category;
         app.appUrls                     = req.appUrls;
         app.providerSubaccountId        = req.providerSubaccountId;
-        app.globalAccountId             = req.globalAccountId;
+        app.globalAccountId             = req.accountId;
         app.xsuaaServiceInstanceId      = req.xsuaaServiceInstanceId;
         app.plan                        = req.plan;
         app.autoSubscribeGlobalAccounts = req.autoSubscribeGlobalAccounts;
@@ -59,7 +59,7 @@ class ManageSaasApplicationsUseCase {
         return CommandResult(true, newId, "");
     }
 
-    CommandResult updateApplication(string tenantId, SaasApplicationId id, UpdateAppRequest req) {
+    CommandResult updateApplication(TenantId tenantId, SaasApplicationId id, UpdateAppRequest req) {
         auto app = repo.findById(tenantId, id);
         if (app.isNull) return CommandResult(false, "", "Application not found");
 
@@ -78,7 +78,7 @@ class ManageSaasApplicationsUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult deregisterApplication(string tenantId, SaasApplicationId id) {
+    CommandResult deregisterApplication(TenantId tenantId, SaasApplicationId id) {
         auto app = repo.findById(tenantId, id);
         if (app.isNull) return CommandResult(false, "", "Application not found");
         repo.remove(tenantId, id);

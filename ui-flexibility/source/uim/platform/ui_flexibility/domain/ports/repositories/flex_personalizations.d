@@ -11,18 +11,18 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexPersonalizationRepository : ITenantRepository!(FlexPersonalization, FlexPersonalizationId) {
-  bool existsById(string tenantId, FlexPersonalizationId id);
-  FlexPersonalization findById(string tenantId, FlexPersonalizationId id);
-  bool removeById(string tenantId, FlexPersonalizationId id);
-  long countByTenant(string tenantId);
-  FlexPersonalization[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexPersonalizationId id);
+  FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id);
+  bool removeById(TenantId tenantId, FlexPersonalizationId id);
+  long countByTenant(TenantId tenantId);
+  FlexPersonalization[] findByTenantAll(TenantId tenantId);
 
   /// All personalizations for a specific user in an application
-  FlexPersonalization[] findByUser(string tenantId, string appId, string userId);
+  FlexPersonalization[] findByUser(TenantId tenantId, string appId, string userId);
 
   /// Personalizations for a specific control and user
-  FlexPersonalization findByControl(string tenantId, string appId, string userId, string controlId);
+  FlexPersonalization findByControl(TenantId tenantId, string appId, string userId, string controlId);
 
   /// Remove all personalizations for a user in an app (reset user settings)
-  bool removeByUser(string tenantId, string appId, string userId);
+  bool removeByUser(TenantId tenantId, string appId, string userId);
 }

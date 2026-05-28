@@ -62,7 +62,7 @@ class FeatureFlagWidget {
         this.useCase = useCase;
     }
 
-    FlagRowViewModel[] buildListViewModel(string tenantId, string instanceId = "") @safe {
+    FlagRowViewModel[] buildListViewModel(TenantId tenantId, string instanceId = "") @safe {
         FeatureFlag[] flags;
         if (instanceId.length > 0)
             flags = useCase.listFlagsByInstance(tenantId, ServiceInstanceId(instanceId));
@@ -84,7 +84,7 @@ class FeatureFlagWidget {
         return rows;
     }
 
-    FlagDetailViewModel buildDetailViewModel(string tenantId, string id) @safe {
+    FlagDetailViewModel buildDetailViewModel(TenantId tenantId, string id) @safe {
         auto f = useCase.getFlag(tenantId, FlagId(id));
         FlagDetailViewModel vm;
         if (f.isNull) return vm;

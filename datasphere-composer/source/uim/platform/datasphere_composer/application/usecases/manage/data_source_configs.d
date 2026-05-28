@@ -36,15 +36,15 @@ class ManageDataSourceConfigsUseCase {
     return CommandResult(true, cfg.id.value, null);
   }
 
-  DataSourceConfig[] list(string tenantId) {
+  DataSourceConfig[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  DataSourceConfig[] listByProduct(string tenantId, string productId) {
+  DataSourceConfig[] listByProduct(TenantId tenantId, string productId) {
     return repo.findByProduct(TenantId(tenantId), DataProductId(productId));
   }
 
-  DataSourceConfig getById(string tenantId, string id) {
+  DataSourceConfig getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), DataSourceConfigId(id));
   }
 
@@ -79,7 +79,7 @@ class ManageDataSourceConfigsUseCase {
     return CommandResult(true, r.configId, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto cfg = repo.findById(TenantId(tenantId), DataSourceConfigId(id));
     if (cfg.isNull) return CommandResult(false, id, "Config not found");
     repo.remove(TenantId(tenantId), DataSourceConfigId(id));

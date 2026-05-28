@@ -28,14 +28,14 @@ public:
     return CommandResult(true, pkg.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto pkg = _repo.getById(getTenantId(tenantId), IntegrationPackageId(id));
     if (pkg.isNull) return CommandResult(false, "Package not found");
     return CommandResult(true, pkg.toJson());
@@ -55,7 +55,7 @@ public:
     return CommandResult(true, pkg.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto pkg = _repo.getById(getTenantId(tenantId), IntegrationPackageId(id));
     if (pkg.isNull) return CommandResult(false, "Package not found");
     _repo.remove(getTenantId(tenantId), IntegrationPackageId(id));

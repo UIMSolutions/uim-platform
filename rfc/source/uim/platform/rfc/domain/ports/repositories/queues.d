@@ -11,12 +11,12 @@ mixin(ShowModule!());
 @safe:
 
 interface RfcQueueRepository {
-    RfcQueueEntry   findById(string tenantId, string id);
-    RfcQueueEntry[] findByQueue(string tenantId, QueueName queueName);
-    RfcQueueEntry[] findByTid(string tenantId, TidValue tid);
-    RfcQueueEntry[] findPending(string tenantId, QueueName queueName);
+    RfcQueueEntry   findById(TenantId tenantId, string id);
+    RfcQueueEntry[] findByQueue(TenantId tenantId, QueueName queueName);
+    RfcQueueEntry[] findByTid(TenantId tenantId, TidValue tid);
+    RfcQueueEntry[] findPending(TenantId tenantId, QueueName queueName);
     bool            save(RfcQueueEntry entry);
     bool            update(RfcQueueEntry entry);
-    bool            remove(string tenantId, string id);
-    size_t          countByQueue(string tenantId, QueueName queueName);
+    bool            remove(TenantId tenantId, string id);
+    size_t          countByQueue(TenantId tenantId, QueueName queueName);
 }

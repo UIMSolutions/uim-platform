@@ -16,7 +16,7 @@ class MemoryAppSubscriptionRepository
     : TenantRepository!(AppSubscription, AppSubscriptionId),
       AppSubscriptionRepository
 {
-    AppSubscription[] findByAppName(string tenantId, string appName) {
+    AppSubscription[] findByAppName(TenantId tenantId, string appName) {
         AppSubscription[] result;
         foreach (sub; findByTenant(tenantId)) {
             if (sub.appName == appName) result ~= sub;
@@ -24,7 +24,7 @@ class MemoryAppSubscriptionRepository
         return result;
     }
 
-    AppSubscription[] findBySubscriberTenant(string tenantId, string subscriberTenantId) {
+    AppSubscription[] findBySubscriberTenant(TenantId tenantId, string subscriberTenantId) {
         AppSubscription[] result;
         foreach (sub; findByTenant(tenantId)) {
             if (sub.subscriberTenantId == subscriberTenantId) result ~= sub;

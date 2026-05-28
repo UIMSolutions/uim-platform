@@ -12,42 +12,42 @@ mixin(ShowModule!());
 
 class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalization, FlexPersonalizationId), FlexPersonalizationRepository {
 
-  bool existsById(string tenantId, FlexPersonalizationId id) {
+  bool existsById(TenantId tenantId, FlexPersonalizationId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexPersonalization findById(string tenantId, FlexPersonalizationId id) {
+  FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id) {
     foreach (p; findByTenant(tenantId))
       if (p.id_ == id) return p;
     return FlexPersonalization.init;
   }
 
-  bool removeById(string tenantId, FlexPersonalizationId id) {
+  bool removeById(TenantId tenantId, FlexPersonalizationId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexPersonalization[] findByTenantAll(string tenantId) {
+  FlexPersonalization[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexPersonalization[] findByUser(string tenantId, string appId, string userId) {
+  FlexPersonalization[] findByUser(TenantId tenantId, string appId, string userId) {
     FlexPersonalization[] result;
     foreach (p; findByTenant(tenantId))
       if (p.appId_ == appId && p.userId_ == userId) result ~= p;
     return result;
   }
 
-  FlexPersonalization findByControl(string tenantId, string appId, string userId, string controlId) {
+  FlexPersonalization findByControl(TenantId tenantId, string appId, string userId, string controlId) {
     foreach (p; findByTenant(tenantId))
       if (p.appId_ == appId && p.userId_ == userId && p.controlId_ == controlId) return p;
     return FlexPersonalization.init;
   }
 
-  bool removeByUser(string tenantId, string appId, string userId) {
+  bool removeByUser(TenantId tenantId, string appId, string userId) {
     auto toRemove = findByUser(tenantId, appId, userId);
     foreach (p; toRemove) remove(tenantId, p.id_);
     return true;

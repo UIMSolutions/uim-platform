@@ -19,12 +19,12 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
     this.basePath = basePath;
   }
 
-  private string filePath(string tenantId, FlexChangeId id) @trusted {
+  private string filePath(TenantId tenantId, FlexChangeId id) @trusted {
     import std.path : buildPath;
     return buildPath(basePath, "FlexChange_" ~ tenantId ~ "_" ~ id.value ~ ".json");
   }
 
-  override FlexChangeId save(string tenantId, FlexChange c) @trusted {
+  override FlexChangeId save(TenantId tenantId, FlexChange c) @trusted {
     import std.file : mkdirRecurse, write;
     mkdirRecurse(basePath);
     write(filePath(tenantId, c.id_), c.toJson().toString());
@@ -32,14 +32,14 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
     return c.id_;
   }
 
-  override bool update(string tenantId, FlexChange c) @trusted {
+  override bool update(TenantId tenantId, FlexChange c) @trusted {
     import std.file : write;
     write(filePath(tenantId, c.id_), c.toJson().toString());
     super.update(tenantId, c);
     return true;
   }
 
-  override bool remove(string tenantId, FlexChangeId id) @trusted {
+  override bool remove(TenantId tenantId, FlexChangeId id) @trusted {
     import std.file : exists, remove;
     auto fp = filePath(tenantId, id);
     if (exists(fp)) remove(fp);
@@ -47,43 +47,43 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
     return true;
   }
 
-  bool existsById(string tenantId, FlexChangeId id) {
+  bool existsById(TenantId tenantId, FlexChangeId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexChange findById(string tenantId, FlexChangeId id) {
+  FlexChange findById(TenantId tenantId, FlexChangeId id) {
     foreach (c; findByTenant(tenantId))
       if (c.id_ == id) return c;
     return FlexChange.init;
   }
 
-  bool removeById(string tenantId, FlexChangeId id) {
+  bool removeById(TenantId tenantId, FlexChangeId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexChange[] findByTenantAll(string tenantId) {
+  FlexChange[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexChange[] findByApp(string tenantId, string appId) {
+  FlexChange[] findByApp(TenantId tenantId, string appId) {
     FlexChange[] result;
     foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId) result ~= c;
     return result;
   }
 
-  FlexChange[] findByLayer(string tenantId, string appId, ChangeLayer layer) {
+  FlexChange[] findByLayer(TenantId tenantId, string appId, ChangeLayer layer) {
     FlexChange[] result;
     foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId && c.layer_ == layer) result ~= c;
     return result;
   }
 
-  FlexChange[] findByChangeType(string tenantId, string appId, ChangeType changeType) {
+  FlexChange[] findByChangeType(TenantId tenantId, string appId, ChangeType changeType) {
     FlexChange[] result;
     foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId && c.changeType_ == changeType) result ~= c;

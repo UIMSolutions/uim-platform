@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 interface CarrierRepository : ITenantRepository!(Carrier, CarrierId) {
-  Carrier[] findByStatus(string tenantId, CarrierStatus status);
-  Carrier[] findByName(string tenantId, string name);
-  bool existsByName(string tenantId, string name);
+  Carrier[] findByStatus(TenantId tenantId, CarrierStatus status);
+  Carrier[] findByName(TenantId tenantId, string name);
+  bool existsByName(TenantId tenantId, string name);
 }

@@ -16,7 +16,7 @@ class ManageSubscriptionsUseCase {
 
     this(SubscriptionRepository repo) { this.repo = repo; }
 
-    CommandResult createSubscription(string tenantId, CreateSubscriptionRequest req) {
+    CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
         import std.conv : to;
         import std.uuid : randomUUID;
 
@@ -38,21 +38,21 @@ class ManageSubscriptionsUseCase {
         return CommandResult(true, sub.toJson().toString());
     }
 
-    QueryResult getSubscription(string tenantId, string id) {
+    QueryResult getSubscription(TenantId tenantId, string id) {
         auto sub = repo.findById(tenantId, SubscriptionId(id));
         if (sub is null || sub.isNull())
             return QueryResult(false, "Subscription not found", Json.emptyObject);
         return QueryResult(true, "", sub.toJson());
     }
 
-    QueryResult listSubscriptions(string tenantId) {
+    QueryResult listSubscriptions(TenantId tenantId) {
         auto items = repo.findAll(tenantId);
         auto arr   = Json.emptyArray;
         foreach (s; items) arr ~= s.toJson();
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateSubscription(string tenantId, string id, UpdateSubscriptionRequest req) {
+    CommandResult updateSubscription(TenantId tenantId, string id, UpdateSubscriptionRequest req) {
         import std.conv : to;
         auto sub = repo.findById(tenantId, SubscriptionId(id));
         if (sub is null || sub.isNull())
@@ -68,7 +68,7 @@ class ManageSubscriptionsUseCase {
         return CommandResult(true, sub.toJson().toString());
     }
 
-    CommandResult deleteSubscription(string tenantId, string id) {
+    CommandResult deleteSubscription(TenantId tenantId, string id) {
         auto sub = repo.findById(tenantId, SubscriptionId(id));
         if (sub is null || sub.isNull())
             return CommandResult(false, "Subscription not found");

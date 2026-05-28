@@ -18,19 +18,19 @@ class ManageJobsUseCase {
         this.repo = repo;
     }
 
-    CompilationJob   getJob(string tenantId, CompilationJobId id) {
+    CompilationJob   getJob(TenantId tenantId, CompilationJobId id) {
         return repo.findById(tenantId, id);
     }
 
-    CompilationJob[] listJobs(string tenantId) {
+    CompilationJob[] listJobs(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CompilationJob[] listJobsForProgram(string tenantId, ProgramId pid) {
+    CompilationJob[] listJobsForProgram(TenantId tenantId, ProgramId pid) {
         return repo.findByProgram(tenantId, pid);
     }
 
-    CommandResult deleteJob(string tenantId, CompilationJobId id) {
+    CommandResult deleteJob(TenantId tenantId, CompilationJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Job '" ~ id ~ "' not found");

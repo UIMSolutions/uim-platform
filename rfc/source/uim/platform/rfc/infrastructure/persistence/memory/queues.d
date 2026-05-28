@@ -14,17 +14,17 @@ class MemoryRfcQueueRepository : RfcQueueRepository {
 
     private RfcQueueEntry[string] _store;
 
-    private static string _key(string tenantId, string id) {
+    private static string _key(TenantId tenantId, string id) {
         return tenantId ~ "|" ~ id;
     }
 
-    override RfcQueueEntry findById(string tenantId, string id) {
+    override RfcQueueEntry findById(TenantId tenantId, string id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return RfcQueueEntry.init;
         return _store[key];
     }
 
-    override RfcQueueEntry[] findByQueue(string tenantId, QueueName queueName) {
+    override RfcQueueEntry[] findByQueue(TenantId tenantId, QueueName queueName) {
         RfcQueueEntry[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.queueName == queueName)
@@ -32,7 +32,7 @@ class MemoryRfcQueueRepository : RfcQueueRepository {
         return result;
     }
 
-    override RfcQueueEntry[] findByTid(string tenantId, TidValue tid) {
+    override RfcQueueEntry[] findByTid(TenantId tenantId, TidValue tid) {
         RfcQueueEntry[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.tid == tid)
@@ -40,7 +40,7 @@ class MemoryRfcQueueRepository : RfcQueueRepository {
         return result;
     }
 
-    override RfcQueueEntry[] findPending(string tenantId, QueueName queueName) {
+    override RfcQueueEntry[] findPending(TenantId tenantId, QueueName queueName) {
         RfcQueueEntry[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.queueName == queueName
@@ -63,14 +63,14 @@ class MemoryRfcQueueRepository : RfcQueueRepository {
         return true;
     }
 
-    override bool remove(string tenantId, string id) {
+    override bool remove(TenantId tenantId, string id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return false;
         _store.remove(key);
         return true;
     }
 
-    override size_t countByQueue(string tenantId, QueueName queueName) {
+    override size_t countByQueue(TenantId tenantId, QueueName queueName) {
         size_t n = 0;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.queueName == queueName) n++;

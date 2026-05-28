@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Web view-model for a WZTask inbox item.
 struct TaskViewModel {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string title;
     string description;
     string assigneeName;
@@ -82,7 +82,7 @@ struct TaskViewModel {
 
 /// View-model for the task inbox page.
 struct TaskListViewModel {
-    string tenantId;
+    TenantId tenantId;
     string assigneeId;
     TaskViewModel[] items;
     size_t openCount;

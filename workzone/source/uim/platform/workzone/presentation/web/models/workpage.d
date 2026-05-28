@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct WorkpageViewModel {
     string id;
     string workspaceId;
-    string tenantId;
+    TenantId tenantId;
     string title;
     string description;
     int sortOrder;

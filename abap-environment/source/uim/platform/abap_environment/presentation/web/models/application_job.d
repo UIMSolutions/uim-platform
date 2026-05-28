@@ -12,6 +12,6 @@ class ApplicationJobViewModel {
   string name;
   string description;
   string status;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

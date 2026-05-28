@@ -25,15 +25,13 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult createGlobalAccount(CreateGlobalAccountRequest req) {
+  CommandResult createAccount(CreateGlobalAccountRequest req) {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
-    GlobalAccount globalAccount;
-    globalAccount.initEntity(req.tenantId, req.createdBy);
-
+    auto globalAccount = GlobalAccount(req.tenantId, req.createdBy);
     globalAccount.displayName = req.displayName;
     globalAccount.description = req.description;
     globalAccount.contractNumber = req.contractNumber;
@@ -53,11 +51,11 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult updateGlobalAccount(GlobalAccountId id, UpdateGlobalAccountRequest req) {
-    if (!repo.existsById(id))
+  CommandResult updateAccount(UpdateGlobalAccountRequest req) {
+    auto globalAccount = repo.findById(req.tenantId, req.accountId);
+    if (globalAccount.isNull)
       return CommandResult(false, "", "Global account not found");
 
-    auto globalAccount = repo.findById(tenantId, id);
     if (req.displayName.length > 0)
       globalAccount.displayName = req.displayName;
     if (req.description.length > 0)
@@ -71,11 +69,11 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
 
     repo.update(globalAccount);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult suspendGlobalAccount(GlobalAccountId accountId) {
-    auto globalAccount = repo.findById(accountId);
+  CommandResult suspendAccount(TenantId tenantId, GlobalAccountId accountId) {
+    auto globalAccount = repo.findById(tenantId, accountId);
     if (globalAccount.isNull)
       return CommandResult(false, "", "Global account not found");
 
@@ -91,40 +89,41 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, accountId.value, "");
   }
 
-  CommandResult reactivateGlobalAccount(GlobalAccountId accountId) {
-    if (!repo.existsById(accountId))
+  CommandResult reactivateAccount(TenantId tenantId,  GlobalAccountId accountId) {
+    auto globalAccount = repo.findById(tenantId, accountId);
+    if (globalAccount.isNull)
       return CommandResult(false, "", "Global account not found");
 
-    auto globalAccount = repo.findById(accountId);
     if (globalAccount.status != GlobalAccountStatus.suspended)
       return CommandResult(false, "", "Only suspended accounts can be reactivated");
 
     globalAccount.status = GlobalAccountStatus.active;
     globalAccount.updatedAt = clockSeconds();
+
     repo.update(globalAccount);
     emitEvent(eventRepo, accountId.value, "", PlatformEventCategory.globalAccountChange,
       "globalAccount.reactivated", "Global account reactivated", UserId("system")); 
     return CommandResult(true, accountId.value, "");
   }
 
-  bool existsGlobalAccount(GlobalAccountId accountId) {
-    return repo.existsById(accountId);
+  bool existsAccount(TenantId tenantId, GlobalAccountId accountId) {
+    return repo.existsById(tenantId, accountId);
   }
 
-  GlobalAccount getGlobalAccount(GlobalAccountId accountId) {
-    return repo.findById(accountId);
+  GlobalAccount getAccount(TenantId tenantId, GlobalAccountId accountId) {
+    return repo.findById(tenantId, accountId);
   }
 
-  GlobalAccount[] listGlobalAccounts() {
+  GlobalAccount[] listAccounts(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  GlobalAccount[] listGlobalAccounts(string status) {
-    return repo.findByStatus(status.to!GlobalAccountStatus);
+  GlobalAccount[] listAccounts(TenantId tenantId, string status) {
+    return repo.findByStatus(tenantId, status.to!GlobalAccountStatus);
   }
 
-  CommandResult deleteGlobalAccount(GlobalAccountId accountId) {
-    auto entity = repo.findById(accountId);
+  CommandResult deleteAccount(TenantId tenantId, GlobalAccountId accountId) {
+    auto entity = repo.findById(tenantId, accountId);
     if (entity.isNull)
       return CommandResult(false, "", "Global account not found");
 

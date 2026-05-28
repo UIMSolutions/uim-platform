@@ -20,11 +20,11 @@ class ManageSnowflakeDatabasesUseCase {
     return CommandResult(true, db.id.value, null);
   }
 
-  SnowflakeDatabase[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  SnowflakeDatabase[] listByAccount(string tenantId, string accountId) {
+  SnowflakeDatabase[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  SnowflakeDatabase[] listByAccount(TenantId tenantId, string accountId) {
     return repo.findByAccount(TenantId(tenantId), SnowflakeAccountId(accountId));
   }
-  SnowflakeDatabase getById(string tenantId, string id) {
+  SnowflakeDatabase getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), SnowflakeDatabaseId(id));
   }
 
@@ -39,7 +39,7 @@ class ManageSnowflakeDatabasesUseCase {
     return CommandResult(true, db.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto db = repo.findById(TenantId(tenantId), SnowflakeDatabaseId(id));
     if (db.isNull) return CommandResult(false, id, "Database not found");
     repo.remove(TenantId(tenantId), SnowflakeDatabaseId(id));

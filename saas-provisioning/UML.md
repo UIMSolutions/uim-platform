@@ -64,7 +64,7 @@ classDiagram
     }
     class SaasApplication {
         +SaasApplicationId id
-        +string tenantId
+        +TenantId tenantId
         +string appName
         +string displayName
         +string description
@@ -82,7 +82,7 @@ classDiagram
     }
     class AppSubscription {
         +AppSubscriptionId id
-        +string tenantId
+        +TenantId tenantId
         +string appName
         +string appDisplayName
         +string subscriberTenantId
@@ -99,7 +99,7 @@ classDiagram
     }
     class SubscriptionJob {
         +SubscriptionJobId id
-        +string tenantId
+        +TenantId tenantId
         +string appName
         +string subscriptionId
         +JobType jobType

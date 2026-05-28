@@ -21,7 +21,7 @@ struct CommandResult {
 // ─── FlexChange DTOs ─────────────────────────────────────────────────────────
 
 struct CreateFlexChangeRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexChangeId changeId;
   string appId;
   string namespace_;
@@ -36,7 +36,7 @@ struct CreateFlexChangeRequest {
 }
 
 struct UpdateFlexChangeRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexChangeId changeId;
   string selector_;
   string content_;
@@ -48,7 +48,7 @@ struct UpdateFlexChangeRequest {
 // ─── FlexVariant DTOs ────────────────────────────────────────────────────────
 
 struct CreateFlexVariantRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexVariantId variantId;
   string appId;
   VariantType variantType_;
@@ -61,7 +61,7 @@ struct CreateFlexVariantRequest {
 }
 
 struct UpdateFlexVariantRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexVariantId variantId;
   string variantName_;
   string content_;
@@ -72,7 +72,7 @@ struct UpdateFlexVariantRequest {
 // ─── FlexVersion DTOs ────────────────────────────────────────────────────────
 
 struct CreateFlexVersionRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexVersionId versionId;
   string appId;
   string displayName_;
@@ -82,7 +82,7 @@ struct CreateFlexVersionRequest {
 }
 
 struct UpdateFlexVersionRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexVersionId versionId;
   string displayName_;
   string description_;
@@ -91,7 +91,7 @@ struct UpdateFlexVersionRequest {
 
 /// Activate a specific version (makes it the active version, archives others)
 struct ActivateVersionRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexVersionId versionId;
   string appId;
   string activatedBy_;
@@ -100,7 +100,7 @@ struct ActivateVersionRequest {
 // ─── FlexDraft DTOs ──────────────────────────────────────────────────────────
 
 struct CreateFlexDraftRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexDraftId draftId;
   string appId;
   string updatedBy_;
@@ -108,7 +108,7 @@ struct CreateFlexDraftRequest {
 }
 
 struct UpdateFlexDraftRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexDraftId draftId;
   string[] changeIds_;
   string updatedBy_;
@@ -116,7 +116,7 @@ struct UpdateFlexDraftRequest {
 
 /// Publish a draft: creates a new activated FlexVersion from draft changes
 struct PublishDraftRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexDraftId draftId;
   string appId;
   string displayName_;
@@ -127,7 +127,7 @@ struct PublishDraftRequest {
 // ─── FlexPersonalization DTOs ────────────────────────────────────────────────
 
 struct CreateFlexPersonalizationRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexPersonalizationId personalizationId;
   string appId;
   string userId_;
@@ -138,7 +138,7 @@ struct CreateFlexPersonalizationRequest {
 }
 
 struct UpdateFlexPersonalizationRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexPersonalizationId personalizationId;
   string content_;
   bool isSynced_;
@@ -147,7 +147,7 @@ struct UpdateFlexPersonalizationRequest {
 // ─── FlexApplication DTOs ────────────────────────────────────────────────────
 
 struct CreateFlexApplicationRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexApplicationId applicationId;
   string namespace_;
   string appId;
@@ -160,7 +160,7 @@ struct CreateFlexApplicationRequest {
 }
 
 struct UpdateFlexApplicationRequest {
-  string tenantId;
+  TenantId tenantId;
   FlexApplicationId applicationId;
   string description_;
   bool isActive_;

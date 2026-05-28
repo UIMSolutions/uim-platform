@@ -21,7 +21,7 @@ class ManagePipelinesUseCase {
     _quota = QuotaService();
   }
 
-  CommandResult create(string tenantId, CreatePipelineRequest req) {
+  CommandResult create(TenantId tenantId, CreatePipelineRequest req) {
     auto existing = _repo.findByProject(tenantId, req.projectId);
     auto qerr = _quota.checkPipelineQuota(existing.length);
     if (qerr !is null) return CommandResult(false, "", qerr);
@@ -49,19 +49,19 @@ class ManagePipelinesUseCase {
     return CommandResult(true, p.id.value, "");
   }
 
-  Pipeline getById(string tenantId, string id) {
+  Pipeline getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, PipelineId(id));
   }
 
-  Pipeline[] list(string tenantId) {
+  Pipeline[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  Pipeline[] listByProject(string tenantId, string projectId) {
+  Pipeline[] listByProject(TenantId tenantId, string projectId) {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult update(string tenantId, string id, UpdatePipelineRequest req) {
+  CommandResult update(TenantId tenantId, string id, UpdatePipelineRequest req) {
     auto p = _repo.findById(tenantId, PipelineId(id));
     if (p.isNull) return CommandResult(false, "", "Pipeline not found");
     if (req.description.length > 0)    p.description    = req.description;
@@ -74,7 +74,7 @@ class ManagePipelinesUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto p = _repo.findById(tenantId, PipelineId(id));
     if (p.isNull) return CommandResult(false, "", "Pipeline not found");
     _repo.remove(tenantId, PipelineId(id));

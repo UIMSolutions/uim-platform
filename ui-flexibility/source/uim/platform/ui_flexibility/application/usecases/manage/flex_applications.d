@@ -50,25 +50,28 @@ class ManageFlexApplicationsUseCase {
     return CommandResult(true, a.id_.value);
   }
 
-  FlexApplication getApplication(string tenantId, FlexApplicationId id) {
+  FlexApplication getApplication(TenantId tenantId, FlexApplicationId id) {
     return repo.findById(tenantId, id);
   }
 
-  FlexApplication getApplicationByAppId(string tenantId, string appId) {
+  FlexApplication getApplicationByAppId(TenantId tenantId, string appId) {
     return repo.findByAppId(tenantId, appId);
   }
 
-  FlexApplication[] listApplications(string tenantId) {
+  FlexApplication[] listApplications(TenantId tenantId) {
     return repo.findByTenantAll(tenantId);
   }
 
-  FlexApplication[] listActiveApplications(string tenantId) {
+  FlexApplication[] listActiveApplications(TenantId tenantId) {
     return repo.findActiveByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(string tenantId, FlexApplicationId id) {
-    if (!repo.existsById(tenantId, id)) return CommandResult(false, null, "FlexApplication not found");
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value);
+  CommandResult deleteApplication(TenantId tenantId, FlexApplicationId id) {
+    auto app = repo.findById(tenantId, id);
+    if (app.isNull) 
+      return CommandResult(false, null, "FlexApplication not found");
+ 
+    repo.remove(app);
+    return CommandResult(true, app.id.value);
   }
 }

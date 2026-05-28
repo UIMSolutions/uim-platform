@@ -16,42 +16,42 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   override void save(Deployment entity)                { _store[entity.id.value] = entity; }
   override void update(Deployment entity)              { _store[entity.id.value] = entity; }
-  override void remove(string tenantId, DeploymentId id) { _store.remove(id.value); }
+  override void remove(TenantId tenantId, DeploymentId id) { _store.remove(id.value); }
 
-  override Deployment findById(string tenantId, DeploymentId id) {
+  override Deployment findById(TenantId tenantId, DeploymentId id) {
     if (id.value in _store) return _store[id.value];
     Deployment d; return d;
   }
 
-  override Deployment[] findByTenant(string tenantId) {
+  override Deployment[] findByTenant(TenantId tenantId) {
     Deployment[] result;
     foreach (d; _store.byValue)
       if (d.tenantId == tenantId) result ~= d;
     return result;
   }
 
-  override Deployment[] findByProject(string tenantId, string projectId) {
+  override Deployment[] findByProject(TenantId tenantId, string projectId) {
     Deployment[] result;
     foreach (d; _store.byValue)
       if (d.tenantId == tenantId && d.projectId.value == projectId) result ~= d;
     return result;
   }
 
-  override Deployment[] findByEnvironment(string tenantId, DeploymentEnvironment env) {
+  override Deployment[] findByEnvironment(TenantId tenantId, DeploymentEnvironment env) {
     Deployment[] result;
     foreach (d; _store.byValue)
       if (d.tenantId == tenantId && d.targetEnvironment == env) result ~= d;
     return result;
   }
 
-  override Deployment[] findByStatus(string tenantId, DeploymentStatus status) {
+  override Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
     Deployment[] result;
     foreach (d; _store.byValue)
       if (d.tenantId == tenantId && d.status == status) result ~= d;
     return result;
   }
 
-  override Deployment[] findByBuildJob(string tenantId, string buildJobId) {
+  override Deployment[] findByBuildJob(TenantId tenantId, string buildJobId) {
     Deployment[] result;
     foreach (d; _store.byValue)
       if (d.tenantId == tenantId && d.buildJobId.value == buildJobId) result ~= d;

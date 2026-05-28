@@ -22,45 +22,45 @@ class MemoryProjectRepository : ProjectRepository {
     _store[entity.id.value] = entity;
   }
 
-  override void remove(string tenantId, ProjectId id) {
+  override void remove(TenantId tenantId, ProjectId id) {
     _store.remove(id.value);
   }
 
-  override Project findById(string tenantId, ProjectId id) {
+  override Project findById(TenantId tenantId, ProjectId id) {
     if (id.value in _store) return _store[id.value];
     Project p;
     return p;
   }
 
-  override Project[] findByTenant(string tenantId) {
+  override Project[] findByTenant(TenantId tenantId) {
     Project[] result;
     foreach (p; _store.byValue)
       if (p.tenantId == tenantId) result ~= p;
     return result;
   }
 
-  override Project[] findByStatus(string tenantId, ProjectStatus status) {
+  override Project[] findByStatus(TenantId tenantId, ProjectStatus status) {
     Project[] result;
     foreach (p; _store.byValue)
       if (p.tenantId == tenantId && p.status == status) result ~= p;
     return result;
   }
 
-  override Project[] findByType(string tenantId, ProjectType type) {
+  override Project[] findByType(TenantId tenantId, ProjectType type) {
     Project[] result;
     foreach (p; _store.byValue)
       if (p.tenantId == tenantId && p.type == type) result ~= p;
     return result;
   }
 
-  override Project[] findByOwner(string tenantId, string ownerEmail) {
+  override Project[] findByOwner(TenantId tenantId, string ownerEmail) {
     Project[] result;
     foreach (p; _store.byValue)
       if (p.tenantId == tenantId && p.ownerEmail == ownerEmail) result ~= p;
     return result;
   }
 
-  override bool nameExists(string tenantId, string name) {
+  override bool nameExists(TenantId tenantId, string name) {
     foreach (p; _store.byValue)
       if (p.tenantId == tenantId && p.name == name) return true;
     return false;

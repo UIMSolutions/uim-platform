@@ -23,7 +23,7 @@ class ManageAIRequestsUseCase {
     _quota     = QuotaService();
   }
 
-  CommandResult generate(string tenantId, AIGenerateRequest req) {
+  CommandResult generate(TenantId tenantId, AIGenerateRequest req) {
     auto promptErrors = _validator.validatePrompt(req.prompt);
     if (promptErrors.length > 0)
       return CommandResult(false, "", promptErrors[0]);
@@ -48,19 +48,19 @@ class ManageAIRequestsUseCase {
     return CommandResult(true, r.id.value, "");
   }
 
-  AIRequest getById(string tenantId, string id) {
+  AIRequest getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, AIRequestId(id));
   }
 
-  AIRequest[] list(string tenantId) {
+  AIRequest[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  AIRequest[] listByProject(string tenantId, string projectId) {
+  AIRequest[] listByProject(TenantId tenantId, string projectId) {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  AIRequest[] listByStatus(string tenantId, string statusStr) {
+  AIRequest[] listByStatus(TenantId tenantId, string statusStr) {
     AIRequestStatus st = AIRequestStatus.pending;
     static foreach (member; __traits(allMembers, AIRequestStatus)) {
       if (statusStr == mixin("AIRequestStatus." ~ member ~ ".to!string"))
@@ -69,7 +69,7 @@ class ManageAIRequestsUseCase {
     return _repo.findByStatus(tenantId, st);
   }
 
-  CommandResult updateStatus(string tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "") {
+  CommandResult updateStatus(TenantId tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "") {
     auto r = _repo.findById(tenantId, AIRequestId(id));
     if (r.isNull) return CommandResult(false, "", "AI request not found");
     static foreach (member; __traits(allMembers, AIRequestStatus)) {

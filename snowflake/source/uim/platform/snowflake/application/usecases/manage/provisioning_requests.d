@@ -22,12 +22,12 @@ class ManageProvisioningRequestsUseCase {
     return CommandResult(true, req.id.value, null);
   }
 
-  ProvisioningRequest[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  ProvisioningRequest getById(string tenantId, string id) {
+  ProvisioningRequest[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  ProvisioningRequest getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), ProvisioningRequestId(id));
   }
 
-  CommandResult process(string tenantId, string id) {
+  CommandResult process(TenantId tenantId, string id) {
     auto req = repo.findById(TenantId(tenantId), ProvisioningRequestId(id));
     if (req.isNull) return CommandResult(false, id, "Provisioning request not found");
     req.status = ProvisioningStatus.processing;
@@ -55,7 +55,7 @@ class ManageProvisioningRequestsUseCase {
     return CommandResult(true, r.id, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto req = repo.findById(TenantId(tenantId), ProvisioningRequestId(id));
     if (req.isNull) return CommandResult(false, id, "Provisioning request not found");
     repo.remove(TenantId(tenantId), ProvisioningRequestId(id));

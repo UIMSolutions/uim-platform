@@ -15,7 +15,7 @@ mixin(ShowModule!());
 interface DirectoryRepository : ITenantRepository!(Directory, DirectoryId) {
 
   Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
-  Directory[] findByParent(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryId parentDirectoryId);  
+  Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId);  
   Directory[] findByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status);
 
 }

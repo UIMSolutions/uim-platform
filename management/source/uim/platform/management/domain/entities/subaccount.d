@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// and applications are deployed. It is always part of a global account
 /// and optionally part of a directory.
 struct Subaccount {
-  mixin GlobalEntity!(SubaccountId);
+  mixin TenantEntity!(SubaccountId);
 
-  TenantId tenantId;
+  GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId; // empty if directly under global account
   string displayName;
   string description;
@@ -42,7 +42,7 @@ struct Subaccount {
     }
 
     return entityToJson
-      .set("tenantId", tenantId.value)
+      .set("globalAccountId", globalAccountId.value)
       .set("parentDirectoryId", parentDirectoryId.value)
       .set("displayName", displayName)
       .set("description", description)

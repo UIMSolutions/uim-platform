@@ -21,7 +21,7 @@ class ManageDevSpacesUseCase {
     _quota = QuotaService();
   }
 
-  CommandResult create(string tenantId, CreateDevSpaceRequest req) {
+  CommandResult create(TenantId tenantId, CreateDevSpaceRequest req) {
     auto existing = _repo.findByProject(tenantId, req.projectId);
     auto qerr = _quota.checkDevSpaceQuota(existing.length);
     if (qerr !is null) return CommandResult(false, "", qerr);
@@ -40,19 +40,19 @@ class ManageDevSpacesUseCase {
     return CommandResult(true, ds.id.value, "");
   }
 
-  DevSpace getById(string tenantId, string id) {
+  DevSpace getById(TenantId tenantId, string id) {
     return _repo.findById(tenantId, DevSpaceId(id));
   }
 
-  DevSpace[] listByProject(string tenantId, string projectId) {
+  DevSpace[] listByProject(TenantId tenantId, string projectId) {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  DevSpace[] list(string tenantId) {
+  DevSpace[] list(TenantId tenantId) {
     return _repo.findByTenant(tenantId);
   }
 
-  CommandResult setStatus(string tenantId, string id, string statusStr) {
+  CommandResult setStatus(TenantId tenantId, string id, string statusStr) {
     auto ds = _repo.findById(tenantId, DevSpaceId(id));
     if (ds.isNull) return CommandResult(false, "", "Dev space not found");
     DevSpaceStatus st = DevSpaceStatus.stopped;
@@ -65,7 +65,7 @@ class ManageDevSpacesUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto ds = _repo.findById(tenantId, DevSpaceId(id));
     if (ds.isNull) return CommandResult(false, "", "Dev space not found");
     _repo.remove(tenantId, DevSpaceId(id));

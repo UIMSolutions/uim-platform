@@ -8,7 +8,7 @@ classDiagram
         +string id
         +string name
         +string description
-        +string tenantId
+        +TenantId tenantId
         +string createdAt
     }
     class KeyEntry {

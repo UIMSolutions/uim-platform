@@ -22,52 +22,28 @@ class QueryPlatformEventsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  PlatformEvent getById(string id) {
-    return getById(PlatformEventId(id));
-  }
-
-  PlatformEvent getById(PlatformEventId id) {
+  PlatformEvent getEvent(TenantId tenantId, PlatformEventId id) {
     return repo.findById(tenantId, id);
   }
 
-  PlatformEvent[] listByGlobalAccount(string gaId) {
-    return listByGlobalAccount(GlobalAccountId(gaId));
+  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId) {
+    return repo.findByGlobalAccount(tenantId, gaId);
   }
 
-  PlatformEvent[] listByGlobalAccount(GlobalAccountId gaId) {
-    return repo.findByGlobalAccount(gaId);
+  PlatformEvent[] listEvents(TenantId tenantId, SubaccountId subId) {
+    return repo.findBySubaccount(tenantId, subId);
   }
 
-  PlatformEvent[] listBySubaccount(string subId) {
-    return listBySubaccount(SubaccountId(subId));
+  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, PlatformEventCategory category) {
+    return repo.findByCategory(tenantId, gaId, category);
   }
 
-  PlatformEvent[] listBySubaccount(SubaccountId subId) {
-    return repo.findBySubaccount(subId);
+  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, PlatformEventSeverity severity) {
+    return repo.findBySeverity(tenantId, gaId, severity);
   }
 
-  PlatformEvent[] listByCategory(string gaId, string category) {
-    return listByCategory(GlobalAccountId(gaId), category);
-  }
-
-  PlatformEvent[] listByCategory(GlobalAccountId gaId, string category) {
-    return repo.findByCategory(gaId, parseCategory(category));
-  }
-
-  PlatformEvent[] listBySeverity(string gaId, string severity) {
-    return listBySeverity(GlobalAccountId(gaId), severity);
-  }
-
-  PlatformEvent[] listBySeverity(GlobalAccountId gaId, string severity) {
-    return repo.findBySeverity(gaId, parseSeverity(severity));
-  }
-
-  PlatformEvent[] listSince(string gaId, long sinceTimestamp) {
-    return listSince(GlobalAccountId(gaId), sinceTimestamp);
-  }
-
-  PlatformEvent[] listSince(GlobalAccountId gaId, long sinceTimestamp) {
-    return repo.findSince(gaId, sinceTimestamp);
+  PlatformEvent[] listSince(TenantId tenantId, GlobalAccountId gaId, long sinceTimestamp) {
+    return repo.findSince(tenantId, gaId, sinceTimestamp);
   }
 
   private PlatformEventCategory parseCategory(string category) {

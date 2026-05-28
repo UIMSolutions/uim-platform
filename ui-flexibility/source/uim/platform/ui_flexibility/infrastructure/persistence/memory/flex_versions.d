@@ -12,42 +12,42 @@ mixin(ShowModule!());
 
 class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId), FlexVersionRepository {
 
-  bool existsById(string tenantId, FlexVersionId id) {
+  bool existsById(TenantId tenantId, FlexVersionId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexVersion findById(string tenantId, FlexVersionId id) {
+  FlexVersion findById(TenantId tenantId, FlexVersionId id) {
     foreach (v; findByTenant(tenantId))
       if (v.id_ == id) return v;
     return FlexVersion.init;
   }
 
-  bool removeById(string tenantId, FlexVersionId id) {
+  bool removeById(TenantId tenantId, FlexVersionId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexVersion[] findByTenantAll(string tenantId) {
+  FlexVersion[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexVersion[] findByApp(string tenantId, string appId) {
+  FlexVersion[] findByApp(TenantId tenantId, string appId) {
     FlexVersion[] result;
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId) result ~= v;
     return result;
   }
 
-  FlexVersion findActiveByApp(string tenantId, string appId) {
+  FlexVersion findActiveByApp(TenantId tenantId, string appId) {
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.status_ == VersionStatus.active_) return v;
     return FlexVersion.init;
   }
 
-  FlexVersion findByNumber(string tenantId, string appId, long versionNumber) {
+  FlexVersion findByNumber(TenantId tenantId, string appId, long versionNumber) {
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.versionNumber_ == versionNumber) return v;
     return FlexVersion.init;

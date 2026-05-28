@@ -40,32 +40,33 @@ class ManageAppBindingsUseCase {
   }
 
   CommandResult updateBinding(UpdateAppBindingRequest r) {
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenamtId, r.bindingId);
+    if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
 
     import core.time : MonoTime;
-    auto existing = repo.findById(r.id);
     existing.currentInstances = r.currentInstances;
     existing.updatedAt        = currentTimestamp;
+
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult deleteBinding(TenantId tenantId, AppBindingId id) {
-    if (!repo.existsById(id))
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
-    auto existing = repo.findById(id);
 
     repo.remove(existing);
     return CommandResult(true, existing.id.value, "");
   }
 
   CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, PolicyId policyId) {
-    if (!repo.existsById(bindingId))
+    auto existing = repo.findById(tenantId, bindingId);
+    if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
 
     import core.time : MonoTime;
-    auto existing = repo.findById(bindingId);
     existing.policyId   = policyId;
     existing.updatedAt  = currentTimestamp;
 
@@ -74,7 +75,7 @@ class ManageAppBindingsUseCase {
   }
 
   AppBindingEntity getBinding(TenantId tenantId, AppBindingId id) {
-    return repo.findById(id);
+    return repo.findById(tenantId, id);
   }
 
   AppBindingEntity[] listBindings(TenantId tenantId) {

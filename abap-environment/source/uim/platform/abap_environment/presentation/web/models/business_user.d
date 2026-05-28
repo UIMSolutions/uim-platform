@@ -13,6 +13,6 @@ class BusinessUserViewModel {
   string firstName;
   string lastName;
   string email;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

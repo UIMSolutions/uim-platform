@@ -36,11 +36,11 @@ class ManageDestinationsUseCase {
         return CommandResult(true, dest.id, "");
     }
 
-    Destination getDestination(string tenantId, DestinationId id) {
+    Destination getDestination(TenantId tenantId, DestinationId id) {
         return _repo.findById(tenantId, id);
     }
 
-    Destination[] listDestinations(string tenantId) {
+    Destination[] listDestinations(TenantId tenantId) {
         return _repo.findByTenant(tenantId);
     }
 
@@ -63,7 +63,7 @@ class ManageDestinationsUseCase {
         return CommandResult(true, dest.id, "");
     }
 
-    CommandResult deleteDestination(string tenantId, DestinationId id) {
+    CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
         auto dest = _repo.findById(tenantId, id);
         if (dest.isNull())
             return CommandResult(false, id, "Destination not found: " ~ id);
@@ -72,7 +72,7 @@ class ManageDestinationsUseCase {
         return CommandResult(true, id, "");
     }
 
-    size_t countDestinations(string tenantId) {
+    size_t countDestinations(TenantId tenantId) {
         return _repo.countByTenant(tenantId);
     }
 }

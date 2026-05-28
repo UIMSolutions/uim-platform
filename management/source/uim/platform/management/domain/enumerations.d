@@ -239,6 +239,7 @@ SubscriptionStatus toSubscriptionStatus(string s) {
     default: return SubscriptionStatus.subscribed; // default
   }
 }
+
 /// Status of a service instance.
 enum ServiceInstanceStatus {
   creating,
@@ -273,26 +274,7 @@ EnvironmentType toEnvironmentType(string s) {
     default: return EnvironmentType.cloudFoundry; // default
   }
 }
-/// Status of a SaaS subscription.
-enum SubscriptionStatus {
-  subscribed,
-  subscribing,
-  unsubscribing,
-  unsubscribed,
-  error,
-  suspended,
-}
-SubscriptionStatus toSubscriptionStatus(string s) {
-  switch (s.toLower()) {
-    case "subscribed": return SubscriptionStatus.subscribed;
-    case "subscribing": return SubscriptionStatus.subscribing;
-    case "unsubscribing": return SubscriptionStatus.unsubscribing;
-    case "unsubscribed": return SubscriptionStatus.unsubscribed;
-    case "error": return SubscriptionStatus.error;
-    case "suspended": return SubscriptionStatus.suspended;
-    default: return SubscriptionStatus.subscribed; // default
-  }
-}
+
 /// Category of a platform event.
 enum PlatformEventCategory {
   subaccountLifecycle,

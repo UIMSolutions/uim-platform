@@ -46,7 +46,7 @@ class ValidationRuleController : ManageController {
       r.datasetPattern = data.getString("datasetPattern");
       r.fieldName = data.getString("fieldName");
       r.ruleType = parseRuleType(data.getString("ruleType"));
-      r.severity = parseSeverity(data.getString("severity"));
+      r.severity = data.getString("severity").to;
       r.pattern = data.getString("pattern");
       r.minValue = data.getString("minValue");
       r.maxValue = data.getString("maxValue");
@@ -120,7 +120,7 @@ class ValidationRuleController : ManageController {
       r.datasetPattern = data.getString("datasetPattern");
       r.fieldName = data.getString("fieldName");
       r.ruleType = parseRuleType(data.getString("ruleType"));
-      r.severity = parseSeverity(data.getString("severity"));
+      r.severity = data.getString("severity").toRuleSeverity;
       r.status = parseRuleStatus(data.getString("status"));
       r.pattern = data.getString("pattern");
       r.minValue = data.getString("minValue");

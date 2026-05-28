@@ -36,11 +36,11 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     // Check subdomain uniqueness
-    if (repository.existsBySubdomain(req.subdomain))
+    if (repository.existsBySubdomain(req.tenantId, req.subdomain))
       return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
     Subaccount subaccount;
-    subaccount.initEntity(req.tenantId, req.createdBy);
+    subaccount.initEntity(req.tenantId);
 
     subaccount.globalAccountId = req.globalAccountId;
     subaccount.parentDirectoryId = req.parentDirectoryId;
@@ -54,6 +54,8 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.creating;
     subaccount.labels = req.labels;
     subaccount.customProperties = req.customProperties;
+    subaccount.createdBy = req.createdBy;
+    subaccount.updatedBy = req.createdBy;
 
     repository.save(subaccount);
 
@@ -61,20 +63,20 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
 
-    emitEvent(req.globalAccountid.value, subaccount.id.value, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(subaccount.tenantId, subaccount.globalAccountId.value, subaccount.id.value, PlatformEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, subaccount.id.value, "");
   }
 
-  CommandResult updateSubaccount(SubaccountId id, UpdateSubaccountRequest req) {
-    if (!repository.existsById(id))
+  CommandResult updateSubaccount(UpdateSubaccountRequest req) {
+    auto subaccount = repository.findById(req.tenantId, req.subaccountId);
+    if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.findById(tenantId, id);
     if (req.displayName.length > 0)
-      subaccount.displayName = req.displayName;
-    if (req.description.length > 0)
+        subaccount.displayName = req.displayName;
+      if (req.description.length > 0)
       subaccount.description = req.description;
     if (req.usage.length > 0)
       subaccount.usage = toSubaccountUsage(req.usage);
@@ -87,11 +89,11 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.updatedAt = clockSeconds();
 
     repository.update(subaccount);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, subaccount.id.value, "");
   }
 
-  CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
-    if (!repository.existsById(id))
+  CommandResult moveSubaccount(TenantId tenantId, SubaccountId id, MoveSubaccountRequest req) {
+    if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
@@ -109,8 +111,8 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult suspendSubaccount(SubaccountId id) {
-    if (!repository.existsById(id))
+  CommandResult suspendSubaccount(TenantId tenantId, SubaccountId id) {
+    if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
@@ -123,8 +125,8 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  CommandResult reactivateSubaccount(SubaccountId id) {
-    if (!repository.existsById(id))
+  CommandResult reactivateSubaccount(TenantId tenantId, SubaccountId id) {
+    if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
@@ -137,23 +139,23 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  Subaccount getSubaccount(SubaccountId id) {
+  Subaccount getSubaccount(TenantId tenantId, SubaccountId id) {
     return repository.findById(tenantId, id);
   }
 
-  Subaccount[] listSubaccounts(GlobalAccountId gaId) {
-    return repository.findByGlobalAccount(gaId);
+  Subaccount[] listSubaccounts(TenantId tenantId, GlobalAccountId gaId) {
+    return repository.findByGlobalAccount(tenantId, gaId);
   }
 
-  Subaccount[] listSubaccounts(DirectoryId dirId) {
-    return repository.findByDirectory(dirId);
+  Subaccount[] listSubaccounts(TenantId tenantId, DirectoryId dirId) {
+    return repository.findByDirectory(tenantId, dirId);
   }
 
-  Subaccount[] listSubaccounts(GlobalAccountId gaId, string region) {
-    return repository.findByRegion(gaId, region);
+  Subaccount[] listSubaccounts(TenantId tenantId, GlobalAccountId gaId, string region) {
+    return repository.findByRegion(tenantId, gaId, region);
   }
 
-  CommandResult deleteSubaccount(SubaccountId id) {
+  CommandResult deleteSubaccount(TenantId tenantId, SubaccountId id) {
     auto subaccount = repository.findById(tenantId, id);
     if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
@@ -162,7 +164,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subaccount is already being deleted");
 
     repository.remove(subaccount);
-    emitEvent(subaccount.globalAccountId.value, id.value, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(tenantId, subaccount.globalAccountId.value, id.value, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, UserId("system"));
     return CommandResult(true, id.value, "");
   }

@@ -12,6 +12,6 @@ class CommunicationArrangementViewModel {
   string name;
   string description;
   string communicationSystemId;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

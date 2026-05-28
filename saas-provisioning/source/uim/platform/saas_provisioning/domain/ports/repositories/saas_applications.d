@@ -14,5 +14,5 @@ mixin(ShowModule!());
 /// Port: persistence contract for the SaasApplication aggregate root.
 interface SaasApplicationRepository : ITenantRepository!(SaasApplication, SaasApplicationId) {
     /// Find an application by its unique technical name within a provider tenant.
-    SaasApplication findByAppName(string tenantId, string appName);
+    SaasApplication findByAppName(TenantId tenantId, string appName);
 }

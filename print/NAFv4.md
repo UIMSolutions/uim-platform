@@ -94,7 +94,7 @@ erDiagram
     }
     PRINT_QUEUE {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string status
         string printerId FK
@@ -104,7 +104,7 @@ erDiagram
     }
     PRINT_TASK {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string queueId FK
         string documentId FK
         string status
@@ -116,7 +116,7 @@ erDiagram
     }
     PRINTER {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string clientId FK
         string name
         string status
@@ -126,7 +126,7 @@ erDiagram
     }
     PRINT_DOCUMENT {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string fileName
         string mimeType
         string format
@@ -136,7 +136,7 @@ erDiagram
     }
     PRINT_CLIENT {
         string id PK
-        string tenantId FK
+        TenantId tenantId FK
         string name
         string status
         string authToken

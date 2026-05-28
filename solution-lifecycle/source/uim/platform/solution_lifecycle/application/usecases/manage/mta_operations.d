@@ -20,11 +20,11 @@ class ManageMtaOperationsUseCase {
         this.engine = engine;
     }
 
-    MtaOperation[] listOperations(string tenantId) {
+    MtaOperation[] listOperations(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    MtaOperation getOperation(string tenantId, MtaOperationId id) {
+    MtaOperation getOperation(TenantId tenantId, MtaOperationId id) {
         auto ops = repo.findByTenant(tenantId);
         foreach (op; ops)
             if (op.id.value == id.value) return op;
@@ -32,7 +32,7 @@ class ManageMtaOperationsUseCase {
     }
 
     /// Poll/advance an operation one step forward (mock simulation).
-    CommandResult pollOperation(string tenantId, MtaOperationId id) {
+    CommandResult pollOperation(TenantId tenantId, MtaOperationId id) {
         import core.time : MonoTime;
 
         auto op = getOperation(tenantId, id);
@@ -73,7 +73,7 @@ class ManageMtaOperationsUseCase {
     }
 
     /// Retrieve streaming log lines for an operation.
-    string[] getOperationLogs(string tenantId, MtaOperationId id) {
+    string[] getOperationLogs(TenantId tenantId, MtaOperationId id) {
         auto op = getOperation(tenantId, id);
         if (op is null || op.isNull) return [];
         return op.logLines;

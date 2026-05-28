@@ -16,14 +16,14 @@ class ConsumeUndeliveredEventsUseCase {
 
     this(UndeliveredEventRepository repo) { this.repo = repo; }
 
-    QueryResult listUndeliveredEvents(string tenantId) {
+    QueryResult listUndeliveredEvents(TenantId tenantId) {
         auto items = repo.findAll(tenantId);
         auto arr   = Json.emptyArray;
         foreach (e; items) arr ~= e.toJson();
         return QueryResult(true, "", arr);
     }
 
-    QueryResult getUndeliveredEvent(string tenantId, string id) {
+    QueryResult getUndeliveredEvent(TenantId tenantId, string id) {
         auto ev = repo.findById(tenantId, UndeliveredEventId(id));
         if (ev is null || ev.isNull())
             return QueryResult(false, "Undelivered event not found", Json.emptyObject);

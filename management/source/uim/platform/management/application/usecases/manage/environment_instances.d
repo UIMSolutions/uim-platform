@@ -35,21 +35,19 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Environment name is required");
 
-    auto subaccount = subaccountRepo.findById(req.subaccountId);
+    auto subaccount = subaccountRepo.findById(req.tenantId, req.subaccountId);
     if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
 
-    auto envType = parseEnvironmentType(req.environmentType);
-    auto existing = repo.findBySubaccount(req.subaccountId);
+    auto envType = req.environmentType.toEnvironmentType;
+    auto existing = repo.findBySubaccount(req.tenantId, req.subaccountId);
 
     auto validation = provisioner.validateProvisioning(envType, req.planName,
         subaccount, existing);
     if (!validation.valid)
       return CommandResult(false, "", validation.reason);
 
-    EnvironmentInstance inst;
-    inst.initEntity(req.tenantId, req.createdBy);
-
+    auto inst = EnvironmentInstance(req.tenantId);
     inst.subaccountId = req.subaccountId;
     inst.globalAccountId = req.globalAccountId;
     inst.name = req.name;
@@ -63,6 +61,8 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     inst.serviceQuota = req.serviceQuota;
     inst.parameters = req.parameters;
     inst.labels = req.labels;
+    inst.createdBy = req.createdBy;
+    inst.updatedBy = req.createdBy;
 
     repo.save(inst);
 
@@ -123,6 +123,6 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
   }
 
   EnvironmentInstance[] listEnvironmentInstances(TenantId tenantId, SubaccountId subId, string envType) {
-    return repo.findByType(tenantId, subId, parseEnvironmentType(envType));
+    return repo.findByType(tenantId, subId, envType.toEnvironmentType);
   }
 }

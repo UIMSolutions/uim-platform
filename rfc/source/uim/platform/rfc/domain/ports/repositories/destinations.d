@@ -11,10 +11,10 @@ mixin(ShowModule!());
 @safe:
 
 interface DestinationRepository {
-    Destination   findById(string tenantId, DestinationId id);
-    Destination[] findByTenant(string tenantId);
+    Destination   findById(TenantId tenantId, DestinationId id);
+    Destination[] findByTenant(TenantId tenantId);
     bool          save(Destination dest);
     bool          update(Destination dest);
-    bool          remove(string tenantId, DestinationId id);
-    size_t        countByTenant(string tenantId);
+    bool          remove(TenantId tenantId, DestinationId id);
+    size_t        countByTenant(TenantId tenantId);
 }

@@ -32,7 +32,7 @@ struct CreateGlobalAccountRequest {
 
 struct UpdateGlobalAccountRequest {
   TenantId tenantId;
-  GlobalAccountId globalAccountId;
+  GlobalAccountId accountId;
 
   string displayName;
   string description;
@@ -43,7 +43,7 @@ struct UpdateGlobalAccountRequest {
 /// --- Directory DTOs ---
 struct CreateDirectoryRequest {
   TenantId tenantId;
-  GlobalAccountId globalAccountId;
+  GlobalAccountId accountId;
   DirectoryId parentDirectoryId;
   
   string displayName;
@@ -98,6 +98,7 @@ struct UpdateSubaccountRequest {
 }
 
 struct MoveSubaccountRequest {
+  GlobalAccountId globalAccountId;
   TenantId tenantId;
   SubaccountId subaccountId;
   DirectoryId targetDirectoryId; // empty = move to global account root
@@ -202,7 +203,7 @@ struct CreateServicePlanRequest {
 
 struct UpdateServicePlanRequest {
   TenantId tenantId;
-  ServicePlanId servicePlanId;
+  ServicePlanId planId;
 
   string planDisplayName;
   string description;
@@ -243,11 +244,11 @@ struct QueryEventsRequest {
 /// --- Dashboard/overview DTOs ---
 
 struct AccountOverview {
-  long totalSubaccounts;
-  long activeSubaccounts;
-  long totalDirectories;
-  long totalEntitlements;
-  long totalEnvironments;
-  long totalSubscriptions;
-  long recentEventsCount;
+  size_t totalSubaccounts;
+  size_t activeSubaccounts;
+  size_t totalDirectories;
+  size_t totalEntitlements;
+  size_t totalEnvironments;
+  size_t totalSubscriptions;
+  size_t recentEventsCount;
 }

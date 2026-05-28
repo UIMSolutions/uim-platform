@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// A directory is a grouping entity within a global account for
 /// organizing subaccounts and managing entitlements/authorizations.
 struct Directory {
-  mixin GlobalEntity!DirectoryId;
+  mixin TenantEntity!DirectoryId;
 
+  GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId; // empty if root-level
   string displayName;
   string description;
@@ -28,13 +29,12 @@ struct Directory {
   string[string] customProperties;
 
   static Directory createFromRequest(CreateDirectoryRequest req) {
-    Directory directory;
-    
-    directory.initEntity(req.globalAccountId);
+    auto directory = Directory();
+    directory.globalAccountId = req.accountId;
     directory.parentDirectoryId = req.parentDirectoryId;
     directory.displayName = req.displayName;
     directory.description = req.description;
-    directory.features = req.features.map!(f => f.to!DirectoryFeature).array.toJson;
+    directory.features = req.features.map!(f => f.to!DirectoryFeature).array;
     directory.manageEntitlements = req.manageEntitlements;
     directory.manageAuthorizations = req.manageAuthorizations;
     directory.createdBy = req.createdBy;

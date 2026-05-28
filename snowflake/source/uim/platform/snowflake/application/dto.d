@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 // --- SnowflakeAccount ---
 struct CreateAccountRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string region;
@@ -22,7 +22,7 @@ struct CreateAccountRequest {
   string[string] metadata;
 }
 struct UpdateAccountRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string status;
@@ -31,7 +31,7 @@ struct UpdateAccountRequest {
 
 // --- ZerocopyConnector ---
 struct CreateConnectorRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string accountId;
   string name;
@@ -41,7 +41,7 @@ struct CreateConnectorRequest {
   string[string] metadata;
 }
 struct UpdateConnectorRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string status;
@@ -49,14 +49,14 @@ struct UpdateConnectorRequest {
   string[string] metadata;
 }
 struct EnrollConnectorRequest {
-  string tenantId;
+  TenantId tenantId;
   string connectorId;
   string bdcTenantId;
 }
 
 // --- SnowflakeWarehouse ---
 struct CreateWarehouseRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string accountId;
   string name;
@@ -67,7 +67,7 @@ struct CreateWarehouseRequest {
   string[string] metadata;
 }
 struct UpdateWarehouseRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string size;
   string status;
@@ -78,7 +78,7 @@ struct UpdateWarehouseRequest {
 
 // --- SnowflakeDatabase ---
 struct CreateDatabaseRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string accountId;
   string name;
@@ -87,7 +87,7 @@ struct CreateDatabaseRequest {
   string[string] metadata;
 }
 struct UpdateDatabaseRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   int    retentionDays;
   string status;
@@ -96,7 +96,7 @@ struct UpdateDatabaseRequest {
 
 // --- DataProductShare ---
 struct CreateShareRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string accountId;
   string connectorId;
@@ -106,7 +106,7 @@ struct CreateShareRequest {
   string[string] metadata;
 }
 struct UpdateShareRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string status;
   string comment;
@@ -132,7 +132,7 @@ struct UpdateRoleRequest {
 
 // --- TenantUser ---
 struct CreateTenantUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string email;
   string firstName;
@@ -141,7 +141,7 @@ struct CreateTenantUserRequest {
   string externalUserId;
 }
 struct UpdateTenantUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string firstName;
   string lastName;
@@ -151,7 +151,7 @@ struct UpdateTenantUserRequest {
 
 // --- ProvisioningRequest ---
 struct CreateProvisioningRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string requestedBy;
   string accountName;
@@ -162,7 +162,7 @@ struct CreateProvisioningRequest {
   string[string] metadata;
 }
 struct UpdateProvisioningStatusRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string status;
   string resultAccountId;

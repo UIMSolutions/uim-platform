@@ -6,7 +6,7 @@
 classDiagram
     class MtaArchive {
         +MtaArchiveId id
-        +string tenantId
+        +TenantId tenantId
         +string fileName
         +string mtaId
         +string mtaVersion
@@ -21,7 +21,7 @@ classDiagram
 
     class Mta {
         +MtaId id
-        +string tenantId
+        +TenantId tenantId
         +string mtaId
         +string version_
         +string description
@@ -45,7 +45,7 @@ classDiagram
 
     class MtaOperation {
         +MtaOperationId id
-        +string tenantId
+        +TenantId tenantId
         +OperationType operationType
         +OperationStatus operationStatus
         +string mtaId
@@ -61,7 +61,7 @@ classDiagram
 
     class MtaSubscription {
         +MtaSubscriptionId id
-        +string tenantId
+        +TenantId tenantId
         +string mtaId
         +string mtaVersion
         +string providerTenantId

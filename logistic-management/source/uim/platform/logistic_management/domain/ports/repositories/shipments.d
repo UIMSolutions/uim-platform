@@ -10,9 +10,9 @@ mixin(ShowModule!());
 
 @safe:
 interface ShipmentRepository : ITenantRepository!(Shipment, ShipmentId) {
-  Shipment[] findByFreightOrder(string tenantId, FreightOrderId freightOrderId);
-  Shipment[] findByStatus(string tenantId, ShipmentStatus status);
-  Shipment[] findByDirection(string tenantId, LogisticsDirection direction);
-  Shipment[] findByPartner(string tenantId, string partnerId);
-  void removeByFreightOrder(string tenantId, FreightOrderId freightOrderId);
+  Shipment[] findByFreightOrder(TenantId tenantId, FreightOrderId freightOrderId);
+  Shipment[] findByStatus(TenantId tenantId, ShipmentStatus status);
+  Shipment[] findByDirection(TenantId tenantId, LogisticsDirection direction);
+  Shipment[] findByPartner(TenantId tenantId, string partnerId);
+  void removeByFreightOrder(TenantId tenantId, FreightOrderId freightOrderId);
 }

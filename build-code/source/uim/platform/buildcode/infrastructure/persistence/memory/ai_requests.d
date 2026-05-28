@@ -16,42 +16,42 @@ class MemoryAIRequestRepository : AIRequestRepository {
 
   override void save(AIRequest entity)                { _store[entity.id.value] = entity; }
   override void update(AIRequest entity)              { _store[entity.id.value] = entity; }
-  override void remove(string tenantId, AIRequestId id) { _store.remove(id.value); }
+  override void remove(TenantId tenantId, AIRequestId id) { _store.remove(id.value); }
 
-  override AIRequest findById(string tenantId, AIRequestId id) {
+  override AIRequest findById(TenantId tenantId, AIRequestId id) {
     if (id.value in _store) return _store[id.value];
     AIRequest r; return r;
   }
 
-  override AIRequest[] findByTenant(string tenantId) {
+  override AIRequest[] findByTenant(TenantId tenantId) {
     AIRequest[] result;
     foreach (r; _store.byValue)
       if (r.tenantId == tenantId) result ~= r;
     return result;
   }
 
-  override AIRequest[] findByProject(string tenantId, string projectId) {
+  override AIRequest[] findByProject(TenantId tenantId, string projectId) {
     AIRequest[] result;
     foreach (r; _store.byValue)
       if (r.tenantId == tenantId && r.projectId.value == projectId) result ~= r;
     return result;
   }
 
-  override AIRequest[] findByStatus(string tenantId, AIRequestStatus status) {
+  override AIRequest[] findByStatus(TenantId tenantId, AIRequestStatus status) {
     AIRequest[] result;
     foreach (r; _store.byValue)
       if (r.tenantId == tenantId && r.status == status) result ~= r;
     return result;
   }
 
-  override AIRequest[] findByType(string tenantId, AIGenerationType type) {
+  override AIRequest[] findByType(TenantId tenantId, AIGenerationType type) {
     AIRequest[] result;
     foreach (r; _store.byValue)
       if (r.tenantId == tenantId && r.generationType == type) result ~= r;
     return result;
   }
 
-  override AIRequest[] findByUser(string tenantId, string userId) {
+  override AIRequest[] findByUser(TenantId tenantId, string userId) {
     AIRequest[] result;
     foreach (r; _store.byValue)
       if (r.tenantId == tenantId && r.requestedBy == userId) result ~= r;

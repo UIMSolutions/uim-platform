@@ -30,7 +30,7 @@ struct AbapProgram {
             .set("sourceCode",  sourceCode);
     }
 
-    static AbapProgram create(string id, string tenantId, ProgramType pt, string title, string language, string src) {
+    static AbapProgram create(string id, TenantId tenantId, ProgramType pt, string title, string language, string src) {
         import core.time : MonoTime;
         AbapProgram p;
         p.initEntity(TenantId(tenantId));

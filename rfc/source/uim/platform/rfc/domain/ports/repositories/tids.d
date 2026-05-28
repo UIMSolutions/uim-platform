@@ -11,12 +11,12 @@ mixin(ShowModule!());
 @safe:
 
 interface TidRepository {
-    Tid    findById(string tenantId, TidValue value);
-    Tid[]  findByTenant(string tenantId);
-    Tid[]  findByDestination(string tenantId, DestinationId destId);
-    Tid[]  findByStatus(string tenantId, LuwStatus status);
+    Tid    findById(TenantId tenantId, TidValue value);
+    Tid[]  findByTenant(TenantId tenantId);
+    Tid[]  findByDestination(TenantId tenantId, DestinationId destId);
+    Tid[]  findByStatus(TenantId tenantId, LuwStatus status);
     bool   save(Tid tid);
     bool   update(Tid tid);
-    bool   remove(string tenantId, TidValue value);
-    size_t countByTenant(string tenantId);
+    bool   remove(TenantId tenantId, TidValue value);
+    size_t countByTenant(TenantId tenantId);
 }

@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
-  Project[]  findByStatus(string tenantId, ProjectStatus status);
-  Project[]  findByType(string tenantId, ProjectType type);
-  Project[]  findByOwner(string tenantId, string ownerEmail);
-  bool       nameExists(string tenantId, string name);
+  Project[]  findByStatus(TenantId tenantId, ProjectStatus status);
+  Project[]  findByType(TenantId tenantId, ProjectType type);
+  Project[]  findByOwner(TenantId tenantId, string ownerEmail);
+  bool       nameExists(TenantId tenantId, string name);
 }

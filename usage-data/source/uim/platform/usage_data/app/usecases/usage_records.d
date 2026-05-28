@@ -20,7 +20,7 @@ class UsageRecordUseCases {
   UsageRecordResponse submitRecord(CreateUsageRecordRequest req) {
     Environment env;
     try { env = req.environment.to!Environment; } catch (Exception) { env = Environment.other; }
-    auto record = UsageRecord.create(req.globalAccountId, req.subaccountId,
+    auto record = UsageRecord.create(req.accountId, req.subaccountId,
       req.serviceId, req.serviceName, req.metricName, req.metricValue, env, req.region);
     record.directoryId = req.directoryId;
     record.datacenter = req.datacenter;

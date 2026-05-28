@@ -11,18 +11,18 @@ mixin(ShowModule!());
 @safe:
 
 interface FlexChangeRepository : ITenantRepository!(FlexChange, FlexChangeId) {
-  bool existsById(string tenantId, FlexChangeId id);
-  FlexChange findById(string tenantId, FlexChangeId id);
-  bool removeById(string tenantId, FlexChangeId id);
-  long countByTenant(string tenantId);
-  FlexChange[] findByTenantAll(string tenantId);
+  bool existsById(TenantId tenantId, FlexChangeId id);
+  FlexChange findById(TenantId tenantId, FlexChangeId id);
+  bool removeById(TenantId tenantId, FlexChangeId id);
+  long countByTenant(TenantId tenantId);
+  FlexChange[] findByTenantAll(TenantId tenantId);
 
   /// Find all active changes for a specific application
-  FlexChange[] findByApp(string tenantId, string appId);
+  FlexChange[] findByApp(TenantId tenantId, string appId);
 
   /// Find changes by layer (customer/user/vendor)
-  FlexChange[] findByLayer(string tenantId, string appId, ChangeLayer layer);
+  FlexChange[] findByLayer(TenantId tenantId, string appId, ChangeLayer layer);
 
   /// Find by change type
-  FlexChange[] findByChangeType(string tenantId, string appId, ChangeType changeType);
+  FlexChange[] findByChangeType(TenantId tenantId, string appId, ChangeType changeType);
 }

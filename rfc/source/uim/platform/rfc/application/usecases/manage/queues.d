@@ -31,11 +31,11 @@ class ManageQueuesUseCase {
         _processor = QueueProcessor(queueRepo, callRepo, destRepo, fmRepo, tidMgr);
     }
 
-    RfcQueueEntry[] listQueue(string tenantId, QueueName queueName) {
+    RfcQueueEntry[] listQueue(TenantId tenantId, QueueName queueName) {
         return _queueRepo.findByQueue(tenantId, queueName);
     }
 
-    RfcQueueEntry[] listPending(string tenantId, QueueName queueName) {
+    RfcQueueEntry[] listPending(TenantId tenantId, QueueName queueName) {
         return _queueRepo.findPending(tenantId, queueName);
     }
 
@@ -52,7 +52,7 @@ class ManageQueuesUseCase {
         return resp;
     }
 
-    CommandResult deleteQueueEntry(string tenantId, string id) {
+    CommandResult deleteQueueEntry(TenantId tenantId, string id) {
         auto entry = _queueRepo.findById(tenantId, id);
         if (entry.isNull())
             return CommandResult(false, id, "Queue entry not found: " ~ id);
@@ -61,7 +61,7 @@ class ManageQueuesUseCase {
         return CommandResult(true, id, "");
     }
 
-    size_t countEntries(string tenantId, QueueName queueName) {
+    size_t countEntries(TenantId tenantId, QueueName queueName) {
         return _queueRepo.countByQueue(tenantId, queueName);
     }
 }

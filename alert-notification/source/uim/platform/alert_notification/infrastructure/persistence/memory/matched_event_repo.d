@@ -15,7 +15,7 @@ class MemoryMatchedEventRepository
     : TenantRepository!(MatchedEvent, MatchedEventId),
       MatchedEventRepository
 {
-    MatchedEvent[] findBySubscription(string tenantId, string subscriptionName) {
+    MatchedEvent[] findBySubscription(TenantId tenantId, string subscriptionName) {
         MatchedEvent[] result;
         foreach (e; findAll(tenantId))
             if (e.subscriptionName == subscriptionName) result ~= e;

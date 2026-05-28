@@ -96,6 +96,7 @@ struct CreateServicePlanRequest {
 struct UpdateServicePlanRequest {
     TenantId tenantId;
     ServicePlanId servicePlanId;
+    
     string name;
     string description;
     string pricing;

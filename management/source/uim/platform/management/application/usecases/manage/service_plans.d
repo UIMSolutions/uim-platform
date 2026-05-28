@@ -21,22 +21,22 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     this.servicePlans = servicePlans;
   }
 
-  CommandResult createServicePlan(CreateServicePlanRequest req) {
+  CommandResult createPlan(CreateServicePlanRequest req) {
     if (req.serviceName.length == 0)
       return CommandResult(false, "", "Service name is required");
     if (req.planName.length == 0)
       return CommandResult(false, "", "Plan name is required");
 
-    ServicePlan plan;
-    plan.initEntity(req.tenantId, req.createdBy);
-
+    auto plan = ServicePlan(req.tenantId);
     plan.serviceName = req.serviceName;
     plan.serviceDisplayName = req.serviceDisplayName;
     plan.planName = req.planName;
     plan.planDisplayName = req.planDisplayName.length > 0 ? req.planDisplayName : req.planName;
     plan.description = req.description;
-    plan.category = parseCategory(req.category);
-    plan.pricingModel = parsePricingModel(req.pricingModel);
+    plan.category = req.category.toServicePlanCategory;
+    plan.pricingModel = req.pricingModel.toPricingModel;
+    plan.metadata = req.metadata;
+    // plan.provisionable = req.provisionable;
     plan.isFree = req.isFree;
     plan.isBeta = req.isBeta;
     plan.availableRegions = req.availableRegions;
@@ -44,13 +44,15 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.unit = req.unit;
     plan.supportedPlatforms = req.supportedPlatforms;
     plan.providerDisplayName = req.providerDisplayName;
+    // plan.createdBy = req.createdBy;
+    // plan.updatedBy = req.createdBy;
 
     servicePlans.save(plan);
     return CommandResult(true, plan.id.value, "");
   }
 
-  CommandResult updateServicePlan(UpdateServicePlanRequest req) {
-    auto plan = servicePlans.findById(tenantId, req.id);
+  CommandResult updatePlan(UpdateServicePlanRequest req) {
+    auto plan = servicePlans.findById(req.tenantId, req.planId);
     if (plan.isNull)
       return CommandResult(false, "", "Service plan not found");
 
@@ -66,68 +68,39 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     plan.provisionable = req.provisionable;
     if (req.metadata.length > 0)
       plan.metadata = req.metadata;
-    plan.updatedAt = clockSeconds();
+    // plan.updatedBy = req.updatedBy;
+    // plan.updatedAt = clockSeconds();
 
     servicePlans.update(plan);
-    return CommandResult(true, req.id.value, "");
+    return CommandResult(true, plan.id.value, "");
   }
 
-  ServicePlan getServicePlan(ServicePlanId id) {
+  ServicePlan getPlan(TenantId tenantId, ServicePlanId id) {
     return servicePlans.findById(tenantId, id);
   }
 
-  ServicePlan[] listServicePlans() {
+  ServicePlan[] listPlans(TenantId tenantId) {
     return servicePlans.findByTenant(tenantId);
   }
 
-  ServicePlan[] listServicePlansByService(string serviceName) {
-    return servicePlans.findByService(serviceName);
+  ServicePlan[] listPlansByService(TenantId tenantId, string serviceName) {
+    return servicePlans.findByService(tenantId, serviceName);
   }
 
-  ServicePlan[] listServicePlansByCategory(string category) {
-    return servicePlans.findByCategory(parseCategory(category));
+  ServicePlan[] listPlansByCategory(TenantId tenantId, string category) {
+    return servicePlans.findByCategory(tenantId, category.toServicePlanCategory);
   }
 
-  ServicePlan[] listServicePlansByRegion(string region) {
-    return servicePlans.findByRegion(region);
+  ServicePlan[] listPlansByRegion(TenantId tenantId, string region) {
+    return servicePlans.findByRegion(tenantId, region);
   }
 
-  CommandResult deleteServicePlan(ServicePlanId id) {
+  CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
     auto entity = servicePlans.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Service plan not found");
 
     servicePlans.remove(entity);
     return CommandResult(true, entity.id.value, "");
-  }
-
-  private ServicePlanCategory parseCategory(string s) {
-    switch (s) {
-    case "service":
-      return ServicePlanCategory.service;
-    case "application":
-      return ServicePlanCategory.application;
-    case "environment":
-      return ServicePlanCategory.environment;
-    case "elasticService":
-      return ServicePlanCategory.elasticService;
-    default:
-      return ServicePlanCategory.service;
-    }
-  }
-
-  private PricingModel parsePricingModel(string s) {
-    switch (s) {
-    case "free":
-      return PricingModel.free;
-    case "subscription":
-      return PricingModel.subscription;
-    case "consumption":
-      return PricingModel.consumption;
-    case "byol":
-      return PricingModel.byol;
-    default:
-      return PricingModel.free;
-    }
   }
 }

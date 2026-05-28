@@ -27,20 +27,20 @@ public:
     return CommandResult(true, sub.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (s; items) arr ~= s.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto sub = _repo.getById(getTenantId(tenantId), TopicSubscriptionId(id));
     if (sub.isNull) return CommandResult(false, "Subscription not found");
     return CommandResult(true, sub.toJson());
   }
 
-  CommandResult listByQueue(string tenantId, string queueId) {
+  CommandResult listByQueue(TenantId tenantId, string queueId) {
     auto items = _repo.findByQueue(getTenantId(tenantId), MessageQueueId(queueId));
     auto arr = Json.emptyArray;
     foreach (s; items) arr ~= s.toJson();
@@ -58,7 +58,7 @@ public:
     return CommandResult(true, sub.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto sub = _repo.getById(getTenantId(tenantId), TopicSubscriptionId(id));
     if (sub.isNull) return CommandResult(false, "Subscription not found");
     _repo.remove(getTenantId(tenantId), TopicSubscriptionId(id));

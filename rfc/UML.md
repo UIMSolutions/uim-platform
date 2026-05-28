@@ -52,7 +52,7 @@ package "domain" {
 
   class Destination {
     +DestinationId id
-    +string tenantId
+    +TenantId tenantId
     +ConnectionType connectionType
     +string host
     +ushort port
@@ -66,7 +66,7 @@ package "domain" {
 
   class FunctionModule {
     +FunctionModuleId id
-    +string tenantId
+    +TenantId tenantId
     +string functionGroup
     +string shortText
     +string remoteEnabled
@@ -87,7 +87,7 @@ package "domain" {
 
   class RfcCall {
     +RfcCallId id
-    +string tenantId
+    +TenantId tenantId
     +DestinationId destinationId
     +FunctionModuleId functionModule
     +RfcType rfcType
@@ -103,7 +103,7 @@ package "domain" {
 
   class Tid {
     +TidValue value
-    +string tenantId
+    +TenantId tenantId
     +DestinationId destinationId
     +LuwStatus status
     +RfcCallId[] callIds

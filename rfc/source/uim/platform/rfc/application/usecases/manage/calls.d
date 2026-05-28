@@ -16,27 +16,27 @@ class ManageCallsUseCase {
 
     this(RfcCallRepository repo) { _repo = repo; }
 
-    RfcCall getCall(string tenantId, RfcCallId id) {
+    RfcCall getCall(TenantId tenantId, RfcCallId id) {
         return _repo.findById(tenantId, id);
     }
 
-    RfcCall[] listCalls(string tenantId) {
+    RfcCall[] listCalls(TenantId tenantId) {
         return _repo.findByTenant(tenantId);
     }
 
-    RfcCall[] listCallsByDestination(string tenantId, DestinationId destId) {
+    RfcCall[] listCallsByDestination(TenantId tenantId, DestinationId destId) {
         return _repo.findByDestination(tenantId, destId);
     }
 
-    RfcCall[] listCallsByTid(string tenantId, TidValue tid) {
+    RfcCall[] listCallsByTid(TenantId tenantId, TidValue tid) {
         return _repo.findByTid(tenantId, tid);
     }
 
-    RfcCall[] listCallsByStatus(string tenantId, RfcStatus status) {
+    RfcCall[] listCallsByStatus(TenantId tenantId, RfcStatus status) {
         return _repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteCall(string tenantId, RfcCallId id) {
+    CommandResult deleteCall(TenantId tenantId, RfcCallId id) {
         auto call = _repo.findById(tenantId, id);
         if (call.isNull())
             return CommandResult(false, id, "RFC call not found: " ~ id);
@@ -45,7 +45,7 @@ class ManageCallsUseCase {
         return CommandResult(true, id, "");
     }
 
-    size_t countCalls(string tenantId) {
+    size_t countCalls(TenantId tenantId) {
         return _repo.countByTenant(tenantId);
     }
 }

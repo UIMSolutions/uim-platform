@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 interface BuildJobRepository : ITenantRepository!(BuildJob, BuildJobId) {
-  BuildJob[]  findByPipeline(string tenantId, string pipelineId);
-  BuildJob[]  findByProject(string tenantId, string projectId);
-  BuildJob[]  findByStatus(string tenantId, JobStatus status);
-  BuildJob[]  findByBranch(string tenantId, string branch);
+  BuildJob[]  findByPipeline(TenantId tenantId, string pipelineId);
+  BuildJob[]  findByProject(TenantId tenantId, string projectId);
+  BuildJob[]  findByStatus(TenantId tenantId, JobStatus status);
+  BuildJob[]  findByBranch(TenantId tenantId, string branch);
 }

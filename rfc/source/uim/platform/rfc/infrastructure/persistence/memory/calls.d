@@ -14,24 +14,24 @@ class MemoryRfcCallRepository : RfcCallRepository {
 
     private RfcCall[string] _store;
 
-    private static string _key(string tenantId, RfcCallId id) {
+    private static string _key(TenantId tenantId, RfcCallId id) {
         return tenantId ~ "|" ~ id;
     }
 
-    override RfcCall findById(string tenantId, RfcCallId id) {
+    override RfcCall findById(TenantId tenantId, RfcCallId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return RfcCall.init;
         return _store[key];
     }
 
-    override RfcCall[] findByTenant(string tenantId) {
+    override RfcCall[] findByTenant(TenantId tenantId) {
         RfcCall[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) result ~= _copy(kv.value);
         return result;
     }
 
-    override RfcCall[] findByDestination(string tenantId, DestinationId destId) {
+    override RfcCall[] findByDestination(TenantId tenantId, DestinationId destId) {
         RfcCall[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.destinationId == destId)
@@ -39,7 +39,7 @@ class MemoryRfcCallRepository : RfcCallRepository {
         return result;
     }
 
-    override RfcCall[] findByTid(string tenantId, TidValue tid) {
+    override RfcCall[] findByTid(TenantId tenantId, TidValue tid) {
         RfcCall[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.tid == tid)
@@ -47,7 +47,7 @@ class MemoryRfcCallRepository : RfcCallRepository {
         return result;
     }
 
-    override RfcCall[] findByStatus(string tenantId, RfcStatus status) {
+    override RfcCall[] findByStatus(TenantId tenantId, RfcStatus status) {
         RfcCall[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.status == status)
@@ -69,14 +69,14 @@ class MemoryRfcCallRepository : RfcCallRepository {
         return true;
     }
 
-    override bool remove(string tenantId, RfcCallId id) {
+    override bool remove(TenantId tenantId, RfcCallId id) {
         auto key = _key(tenantId, id);
         if (key !in _store) return false;
         _store.remove(key);
         return true;
     }
 
-    override size_t countByTenant(string tenantId) {
+    override size_t countByTenant(TenantId tenantId) {
         size_t n = 0;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) n++;

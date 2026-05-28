@@ -22,7 +22,7 @@ class FeatureFlagCliCommand {
     }
 
     /// List all flags for a tenant (optionally filtered by instanceId).
-    void listFlags(string tenantId, string instanceId = "") @safe {
+    void listFlags(TenantId tenantId, string instanceId = "") @safe {
         FeatureFlag[] flags;
         if (instanceId.length > 0)
             flags = useCase.listFlagsByInstance(tenantId, ServiceInstanceId(instanceId));
@@ -37,35 +37,35 @@ class FeatureFlagCliCommand {
     }
 
     /// Print a single flag's details.
-    void getFlag(string tenantId, string id) @safe {
+    void getFlag(TenantId tenantId, string id) @safe {
         auto flag_ = useCase.getFlag(tenantId, FlagId(id));
         if (flag_.isNull) { writeln("Error: Feature flag not found."); return; }
         printFlag(flag_);
     }
 
     /// Enable a flag.
-    void enableFlag(string tenantId, string id, string updatedBy = "") @safe {
+    void enableFlag(TenantId tenantId, string id, string updatedBy = "") @safe {
         auto req = PatchFeatureFlagRequest("ENABLED", updatedBy);
         auto r   = useCase.patchFlagState(tenantId, FlagId(id), req);
         writeln(r.hasError ? "Error: " ~ r.message : "Flag enabled: " ~ r.id);
     }
 
     /// Disable a flag.
-    void disableFlag(string tenantId, string id, string updatedBy = "") @safe {
+    void disableFlag(TenantId tenantId, string id, string updatedBy = "") @safe {
         auto req = PatchFeatureFlagRequest("DISABLED", updatedBy);
         auto r   = useCase.patchFlagState(tenantId, FlagId(id), req);
         writeln(r.hasError ? "Error: " ~ r.message : "Flag disabled: " ~ r.id);
     }
 
     /// Archive a flag.
-    void archiveFlag(string tenantId, string id, string updatedBy = "") @safe {
+    void archiveFlag(TenantId tenantId, string id, string updatedBy = "") @safe {
         auto req = PatchFeatureFlagRequest("ARCHIVED", updatedBy);
         auto r   = useCase.patchFlagState(tenantId, FlagId(id), req);
         writeln(r.hasError ? "Error: " ~ r.message : "Flag archived: " ~ r.id);
     }
 
     /// Delete a flag.
-    void deleteFlag(string tenantId, string id, string deletedBy = "") @safe {
+    void deleteFlag(TenantId tenantId, string id, string deletedBy = "") @safe {
         auto r = useCase.deleteFlag(tenantId, FlagId(id), deletedBy);
         writeln(r.hasError ? "Error: " ~ r.message : "Flag deleted: " ~ r.id);
     }

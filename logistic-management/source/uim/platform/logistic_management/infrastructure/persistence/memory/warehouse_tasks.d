@@ -12,23 +12,23 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryWarehouseTaskRepository : TenantRepository!(WarehouseTask, WarehouseTaskId), WarehouseTaskRepository {
-  override WarehouseTask[] findByWarehouseOrder(string tenantId, WarehouseOrderId orderId) {
+  override WarehouseTask[] findByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId) {
     return findAll(tenantId).filter!(t => t.warehouseOrderId.value == orderId.value).array;
   }
 
-  override WarehouseTask[] findByStatus(string tenantId, WarehouseTaskStatus status) {
+  override WarehouseTask[] findByStatus(TenantId tenantId, WarehouseTaskStatus status) {
     return findAll(tenantId).filter!(t => t.status == status).array;
   }
 
-  override WarehouseTask[] findByTaskType(string tenantId, WarehouseTaskType taskType) {
+  override WarehouseTask[] findByTaskType(TenantId tenantId, WarehouseTaskType taskType) {
     return findAll(tenantId).filter!(t => t.taskType == taskType).array;
   }
 
-  override WarehouseTask[] findByAssignee(string tenantId, string assignedTo) {
+  override WarehouseTask[] findByAssignee(TenantId tenantId, string assignedTo) {
     return findAll(tenantId).filter!(t => t.assignedTo == assignedTo).array;
   }
 
-  override void removeByWarehouseOrder(string tenantId, WarehouseOrderId orderId) {
+  override void removeByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId) {
     auto toRemove = findByWarehouseOrder(tenantId, orderId);
     toRemove.each!(t => remove(tenantId, t.id));
   }

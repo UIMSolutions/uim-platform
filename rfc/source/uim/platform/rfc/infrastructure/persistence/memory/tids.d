@@ -14,24 +14,24 @@ class MemoryTidRepository : TidRepository {
 
     private Tid[string] _store;
 
-    private static string _key(string tenantId, TidValue value) {
+    private static string _key(TenantId tenantId, TidValue value) {
         return tenantId ~ "|" ~ value;
     }
 
-    override Tid findById(string tenantId, TidValue value) {
+    override Tid findById(TenantId tenantId, TidValue value) {
         auto key = _key(tenantId, value);
         if (key !in _store) return Tid.init;
         return _store[key];
     }
 
-    override Tid[] findByTenant(string tenantId) {
+    override Tid[] findByTenant(TenantId tenantId) {
         Tid[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) result ~= _copy(kv.value);
         return result;
     }
 
-    override Tid[] findByDestination(string tenantId, DestinationId destId) {
+    override Tid[] findByDestination(TenantId tenantId, DestinationId destId) {
         Tid[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.destinationId == destId)
@@ -39,7 +39,7 @@ class MemoryTidRepository : TidRepository {
         return result;
     }
 
-    override Tid[] findByStatus(string tenantId, LuwStatus status) {
+    override Tid[] findByStatus(TenantId tenantId, LuwStatus status) {
         Tid[] result;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId && kv.value.status == status)
@@ -61,14 +61,14 @@ class MemoryTidRepository : TidRepository {
         return true;
     }
 
-    override bool remove(string tenantId, TidValue value) {
+    override bool remove(TenantId tenantId, TidValue value) {
         auto key = _key(tenantId, value);
         if (key !in _store) return false;
         _store.remove(key);
         return true;
     }
 
-    override size_t countByTenant(string tenantId) {
+    override size_t countByTenant(TenantId tenantId) {
         size_t n = 0;
         foreach (kv; _store.byKeyValue())
             if (kv.value.tenantId == tenantId) n++;

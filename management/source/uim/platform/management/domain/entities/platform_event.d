@@ -13,8 +13,9 @@ mixin(ShowModule!());
 /// A platform event represents an auditable action or state change
 /// on a BTP resource (subaccount created, entitlement changed, etc.).
 struct PlatformEvent {
-  mixin GlobalEntity!PlatformEventId;
+  mixin TenantEntity!PlatformEventId;
 
+  GlobalAccountId globalAccountId;
   SubaccountId subaccountId; // optional — if subaccount-scoped
   DirectoryId directoryId; // optional — if directory-scoped
   PlatformEventCategory category;
@@ -29,11 +30,17 @@ struct PlatformEvent {
   string[string] details; // additional event data
 
   Json toJson() const {
+    auto jDetail = Json.emptyObject;
+    foreach (key, value; details) {
+      jDetail.set(key, value);
+    }
+
     return entityToJson
+        .set("globalAccountId", globalAccountId)
         .set("subaccountId", subaccountId)
         .set("directoryId", directoryId)
-        .set("category", category.toString)
-        .set("severity", severity.toString)
+        .set("category", category.to!string)
+        .set("severity", severity.to!string)
         .set("eventType", eventType)
         .set("description", description)
         .set("resourceId", resourceId)
@@ -41,6 +48,6 @@ struct PlatformEvent {
         .set("initiatedBy", initiatedBy)
         .set("sourceService", sourceService)
         .set("timestamp", timestamp)
-        .set("details", details);
+        .set("details", jDetail);
   }
 }

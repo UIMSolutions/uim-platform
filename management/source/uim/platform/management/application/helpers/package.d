@@ -12,10 +12,8 @@ void emitEvent(PlatformEventRepository eventRepo, string gaId, string subId, Pla
 
 void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, SubaccountId subId, PlatformEventCategory cat,
   string eventType, string desc, UserId initiatedBy, string sourceService = "cloud-management") {
- 
 
-  PlatformEvent event;
-  event.initEntity();
+  auto event = PlatformEvent(); 
   
   event.globalAccountId = gaId;
   event.subaccountId = subId;

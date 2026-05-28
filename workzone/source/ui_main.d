@@ -15,7 +15,7 @@ import uim.platform.workzone.presentation.gui.controllers.app;
 import std.getopt : getopt, defaultGetoptPrinter;
 
 int main(string[] args) {
-    string tenantId = "default";
+    TenantId tenantId = "default";
     try {
         auto helpInfo = getopt(args, "tenant", "Tenant ID to use", &tenantId);
         if (helpInfo.helpWanted) {

@@ -13,7 +13,7 @@ struct WorkspaceCliModel {
     private ManageWorkspacesUseCase _useCase;
     private string _tenantId;
 
-    this(ManageWorkspacesUseCase useCase, string tenantId) {
+    this(ManageWorkspacesUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
         _tenantId = tenantId;
     }

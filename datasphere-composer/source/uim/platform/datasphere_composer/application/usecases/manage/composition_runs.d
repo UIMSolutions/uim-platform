@@ -30,11 +30,11 @@ class ManageCompositionRunsUseCase {
     return CommandResult(true, run.id.value, null);
   }
 
-  CompositionRun[] list(string tenantId) {
+  CompositionRun[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  CompositionRun[] listByStatus(string tenantId, string status) {
+  CompositionRun[] listByStatus(TenantId tenantId, string status) {
     try {
       import std.conv : to;
       return repo.findByStatus(TenantId(tenantId), status.to!CompositionRunStatus);
@@ -43,7 +43,7 @@ class ManageCompositionRunsUseCase {
     }
   }
 
-  CompositionRun getById(string tenantId, string id) {
+  CompositionRun getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), CompositionRunId(id));
   }
 
@@ -64,7 +64,7 @@ class ManageCompositionRunsUseCase {
     return CommandResult(false, r.id, "Unknown action: " ~ r.action);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto run = repo.findById(TenantId(tenantId), CompositionRunId(id));
     if (run.isNull) return CommandResult(false, id, "Composition run not found");
     repo.remove(TenantId(tenantId), CompositionRunId(id));

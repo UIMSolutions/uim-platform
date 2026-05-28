@@ -29,7 +29,7 @@ class CliRouter {
 
     this(ManageWorkspacesUseCase workspacesUC,
          ManageTasksUseCase tasksUC,
-         string tenantId) {
+         TenantId tenantId) {
         auto wsModel   = WorkspaceCliModel(workspacesUC, tenantId);
         auto taskModel = TaskCliModel(tasksUC, tenantId);
         _workspaceCtrl = new WorkspaceCliController(wsModel);

@@ -31,15 +31,15 @@ class ManageFunctionModulesUseCase {
         return CommandResult(true, fm.id, "");
     }
 
-    FunctionModule getFunctionModule(string tenantId, FunctionModuleId id) {
+    FunctionModule getFunctionModule(TenantId tenantId, FunctionModuleId id) {
         return _repo.findById(tenantId, id);
     }
 
-    FunctionModule[] listFunctionModules(string tenantId) {
+    FunctionModule[] listFunctionModules(TenantId tenantId) {
         return _repo.findByTenant(tenantId);
     }
 
-    FunctionModule[] listByFunctionGroup(string tenantId, string functionGroup) {
+    FunctionModule[] listByFunctionGroup(TenantId tenantId, string functionGroup) {
         return _repo.findByFunctionGroup(tenantId, functionGroup);
     }
 
@@ -62,7 +62,7 @@ class ManageFunctionModulesUseCase {
         return CommandResult(true, fm.id, "");
     }
 
-    CommandResult deleteFunctionModule(string tenantId, FunctionModuleId id) {
+    CommandResult deleteFunctionModule(TenantId tenantId, FunctionModuleId id) {
         auto fm = _repo.findById(tenantId, id);
         if (fm.isNull())
             return CommandResult(false, id, "Function module not found: " ~ id);
@@ -71,7 +71,7 @@ class ManageFunctionModulesUseCase {
         return CommandResult(true, id, "");
     }
 
-    size_t countFunctionModules(string tenantId) {
+    size_t countFunctionModules(TenantId tenantId) {
         return _repo.countByTenant(tenantId);
     }
 }

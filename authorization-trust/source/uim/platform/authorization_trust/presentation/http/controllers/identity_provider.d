@@ -124,7 +124,7 @@ class IdentityProviderController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Identity provider updated successfully", "Updated", 200, responseData);
   }
 
@@ -144,7 +144,7 @@ class IdentityProviderController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Identity provider deleted successfully", "Deleted", 200, responseData);
   }
 }

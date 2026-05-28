@@ -12,6 +12,6 @@ class SoftwareComponentViewModel {
   string name;
   string description;
   string version_;
-  string tenantId;
+  TenantId tenantId;
   string systemInstanceId;
 }

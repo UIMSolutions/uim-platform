@@ -29,14 +29,14 @@ public:
     return CommandResult(true, proxy.toJson());
   }
 
-  CommandResult getAll(string tenantId) {
+  CommandResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
     return CommandResult(true, arr);
   }
 
-  CommandResult getById(string tenantId, string id) {
+  CommandResult getById(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
     if (proxy.isNull) return CommandResult(false, "API proxy not found");
     return CommandResult(true, proxy.toJson());
@@ -56,7 +56,7 @@ public:
     return CommandResult(true, proxy.toJson());
   }
 
-  CommandResult publish(string tenantId, string id) {
+  CommandResult publish(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
     if (proxy.isNull) return CommandResult(false, "API proxy not found");
     proxy.status = ApiProxyStatus.published;
@@ -64,7 +64,7 @@ public:
     return CommandResult(true, proxy.toJson());
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
     if (proxy.isNull) return CommandResult(false, "API proxy not found");
     _repo.remove(getTenantId(tenantId), ApiProxyId(id));

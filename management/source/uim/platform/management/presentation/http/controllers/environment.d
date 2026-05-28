@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management.presentation.http.controllers.environment;
 
-
 // 
 // import uim.platform.management.application.usecases.manage.environment_instances;
 // import uim.platform.management.application.dto;
@@ -30,111 +29,132 @@ class EnvironmentController : ManageController {
     router.post("/api/v1/environments/deprovision/*", &handleDeprovision);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateEnvironmentInstanceRequest r;
-      r.tenantId = tenantId;
-      r.subaccountId = data.getString("subaccountId");
-      r.globalAccountId = data.getString("globalAccountId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.environmentType = data.getString("environmentType");
-      r.planName = data.getString("planName");
-      r.landscapeLabel = data.getString("landscapeLabel");
-      r.memoryQuotaMb = data.getInteger("memoryQuotaMb");
-      r.routeQuota = data.getInteger("routeQuota");
-      r.serviceQuota = data.getInteger("serviceQuota");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.parameters = data.jsonStrMap("parameters");
-      r.labels = data.jsonStrMap("labels");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createEnvironmentInstance(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Environment instance created successfully");
+    auto tenantId = precheck.tenantId;
+    auto subId = SubaccountId(req.params.get("subaccountId"));
+    auto envType = req.params.get("environmentType");
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    EnvironmentInstance[] items;
+    if (envType.length > 0 && !subId.isEmpty)
+      items = usecase.listEnvironmentInstances(tenantId, subId, envType);
+    else if (!subId.isEmpty)
+      items = usecase.listEnvironmentInstances(tenantId, subId);
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Environment instance list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto subId = req.params.get("subaccountId");
-      auto envType = req.params.get("environmentType");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      EnvironmentInstance[] items;
-      if (envType.length > 0 && !subId.isEmpty)
-        items = usecase.listEnvironmentInstances(tenantId, subId, envType);
-      else if (!subId.isEmpty)
-        items = usecase.listEnvironmentInstances(tenantId, subId);
+    auto tenantId = precheck.tenantId;
 
-      auto arr = items.map!(inst => inst.toJson).array.toJson;
+    auto data = precheck.data;
+    CreateEnvironmentInstanceRequest r;
+    r.tenantId = tenantId;
+    r.subaccountId = data.getString("subaccountId");
+    r.globalAccountId = data.getString("globalAccountId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.environmentType = data.getString("environmentType");
+    r.planName = data.getString("planName");
+    r.landscapeLabel = data.getString("landscapeLabel");
+    r.memoryQuotaMb = data.getInteger("memoryQuotaMb");
+    r.routeQuota = data.getInteger("routeQuota");
+    r.serviceQuota = data.getInteger("serviceQuota");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    r.parameters = data.jsonStrMap("parameters");
+    r.labels = data.jsonStrMap("labels");
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Environment instances retrieved successfully");
+    auto result = usecase.createEnvironmentInstance(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Environment instance created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = EnvironmentInstanceId(extractId(req.requestURI));
-      auto inst = usecase.getEnvironmentInstance(tenantId, id);
-      if (inst.isNull) {
-        writeError(res, 404, "Environment instance not found");
-        return;
-      }
-      res.writeJsonBody(inst.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = EnvironmentInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid environment instance ID", 400);
+
+    auto inst = usecase.getEnvironmentInstance(tenantId, id);
+    if (inst.isNull)
+      return errorResponse("Environment instance not found", 404);
+
+    auto responseData = inst.toJson();
+    return successResponse("Environment instance retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = EnvironmentInstanceId(extractId(req.requestURI));
-      auto data = precheck.data;
-      UpdateEnvironmentInstanceRequest request;
-      request.tenantId = tenantId;
-      request.environmentInstanceId = id;
-      request.description = data.getString("description");
-      request.memoryQuotaMb = data.getInteger("memoryQuotaMb");
-      request.routeQuota = data.getInteger("routeQuota");
-      request.serviceQuota = data.getInteger("serviceQuota");
-      request.parameters = data.jsonStrMap("parameters");
-      request.labels = data.jsonStrMap("labels");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateEnvironmentInstance(request);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+
+    auto id = EnvironmentInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid environment instance ID", 400);
+
+    auto data = precheck.data;
+    UpdateEnvironmentInstanceRequest request;
+    request.tenantId = tenantId;
+    request.instanceId = id;
+    request.description = data.getString("description");
+    request.memoryQuotaMb = data.getInteger("memoryQuotaMb");
+    request.routeQuota = data.getInteger("routeQuota");
+    request.serviceQuota = data.getInteger("serviceQuota");
+    request.parameters = data.jsonStrMap("parameters");
+    request.labels = data.jsonStrMap("labels");
+
+    auto result = usecase.updateEnvironmentInstance(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Environment instance updated successfully", "Updated", 200, responseData);
   }
 
-  override protected void handleGetDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  protected Json getDesprovisionHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (precheck.hasError)       
+      return precheck;
+
       auto tenantId = precheck.tenantId;
-      auto id = EnvironmentInstanceId(extractId(req.requestURI));
+      auto id = EnvironmentInstanceId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid environment instance ID", 400);
+
       auto result = usecase.deprovisionEnvironmentInstance(tenantId, id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+      auto responseData = Json.emptyObject.set("id", result.id);
+      return successResponse("Environment instance deprovisioned successfully", "Deprovisioned", 200, responseData);
+
+  }
+  protected void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getDesprovisionHandler(req);
+      res.writeJsonBody(response.data, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

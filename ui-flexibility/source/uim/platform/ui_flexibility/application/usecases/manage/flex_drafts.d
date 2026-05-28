@@ -50,21 +50,24 @@ class ManageFlexDraftsUseCase {
     return CommandResult(true, d.id_.value);
   }
 
-  FlexDraft getDraft(string tenantId, FlexDraftId id) {
+  FlexDraft getDraft(TenantId tenantId, FlexDraftId id) {
     return repo.findById(tenantId, id);
   }
 
-  FlexDraft getDraftByApp(string tenantId, string appId) {
+  FlexDraft getDraftByApp(TenantId tenantId, string appId) {
     return repo.findByApp(tenantId, appId);
   }
 
-  FlexDraft[] listDrafts(string tenantId) {
+  FlexDraft[] listDrafts(TenantId tenantId) {
     return repo.findByTenantAll(tenantId);
   }
 
-  CommandResult discardDraft(string tenantId, FlexDraftId id) {
-    if (!repo.existsById(tenantId, id)) return CommandResult(false, null, "FlexDraft not found");
-    repo.removeById(tenantId, id);
-    return CommandResult(true, id.value);
+  CommandResult discardDraft(TenantId tenantId, FlexDraftId id) {
+    auto draft = repo.findById(tenantId, id);
+    if (draft.isNull)
+      return CommandResult(false, null, "FlexDraft not found");
+
+    repo.remove(draft);
+    return CommandResult(true, draft.id.value);
   }
 }

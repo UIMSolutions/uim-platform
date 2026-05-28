@@ -16,7 +16,7 @@ class MemorySubscriptionJobRepository
     : TenantRepository!(SubscriptionJob, SubscriptionJobId),
       SubscriptionJobRepository
 {
-    SubscriptionJob[] findBySubscription(string tenantId, string subscriptionId) {
+    SubscriptionJob[] findBySubscription(TenantId tenantId, string subscriptionId) {
         SubscriptionJob[] result;
         foreach (job; findByTenant(tenantId)) {
             if (job.subscriptionId == subscriptionId) result ~= job;

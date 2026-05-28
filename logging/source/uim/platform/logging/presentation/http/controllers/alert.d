@@ -102,7 +102,7 @@ class AlertController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Alert acknowledged successfully", 200, resp);
   }
 
@@ -132,7 +132,7 @@ class AlertController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Alert resolved successfully", 200, resp);
   }
 

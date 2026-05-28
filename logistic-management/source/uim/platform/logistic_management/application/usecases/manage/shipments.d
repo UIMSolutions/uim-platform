@@ -18,7 +18,7 @@ public:
     _repo = repo;
   }
 
-  CommandResult createShipment(string tenantId, CreateShipmentRequest req) {
+  CommandResult createShipment(TenantId tenantId, CreateShipmentRequest req) {
     if (req.shipmentNumber.length == 0)
       return CommandResult(false, "Shipment number is required");
 
@@ -44,7 +44,7 @@ public:
     return CommandResult(true, "", s.id.value);
   }
 
-  CommandResult updateShipment(string tenantId, ShipmentId id, UpdateShipmentRequest req) {
+  CommandResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req) {
     auto s = _repo.findById(tenantId, id);
     if (s == Shipment.init) return CommandResult(false, "Shipment not found");
 
@@ -73,26 +73,26 @@ public:
     return CommandResult(true, "", id.value);
   }
 
-  CommandResult deleteShipment(string tenantId, ShipmentId id) {
+  CommandResult deleteShipment(TenantId tenantId, ShipmentId id) {
     auto s = _repo.findById(tenantId, id);
     if (s == Shipment.init) return CommandResult(false, "Shipment not found");
     _repo.remove(tenantId, id);
     return CommandResult(true);
   }
 
-  Shipment getShipment(string tenantId, ShipmentId id) {
+  Shipment getShipment(TenantId tenantId, ShipmentId id) {
     return _repo.findById(tenantId, id);
   }
 
-  Shipment[] listShipments(string tenantId) {
+  Shipment[] listShipments(TenantId tenantId) {
     return _repo.findAll(tenantId);
   }
 
-  Shipment[] listByFreightOrder(string tenantId, FreightOrderId foId) {
+  Shipment[] listByFreightOrder(TenantId tenantId, FreightOrderId foId) {
     return _repo.findByFreightOrder(tenantId, foId);
   }
 
-  Shipment[] listByDirection(string tenantId, LogisticsDirection dir) {
+  Shipment[] listByDirection(TenantId tenantId, LogisticsDirection dir) {
     return _repo.findByDirection(tenantId, dir);
   }
 }

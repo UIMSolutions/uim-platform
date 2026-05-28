@@ -16,42 +16,42 @@ class MemoryBuildJobRepository : BuildJobRepository {
 
   override void save(BuildJob entity)               { _store[entity.id.value] = entity; }
   override void update(BuildJob entity)             { _store[entity.id.value] = entity; }
-  override void remove(string tenantId, BuildJobId id) { _store.remove(id.value); }
+  override void remove(TenantId tenantId, BuildJobId id) { _store.remove(id.value); }
 
-  override BuildJob findById(string tenantId, BuildJobId id) {
+  override BuildJob findById(TenantId tenantId, BuildJobId id) {
     if (id.value in _store) return _store[id.value];
     BuildJob j; return j;
   }
 
-  override BuildJob[] findByTenant(string tenantId) {
+  override BuildJob[] findByTenant(TenantId tenantId) {
     BuildJob[] result;
     foreach (j; _store.byValue)
       if (j.tenantId == tenantId) result ~= j;
     return result;
   }
 
-  override BuildJob[] findByPipeline(string tenantId, string pipelineId) {
+  override BuildJob[] findByPipeline(TenantId tenantId, string pipelineId) {
     BuildJob[] result;
     foreach (j; _store.byValue)
       if (j.tenantId == tenantId && j.pipelineId.value == pipelineId) result ~= j;
     return result;
   }
 
-  override BuildJob[] findByProject(string tenantId, string projectId) {
+  override BuildJob[] findByProject(TenantId tenantId, string projectId) {
     BuildJob[] result;
     foreach (j; _store.byValue)
       if (j.tenantId == tenantId && j.projectId.value == projectId) result ~= j;
     return result;
   }
 
-  override BuildJob[] findByStatus(string tenantId, JobStatus status) {
+  override BuildJob[] findByStatus(TenantId tenantId, JobStatus status) {
     BuildJob[] result;
     foreach (j; _store.byValue)
       if (j.tenantId == tenantId && j.status == status) result ~= j;
     return result;
   }
 
-  override BuildJob[] findByBranch(string tenantId, string branch) {
+  override BuildJob[] findByBranch(TenantId tenantId, string branch) {
     BuildJob[] result;
     foreach (j; _store.byValue)
       if (j.tenantId == tenantId && j.branch == branch) result ~= j;

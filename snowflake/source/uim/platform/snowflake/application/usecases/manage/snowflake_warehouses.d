@@ -23,11 +23,11 @@ class ManageSnowflakeWarehousesUseCase {
     return CommandResult(true, w.id.value, null);
   }
 
-  SnowflakeWarehouse[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
-  SnowflakeWarehouse[] listByAccount(string tenantId, string accountId) {
+  SnowflakeWarehouse[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  SnowflakeWarehouse[] listByAccount(TenantId tenantId, string accountId) {
     return repo.findByAccount(TenantId(tenantId), SnowflakeAccountId(accountId));
   }
-  SnowflakeWarehouse getById(string tenantId, string id) {
+  SnowflakeWarehouse getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), SnowflakeWarehouseId(id));
   }
 
@@ -44,7 +44,7 @@ class ManageSnowflakeWarehousesUseCase {
     return CommandResult(true, w.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto w = repo.findById(TenantId(tenantId), SnowflakeWarehouseId(id));
     if (w.isNull) return CommandResult(false, id, "Warehouse not found");
     repo.remove(TenantId(tenantId), SnowflakeWarehouseId(id));

@@ -72,7 +72,7 @@ struct RfcCall {
             .set("completedAt",     completedAt);
     }
 
-    static RfcCall create(string tenantId, DestinationId dest, FunctionModuleId fm, RfcType rt) {
+    static RfcCall create(TenantId tenantId, DestinationId dest, FunctionModuleId fm, RfcType rt) {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;
         RfcCall c;

@@ -12,5 +12,5 @@ mixin(ShowModule!());
 @safe:
 
 interface ConditionRepository : ITenantRepository!(Condition, ConditionId) {
-    Condition findByName(string tenantId, string name);
+    Condition findByName(TenantId tenantId, string name);
 }

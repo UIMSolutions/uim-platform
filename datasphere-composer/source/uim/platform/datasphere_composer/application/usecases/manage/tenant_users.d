@@ -34,11 +34,11 @@ class ManageTenantUsersUseCase {
     return CommandResult(true, u.id.value, null);
   }
 
-  TenantUser[] list(string tenantId) {
+  TenantUser[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  TenantUser getById(string tenantId, string id) {
+  TenantUser getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), TenantUserId(id));
   }
 
@@ -55,7 +55,7 @@ class ManageTenantUsersUseCase {
     return CommandResult(true, u.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto u = repo.findById(TenantId(tenantId), TenantUserId(id));
     if (u.isNull) return CommandResult(false, id, "User not found");
     repo.remove(TenantId(tenantId), TenantUserId(id));

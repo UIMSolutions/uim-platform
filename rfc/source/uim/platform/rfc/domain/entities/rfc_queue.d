@@ -42,7 +42,7 @@ struct RfcQueueEntry {
             .set("processedAt", processedAt);
     }
 
-    static RfcQueueEntry create(string tenantId, QueueName queueName, QueueDirection dir,
+    static RfcQueueEntry create(TenantId tenantId, QueueName queueName, QueueDirection dir,
                                 TidValue tid, RfcCallId callId, int seq) {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;

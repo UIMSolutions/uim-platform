@@ -66,10 +66,10 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateTheme(UpdateThemeRequest req) {
-    if (!repo.existsById(req.tenantId, req.themeId))
+    auto theme = repo.findById(req.tenantId, req.themeId);
+    if (theme.isNull)
       return CommandResult(false, "", "Theme not found");
 
-    auto theme = repo.findById(req.tenantId, req.themeId);
     with (theme) {
       name = req.name.length > 0 ? req.name : theme.name;
       description = req.description;
@@ -88,13 +88,14 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     }
     theme.isDefault = req.isDefault;
     theme.updatedAt = currentTimestamp();
+
     repo.update(theme);
     return CommandResult(true, theme.id.value, "Theme updated successfully.");
   }
 
   CommandResult deleteTheme(TenantId tenantId, ThemeId id) {
     auto theme = repo.findById(tenantId, id);
-    if (theme == Theme.init)
+    if (theme.isNull)
       return CommandResult(false, "", "Theme not found");
 
     if (theme.isDefault)

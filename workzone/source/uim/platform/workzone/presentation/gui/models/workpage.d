@@ -17,7 +17,7 @@ final class WorkpageGuiModel {
 
     void delegate() @safe onChanged;
 
-    this(ManageWorkpagesUseCase useCase, string tenantId, string workspaceId) {
+    this(ManageWorkpagesUseCase useCase, TenantId tenantId, string workspaceId) {
         _useCase     = useCase;
         _tenantId    = tenantId;
         _workspaceId = workspaceId;

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Web view-model for a Card integration tile.
 struct CardViewModel {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string title;
     string subtitle;
     string description;
@@ -48,7 +48,7 @@ struct CardViewModel {
 
 /// View-model for the card catalogue page.
 struct CardListViewModel {
-    string tenantId;
+    TenantId tenantId;
     CardViewModel[] items;
     string errorMessage;
     bool hasError() const { return errorMessage.length > 0; }

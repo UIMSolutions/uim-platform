@@ -12,50 +12,50 @@ mixin(ShowModule!());
 
 class MemoryFlexVariantRepository : TenantRepository!(FlexVariant, FlexVariantId), FlexVariantRepository {
 
-  bool existsById(string tenantId, FlexVariantId id) {
+  bool existsById(TenantId tenantId, FlexVariantId id) {
     return !findById(tenantId, id).isNull;
   }
 
-  FlexVariant findById(string tenantId, FlexVariantId id) {
+  FlexVariant findById(TenantId tenantId, FlexVariantId id) {
     foreach (v; findByTenant(tenantId))
       if (v.id_ == id) return v;
     return FlexVariant.init;
   }
 
-  bool removeById(string tenantId, FlexVariantId id) {
+  bool removeById(TenantId tenantId, FlexVariantId id) {
     return remove(tenantId, id);
   }
 
-  long countByTenant(string tenantId) {
+  long countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  FlexVariant[] findByTenantAll(string tenantId) {
+  FlexVariant[] findByTenantAll(TenantId tenantId) {
     return findByTenant(tenantId);
   }
 
-  FlexVariant[] findByApp(string tenantId, string appId) {
+  FlexVariant[] findByApp(TenantId tenantId, string appId) {
     FlexVariant[] result;
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId) result ~= v;
     return result;
   }
 
-  FlexVariant[] findByType(string tenantId, string appId, VariantType variantType) {
+  FlexVariant[] findByType(TenantId tenantId, string appId, VariantType variantType) {
     FlexVariant[] result;
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.variantType_ == variantType) result ~= v;
     return result;
   }
 
-  FlexVariant[] findPublicByApp(string tenantId, string appId) {
+  FlexVariant[] findPublicByApp(TenantId tenantId, string appId) {
     FlexVariant[] result;
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.isPublic_) result ~= v;
     return result;
   }
 
-  FlexVariant findDefaultByApp(string tenantId, string appId, VariantType variantType) {
+  FlexVariant findDefaultByApp(TenantId tenantId, string appId, VariantType variantType) {
     foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.variantType_ == variantType && v.isDefault_) return v;
     return FlexVariant.init;

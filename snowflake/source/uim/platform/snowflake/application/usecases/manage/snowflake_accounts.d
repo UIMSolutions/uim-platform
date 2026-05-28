@@ -22,9 +22,9 @@ class ManageSnowflakeAccountsUseCase {
     return CommandResult(true, a.id.value, null);
   }
 
-  SnowflakeAccount[] list(string tenantId) { return repo.findByTenant(TenantId(tenantId)); }
+  SnowflakeAccount[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
 
-  SnowflakeAccount getById(string tenantId, string id) {
+  SnowflakeAccount getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
   }
 
@@ -37,7 +37,7 @@ class ManageSnowflakeAccountsUseCase {
     return CommandResult(true, a.id.value, null);
   }
 
-  CommandResult activate(string tenantId, string id) {
+  CommandResult activate(TenantId tenantId, string id) {
     auto a = repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
     if (a.isNull) return CommandResult(false, id, "Account not found");
     a.status = AccountStatus.active;
@@ -46,7 +46,7 @@ class ManageSnowflakeAccountsUseCase {
     return CommandResult(true, id, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto a = repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
     if (a.isNull) return CommandResult(false, id, "Account not found");
     repo.remove(TenantId(tenantId), SnowflakeAccountId(id));

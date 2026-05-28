@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management.presentation.http.controllers.global_account;
 
-
 // 
 // import uim.platform.management.application.usecases.manage.global_accounts;
 // import uim.platform.management.application.dto;
@@ -34,152 +33,168 @@ class GlobalAccountController : ManageController {
     router.delete_("/api/v1/accounts/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateGlobalAccountRequest r;
-      r.displayName = data.getString("displayName");
-      r.description = data.getString("description");
-      r.contractNumber = data.getString("contractNumber");
-      r.licenseType = data.getString("licenseType");
-      r.region = data.getString("region");
-      r.costCenter = data.getString("costCenter");
-      r.companyName = data.getString("companyName");
-      r.contactEmail = data.getString("contactEmail");
-      r.maxSubaccounts = data.getInteger("maxSubaccounts", 100);
-      r.maxDirectories = data.getInteger("maxDirectories", 20);
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.customProperties = data.jsonStrMap("customProperties");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto data = precheck.data;
+    CreateGlobalAccountRequest r;
+    r.displayName = data.getString("displayName");
+    r.description = data.getString("description");
+    r.contractNumber = data.getString("contractNumber");
+    r.licenseType = data.getString("licenseType");
+    r.region = data.getString("region");
+    r.costCenter = data.getString("costCenter");
+    r.companyName = data.getString("companyName");
+    r.contactEmail = data.getString("contactEmail");
+    r.maxSubaccounts = data.getInteger("maxSubaccounts", 100);
+    r.maxDirectories = data.getInteger("maxDirectories", 20);
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    r.customProperties = data.jsonStrMap("customProperties");
+
+    auto result = usecase.createAccount(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Global account created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto statusFilter = req.params.get("status");
-      GlobalAccount[] items;
-      if (statusFilter.length > 0)
-        items = usecase.listByStatus(statusFilter);
-      else
-        items = usecase.listAll();
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto arr = items.map!(ga => ga.toJson).array.toJson;
+    auto tenantId = precheck.tenantId;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Global accounts retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto statusFilter = req.params.get("status");
+    GlobalAccount[] items = statusFilter.length > 0
+      ? usecase.listAccounts(tenantId, statusFilter) : usecase.listAccounts(tenantId);
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Global accounts retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = extractId(req.requestURI);
-      if (!usecase.existsById(id)) {
-        writeError(res, 404, "Global account not found");
-        return;
-      }
-      
-      auto ga = usecase.getById(tenantId, id);
-      res.writeJsonBody(ga.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = GlobalAccountId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid global account ID", 400);
+
+    auto account = usecase.getAccount(tenantId, id);
+    if (account.isNull)
+      return errorResponse("Global account not found", 404);
+
+    auto responseData = account.toJson();
+    return successResponse("Global account retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = extractId(req.requestURI);
-      auto data = precheck.data;
-      UpdateGlobalAccountRequest request;
-      request.displayName = data.getString("displayName");
-      request.description = data.getString("description");
-      request.costCenter = data.getString("costCenter");
-      request.contactEmail = data.getString("contactEmail");
-      request.customProperties = data.jsonStrMap("customProperties");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.update(id, request);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+
+    auto id = GlobalAccountId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid global account ID", 400);
+
+    auto data = precheck.data;
+    UpdateGlobalAccountRequest request;
+    request.displayName = data.getString("displayName");
+    request.description = data.getString("description");
+    request.costCenter = data.getString("costCenter");
+    request.contactEmail = data.getString("contactEmail");
+    request.customProperties = data.jsonStrMap("customProperties");
+
+    auto result = usecase.updateAccount(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Global account updated successfully", "Updated", 200, responseData);
+  }
+
+  protected Json suspendHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = GlobalAccountId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid global account ID", 400);
+
+    auto result = usecase.suspendAccount(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Global account suspended successfully", "Updated", 200, responseData);
   }
 
   protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.suspend(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
+    try {
+      auto response = suspendHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
+  }
+
+  protected Json reactivateHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = GlobalAccountId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid global account ID", 400);
+
+    auto result = usecase.reactivateAccount(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Global account reactivated successfully", "Updated", 200, responseData);
   }
 
   protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = extractId(req.requestURI);
-      auto result = usecase.reactivate(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
+    try {
+      auto response = reactivateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = GlobalAccountId(extractId(req.requestURI));
-      auto result = usecase.deleteGlobalAccount(id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
-}
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-private Json serializeGlobalAccount(GlobalAccount ga) {
-  return Json.emptyObject
-    .set("id", ga.id)
-    .set("displayName", ga.displayName)
-    .set("description", ga.description)
-    .set("contractNumber", ga.contractNumber)
-    .set("licenseType", to!string(ga.licenseType))
-    .set("status", to!string(ga.status))
-    .set("region", ga.region)
-    .set("costCenter", ga.costCenter)
-    .set("companyName", ga.companyName)
-    .set("contactEmail", ga.contactEmail)
-    .set("maxSubaccounts", ga.maxSubaccounts)
-    .set("currentSubaccounts", ga.currentSubaccounts)
-    .set("maxDirectories", ga.maxDirectories)
-    .set("currentDirectories", ga.currentDirectories)
-    .set("createdAt", ga.createdAt)
-    .set("updatedAt", ga.updatedAt)
-    .set("createdBy", ga.createdBy)
-    .set("customProperties", ga.customProperties.toJson);
+    auto tenantId = precheck.tenantId;
+    auto id = GlobalAccountId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid global account ID", 400);
+
+    auto result = usecase.deleteAccount(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Global account deleted successfully", "Deleted", 200, responseData);
+  }
 }

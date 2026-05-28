@@ -33,15 +33,15 @@ class ManageDataProductsUseCase {
     return CommandResult(true, p.id.value, null);
   }
 
-  DataProduct[] list(string tenantId) {
+  DataProduct[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  DataProduct[] listByProvider(string tenantId, string providerId) {
+  DataProduct[] listByProvider(TenantId tenantId, string providerId) {
     return repo.findByProvider(TenantId(tenantId), DataProviderId(providerId));
   }
 
-  DataProduct getById(string tenantId, string id) {
+  DataProduct getById(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), DataProductId(id));
   }
 
@@ -61,7 +61,7 @@ class ManageDataProductsUseCase {
     return CommandResult(true, p.id.value, null);
   }
 
-  CommandResult remove(string tenantId, string id) {
+  CommandResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), DataProductId(id));
     if (p.isNull) return CommandResult(false, id, "Data product not found");
     repo.remove(TenantId(tenantId), DataProductId(id));

@@ -81,10 +81,10 @@ class ManageScalingPoliciesUseCase {
 
   CommandResult updatePolicy(UpdateScalingPolicyRequest r) {
     import core.time : MonoTime;
-    if (!repo.existsById(r.id))
+    auto existing = repo.findById(r.tenantId, r.policyId);
+    if (existing.isNull)
       return CommandResult(false, "", "Policy not found");
 
-    auto existing = repo.findById(r.id);
     existing.instanceMinCount = r.instanceMinCount > 0 ? r.instanceMinCount : existing.instanceMinCount;
     existing.instanceMaxCount = r.instanceMaxCount > existing.instanceMinCount
       ? r.instanceMaxCount : existing.instanceMaxCount;
@@ -96,7 +96,7 @@ class ManageScalingPoliciesUseCase {
     // Replace rules
     ScalingRuleEntity[] newRules;
     foreach (rr; r.scalingRules) {
-      ScalingRuleEntity rule;
+      auto rule = ScalingRuleEntity();
       rule.id                = generateId();
       rule.metricType        = toMetricType(rr.metricType);
       rule.customMetricName  = rr.customMetricName;
@@ -110,22 +110,24 @@ class ManageScalingPoliciesUseCase {
     existing.scalingRules = newRules;
 
     repo.update(existing);
-    return CommandResult(true, r.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deletePolicy(PolicyId id) {
-    if (!repo.existsById(id))
+  CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
       return CommandResult(false, "", "Policy not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
   }
 
-  ScalingPolicyEntity getPolicy(PolicyId id) {
-    return repo.findById(id);
+  ScalingPolicyEntity getPolicy(TenantId tenantId, PolicyId id) {
+    return repo.findById(tenantId, id);
   }
 
-  ScalingPolicyEntity getPolicyByAppId(AppBindingId appId) {
-    return repo.findByAppId(appId);
+  ScalingPolicyEntity getPolicyByAppId(TenantId tenantId, AppBindingId appId) {
+    return repo.findByAppId(tenantId, appId);
   }
 
   ScalingPolicyEntity[] listPolicies(TenantId tenantId) {

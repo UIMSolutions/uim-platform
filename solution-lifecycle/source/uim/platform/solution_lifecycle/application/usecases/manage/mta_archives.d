@@ -44,18 +44,18 @@ class ManageMtaArchivesUseCase {
         return CommandResult(true, archive.id.value, "");
     }
 
-    MtaArchive[] listArchives(string tenantId) {
+    MtaArchive[] listArchives(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    MtaArchive getArchive(string tenantId, MtaArchiveId id) {
+    MtaArchive getArchive(TenantId tenantId, MtaArchiveId id) {
         auto results = repo.findByTenant(tenantId);
         foreach (a; results)
             if (a.id.value == id.value) return a;
         return new MtaArchive();
     }
 
-    CommandResult deleteArchive(string tenantId, MtaArchiveId id) {
+    CommandResult deleteArchive(TenantId tenantId, MtaArchiveId id) {
         auto a = getArchive(tenantId, id);
         if (a.isNull) return CommandResult(false, "", "MTA archive not found");
         repo.remove(id);

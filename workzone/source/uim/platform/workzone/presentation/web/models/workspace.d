@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Web view-model for a single workspace — pre-formatted for HTML rendering.
 struct WorkspaceViewModel {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string name;
     string description;
     string alias_;
@@ -93,7 +93,7 @@ struct WorkspaceListItem {
 
 /// View-model for the workspace list page.
 struct WorkspaceListViewModel {
-    string tenantId;
+    TenantId tenantId;
     WorkspaceListItem[] items;
     string errorMessage;
     bool hasError() const { return errorMessage.length > 0; }
