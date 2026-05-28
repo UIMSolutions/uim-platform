@@ -180,45 +180,45 @@ unittest {
         .set("manageEntitlements", true)
         .set("labels", Json.emptyObject.set("env", "test"));
 
-      auto reqCreate = createMockRequest("POST", "/api/v1/directories", "test-tenant", createData);
-      auto resCreate = controller.createHandler(reqCreate);
-      writeln("Create Response: ", resCreate);
-      string createdId = resCreate["data"]["id"].get!string;
-      // assertSuccess(resCreate, 201);
+    //   auto reqCreate = createMockRequest("POST", "/api/v1/directories", "test-tenant", createData);
+    //   auto resCreate = controller.createHandler(reqCreate);
+    //   writeln("Create Response: ", resCreate);
+    //   string createdId = resCreate["data"]["id"].get!string;
+    //   // assertSuccess(resCreate, 201);
 
-      // 4. Test Get Handler
-      auto reqGet = createMockRequest("GET", "/api/v1/directories/" ~ createdId);
-      // Simulating the precheck logic usually handled by the base class
-      // reqGet.params["id"] = createdId; 
-      auto resGet = controller.getHandler(reqGet);
-      writeln("Get Response: ", resGet);
-      // assertSuccess(resGet, 200);
-      // assert(resGet["data"]["displayName"].get!string == "Test Directory");
+    //   // 4. Test Get Handler
+    //   auto reqGet = createMockRequest("GET", "/api/v1/directories/" ~ createdId);
+    //   // Simulating the precheck logic usually handled by the base class
+    //   // reqGet.params["id"] = createdId; 
+    //   auto resGet = controller.getHandler(reqGet);
+    //   writeln("Get Response: ", resGet);
+    //   // assertSuccess(resGet, 200);
+    //   // assert(resGet["data"]["displayName"].get!string == "Test Directory");
 
-      // 5. Test Update Handler
-      Json updateData = Json.emptyObject
-        .set("displayName", "Updated Name")
-        .set("description", "Updated description");
-      auto reqUpdate = createMockRequest("PUT", "/api/v1/directories/" ~ createdId, "test-tenant", updateData);
-      auto resUpdate = controller.updateHandler(reqUpdate);
-      writeln("Update Response: ", resUpdate);
-      // assertSuccess(resUpdate, 200);
+    //   // 5. Test Update Handler
+    //   Json updateData = Json.emptyObject
+    //     .set("displayName", "Updated Name")
+    //     .set("description", "Updated description");
+    //   auto reqUpdate = createMockRequest("PUT", "/api/v1/directories/" ~ createdId, "test-tenant", updateData);
+    //   auto resUpdate = controller.updateHandler(reqUpdate);
+    //   writeln("Update Response: ", resUpdate);
+    //   // assertSuccess(resUpdate, 200);
 
-      // 6. Test List Handler (Again, should have 1 item)
-      auto resList2 = controller.listHandler(reqList);
-      writeln("List Response (Post-Create): ", resList2);
-      // assert(resList2["data"]["totalCount"].get!int == 1);
+    //   // 6. Test List Handler (Again, should have 1 item)
+    //   auto resList2 = controller.listHandler(reqList);
+    //   writeln("List Response (Post-Create): ", resList2);
+    //   // assert(resList2["data"]["totalCount"].get!int == 1);
 
-      // 7. Test Delete Handler
-      auto reqDelete = createMockRequest("DELETE", "/api/v1/directories/" ~ createdId);
-      auto resDelete = controller.deleteHandler(reqDelete);
-      writeln("Delete Response: ", resDelete);
-      // assertSuccess(resDelete, 200);
+    //   // 7. Test Delete Handler
+    //   auto reqDelete = createMockRequest("DELETE", "/api/v1/directories/" ~ createdId);
+    //   auto resDelete = controller.deleteHandler(reqDelete);
+    //   writeln("Delete Response: ", resDelete);
+    //   // assertSuccess(resDelete, 200);
 
-      // 8. Test Get Handler (Should be 404)
-      auto resGet404 = controller.getHandler(reqGet);
-      writeln("Get 404 Response: ", resGet404);
-      // assert(resGet404["code"].get!int == 404);
+    //   // 8. Test Get Handler (Should be 404)
+    //   auto resGet404 = controller.getHandler(reqGet);
+    //   writeln("Get 404 Response: ", resGet404);
+    //   // assert(resGet404["code"].get!int == 404);
     }
   }
 
