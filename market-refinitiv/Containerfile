@@ -16,13 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 COPY --from=builder /build/build/uim-market-refinitiv-platform-service .
 
-ENV MARKET_RATES_HOST=0.0.0.0
-ENV MARKET_RATES_PORT=8097
+ENV MARKET_REFINITIV_HOST=0.0.0.0
+ENV MARKET_REFINITIV_PORT=8098
+ENV MARKET_REFINITIV_STORAGE_BACKEND=MEMORY
 
-EXPOSE 8097
+EXPOSE 8098
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8097/api/v1/health || exit 1
+    CMD curl -f http://localhost:8098/api/v1/health || exit 1
 
 USER appuser
 ENTRYPOINT ["./uim-market-refinitiv-platform-service"]

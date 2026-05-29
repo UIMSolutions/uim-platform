@@ -26,7 +26,7 @@ class OverviewController : PlatformController {
   }
 
   protected Json getOverviewHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

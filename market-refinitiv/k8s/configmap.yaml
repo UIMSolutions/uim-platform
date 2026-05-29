@@ -6,5 +6,10 @@ metadata:
     app: market-refinitiv
     tier: platform-service
 data:
-  MARKET_RATES_HOST: "0.0.0.0"
-  MARKET_RATES_PORT: "8097"
+  MARKET_REFINITIV_HOST: "0.0.0.0"
+  MARKET_REFINITIV_PORT: "8098"
+  MARKET_REFINITIV_SERVICE_NAME: "uim-market-refinitiv-platform-service"
+  MARKET_REFINITIV_STORAGE_BACKEND: "MEMORY"
+  MARKET_REFINITIV_FILE_PATH: "/data/market-refinitiv"
+  MARKET_REFINITIV_MONGO_URI: "mongodb://mongodb.default.svc.cluster.local:27017"
+  MARKET_REFINITIV_MONGO_DB: "market_refinitiv"

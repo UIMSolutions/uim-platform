@@ -134,7 +134,7 @@ class EnvironmentController : ManageController {
   }
 
   protected Json getDesprovisionHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)       
       return precheck;
 

@@ -105,8 +105,7 @@ class KeyEntryController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = req.requestPath.to!string;
-    auto id = KeyEntryId(extractSegment(path, 6)); // /api/v1/keystores/{id}/entries/{entryId}
+    auto id = KeyEntryId(extractSegment(precheck.path, 6)); // /api/v1/keystores/{id}/entries/{entryId}
     auto entry = usecase.getById(tenantId, id);
     if (entry.isNull)
       return errorResponse("Key entry not found", 404);

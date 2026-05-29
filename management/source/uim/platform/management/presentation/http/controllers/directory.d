@@ -164,7 +164,8 @@ unittest {
       auto controller = new DirectoryController(usecase);
 
       // 2. Test List Handler (Initially empty)
-      auto reqList = createMockRequest("GET", "/api/v1/directories");
+      auto tenantId = TenantId("test-tenant");
+      auto reqList = createMockRequest("GET", "/api/v1/directories", tenantId);
       reqList.params["globalAccountId"] = "test-account";
       auto resList = controller.listHandler(reqList);
       writeln("List Response: ", resList);

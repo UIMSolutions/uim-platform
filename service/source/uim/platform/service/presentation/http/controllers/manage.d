@@ -35,14 +35,12 @@ class ManageController : PlatformController {
 
   // #region list
   protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
-    if (hasError(precheck))
+    auto precheck = super.getHandler(req);
+    // writeln("Precheck result in listHandler: ", precheck);
+    if (precheck.hasError)
       return precheck; // Return error response from precheck
 
-    return precheck
-      .set("status", "ok")
-      .set("message", "List handler not implemented")
-      .set("code", 200);
+    return successResponse("List handler not implemented", 200);
   }
 
   protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -56,15 +54,13 @@ class ManageController : PlatformController {
   // #endregion list
 
   // #region create
+  
   protected Json createHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck; // Return error response from precheck
 
-    return precheck
-      .set("status", "ok")
-      .set("message", "Create handler not implemented")
-      .set("code", 201);
+    return successResponse(precheck, "Create handler not implemented", 201);
   }
 
   protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -78,18 +74,15 @@ class ManageController : PlatformController {
   // #endregion create
 
   // #region get
-  protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck; // Return error response from precheck
 
-    return precheck
-      .set("status", "ok")
-      .set("message", "Get handler not implemented")
-      .set("code", 200);
+    return successResponse(precheck, "Get handler not implemented", 200);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = getHandler(req);
       res.writeJsonBody(response, 200);
@@ -101,7 +94,7 @@ class ManageController : PlatformController {
 
   // #region update
   protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.putHandler(req);
     if (precheck.hasError)
       return precheck; // Return error response from precheck 
 
@@ -109,11 +102,7 @@ class ManageController : PlatformController {
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 
-    return precheck
-      .set("id", id)
-      .set("status", "ok")
-      .set("message", "Update handler not implemented")
-      .set("code", 200);
+    return successResponse(precheck, "Update handler not implemented", 200);
   }
 
   protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -127,8 +116,8 @@ class ManageController : PlatformController {
   // #endregion update
 
   // #region delete
-  protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
     if (precheck.hasError)
       return precheck; // Return error response from precheck
 
@@ -136,14 +125,10 @@ class ManageController : PlatformController {
     if (id.isEmpty)
       return errorResponse("ID is required", 400);
 
-    return precheck
-      .set("id", id)
-      .set("status", "ok")
-      .set("message", "Delete handler not implemented")
-      .set("code", 200);
+    return successResponse(precheck, "Delete handler not implemented", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = deleteHandler(req);
       res.writeJsonBody(response, 200);

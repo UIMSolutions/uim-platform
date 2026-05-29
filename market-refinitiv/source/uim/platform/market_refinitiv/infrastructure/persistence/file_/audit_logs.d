@@ -29,13 +29,14 @@ class FileAuditLogRepository : AuditLogRepository {
     auto p = logPath(tenantId);
     if (!p.exists) return [];
 
-    AuditLog[] out;
+    AuditLog[] results;
     foreach (line; readText(p).splitLines()) {
       if (line.length == 0) continue;
-      try out ~= auditLogFromJson(parseJsonString(line));
-      catch (Exception) {}
+      try {
+        results ~= auditLogFromJson(parseJsonString(line));
+      } catch (Exception) {}
     }
-    return out;
+    return results;
   }
 
   override void save(AuditLog log) @trusted {

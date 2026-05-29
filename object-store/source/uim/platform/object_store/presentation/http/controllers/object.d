@@ -63,7 +63,7 @@ class ObjectController : ManageController {
   }
 
   protected Json listByBucketHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -112,7 +112,7 @@ class ObjectController : ManageController {
   }
 
   protected Json updateMetadataHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.putHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -166,7 +166,7 @@ class ObjectController : ManageController {
   }
 
   protected Json copyHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -201,7 +201,7 @@ class ObjectController : ManageController {
   }
 
   protected Json listVersionsHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

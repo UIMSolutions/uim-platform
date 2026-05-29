@@ -21,7 +21,7 @@ spec:
         image: uim-market-refinitiv-platform-service:latest
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8097
+        - containerPort: 8098
           protocol: TCP
         envFrom:
         - configMapRef:
@@ -29,14 +29,14 @@ spec:
         livenessProbe:
           httpGet:
             path: /api/v1/health
-            port: 8097
+            port: 8098
           initialDelaySeconds: 10
           periodSeconds: 30
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /api/v1/health
-            port: 8097
+            port: 8098
           initialDelaySeconds: 5
           periodSeconds: 15
           timeoutSeconds: 3

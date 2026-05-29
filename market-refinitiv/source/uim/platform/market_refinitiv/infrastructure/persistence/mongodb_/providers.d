@@ -24,11 +24,11 @@ class MongoDbProviderRepository : ProviderRepository {
   }
 
   override Provider[] findByTenant(TenantId tenantId) @trusted {
-    Provider[] out;
+    Provider[] results;
     foreach (d; collection.find(Bson(["tenantId": Bson(tenantId.value)]))) {
-      out ~= providerFromDoc(d);
+      results ~= providerFromDoc(d);
     }
-    return out;
+    return results;
   }
 
   override void save(Provider provider) @trusted {

@@ -24,11 +24,11 @@ class MongoDbMarketRateRepository : MarketRateRepository {
   }
 
   override MarketRate[] findByTenant(TenantId tenantId) @trusted {
-    MarketRate[] out;
+    MarketRate[] results;
     foreach (d; collection.find(Bson(["tenantId": Bson(tenantId.value)]))) {
-      out ~= marketRateFromDoc(d);
+      results ~= marketRateFromDoc(d);
     }
-    return out;
+    return results;
   }
 
   override void save(MarketRate rate) @trusted {

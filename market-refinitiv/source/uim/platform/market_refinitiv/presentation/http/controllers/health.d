@@ -19,7 +19,7 @@ class HealthController : SAPController {
   private void handleHealth(HTTPServerRequest req, HTTPServerResponse res) {
     auto j = Json.emptyObject;
     j["status"]  = Json("UP");
-    j["service"] = Json("Market Rates Management - BYOR");
+    j["service"] = Json("Market Rates Management - Refinitiv Data Option");
     res.writeJsonBody(j, 200);
   }
 }

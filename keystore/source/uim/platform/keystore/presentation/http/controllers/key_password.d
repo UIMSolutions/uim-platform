@@ -21,14 +21,14 @@ class KeyPasswordController : ManageController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
     // Password Storage API: set, get, delete, list
+    router.get("/api/v1/passwords", &handleList);
     router.put("/api/v1/passwords/*", &handleSetPassword);
     router.get("/api/v1/passwords/*", &handleGet);
     router.delete_("/api/v1/passwords/*", &handleDelete);
-    router.get("/api/v1/passwords", &handleList);
   }
 
   protected Json setPasswordHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.putHandler(req);
     if (precheck.hasError)
       return precheck;
 

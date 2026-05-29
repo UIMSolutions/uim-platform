@@ -27,12 +27,13 @@ class FileMarketRateRepository : MarketRateRepository {
     auto dir = tenantDir(tenantId);
     if (!dir.exists) return [];
 
-    MarketRate[] out;
+    MarketRate[] results;
     foreach (e; dirEntries(dir, "*.json", SpanMode.shallow)) {
-      try out ~= marketRateFromJson(parseJsonString(readText(e.name)));
-      catch (Exception) {}
+      try {
+        results ~= marketRateFromJson(parseJsonString(readText(e.name)));
+      } catch (Exception) {}
     }
-    return out;
+    return results;
   }
 
   override void save(MarketRate rate) {

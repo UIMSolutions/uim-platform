@@ -200,9 +200,11 @@ unittest {
       auto repo = new MemoryEntitlementRepository();
       auto usecase = new ManageEntitlementsUseCase(repo, new EntitlementEvaluator);
       auto controller = new EntitlementController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
 
       // 2. Test List Handler (Initially empty)
-      auto reqList = createMockRequest("GET", "/api/v1/entitlements");
+      auto reqList = createMockRequest("GET", "/api/v1/entitlements", tenantId);
       reqList.params["globalAccountId"] = "test-account";
       auto resList = controller.listHandler(reqList);
       writeln("Initial List Response: ", resList);

@@ -28,84 +28,47 @@ class ExecutableController : ManageController {
     router.delete_("/api/v2/lm/executables/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateExecutableRequest r;
-      r.tenantId = tenantId;
-      r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      r.scenarioId = ScenarioId(data.getString("scenarioId"));
-      r.executableId = ExecutableId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.type = data.getString("type");
-      r.versionId = data.getString("versionId");
-      r.deployable = data.getString("deployable");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createExecutable(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Executable registered");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    CreateExecutableRequest r;
+    r.tenantId = tenantId;
+    r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    r.scenarioId = ScenarioId(data.getString("scenarioId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.type = data.getString("type");
+    r.versionId = data.getString("versionId");
+    r.deployable = data.getString("deployable");
+
+    auto result = usecase.createExecutable(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Executable created successfully", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-      auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto executables = scenarioId.isEmpty
-        ? usecase.listExecutables(tenantId, rgId) : usecase.listExecutables(tenantId, rgId, scenarioId);
+    auto tenantId = precheck.tenantId;
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
 
-      auto jarr = Json.emptyArray;
-      foreach (e; executables) {
-        jarr ~= Json.emptyObject
-          .set("id", e.id)
-          .set("scenarioId", e.scenarioId)
-          .set("name", e.name)
-          .set("description", e.description)
-          .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
-          .set("versionId", e.versionId)
-          .set("deployable", e.deployable)
-          .set("createdAt", e.createdAt)
-          .set("updatedAt", e.updatedAt);
-      }
+    auto executables = scenarioId.isEmpty
+      ? usecase.listExecutables(tenantId, rgId) : usecase.listExecutables(tenantId, rgId, scenarioId);
 
-      auto resp = Json.emptyObject
-        .set("resources", jarr)
-        .set("totalCount", executables.length)
-        .set("message", "Executables retrieved");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = Executableprecheck.id);
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
-
-      auto e = usecase.getExecutable(tenantId, rgId, id);
-      if (e.isNull) {
-        writeError(res, 404, "Executable not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto list = Json.emptyArray;
+    foreach (e; executables) {
+      list ~= Json.emptyObject
         .set("id", e.id)
         .set("scenarioId", e.scenarioId)
         .set("name", e.name)
@@ -114,34 +77,65 @@ class ExecutableController : ManageController {
         .set("versionId", e.versionId)
         .set("deployable", e.deployable)
         .set("createdAt", e.createdAt)
-        .set("updatedAt", e.updatedAt)
-        .set("message", "Executable retrieved");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("updatedAt", e.updatedAt);
     }
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Executables retrieved successfully", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = Executableprecheck.id);
-      auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteExecutable(tenantId, rgId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto response = Json.emptyObject
-          .set("id", id)
-          .set("message", "Executable deleted");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(response, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = ExecutableId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid executable ID");
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto e = usecase.getExecutable(tenantId, rgId, id);
+    if (e.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = Json.emptyObject
+      .set("id", e.id)
+      .set("scenarioId", e.scenarioId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
+      .set("versionId", e.versionId)
+      .set("deployable", e.deployable)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("message", "Executable retrieved");
+
+    return successResponse("Scan job retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = ExecutableId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid executable ID");
+
+    auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+
+    auto result = usecase.deleteExecutable(tenantId, rgId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Executable deleted successfully", "Deleted", 200, responseData);
   }
 }

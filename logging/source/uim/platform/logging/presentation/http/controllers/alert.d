@@ -86,7 +86,7 @@ class AlertController : ManageController {
   }
 
   protected Json acknowledgeHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -116,7 +116,7 @@ class AlertController : ManageController {
   }
 
   protected Json resolveHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 

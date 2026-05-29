@@ -141,7 +141,7 @@ class SubaccountController : ManageController {
   }
 
   protected Json moveHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -174,7 +174,7 @@ class SubaccountController : ManageController {
   }
 
   protected Json suspendHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -200,7 +200,7 @@ class SubaccountController : ManageController {
   }
 
   protected Json reactivateHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 

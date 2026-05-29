@@ -33,7 +33,7 @@ class KeystoreController : ManageController {
   }
 
   protected Json uploadHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -184,7 +184,7 @@ class KeystoreController : ManageController {
   }
 
   protected Json resolveHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

@@ -25,11 +25,11 @@ class MongoDbAuditLogRepository : AuditLogRepository {
   }
 
   override AuditLog[] findByTenant(TenantId tenantId) @trusted {
-    AuditLog[] out;
+    AuditLog[] results;
     foreach (d; collection.find(Bson(["tenantId": Bson(tenantId.value)]))) {
-      out ~= auditLogFromDoc(d);
+      results ~= auditLogFromDoc(d);
     }
-    return out;
+    return results;
   }
 
   override void save(AuditLog log) @trusted {

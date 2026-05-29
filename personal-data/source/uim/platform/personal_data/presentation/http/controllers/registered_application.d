@@ -134,7 +134,7 @@ class RegisteredApplicationController : ManageController {
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
-        auto precheck = precheckHandler(req);
+        auto precheck = super.postHandler(req);
         if (precheck.hasError)
             return precheck;
 
@@ -166,7 +166,7 @@ class RegisteredApplicationController : ManageController {
     }
 
     protected Json suspendHandler(HTTPServerRequest req) {
-        auto precheck = precheckHandler(req);
+        auto precheck = super.postHandler(req);
         if (precheck.hasError)
             return precheck;
 

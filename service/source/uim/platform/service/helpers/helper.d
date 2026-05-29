@@ -275,3 +275,7 @@ long currentTimestamp() {
 
   return Clock.currStdTime();
 }
+
+string generateUniqueId() {
+  return randomUUID().toString();
+}
