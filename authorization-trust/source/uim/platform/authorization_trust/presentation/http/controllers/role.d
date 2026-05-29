@@ -39,7 +39,7 @@ class RoleController : ManageController {
       r.appId       = data.getString("appId");
 
       auto srArr = j["scopeReferences"];
-      if (srArr.type == Json.Type.array)
+      if (srArr.isArray)
         foreach (v; srArr.byValue)
           r.scopeReferences ~= v.get!string;
 
@@ -96,7 +96,7 @@ class RoleController : ManageController {
       r.description = data.getString("description");
 
       auto srArr = j["scopeReferences"];
-      if (srArr.type == Json.Type.array)
+      if (srArr.isArray)
         foreach (v; srArr.byValue)
           r.scopeReferences ~= v.get!string;
 

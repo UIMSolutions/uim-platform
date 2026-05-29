@@ -56,7 +56,7 @@ class FunctionModuleController : PlatformController {
             r.shortText     = data.getString("shortText", "");
             r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");
 
-            if (j.type == Json.Type.object && "parameters" in j) {
+            if (j.isObject && "parameters" in j) {
                 foreach (jp; j["parameters"]) {
                     RfcParameter p;
                     p.name         = jp.getString("name", "");
@@ -97,7 +97,7 @@ class FunctionModuleController : PlatformController {
             r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");
             r.active        = j.get("active", Json(true)).get!bool;
 
-            if (j.type == Json.Type.object && "parameters" in j) {
+            if (j.isObject && "parameters" in j) {
                 foreach (jp; j["parameters"]) {
                     RfcParameter p;
                     p.name         = jp.getString("name", "");

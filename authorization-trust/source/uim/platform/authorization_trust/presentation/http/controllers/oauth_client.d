@@ -43,17 +43,17 @@ class OAuthClientController : ManageController {
       r.appId = data.getString("appId");
 
       auto gtArr = j["grantTypes"];
-      if (gtArr.type == Json.Type.array)
+      if (gtArr.isArray)
         foreach (v; gtArr.byValue)
           r.grantTypes ~= v.get!string;
 
       auto scArr = j["scopes"];
-      if (scArr.type == Json.Type.array)
+      if (scArr.isArray)
         foreach (v; scArr.byValue)
           r.scopes ~= v.get!string;
 
       auto ruArr = j["redirectUris"];
-      if (ruArr.type == Json.Type.array)
+      if (ruArr.isArray)
         foreach (v; ruArr.byValue)
           r.redirectUris ~= v.get!string;
 
@@ -129,17 +129,17 @@ class OAuthClientController : ManageController {
       r.description = data.getString("description");
 
       auto gtArr = j["grantTypes"];
-      if (gtArr.type == Json.Type.array)
+      if (gtArr.isArray)
         foreach (v; gtArr.byValue)
           r.grantTypes ~= v.get!string;
 
       auto scArr = j["scopes"];
-      if (scArr.type == Json.Type.array)
+      if (scArr.isArray)
         foreach (v; scArr.byValue)
           r.scopes ~= v.get!string;
 
       auto ruArr = j["redirectUris"];
-      if (ruArr.type == Json.Type.array)
+      if (ruArr.isArray)
         foreach (v; ruArr.byValue)
           r.redirectUris ~= v.get!string;
 

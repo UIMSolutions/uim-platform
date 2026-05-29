@@ -47,11 +47,11 @@ class ServiceMetricHandler {
         json["planId"].get!string,
         json["planName"].get!string,
         json["metricName"].get!string,
-        json.type == Json.Type.object && json["description"].type != Json.Type.undefined
+        json.isObject && json["description"].type != Json.Type.undefined
           ? json["description"].get!string : "",
         json["unit"].get!string,
         json["isBillable"].get!bool,
-        json.type == Json.Type.object && json["category"].type != Json.Type.undefined
+        json.isObject && json["category"].type != Json.Type.undefined
           ? json["category"].get!string : "",
         json["commercialModel"].get!string,
       );

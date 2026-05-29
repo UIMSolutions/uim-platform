@@ -44,11 +44,11 @@ class CallController : PlatformController {
             r.rfcType         = _parseRfcType(data.getString("rfcType", "sRFC"));
             r.queueName       = data.getString("queueName", "");
 
-            if (j.type == Json.Type.object && "importParams" in j) {
+            if (j.isObject && "importParams" in j) {
                 foreach (jp; j["importParams"])
                     r.importParams ~= ParameterValue(jp.getString("name", ""), jp.getString("value", ""));
             }
-            if (j.type == Json.Type.object && "changingParams" in j) {
+            if (j.isObject && "changingParams" in j) {
                 foreach (jp; j["changingParams"])
                     r.changingParams ~= ParameterValue(jp.getString("name", ""), jp.getString("value", ""));
             }

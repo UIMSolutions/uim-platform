@@ -40,8 +40,8 @@ class SnowflakeWarehouseController : ManageController {
     r.name       = data.getString("name");
     r.size       = data.getString("size");
     r.comment    = data.getString("comment");
-    if (j["autoSuspend"].type == Json.Type.int_) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
-    if (j["autoResume"].type == Json.Type.bool_) r.autoResume = j["autoResume"].get!bool;
+    if (j["autoSuspend"].isInteger) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
+    if (j["autoResume"].isBoolean_) r.autoResume = j["autoResume"].get!bool;
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -57,8 +57,8 @@ class SnowflakeWarehouseController : ManageController {
     r.size     = data.getString("size");
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");
-    if (j["autoSuspend"].type == Json.Type.int_) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
-    if (j["autoResume"].type == Json.Type.bool_) r.autoResume = j["autoResume"].get!bool;
+    if (j["autoSuspend"].isInteger) r.autoSuspend = cast(int) j["autoSuspend"].get!long;
+    if (j["autoResume"].isBoolean_) r.autoResume = j["autoResume"].get!bool;
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

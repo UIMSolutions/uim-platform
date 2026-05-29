@@ -33,14 +33,14 @@ class CustomMetricController : ManageController {
       auto data = precheck.data;
       // Support batch: {"metrics": [...]} or single object
       auto metricsJ = j["metrics"];
-      if (metricsJ.type == Json.Type.array) {
+      if (metricsJ.isArray) {
         foreach (mj; metricsJ.byValue) {
           SubmitCustomMetricRequest r;
           r.appId      = appId;
           r.metricName = mdata.getString("name");
-          r.value      = mj.type == Json.Type.object ? mj["value"].get!double : 0.0;
+          r.value      = mj.isObject ? mj["value"].get!double : 0.0;
           r.unit       = mdata.getString("unit");
-          r.timestamp  = mj.type == Json.Type.object && mj["timestamp"].type == Json.Type.int_
+          r.timestamp  = mj.isObject && mj["timestamp"].isInteger
             ? mj["timestamp"].get!long : 0;
           usecase.submit(r);
         }
@@ -49,9 +49,9 @@ class CustomMetricController : ManageController {
         SubmitCustomMetricRequest r;
         r.appId      = appId;
         r.metricName = data.getString("name");
-        r.value      = j["value"].type == Json.Type.float_ ? j["value"].get!double : 0.0;
+        r.value      = j["value"].isFloat ? j["value"].get!double : 0.0;
         r.unit       = data.getString("unit");
-        r.timestamp  = j["timestamp"].type == Json.Type.int_ ? j["timestamp"].get!long : 0;
+        r.timestamp  = j["timestamp"].isInteger ? j["timestamp"].get!long : 0;
         auto result = usecase.submit(r);
         if (result.success)
           res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Metric submitted"), 201);

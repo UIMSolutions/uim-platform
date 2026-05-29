@@ -43,7 +43,7 @@ class TranslationProjectController : ManageController {
             r.baseBranch = data.getString("baseBranch");
             r.abapSystemId = data.getString("abapSystemId");
 
-            if (j["targetLanguages"].type == Json.Type.array)
+            if (j["targetLanguages"].isArray)
                 foreach (l; j["targetLanguages"])
                     r.targetLanguages ~= l.get!string;
 
@@ -127,7 +127,7 @@ class TranslationProjectController : ManageController {
             r.baseBranch = data.getString("baseBranch");
             r.status = data.getString("status");
 
-            if (j["targetLanguages"].type == Json.Type.array)
+            if (j["targetLanguages"].isArray)
                 foreach (l; j["targetLanguages"])
                     r.targetLanguages ~= l.get!string;
 

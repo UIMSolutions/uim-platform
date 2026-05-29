@@ -23,35 +23,39 @@ class StatisticsController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/statistics", &handleGet);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
-      auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      UsageStatistic[] stats;
-      if (!scenarioId.isEmpty && !connectionId.isEmpty)
-        stats = usecase.listStatistics(tenantId, connectionId, scenarioId);
-      else if (!connectionId.isEmpty)
-        stats = usecase.listStatistics(tenantId, connectionId);
-      else
-        stats = usecase.listStatistics(tenantId);
+    auto tenantId = precheck.tenantId;
 
-      auto jarr = stats.map!(s => s.toJson).array.toJson;
+    auto id = ScenarioId(precheck.id);
+    // if (id.isNull)
+    //     return errorResponse("Invalid scenario ID", 400);
 
-      auto resp = Json.emptyObject
-        .set("count", stats.length)
-        .set("resources", jarr)
-        .set("message", "Usage statistics retrieved");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
+    auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
+
+    UsageStatistic[] stats;
+    if (!scenarioId.isEmpty && !connectionId.isEmpty)
+      stats = usecase.listStatistics(tenantId, connectionId, scenarioId);
+    else if (!connectionId.isEmpty)
+      stats = usecase.listStatistics(tenantId, connectionId);
+    else
+      stats = usecase.listStatistics(tenantId);
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Statistics retrieved successfully", "Retrieved", 200, responseData);
   }
 }

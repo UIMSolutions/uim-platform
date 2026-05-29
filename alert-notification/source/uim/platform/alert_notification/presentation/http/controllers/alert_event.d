@@ -35,16 +35,16 @@ class AlertEventController : PlatformController {
         dto.region    = body_["region"].opt!string("");
 
         auto tagsNode = body_["tags"];
-        if (tagsNode.type == Json.Type.object_)
+        if (tagsNode.isObject_)
             foreach (k, v; tagsNode.byKeyValue()) dto.tags[k] = v.to!string;
 
         auto arNode   = body_["affectedResource"];
-        if (arNode.type == Json.Type.object_) {
+        if (arNode.isObject_) {
             dto.affectedResource.name      = arNode["name"].opt!string("");
             dto.affectedResource.type_     = arNode["type"].opt!string("");
             dto.affectedResource.instance_ = arNode["instance"].opt!string("");
             auto arTags = arNode["tags"];
-            if (arTags.type == Json.Type.object_)
+            if (arTags.isObject_)
                 foreach (k, v; arTags.byKeyValue()) dto.affectedResource.tags[k] = v.to!string;
         }
 

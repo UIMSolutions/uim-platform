@@ -23,113 +23,120 @@ class PromptController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/genai/prompts", &handleCreate);
     router.get("/api/v1/genai/prompts", &handleList);
     router.get("/api/v1/genai/prompts/*", &handleGet);
     router.patch("/api/v1/genai/prompts/*", &handlePatch);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreatePromptRequest r;
-r.tenantId = tenantId;
-      r.collectionId = data.getString("collectionId");
-      r.name = data.getString("name");
-      r.modelName = data.getString("modelName");
-      r.modelVersion = data.getString("modelVersion");
-      r.messages = jsonMessageArray(j, "messages");
-      r.temperature = getDouble(j, "temperature");
-      r.maxTokens = data.getInteger("maxTokens");
-      r.topP = getDouble(j, "topP");
-      r.frequencyPenalty = getDouble(j, "frequencyPenalty");
-      r.presencePenalty = getDouble(j, "presencePenalty");
-      r.inputParams = data.getStrings("inputParams");
-      r.createdBy = UserId(data.getString("createdBy"));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createPrompt(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Prompt created");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    CreatePromptRequest r;
+    r.tenantId = tenantId;
+    r.collectionId = data.getString("collectionId");
+    r.name = data.getString("name");
+    r.modelName = data.getString("modelName");
+    r.modelVersion = data.getString("modelVersion");
+    r.messages = jsonMessageArray(data, "messages");
+    r.temperature = getDouble(data, "temperature");
+    r.maxTokens = data.getInteger("maxTokens");
+    r.topP = getDouble(data, "topP");
+    r.frequencyPenalty = getDouble(data, "frequencyPenalty");
+    r.presencePenalty = getDouble(data, "presencePenalty");
+    r.inputParams = data.getStrings("inputParams");
+    r.createdBy = UserId(data.getString("createdBy"));
+
+    auto result = usecase.createPrompt(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Prompt created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto collectionId = PromptCollectionId(req.headers.get("X-Collection-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto collectionId = PromptCollectionId(req.headers.get("X-Collection-Id", ""));
 
-      auto prompts = collectionId.isEmpty
-        ? usecase.listPrompts(tenantId) : usecase.listPrompts(tenantId, collectionId);
+    auto prompts = collectionId.isEmpty
+      ? usecase.listPrompts(tenantId) 
+      : usecase.listPrompts(tenantId, collectionId);
 
-      auto jarr = prompts.map!(p => p.toJson).array.toJson;
+    auto list = prompts.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", prompts.length)
-        .set("resources", jarr)
-        .set("message", "Prompts retrieved");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Prompt list retrieved successfully", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = PromptId(precheck.id);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto p = usecase.getPrompt(tenantId, id);
-      if (p.isNull) {
-        writeError(res, 404, "Prompt not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto id = PromptId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Prompt ID is required", 400);
 
-      res.writeJsonBody(p.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto p = usecase.getPrompt(tenantId, id);
+    if (p.isNull)
+      return errorResponse("Prompt not found", 404);
+
+    auto responseData = p.toJson();
+    return successResponse("Prompt retrieved successfully", 200, responseData);
+  }
+
+  protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = PromptId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Prompt ID is required", 400);
+
+    auto data = precheck.data;
+    PatchPromptRequest r;
+    r.tenantId = tenantId;
+    r.promptId = id;
+    r.name = data.getString("name");
+    r.status = data.getString("status");
+    r.messages = jsonMessageArray(data, "messages");
+    r.temperature = getDouble(data, "temperature");
+    r.maxTokens = data.getInteger("maxTokens");
+    r.topP = getDouble(data, "topP");
+    r.frequencyPenalty = getDouble(data, "frequencyPenalty");
+    r.presencePenalty = getDouble(data, "presencePenalty");
+    r.inputParams = data.getStrings("inputParams");
+
+    auto result = usecase.patchPrompt(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Prompt updated");
+    return successResponse("Prompt updated successfully", 200, responseData);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = PromptId(precheck.id);
-      auto data = precheck.data;
-      PatchPromptRequest r;
-      r.tenantId = tenantId;
-      r.promptId = id;
-      r.name = data.getString("name");
-      r.status = data.getString("status");
-      r.messages = jsonMessageArray(j, "messages");
-      r.temperature = getDouble(j, "temperature");
-      r.maxTokens = data.getInteger("maxTokens");
-
-      auto result = usecase.patchPrompt(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", id)
-          .set("message", "Prompt updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto resp = patchHandler(req);
+      res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

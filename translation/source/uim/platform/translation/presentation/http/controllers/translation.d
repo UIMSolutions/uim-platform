@@ -37,10 +37,10 @@ class TranslationController : PlatformController {
             r.provider = data.getString("provider");
 
             // Accept either "texts" (array) or "text" (single string)
-            if (j["texts"].type == Json.Type.array) {
+            if (j["texts"].isArray) {
                 foreach (item; j["texts"])
                     r.texts ~= item.get!string;
-            } else if (j["text"].type == Json.Type.string) {
+            } else if (j["text"].isString) {
                 r.texts ~= data.getString("text");
             }
 

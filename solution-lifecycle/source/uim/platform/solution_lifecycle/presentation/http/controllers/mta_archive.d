@@ -35,12 +35,12 @@ class MtaArchiveController : ManageController {
             r.fileName     = data.getString("fileName");
             r.mtaId        = data.getString("mtaId");
             r.mtaVersion   = data.getString("mtaVersion");
-            r.fileSizeBytes = j["fileSizeBytes"].type == Json.Type.int_
+            r.fileSizeBytes = j["fileSizeBytes"].isInteger
                               ? j["fileSizeBytes"].get!long : 0L;
             r.checksum     = data.getString("checksum");
             r.uploadedBy   = data.getString("uploadedBy");
             r.namespace_   = data.getString("namespace");
-            if (j["targetPlatforms"].type == Json.Type.array)
+            if (j["targetPlatforms"].isArray)
                 foreach (p; j["targetPlatforms"])
                     r.targetPlatforms ~= p.get!string;
 

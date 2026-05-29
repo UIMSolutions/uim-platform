@@ -144,17 +144,17 @@ class SaasApplicationController : ManageController {
     // -----------------------------------------------------------------------
 
     private string safeStr(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].type == Json.Type.string) return obj[key].get!string;
+        if ((key in obj) !is null && obj[key].isString) return obj[key].get!string;
         return "";
     }
 
     private bool safeBool(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].type == Json.Type.bool_) return obj[key].get!bool;
+        if ((key in obj) !is null && obj[key].isBoolean_) return obj[key].get!bool;
         return false;
     }
 
     private E safeEnum(E)(Json obj, string key, E default_) {
-        if ((key in obj) !is null && obj[key].type == Json.Type.string) {
+        if ((key in obj) !is null && obj[key].isString) {
             try { return obj[key].get!string.to!E; } catch (Exception) {}
         }
         return default_;

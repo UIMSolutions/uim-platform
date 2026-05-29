@@ -48,7 +48,7 @@ class ProjectController : SAPController {
     dto.ownerEmail    = body_["ownerEmail"].get!string("");
     dto.repositoryUrl = body_["repositoryUrl"].get!string("");
     dto.defaultBranch = body_["defaultBranch"].get!string("main");
-    if (body_["tags"].type == Json.Type.array)
+    if (body_["tags"].isArray)
       foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.create(tenantId, dto);
     if (!result.success)
@@ -76,7 +76,7 @@ class ProjectController : SAPController {
     dto.repositoryUrl = body_["repositoryUrl"].get!string("");
     dto.defaultBranch = body_["defaultBranch"].get!string("");
     dto.status        = body_["status"].get!string("");
-    if (body_["tags"].type == Json.Type.array)
+    if (body_["tags"].isArray)
       foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.update(tenantId, id, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);

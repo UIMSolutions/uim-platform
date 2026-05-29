@@ -49,7 +49,7 @@ protected:
     dto.addressCountry = jsonStr(body_, "addressCountry");
     dto.taxId = jsonStr(body_, "taxId");
     auto modes = body_["supportedModes"];
-    if (modes.type == Json.Type.array) {
+    if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }
     auto result = _useCase.createCarrier(tenantId, dto);
@@ -85,7 +85,7 @@ protected:
     dto.addressCountry = jsonStr(body_, "addressCountry");
     dto.status = jsonStr(body_, "status");
     auto modes = body_["supportedModes"];
-    if (modes.type == Json.Type.array) {
+    if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }
     auto result = _useCase.updateCarrier(tenantId, id, dto);

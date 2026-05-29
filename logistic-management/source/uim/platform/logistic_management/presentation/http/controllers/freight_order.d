@@ -76,8 +76,8 @@ protected:
     dto.destinationAddress = jsonStr(body_, "destinationAddress");
     dto.carrierId = jsonStr(body_, "carrierId");
     dto.transportMode = jsonStr(body_, "transportMode");
-    dto.weightKg = body_["weightKg"].type == Json.Type.float_ ? body_["weightKg"].get!double : 0.0;
-    dto.volumeM3 = body_["volumeM3"].type == Json.Type.float_ ? body_["volumeM3"].get!double : 0.0;
+    dto.weightKg = body_["weightKg"].isFloat ? body_["weightKg"].get!double : 0.0;
+    dto.volumeM3 = body_["volumeM3"].isFloat ? body_["volumeM3"].get!double : 0.0;
     dto.plannedDepartureAt = jsonInt(body_, "plannedDepartureAt");
     dto.plannedArrivalAt = jsonInt(body_, "plannedArrivalAt");
     auto result = _useCase.createFreightOrder(tenantId, dto);
@@ -112,8 +112,8 @@ protected:
     dto.destinationAddress = jsonStr(body_, "destinationAddress");
     dto.carrierId = jsonStr(body_, "carrierId");
     dto.transportMode = jsonStr(body_, "transportMode");
-    dto.weightKg = body_["weightKg"].type == Json.Type.float_ ? body_["weightKg"].get!double : 0.0;
-    dto.volumeM3 = body_["volumeM3"].type == Json.Type.float_ ? body_["volumeM3"].get!double : 0.0;
+    dto.weightKg = body_["weightKg"].isFloat ? body_["weightKg"].get!double : 0.0;
+    dto.volumeM3 = body_["volumeM3"].isFloat ? body_["volumeM3"].get!double : 0.0;
     dto.plannedDepartureAt = jsonInt(body_, "plannedDepartureAt");
     dto.plannedArrivalAt = jsonInt(body_, "plannedArrivalAt");
     auto result = _useCase.updateFreightOrder(tenantId, id, dto);

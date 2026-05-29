@@ -14,29 +14,29 @@ mixin(ShowModule!());
 string jsonStr(Json j, string key, string def = "") {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.string) return v.get!string;
+  if (v.isString) return v.get!string;
   return def;
 }
 
 bool jsonBool(Json j, string key, bool def = false) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.bool_) return v.get!bool;
+  if (v.isBoolean_) return v.get!bool;
   return def;
 }
 
 int jsonInt(Json j, string key, int def = 0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.int_) return cast(int) v.get!long;
+  if (v.isInteger) return cast(int) v.get!long;
   return def;
 }
 
 double jsonDouble(Json j, string key, double def = 0.0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.float_) return v.get!double;
-  if (v.type == Json.Type.int_)   return cast(double) v.get!long;
+  if (v.isFloat) return v.get!double;
+  if (v.isInteger)   return cast(double) v.get!long;
   return def;
 }
 
@@ -46,7 +46,7 @@ string[] jsonStrArray(Json j, string key) {
   auto v = j[key];
   if (v.type != Json.Type.array) return result;
   foreach (el; v.byValue)
-    if (el.type == Json.Type.string)
+    if (el.isString)
       result ~= el.get!string;
   return result;
 }

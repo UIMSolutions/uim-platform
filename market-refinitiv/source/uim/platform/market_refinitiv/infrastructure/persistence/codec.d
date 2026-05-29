@@ -10,41 +10,41 @@ import std.traits : EnumMembers;
 private string getString(Json j, string key, string def = "") {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.string) return v.get!string;
-  if (v.type == Json.Type.int_) return v.get!long.to!string;
-  if (v.type == Json.Type.float_) return v.get!double.to!string;
-  if (v.type == Json.Type.bool_) return v.get!bool.to!string;
+  if (v.isString) return v.get!string;
+  if (v.isInteger) return v.get!long.to!string;
+  if (v.isFloat) return v.get!double.to!string;
+  if (v.isBoolean_) return v.get!bool.to!string;
   return def;
 }
 
 private int getInt(Json j, string key, int def = 0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.int_) return cast(int) v.get!long;
-  if (v.type == Json.Type.float_) return cast(int) v.get!double;
+  if (v.isInteger) return cast(int) v.get!long;
+  if (v.isFloat) return cast(int) v.get!double;
   return def;
 }
 
 private long getLong(Json j, string key, long def = 0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.int_) return v.get!long;
-  if (v.type == Json.Type.float_) return cast(long) v.get!double;
+  if (v.isInteger) return v.get!long;
+  if (v.isFloat) return cast(long) v.get!double;
   return def;
 }
 
 private double getDouble(Json j, string key, double def = 0.0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.float_) return v.get!double;
-  if (v.type == Json.Type.int_) return cast(double) v.get!long;
+  if (v.isFloat) return v.get!double;
+  if (v.isInteger) return cast(double) v.get!long;
   return def;
 }
 
 private bool getBool(Json j, string key, bool def = false) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.type == Json.Type.bool_) return v.get!bool;
+  if (v.isBoolean_) return v.get!bool;
   return def;
 }
 

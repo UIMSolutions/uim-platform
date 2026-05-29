@@ -56,7 +56,7 @@ class SnowflakeTenantUserController : ManageController {
     r.firstName = data.getString("firstName");
     r.lastName  = data.getString("lastName");
     r.role      = data.getString("role");
-    if (j["active"].type == Json.Type.bool_) r.active = j["active"].get!bool;
+    if (j["active"].isBoolean_) r.active = j["active"].get!bool;
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

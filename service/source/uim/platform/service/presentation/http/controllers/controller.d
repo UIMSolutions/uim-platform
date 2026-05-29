@@ -65,8 +65,7 @@ class PlatformController {
 
     return precheck
       .set("path", req.requestPath.to!string)
-      .set("method", req.method.to!string)
-      // .set("headers", req.headers.toMap)
+      .set("method", req.method.to!string) // .set("headers", req.headers.toMap)
       // .set("params", req.params.toMap)
       // .set("query", req.query.toMap)
       .set("data", req.json)
@@ -82,6 +81,9 @@ class PlatformController {
     if (hasError(precheck))
       return precheck; // Return error response from precheck
 
+    precheck["path"] = req.requestPath.to!string;
+    precheck["id"] = extractIdFromPath(req);
+
     return successResponse(precheck, "Get handler not implemented", 200);
   }
 
@@ -95,7 +97,7 @@ class PlatformController {
   }
   // #endregion get
 
-// #region post
+  // #region post
   protected Json headHandler(HTTPServerRequest req) {
     auto precheck = precheckHandler(req);
     if (hasError(precheck))
@@ -120,13 +122,14 @@ class PlatformController {
     if (hasError(precheck))
       return precheck; // Return error response from precheck
 
+    precheck["data"] = req.json;
     return successResponse(precheck, "Post handler not implemented", 201);
   }
 
   protected void handlePost(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = postHandler(req);
-      res.writeJsonBody(response, 200);
+      res.writeJsonBody(response, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -139,6 +142,7 @@ class PlatformController {
     if (hasError(precheck))
       return precheck; // Return error response from precheck
 
+    precheck["data"] = req.json;
     return successResponse(precheck, "Put handler not implemented", 200);
   }
 
@@ -158,6 +162,8 @@ class PlatformController {
     if (hasError(precheck))
       return precheck; // Return error response from precheck
 
+    precheck["path"] = req.requestPath.to!string;
+    precheck["id"] = extractIdFromPath(req);
     return successResponse(precheck, "Delete handler not implemented", 200);
   }
 
@@ -227,4 +233,4 @@ class PlatformController {
     }
   }
   // #endregion patch
-} 
+}

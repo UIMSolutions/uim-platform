@@ -54,7 +54,7 @@ class SnowflakeRoleController : ManageController {
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.description = data.getString("description");
     r.privileges  = data.getStrings("privileges");
-    if (j["active"].type == Json.Type.bool_) r.active = j["active"].get!bool;
+    if (j["active"].isBoolean_) r.active = j["active"].get!bool;
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

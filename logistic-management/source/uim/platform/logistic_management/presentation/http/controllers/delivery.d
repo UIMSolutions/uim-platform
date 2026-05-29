@@ -50,16 +50,16 @@ protected:
     dto.deliveryAddress = jsonStr(body_, "deliveryAddress");
     dto.plannedDate = jsonInt(body_, "plannedDate");
     auto itemsJson = body_["items"];
-    if (itemsJson.type == Json.Type.array) {
+    if (itemsJson.isArray) {
       foreach (ij; itemsJson.byValue) {
         DeliveryItemRequest ir;
         ir.itemNumber = jsonStr(ij, "itemNumber");
         ir.productId = jsonStr(ij, "productId");
         ir.productDescription = jsonStr(ij, "productDescription");
-        ir.quantity = ij["quantity"].type == Json.Type.float_ ? ij["quantity"].get!double : 0.0;
+        ir.quantity = ij["quantity"].isFloat ? ij["quantity"].get!double : 0.0;
         ir.unit = jsonStr(ij, "unit");
-        ir.weightKg = ij["weightKg"].type == Json.Type.float_ ? ij["weightKg"].get!double : 0.0;
-        ir.volumeM3 = ij["volumeM3"].type == Json.Type.float_ ? ij["volumeM3"].get!double : 0.0;
+        ir.weightKg = ij["weightKg"].isFloat ? ij["weightKg"].get!double : 0.0;
+        ir.volumeM3 = ij["volumeM3"].isFloat ? ij["volumeM3"].get!double : 0.0;
         dto.items ~= ir;
       }
     }

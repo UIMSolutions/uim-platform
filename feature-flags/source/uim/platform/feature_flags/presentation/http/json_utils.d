@@ -20,21 +20,21 @@ mixin(ShowModule!());
 string getString(Json j, string key, string def = "") {
     if (j.type != Json.Type.object) return def;
     auto v = j[key];
-    if (v.type == Json.Type.string) return v.get!string;
+    if (v.isString) return v.get!string;
     return def;
 }
 
 bool getBoolean(Json j, string key, bool def = false) {
     if (j.type != Json.Type.object) return def;
     auto v = j[key];
-    if (v.type == Json.Type.bool_) return v.get!bool;
+    if (v.isBoolean_) return v.get!bool;
     return def;
 }
 
 long getLong(Json j, string key, long def = 0) {
     if (j.type != Json.Type.object) return def;
     auto v = j[key];
-    if (v.type == Json.Type.int_) return v.get!long;
+    if (v.isInteger) return v.get!long;
     return def;
 }
 
@@ -48,7 +48,7 @@ string[] getStringArray(Json j, string key) {
     if (v.type != Json.Type.array) return [];
     string[] result;
     foreach (item; v)
-        if (item.type == Json.Type.string) result ~= item.get!string;
+        if (item.isString) result ~= item.get!string;
     return result;
 }
 
@@ -58,7 +58,7 @@ string[string] getStringMap(Json j, string key) {
     if (v.type != Json.Type.object) return null;
     string[string] result;
     foreach (string k, val; v)
-        if (val.type == Json.Type.string) result[k] = val.get!string;
+        if (val.isString) result[k] = val.get!string;
     return result;
 }
 

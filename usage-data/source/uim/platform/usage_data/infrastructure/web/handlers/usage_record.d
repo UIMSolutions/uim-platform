@@ -44,10 +44,10 @@ class UsageRecordHandler {
       auto cmd = CreateUsageRecordRequest(
         json["globalAccountId"].get!string,
         json["subaccountId"].get!string,
-        json.type == Json.Type.object && json["directoryId"].type != Json.Type.undefined
+        json.isObject && json["directoryId"].type != Json.Type.undefined
           ? json["directoryId"].get!string : "",
         json["region"].get!string,
-        json.type == Json.Type.object && json["datacenter"].type != Json.Type.undefined
+        json.isObject && json["datacenter"].type != Json.Type.undefined
           ? json["datacenter"].get!string : "",
         json["serviceId"].get!string,
         json["serviceName"].get!string,

@@ -108,7 +108,7 @@ class AppSubscriptionController : ManageController {
             auto body_    = req.json;
 
             UpdateSubscriptionRequest dto;
-            if ((("state" in body_) !is null) && body_["state"].type == Json.Type.string) {
+            if ((("state" in body_) !is null) && body_["state"].isString) {
                 try { dto.state = body_["state"].get!string.to!SubscriptionState; } catch (Exception) {}
             }
             dto.error = safeStr(body_, "error");
@@ -138,7 +138,7 @@ class AppSubscriptionController : ManageController {
     // -----------------------------------------------------------------------
 
     private string safeStr(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].type == Json.Type.string) return obj[key].get!string;
+        if ((key in obj) !is null && obj[key].isString) return obj[key].get!string;
         return "";
     }
 }

@@ -71,11 +71,11 @@ class FeatureFlagController {
         dto.createdBy      = getString(body_, "createdBy");
 
         auto varArr = body_["variants"];
-        if (varArr.type == Json.Type.array)
+        if (varArr.isArray)
             foreach (v; varArr) dto.variants ~= parseVariantDTO(v);
 
         auto ruleArr = body_["rules"];
-        if (ruleArr.type == Json.Type.array)
+        if (ruleArr.isArray)
             foreach (r; ruleArr) dto.rules ~= parseRuleDTO(r);
 
         auto result = useCase.createFlag(dto);
@@ -122,11 +122,11 @@ class FeatureFlagController {
         dto.updatedBy      = getString(body_, "updatedBy");
 
         auto varArr = body_["variants"];
-        if (varArr.type == Json.Type.array)
+        if (varArr.isArray)
             foreach (v; varArr) dto.variants ~= parseVariantDTO(v);
 
         auto ruleArr = body_["rules"];
-        if (ruleArr.type == Json.Type.array)
+        if (ruleArr.isArray)
             foreach (r; ruleArr) dto.rules ~= parseRuleDTO(r);
 
         auto result = useCase.updateFlag(tenantId, id, dto);

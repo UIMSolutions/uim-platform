@@ -55,7 +55,7 @@ class MarketRateController : SAPController {
     ucReq.requestedBy = jsonStr(body_, "requestedBy");
 
     auto recordsJson = body_["records"];
-    if (recordsJson.type == Json.Type.array) {
+    if (recordsJson.isArray) {
       foreach (r; recordsJson.byValue) {
         UploadRateRecord rec;
         rec.providerCode       = jsonStr(r, "providerCode");
@@ -109,7 +109,7 @@ class MarketRateController : SAPController {
     ucReq.latestOnly  = jsonBool(body_, "latestOnly", false);
 
     auto instrJson = body_["instruments"];
-    if (instrJson.type == Json.Type.array) {
+    if (instrJson.isArray) {
       foreach (i; instrJson.byValue) {
         DownloadInstrument instr;
         instr.key1     = jsonStr(i, "key1");

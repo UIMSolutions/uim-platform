@@ -39,7 +39,7 @@ class SnowflakeDatabaseController : ManageController {
     r.accountId     = data.getString("accountId");
     r.name          = data.getString("name");
     r.comment       = data.getString("comment");
-    if (j["retentionDays"].type == Json.Type.int_) r.retentionDays = cast(int) j["retentionDays"].get!long;
+    if (j["retentionDays"].isInteger) r.retentionDays = cast(int) j["retentionDays"].get!long;
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -54,7 +54,7 @@ class SnowflakeDatabaseController : ManageController {
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");
-    if (j["retentionDays"].type == Json.Type.int_) r.retentionDays = cast(int) j["retentionDays"].get!long;
+    if (j["retentionDays"].isInteger) r.retentionDays = cast(int) j["retentionDays"].get!long;
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

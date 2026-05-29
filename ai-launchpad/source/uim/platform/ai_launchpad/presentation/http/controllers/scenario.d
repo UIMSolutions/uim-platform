@@ -30,101 +30,95 @@ class ScenarioController : ManageController {
     router.delete_("/api/v1/scenarios/*", &handleDelete);
   }
 
+  protected Json syncHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    ScenarioDTO dto;
+    dto.tenantId = tenantId;
+    dto.scenarioId = ScenarioId(data.getString("scenarioId"));
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.labels = data.getStrings("labels");
+
+    auto result = usecase.syncScenario(dto);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Scenario synced successfully", "Synced", 201, resp);
+  }
+
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      SyncScenarioRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.scenarioId = ScenarioId(data.getString("scenarioId"));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.labels = data.getStrings("labels");
-
-      auto result = usecase.syncScenario(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Scenario synced");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = syncHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto scenarios = connectionId.isEmpty
-        ? usecase.listScenarios(tenantId) : usecase.listScenarios(tenantId, connectionId);
+    auto scenarios = connectionId.isEmpty
+      ? usecase.listScenarios(tenantId) : usecase.listScenarios(tenantId, connectionId);
 
-      auto jarr = scenarios.map!(s => s.toJson).array.toJson;
+    auto list = scenarios.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", scenarios.length)
-        .set("resources", jarr)
-        .set("message", "Scenarios retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Scenario list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = ScenarioId(precheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto s = usecase.getScenario(tenantId, connectionId, id);
-      if (s.isNull) {
-        writeError(res, 404, "Scenario not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      auto resp = s.toJson
-        .set("message", "Scenario retrieved successfully");
+    auto id = ScenarioId(precheck.id);
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto s = usecase.getScenario(tenantId, connectionId, id);
+    if (s.isNull)
+      return errorResponse("Invalid scan job ID", 400);
+
+    auto responseData = job.toJson();
+    return successResponse("Scenario retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = ScenarioId(precheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteScenario(tenantId, connectionId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Scenario deleted successfully");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = ScenarioId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid scenario ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto result = usecase.deleteScenario(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Scenario deleted successfully", "Deleted", 200, responseData);
   }
-
 }

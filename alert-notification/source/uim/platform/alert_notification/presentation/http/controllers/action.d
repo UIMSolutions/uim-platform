@@ -38,7 +38,7 @@ class ActionController : ManageController {
         dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
         // parse properties object
         auto propsNode = body_["properties"];
-        if (propsNode.type == Json.Type.object_)
+        if (propsNode.isObject_)
             foreach (k, v; propsNode.byKeyValue()) dto.properties[k] = v.to!string;
         auto result = usecase.createAction(tenantId, dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.badRequest, result.message); return; }
@@ -71,7 +71,7 @@ class ActionController : ManageController {
         dto.fallbackAction       = body_["fallbackAction"].opt!string("");
         dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
         auto propsNode = body_["properties"];
-        if (propsNode.type == Json.Type.object_)
+        if (propsNode.isObject_)
             foreach (k, v; propsNode.byKeyValue()) dto.properties[k] = v.to!string;
         auto result = usecase.updateAction(tenantId, id, dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }

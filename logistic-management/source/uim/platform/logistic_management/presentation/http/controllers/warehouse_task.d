@@ -72,7 +72,7 @@ protected:
     dto.destinationStorageBin = jsonStr(body_, "destinationStorageBin");
     dto.productId = jsonStr(body_, "productId");
     dto.productDescription = jsonStr(body_, "productDescription");
-    dto.quantity = body_["quantity"].type == Json.Type.float_ ? body_["quantity"].get!double : 0.0;
+    dto.quantity = body_["quantity"].isFloat ? body_["quantity"].get!double : 0.0;
     dto.unit = jsonStr(body_, "unit");
     dto.assignedTo = jsonStr(body_, "assignedTo");
     auto result = _useCase.createWarehouseTask(tenantId, dto);

@@ -32,165 +32,171 @@ class ExecutionController : ManageController {
     router.delete_("/api/v1/executions/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateExecutionRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.configurationId = data.getString("configurationId");
-      r.resourceGroupId = data.getString("resourceGroupId");
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      auto result = usecase.createExecution(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Execution scheduled")
-          .set("status", "PENDING");
+    auto data = precheck.data;
+    CreateExecutionRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.configurationId = data.getString("configurationId");
+    r.resourceGroupId = data.getString("resourceGroupId");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.createExecution(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "PENDING");
+
+    return successResponse("Execution scheduled successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      auto executions = scenarioId.isEmpty 
-        ? usecase.listExecutions(tenantId, connectionId) 
-        : usecase.listExecutions(tenantId, connectionId, scenarioId);
+    auto executions = scenarioId.isEmpty
+      ? usecase.listExecutions(tenantId, connectionId) : usecase.listExecutions(tenantId, connectionId, scenarioId);
 
-      auto jarr = executions.map!(e => e.toJson).array.toJson;
+    aauto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", executions.length)
-        .set("resources", jarr)
-        .set("message", "Executions retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Execution list retrieved successfully", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = ExecutionId(precheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto ex = usecase.getExecution(tenantId, connectionId, id);
-      if (ex.isNull) {
-        writeError(res, 404, "Execution not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      auto resp = ex.toJson
-        .set("message", "Execution retrieved successfully");
+    auto id = ExecutionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Execution ID is required", 400);
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto ex = usecase.getExecution(tenantId, connectionId, id);
+    if (ex.isNull)
+      return errorResponse("Execution not found", 404);
+
+    auto responseData = ex.toJson();
+    return successResponse("Execution retrieved successfully", 200, responseData);
+  }
+
+  protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ExecutionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Execution ID is required", 400);
+
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    PatchExecutionRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.executionId = id;
+    r.targetStatus = data.getString("targetStatus");
+
+    auto result = usecase.patchExecution(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Execution updated");
+
+    return successResponse("Execution updated successfully", 200, resp);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = ExecutionId(precheck.id);
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      PatchExecutionRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.executionId = id;
-      r.targetStatus = data.getString("targetStatus");
-
-      auto result = usecase.patchExecution(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Execution updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+    try {
+      auto resp = patchHandler(req);
+      res.writeJsonBody(resp, resp.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json bulkPatchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    BulkPatchExecutionRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.executionIds = data.getStrings("executionIds").map!(s => ExecutionId(s)).array;
+    r.targetStatus = data.getString("targetStatus");
+
+    auto results = usecase.bulkPatchExecution(r);
+    auto jarr = Json.emptyArray;
+    foreach (result; results) {
+      auto rj = Json.emptyObject
+        .set("id", result.id)
+        .set("success", result.success)
+        .set("message", result.success ? "Execution updated" : "Failed to update execution");
+
+      if (result.message.length > 0)
+        rj["error"] = Json(result.message);
+      jarr ~= rj;
+    }
+
+    auto resp = Json.emptyObject
+      .set("results", jarr)
+      .set("message", "Bulk update completed");
+
+    return successResponse("Bulk update completed", 200, resp);
   }
 
   protected void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      BulkPatchExecutionRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.executionIds = data.getStrings("executionIds").map!(s => ExecutionId(s)).array;
-      r.targetStatus = data.getString("targetStatus");
-
-      auto results = usecase.bulkPatchExecution(r);
-      auto jarr = Json.emptyArray;
-      foreach (result; results) {
-        auto rj = Json.emptyObject
-          .set("id", result.id)
-          .set("success", result.success)
-          .set("message", result.success ? "Execution updated" : "Failed to update execution"); 
-          
-        if (result.message.length > 0)
-          rj["error"] = Json(result.message);
-        jarr ~= rj;
-      }
-
-      auto resp = Json.emptyObject
-        .set("results", jarr)
-          .set("message", "Bulk update completed");
-
-      res.writeJsonBody(resp, 200);
+    try {
+      auto resp = bulkPatchHandler(req);
+      res.writeJsonBody(resp, resp.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = ExecutionId(precheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteExecution(tenantId, connectionId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("message", "Execution deleted successfully");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = ExecutionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Execution ID is required", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto result = usecase.deleteExecution(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Execution deleted successfully", 200, responseData);
   }
-
 }

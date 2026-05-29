@@ -52,7 +52,7 @@ class TemplateController : SAPController {
     dto.version_    = body_["version"].get!string("1.0.0");
     dto.author      = body_["author"].get!string("");
     dto.isBuiltIn   = body_["isBuiltIn"].get!bool(false);
-    if (body_["parameters"].type == Json.Type.array)
+    if (body_["parameters"].isArray)
       foreach (p; body_["parameters"]) dto.parameters ~= p.get!string("");
     auto result = _uc.create(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);

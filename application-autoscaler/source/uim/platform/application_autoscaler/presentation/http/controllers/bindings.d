@@ -20,6 +20,7 @@ class AppBindingController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/bindings", &handleCreate);
     router.get("/api/v1/bindings", &handleList);
     router.get("/api/v1/bindings/*", &handleGet);
@@ -44,38 +45,45 @@ class AppBindingController : ManageController {
     return successResponse("Bindings retrieved successfully", "Retrieved", 200, response);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto data = precheck.data;
-      CreateAppBindingRequest r;
-      r.tenantId = data.getString("tenant_id");
-      r.appGuid = data.getString("app_guid");
-      r.appName = data.getString("app_name");
-      r.serviceInstanceId = data.getString("service_instance_id");
-      auto result = usecase.createBinding(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Binding created"), 201);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    CreateAppBindingRequest r;
+    r.tenantId = data.getString("tenant_id");
+    r.appGuid = data.getString("app_guid");
+    r.appName = data.getString("app_name");
+    r.serviceInstanceId = data.getString("service_instance_id");
+
+    auto result = usecase.createBinding(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Binding created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = AppBindingId(extractIdFromPath(req));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto b = usecase.getBinding(tenantId, id);
-      if (b.isNull) {
-        writeError(res, 404, "Binding not found");
-        return;
-      }
-      res.writeJsonBody(b.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto id = AppBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid binding ID", 400);
+
+    auto binding = usecase.getBinding(tenantId, id);
+    if (binding.isNull)
+      return errorResponse("Binding not found", 404);
+
+    auto responseData = binding.toJson();
+    return successResponse("Binding retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -92,19 +100,25 @@ class AppBindingController : ManageController {
     }
   }
 
-  protected void handleAttachPolicy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto bindingId = AppBindingId(extractIdFromPath(req));
-      auto data = precheck.data;
-      auto policyId = data.getString("policy_id");
-      auto result = usecase.attachPolicy(tenantId, bindingId, policyId);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("message", "Policy attached"), 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = AppBindingId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid binding ID", 400);
+
+    auto data = precheck.data;
+    auto policyId = data.getString("policy_id");
+    auto result = usecase.attachPolicy(tenantId, id, policyId);
+
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Policy attached successfully", "Attached", 200, responseData);
   }
 }
