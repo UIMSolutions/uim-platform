@@ -20,7 +20,7 @@ class ContentConnectorController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/automation-pilot/content-connectors", &handleList);
         router.get("/api/v1/automation-pilot/content-connectors/*", &handleGet);
         router.post("/api/v1/automation-pilot/content-connectors", &handleCreate);
@@ -28,116 +28,111 @@ class ContentConnectorController : ManageController {
         router.delete_("/api/v1/automation-pilot/content-connectors/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            
-            auto items = usecase.listContentConnectors(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", list);
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listContentConnectors(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Content connector list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ContentConnectorId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getContentConnector(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Content connector not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+
+        auto id = ContentConnectorId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid content connector ID", 400);
+
+        auto connector = usecase.getContentConnector(tenantId, id);
+        if (connector.isNull)
+            return errorResponse("Content connector not found", 404);
+
+        auto responseData = connector.toJson();
+        return successResponse("Content connector retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            ContentConnectorDTO dto;
-            dto.contentConnectorId = ContentConnectorId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.repositoryUrl = data.getString("repositoryUrl");
-            dto.branch = data.getString("branch");
-            dto.path = data.getString("path");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createContentConnector(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ContentConnectorDTO dto;
+        dto.contentConnectorId = ContentConnectorId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.repositoryUrl = data.getString("repositoryUrl");
+        dto.branch = data.getString("branch");
+        dto.path = data.getString("path");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createContentConnector(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Content connector created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Content connector created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            ContentConnectorDTO dto;
-            dto.contentConnectorId = ContentConnectorId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.repositoryUrl = data.getString("repositoryUrl");
-            dto.branch = data.getString("branch");
-            dto.path = data.getString("path");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateContentConnector(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = ContentConnectorId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid content connector ID", 400);
+
+        auto data = precheck.data;
+        ContentConnectorDTO dto;
+        dto.connectorId = id;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.repositoryUrl = data.getString("repositoryUrl");
+        dto.branch = data.getString("branch");
+        dto.path = data.getString("path");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateContentConnector(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Content connector updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Content connector updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto contentConnectorId = ContentConnectorId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto id = ContentConnectorId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid content connector ID", 400);
+
+        auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Content connector deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Content connector deleted successfully", "Deleted", 200, responseData);
     }
 }

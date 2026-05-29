@@ -21,107 +21,121 @@ class RoleController : ManageController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/roles",    &handleCreate);
-    router.get("/api/v1/roles",     &handleList);
-    router.get("/api/v1/roles/*",   &handleGet);
-    router.put("/api/v1/roles/*",   &handleUpdate);
+    router.post("/api/v1/roles", &handleCreate);
+    router.get("/api/v1/roles", &handleList);
+    router.get("/api/v1/roles/*", &handleGet);
+    router.put("/api/v1/roles/*", &handleUpdate);
     router.delete_("/api/v1/roles/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateRoleRequest r;
-      r.tenantId = tenantId;
-      r.name        = data.getString("name");
-      r.description = data.getString("description");
-      r.appId       = data.getString("appId");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto srArr = j["scopeReferences"];
-      if (srArr.isArray)
-        foreach (v; srArr.byValue)
-          r.scopeReferences ~= v.get!string;
+    auto tenantId = precheck.tenantId;
 
-      auto result = usecase.createRole(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    CreateRoleRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.appId = data.getString("appId");
+
+    auto srArr = j["scopeReferences"];
+    if (srArr.isArray)
+      foreach (v; srArr.byValue)
+        r.scopeReferences ~= v.get!string;
+
+    auto result = usecase.createRole(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Role created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto roles = usecase.listRoles(tenantId);
-      auto jarr = Json.emptyArray;
-      foreach (role; roles)
-        jarr ~= role.toJson();
-      res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", roles.length), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto roles = usecase.listRoles(tenantId);
+    auto list = roles.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Role list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = RoleId(extractIdFromPath(req));
-      
-      auto role = usecase.getRole(tenantId, id);
-      if (role.isNull) {
-        writeError(res, 404, "Role not found");
-        return;
-      }
-      res.writeJsonBody(role.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = RoleId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid role ID", 400);
+
+    auto role = usecase.getRole(tenantId, id);
+    if (role.isNull)
+      return errorResponse("Role not found", 404);
+
+    auto responseData = role.toJson();
+    return successResponse("Role retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = RoleId(extractIdFromPath(req));
-      auto data = precheck.data;
-      UpdateRoleRequest r;
-      r.tenantId = tenantId;
-      r.id          = id;
-      r.description = data.getString("description");
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto srArr = j["scopeReferences"];
-      if (srArr.isArray)
-        foreach (v; srArr.byValue)
-          r.scopeReferences ~= v.get!string;
+    auto tenantId = precheck.tenantId;
 
-      auto result = usecase.updateRole(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-      else
-        writeError(res, result.message == "Role not found" ? 404 : 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = RoleId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid role ID", 400);
+
+    auto data = precheck.data;
+    UpdateRoleRequest r;
+    r.tenantId = tenantId;
+    r.roleId = id;
+    r.description = data.getString("description");
+
+    auto srArr = j["scopeReferences"];
+    if (srArr.isArray)
+      foreach (v; srArr.byValue)
+        r.scopeReferences ~= v.get!string;
+
+    auto result = usecase.updateRole(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Role updated successfully", "Updated", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = RoleId(extractIdFromPath(req));
-      
-      auto result = usecase.deleteRole(tenantId, id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("id", id), 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = RoleId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid role ID", 400);
+
+    auto result = usecase.deleteRole(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Role deleted successfully", "Deleted", 200, responseData);
   }
 }

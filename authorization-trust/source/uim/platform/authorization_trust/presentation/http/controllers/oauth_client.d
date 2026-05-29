@@ -29,150 +29,143 @@ class OAuthClientController : ManageController {
   }
 
   // POST /api/v1/oauth/clients
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateOAuthClientRequest r;
-      r.tenantId = tenantId;
-      r.clientId = data.getString("clientId");
-      r.clientSecret = data.getString("clientSecret");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.clientType = data.getString("clientType");
-      r.appId = data.getString("appId");
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto gtArr = j["grantTypes"];
-      if (gtArr.isArray)
-        foreach (v; gtArr.byValue)
-          r.grantTypes ~= v.get!string;
+    auto tenantId = precheck.tenantId;
 
-      auto scArr = j["scopes"];
-      if (scArr.isArray)
-        foreach (v; scArr.byValue)
-          r.scopes ~= v.get!string;
+    auto data = precheck.data;
+    CreateOAuthClientRequest r;
+    r.tenantId = tenantId;
+    r.clientId = data.getString("clientId");
+    r.clientSecret = data.getString("clientSecret");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.clientType = data.getString("clientType");
+    r.appId = data.getString("appId");
 
-      auto ruArr = j["redirectUris"];
-      if (ruArr.isArray)
-        foreach (v; ruArr.byValue)
-          r.redirectUris ~= v.get!string;
+    auto gtArr = j["grantTypes"];
+    if (gtArr.isArray)
+      foreach (v; gtArr.byValue)
+        r.grantTypes ~= v.get!string;
 
-      auto result = usecase.createOAuthClient(r);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject
-            .set("id", result.id)
-            .set("message", "OAuth client created successfully"), 201);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto scArr = j["scopes"];
+    if (scArr.isArray)
+      foreach (v; scArr.byValue)
+        r.scopes ~= v.get!string;
+
+    auto ruArr = j["redirectUris"];
+    if (ruArr.isArray)
+      foreach (v; ruArr.byValue)
+        r.redirectUris ~= v.get!string;
+
+    auto result = usecase.createOAuthClient(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("OAuth client created successfully", "Created", 201, responseData);
   }
 
   // GET /api/v1/oauth/clients
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto appId = AppId(req.params.get("appId", ""));
-      auto clients = appId.length > 0
-        ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
-          tenantId);
-      auto jarr = clients.map!(c => c.toJson()).array;
+    auto tenantId = precheck.tenantId;
+    auto appId = AppId(req.params.get("appId", ""));
+    auto clients = appId.length > 0
+      ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
+        tenantId);
+    auto list = clients.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(
-        Json.emptyObject
-          .set("items", jarr)
-          .set("totalCount", clients.length), 200)
-        .set("message", "OAuth clients retrieved successfully");
-
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("OAuth client list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   // GET /api/v1/oauth/clients/{id}
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = OAuthClientId(extractIdFromPath(req));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto c = usecase.getOAuthClient(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "OAuth client not found");
-        return;
-      }
-      res.writeJsonBody(
-        Json.emptyObject
-          .set("id", c.id)
-          .set("message", "OAuth client retrieved successfully")
-          .set("client", clientToJson(c)), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = OAuthClientId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid OAuth client ID", 400);
+
+    auto client = usecase.getOAuthClient(tenantId, id);
+    if (client.isNull)
+      return errorResponse("OAuth client not found", 404);
+
+    auto responseData = client.toJson();
+    return successResponse("OAuth client retrieved successfully", "Retrieved", 200, responseData);
   }
 
   // PUT /api/v1/oauth/clients/{id}
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = OAuthClientId(extractIdFromPath(req));
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto data = precheck.data;
-      UpdateOAuthClientRequest r;
-      r.id = id;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
+    auto tenantId = precheck.tenantId;
 
-      auto gtArr = j["grantTypes"];
-      if (gtArr.isArray)
-        foreach (v; gtArr.byValue)
-          r.grantTypes ~= v.get!string;
+    auto id = OAuthClientId(extractIdFromPath(req));
+    if (id.isNull)
+      return errorResponse("Invalid OAuth client ID", 400);
 
-      auto scArr = j["scopes"];
-      if (scArr.isArray)
-        foreach (v; scArr.byValue)
-          r.scopes ~= v.get!string;
+    auto data = precheck.data;
+    UpdateOAuthClientRequest r;
+    r.id = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
 
-      auto ruArr = j["redirectUris"];
-      if (ruArr.isArray)
-        foreach (v; ruArr.byValue)
-          r.redirectUris ~= v.get!string;
+    auto gtArr = j["grantTypes"];
+    if (gtArr.isArray)
+      foreach (v; gtArr.byValue)
+        r.grantTypes ~= v.get!string;
 
-      auto result = usecase.update(r);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject
-            .set("id", result.id)
-            .set("message", "OAuth client updated successfully"), 200);
-      else
-        writeError(res, result.message == "OAuth client not found" ? 404 : 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto scArr = j["scopes"];
+    if (scArr.isArray)
+      foreach (v; scArr.byValue)
+        r.scopes ~= v.get!string;
+
+    auto ruArr = j["redirectUris"];
+    if (ruArr.isArray)
+      foreach (v; ruArr.byValue)
+        r.redirectUris ~= v.get!string;
+
+    auto result = usecase.updateClient(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("OAuth client updated successfully", "Updated", 200, responseData);
   }
 
   // DELETE /api/v1/oauth/clients/{id}
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = OAuthClientId(extractIdFromPath(req));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteOAuthClient(tenantId, id);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject
-            .set("id", id)
-            .set("message", "OAuth client deleted successfully"), 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto id = OAuthClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid OAuth client ID", 400);
+
+    auto result = usecase.deleteOAuthClient(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("OAuth client deleted successfully", "Deleted", 200, responseData);
   }
-
 }

@@ -20,7 +20,7 @@ class ServiceAccountController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/automation-pilot/service-accounts", &handleList);
         router.get("/api/v1/automation-pilot/service-accounts/*", &handleGet);
         router.post("/api/v1/automation-pilot/service-accounts", &handleCreate);
@@ -28,113 +28,106 @@ class ServiceAccountController : ManageController {
         router.delete_("/api/v1/automation-pilot/service-accounts/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto items = usecase.listServiceAccounts(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", list);
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listServiceAccounts(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Service account list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ServiceAccountId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getServiceAccount(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Service account not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = ServiceAccountId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service account ID", 400);
+
+        auto account = usecase.getServiceAccount(tenantId, id);
+        if (account.isNull)
+            return errorResponse("Service account not found", 404);
+
+        auto responseData = account.toJson();
+        return successResponse("Service account retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            ServiceAccountDTO dto;
-            dto.tenantId = tenantId;
-            dto.serviceAccountId = ServiceAccountId(precheck.id);
-            dto.tenantId = req.getTenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.clientId = data.getString("clientId");
-            dto.permissions = data.getString("permissions");
-            dto.expiresAt = data.getLong("expiresAt");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createServiceAccount(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ServiceAccountDTO dto;
+        dto.tenantId = tenantId;
+        dto.serviceAccountId = ServiceAccountId(precheck.id);
+        dto.tenantId = req.getTenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.clientId = data.getString("clientId");
+        dto.permissions = data.getString("permissions");
+        dto.expiresAt = data.getLong("expiresAt");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createServiceAccount(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Service account created");
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service account created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            ServiceAccountDTO dto;
-            dto.tenantId = tenantId;
-            dto.serviceAccountId = ServiceAccountId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.permissions = data.getString("permissions");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateServiceAccount(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ServiceAccountDTO dto;
+        dto.tenantId = tenantId;
+        dto.serviceAccountId = ServiceAccountId(precheck.id);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.permissions = data.getString("permissions");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateServiceAccount(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Service account updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service account updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ServiceAccountId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteServiceAccount(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = ServiceAccountId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service account ID", 400);
+
+        auto result = usecase.deleteServiceAccount(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Service account deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service account deleted successfully", "Deleted", 200, responseData);
     }
 }

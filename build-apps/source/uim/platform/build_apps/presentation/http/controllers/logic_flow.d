@@ -28,121 +28,111 @@ class LogicFlowController : ManageController {
         router.delete_("/api/v1/build-apps/logic-flows/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = usecase.listLogicFlows(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Logic flows retrieved successfully");
+        auto items = usecase.listLogicFlows(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Logic flow list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = LogicFlowId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getLogicFlow(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Logic flow not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = LogicFlowId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid logic flow ID", 400);
+
+        auto flow = usecase.getLogicFlow(tenantId, id);
+        if (flow.isNull)
+            return errorResponse("Logic flow not found", 404);
+
+        auto responseData = flow.toJson();
+        return successResponse("Logic flow retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            LogicFlowDTO dto;
-            dto.logicFlowId = LogicFlowId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(data.getString("applicationId"));
-            dto.pageId = PageId(data.getString("pageId"));
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.trigger = data.getString("trigger");
-            dto.triggerConfig = data.getString("triggerConfig");
-            dto.nodes = data.getString("nodes");
-            dto.connections = data.getString("connections");
-            dto.variables = data.getString("variables");
-            dto.errorHandler = data.getString("errorHandler");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createLogicFlow(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        LogicFlowDTO dto;
+        dto.logicFlowId = LogicFlowId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.pageId = PageId(data.getString("pageId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.trigger = data.getString("trigger");
+        dto.triggerConfig = data.getString("triggerConfig");
+        dto.nodes = data.getString("nodes");
+        dto.connections = data.getString("connections");
+        dto.variables = data.getString("variables");
+        dto.errorHandler = data.getString("errorHandler");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createLogicFlow(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Logic flow created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Logic flow created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            LogicFlowDTO dto;
-            dto.tenantId = tenantId;
-            dto.logicFlowId = LogicFlowId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.nodes = data.getString("nodes");
-            dto.connections = data.getString("connections");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateLogicFlow(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        LogicFlowDTO dto;
+        dto.tenantId = tenantId;
+        dto.logicFlowId = LogicFlowId(precheck.id);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.nodes = data.getString("nodes");
+        dto.connections = data.getString("connections");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateLogicFlow(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Logic flow updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Logic flow updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = LogicFlowId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteLogicFlow(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = LogicFlowId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid logic flow ID", 400);
+
+        auto result = usecase.deleteLogicFlow(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Logic flow deleted successfully");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Logic flow deleted successfully", "Deleted", 200, responseData);
     }
 }

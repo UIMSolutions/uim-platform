@@ -34,11 +34,11 @@ class PageController : ManageController {
 
             auto items = usecase.listPages(tenantId);
             auto list = items.map!(e => e.toJson()).array.toJson;
-            
+
             auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Pages retrieved");
+                .set("count", items.length)
+                .set("resources", jarr)
+                .set("message", "Pages retrieved");
 
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -46,103 +46,94 @@ class PageController : ManageController {
         }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = PageId(precheck.id);
-            
-            auto e = usecase.getPage(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Page not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = PageId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid page ID", 400);
+
+        auto page = usecase.getPage(tenantId, id);
+        if (page.isNull)
+            return errorResponse("Page not found", 404);
+
+        auto responseData = page.toJson();
+        return successResponse("Page retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            PageDTO dto;
-            dto.pageId = PageId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(data.getString("applicationId"));
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.pageType = data.getString("pageType");
-            dto.route = data.getString("route");
-            dto.layoutConfig = data.getString("layoutConfig");
-            dto.componentTree = data.getString("componentTree");
-            dto.styleOverrides = data.getString("styleOverrides");
-            dto.pageVariables = data.getString("pageVariables");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createPage(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        PageDTO dto;
+        dto.pageId = PageId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.pageType = data.getString("pageType");
+        dto.route = data.getString("route");
+        dto.layoutConfig = data.getString("layoutConfig");
+        dto.componentTree = data.getString("componentTree");
+        dto.styleOverrides = data.getString("styleOverrides");
+        dto.pageVariables = data.getString("pageVariables");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createPage(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Page created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Page created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            PageDTO dto;
-            dto.tenantId = tenantId;
-            dto.pageId = PageId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.route = data.getString("route");
-            dto.layoutConfig = data.getString("layoutConfig");
-            dto.componentTree = data.getString("componentTree");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updatePage(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        PageDTO dto;
+        dto.pageId = PageId(precheck.id);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.route = data.getString("route");
+        dto.layoutConfig = data.getString("layoutConfig");
+        dto.componentTree = data.getString("componentTree");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updatePage(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Page updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Page updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = PageId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deletePage(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = PageId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid page ID", 400);
+
+        auto result = usecase.deletePage(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Page deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Page deleted successfully", "Deleted", 200, responseData);
     }
 }

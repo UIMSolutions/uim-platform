@@ -22,47 +22,67 @@ class ScalingHistoryController : ManageController {
     super.registerRoutes(router);
 
     router.get("/api/v1/apps/*/scaling-history", &handleListByApp);
-    router.get("/api/v1/scaling-history/*",      &handleGet);
+    router.get("/api/v1/scaling-history/*", &handleGet);
   }
 
   // GET /api/v1/apps/{appId}/scaling-history
-  override protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto appId = AppId(extractIdFromPath(req));
-      long since = 0;
-      foreach (kv; req.query.byKeyValue()) {
-        if (kv.key == "since") {
-          import std.conv : to;
-          try { since = kv.value.to!long; } catch (Exception) {}
-          break;
+  protected Json listByAppHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto appId = AppId(extractIdFromPath(req));
+    long since = 0;
+    foreach (kv; req.query.byKeyValue()) {
+      if (kv.key == "since") {
+        import std.conv : to;
+
+        try {
+          since = kv.value.to!long;
+        } catch (Exception) {
         }
+        break;
       }
-      auto events = since > 0
-        ? usecase.getHistorySince(appId, since)
-        : usecase.getHistory(appId);
-      auto arr = Json.emptyArray;
-      foreach (e; events) arr ~= e.toJson();
-      res.writeJsonBody(Json.emptyObject.set("items", arr).set("totalCount", events.length), 200);
+    }
+    auto events = since > 0
+      ? usecase.getHistorySince(appId, since) : usecase.getHistory(appId);
+    auto arr = events.map!(e => e.toJson()).array.toJson;
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Scaling event list retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = listByAppHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   // GET /api/v1/scaling-history/{id}
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = ScalingHistoryId(extractIdFromPath(req));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto evt = usecase.getEvent(tenantId, id);
-      if (evt.isNull) {
-        writeError(res, 404, "Scaling event not found");
-        return;
-      }
-      res.writeJsonBody(evt.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto id = ScalingHistoryId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid scaling event ID", 400);
+
+    auto event = usecase.getEvent(tenantId, id);
+    if (event.isNull)
+      return errorResponse("Scaling event not found", 404);
+
+    auto responseData = event.toJson();
+    return successResponse("Scaling event retrieved successfully", "Retrieved", 200, responseData);
   }
 }

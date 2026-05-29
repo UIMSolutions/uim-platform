@@ -28,121 +28,110 @@ class TriggerController : ManageController {
         router.delete_("/api/v1/automation-pilot/triggers/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto items = usecase.listTriggers(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Trigger list retrieved successfully");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listTriggers(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Trigger list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = TriggerId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getTrigger(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "Trigger not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = TriggerId(precheck.id);
+
+        auto trigger = usecase.getTrigger(tenantId, id);
+        if (trigger.isNull)
+            return errorResponse("Trigger not found", 404);
+
+        auto responseData = trigger.toJson();
+        return successResponse("Trigger retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            TriggerDTO dto;
-            dto.triggerId = TriggerId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.commandId = data.getString("commandId");
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.eventType = data.getString("eventType");
-            dto.eventSource = data.getString("eventSource");
-            dto.filterExpression = data.getString("filterExpression");
-            dto.inputMapping = data.getString("inputMapping");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createTrigger(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        TriggerDTO dto;
+        dto.triggerId = TriggerId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.commandId = data.getString("commandId");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.eventType = data.getString("eventType");
+        dto.eventSource = data.getString("eventSource");
+        dto.filterExpression = data.getString("filterExpression");
+        dto.inputMapping = data.getString("inputMapping");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createTrigger(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trigger created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            TriggerDTO dto;
-            dto.tenantId = tenantId;
-            dto.triggerId = TriggerId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.eventType = data.getString("eventType");
-            dto.eventSource = data.getString("eventSource");
-            dto.filterExpression = data.getString("filterExpression");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateTrigger(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = TriggerId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid trigger ID", 400);
+
+        auto data = precheck.data;
+        TriggerDTO dto;
+        dto.tenantId = tenantId;
+        dto.triggerId = id;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.eventType = data.getString("eventType");
+        dto.eventSource = data.getString("eventSource");
+        dto.filterExpression = data.getString("filterExpression");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateTrigger(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trigger updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = TriggerId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deleteTrigger(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = TriggerId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid trigger ID", 400);
+
+        auto result = usecase.deleteTrigger(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Trigger deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger deleted successfully", "Deleted", 200, responseData);
     }
 }

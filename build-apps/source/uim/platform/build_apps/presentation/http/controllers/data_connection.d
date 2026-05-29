@@ -30,162 +30,111 @@ class DataConnectionController : ManageController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error);
-        }
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listDataConnections(tenantId);
+        auto items = usecase.listConnections(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
-            .set("count", items.length)
-            .set("resources", jarr)
-            .set("message", "Data connections retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Data connection list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = usecase.listDataConnections(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
+        auto id = DataConnectionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data connection ID", 400);
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Data connections retrieved successfully")
-                .set("status", "success")
-                .set("statusCode", 200);
+        auto connection = usecase.getDataConnection(tenantId, dataConnectionId);
+        if (connection.isNull)
+            return errorResponse("Data connection not found", 404);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = connection.toJson();
+        return successResponse("Data connection retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto dataConnectionId = DataConnectionId(precheck.id);
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getDataConnection(tenantId, dataConnectionId);
-            if (e.isNull) {
-                writeError(res, 404, "Data connection not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+        auto tenantId = precheck.tenantId;
+        auto id = DataConnectionId(precheck.id);
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            auto dataConnectionId = DataConnectionId(precheck.id);
+        auto data = precheck.data;
+        DataConnectionDTO dto;
+        dto.tenantId = tenantId;
+        dto.dataConnectionId = id;
+        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.connectionType = data.getString("connectionType");
+        dto.authMethod = data.getString("authMethod");
+        dto.baseUrl = data.getString("baseUrl");
+        dto.basePath = data.getString("basePath");
+        dto.headers = data.getString("headers");
+        dto.queryParams = data.getString("queryParams");
+        dto.responseMapping = data.getString("responseMapping");
+        dto.destinationName = data.getString("destinationName");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            DataConnectionDTO dto;
-            dto.tenantId = tenantId;
-            dto.dataConnectionId = dataConnectionId;
-            dto.applicationId = ApplicationId(data.getString("applicationId"));
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.connectionType = data.getString("connectionType");
-            dto.authMethod = data.getString("authMethod");
-            dto.baseUrl = data.getString("baseUrl");
-            dto.basePath = data.getString("basePath");
-            dto.headers = data.getString("headers");
-            dto.queryParams = data.getString("queryParams");
-            dto.responseMapping = data.getString("responseMapping");
-            dto.destinationName = data.getString("destinationName");
-            dto.createdBy = UserId(data.getString("createdBy"));
-
-            auto result = usecase.createDataConnection(dto);
-            if (result.hasError)
+        auto result = usecase.createDataConnection(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data connection created")
-                    .set("status", "success")
-                    .set("statusCode", 201);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Data connection created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            DataConnectionDTO dto;
-            dto.dataConnectionId = DataConnectionId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.baseUrl = data.getString("baseUrl");
-            dto.basePath = data.getString("basePath");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateDataConnection(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        DataConnectionDTO dto;
+        dto.connectionId = DataConnectionId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.baseUrl = data.getString("baseUrl");
+        dto.basePath = data.getString("basePath");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateDataConnection(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data connection updated")
-                    .set("status", "success")
-                    .set("statusCode", 200);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Data connection updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
-            return Json.emptyObject.set("error", precheck.error)
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = DataConnectionId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid Data Connection ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid data connection ID", 400);
 
         auto result = usecase.deleteDataConnection(tenantId, id);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("message", "Data connection deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
-
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Data connection deleted successfully", "Deleted", 200, responseData);
     }
 }

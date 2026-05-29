@@ -28,119 +28,106 @@ class ScheduledExecutionController : ManageController {
         router.delete_("/api/v1/automation-pilot/scheduled-executions/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = scheduledExecutions.listScheduledExecutions(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Scheduled executions retrieved successfully");
+        auto items = scheduledExecutions.listScheduledExecutions(tenantId);
+        aauto list = items.map!(item => item.toJson()).array.toJson;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Scheduled execution list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ScheduledExecutionId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = scheduledExecutions.getScheduledExecution(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Scheduled execution not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = ScheduledExecutionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid scheduled execution ID", 400);
+
+        auto execution = scheduledExecutions.getScheduledExecution(tenantId, id);
+        if (execution.isNull)
+            return errorResponse("Scheduled execution not found", 404);
+
+        auto responseData = execution.toJson();
+        return successResponse("Scheduled execution retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            ScheduledExecutionDTO dto;
-            dto.tenantId = tenantId;
-            dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
-            dto.commandId = CommandId(data.getString("commandId"));
-            dto.cronExpression = data.getString("cronExpression");
-            dto.scheduledAt = data.getLong("scheduledAt");
-            dto.inputValues = data.getString("inputValues");
-            dto.description = data.getString("description");
-            dto.maxRetries = data.getString("maxRetries");
-            dto.retryDelay = data.getString("retryDelay");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = scheduledExecutions.createScheduledExecution(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        ;
+
+        auto data = precheck.data;
+        ScheduledExecutionDTO dto;
+        dto.tenantId = tenantId;
+        dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
+        dto.commandId = CommandId(data.getString("commandId"));
+        dto.cronExpression = data.getString("cronExpression");
+        dto.scheduledAt = data.getLong("scheduledAt");
+        dto.inputValues = data.getString("inputValues");
+        dto.description = data.getString("description");
+        dto.maxRetries = data.getString("maxRetries");
+        dto.retryDelay = data.getString("retryDelay");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = scheduledExecutions.createScheduledExecution(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Scheduled execution created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Scheduled execution created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            
-            ScheduledExecutionDTO dto;
-            dto.tenantId = tenantId;
-            dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
-            dto.cronExpression = data.getString("cronExpression");
-            dto.scheduledAt = data.getLong("scheduledAt");
-            dto.description = data.getString("description");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = scheduledExecutions.updateScheduledExecution(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScheduledExecutionDTO dto;
+        dto.tenantId = tenantId;
+        dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
+        dto.cronExpression = data.getString("cronExpression");
+        dto.scheduledAt = data.getLong("scheduledAt");
+        dto.description = data.getString("description");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = scheduledExecutions.updateScheduledExecution(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Scheduled execution updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Scheduled execution updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ScheduledExecutionId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = scheduledExecutions.deleteScheduledExecution(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = ScheduledExecutionId(precheck.id);
+
+        auto result = scheduledExecutions.deleteScheduledExecution(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Scheduled execution deleted successfully");
-                
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Scheduled execution deleted successfully", "Deleted", 200, responseData);
     }
 }

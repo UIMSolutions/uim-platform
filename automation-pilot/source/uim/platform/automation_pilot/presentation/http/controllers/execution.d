@@ -28,112 +28,101 @@ class ExecutionController : ManageController {
         router.delete_("/api/v1/automation-pilot/executions/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    verride protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = executions.listExecutions(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", list);
-    
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = executions.listExecutions(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Execution list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto executionId = ExecutionId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = executions.getExecution(tenantId, executionId);
-            if (e.isNull) {
-                writeError(res, 404, "Execution not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = ExecutionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid execution ID", 400);
+
+        auto execution = executions.getExecution(tenantId, id);
+        if (execution.isNull)
+            return errorResponse("Execution not found", 404);
+
+        auto responseData = execution.toJson();
+        return successResponse("Execution retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto data = precheck.data;
-            ExecutionDTO dto;
-            dto.executionId = ExecutionId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.commandId = CommandId(data.getString("commandId"));
-            dto.inputValues = data.getString("inputValues");
-            dto.triggeredBy = UserId(data.getString("triggeredBy"));
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = executions.createExecution(dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ExecutionDTO dto;
+        dto.executionId = ExecutionId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.commandId = CommandId(data.getString("commandId"));
+        dto.inputValues = data.getString("inputValues");
+        dto.triggeredBy = UserId(data.getString("triggeredBy"));
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = executions.createExecution(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Execution created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Execution created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            ExecutionDTO dto;
-            dto.tenantId = tenantId;
-            dto.executionId = ExecutionId(precheck.id);
+        auto tenantId = precheck.tenantId;
+        auto id = ExecutionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid execution ID", 400);
 
-            auto result = executions.updateExecution(dto);
-            if (result.hasError)
+        ExecutionDTO dto;
+        dto.tenantId = tenantId;
+        dto.executionId = id;
+
+        auto result = executions.updateExecution(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Execution updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Execution updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ExecutionId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = executions.deleteExecution(tenantId, id);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = ExecutionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid execution ID", 400);
+
+        auto result = executions.deleteExecution(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Execution deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Execution deleted successfully", "Deleted", 200, responseData);
     }
 }

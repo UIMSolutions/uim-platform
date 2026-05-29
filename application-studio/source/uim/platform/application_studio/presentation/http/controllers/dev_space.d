@@ -20,7 +20,7 @@ class DevSpaceController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/application-studio/dev-spaces", &handleList);
         router.get("/api/v1/application-studio/dev-spaces/*", &handleGet);
         router.post("/api/v1/application-studio/dev-spaces", &handleCreate);
@@ -28,114 +28,113 @@ class DevSpaceController : ManageController {
         router.delete_("/api/v1/application-studio/dev-spaces/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto items = usecase.listDevSpaces();
-            auto list = items.map!(e => e.toJson()).array.toJson;
-            
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Dev space list retrieved successfully");
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+
+        auto items = usecase.listDevSpaces();
+        uto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Dev space list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DevSpaceId(precheck.id);
-            auto e = usecase.getDevSpace(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Dev space not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = DevSpaceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid dev space ID", 400);
+
+        auto space = usecase.getDevSpace(tenantId, id);
+        if (space.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = space.toJson();
+        return successResponse("Dev space retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            DevSpaceDTO dto;
-            dto.id = precheck.id;
-            dto.tenantId = req.getTenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.devSpaceTypeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));
-            dto.extensions = data.getString("extensions");
-            dto.owner = UserId(data.getString("owner"));
-            dto.region = data.getString("region");
-            dto.hibernateAfterDays = data.getString("hibernateAfterDays");
-            dto.memoryLimit = data.getString("memoryLimit");
-            dto.diskLimit = data.getString("diskLimit");
-            dto.createdBy = UserId(data.getString("createdBy"));
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.createDevSpace(tenantId, dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        DevSpaceDTO dto;
+        dto.id = precheck.id;
+        dto.tenantId = req.getTenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.devSpaceTypeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));
+        dto.extensions = data.getString("extensions");
+        dto.owner = UserId(data.getString("owner"));
+        dto.region = data.getString("region");
+        dto.hibernateAfterDays = data.getString("hibernateAfterDays");
+        dto.memoryLimit = data.getString("memoryLimit");
+        dto.diskLimit = data.getString("diskLimit");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createDevSpace(tenantId, dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Dev space created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Dev space created successfully", "Created", 201, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            DevSpaceDTO dto;
-            dto.id = DevSpaceId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.extensions = data.getString("extensions");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.updateDevSpace(tenantId, dto);
-            if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = DevSpaceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid dev space ID", 400);
+
+        auto data = precheck.data;
+        DevSpaceDTO dto;
+        dto.spaceId = id;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.extensions = data.getString("extensions");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateDevSpace(tenantId, dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Dev space updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Dev space updated successfully", "Updated", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = DevSpaceId(precheck.id);
-            auto result = usecase.deleteDevSpace(tenantId, id);
-            if (result.hasError)
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = DevSpaceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid dev space ID", 400);
+
+        auto result = usecase.deleteDevSpace(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Dev space deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Dev space deleted successfully", "Deleted", 200, responseData);
     }
 }

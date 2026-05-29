@@ -28,41 +28,46 @@ class ProjectMemberController : ManageController {
         router.delete_("/api/v1/build-apps/project-members/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();  
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto items = usecase.listProjectMembers(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto tenantId = precheck.tenantId;
 
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Project members retrieved");
+        auto items = usecase.listProjectMembers(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Project member list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
-            auto id = ProjectMemberId(precheck.id);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto e = usecase.getProjectMember(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Project member not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+        auto id = ProjectMemberId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid project member ID", 400);
+
+        auto member = usecase.getProjectMember(tenantId, id);
+        if (member.isNull)
+            return errorResponse("Project member not found", 404);
+
+        auto responseData = member.toJson();
+        return successResponse("Project member retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             ProjectMemberDTO dto;
             dto.projectMemberId = ProjectMemberId(precheck.id);
@@ -77,68 +82,68 @@ class ProjectMemberController : ManageController {
 
             auto result = usecase.createProjectMember(dto);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Project member added");
+                return errorResponse(result.message, 400);
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Project member added");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            res.writeJsonBody(resp, 201);
+        } else {
+            writeError(res, 400, result.message);
         }
+    } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto data = precheck.data;
-            
-            ProjectMemberDTO dto;
-            dto.tenantId = tenantId;
-            dto.projectMemberId = ProjectMemberId(precheck.id);
-            dto.displayName = data.getString("displayName");
-            dto.email = data.getString("email");
-            dto.permissions = data.getString("permissions");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+        auto tenantId = req.getTenantId();
+        auto path = req.requestURI.to!string;
+        auto data = precheck.data;
 
-            auto result = usecase.updateProjectMember(dto);
-            if (result.hasError)
+        ProjectMemberDTO dto;
+        dto.tenantId = tenantId;
+        dto.projectMemberId = ProjectMemberId(precheck.id);
+        dto.displayName = data.getString("displayName");
+        dto.email = data.getString("email");
+        dto.permissions = data.getString("permissions");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateProjectMember(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Project member updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Project member updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        res.writeJsonBody(resp, 200);
+    } else {
+        writeError(res, 404, result.message);
     }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
-            auto path = req.requestURI.to!string;
-            auto id = ProjectMemberId(precheck.id);
+override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+        auto tenantId = req.getTenantId();
+        auto path = req.requestURI.to!string;
+        auto id = ProjectMemberId(precheck.id);
 
-            auto result = usecase.deleteProjectMember(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteProjectMember(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Project member deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("message", "Project member deleted");
+
+        res.writeJsonBody(resp, 200);
+    } else {
+        writeError(res, 404, result.message);
     }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 }
