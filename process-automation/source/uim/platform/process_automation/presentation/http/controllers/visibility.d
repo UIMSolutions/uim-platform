@@ -95,7 +95,7 @@ class VisibilityController : ManageController {
         try {
 
             auto tenantId = precheck.tenantId;
-            auto id = Visibilityprecheck.id);
+            auto id = VisibilityId(precheck.id);
             auto v = visibilityUsecase.getVisibility(tenantId, id);
             if (v.isNull) {
                 writeError(res, 404, "Visibility dashboard not found");
@@ -128,7 +128,7 @@ class VisibilityController : ManageController {
             auto data = precheck.data;
             UpdateVisibilityRequest r;
             r.tenantId = tenantId;
-            r.visibilityId = Visibilityprecheck.id);
+            r.visibilityId = VisibilityId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.refreshIntervalSeconds = data.getString("refreshIntervalSeconds");
@@ -155,7 +155,7 @@ class VisibilityController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Visibilityprecheck.id);
+            auto id = VisibilityId(precheck.id);
             auto result = visibilityUsecase.deleteVisibility(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

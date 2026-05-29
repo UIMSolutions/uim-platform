@@ -96,7 +96,7 @@ class DataProcessingLogController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DataProcessingLogprecheck.id);
+            auto id = DataProcessingLogId(precheck.id);
             auto l = usecase.getProcessingLog(tenantId, id);
             if (l.isNull) {
                 writeError(res, 404, "Processing log entry not found");
@@ -111,7 +111,7 @@ class DataProcessingLogController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DataProcessingLogprecheck.id);
+            auto id = DataProcessingLogId(precheck.id);
 
             auto result = usecase.deleteProcessingLog(tenantId, id);
             if (result.hasError)

@@ -50,7 +50,7 @@ class BusinessPartnerController : ManageController {
             return precheck;
         auto tenantId = precheck.tenantId;
         auto id = BusinessPartnerId(
-            precheck.id);
+            Id(precheck.id);
         auto bp = usecase.getBusinessPartner(tenantId, id);
         if (bp.isNull)
             return errorResponse("Business partner not found", 404);

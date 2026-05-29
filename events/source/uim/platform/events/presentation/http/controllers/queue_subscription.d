@@ -77,7 +77,7 @@ class QueueSubscriptionController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId      = req.getTenantId;
-            auto subscriptionId = QueueSubscriptionprecheck.id);
+            auto subscriptionId = QueueSubscriptionId(precheck.id);
             auto data = precheck.data;
             QueueSubscriptionDTO dto;
             dto.tenantId       = tenantId;
@@ -97,7 +97,7 @@ class QueueSubscriptionController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = QueueSubscriptionprecheck.id);
+            auto id = QueueSubscriptionId(precheck.id);
             auto result = usecase.deleteSubscription(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

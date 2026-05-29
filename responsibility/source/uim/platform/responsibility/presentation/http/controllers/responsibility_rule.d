@@ -41,7 +41,7 @@ class ResponsibilityRuleController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityRuleprecheck.id);
+        auto id = ResponsibilityRuleId(precheck.id);
         auto e = _uc.getRule(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Rule not found").set("statusCode", 404);
@@ -79,7 +79,7 @@ class ResponsibilityRuleController : ManageController {
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data     = pre["data"];
-        auto id = ResponsibilityRuleprecheck.id);
+        auto id = ResponsibilityRuleId(precheck.id);
 
         ResponsibilityRuleDTO dto;
         dto.ruleId      = id;
@@ -99,7 +99,7 @@ class ResponsibilityRuleController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityRuleprecheck.id);
+        auto id = ResponsibilityRuleId(precheck.id);
 
         auto result = _uc.deleteRule(tenantId, id);
         if (!result.success)

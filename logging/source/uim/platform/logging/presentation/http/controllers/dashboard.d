@@ -101,7 +101,7 @@ class DashboardController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Dashboardprecheck.id);
+      auto id = DashboardId(precheck.id);
 
       auto d = usecase.getDashboard(tenantId, id);
       if (d.isNull) {
@@ -137,7 +137,7 @@ class DashboardController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Dashboardprecheck.id);
+      auto id = DashboardId(precheck.id);
       auto data = precheck.data;
       UpdateDashboardRequest r;
       r.tenantId = tenantId;
@@ -165,7 +165,7 @@ class DashboardController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Dashboardprecheck.id);
+      auto id = DashboardId(precheck.id);
 
       usecase.deleteDashboard(tenantId, id);
       auto resp = Json.emptyObject

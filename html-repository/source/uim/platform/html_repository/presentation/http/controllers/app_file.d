@@ -88,7 +88,7 @@ class AppFileController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = AppFileprecheck.id);
+      auto id = AppFileId(precheck.id);
       auto tenantId = precheck.tenantId;
       if (isNull) {
         writeError(res, 404, "File not found");
@@ -122,7 +122,7 @@ class AppFileController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
-      auto id = AppFileprecheck.id);
+      auto id = AppFileId(precheck.id);
 
       auto tenantId = precheck.tenantId;
       if (id.isNull) {
@@ -150,7 +150,7 @@ class AppFileController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = AppFileprecheck.id);
+      auto id = AppFileId(precheck.id);
       if (id.isNull) {
         writeError(res, 404, "File not found");
         return;

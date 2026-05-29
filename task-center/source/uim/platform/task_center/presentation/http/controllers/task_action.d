@@ -86,7 +86,7 @@ class TaskActionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TaskActionprecheck.id);
+            auto id = TaskActionId(precheck.id);
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Action not found");
@@ -101,7 +101,7 @@ class TaskActionController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TaskActionprecheck.id);
+            auto id = TaskActionId(precheck.id);
             auto result = usecase.deleteTaskAction(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

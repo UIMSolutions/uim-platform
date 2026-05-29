@@ -108,7 +108,7 @@ class TaskDefinitionController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TaskDefinitionprecheck.id);
+            auto id = TaskDefinitionId(precheck.id);
             auto data = precheck.data;
             UpdateTaskDefinitionRequest r;
             r.tenantId = tenantId;

@@ -79,7 +79,7 @@ class FlexVariantsController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVariantprecheck.id);
+      auto id = FlexVariantId(precheck.id);
       auto v = usecase.getVariant(tenantId, id);
       if (v.isNull) { writeError(res, 404, "FlexVariant not found"); return; }
       res.writeJsonBody(v.toJson(), 200);
@@ -91,7 +91,7 @@ class FlexVariantsController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVariantprecheck.id);
+      auto id = FlexVariantId(precheck.id);
       auto data = precheck.data;
       
       UpdateFlexVariantRequest request;
@@ -114,7 +114,7 @@ class FlexVariantsController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVariantprecheck.id);
+      auto id = FlexVariantId(precheck.id);
       auto result = usecase.deleteVariant(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

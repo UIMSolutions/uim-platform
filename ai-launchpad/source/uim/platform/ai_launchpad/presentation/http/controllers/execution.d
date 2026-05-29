@@ -87,7 +87,7 @@ class ExecutionController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Executionprecheck.id);
+      auto id = ExecutionId(precheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto ex = usecase.getExecution(tenantId, connectionId, id);
@@ -108,7 +108,7 @@ class ExecutionController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Executionprecheck.id);
+      auto id = ExecutionId(precheck.id);
       auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -172,7 +172,7 @@ class ExecutionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Executionprecheck.id);
+      auto id = ExecutionId(precheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteExecution(tenantId, connectionId, id);

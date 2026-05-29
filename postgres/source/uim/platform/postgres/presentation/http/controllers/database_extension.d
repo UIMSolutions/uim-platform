@@ -40,7 +40,7 @@ class DatabaseExtensionController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = DatabaseExtensionprecheck.id);
+        auto id = DatabaseExtensionId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = extensions.getDatabaseExtension(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Extension not found").set("statusCode", 404);
@@ -69,7 +69,7 @@ class DatabaseExtensionController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = DatabaseExtensionprecheck.id);
+        auto id = DatabaseExtensionId(precheck.id);
         auto result = extensions.deleteDatabaseExtension(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Extension disabled successfully").set("status", "success").set("statusCode", 200);

@@ -151,7 +151,7 @@ override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServ
   try {
     auto tenantId = precheck.tenantId;
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-    auto id = Modelprecheck.id);
+    auto id = ModelId(precheck.id);
 
     auto result = usecase.deleteModel(tenantId, connectionId, id);
     if (result.hasError)

@@ -92,7 +92,7 @@ class FlexPersonalizationsController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexPersonalizationprecheck.id);
+      auto id = FlexPersonalizationId(precheck.id);
       auto p = usecase.getPersonalization(tenantId, id);
       if (p.isNull) { writeError(res, 404, "FlexPersonalization not found"); return; }
       res.writeJsonBody(p.toJson(), 200);
@@ -104,7 +104,7 @@ class FlexPersonalizationsController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexPersonalizationprecheck.id);
+      auto id = FlexPersonalizationId(precheck.id);
       auto data = precheck.data;
       UpdateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
@@ -124,7 +124,7 @@ class FlexPersonalizationsController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexPersonalizationprecheck.id);
+      auto id = FlexPersonalizationId(precheck.id);
       auto result = usecase.deletePersonalization(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

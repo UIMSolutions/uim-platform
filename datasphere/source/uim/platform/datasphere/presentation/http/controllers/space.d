@@ -89,7 +89,7 @@ class SpaceController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Spaceprecheck.id);
+      auto id = SpaceId(precheck.id);
       auto s = usecase.getSpace(tenantId, id);
       if (s.isNull) {
         writeError(res, 404, "Space not found");
@@ -119,7 +119,7 @@ class SpaceController : ManageController {
       auto data = precheck.data;
       UpdateSpaceRequest r;
       r.tenantId = tenantId;
-      r.spaceId = Spaceprecheck.id);
+      r.spaceId = SpaceId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.businessName = data.getString("businessName");
@@ -144,7 +144,7 @@ class SpaceController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Spaceprecheck.id);
+      auto id = SpaceId(precheck.id);
 
       auto result = usecase.deleteSpace(tenantId, id);
       if (result.hasError)

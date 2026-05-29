@@ -80,7 +80,7 @@ class DocumentTypeController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeprecheck.id);
+      auto id = DocumentTypeId(precheck.id);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto dt = usecase.getDocumentType(tenantId, id, clientId);
@@ -108,7 +108,7 @@ class DocumentTypeController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeprecheck.id);
+      auto id = DocumentTypeId(precheck.id);
       auto data = precheck.data;
       UpdateDocumentTypeRequest r;
       r.tenantId = tenantId;
@@ -138,7 +138,7 @@ class DocumentTypeController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeprecheck.id);
+      auto id = DocumentTypeId(precheck.id);
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
       auto result = usecase.deleteDocumentType(tenantId, id, clientId);

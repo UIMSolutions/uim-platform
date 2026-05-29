@@ -49,7 +49,7 @@ class SubscriptionJobController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = SubscriptionJobprecheck.id);
+            auto id = SubscriptionJobId(precheck.id);
             auto job = usecase.getJob(tenantId, id);
             if (job.isNull) { writeError(res, 404, "Job not found"); return; }
             res.writeJsonBody(job.toJson(), 200);

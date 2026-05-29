@@ -159,7 +159,7 @@ class DatabaseConnectionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = DatabaseConnectionprecheck.id);
+      auto id = DatabaseConnectionId(precheck.id);
       auto result = usecase.deleteDatabaseConnection(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -41,7 +41,7 @@ class ServicePlanController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServicePlanprecheck.id);
+        auto id = ServicePlanId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = plans.getServicePlan(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Service plan not found").set("statusCode", 404);
@@ -76,7 +76,7 @@ class ServicePlanController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServicePlanDTO dto;
-        dto.servicePlanId = ServicePlanprecheck.id);
+        dto.servicePlanId = ServicePlanId(precheck.id);
         dto.tenantId      = tenantId;
         dto.description   = data.getString("description", "");
         dto.available     = data.getBoolean("available", true);
@@ -90,7 +90,7 @@ class ServicePlanController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = ServicePlanprecheck.id);
+        auto id = ServicePlanId(precheck.id);
         auto result = plans.deleteServicePlan(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Service plan deleted successfully").set("status", "success").set("statusCode", 200);

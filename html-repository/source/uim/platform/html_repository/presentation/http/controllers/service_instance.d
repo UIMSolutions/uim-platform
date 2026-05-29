@@ -145,7 +145,7 @@ class ServiceInstanceController : ManageController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto id = ServiceInstanceprecheck.id);
+      auto id = ServiceInstanceId(precheck.id);
       auto result = usecase.deleteServiceInstance(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);

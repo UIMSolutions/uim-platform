@@ -85,7 +85,7 @@ class DomainMappingController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = DomainMappingprecheck.id);
+        auto id = DomainMappingId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Domain Mapping ID", 400);
 
@@ -127,7 +127,7 @@ class DomainMappingController : ManageController {
         auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
         if (precheck.hasError) return precheck;
         auto tenantId = precheck.tenantId;
-        auto id = DomainMappingprecheck.id);
+        auto id = DomainMappingId(precheck.id);
         auto result = usecase.deleteDomainMapping(tenantId, id);
         if (result.hasError) return errorResponse(result.message, 404);
         return successResponse("Domain mapping deleted successfully", 200, Json.emptyObject.set("id", result.id));

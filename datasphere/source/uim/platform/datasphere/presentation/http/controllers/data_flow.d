@@ -88,7 +88,7 @@ class DataFlowController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = DataFlowprecheck.id);
+      auto id = DataFlowId(precheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto df = usecase.getDataFlow(tenantId, spaceId, id);
@@ -117,7 +117,7 @@ class DataFlowController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = DataFlowprecheck.id);
+      auto id = DataFlowId(precheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto result = usecase.deleteDataFlow(tenantId, spaceId, id);

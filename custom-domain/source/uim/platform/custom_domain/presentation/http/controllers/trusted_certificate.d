@@ -93,7 +93,7 @@ class TrustedCertificateController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TrustedCertificateprecheck.id);
+            auto id = TrustedCertificateId(precheck.id);
 
             auto c = usecase.getCertificate(tenantId, id);
             if (c.isNull) {
@@ -124,7 +124,7 @@ class TrustedCertificateController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TrustedCertificateprecheck.id);
+            auto id = TrustedCertificateId(precheck.id);
 
             auto result = usecase.deleteCertificate(tenantId, id);
             if (result.hasError)

@@ -85,7 +85,7 @@ class PrivateKeyController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = PrivateKeyprecheck.id);
+        auto id = PrivateKeyId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Private Key ID", 400);
 
@@ -117,7 +117,7 @@ class PrivateKeyController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = PrivateKeyprecheck.id);
+        auto id = PrivateKeyId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Private Key ID", 400);
 

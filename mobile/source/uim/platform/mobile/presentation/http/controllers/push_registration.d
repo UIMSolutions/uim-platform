@@ -108,7 +108,7 @@ class PushRegistrationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = PushRegistrationprecheck.id);
+      auto id = PushRegistrationId(precheck.id);
       auto result = usecase.deletePushRegistration(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

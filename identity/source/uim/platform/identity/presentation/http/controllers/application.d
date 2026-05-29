@@ -44,7 +44,7 @@ class ApplicationController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = Applicationprecheck.id);
+            auto id = ApplicationId(precheck.id);
             auto e = usecase.getApplication(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Application not found"); return; }
             res.writeJsonBody(e.toJson(), 200);
@@ -79,7 +79,7 @@ class ApplicationController : ManageController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             ApplicationDTO dto;
-            dto.applicationId = Applicationprecheck.id);
+            dto.applicationId = ApplicationId(precheck.id);
             dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
@@ -98,7 +98,7 @@ class ApplicationController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = Applicationprecheck.id);
+            auto id = ApplicationId(precheck.id);
             auto result = usecase.deleteApplication(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }
             res.writeJsonBody(Json.emptyObject.set("message", "Application deleted successfully"), 200);

@@ -39,7 +39,7 @@ class WebServiceBindingController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = ServiceBindingprecheck.id);
+        auto id = ServiceBindingId(precheck.id);
         auto b  = _useCase.getServiceBinding(tenantId, id);
         _model.setSelected(b, !b.isNull);
         _view.renderDetail(res, _model);
@@ -62,7 +62,7 @@ class WebServiceBindingController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = ServiceBindingprecheck.id);
+        auto id = ServiceBindingId(precheck.id);
         auto result = _useCase.deleteServiceBinding(tenantId, id);
         if (result.success) _model.setSuccess("Binding deleted");
         else                _model.setError(404, result.message);

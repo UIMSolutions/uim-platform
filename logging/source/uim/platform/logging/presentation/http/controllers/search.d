@@ -87,7 +87,7 @@ class SearchController : PlatformController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = LogEntryprecheck.id);
+      auto id = LogEntryId(precheck.id);
       auto entry = usecase.getLog(tenantId, id);
 
       if (entry.isNull) {

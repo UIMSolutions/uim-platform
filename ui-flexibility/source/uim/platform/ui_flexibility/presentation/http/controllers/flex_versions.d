@@ -101,7 +101,7 @@ class FlexVersionsController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVersionprecheck.id);
+      auto id = FlexVersionId(precheck.id);
       auto v = usecase.getVersion(tenantId, id);
       if (v.isNull) { writeError(res, 404, "FlexVersion not found"); return; }
       res.writeJsonBody(v.toJson(), 200);
@@ -113,7 +113,7 @@ class FlexVersionsController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVersionprecheck.id);
+      auto id = FlexVersionId(precheck.id);
       auto data = precheck.data;
       UpdateFlexVersionRequest r;
       r.tenantId    = tenantId;
@@ -134,7 +134,7 @@ class FlexVersionsController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexVersionprecheck.id);
+      auto id = FlexVersionId(precheck.id);
       auto result = usecase.deleteVersion(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

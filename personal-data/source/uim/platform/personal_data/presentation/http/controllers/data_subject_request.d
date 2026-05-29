@@ -118,7 +118,7 @@ class DataSubjectRequestController : ManageController {
             auto data = precheck.data;
             UpdateDataSubjectRequestRequest r;
             r.tenantId = tenantId;
-            r.dataSubjectRequestId = DataSubjectRequestprecheck.id);
+            r.dataSubjectRequestId = DataSubjectRequestId(precheck.id);
             r.status = data.getString("status");
             r.priority = data.getString("priority");
             r.assignedTo = data.getString("assignedTo");
@@ -146,7 +146,7 @@ class DataSubjectRequestController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DataSubjectRequestprecheck.id);
+            auto id = DataSubjectRequestId(precheck.id);
             auto result = usecase.deleteDataSubjectRequest(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

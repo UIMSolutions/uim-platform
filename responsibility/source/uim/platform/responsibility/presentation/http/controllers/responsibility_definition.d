@@ -40,7 +40,7 @@ class ResponsibilityDefinitionController : ManageController {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityDefinitionprecheck.id);
+        auto id = ResponsibilityDefinitionId(precheck.id);
         auto e = _uc.getDefinition(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Definition not found").set("statusCode", 404);
@@ -77,7 +77,7 @@ class ResponsibilityDefinitionController : ManageController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         ResponsibilityDefinitionDTO dto;
-        dto.definitionId = ResponsibilityDefinitionprecheck.id);
+        dto.definitionId = ResponsibilityDefinitionId(precheck.id);
         dto.tenantId     = tenantId;
         dto.name         = data.getString("name", "");
         dto.description  = data.getString("description", "");
@@ -94,7 +94,7 @@ class ResponsibilityDefinitionController : ManageController {
         auto pre = super.deleteHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = ResponsibilityDefinitionprecheck.id);
+        auto id = ResponsibilityDefinitionId(precheck.id);
         auto result = _uc.deleteDefinition(tenantId, id);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);

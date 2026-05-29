@@ -48,7 +48,7 @@ class JobController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Jobprecheck.id);
+        auto id = JobId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid job ID").set("statusCode", 400);
 
@@ -93,7 +93,7 @@ class JobController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = Jobprecheck.id);
+        auto id = JobId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid job ID").set("statusCode", 400);
 
@@ -118,7 +118,7 @@ class JobController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Jobprecheck.id);
+        auto id = JobId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid job ID").set("statusCode", 400);
 

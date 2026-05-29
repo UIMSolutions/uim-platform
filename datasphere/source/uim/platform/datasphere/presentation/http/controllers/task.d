@@ -96,7 +96,7 @@ class TaskController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Taskprecheck.id);
+      auto id = TaskId(precheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto t = usecase.getTaskById(tenantId, spaceId, id);
@@ -130,7 +130,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto id = Taskprecheck.id);
+      auto id = TaskId(precheck.id);
 
       auto result = usecase.deleteTask(tenantId, spaceId, id);
       if (result.hasError)

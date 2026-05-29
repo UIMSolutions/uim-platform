@@ -96,7 +96,7 @@ class FormController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = Formprecheck.id);
+            auto id = FormId(precheck.id);
             auto f = formUsecase.getForm(tenantId, id);
             if (f.isNull) {
                 writeError(res, 404, "Form not found");
@@ -129,7 +129,7 @@ class FormController : ManageController {
             auto data = precheck.data;
             UpdateFormRequest r;
             r.tenantId = tenantId;
-            r.formId = Formprecheck.id);
+            r.formId = FormId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.version_ = data.getString("version");
@@ -156,7 +156,7 @@ class FormController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Formprecheck.id);
+            auto id = FormId(precheck.id);
             auto result = formUsecase.deleteForm(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

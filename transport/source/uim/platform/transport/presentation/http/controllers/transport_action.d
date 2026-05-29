@@ -44,7 +44,7 @@ class TransportActionController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TransportActionprecheck.id);
+            auto id = TransportActionId(precheck.id);
             auto item = usecase.getAction(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Transport action not found"); return; }
             res.writeJsonBody(item.toJson, 200);
@@ -80,7 +80,7 @@ class TransportActionController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TransportActionprecheck.id);
+            auto id = TransportActionId(precheck.id);
             auto data = precheck.data;
             auto statusStr = data.getString("actionStatus");
             if (statusStr.length > 0) {

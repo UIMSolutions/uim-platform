@@ -44,7 +44,7 @@ class EventMessageController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventMessageprecheck.id);
+        auto id = EventMessageId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getEventMessage(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Message not found").set("statusCode", 404);
@@ -74,7 +74,7 @@ class EventMessageController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventMessageprecheck.id);
+        auto id = EventMessageId(precheck.id);
         auto result = _useCase.deleteEventMessage(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Message deleted successfully").set("status", "success").set("statusCode", 200);

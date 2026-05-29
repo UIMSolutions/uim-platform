@@ -74,7 +74,7 @@ class PractitionerController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Practitionerprecheck.id);
+      auto id = PractitionerId(precheck.id);
       auto p = usecase.getPractitioner(tenantId, id);
       if (p.isNull) { writeFhirError(res, 404, "Practitioner not found"); return; }
       res.writeJsonBody(p.toJson(), 200);
@@ -86,7 +86,7 @@ class PractitionerController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Practitionerprecheck.id);
+      auto id = PractitionerId(precheck.id);
       auto data = precheck.data;
       UpdatePractitionerRequest r;
       r.tenantId = tenantId;
@@ -106,7 +106,7 @@ class PractitionerController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Practitionerprecheck.id);
+      auto id = PractitionerId(precheck.id);
       auto result = usecase.deletePractitioner(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

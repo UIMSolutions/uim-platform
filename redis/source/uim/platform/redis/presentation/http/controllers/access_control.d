@@ -48,7 +48,7 @@ class AccessControlController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = AccessControlprecheck.id);
+        auto id = AccessControlId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid access control ID").set("statusCode", 400);
 
@@ -93,7 +93,7 @@ class AccessControlController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         AccessControlDTO dto;
-        dto.accessControlId = AccessControlprecheck.id);
+        dto.accessControlId = AccessControlId(precheck.id);
         dto.tenantId        = tenantId;
         dto.description     = data.getString("description", "");
         dto.updatedBy       = UserId(data.getString("updatedBy", ""));
@@ -115,7 +115,7 @@ class AccessControlController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = AccessControlprecheck.id);
+        auto id = AccessControlId(precheck.id);
 
         auto result = accessControls.deleteAccessControl(tenantId, id);
         if (result.hasError)

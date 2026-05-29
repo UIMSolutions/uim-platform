@@ -91,7 +91,7 @@ class DatabaseUserController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = DatabaseUserprecheck.id);
+      auto id = DatabaseUserId(precheck.id);
 
       auto u = usecase.getDatabaseUser(tenantId, id);
       if (u.isNull) {
@@ -123,7 +123,7 @@ class DatabaseUserController : ManageController {
       auto data = precheck.data;
       UpdateDatabaseUserRequest r;
       r.tenantId = tenantId;
-      r.id = DatabaseUserprecheck.id);
+      r.id = DatabaseUserId(precheck.id);
       r.password = data.getString("password");
       r.defaultSchema = data.getString("defaultSchema");
       r.isRestricted = data.getBoolean("isRestricted");
@@ -149,7 +149,7 @@ class DatabaseUserController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = DatabaseUserprecheck.id);
+      auto id = DatabaseUserId(precheck.id);
 
       auto result = usecase.deleteDatabaseUser(tenantId, id);
       if (result.hasError)

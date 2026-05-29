@@ -95,7 +95,7 @@ class ViewController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Viewprecheck.id);
+      auto id = ViewId(precheck.id);
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto v = usecase.getById(spaceId, id);
@@ -131,7 +131,7 @@ class ViewController : ManageController {
       UpdateViewRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.viewId = Viewprecheck.id);
+      r.viewId = ViewId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.businessName = data.getString("businessName");
@@ -159,7 +159,7 @@ class ViewController : ManageController {
     try {
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto id = Viewprecheck.id);
+      auto id = ViewId(precheck.id);
 
       auto result = usecase.deleteView(spaceId, id);
       if (result.hasError)

@@ -85,7 +85,7 @@ class TaskAttachmentController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TaskAttachmentprecheck.id);
+            auto id = TaskAttachmentId(precheck.id);
             
             auto a = usecase.getById(tenantId, id);
             if (a.isNull) {
@@ -101,7 +101,7 @@ class TaskAttachmentController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TaskAttachmentprecheck.id);
+            auto id = TaskAttachmentId(precheck.id);
 
             auto result = usecase.deleteTaskAttachment(tenantId, id);
             if (result.hasError)

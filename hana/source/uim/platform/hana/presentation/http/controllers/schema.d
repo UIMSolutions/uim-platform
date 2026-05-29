@@ -142,7 +142,7 @@ class SchemaController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Schemaprecheck.id);
+      auto id = SchemaId(precheck.id);
       auto result = usecase.deleteSchema(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

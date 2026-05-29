@@ -100,7 +100,7 @@ class ProcessController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = Processprecheck.id);
+            auto id = ProcessId(precheck.id);
             auto p = processUsecase.getProcess(tenantId, id);
             if (p.isNull) {
                 writeError(res, 404, "Process not found");
@@ -134,7 +134,7 @@ class ProcessController : ManageController {
             auto data = precheck.data;
             UpdateProcessRequest r;
             r.tenantId = tenantId;
-            r.processId = Processprecheck.id);
+            r.processId = ProcessId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.category = data.getString("category");
@@ -198,7 +198,7 @@ class ProcessController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = Processprecheck.id);
+            auto id = ProcessId(precheck.id);
             auto result = processUsecase.deleteProcess(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

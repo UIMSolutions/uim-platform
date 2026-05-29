@@ -104,7 +104,7 @@ class PatientController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Patientprecheck.id);
+      auto id = PatientId(precheck.id);
       auto p = usecase.getPatient(tenantId, id);
       if (p.isNull) { writeFhirError(res, 404, "Patient not found"); return; }
       res.writeJsonBody(p.toJson(), 200);
@@ -116,7 +116,7 @@ class PatientController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Patientprecheck.id);
+      auto id = PatientId(precheck.id);
       auto data = precheck.data;
       UpdatePatientRequest r;
       r.tenantId   = tenantId;
@@ -155,7 +155,7 @@ class PatientController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Patientprecheck.id);
+      auto id = PatientId(precheck.id);
       auto result = usecase.deletePatient(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

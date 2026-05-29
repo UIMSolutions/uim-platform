@@ -47,7 +47,7 @@ class EventFilterController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventFilterprecheck.id);
+        auto id = EventFilterId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getEventFilter(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Filter not found").set("statusCode", 404);
@@ -80,7 +80,7 @@ class EventFilterController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         EventFilterDTO dto;
-        dto.filterId       = EventFilterprecheck.id);
+        dto.filterId       = EventFilterId(precheck.id);
         dto.tenantId       = tenantId;
         dto.subscriptionId = EventSubscriptionId(data.getString("subscriptionId", ""));
         dto.filterType     = data.getString("filterType", "include").to!FilterType;
@@ -98,7 +98,7 @@ class EventFilterController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventFilterprecheck.id);
+        auto id = EventFilterId(precheck.id);
         auto result = _useCase.deleteEventFilter(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Filter deleted successfully").set("status", "success").set("statusCode", 200);

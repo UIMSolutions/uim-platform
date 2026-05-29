@@ -64,7 +64,7 @@ class LegalEntityController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = LegalEntityprecheck.id);
+            auto id = LegalEntityId(precheck.id);
 
             auto le = usecase.getLegalEntity(tenantId, id);
             if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
@@ -79,7 +79,7 @@ class LegalEntityController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = LegalEntityprecheck.id);
+            auto id = LegalEntityId(precheck.id);
             auto data = precheck.data;
             UpdateLegalEntityRequest r;
             r.name = data.getString("name");

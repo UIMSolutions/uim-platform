@@ -79,7 +79,7 @@ class MessageBindingController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto bindingId = MessageBindingprecheck.id);
+            auto bindingId = MessageBindingId(precheck.id);
             auto data = precheck.data;
             MessageBindingDTO dto;
             dto.tenantId    = tenantId;
@@ -98,7 +98,7 @@ class MessageBindingController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = MessageBindingprecheck.id);
+            auto id = MessageBindingId(precheck.id);
             auto result = usecase.deleteBinding(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

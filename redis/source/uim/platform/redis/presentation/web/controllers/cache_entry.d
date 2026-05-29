@@ -38,7 +38,7 @@ class WebCacheEntryController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = CacheEntryprecheck.id);
+        auto id = CacheEntryId(precheck.id);
         auto e = _useCase.getCacheEntry(tenantId, id);
         _model.setSelected(e, !e.isNull);
         _view.renderDetail(res, _model);
@@ -63,7 +63,7 @@ class WebCacheEntryController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = CacheEntryprecheck.id);
+        auto id = CacheEntryId(precheck.id);
         auto result = _useCase.deleteCacheEntry(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
         else                _model.setError(400, result.message);

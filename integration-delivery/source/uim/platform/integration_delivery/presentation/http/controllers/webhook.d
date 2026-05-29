@@ -48,7 +48,7 @@ class WebhookController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Webhookprecheck.id);
+        auto id = WebhookId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
 
@@ -87,7 +87,7 @@ class WebhookController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = Webhookprecheck.id);
+        auto id = WebhookId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
 
@@ -111,7 +111,7 @@ class WebhookController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Webhookprecheck.id);
+        auto id = WebhookId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
 

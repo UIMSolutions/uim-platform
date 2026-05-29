@@ -112,7 +112,7 @@ class ServiceBindingController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = ServiceBindingId(tenantId, precheck.id);
+      auto id = ServiceBindingId(tenantId, Id(precheck.id);
       auto data = precheck.data;
       UpdateServiceBindingRequest r;
       r.tenantId = tenantId;  
@@ -136,7 +136,7 @@ class ServiceBindingController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = ServiceBindingId(tenantId, precheck.id);
+      auto id = ServiceBindingId(tenantId, Id(precheck.id);
 
       auto result = usecase.deleteBinding(tenantId, id);
       if (result.success)

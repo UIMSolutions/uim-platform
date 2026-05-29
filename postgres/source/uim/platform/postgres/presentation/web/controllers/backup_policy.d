@@ -37,7 +37,7 @@ class WebBackupPolicyController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = BackupPolicyprecheck.id);
+        auto id = BackupPolicyId(precheck.id);
         auto p  = _useCase.getBackupPolicy(tenantId, id);
         _model.setSelected(p, !p.isNull);
         _view.renderDetail(res, _model);

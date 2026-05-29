@@ -66,7 +66,7 @@ class FlexDraftsController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexDraftprecheck.id);
+      auto id = FlexDraftId(precheck.id);
       auto d = usecase.getDraft(tenantId, id);
       if (d.isNull) { writeError(res, 404, "FlexDraft not found"); return; }
       res.writeJsonBody(d.toJson(), 200);
@@ -78,7 +78,7 @@ class FlexDraftsController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexDraftprecheck.id);
+      auto id = FlexDraftId(precheck.id);
       auto data = precheck.data;
       UpdateFlexDraftRequest r;
       r.tenantId   = tenantId;
@@ -99,7 +99,7 @@ class FlexDraftsController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexDraftprecheck.id);
+      auto id = FlexDraftId(precheck.id);
       auto result = usecase.discardDraft(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

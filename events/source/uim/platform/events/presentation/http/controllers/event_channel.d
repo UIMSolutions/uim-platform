@@ -80,7 +80,7 @@ class EventChannelController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto channelId = EventChannelprecheck.id);
+            auto channelId = EventChannelId(precheck.id);
             auto data = precheck.data;
             EventChannelDTO dto;
             dto.tenantId           = tenantId;
@@ -101,7 +101,7 @@ class EventChannelController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = EventChannelprecheck.id);
+            auto id = EventChannelId(precheck.id);
             auto result = usecase.deleteChannel(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

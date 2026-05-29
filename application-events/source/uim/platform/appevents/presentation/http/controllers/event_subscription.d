@@ -46,7 +46,7 @@ class EventSubscriptionController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventSubscriptionprecheck.id);
+        auto id = EventSubscriptionId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = _useCase.getEventSubscription(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Subscription not found").set("statusCode", 404);
@@ -81,7 +81,7 @@ class EventSubscriptionController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         EventSubscriptionDTO dto;
-        dto.subscriptionId    = EventSubscriptionprecheck.id);
+        dto.subscriptionId    = EventSubscriptionId(precheck.id);
         dto.tenantId          = tenantId;
         dto.name              = data.getString("name", "");
         dto.description       = data.getString("description", "");
@@ -101,7 +101,7 @@ class EventSubscriptionController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = EventSubscriptionprecheck.id);
+        auto id = EventSubscriptionId(precheck.id);
         auto result = _useCase.deleteEventSubscription(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Subscription deleted successfully").set("status", "success").set("statusCode", 200);

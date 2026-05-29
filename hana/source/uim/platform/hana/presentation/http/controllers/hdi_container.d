@@ -121,7 +121,7 @@ class HDIContainerController : ManageController {
       auto data = precheck.data;
       UpdateHDIContainerRequest r;
       r.tenantId = tenantId;
-      r.id = HDIContainerprecheck.id);
+      r.id = HDIContainerId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.grantedSchemas = data.getStrings("grantedSchemas");
@@ -145,7 +145,7 @@ class HDIContainerController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = HDIContainerprecheck.id);
+      auto id = HDIContainerId(precheck.id);
 
       auto result = usecase.deleteHDIContainer(tenantId, id);
       if (result.hasError)

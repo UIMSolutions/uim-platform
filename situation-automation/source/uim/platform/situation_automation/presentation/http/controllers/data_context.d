@@ -98,7 +98,7 @@ class DataContextController : ManageController {
         try {
 
             auto tenantId = precheck.tenantId;
-            auto id = DataContextprecheck.id);
+            auto id = DataContextId(precheck.id);
             auto d = usecase.getDataContext(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Data context not found");
@@ -125,7 +125,7 @@ class DataContextController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = DataContextprecheck.id);
+            auto id = DataContextId(precheck.id);
             auto result = usecase.deleteDataContext(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

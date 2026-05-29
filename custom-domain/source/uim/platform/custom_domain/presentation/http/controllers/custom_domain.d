@@ -135,7 +135,7 @@ class CustomDomainController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = CustomDomainprecheck.id);
+        auto id = CustomDomainId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
 
@@ -220,7 +220,7 @@ class CustomDomainController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = CustomDomainprecheck.id);
+        auto id = CustomDomainId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
 

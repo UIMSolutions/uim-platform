@@ -95,7 +95,7 @@ class AutomationRuleController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto id = AutomationRuleprecheck.id);
+      auto id = AutomationRuleId(precheck.id);
       auto r = usecase.getAutomationRule(tenantId, id);
       if (r.isNull) {
         writeError(res, 404, "Automation rule not found");
@@ -133,7 +133,7 @@ class AutomationRuleController : ManageController {
       auto data = precheck.data;
       UpdateAutomationRuleRequest r;
       r.tenantId = tenantId;
-      r.automationRuleId = AutomationRuleprecheck.id);
+      r.automationRuleId = AutomationRuleId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.priority = data.getString("priority");
@@ -161,7 +161,7 @@ class AutomationRuleController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto id = AutomationRuleprecheck.id);
+      auto id = AutomationRuleId(precheck.id);
       auto result = usecase.deleteAutomationRule(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

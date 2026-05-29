@@ -39,7 +39,7 @@ class WebMaintenanceWindowController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = MaintenanceWindowprecheck.id);
+        auto id = MaintenanceWindowId(precheck.id);
         auto w  = _useCase.getMaintenanceWindow(tenantId, id);
         _model.setSelected(w, !w.isNull);
         _view.renderDetail(res, _model);
@@ -64,7 +64,7 @@ class WebMaintenanceWindowController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = MaintenanceWindowprecheck.id);
+        auto id = MaintenanceWindowId(precheck.id);
         auto result = _useCase.deleteMaintenanceWindow(tenantId, id);
         if (result.success) _model.setSuccess("Window deleted");
         else                _model.setError(404, result.message);

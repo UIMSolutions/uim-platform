@@ -50,7 +50,7 @@ class DeadLetterEntryController : ManageController {
             return errorResponse(precheck.error, 400);
         auto tenantId = precheck.tenantId;
 
-        auto id = DeadLetterEntryprecheck.id);
+        auto id = DeadLetterEntryId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Dead Letter Entry ID", 400);
 
@@ -99,7 +99,7 @@ class DeadLetterEntryController : ManageController {
         if (precheck.hasError)
             return errorResponse(precheck.error, 400);
         auto tenantId = precheck.tenantId;
-        auto id = DeadLetterEntryprecheck.id);
+        auto id = DeadLetterEntryId(precheck.id);
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);

@@ -154,7 +154,7 @@ class ReplicationTaskController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = ReplicationTaskprecheck.id);
+      auto id = ReplicationTaskId(precheck.id);
       auto result = usecase.deleteReplicationTask(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

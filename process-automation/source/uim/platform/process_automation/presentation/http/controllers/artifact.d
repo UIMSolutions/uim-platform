@@ -103,7 +103,7 @@ class ArtifactController : ManageController {
             
             auto tenantId = precheck.tenantId;
 
-            auto id = Artifactprecheck.id);
+            auto id = ArtifactId(precheck.id);
             auto a = artifactUsecase.getArtifact(tenantId, id);
             if (a.isNull) {
                 writeError(res, 404, "Artifact not found");
@@ -140,7 +140,7 @@ class ArtifactController : ManageController {
             auto data = precheck.data;
             UpdateArtifactRequest r;
             r.tenantId = tenantId;
-            r.artifactId = Artifactprecheck.id);
+            r.artifactId = ArtifactId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.version_ = data.getString("version");
@@ -166,7 +166,7 @@ class ArtifactController : ManageController {
         try {
             
             auto tenantId = precheck.tenantId;
-            auto id = Artifactprecheck.id);
+            auto id = ArtifactId(precheck.id);
             
             auto result = artifactUsecase.deleteArtifact(tenantId, id);
             if (result.hasError)

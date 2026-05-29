@@ -135,7 +135,7 @@ class ServiceInstanceController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto id = ServiceInstanceId(
-        precheck.id);
+        Id(precheck.id);
       auto result = usecase.deleteServiceInstance(tenantId, id);
       if (result.success)
         res.writeBody("", 204);

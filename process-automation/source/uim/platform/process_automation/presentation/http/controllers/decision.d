@@ -100,7 +100,7 @@ class DecisionController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Decisionprecheck.id);
+            auto id = DecisionId(precheck.id);
             auto d = decisionUsecase.getDecision(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Decision not found");
@@ -134,7 +134,7 @@ class DecisionController : ManageController {
             auto data = precheck.data;
             UpdateDecisionRequest r;
             r.tenantId = tenantId;
-            r.decisionId = Decisionprecheck.id);
+            r.decisionId = DecisionId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.hitPolicy = data.getString("hitPolicy");
@@ -162,7 +162,7 @@ class DecisionController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Decisionprecheck.id);
+            auto id = DecisionId(precheck.id);
             auto result = decisionUsecase.deleteDecision(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

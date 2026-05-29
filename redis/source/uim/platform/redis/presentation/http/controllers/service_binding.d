@@ -47,7 +47,7 @@ class ServiceBindingController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServiceBindingprecheck.id);
+        auto id = ServiceBindingId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid service binding ID").set("statusCode", 400);
 
@@ -91,7 +91,7 @@ class ServiceBindingController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServiceBindingprecheck.id);
+        auto id = ServiceBindingId(precheck.id);
 
         auto result = bindings.deleteServiceBinding(tenantId, id);
         if (result.hasError)

@@ -101,7 +101,7 @@ class AutomationController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Automationprecheck.id);
+            auto id = AutomationId(precheck.id);
             
             auto a = automationUsecase.getAutomation(tenantId, id);
             if (a.isNull) {
@@ -136,7 +136,7 @@ class AutomationController : ManageController {
             auto data = precheck.data;
             UpdateAutomationRequest r;
             r.tenantId = tenantId;
-            r.automationId = Automationprecheck.id);
+            r.automationId = AutomationId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.type = data.getString("type");
@@ -165,7 +165,7 @@ class AutomationController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Automationprecheck.id);
+            auto id = AutomationId(precheck.id);
             auto result = automationUsecase.deleteAutomation(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

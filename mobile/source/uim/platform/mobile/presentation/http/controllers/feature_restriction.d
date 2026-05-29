@@ -149,7 +149,7 @@ class FeatureRestrictionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = FeatureRestrictionprecheck.id);
+      auto id = FeatureRestrictionId(precheck.id);
       auto result = usecase.deleteFeatureRestriction(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -141,7 +141,7 @@ class ClientResourceController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = ClientResourceprecheck.id);
+      auto id = ClientResourceId(precheck.id);
       auto result = usecase.deleteClientResource(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

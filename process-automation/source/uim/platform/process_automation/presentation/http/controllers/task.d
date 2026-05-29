@@ -101,7 +101,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto id = Taskprecheck.id);
+      auto id = TaskId(precheck.id);
       auto t = taskUsecase.getTask(tenantId, id);
       if (t.isNull) {
         writeError(res, 404, "PATask not found");
@@ -141,7 +141,7 @@ class TaskController : ManageController {
       auto data = precheck.data;
       UpdateTaskRequest r;
       r.tenantId = tenantId;
-      r.taskId = Taskprecheck.id);
+      r.taskId = TaskId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.priority = data.getString("priority");
@@ -243,7 +243,7 @@ class TaskController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
 
-      auto id = Taskprecheck.id);
+      auto id = TaskId(precheck.id);
       auto result = taskUsecase.deleteTask(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);

@@ -41,7 +41,7 @@ class MaintenanceWindowController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = MaintenanceWindowprecheck.id);
+        auto id = MaintenanceWindowId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = maintenanceWindows.getMaintenanceWindow(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Maintenance window not found").set("statusCode", 404);
@@ -73,7 +73,7 @@ class MaintenanceWindowController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         MaintenanceWindowDTO dto;
-        dto.maintenanceWindowId     = MaintenanceWindowprecheck.id);
+        dto.maintenanceWindowId     = MaintenanceWindowId(precheck.id);
         dto.tenantId                = tenantId;
         dto.dayOfWeek               = data.getString("dayOfWeek", "");
         dto.startHourUtc            = data.getLong("startHourUtc", -1);
@@ -89,7 +89,7 @@ class MaintenanceWindowController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = MaintenanceWindowprecheck.id);
+        auto id = MaintenanceWindowId(precheck.id);
         auto result = maintenanceWindows.deleteMaintenanceWindow(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Maintenance window deleted successfully").set("status", "success").set("statusCode", 200);

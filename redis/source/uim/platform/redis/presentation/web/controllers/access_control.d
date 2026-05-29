@@ -38,7 +38,7 @@ class WebAccessControlController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = AccessControlprecheck.id);
+        auto id = AccessControlId(precheck.id);
         auto a = _useCase.getAccessControl(tenantId, id);
         _model.setSelected(a, !a.isNull);
         _view.renderDetail(res, _model);
@@ -61,7 +61,7 @@ class WebAccessControlController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = AccessControlprecheck.id);
+        auto id = AccessControlId(precheck.id);
         auto result = _useCase.deleteAccessControl(tenantId, id);
         if (result.success) _model.setSuccess("Deleted");
         else                _model.setError(400, result.message);

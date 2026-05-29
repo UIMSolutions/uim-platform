@@ -36,7 +36,7 @@ class WebServicePlanController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = ServicePlanprecheck.id);
+        auto id = ServicePlanId(precheck.id);
         auto p = _useCase.getServicePlan(tenantId, id);
         _model.setSelected(p, !p.isNull);
         _view.renderDetail(res, _model);

@@ -88,7 +88,7 @@ r.tenantId = tenantId;
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Promptprecheck.id);
+      auto id = PromptId(precheck.id);
 
       auto p = usecase.getPrompt(tenantId, id);
       if (p.isNull) {
@@ -105,7 +105,7 @@ r.tenantId = tenantId;
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Promptprecheck.id);
+      auto id = PromptId(precheck.id);
       auto data = precheck.data;
       PatchPromptRequest r;
       r.tenantId = tenantId;

@@ -103,7 +103,7 @@ class SituationTemplateController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = SituationTemplateprecheck.id);
+            auto id = SituationTemplateId(precheck.id);
 
             auto t = usecase.getSituationTemplate(tenantId, id);
             if (t.isNull) {
@@ -138,7 +138,7 @@ class SituationTemplateController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = SituationTemplateprecheck.id);
+            auto id = SituationTemplateId(precheck.id);
 
             auto data = precheck.data;
             UpdateSituationTemplateRequest r;
@@ -174,7 +174,7 @@ class SituationTemplateController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = SituationTemplateprecheck.id);
+            auto id = SituationTemplateId(precheck.id);
             auto result = usecase.deleteSituationTemplate(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

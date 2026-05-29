@@ -76,7 +76,7 @@ class FlexApplicationsController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexApplicationprecheck.id);
+      auto id = FlexApplicationId(precheck.id);
       auto a = usecase.getApplication(tenantId, id);
       if (a.isNull) { writeError(res, 404, "FlexApplication not found"); return; }
       res.writeJsonBody(a.toJson(), 200);
@@ -88,7 +88,7 @@ class FlexApplicationsController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexApplicationprecheck.id);
+      auto id = FlexApplicationId(precheck.id);
       auto data = precheck.data;
       UpdateFlexApplicationRequest r;
       r.tenantId       = tenantId;
@@ -112,7 +112,7 @@ class FlexApplicationsController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = FlexApplicationprecheck.id);
+      auto id = FlexApplicationId(precheck.id);
       auto result = usecase.deleteApplication(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);

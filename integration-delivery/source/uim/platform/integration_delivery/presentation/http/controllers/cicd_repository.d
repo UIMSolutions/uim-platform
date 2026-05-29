@@ -48,7 +48,7 @@ class CicdRepositoryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CicdRepositoryprecheck.id);
+        auto id = CicdRepositoryId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);
 
@@ -90,7 +90,7 @@ class CicdRepositoryController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = CicdRepositoryprecheck.id);
+        auto id = CicdRepositoryId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);
 
@@ -116,7 +116,7 @@ class CicdRepositoryController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = CicdRepositoryprecheck.id);
+        auto id = CicdRepositoryId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);
 

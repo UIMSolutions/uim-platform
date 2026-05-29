@@ -48,7 +48,7 @@ class ServicePlanController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServicePlanprecheck.id);
+        auto id = ServicePlanId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid service plan ID").set("statusCode", 400);
 
@@ -99,7 +99,7 @@ class ServicePlanController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServicePlanDTO dto;
-        dto.servicePlanId  = ServicePlanprecheck.id);
+        dto.servicePlanId  = ServicePlanId(precheck.id);
         dto.tenantId       = tenantId;
         dto.name           = data.getString("name", "");
         dto.description    = data.getString("description", "");
@@ -124,7 +124,7 @@ class ServicePlanController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = ServicePlanprecheck.id);
+        auto id = ServicePlanId(precheck.id);
 
         auto result = plans.deleteServicePlan(tenantId, id);
         if (result.hasError)

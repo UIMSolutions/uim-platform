@@ -89,7 +89,7 @@ class DatasetController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Datasetprecheck.id);
+      auto id = DatasetId(precheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto d = usecase.getDataset(tenantId, connectionId, id);
@@ -110,7 +110,7 @@ class DatasetController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Datasetprecheck.id);
+      auto id = DatasetId(precheck.id);
       auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -140,7 +140,7 @@ class DatasetController : ManageController {
     try {
       auto tenantId = precheck.tenantId;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto id = Datasetprecheck.id);
+      auto id = DatasetId(precheck.id);
 
       auto result = usecase.deleteDataset(tenantId, connectionId, id);
       if (result.hasError)

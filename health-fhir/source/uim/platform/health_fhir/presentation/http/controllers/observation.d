@@ -84,7 +84,7 @@ class ObservationController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Observationprecheck.id);
+      auto id = ObservationId(precheck.id);
       auto o = usecase.getObservation(tenantId, id);
       if (o.isNull) { writeFhirError(res, 404, "Observation not found"); return; }
       res.writeJsonBody(o.toJson(), 200);
@@ -96,7 +96,7 @@ class ObservationController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Observationprecheck.id);
+      auto id = ObservationId(precheck.id);
       auto data = precheck.data;
       
       UpdateObservationRequest r;
@@ -121,7 +121,7 @@ class ObservationController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Observationprecheck.id);
+      auto id = ObservationId(precheck.id);
       auto result = usecase.deleteObservation(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);

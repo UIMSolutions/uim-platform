@@ -103,7 +103,7 @@ class ActionController : ManageController {
         try {
 
             auto tenantId = precheck.tenantId;
-            auto id = Actionprecheck.id);
+            auto id = ActionId(precheck.id);
 
             auto a = actionUsecase.getAction(tenantId, id);
             if (a.isNull) {
@@ -140,7 +140,7 @@ class ActionController : ManageController {
             auto data = precheck.data;
             UpdateActionRequest r;
             r.tenantId = tenantId;
-            r.actionId = Actionprecheck.id);
+            r.actionId = ActionId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.baseUrl = data.getString("baseUrl");
@@ -170,7 +170,7 @@ class ActionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = Actionprecheck.id);
+            auto id = ActionId(precheck.id);
             auto result = actionUsecase.deleteAction(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

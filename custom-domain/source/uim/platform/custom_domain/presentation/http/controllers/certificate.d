@@ -233,7 +233,7 @@ class CertificateController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = Certificateprecheck.id);
+        auto id = CertificateId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);
 

@@ -150,7 +150,7 @@ class MobileAppController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = MobileAppprecheck.id);
+      auto id = MobileAppId(precheck.id);
       auto result = usecase.deleteMobileApp(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

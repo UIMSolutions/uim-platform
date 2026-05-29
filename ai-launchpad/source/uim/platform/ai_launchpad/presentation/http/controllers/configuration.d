@@ -30,95 +30,84 @@ class ConfigurationController : ManageController {
     router.delete_("/api/v1/configurations/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId();
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      CreateConfigurationRequest r;
-      r.connectionId = connectionId;
-      r.scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
-      r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
+    auto tenantId = precheck.tenantId;
 
-      auto result = configurations.createConfiguration(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Configuration created");
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    CreateConfigurationRequest r;
+    r.connectionId = connectionId;
+    r.scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
+    r.inputArtifacts = jsonPairArray(data, "inputArtifacts");
+
+    auto result = configurations.createConfiguration(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Configuration created successfully", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId();
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto configs = scenarioId.isEmpty
-        ? configurations.listConfigurations(tenantId, connectionId) 
-        : configurations.listConfigurations(tenantId, connectionId, scenarioId);
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      auto jarr = configs.map!(c => c.toJson).array.toJson;
+    auto items = scenarioId.isEmpty
+      ? configurations.listConfigurations(tenantId, connectionId) : configurations.listConfigurations(tenantId, connectionId, scenarioId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", configs.length)
-        .set("resources", jarr)
-        .set("message", "Configurations retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Configuration list retrieved successfully", 200, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId();
-      auto id = Configurationprecheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto c = configurations.getConfiguration(tenantId, connectionId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Configuration not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      auto resp = c.toJson.set("message", "Configuration retrieved successfully");
+    auto id = ConfigurationId(precheck.id);
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto c = configurations.getConfiguration(tenantId, connectionId, id);
+    if (c.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = job.toJson();
+    return successResponse("Configuration retrieved successfully", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = req.getTenantId();
-      auto id = Configurationprecheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = configurations.deleteConfiguration(tenantId, connectionId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("message", "Configuration deleted");
+    auto tenantId = precheck.tenantId;
 
-        res.writeJsonBody(resp, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto result = configurations.deleteConfiguration(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Configuration deleted successfully", 200, responseData);
   }
-
 }

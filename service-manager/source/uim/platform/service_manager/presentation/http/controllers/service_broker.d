@@ -96,7 +96,7 @@ class ServiceBrokerController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             
-            auto id = ServiceBrokerprecheck.id);
+            auto id = ServiceBrokerId(precheck.id);
             auto result = usecase.delete(req.getTenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

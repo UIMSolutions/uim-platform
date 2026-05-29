@@ -132,7 +132,7 @@ class UserSessionController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = UserSessionprecheck.id);
+      auto id = UserSessionId(precheck.id);
       auto result = usecase.delete(id);
       if (result.hasError)
             return errorResponse(result.message, 400);

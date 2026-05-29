@@ -30,59 +30,58 @@ class ConnectionController : ManageController {
     router.delete_("/api/v1/connections/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateConnectionRequest r;
-      r.tenantId = tenantId;
-      r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
-      r.clientSecret = data.getString("clientSecret");
-      r.description = data.getString("description");
-      r.defaultResourceGroupId = data.getString("defaultResourceGroupId");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.createConnection(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Connection created");
+    auto tenantId = precheck.tenantId;
+    auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto items = workspaceId.isNull
+      ? usecase.listConnections(tenantId) : usecase.listConnections(tenantId, workspaceId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Connection list retrieved successfully", 200, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto connections = workspaceId.isEmpty
-        ? usecase.listConnections(tenantId)
-        : usecase.listConnections(tenantId, workspaceId);
+    auto tenantId = precheck.tenantId;
 
-      auto jarr = connections.map!(connection => connection.toJson).array.toJson;
+    auto data = precheck.data;
+    CreateConnectionRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = ConnectionId(data.getString("id"));
+    r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
+    r.clientSecret = data.getString("clientSecret");
+    r.description = data.getString("description");
+    r.defaultResourceGroupId = data.getString("defaultResourceGroupId");
 
-      auto resp = Json.emptyObject
-        .set("count", connections.length)
-        .set("resources", jarr)
-        .set("message", "Connections retrieved successfully");
+    auto result = usecase.createConnection(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Connection created successfully", 201, responseData);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = Connectionprecheck.id);
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = ConnectionId(precheck.id);
 
       auto connection = usecase.getConnection(tenantId, id);
       if (connection.isNull) {
@@ -99,7 +98,7 @@ class ConnectionController : ManageController {
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Connectionprecheck.id);
+      auto id = ConnectionId(precheck.id);
       auto data = precheck.data;
       PatchConnectionRequest r;
       r.tenantId = tenantId;
@@ -110,37 +109,37 @@ class ConnectionController : ManageController {
 
       auto result = usecase.patchConnection(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("message", "Connection updated");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("message", "Connection updated");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else {
+      writeError(res, 404, result.message);
     }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = Connectionprecheck.id);
+override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = ConnectionId(precheck.id);
 
-      auto result = usecase.deleteConnection(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto response = Json.emptyObject
-          .set("message", "Connection deleted");
+    auto result = usecase.deleteConnection(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto response = Json.emptyObject
+      .set("message", "Connection deleted");
 
-        res.writeJsonBody(response, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    res.writeJsonBody(response, 204);
+  } else {
+    writeError(res, 404, result.message);
   }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
 }

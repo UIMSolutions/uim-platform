@@ -89,7 +89,7 @@ class KeyringController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Credentialprecheck.id);
+      auto id = CredentialId(precheck.id);
       auto k = usecase.getCredential(tenantId, id);
 
       if (k.isNull) {
@@ -170,7 +170,7 @@ class KeyringController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
-      auto id = Credentialprecheck.id);
+      auto id = CredentialId(precheck.id);
 
       auto result = usecase.deleteCredential(tenantId, id);
       if (result.hasError)

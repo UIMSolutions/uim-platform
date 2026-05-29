@@ -41,7 +41,7 @@ class BackupPolicyController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = BackupPolicyprecheck.id);
+        auto id = BackupPolicyId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
         auto e = backupPolicies.getBackupPolicy(tenantId, id);
         if (e.isNull) return Json.emptyObject.set("error", "Backup policy not found").set("statusCode", 404);
@@ -72,7 +72,7 @@ class BackupPolicyController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         BackupPolicyDTO dto;
-        dto.backupPolicyId  = BackupPolicyprecheck.id);
+        dto.backupPolicyId  = BackupPolicyId(precheck.id);
         dto.tenantId        = tenantId;
         dto.retentionPeriod = data.getLong("retentionPeriod", 0);
         dto.backupWindow    = data.getString("backupWindow", "");
@@ -87,7 +87,7 @@ class BackupPolicyController : ManageController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return Json.emptyObject.set("error", precheck.error);
         auto tenantId = precheck.tenantId;
-        auto id = BackupPolicyprecheck.id);
+        auto id = BackupPolicyId(precheck.id);
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
         if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("message", "Backup policy deleted successfully").set("status", "success").set("statusCode", 200);

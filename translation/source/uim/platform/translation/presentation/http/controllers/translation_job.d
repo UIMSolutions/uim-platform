@@ -90,7 +90,7 @@ class TranslationJobController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = TranslationJobprecheck.id);
+            auto id = TranslationJobId(precheck.id);
             auto job = usecase.getJob(tenantId, id);
             if (job.isNull) {
                 writeError(res, 404, "Translation job not found");

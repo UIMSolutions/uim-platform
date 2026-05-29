@@ -93,7 +93,7 @@ class DashboardController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = Dashboardprecheck.id);
+            auto id = DashboardId(precheck.id);
             auto d = usecase.getDashboard(tenantId, id);
             if (d.isNull) {
                 writeError(res, 404, "Dashboard not found");
@@ -123,7 +123,7 @@ class DashboardController : ManageController {
             auto data = precheck.data;
             UpdateDashboardRequest r;
             r.tenantId = tenantId;
-            r.dashboardId = Dashboardprecheck.id);
+            r.dashboardId = DashboardId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
@@ -148,7 +148,7 @@ class DashboardController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = Dashboardprecheck.id);
+            auto id = DashboardId(precheck.id);
             
             auto result = usecase.deleteDashboard(tenantId, id);
             if (result.hasError)

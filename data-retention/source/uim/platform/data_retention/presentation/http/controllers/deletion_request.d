@@ -74,7 +74,7 @@ class DeletionRequestController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DeletionRequestprecheck.id);
+            auto id = DeletionRequestId(precheck.id);
             auto dr = usecase.getDeletionRequest(tenantId, id);
             if (dr.isNull) {
                 writeError(res, 404, "Deletion request not found");
@@ -110,7 +110,7 @@ class DeletionRequestController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DeletionRequestprecheck.id);
+            auto id = DeletionRequestId(precheck.id);
             auto data = precheck.data;
             UpdateDeletionRequestRequest r;
             r.tenantId = tenantId;
@@ -133,7 +133,7 @@ class DeletionRequestController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = DeletionRequestprecheck.id);
+            auto id = DeletionRequestId(precheck.id);
 
             auto result = usecase.deleteDeletionRequest(tenantId, id);
             if (result.hasError)

@@ -100,7 +100,7 @@ class BindingController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ServiceBindingprecheck.id);
+    auto id = ServiceBindingId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
 
@@ -128,7 +128,7 @@ class BindingController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ServiceBindingprecheck.id);
+    auto id = ServiceBindingId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
 
@@ -157,7 +157,7 @@ class BindingController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ServiceBindingprecheck.id);
+    auto id = ServiceBindingId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Service Binding ID", 400);
 

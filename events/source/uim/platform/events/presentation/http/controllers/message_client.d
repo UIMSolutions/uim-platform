@@ -78,7 +78,7 @@ class MessageClientController : ManageController {
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto clientId = MessageClientprecheck.id);
+            auto clientId = MessageClientId(precheck.id);
             auto data = precheck.data;
             MessageClientDTO dto;
             dto.tenantId           = tenantId;
@@ -99,7 +99,7 @@ class MessageClientController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = MessageClientprecheck.id);
+            auto id = MessageClientId(precheck.id);
             auto result = usecase.deleteClient(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

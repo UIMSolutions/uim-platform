@@ -94,7 +94,7 @@ class TlsConfigurationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = TlsConfigurationprecheck.id);
+        auto id = TlsConfigurationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid TLS Configuration ID", 400);
 
@@ -131,7 +131,7 @@ class TlsConfigurationController : ManageController {
         auto data = precheck.data;
         UpdateTlsConfigurationRequest r;
         r.tenantId = tenantId;
-        r.tlsConfigurationId = TlsConfigurationprecheck.id);
+        r.tlsConfigurationId = TlsConfigurationId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.minProtocolVersion = data.getString("minProtocolVersion");
@@ -157,7 +157,7 @@ class TlsConfigurationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = TlsConfigurationprecheck.id);
+        auto id = TlsConfigurationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid TLS Configuration ID", 400);
 

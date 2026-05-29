@@ -39,7 +39,7 @@ class WebDatabaseExtensionController {
 
     private void handleDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = DatabaseExtensionprecheck.id);
+        auto id = DatabaseExtensionId(precheck.id);
         auto e  = _useCase.getDatabaseExtension(tenantId, id);
         _model.setSelected(e, !e.isNull);
         _view.renderDetail(res, _model);
@@ -63,7 +63,7 @@ class WebDatabaseExtensionController {
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-ID", "default"));
-        auto id = DatabaseExtensionprecheck.id);
+        auto id = DatabaseExtensionId(precheck.id);
         auto result = _useCase.deleteDatabaseExtension(tenantId, id);
         if (result.success) _model.setSuccess("Extension disabled");
         else                _model.setError(404, result.message);

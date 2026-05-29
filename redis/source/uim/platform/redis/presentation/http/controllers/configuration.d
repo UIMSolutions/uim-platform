@@ -48,7 +48,7 @@ class ConfigurationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Configurationprecheck.id);
+        auto id = ConfigurationId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid configuration ID").set("statusCode", 400);
 
@@ -97,7 +97,7 @@ class ConfigurationController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ConfigurationDTO dto;
-        dto.configurationId      = Configurationprecheck.id);
+        dto.configurationId      = ConfigurationId(precheck.id);
         dto.tenantId             = tenantId;
         dto.timeout_             = data.getLong("timeout", 0);
         dto.maxConnections       = data.getLong("maxConnections", 0);
@@ -124,7 +124,7 @@ class ConfigurationController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = Configurationprecheck.id);
+        auto id = ConfigurationId(precheck.id);
 
         auto result = configurations.deleteConfiguration(tenantId, id);
         if (result.hasError)

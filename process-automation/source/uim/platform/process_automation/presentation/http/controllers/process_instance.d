@@ -97,7 +97,7 @@ class ProcessInstanceController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = ProcessInstanceprecheck.id);
+            auto id = ProcessInstanceId(precheck.id);
             auto i = processInstanceUsecase.getProcessInstance(tenantId, id);
             if (i.isNull) {
                 writeError(res, 404, "Process instance not found");
@@ -162,7 +162,7 @@ class ProcessInstanceController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = ProcessInstanceprecheck.id);
+            auto id = ProcessInstanceId(precheck.id);
             
             auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
             if (result.hasError)

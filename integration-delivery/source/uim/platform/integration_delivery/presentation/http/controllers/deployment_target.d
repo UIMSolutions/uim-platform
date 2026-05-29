@@ -48,7 +48,7 @@ class DeploymentTargetController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = DeploymentTargetprecheck.id);
+        auto id = DeploymentTargetId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);
 
@@ -91,7 +91,7 @@ class DeploymentTargetController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = DeploymentTargetprecheck.id);
+        auto id = DeploymentTargetId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);
 
@@ -119,7 +119,7 @@ class DeploymentTargetController : ManageController {
             return Json.emptyObject.set("error", precheck.error);
 
         auto tenantId = precheck.tenantId;
-        auto id = DeploymentTargetprecheck.id);
+        auto id = DeploymentTargetId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);
 

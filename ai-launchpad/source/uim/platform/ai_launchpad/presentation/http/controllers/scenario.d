@@ -84,7 +84,7 @@ class ScenarioController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Scenarioprecheck.id);
+      auto id = ScenarioId(precheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto s = usecase.getScenario(tenantId, connectionId, id);
@@ -105,7 +105,7 @@ class ScenarioController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = Scenarioprecheck.id);
+      auto id = ScenarioId(precheck.id);
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
       auto result = usecase.deleteScenario(tenantId, connectionId, id);

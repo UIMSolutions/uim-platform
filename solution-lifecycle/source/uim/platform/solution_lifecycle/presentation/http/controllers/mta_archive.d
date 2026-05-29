@@ -81,7 +81,7 @@ class MtaArchiveController : ManageController {
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = MtaArchiveprecheck.id);
+            auto id = MtaArchiveId(precheck.id);
             auto a = usecase.getArchive(tenantId, id);
             if (a.isNull) { writeError(res, 404, "MTA archive not found"); return; }
             res.writeJsonBody(a.toJson, 200);
@@ -93,7 +93,7 @@ class MtaArchiveController : ManageController {
     override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id = MtaArchiveprecheck.id);
+            auto id = MtaArchiveId(precheck.id);
             auto result = usecase.deleteArchive(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);

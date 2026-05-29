@@ -93,7 +93,7 @@ class AlertRuleController : ManageController {
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = AlertRuleprecheck.id);
+      auto id = AlertRuleId(precheck.id);
 
       if (!usecase.hasRule(tenantId, id)) {
         writeError(res, 404, "Alert rule not found");
@@ -119,7 +119,7 @@ class AlertRuleController : ManageController {
   override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = AlertRuleprecheck.id);
+      auto id = AlertRuleId(precheck.id);
       auto data = precheck.data;
       UpdateAlertRuleRequest r;
       r.tenantId = tenantId;
@@ -155,7 +155,7 @@ class AlertRuleController : ManageController {
   override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = AlertRuleprecheck.id);
+      auto id = AlertRuleId(precheck.id);
       
       usecase.deleteAlertRule(tenantId, id);
       auto resp = Json.emptyObject

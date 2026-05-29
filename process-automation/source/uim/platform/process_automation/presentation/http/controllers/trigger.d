@@ -102,7 +102,7 @@ class TriggerController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto id = Triggerprecheck.id);
+            auto id = TriggerId(precheck.id);
             auto t = triggerUsecase.getTrigger(tenantId, id);
             if (t.isNull) {
                 writeError(res, 404, "Trigger not found");
@@ -138,7 +138,7 @@ class TriggerController : ManageController {
             auto data = precheck.data;
             UpdateTriggerRequest r;
             r.tenantId = tenantId;
-            r.triggerId = Triggerprecheck.id);
+            r.triggerId = TriggerId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.cronExpression = data.getString("cronExpression");
@@ -165,7 +165,7 @@ class TriggerController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto id = Triggerprecheck.id);
+            auto id = TriggerId(precheck.id);
             auto result = triggerUsecase.deleteTrigger(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
