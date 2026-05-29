@@ -60,9 +60,12 @@ class ExportController : PlatformController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto jobs = usecase.listExportJobs(tenantId);
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;

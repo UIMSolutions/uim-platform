@@ -55,9 +55,12 @@ class TranslationController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto language = req.headers.get("X-Language", "");
       auto resourceType = req.headers.get("X-Resource-Type", "");
       auto resourceId = req.headers.get("X-Resource-Id", "");

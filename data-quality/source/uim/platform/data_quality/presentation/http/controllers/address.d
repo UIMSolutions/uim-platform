@@ -86,9 +86,12 @@ class AddressController : PlatformController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
       auto records = usecase.getByTenant(tenantId);
       auto arr = records.map!(r => r.toJson).array.toJson;

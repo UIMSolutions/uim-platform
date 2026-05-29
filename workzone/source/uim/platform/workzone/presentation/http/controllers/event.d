@@ -67,9 +67,12 @@ class EventController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto workspaceId = req.params.get("workspaceId", "");
 
       auto events = useCase.listByWorkspace(tenantId, workspaceId);

@@ -61,9 +61,12 @@ class TileController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto tiles = useCase.listTiles(tenantId);
       auto response = Json.emptyObject
       .set("totalResults", tiles.length)

@@ -31,130 +31,129 @@ class DatasetController : ManageController {
     router.delete_("/api/v1/datasets/*", &handleDelete);
   }
 
+  protected Json registerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    RegisterDatasetRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.scenarioId = data.getString("scenarioId");
+    r.url = data.getString("url");
+    r.size = jsonLong(data, "size");
+    r.labels = data.getStrings("labels");
+
+    auto result = usecase.registerDataset(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Dataset registered successfully", 201, responseData);
+  }
+
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      RegisterDatasetRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.scenarioId = data.getString("scenarioId");
-      r.url = data.getString("url");
-      r.size = jsonLong(j, "size");
-      r.labels = data.getStrings("labels");
-
-      auto result = usecase.registerDataset(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Dataset registered");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
-
-      auto datasets = scenarioId.isEmpty
-        ? usecase.listDatasets(tenantId, connectionId)
-        : usecase.listDatasets(tenantId, connectionId, scenarioId);
-
-      auto jarr = datasets.map!(ds => ds.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("count", Json(datasets.length))
-        .set("resources", jarr)
-        .set("message", "Datasets retrieved");
-
-      res.writeJsonBody(resp, 200);
+      auto response = registerHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = DatasetId(precheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto d = usecase.getDataset(tenantId, connectionId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Dataset not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
 
-      auto resp = d.toJson
-        .set("message", "Dataset retrieved successfully");
+    auto datasets = scenarioId.isEmpty
+      ? usecase.listDatasets(tenantId, connectionId) : usecase.listDatasets(tenantId, connectionId, scenarioId);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto list = datasets.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Dataset list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = DatasetId(precheck.id);
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      PatchDatasetRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.datasetId = id;
-      r.description = data.getString("description");
-      r.status = data.getString("status");
+    auto tenantId = precheck.tenantId;
 
-      auto result = usecase.patchDataset(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("message", "Dataset updated successfully");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = DatasetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid dataset ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto dataset = usecase.getDataset(tenantId, connectionId, id);
+    if (dataset.isNull)
+      return errorResponse("Dataset not found", 404);
+
+    auto responseData = dataset.toJson();
+    return successResponse("Dataset retrieved successfully", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto id = DatasetId(precheck.id);
+  override protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.deleteDataset(tenantId, connectionId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("message", "Dataset deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = DatasetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid dataset ID", 400);
 
-        res.writeJsonBody(resp, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    PatchDatasetRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.datasetId = id;
+    r.description = data.getString("description");
+    r.status = data.getString("status");
+
+    auto result = usecase.patchDataset(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("message", "Dataset updated successfully");
+
+    return successResponse("Dataset updated successfully", 200, responseData);
   }
 
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = DatasetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid dataset ID", 400);
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto result = usecase.deleteDataset(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Dataset deleted successfully", 200, responseData);
+  }
 }

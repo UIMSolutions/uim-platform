@@ -60,9 +60,12 @@ class TrainingJobController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
       auto jobs = usecase.listTrainingJobs(tenantId, clientId);
 

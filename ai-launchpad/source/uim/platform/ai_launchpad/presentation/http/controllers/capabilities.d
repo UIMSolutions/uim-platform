@@ -26,27 +26,28 @@ class CapabilitiesController : PlatformController {
     router.get("/api/v1/capabilities", &handleGet);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto cap = usecase.getCapabilities();
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      // auto resp = Json.emptyObject
-      // .set("serviceName", cap.serviceName)
-      // .set("serviceVersion", cap.serviceVersion)
-      // .set("supportedRuntimes", cap.supportedRuntimes)
-      // .set("features", cap.features)
-      // .set("multiTenant", cap.multiTenant)
-      // .set("genAiHub", cap.genAiHub)
-      // .set("promptManagement", cap.promptManagement)
-      // .set("usageStatistics", cap.usageStatistics)
-      // .set("bulkOperations", cap.bulkOperations)
-      // .set("maxConnections", cap.maxConnections);
+    auto tenantId = precheck.tenantId;
+    auto cap = usecase.getCapabilities();
+    if (cap.isNull)
+      return errorResponse("Scan job not found", 404);
 
-      auto resp = cap.toJson;
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = cap.toJson();
+    return successResponse("Capabilities retrieved successfully", "Retrieved", 200, responseData);
+    // auto resp = Json.emptyObject
+    // .set("serviceName", cap.serviceName)
+    // .set("serviceVersion", cap.serviceVersion)
+    // .set("supportedRuntimes", cap.supportedRuntimes)
+    // .set("features", cap.features)
+    // .set("multiTenant", cap.multiTenant)
+    // .set("genAiHub", cap.genAiHub)
+    // .set("promptManagement", cap.promptManagement)
+    // .set("usageStatistics", cap.usageStatistics)
+    // .set("bulkOperations", cap.bulkOperations)
+    // .set("maxConnections", cap.maxConnections);
   }
 }

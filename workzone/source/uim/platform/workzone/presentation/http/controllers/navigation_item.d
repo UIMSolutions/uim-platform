@@ -64,9 +64,12 @@ class NavigationItemController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(tenantId, siteId);
       auto arr = items.map!(n => n.toJson).array.toJson;

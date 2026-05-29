@@ -68,9 +68,12 @@ class ServiceBindingController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto nsId = NamespaceId(req.params.get("namespaceId"));
       auto instId = ServiceInstanceId(req.params.get("serviceInstanceId"));
 
