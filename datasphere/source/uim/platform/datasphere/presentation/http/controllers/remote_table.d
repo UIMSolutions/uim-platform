@@ -45,100 +45,87 @@ class RemoteTableController : ManageController {
 
       auto result = usecase.createRemoteTable(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Remote table created");
+        return errorResponse(result.message, 400);
+        
+      auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
+}
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+
+  auto tables = usecase.listRemoteTables(tenantId, spaceId);
+  auto list = Json.emptyArray;
+  foreach (rt; tables) {
+    list ~= Json.emptyObject
+      .set("id", rt.id)
+      .set("name", rt.name)
+      .set("description", rt.description)
+      .set("connectionId", rt.connectionId)
+      .set("remoteSchema", rt.remoteSchema)
+      .set("remoteObjectName", rt.remoteObjectName)
+      .set("rowCount", rt.rowCount)
+      .set("lastReplicatedAt", rt.lastReplicatedAt)
+      .set("createdAt", rt.createdAt);
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto responseData = Json.emptyObject
+    .set("count", list.length)
+    .set("resources", list);
+  return successResponse("", 0, responseData);
+}
 
-        auto tenantId = precheck.tenantId;
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = RemoteTableId(precheck.id);
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto tables = usecase.listRemoteTables(tenantId, spaceId);
-      auto jarr = Json.emptyArray;
-      foreach (rt; tables) {
-        jarr ~= Json.emptyObject
-          .set("id", rt.id)
-          .set("name", rt.name)
-          .set("description", rt.description)
-          .set("connectionId", rt.connectionId)
-          .set("remoteSchema", rt.remoteSchema)
-          .set("remoteObjectName", rt.remoteObjectName)
-          .set("rowCount", rt.rowCount)
-          .set("lastReplicatedAt", rt.lastReplicatedAt)
-          .set("createdAt", rt.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", Json(tables.length))
-        .set("resources", jarr)
-        .set("message", "Remote tables retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
+    if (rt.isNull) {
+      writeError(res, 404, "Remote table not found");
+      return;
     }
+
+    auto resp = Json.emptyObject
+      .set("id", rt.id)
+      .set("name", rt.name)
+      .set("description", rt.description)
+      .set("connectionId", rt.connectionId)
+      .set("remoteSchema", rt.remoteSchema)
+      .set("remoteObjectName", rt.remoteObjectName)
+      .set("rowCount", rt.rowCount)
+      .set("lastReplicatedAt", rt.lastReplicatedAt)
+      .set("createdAt", rt.createdAt)
+      .set("updatedAt", rt.updatedAt)
+      .set("message", "Remote table retrieved successfully");
+
+    res.writeJsonBody(resp, 200);
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = RemoteTableId(precheck.id);
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = RemoteTableId(precheck.id);
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
-      if (rt.isNull) {
-        writeError(res, 404, "Remote table not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
-        .set("id", rt.id)
-        .set("name", rt.name)
-        .set("description", rt.description)
-        .set("connectionId", rt.connectionId)
-        .set("remoteSchema", rt.remoteSchema)
-        .set("remoteObjectName", rt.remoteObjectName)
-        .set("rowCount", rt.rowCount)
-        .set("lastReplicatedAt", rt.lastReplicatedAt)
-        .set("createdAt", rt.createdAt)
-        .set("updatedAt", rt.updatedAt)
-        .set("message", "Remote table retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    res.writeJsonBody(Json.emptyObject, 204);
+  } else {
+    writeError(res, 404, result.message);
   }
-
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = RemoteTableId(precheck.id);
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-
-      auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 }

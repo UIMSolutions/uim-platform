@@ -68,40 +68,37 @@ class ProjectMemberController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            ProjectMemberDTO dto;
-            dto.projectMemberId = ProjectMemberId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.applicationId = ApplicationId(data.getString("applicationId"));
-            dto.userId = UserId(data.getString("userId"));
-            dto.displayName = data.getString("displayName");
-            dto.email = data.getString("email");
-            dto.role = data.getString("role");
-            dto.permissions = data.getString("permissions");
-            dto.createdBy = UserId(data.getString("createdBy"));
-
-            auto result = usecase.createProjectMember(dto);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Project member added");
-
-            res.writeJsonBody(resp, 201);
-        } else {
-            writeError(res, 400, result.message);
-        }
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-    }
-}
-
-override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-        auto tenantId = req.getTenantId();
-        auto path = req.requestURI.to!string;
         auto data = precheck.data;
+        ProjectMemberDTO dto;
+        dto.projectMemberId = ProjectMemberId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.userId = UserId(data.getString("userId"));
+        dto.displayName = data.getString("displayName");
+        dto.email = data.getString("email");
+        dto.role = data.getString("role");
+        dto.permissions = data.getString("permissions");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
+        auto result = usecase.createProjectMember(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Project member created successfully", "Created", 201, responseData);
+    }
+
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ProjectMemberId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid project member ID", 400);
+
+        auto data = precheck.data;
         ProjectMemberDTO dto;
         dto.tenantId = tenantId;
         dto.projectMemberId = ProjectMemberId(precheck.id);
@@ -113,37 +110,28 @@ override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServ
         auto result = usecase.updateProjectMember(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Project member updated");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 404, result.message);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Project member updated successfully", "Updated", 200, responseData);
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
 
-override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-        auto tenantId = req.getTenantId();
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = ProjectMemberId(precheck.id);
 
         auto result = usecase.deleteProjectMember(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
             .set("message", "Project member deleted");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 404, result.message);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Project member deleted successfully", "Deleted", 200, responseData);
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
 }

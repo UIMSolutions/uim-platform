@@ -84,14 +84,12 @@ class ApplicationController : ManageController {
 
       auto arr = items.map!(app => app.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {

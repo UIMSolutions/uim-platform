@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.presentation.http.controllers.import_controller;
+module uim.platform.content_agent.presentation.http.controllers.import_;
 
 // import uim.platform.content_agent.application.usecases.import_content;
 // import uim.platform.content_agent.application.dto;
@@ -67,15 +67,12 @@ class ImportController : PlatformController {
 
       auto arr = jobs.map!(j => j.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(jobs.length))
-        .set("message", "Import jobs retrieved successfully");
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {

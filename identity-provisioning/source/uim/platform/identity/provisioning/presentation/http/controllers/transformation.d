@@ -50,16 +50,11 @@ class TransformationController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createTransformation(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse(("", 0, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -72,14 +67,12 @@ class TransformationController : ManageController {
 
       auto arr = items.map!(t => t.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {

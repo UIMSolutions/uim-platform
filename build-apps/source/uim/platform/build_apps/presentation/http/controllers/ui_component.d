@@ -91,7 +91,7 @@ class UIComponentController : ManageController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseDate);
+        return successResponse("UI component created successfully", "Created", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -116,8 +116,7 @@ class UIComponentController : ManageController {
                 result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
-    }
+        return successResponse("UI component updated successfully", "Updated", 200, responseData);
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -128,13 +127,13 @@ class UIComponentController : ManageController {
 
         auto id = UIComponentId(precheck.id);
         if (id.isNull)
-            return errorResponse("", 0);
+            return errorResponse("Invalid UI component ID", 400);
 
         auto result = components.deleteUIComponent(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
+        return successResponse("UI component deleted successfully", "Deleted", 200, responseData);
     }
 }

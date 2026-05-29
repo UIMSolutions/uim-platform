@@ -1,0 +1,163 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.content_agent.presentation.http.controllers.transport;
+
+// import uim.platform.content_agent.application.usecases.manage.transport_requests;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.transport_request;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
+class TransportController : ManageController {
+  private ManageTransportRequestsUseCase usecase;
+
+  this(ManageTransportRequestsUseCase usecase) {
+    this.usecase = usecase;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
+    router.post("/api/v1/transports", &handleCreate);
+    router.get("/api/v1/transports", &handleList);
+    router.get("/api/v1/transports/*", &handleGet);
+    router.post("/api/v1/transports/release", &handleRelease);
+    router.post("/api/v1/transports/cancel", &handleCancel);
+  }
+
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    auto r = CreateTransportRequest();
+    r.tenantId = tenantId;
+    r.sourceSubaccount = data.getString("sourceSubaccount");
+    r.targetSubaccount = data.getString("targetSubaccount");
+    r.description = data.getString("description");
+    r.mode = data.getString("mode");
+    r.packageIds = data.getStrings("packageIds");
+    r.queueId = data.getString("queueId");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.createTransportRequest(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Transport request created successfully", "Created", 201, responseData);
+  }
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto transports = usecase.listTransportRequests(tenantId);
+    auto arr = transports.map!(t => t.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(transports.length))
+      .set("message", "Transport requests retrieved successfully");
+
+    res.writeJsonBody(resp, 200);
+  }
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+  }
+}
+
+override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tr = usecase.getTransportRequest(id);
+    if (tr.isNull) {
+      writeError(res, 404, "Transport request not found");
+      return;
+    }
+    res.writeJsonBody(tr.toJson, 200);
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+  }
+}
+
+protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = ReleaseTransportRequest();
+    r.requestId = data.getString("requestId");
+    r.tenantId = tenantId;
+    r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.releaseTransport(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "released")
+      .set("message", "Transport request released successfully");
+
+    res.writeJsonBody(resp, 200);
+  } else {
+    writeError(res, 400, result.message);
+  }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto requestId = data.getString("requestId");
+
+    auto result = usecase.cancelTransport(requestId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "cancelled")
+      .set("message", "Transport request cancelled successfully");
+
+    res.writeJsonBody(resp, 200);
+  } else {
+    writeError(res, 400, result.message);
+  }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+private static Json serializeTransport(const TransportRequest t) {
+  return Json.emptyObject
+    .set("id", t.id)
+    .set("tenantId", t.tenantId)
+    .set("sourceSubaccount", t.sourceSubaccount)
+    .set("targetSubaccount", t.targetSubaccount)
+    .set("description", t.description)
+    .set("status", t.status.to!string)
+    .set("mode", t.mode.to!string)
+    .set("queueId", t.queueId)
+    .set("createdBy", t.createdBy)
+    .set("createdAt", t.createdAt)
+    .set("updatedAt", t.updatedAt)
+    .set("releasedAt", t.releasedAt)
+    .set("errorMessage", t.errorMessage)
+    .set("packageIds", toJsonArray(t.packageIds));
+}
+}

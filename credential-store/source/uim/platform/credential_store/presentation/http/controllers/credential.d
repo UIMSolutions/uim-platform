@@ -22,7 +22,7 @@ class CredentialController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     // Separate endpoints per credential type (SAP pattern)
     router.post("/api/v1/passwords", &handleCreatePassword);
     router.get("/api/v1/passwords", &handleListPasswords);
@@ -91,104 +91,97 @@ class CredentialController : ManageController {
 
       auto result = usecase.createCredential(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Credential created successfully");
+        return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      auto responseData = Json.emptyObject.set("id", result.id);
+      return successResponse("", 0, responseData);
     }
-  }
 
-  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
+    protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+      try {
+        auto tenantId = precheck.tenantId;
+        auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
-      Credential[] creds;
-      if (!namespaceId.isEmpty) {
-        creds = usecase.listCredentials(tenantId, namespaceId, type);
-      }
-
-      auto jarr = Json.emptyArray;
-      foreach (c; creds) {
-        jarr ~= Json.emptyObject
-        .set("id", c.id)
-        .set("name", c.name)
-        .set("metadata", c.metadata)
-        .set("format", c.format)
-        .set("status", c.status == CredentialStatus.active ? "active" : "disabled")
-        .set("version", c.version_);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", creds.length)
-        .set("message", "Credentials retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = CredentialId(precheck.id);
-
-      // Support conditional read via If-None-Match
-      auto ifNoneMatch = req.headers.get("If-None-Match", "");
-
-      auto c = usecase.getCredential(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Credential not found");
-        return;
-      }
-
-      // If version matches If-None-Match, return 304
-      if (ifNoneMatch.length > 0) {
-        try {
-          auto matchVer = ifNoneMatch.to!long;
-          if (matchVer == c.version_) {
-            res.writeBody("", 304);
-            return;
-          }
-        } catch (Exception) {
+        Credential[] creds;
+        if (!namespaceId.isEmpty) {
+          creds = usecase.listCredentials(tenantId, namespaceId, type);
         }
+
+        auto jarr = Json.emptyArray;
+        foreach (c; creds) {
+          jarr ~= Json.emptyObject
+            .set("id", c.id)
+            .set("name", c.name)
+            .set("metadata", c.metadata)
+            .set("format", c.format)
+            .set("status", c.status == CredentialStatus.active ? "active" : "disabled")
+            .set("version", c.version_);
+        }
+
+        auto resp = Json.emptyObject
+          .set("items", jarr)
+          .set("totalCount", creds.length)
+          .set("message", "Credentials retrieved successfully");
+
+        res.writeJsonBody(resp, 200);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
       }
-
-      auto response = Json.emptyObject
-        .set("id", c.id)
-        .set("name", c.name)
-        .set("value", c.value)
-        .set("metadata", c.metadata)
-        .set("format", c.format)
-        .set("username", c.username)
-        .set("version", c.version_)
-        .set("createdAt", c.createdAt)
-        .set("updatedAt", c.updatedAt);
-
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
-  }
 
-  protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = CredentialId(precheck.id);
+    protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+      try {
+        auto tenantId = precheck.tenantId;
+        auto id = CredentialId(precheck.id);
 
-      usecase.deleteCredential(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        // Support conditional read via If-None-Match
+        auto ifNoneMatch = req.headers.get("If-None-Match", "");
+
+        auto c = usecase.getCredential(tenantId, id);
+        if (c.isNull) {
+          writeError(res, 404, "Credential not found");
+          return;
+        }
+
+        // If version matches If-None-Match, return 304
+        if (ifNoneMatch.length > 0) {
+          try {
+            auto matchVer = ifNoneMatch.to!long;
+            if (matchVer == c.version_) {
+              res.writeBody("", 304);
+              return;
+            }
+          } catch (Exception) {
+          }
+        }
+
+        auto response = Json.emptyObject
+          .set("id", c.id)
+          .set("name", c.name)
+          .set("value", c.value)
+          .set("metadata", c.metadata)
+          .set("format", c.format)
+          .set("username", c.username)
+          .set("version", c.version_)
+          .set("createdAt", c.createdAt)
+          .set("updatedAt", c.updatedAt);
+
+        res.writeJsonBody(response, 200);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
     }
-  }
-}
+
+    protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+      try {
+        auto tenantId = precheck.tenantId;
+        auto id = CredentialId(precheck.id);
+
+        usecase.deleteCredential(tenantId, id);
+        if (result.hasError)
+          return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
+      }
+    }

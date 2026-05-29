@@ -55,16 +55,11 @@ class DocumentController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createDocument(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -77,14 +72,12 @@ class DocumentController : ManageController {
 
       auto arr = items.map!(d => d.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -107,14 +100,12 @@ class DocumentController : ManageController {
       auto items = usecase.searchByName(tenantId, query);
       auto arr = items.map!(d => d.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -147,18 +138,11 @@ class DocumentController : ManageController {
       r.properties = data.getString("properties");
 
       auto result = usecase.updateDocument(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        auto status = result.message == "Document not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -172,18 +156,11 @@ class DocumentController : ManageController {
       r.newFolderId = data.getString("newFolderId");
 
       auto result = usecase.moveDocument(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        auto status = result.message == "Document not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {

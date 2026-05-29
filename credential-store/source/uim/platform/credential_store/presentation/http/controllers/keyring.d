@@ -47,17 +47,9 @@ class KeyringController : ManageController {
       auto result = usecase.createKeyring(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Keyring created successfully");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {

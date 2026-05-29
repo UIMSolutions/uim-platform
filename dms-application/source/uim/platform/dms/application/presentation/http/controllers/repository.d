@@ -49,17 +49,11 @@ class RepositoryController : ManageController {
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createRepository(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Repository created successfully");
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -72,15 +66,12 @@ class RepositoryController : ManageController {
 
       auto arr = items.map!(item => item.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Repositories retrieved successfully");
+auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -113,19 +104,11 @@ class RepositoryController : ManageController {
       r.allowedFileTypes = data.getString("allowedFileTypes");
 
       auto result = usecase.updateRepository(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Repository updated successfully");
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        auto status = result.message == "Repository not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
   }
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
