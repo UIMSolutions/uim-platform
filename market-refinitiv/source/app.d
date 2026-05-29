@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.marketrates;
+import uim.platform.market_refinitiv;
 
 mixin(ShowModule!());
 
@@ -22,6 +22,7 @@ version (unittest) {
     container.marketRateController.registerRoutes(router);
     container.auditLogController.registerRoutes(router);
     container.healthController.registerRoutes(router);
+    container.webView.registerRoutes(router);
 
     auto settings = new HTTPServerSettings();
     settings.port         = config.port;
@@ -30,21 +31,23 @@ version (unittest) {
     auto listener = listenHTTP(settings, router);
 
     writefln("==========================================================");
-    writefln("  Market Rates Management - Bring Your Own Rates          ");
+    writefln("  Market Rates Management - Refinitiv Data Option         ");
     writefln("  Listening on %s:%d", config.host, config.port);
+    writefln("  Storage backend: %s", config.storageBackend);
     writefln("                                                          ");
-    writefln("  Market Rates API v1 Endpoints:                          ");
-    writefln("    POST      /api/v1/marketrates/upload                  ");
-    writefln("    POST      /api/v1/marketrates/download                ");
-    writefln("    GET       /api/v1/marketrates/rates                   ");
-    writefln("    GET       /api/v1/marketrates/rates/:id               ");
-    writefln("    DELETE    /api/v1/marketrates/rates/:id               ");
-    writefln("    GET       /api/v1/marketrates/providers               ");
-    writefln("    POST      /api/v1/marketrates/providers               ");
-    writefln("    GET       /api/v1/marketrates/providers/:id           ");
-    writefln("    PUT       /api/v1/marketrates/providers/:id           ");
-    writefln("    DELETE    /api/v1/marketrates/providers/:id           ");
-    writefln("    GET       /api/v1/marketrates/auditlogs               ");
+    writefln("  API v1 Endpoints:                                      ");
+    writefln("    POST      /api/v1/market_refinitiv/upload            ");
+    writefln("    POST      /api/v1/market_refinitiv/download          ");
+    writefln("    GET       /api/v1/market_refinitiv/rates             ");
+    writefln("    GET       /api/v1/market_refinitiv/rates/:id         ");
+    writefln("    DELETE    /api/v1/market_refinitiv/rates             ");
+    writefln("    GET       /api/v1/market_refinitiv/providers         ");
+    writefln("    POST      /api/v1/market_refinitiv/providers         ");
+    writefln("    GET       /api/v1/market_refinitiv/providers/:id     ");
+    writefln("    PUT       /api/v1/market_refinitiv/providers/:id     ");
+    writefln("    DELETE    /api/v1/market_refinitiv/providers/:id     ");
+    writefln("    GET       /api/v1/market_refinitiv/auditlogs         ");
+    writefln("    GET       /web/market-refinitiv                      ");
     writefln("                                                          ");
     writefln("  Health:                                                 ");
     writefln("    GET       /api/v1/health                              ");

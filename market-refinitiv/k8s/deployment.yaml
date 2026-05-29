@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: market-rates
+  name: market-refinitiv
   labels:
-    app: market-rates
+    app: market-refinitiv
     tier: platform-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: market-rates
+      app: market-refinitiv
   template:
     metadata:
       labels:
-        app: market-rates
+        app: market-refinitiv
         tier: platform-service
     spec:
       containers:
-      - name: market-rates
-        image: uim-market-rates-platform-service:latest
+      - name: market-refinitiv
+        image: uim-market-refinitiv-platform-service:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8097
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: market-rates-config
+            name: market-refinitiv-config
         livenessProbe:
           httpGet:
             path: /api/v1/health

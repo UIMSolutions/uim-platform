@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.marketrates.presentation.http.controllers.market_rate;
-import uim.platform.marketrates;
+module uim.platform.market_refinitiv.presentation.http.controllers.market_rate;
+import uim.platform.market_refinitiv;
 import std.conv : to;
 
 mixin(ShowModule!());
@@ -24,20 +24,20 @@ class MarketRateController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     // Upload / download
-    router.post("/api/v1/marketrates/upload",   &handleUpload);
-    router.post("/api/v1/marketrates/download", &handleDownload);
+    router.post("/api/v1/market_refinitiv/upload",   &handleUpload);
+    router.post("/api/v1/market_refinitiv/download", &handleDownload);
 
     // Rate records
-    router.get ("/api/v1/marketrates/rates",    &handleListRates);
-    router.get ("/api/v1/marketrates/rates/*",  &handleGetRate);
-    router.delete_("/api/v1/marketrates/rates", &handleDeleteRates);
+    router.get ("/api/v1/market_refinitiv/rates",    &handleListRates);
+    router.get ("/api/v1/market_refinitiv/rates/*",  &handleGetRate);
+    router.delete_("/api/v1/market_refinitiv/rates", &handleDeleteRates);
 
     // Provider management
-    router.get   ("/api/v1/marketrates/providers",    &handleListProviders);
-    router.post  ("/api/v1/marketrates/providers",    &handleCreateProvider);
-    router.get   ("/api/v1/marketrates/providers/*",  &handleGetProvider);
-    router.put   ("/api/v1/marketrates/providers/*",  &handleUpdateProvider);
-    router.delete_("/api/v1/marketrates/providers/*", &handleDeleteProvider);
+    router.get   ("/api/v1/market_refinitiv/providers",    &handleListProviders);
+    router.post  ("/api/v1/market_refinitiv/providers",    &handleCreateProvider);
+    router.get   ("/api/v1/market_refinitiv/providers/*",  &handleGetProvider);
+    router.put   ("/api/v1/market_refinitiv/providers/*",  &handleUpdateProvider);
+    router.delete_("/api/v1/market_refinitiv/providers/*", &handleDeleteProvider);
   }
 
   // ------------------------------------------------------------------

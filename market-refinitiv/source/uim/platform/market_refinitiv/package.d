@@ -1,10 +1,10 @@
-module uim.platform.marketrates;
+module uim.platform.market_refinitiv;
 
 public {
   import uim.platform.service;
 
-  import uim.platform.marketrates.application;
-  import uim.platform.marketrates.domain;
-  import uim.platform.marketrates.infrastructure;
-  import uim.platform.marketrates.presentation;
+  import uim.platform.market_refinitiv.application;
+  import uim.platform.market_refinitiv.domain;
+  import uim.platform.market_refinitiv.infrastructure;
+  import uim.platform.market_refinitiv.presentation;
 }

@@ -37,7 +37,7 @@ SAP BYOR capability, enabling organisations to:
 │  Platform Zone  (Kubernetes / Cloud Foundry)                             │
 │                                                                         │
 │  ┌──────────────────────────────────────────────────────────────────┐   │
-│  │  uim-market-rates-platform-service  (port 8097)                  │   │
+│  │  uim-market-refinitiv-platform-service  (port 8097)                  │   │
 │  │                                                                   │   │
 │  │  ┌─────────────────────────────────────────────────────────────┐ │   │
 │  │  │  HTTP Driving Adapters (Presentation Layer)                  │ │   │
@@ -127,14 +127,14 @@ Tenant    1──────<  MarketRate
 
 | Resource | Name | Notes |
 |----------|------|-------|
-| `Deployment` | `market-rates` | 1 replica; liveness + readiness on `/api/v1/health` |
-| `Service` | `market-rates` | ClusterIP, port 8097 |
-| `ConfigMap` | `market-rates-config` | `MARKET_RATES_HOST`, `MARKET_RATES_PORT` |
+| `Deployment` | `market-refinitiv` | 1 replica; liveness + readiness on `/api/v1/health` |
+| `Service` | `market-refinitiv` | ClusterIP, port 8097 |
+| `ConfigMap` | `market-refinitiv-config` | `MARKET_RATES_HOST`, `MARKET_RATES_PORT` |
 
 ### Container
 
 ```
-Image : uim-market-rates-platform-service:latest
+Image : uim-market-refinitiv-platform-service:latest
 Port  : 8097 (TCP)
 User  : appuser (UID 1000, non-root)
 Health: GET /api/v1/health → { "status": "UP" }
@@ -159,13 +159,13 @@ Health: GET /api/v1/health → { "status": "UP" }
 
 | Endpoint | Method | Direction | Consumer |
 |----------|--------|-----------|----------|
-| `/api/v1/marketrates/upload` | POST | Inbound | Data provider client |
-| `/api/v1/marketrates/download` | POST | Outbound | SAP S/4HANA / consumer |
-| `/api/v1/marketrates/rates` | GET | Query | Management UI |
-| `/api/v1/marketrates/rates/{id}` | GET/DELETE | Management | Management UI |
-| `/api/v1/marketrates/providers` | GET/POST | CRUD | Management UI |
-| `/api/v1/marketrates/providers/{id}` | GET/PUT/DELETE | CRUD | Management UI |
-| `/api/v1/marketrates/auditlogs` | GET | Query | Business logging |
+| `/api/v1/market_refinitiv/upload` | POST | Inbound | Data provider client |
+| `/api/v1/market_refinitiv/download` | POST | Outbound | SAP S/4HANA / consumer |
+| `/api/v1/market_refinitiv/rates` | GET | Query | Management UI |
+| `/api/v1/market_refinitiv/rates/{id}` | GET/DELETE | Management | Management UI |
+| `/api/v1/market_refinitiv/providers` | GET/POST | CRUD | Management UI |
+| `/api/v1/market_refinitiv/providers/{id}` | GET/PUT/DELETE | CRUD | Management UI |
+| `/api/v1/market_refinitiv/auditlogs` | GET | Query | Business logging |
 | `/api/v1/health` | GET | Probe | Kubernetes liveness/readiness |
 
 ---

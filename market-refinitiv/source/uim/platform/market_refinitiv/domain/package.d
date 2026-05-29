@@ -1,8 +1,8 @@
-module uim.platform.marketrates.domain;
+module uim.platform.market_refinitiv.domain;
 
 public {
-  import uim.platform.marketrates.domain.types;
-  import uim.platform.marketrates.domain.entities;
-  import uim.platform.marketrates.domain.ports;
-  import uim.platform.marketrates.domain.services;
+  import uim.platform.market_refinitiv.domain.types;
+  import uim.platform.market_refinitiv.domain.entities;
+  import uim.platform.market_refinitiv.domain.ports;
+  import uim.platform.market_refinitiv.domain.services;
 }

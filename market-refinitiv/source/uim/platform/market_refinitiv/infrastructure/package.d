@@ -1,7 +1,7 @@
-module uim.platform.marketrates.infrastructure;
+module uim.platform.market_refinitiv.infrastructure;
 
 public {
-  import uim.platform.marketrates.infrastructure.config;
-  import uim.platform.marketrates.infrastructure.container;
-  import uim.platform.marketrates.infrastructure.persistence;
+  import uim.platform.market_refinitiv.infrastructure.config;
+  import uim.platform.market_refinitiv.infrastructure.container;
+  import uim.platform.market_refinitiv.infrastructure.persistence;
 }

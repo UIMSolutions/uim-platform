@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.marketrates.presentation.http.controllers.audit_log;
-import uim.platform.marketrates;
+module uim.platform.market_refinitiv.presentation.http.controllers.audit_log;
+import uim.platform.market_refinitiv;
 import std.conv : to;
 
 mixin(ShowModule!());
@@ -19,8 +19,8 @@ class AuditLogController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
-    router.get("/api/v1/marketrates/auditlogs",   &handleList);
-    router.get("/api/v1/marketrates/auditlogs/*", &handleGet);
+    router.get("/api/v1/market_refinitiv/auditlogs",   &handleList);
+    router.get("/api/v1/market_refinitiv/auditlogs/*", &handleGet);
   }
 
   private void handleList(HTTPServerRequest req, HTTPServerResponse res) {

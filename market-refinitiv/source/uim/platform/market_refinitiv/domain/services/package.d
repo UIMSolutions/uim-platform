@@ -1,6 +1,6 @@
-module uim.platform.marketrates.domain.services;
+module uim.platform.market_refinitiv.domain.services;
 
 public {
-  import uim.platform.marketrates.domain.services.market_rate_validator;
-  import uim.platform.marketrates.domain.services.quota_service;
+  import uim.platform.market_refinitiv.domain.services.market_rate_validator;
+  import uim.platform.market_refinitiv.domain.services.quota_service;
 }

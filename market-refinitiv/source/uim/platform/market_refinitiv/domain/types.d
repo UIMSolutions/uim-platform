@@ -3,9 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.marketrates.domain.types;
+module uim.platform.market_refinitiv.domain.types;
 
-import uim.platform.marketrates;
+import uim.platform.market_refinitiv;
 
 mixin(ShowModule!());
 

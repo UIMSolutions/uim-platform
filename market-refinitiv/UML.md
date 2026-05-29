@@ -5,7 +5,7 @@
 ```
 ┌──────────────────────────────────────────────────────────┐
 │                   <<module>>                              │
-│             uim.platform.marketrates                      │
+│             uim.platform.market_refinitiv                      │
 │                                                          │
 │  ┌─────────────────────────────────────────────────┐    │
 │  │ presentation.http                                │    │

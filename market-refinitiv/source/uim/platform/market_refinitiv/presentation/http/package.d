@@ -1,6 +1,6 @@
-module uim.platform.marketrates.presentation.http;
+module uim.platform.market_refinitiv.presentation.http;
 
 public {
-  import uim.platform.marketrates.presentation.http.json_utils;
-  import uim.platform.marketrates.presentation.http.controllers;
+  import uim.platform.market_refinitiv.presentation.http.json_utils;
+  import uim.platform.market_refinitiv.presentation.http.controllers;
 }

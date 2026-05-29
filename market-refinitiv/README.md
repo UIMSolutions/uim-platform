@@ -65,7 +65,7 @@ Dependency direction: Presentation → Application → Domain ← Infrastructure
 
 ### Upload
 ```
-POST /api/v1/marketrates/upload
+POST /api/v1/market_refinitiv/upload
 Content-Type: application/json
 
 {
@@ -92,7 +92,7 @@ Content-Type: application/json
 
 ### Download
 ```
-POST /api/v1/marketrates/download
+POST /api/v1/market_refinitiv/download
 Content-Type: application/json
 
 {
@@ -108,13 +108,13 @@ Content-Type: application/json
 
 ### Query rates
 ```
-GET /api/v1/marketrates/rates?tenantId=t1&providerCode=ECB&category=01
-GET /api/v1/marketrates/rates/{id}?tenantId=t1
+GET /api/v1/market_refinitiv/rates?tenantId=t1&providerCode=ECB&category=01
+GET /api/v1/market_refinitiv/rates/{id}?tenantId=t1
 ```
 
 ### Delete rates
 ```
-DELETE /api/v1/marketrates/rates
+DELETE /api/v1/market_refinitiv/rates
 Content-Type: application/json
 
 { "tenantId": "t1", "providerCode": "ECB", "fromDate": "20260101", "toDate": "20260131" }
@@ -122,17 +122,17 @@ Content-Type: application/json
 
 ### Providers
 ```
-GET    /api/v1/marketrates/providers?tenantId=t1
-POST   /api/v1/marketrates/providers
-GET    /api/v1/marketrates/providers/{id}?tenantId=t1
-PUT    /api/v1/marketrates/providers/{id}
-DELETE /api/v1/marketrates/providers/{id}?tenantId=t1
+GET    /api/v1/market_refinitiv/providers?tenantId=t1
+POST   /api/v1/market_refinitiv/providers
+GET    /api/v1/market_refinitiv/providers/{id}?tenantId=t1
+PUT    /api/v1/market_refinitiv/providers/{id}
+DELETE /api/v1/market_refinitiv/providers/{id}?tenantId=t1
 ```
 
 ### Audit Logs
 ```
-GET /api/v1/marketrates/auditlogs?tenantId=t1
-GET /api/v1/marketrates/auditlogs/{id}?tenantId=t1
+GET /api/v1/market_refinitiv/auditlogs?tenantId=t1
+GET /api/v1/market_refinitiv/auditlogs/{id}?tenantId=t1
 ```
 
 ### Health
@@ -166,10 +166,10 @@ GET /api/v1/health
 
 ```bash
 # From workspace root
-dub build --root=market-rates --build=release --config=defaultRun
+dub build --root=market-refinitiv --build=release --config=defaultRun
 
 # Or inside the package directory
-cd market-rates
+cd market-refinitiv
 dub build --build=release --config=defaultRun
 ```
 
@@ -179,15 +179,15 @@ dub build --build=release --config=defaultRun
 
 ```bash
 # Build
-docker build -t uim-market-rates-platform-service:latest .
+docker build -t uim-market-refinitiv-platform-service:latest .
 # or
-podman build -t uim-market-rates-platform-service:latest .
+podman build -t uim-market-refinitiv-platform-service:latest .
 
 # Run
 docker run -p 8097:8097 \
   -e MARKET_RATES_HOST=0.0.0.0 \
   -e MARKET_RATES_PORT=8097 \
-  uim-market-rates-platform-service:latest
+  uim-market-refinitiv-platform-service:latest
 ```
 
 ---

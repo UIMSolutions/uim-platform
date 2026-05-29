@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && groupadd -r appuser && useradd -r -g appuser appuser
 
 WORKDIR /app
-COPY --from=builder /build/build/uim-market-rates-platform-service .
+COPY --from=builder /build/build/uim-market-refinitiv-platform-service .
 
 ENV MARKET_RATES_HOST=0.0.0.0
 ENV MARKET_RATES_PORT=8097
@@ -25,4 +25,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8097/api/v1/health || exit 1
 
 USER appuser
-ENTRYPOINT ["./uim-market-rates-platform-service"]
+ENTRYPOINT ["./uim-market-refinitiv-platform-service"]

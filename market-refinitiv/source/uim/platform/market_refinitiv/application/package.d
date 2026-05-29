@@ -1,6 +1,6 @@
-module uim.platform.marketrates.application;
+module uim.platform.market_refinitiv.application;
 
 public {
-  import uim.platform.marketrates.application.dto;
-  import uim.platform.marketrates.application.usecases;
+  import uim.platform.market_refinitiv.application.dto;
+  import uim.platform.market_refinitiv.application.usecases;
 }

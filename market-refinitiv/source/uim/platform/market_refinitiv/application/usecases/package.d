@@ -1,5 +1,5 @@
-module uim.platform.marketrates.application.usecases;
+module uim.platform.market_refinitiv.application.usecases;
 
 public {
-  import uim.platform.marketrates.application.usecases.manage;
+  import uim.platform.market_refinitiv.application.usecases.manage;
 }

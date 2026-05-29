@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.marketrates.infrastructure.persistence.memory.providers;
-import uim.platform.marketrates;
+module uim.platform.market_refinitiv.infrastructure.persistence.memory.providers;
+import uim.platform.market_refinitiv;
 import std.algorithm : filter;
 import std.array     : array;
 
