@@ -35,7 +35,7 @@ class AuditLogController : PlatformController {
   }
 
   protected Json writeHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (!precheck.isNull)
       return precheck;
 
@@ -79,58 +79,68 @@ class AuditLogController : PlatformController {
     }
   }
 
+  protected Json queryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (!precheck.isNull)
+      return precheck;
+
+    auto tenantId = req.getTenantId();
+    auto queryReq = AuditLogQueryRequest();
+    queryReq.tenantId = tenantId;
+
+    // Parse category filter (comma-separated)
+    auto catParam = req.headers.get("X-Category-Filter", "");
+    if (catParam.length > 0) {
+      // import std.string : split;
+
+      foreach (c; catParam.split(","))
+        queryReq.categories ~= toAuditCategory(c);
+    }
+
+    queryReq.timeFrom = jsonLong(Json.emptyObject, "unused"); // default 0
+    queryReq.timeTo = 0;
+    queryReq.limit = 500;
+    queryReq.offset = 0;
+
+    auto entries = retrieveUsecase.queryAuditLogs(queryReq);
+    auto arr = entries.map!(e => e.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(entries.length));
+    return successResponse("Audit log entries retrieved successfully", 200, responseData);
+  }
+
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId();
-      auto queryReq = AuditLogQueryRequest();
-      queryReq.tenantId = tenantId;
-
-      // Parse category filter (comma-separated)
-      auto catParam = req.headers.get("X-Category-Filter", "");
-      if (catParam.length > 0) {
-        // import std.string : split;
-
-        foreach (c; catParam.split(","))
-          queryReq.categories ~= toAuditCategory(c);
-      }
-
-      queryReq.timeFrom = jsonLong(Json.emptyObject, "unused"); // default 0
-      queryReq.timeTo = 0;
-      queryReq.limit = 500;
-      queryReq.offset = 0;
-
-      auto entries = retrieveUsecase.queryAuditLogs(queryReq);
-      auto arr = entries.map!(e => e.toJson).array.toJson;
-
-      res.writeJsonBody(successResponse("Audit log entries retrieved successfully", 200,
-          Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", Json(entries.length))), 200);
+      auto response = queryHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = req.getTenantId();
-      auto id = AuditLogId(precheck.id);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      if (!retrieveUsecase.hasAuditLog(tenantId, id)) {
-        writeError(res, 404, "Audit log entry not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      auto entry = retrieveUsecase.getAuditLog(tenantId, id);
-      res.writeJsonBody(successResponse("Audit log entry retrieved successfully", 200, entry.toJson), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto id = AuditLogId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid audit log ID", 400);
+
+    auto entry = retrieveUsecase.getAuditLog(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Audit log entry not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Audit log entry retrieved successfully", "Retrieved", 200, responseData);
   }
 
   private static AuditAttribute[] parseAttributes(Json j) {
     AuditAttribute[] result;
-
     foreach (item; j.getArray("attributes")) {
       if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),

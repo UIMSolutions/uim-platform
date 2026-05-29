@@ -63,4 +63,179 @@ class PlatformController {
       .set("code", 200);
   }
 
-}
+  // #region get
+  protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Get handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion get
+
+// #region post
+  protected Json headHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Head handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handleHead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = headHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion head}
+
+  // #region post
+  protected Json postHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Post handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handlePost(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = postHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion post
+
+  // #region put
+  protected Json putHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Put handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handlePut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = putHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion put
+
+  // #region delete
+  protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Delete handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = deleteHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion delete
+
+  // #region connect
+  protected Json connectHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Connect handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = connectHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion connect
+
+  // #region trace
+  protected Json traceHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Trace handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handleTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = traceHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion trace
+
+  // #region patch
+  protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = precheckHandler(req);
+    if (hasError(precheck))
+      return precheck; // Return error response from precheck
+
+    return precheck
+      .set("status", "ok")
+      .set("message", "Patch handler not implemented")
+      .set("code", 200);
+  }
+
+  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = patchHandler(req);
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+  // #endregion patch
+} 

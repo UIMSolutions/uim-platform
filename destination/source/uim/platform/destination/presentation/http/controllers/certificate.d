@@ -33,7 +33,7 @@ class CertificateController : ManageController {
   }
 
   protected Json uploadHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -96,7 +96,7 @@ class CertificateController : ManageController {
   }
 
   protected Json listExpiringHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

@@ -29,7 +29,7 @@ class KeyEntryController : ManageController {
   }
 
   protected Json importHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -69,7 +69,7 @@ class KeyEntryController : ManageController {
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
-    if (!precheck.isNull)
+    if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
@@ -101,7 +101,7 @@ class KeyEntryController : ManageController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
-    if (!precheck.isNull)
+    if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
@@ -129,7 +129,7 @@ class KeyEntryController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
-    if (!precheck.isNull)
+    if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;

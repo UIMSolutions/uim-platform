@@ -91,3 +91,35 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   // #region ByServicePlan
 
 }
+///
+unittest {
+  auto repo = new MemoryEntitlementRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto globalAccountId = GlobalAccountId("ga1");
+  auto subaccountId = SubaccountId("sa1");
+  auto directoryId = DirectoryId("dir1");
+  auto servicePlanId = ServicePlanId("plan1");
+
+  // Create sample entitlements
+  Entitlement e1;
+  e1.id = EntitlementId("ent1");
+  e1.tenantId = tenantId;
+  e1.globalAccountId = globalAccountId;
+  e1.subaccountId = subaccountId;
+  e1.directoryId = directoryId;
+  e1.servicePlanId = servicePlanId;
+
+  repo.save(e1);
+  
+  // Test findByGlobalAccount
+  auto entitlementsByGA = repo.findByGlobalAccount(tenantId, globalAccountId);
+  assert(entitlementsByGA.length == 1);
+  assert(entitlementsByGA[0].id == e1.id);
+
+  // Test findBySubaccount
+  auto entitlementsBySA = repo.findBySubaccount(tenantId, subaccountId);
+  assert(entitlementsBySA.length == 1);
+  assert(entitlementsBySA[0].id == e1.id);
+
+}

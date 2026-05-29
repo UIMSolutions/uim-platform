@@ -67,3 +67,32 @@ class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstanc
   }
 
 }
+///
+unittest {
+  auto repo = new MemoryEnvironmentInstanceRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto subaccountId = SubaccountId("sa1");
+  auto envType = EnvironmentType.production;
+  auto status = EnvironmentStatus.active; 
+  auto envId = EnvironmentInstanceId("env1"); 
+  auto env = EnvironmentInstance(tenantId);
+  env.id = envId;
+  env.subaccountId = subaccountId;
+  env.environmentType = envType;
+  env.status = status;
+
+  repo.save(env); 
+  // Test findBySubaccount  
+  auto bySubaccount = repo.findBySubaccount(tenantId, subaccountId);
+  assert(bySubaccount.length == 1);
+  assert(bySubaccount[0].id == envId);  
+  // Test findByType
+  auto byType = repo.findByType(tenantId, subaccountId, envType);
+  assert(byType.length == 1);
+  assert(byType[0].id == envId);
+  // Test findByStatus    
+  auto byStatus = repo.findByStatus(tenantId, subaccountId, status);
+  assert(byStatus.length == 1);
+  assert(byStatus[0].id == envId);
+} 

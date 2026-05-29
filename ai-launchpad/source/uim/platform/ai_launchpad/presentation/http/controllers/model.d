@@ -30,83 +30,97 @@ class ModelController : ManageController {
     router.delete_("/api/v1/models/*", &handleDelete);
   }
 
+  protected Json registerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    RegisterModelRequest r;
+    r.connectionId = connectionId;
+    r.name = data.getString("name");
+    r.version_ = data.getString("version");
+    r.description = data.getString("description");
+    r.scenarioId = data.getString("scenarioId");
+    r.executionId = data.getString("executionId");
+    r.url = data.getString("url");
+    r.size = jsonLong(j, "size");
+    r.labels = data.getStrings("labels");
+
+    auto result = usecase.registerModel(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Model registered successfully", "Created", 201, resp);
+  }
+
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      RegisterModelRequest r;
-      r.connectionId = connectionId;
-      r.name = data.getString("name");
-      r.version_ = data.getString("version");
-      r.description = data.getString("description");
-      r.scenarioId = data.getString("scenarioId");
-      r.executionId = data.getString("executionId");
-      r.url = data.getString("url");
-      r.size = jsonLong(j, "size");
-      r.labels = data.getStrings("labels");
-
-      auto result = usecase.registerModel(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Model registered");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
-
-      auto models = scenarioId.isEmpty
-        ? usecase.listModels(tenantId, connectionId)
-        : usecase.listModels(tenantId, connectionId, scenarioId);
-
-      auto jarr = models.map!(m => m.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("count", models.length)
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
+      auto response = registerHandler(req);
+      res.writeJsonBody(resp, 201);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = Modelprecheck.id);
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto model = usecase.getModel(tenantId, connectionId, id);
-      if (model.isNull) {
-        writeError(res, 404, "Model not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
 
-      res.writeJsonBody(model.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
+
+    auto models = scenarioId.isEmpty
+      ? usecase.listModels(tenantId, connectionId) : usecase.listModels(tenantId, connectionId, scenarioId);
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", list);
+    return successResponse("Model list retrieved successfully", "Retrieved", 200, responseData);
   }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = ModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+
+    auto model = usecase.getModel(tenantId, connectionId, id);
+    if (model.isNull)
+      return errorResponse("Model not found", 404);
+
+    auto responseData = model.toJson();
+    return successResponse("Model retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  override protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
-      auto id = Modelprecheck.id);
+      auto id = ModelId(precheck.id);
       auto data = precheck.data;
       auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -119,37 +133,36 @@ class ModelController : ManageController {
 
       auto result = usecase.patchModel(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Model updated");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Model updated");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else {
+      writeError(res, 404, result.message);
     }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-      auto id = Modelprecheck.id);
+override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    auto id = Modelprecheck.id);
 
-      auto result = usecase.deleteModel(tenantId, connectionId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteModel(tenantId, connectionId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    res.writeJsonBody(Json.emptyObject, 204);
+  } else {
+    writeError(res, 404, result.message);
   }
-
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
 }

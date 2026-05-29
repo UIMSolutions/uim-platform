@@ -68,3 +68,49 @@ class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), Dir
   // #endregion ByStatus
 
 }
+/// 
+unittest {
+  auto repo = new MemoryDirectoryRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto gaId = GlobalAccountId("ga1");
+  auto parentDirId = DirectoryId("parent1");
+
+  // Create directories
+  auto dir1 = Directory(tenantId);
+  dir1.id = DirectoryId("dir1");
+  dir1.globalAccountId = gaId;
+  dir1.parentDirectoryId = parentDirId;
+  dir1.displayName = "Directory 1";
+  dir1.description = "Description 1";
+  dir1.status = DirectoryStatus.active;
+
+  auto dir2 = Directory(tenantId);
+  dir2.id = DirectoryId("dir2");
+  dir2.globalAccountId = gaId;
+  dir2.parentDirectoryId = parentDirId;
+  dir2.displayName = "Directory 2";
+  dir2.description = "Description 2";
+  dir2.status = DirectoryStatus.inactive;
+
+  repo.save(dir1);
+  repo.save(dir2);
+
+  // Test findByGlobalAccount
+  auto dirsByGA = repo.findByGlobalAccount(tenantId, gaId);
+  assert(dirsByGA.length == 2);
+
+  // Test findByParent
+  auto dirsByParent = repo.findByParent(tenantId, parentDirId);
+  assert(dirsByParent.length == 2);
+
+  // Test findByStatus
+  auto activeDirs = repo.findByStatus(tenantId, gaId, DirectoryStatus.active);
+  assert(activeDirs.length == 1);
+  assert(activeDirs[0].id == dir1.id);
+
+  // Test removeByStatus
+  repo.removeByStatus(tenantId, gaId, DirectoryStatus.active);
+  activeDirs = repo.findByStatus(tenantId, gaId, DirectoryStatus.active);
+  assert(activeDirs.length == 0);
+}

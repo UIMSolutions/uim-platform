@@ -45,7 +45,7 @@ class AuditController : PlatformController {
   }
 
   protected Json actorHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -75,7 +75,7 @@ class AuditController : PlatformController {
   }
 
   protected Json targetHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

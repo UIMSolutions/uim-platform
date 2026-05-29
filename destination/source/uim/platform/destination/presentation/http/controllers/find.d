@@ -25,13 +25,13 @@ class FindController : PlatformController {
   }
 
   protected Json findHandler(HTTPServerRequest req) {
-    auto precheck = precheckHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     FindDestinationRequest r;
     r.tenantId = precheck.tenantId;
-    r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+    r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
     r.name = req.params.get("name");
     r.headerProvider = req.params.get("headerProvider");
 
