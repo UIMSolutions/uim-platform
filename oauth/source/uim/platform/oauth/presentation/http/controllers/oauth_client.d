@@ -81,7 +81,7 @@ class OAuthClientController : ManageController {
             OAuthClientDTO dto;
             dto.tenantId = tenantId;
             dto.clientId = precheck.id;
-            dto.tenantId = req.getTenantId;
+            dto.tenantId = tenantId;
             dto.parentClientId = data.getString("clientId");
             dto.clientSecret = data.getString("clientSecret");
             dto.name = data.getString("name");

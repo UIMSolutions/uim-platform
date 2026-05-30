@@ -43,13 +43,12 @@ class ApplicationJobController : ManageController {
     auto systemId = SystemInstanceId(data.getString("systemInstanceId"));
 
     auto jobs = usecase.listApplicationJobs(tenantId, systemId);
-    auto arr = jobs.map!(job => job.toJson).array.toJson;
+    auto list = jobs.map!(job => job.toJson).array.toJson;
 
-    return Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", jobs.length)
-      .set("message", "Application jobs retrieved successfully")
-      .set("statusCode", 200);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Application job list retrieved successfully", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -72,17 +71,11 @@ class ApplicationJobController : ManageController {
     r.cronExpression = data.getString("cronExpression");
 
     auto result = usecase.createApplicationJob(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Application job created successfully")
-      .set("statusCode", 201);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Application job created successfully", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -94,17 +87,11 @@ class ApplicationJobController : ManageController {
     auto id = ApplicationJobId(precheck.id);
 
     auto job = usecase.getApplicationJob(tenantId, id);
-    if (job.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Application job not found")
-        .set("statusCode", 404);
-    }
+    if (job.isNull)
+      return errorResponse("Scan job not found", 404);
 
-    return Json.emptyObject
-      .set("item", job.toJson)
-      .set("message", "Application job retrieved successfully")
-      .set("statusCode", 200);
+    auto responseData = job.toJson();
+    return successResponse("Application job retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -127,17 +114,11 @@ class ApplicationJobController : ManageController {
     r.active = data.getBoolean("active", true);
 
     auto result = usecase.updateApplicationJob(r);
-    if (result.hasError()) {
-      auto resp = Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("status", "updated")
-      .set("message", "Application job updated successfully")
-      .set("statusCode", 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Application job updated successfully", 200, responseData);
   }
 
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -170,16 +151,10 @@ class ApplicationJobController : ManageController {
     auto id = ApplicationJobId(precheck.id);
 
     auto result = usecase.deleteApplicationJob(tenantId, id);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("status", "deleted")
-      .set("message", "Application job deleted successfully")
-      .set("statusCode", 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Application job deleted successfully", 200, responseData);
   }
 }

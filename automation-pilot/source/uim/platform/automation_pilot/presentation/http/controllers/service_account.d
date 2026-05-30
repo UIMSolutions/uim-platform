@@ -73,7 +73,7 @@ class ServiceAccountController : ManageController {
         ServiceAccountDTO dto;
         dto.tenantId = tenantId;
         dto.serviceAccountId = ServiceAccountId(precheck.id);
-        dto.tenantId = req.getTenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.clientId = data.getString("clientId");

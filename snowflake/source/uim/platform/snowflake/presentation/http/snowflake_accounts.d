@@ -53,7 +53,7 @@ class SnowflakeAccountController : ManageController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateAccountRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.name     = data.getString("name");
     r.status   = data.getString("status");

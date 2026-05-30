@@ -55,7 +55,7 @@ class AddressController : PlatformController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto batchReq = CleanseBatchAddressRequest();
-      batchReq.tenantId = req.getTenantId;
+      batchReq.tenantId = tenantId;
 
       foreach (item; j.getArray("addresses")) {
         if (item.isObject) {

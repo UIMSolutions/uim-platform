@@ -63,7 +63,7 @@ public:
         auto tenantId = precheck.tenantId;
       
       auto id     = req.requestPath.to!string.split("/")[$-1];
-      auto result = _usecase.get(req.getTenantId, id);
+      auto result = _usecase.get(tenantId, id);
       if (result.success) res.writeJsonBody(serializeToJson(result.data));
       else writeError(res, 404, result.message);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }

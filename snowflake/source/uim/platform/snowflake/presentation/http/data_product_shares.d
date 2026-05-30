@@ -52,7 +52,7 @@ class DataProductShareController : ManageController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateShareRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");

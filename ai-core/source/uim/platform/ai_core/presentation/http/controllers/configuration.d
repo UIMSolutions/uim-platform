@@ -62,7 +62,7 @@ class ConfigurationController : ManageController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     CreateConfigurationRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = tenantId;
     auto data = precheck.data;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.scenarioId = ScenarioId(req.params.get("scenarioId", ""));
