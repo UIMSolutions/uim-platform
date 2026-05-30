@@ -6,7 +6,6 @@
 module uim.platform.data_attribute_recommendation.presentation.http.controllers
   .inference;
 
-
 // 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.process_inference;
@@ -34,116 +33,110 @@ class InferenceController : PlatformController {
     router.get("/api/v1/inference", &handleListRequests);
   }
 
+  protected Json submitHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = SubmitInferenceRequest();
+    r.tenantId = tenantId;
+    r.deploymentId = data.getString("deploymentId");
+    r.inputData = data.getString("inputData");
+
+    auto result = usecase.submitInference(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Inference submitted successfully", 201, responseData);
+  }
+
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = SubmitInferenceRequest();
-      r.tenantId = tenantId;
-      r.deploymentId = data.getString("deploymentId");
-      r.inputData = data.getString("inputData");
-
-      auto result = usecase.submitInference(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("resultId", result.id)
-            .set("status", Json("completed"))
-            .set("message", "Inference submitted successfully");
-
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    try {
+      auto response = submitHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json requestHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = InferenceRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid inference request ID", 400);
+
+    auto request = usecase.getRequest(tenantId, id);
+    if (request.isNull)
+      return errorResponse("Inference request not found", 404);
+
+    auto responseData = request.toJson;
+    return successResponse("Inference request retrieved successfully", 200, responseData);
   }
 
   protected void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-
-      // Try as inference request
-      auto requests = usecase.listByDeployment(tenantId, id);
-      if (requests.length > 0) {
-        auto arr = requests.map!(r => r.toJson).array.toJson;
-
-        auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(requests.length))
-            .set("message", "Inference requests retrieved successfully");
-
-        res.writeJsonBody(resp, 200);
-        return;
-      }
-
-      writeError(res, 404, "Inference request not found");
-    }
-    catch (Exception e) {
+    try {
+      auto response = requestHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json resultHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = InferenceResultId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid inference result ID", 400);
+
+    auto result = usecase.getResult(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Inference result not found", 404);
+
+    auto responseData = result.toJson;
+    return successResponse("Inference result retrieved successfully", 200, responseData);
   }
 
   protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.getResult(tenantId, id);
-      if (result.isNull) {
-        // Try by request id
-        result = usecase.getResultByRequest(tenantId, id);
-      }
-      if (result.isNull) {
-        writeError(res, 404, "Inference result not found");
-        return;
-      }
-      res.writeJsonBody(result.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto items = usecase.listRequests(tenantId);
-      auto arr = items.map!(r => r.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", items.length)
-            .set("message", "Inference requests retrieved successfully");
-            
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+      auto response = resultHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeRequest(const InferenceRequest r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("deploymentId", r.deploymentId)
-      .set("inputData", r.inputData)
-      .set("status", r.status.to!string)
-      .set("createdAt", r.createdAt);
+  protected Json listRequestsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listRequests(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Inference requests retrieved successfully", 200, responseData);
   }
 
-  private static Json serializeResult(const InferenceResult r) {
-    return Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("requestId", r.requestId)
-      .set("predictions", r.predictions)
-      .set("confidenceScores", r.confidenceScores)
-      .set("processingTimeMs", r.processingTimeMs)
-      .set("createdAt", r.createdAt);
+  protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = listRequestsHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
   }
 }
