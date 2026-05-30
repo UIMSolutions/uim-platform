@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
-// import uim.platform.content_agent.domain.types;
+
 // import uim.platform.content_agent.domain.entities.import_job;
 // import uim.platform.content_agent.domain.ports.repositories.import_jobs;
 

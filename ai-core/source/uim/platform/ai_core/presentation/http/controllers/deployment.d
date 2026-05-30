@@ -48,7 +48,7 @@ class DeploymentController : ManageController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Deployment created successfully", "Created", 201, resp);
+    return successResponse("Deployment created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -76,7 +76,6 @@ class DeploymentController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
     auto id = DeploymentId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid deployment ID", 400);
@@ -87,7 +86,7 @@ class DeploymentController : ManageController {
     if (deployment.isNull)
       return errorResponse("Deployment not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = deployment.toJson();
     return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -97,8 +96,8 @@ class DeploymentController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto data = prceheck.data;
-    auto id = DeploymentId(extractIdFromPath(precheck.path));
+    auto data = precheck.data;
+    auto id = DeploymentId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid deployment ID", 400);
 
@@ -114,18 +113,14 @@ class DeploymentController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    if (result.success)
-
-      auto resp = Json.emptyObject
-        .set("id", result.id);
-
-    return successResponse("Deployment updated successfully", "Updated", 200, resp);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Deployment updated successfully", "Updated", 200, responseData);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = patchHandler(req);
-      res.writeJsonBody(resp, 200);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -137,8 +132,6 @@ class DeploymentController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
-
     auto id = DeploymentId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid deployment ID", 400);
@@ -149,9 +142,7 @@ class DeploymentController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("status", "deleted");
-
-    return successResponse("Deployment deleted successfully", "Deleted", 200, resp);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Deployment deleted successfully", "Deleted", 200, responseData);
   }
 }

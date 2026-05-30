@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports.repositories.content_activitys;
 // import uim.platform.content_agent.domain.entities.content_activity;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());

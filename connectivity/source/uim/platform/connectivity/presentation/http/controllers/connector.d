@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.presentation.http.controllers.connector;
 
-
-
-
 // import uim.platform.connectivity.application.usecases.manage.connectors;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.cloud_connector;
@@ -33,122 +30,134 @@ class ConnectorController : ManageController {
     router.delete_("/api/v1/connectors/*", &handleUnregister);
   }
 
+  protected Json registerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    RegisterConnectorRequest r;
+    r.subaccountId = data.getString("subaccountId");
+    r.tenantId = tenantId;
+    r.locationId = data.getString("locationId");
+    r.description = data.getString("description");
+    r.connectorVersion = data.getString("connectorVersion");
+    r.host = data.getString("host");
+    r.port = getUshort(j, "port");
+    r.tunnelEndpoint = data.getString("tunnelEndpoint");
+
+    auto result = usecase.registerConnector(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Connector registered successfully", "Created", 201, resp);
+  }
+
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = RegisterConnectorRequest();
-      r.subaccountId = data.getString("subaccountId");
-      r.tenantId = tenantId;
-      r.locationId = data.getString("locationId");
-      r.description = data.getString("description");
-      r.connectorVersion = data.getString("connectorVersion");
-      r.host = data.getString("host");
-      r.port = getUshort(j, "port");
-      r.tunnelEndpoint = data.getString("tunnelEndpoint");
-
-      auto result = usecase.registerConnector(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Connector registered successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = registerHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto conns = usecase.listByTenant(tenantId);
+    auto tenantId = precheck.tenantId;
 
-      auto arr = conns.map!(c => c.toJson).array.toJson;
+    auto connectors = usecase.listByTenant(tenantId);
+    auto list = connectors.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(conns.length))
-        .set("message", "Connectors retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Connectors retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ConnectorId(precheck.id);
-      auto cc = usecase.getConnector(tenantId, id);
-      if (cc.isNull) {
-        writeError(res, 404, "Connector not found");
-        return;
-      }
-      res.writeJsonBody(cc.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ConnectorId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid connector ID", 400);
+
+    auto connector = usecase.getConnector(tenantId, id);
+    if (connector.isNull)
+      return errorResponse("Connector not found", 404);
+
+    auto responseData = connector.toJson();
+    return successResponse("Connector retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json heartbeatHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto uri = req.requestURI;
+    auto parts = splitPath(uri);
+    if (parts.length < 5)
+      return errorResponse("Invalid path", 400);
+    auto connectorId = ConnectorId(parts[$ - 2]); // second-to-last segment before "heartbeat"
+
+    HeartbeatRequest r;
+    r.connectorVersion = data.getString("connectorVersion");
+
+    auto result = usecase.heartbeat(tenantId, connectorId, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("status", "acknowledged")
+      .set("message", "Heartbeat received");
+
+    return successResponse("Heartbeat received successfully", "Acknowledged", 200, resp);
   }
 
   protected void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      // Extract connector id from /api/v1/connectors/{id}/heartbeat
-      auto uri = req.requestURI;
-      auto parts = splitPath(uri);
-      if (parts.length < 5) {
-        writeError(res, 400, "Invalid path");
-        return;
-      }
-      auto connectorId = ConnectorId(parts[$ - 2]); // second-to-last segment before "heartbeat"
-
-      auto data = precheck.data;
-      auto r = HeartbeatRequest();
-      auto tenantId = precheck.tenantId;
-      r.connectorVersion = data.getString("connectorVersion");
-
-      auto result = usecase.heartbeat(tenantId, connectorId, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("status", "acknowledged")
-          .set("message", "Heartbeat received");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto response = heartbeatHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json unregisterHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ConnectorId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid connector ID", 400);
+
+    auto result = usecase.unregister(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Connector unregistered successfully", "Deleted", 200, resp);
+  }
+
   protected void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = ConnectorId(precheck.id);
-      auto result = usecase.unregister(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Connector unregistered successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto response = unregisterHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

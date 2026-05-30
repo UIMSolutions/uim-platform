@@ -31,136 +31,109 @@ class NamespaceController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateNamespaceRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateNamespaceRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.createNamespace(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Namespace created successfully");
+    auto result = usecase.createNamespace(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Namespace created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto namespaces = usecase.listNamespaces(tenantId);
-      auto jarr = Json.emptyArray;
-      foreach (ns; namespaces) {
-        jarr ~= Json.emptyObject
-          .set("id", ns.id)
-          .set("name", ns.name)
-          .set("description", ns.description)
-          .set("createdAt", ns.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", namespaces.length)
-        .set("message", "Namespace list retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto namespaces = usecase.listNamespaces(tenantId);
+    auto list = Json.emptyArray;
+    foreach (ns; namespaces) {
+      list ~= Json.emptyObject
+        .set("id", ns.id)
+        .set("name", ns.name)
+        .set("description", ns.description)
+        .set("createdAt", ns.createdAt);
     }
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Namespace list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = NamespaceId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = NamespaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid namespace ID", 400);
 
-      auto ns = usecase.getNamespace(tenantId, id);
-      if (ns.isNull) {
-        writeError(res, 404, "Namespace not found");
-        return;
-      }
+    auto ns = usecase.getNamespace(tenantId, id);
+    if (ns.isNull)
+      return errorResponse("Namespace not found", 404);
 
-      auto nj = Json.emptyObject
-        .set("id", ns.id)
-        .set("tenantId", ns.tenantId)
-        .set("name", ns.name)
-        .set("description", ns.description)
-        .set("createdAt", ns.createdAt)
-        .set("updatedAt", ns.updatedAt)
-        .set("createdBy", ns.createdBy);
-
-      res.writeJsonBody(nj, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = ns.toJson();
+    return successResponse("Namespace retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = NamespaceId(precheck.id);
-      auto data = precheck.data;
-      UpdateNamespaceRequest request;
-      request.tenantId = tenantId;
-      request.namespaceId = id;
-      request.description = data.getString("description");
+    auto tenantId = precheck.tenantId;
+    auto id = NamespaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid namespace ID", 400);
+      
+    auto data = precheck.data;
+    UpdateNamespaceRequest request;
+    request.tenantId = tenantId;
+    request.namespaceId = id;
+    request.description = data.getString("description");
 
-      auto result = usecase.updateNamespace(request);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Namespace updated successfully");
+    auto result = usecase.updateNamespace(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Namespace updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = NamespaceId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = NamespaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid namespace ID", 400);
 
-      auto result = usecase.deleteNamespace(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.deleteNamespace(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Namespace deleted successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Namespace deleted successfully", "Deleted", 200, responseData);
   }
 }

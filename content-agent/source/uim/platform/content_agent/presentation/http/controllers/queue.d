@@ -8,7 +8,7 @@ module uim.platform.content_agent.presentation.http.controllers.queue_controller
 // import uim.platform.content_agent.application.usecases.manage.transport_queues;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.transport_queue;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -32,142 +32,106 @@ class QueueController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateQueueRequest();
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.queueType = data.getString("queueType");
-      r.endpoint = data.getString("endpoint");
-      r.authToken = data.getString("authToken");
-      r.isDefault = data.getBoolean("isDefault");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    auto r = CreateQueueRequest();
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.queueType = data.getString("queueType");
+    r.endpoint = data.getString("endpoint");
+    r.authToken = data.getString("authToken");
+    r.isDefault = data.getBoolean("isDefault");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.createQueue(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Queue created successfully");
+    auto result = usecase.createQueue(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Queue created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto queues = usecase.listQueues(tenantId);
-      auto arr = queues.map!(q => q.toJson).array.toJson;
+    auto queues = usecase.listQueues(tenantId);
+    auto list = queues.map!(q => q.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(queues.length))
-        .set("message", "Queues retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Queue list retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = QueueId(precheck.id);
-      auto queue = usecase.getQueue(id);
-      if (queue.isNull) {
-        writeError(res, 404, "Queue not found");
-        return;
-      }
-      res.writeJsonBody(queue.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = QueueId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid queue ID", 400);
+
+    auto queue = usecase.getQueue(tenantId, id);
+    if (queue.isNull)
+      return errorResponse("Queue not found", 404);
+
+    auto responseData = queue.toJson();
+    return successResponse("Queue retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = QueueId(precheck.id);
-      auto data = precheck.data;
-      auto r = UpdateQueueRequest();
-      r.description = data.getString("description");
-      r.endpoint = data.getString("endpoint");
-      r.authToken = data.getString("authToken");
-      r.isDefault = data.getBoolean("isDefault");
+    auto tenantId = precheck.tenantId;
+    auto id = QueueId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid queue ID", 400);
 
-      auto result = usecase.updateQueue(id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Queue updated successfully");
+    auto data = precheck.data;
+    auto r = UpdateQueueRequest();
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.endpoint = data.getString("endpoint");
+    r.authToken = data.getString("authToken");
+    r.isDefault = data.getBoolean("isDefault");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Queue not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateQueue(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Queue updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = QueueId(precheck.id);
-      auto result = usecase.deleteQueue(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Queue deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = QueueId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid queue ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto result = usecase.deleteQueue(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private static Json serializeQueue(const TransportQueue q) {
-    return Json.emptyObject
-      .set("id", q.id)
-      .set("tenantId", q.tenantId)
-      .set("name", q.name)
-      .set("description", q.description)
-      .set("queueType", q.queueType.to!string)
-      .set("endpoint", q.endpoint)
-      .set("isDefault", q.isDefault)
-      .set("createdBy", q.createdBy)
-      .set("createdAt", q.createdAt)
-      .set("updatedAt", q.updatedAt);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Queue deleted successfully", 200, responseData);
   }
 }

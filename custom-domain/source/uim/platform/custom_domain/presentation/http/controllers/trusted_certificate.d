@@ -20,7 +20,7 @@ class TrustedCertificateController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/trusted-certificates", &handleList);
         router.get("/api/v1/custom-domain/trusted-certificates/*", &handleGet);
         router.post("/api/v1/custom-domain/trusted-certificates", &handleCreate);
@@ -35,20 +35,20 @@ class TrustedCertificateController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateTrustedCertificateRequest r;
-            r.tenantId = tenantId;
-            r.trustedCertificateId = TrustedCertificateId(precheck.id);
-            r.customDomainId = CustomDomainId(data.getString("customDomainId"));
-            r.certificatePem = data.getString("certificatePem");
-            r.authMode = data.getString("authMode");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateTrustedCertificateRequest r;
+        r.tenantId = tenantId;
+        r.trustedCertificateId = TrustedCertificateId(precheck.id);
+        r.customDomainId = CustomDomainId(data.getString("customDomainId"));
+        r.certificatePem = data.getString("certificatePem");
+        r.authMode = data.getString("authMode");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createCertificate(r);
-            if (result.hasError)
+        auto result = usecase.createCertificate(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
+        return successResponse("Trusted certificate created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -58,32 +58,26 @@ class TrustedCertificateController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto certs = usecase.listCertificates(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (c; certs) {
-                jarr ~= Json.emptyObject
-                    .set("id", c.id)
-                    .set("customDomainId", c.customDomainId)
-                    .set("subjectDn", c.subjectDn)
-                    .set("issuerDn", c.issuerDn)
-                    .set("status", c.status.to!string)
-                    .set("authMode", c.authMode.to!string)
-                    .set("validFrom", c.validFrom)
-                    .set("validTo", c.validTo)
-                    .set("createdBy", c.createdBy)
-                    .set("createdAt", c.createdAt);
-            }
-
-            auto response = Json.emptyObject
-                .set("count", certs.length)
-                .set("resources", jarr)
-                .set("message", "Trusted certificates retrieved successfully");
-
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto certs = usecase.listCertificates(tenantId);
+        auto list = Json.emptyArray;
+        foreach (c; certs) {
+            list ~= Json.emptyObject
+                .set("id", c.id)
+                .set("customDomainId", c.customDomainId)
+                .set("subjectDn", c.subjectDn)
+                .set("issuerDn", c.issuerDn)
+                .set("status", c.status.to!string)
+                .set("authMode", c.authMode.to!string)
+                .set("validFrom", c.validFrom)
+                .set("validTo", c.validTo)
+                .set("createdBy", c.createdBy)
+                .set("createdAt", c.createdAt);
         }
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Trusted certificates retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -92,32 +86,29 @@ class TrustedCertificateController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TrustedCertificateId(precheck.id);
+        auto id = TrustedCertificateId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid trusted certificate ID", 400);
 
-            auto c = usecase.getCertificate(tenantId, id);
-            if (c.isNull) {
-                writeError(res, 404, "Trusted certificate not found");
-                return;
-            }
+        auto c = usecase.getCertificate(tenantId, id);
+        if (c.isNull)
+            return errorResponse("Trusted certificate not found", 404);
 
-            auto resp = Json.emptyObject
-                .set("id", c.id)
-                .set("customDomainId", c.customDomainId)
-                .set("subjectDn", c.subjectDn)
-                .set("issuerDn", c.issuerDn)
-                .set("serialNumber", c.serialNumber)
-                .set("fingerprint", c.fingerprint)
-                .set("status", c.status.to!string)
-                .set("authMode", c.authMode.to!string)
-                .set("validFrom", c.validFrom)
-                .set("validTo", c.validTo)
-                .set("createdBy", c.createdBy)
-                .set("createdAt", c.createdAt);
-                
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("id", c.id)
+            .set("customDomainId", c.customDomainId)
+            .set("subjectDn", c.subjectDn)
+            .set("issuerDn", c.issuerDn)
+            .set("serialNumber", c.serialNumber)
+            .set("fingerprint", c.fingerprint)
+            .set("status", c.status.to!string)
+            .set("authMode", c.authMode.to!string)
+            .set("validFrom", c.validFrom)
+            .set("validTo", c.validTo)
+            .set("createdBy", c.createdBy)
+            .set("createdAt", c.createdAt);
+
+        return successResponse("Trusted certificate retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -126,21 +117,15 @@ class TrustedCertificateController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TrustedCertificateId(precheck.id);
+        auto id = TrustedCertificateId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid trusted certificate ID", 400);
 
-            auto result = usecase.deleteCertificate(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteCertificate(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trusted certificate deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trusted certificate deleted successfully", "Deleted", 200, responseData);
     }
 }

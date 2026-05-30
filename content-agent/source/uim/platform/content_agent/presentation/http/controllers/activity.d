@@ -5,12 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.activity;
 
-
-
-
 // import uim.platform.content_agent.application.usecases.monitor_activities;
 // import uim.platform.content_agent.domain.entities.content_activity;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -31,24 +28,19 @@ class ActivityController : PlatformController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto activities = usecase.listActivities(tenantId);
-      auto arr = activities.map!(a => a.toJson).array.toJson;
+    auto activities = usecase.listActivities(tenantId);
+    auto list = activities.map!(item => item.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(activities.length))
-        .set("message", "Activities retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Activity list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -62,24 +54,10 @@ class ActivityController : PlatformController {
         .set("warningCount", Json(summary.warningCount))
         .set("errorCount", Json(summary.errorCount))
         .set("message", "Activity summary retrieved successfully");
-        
+
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeActivity(const ContentActivity a) {
-    return Json.emptyObject
-      .set("id", a.id)
-      .set("tenantId", a.tenantId)
-      .set("activityType", a.activityType.to!string)
-      .set("severity", a.severity.to!string)
-      .set("entityId", a.entityId)
-      .set("entityName", a.entityName)
-      .set("description", a.description)
-      .set("performedBy", a.performedBy)
-      .set("timestamp", a.timestamp)
-      .set("details", a.details);
   }
 }

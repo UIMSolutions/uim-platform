@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_provider;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -19,12 +19,12 @@ struct ProvidedContentType {
   string version_;
 
   Json toJson() const {
-      return Json.emptyObject
-          .set("contentTypeId", contentTypeId.value)
-          .set("name", name)
-          .set("category", category.to!string)
-          .set("description", description)
-          .set("version", version_);
+    return Json.emptyObject
+      .set("contentTypeId", contentTypeId.value)
+      .set("name", name)
+      .set("category", category.to!string)
+      .set("description", description)
+      .set("version", version_);
   }
 }
 /// A registered content provider from which content can be discovered and assembled.
@@ -42,15 +42,15 @@ struct ContentProvider {
   long lastSyncAt;
 
   Json toJson() const {
-      return entityToJson
-          .set("name", name)
-          .set("description", description)
-          .set("endpoint", endpoint)
-          .set("authToken", authToken)
-          .set("status", status.to!string)
-          .set("contentTypes", contentTypes.map!(c => c.toJson).array.toJson)
-          .set("createdBy", createdBy)
-          .set("registeredAt", registeredAt)
-          .set("lastSyncAt", lastSyncAt);
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("endpoint", endpoint)
+      .set("authToken", authToken)
+      .set("status", status.to!string)
+      .set("contentTypes", contentTypes.map!(c => c.toJson).array.toJson)
+      .set("createdBy", createdBy)
+      .set("registeredAt", registeredAt)
+      .set("lastSyncAt", lastSyncAt);
   }
 }

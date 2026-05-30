@@ -41,7 +41,6 @@ class BuildConfigurationController : ManageController {
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
-
         return successResponse("Build configuration list retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -51,6 +50,7 @@ class BuildConfigurationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+
         auto data = precheck.data;
         BuildConfigurationDTO dto;
         dto.configId = precheck.id;
@@ -68,9 +68,7 @@ class BuildConfigurationController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.configId);
-
+        auto resp = Json.emptyObject.set("id", result.configId);
         return successResponse("Build configuration created successfully", "Created", 201, resp);
     }
 
@@ -80,7 +78,6 @@ class BuildConfigurationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = BuildConfigurationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid build configuration ID", "InvalidId", 400);
@@ -89,7 +86,8 @@ class BuildConfigurationController : ManageController {
         if (e.isNull)
             return errorResponse("Build configuration not found", "NotFound", 404);
 
-        return successResponse("Build configuration retrieved successfully", "Retrieved", 200, e.toJson());
+        Json responseData = e.toJson();
+        return successResponse("Build configuration retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -104,8 +102,8 @@ class BuildConfigurationController : ManageController {
 
         auto data = precheck.data;
         BuildConfigurationDTO dto;
-        dto.configId = id;
         dto.tenantId = tenantId;
+        dto.configId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.buildCommand = data.getString("buildCommand");
@@ -116,10 +114,8 @@ class BuildConfigurationController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
-        return successResponse("Build configuration updated successfully", "Updated", 200, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Build configuration updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -128,21 +124,15 @@ class BuildConfigurationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
-            auto id = BuildConfigurationId(precheck.id);
+        auto id = BuildConfigurationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid build configuration ID", "InvalidId", 400);
 
-            auto result = usecase.deleteBuildConfiguration(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteBuildConfiguration(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Build configuration deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Build configuration deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.presentation.http.controllers.monitoring;
 
-
-// 
-// 
 // import uim.platform.connectivity.application.usecases.monitor_connectivity;
 // import uim.platform.connectivity.domain.entities.connectivity_log;
 // import uim.platform.connectivity.domain.types;
@@ -40,38 +37,52 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/summary", &handleSummary);
   }
 
-  override protected void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listLogsHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto logs = usecase.listLogs(tenantId);
+    auto list = logs.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Connectivity logs retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-
-      auto logs = usecase.listLogs(tenantId);
-      auto arr = logs.map!(l => l.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(logs.length))
-        .set("message", "Logs retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listLogsHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json summaryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getSummary(tenantId);
+
+    auto responseData = Json.emptyObject
+      .set("totalEvents", summary.totalEvents)
+      .set("info", summary.infoCount)
+      .set("warning", summary.warningCount)
+      .set("error", summary.errorCount)
+      .set("critical", summary.criticalCount);
+    return successResponse("Connectivity summary retrieved successfully", "Retrieved", 200, responseData);
+  }
+
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getSummary(tenantId);
-
-      auto response = Json.emptyObject
-        .set("totalEvents", summary.totalEvents)
-        .set("info", summary.infoCount)
-        .set("warning", summary.warningCount)
-        .set("error", summary.errorCount)
-        .set("critical", summary.criticalCount)
-        .set("message", "Connectivity summary retrieved successfully");
-
-      res.writeJsonBody(response, 200);
+      auto response = summaryHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -8,7 +8,7 @@ module uim.platform.content_agent.presentation.http.controllers.package_;
 // import uim.platform.content_agent.application.usecases.manage.content_packages;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_package;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -128,86 +128,52 @@ class PackageController : ManageController {
     return successResponse("Package deleted successfully", "Deleted", 200, responseData);
   }
 
+  protected Json assembleHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = AssemblePackageRequest();
+    r.packageId = data.getString("packageId");
+    r.tenantId = tenantId;
+    r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.assemblePackage(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Package assembled successfully", "Assembled", 200, responseData);
+  }
+
   protected void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = AssemblePackageRequest();
-      r.packageId = data.getString("packageId");
-      r.tenantId = tenantId;
-      r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.assemblePackage(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "assembled")
-        .set("message", "Package assembled successfully");
-
-      res.writeJsonBody(resp, 200);
-    } else {
-      writeError(res, 400, result.message);
+      auto response = assembleHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
-
-private static ContentItem[] parseContentItems(Json j) {
-  ContentItem[] items;
-
-  foreach (itemJson; j.getArray("items")) {
-    if (!itemJson.isObject)
-      continue;
-    ContentItem item;
-    item.id = itemJson.getString("id");
-    item.name = itemJson.getString("name");
-    item.providerId = itemJson.getString("providerId");
-    item.version_ = itemJson.getString("version");
-    item.description = itemJson.getString("description");
-    item.dependencies = getStrings(itemJson, "dependencies");
-    item.category = itemJson.getString("category").to!ContentCategory;
-    items ~= item;
   }
 
-  return items;
-}
+  private static ContentItem[] parseContentItems(Json j) {
+    ContentItem[] items;
 
-private static Json serializePackage(const ContentPackage p) {
-  auto j = Json.emptyObject
-    .set("id", p.id)
-    .set("tenantId", p.tenantId)
-    .set("subaccountId", p.subaccountId)
-    .set("name", p.name)
-    .set("description", p.description)
-    .set("version", p.version_)
-    .set("status", p.status.to!string)
-    .set("format", p.format.to!string)
-    .set("createdBy", p.createdBy)
-    .set("createdAt", p.createdAt)
-    .set("updatedAt", p.updatedAt)
-    .set("assembledAt", p.assembledAt)
-    .set("packageSizeBytes", p.packageSizeBytes);
-
-  if (p.items.length > 0) {
-    auto arr = Json.emptyArray;
-    foreach (item; p.items) {
-      arr ~= Json.emptyObject
-        .set("id", item.id)
-        .set("name", item.name)
-        .set("category", item.category.to!string)
-        .set("providerId", item.providerId)
-        .set("version", item.version_)
-        .set("description", item.description)
-        .set("dependencies", item.dependencies);
+    foreach (itemJson; j.getArray("items")) {
+      if (!itemJson.isObject)
+        continue;
+      ContentItem item;
+      item.id = itemJson.getString("id");
+      item.name = itemJson.getString("name");
+      item.providerId = itemJson.getString("providerId");
+      item.version_ = itemJson.getString("version");
+      item.description = itemJson.getString("description");
+      item.dependencies = getStrings(itemJson, "dependencies");
+      item.category = itemJson.getString("category").to!ContentCategory;
+      items ~= item;
     }
-    j["items"] = arr;
+
+    return items;
   }
-
-  if (p.tags.length > 0)
-    j["tags"] = toJsonArray(p.tags);
-
-  return j;
-}
 }

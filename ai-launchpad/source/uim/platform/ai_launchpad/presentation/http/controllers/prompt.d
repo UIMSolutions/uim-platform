@@ -127,16 +127,14 @@ class PromptController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Prompt updated");
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Prompt updated successfully", 200, responseData);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resp = patchHandler(req);
-      res.writeJsonBody(resp, 200);
+      auto response = patchHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

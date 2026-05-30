@@ -67,105 +67,108 @@ class ChannelController : ManageController {
     auto channels = usecase.listByTenant(tenantId);
     auto list = channels.map!(item => item.toJson()).array.toJson;
 
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("Channel list retrieved successfully", "Retrieved", 200, responseData);
-}
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Channel list retrieved successfully", "Retrieved", 200, responseData);
+  }
 
-override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-    auto id = ChannelId(precheck.id);
-    auto ch = usecase.getChannel(tenantId, id);
-    if (item.isNull)
-            return errorResponse("Scan job not found", 404);
-
-        auto responseData = item.toJson();
-        return successResponse("Channel retrieved successfully", "Retrieved", 200, responseData);
-}
-
-protected void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto parts = splitPath(req.requestURI);
-    if (parts.length < 5) {
-      writeError(res, 400, "Invalid path");
-      return;
-    }
-    auto channelId = ChannelId(parts[$ - 2]);
     auto tenantId = precheck.tenantId;
+    auto id = ChannelId(precheck.id);
+    auto channel = usecase.getChannel(tenantId, id);
+    if (channel.isNull)
+      return errorResponse("Channel not found", 404);
 
-    auto result = usecase.openChannel(tenantId, channelId);
+    auto responseData = channel.toJson();
+    return successResponse("Channel retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json openHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ChannelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid channel ID", 400);
+
+    auto result = usecase.openChannel(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("status", "opened")
-      .set("message", "Channel opened successfully");
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 400, result.message);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Channel opened successfully", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-protected void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto parts = splitPath(req.requestURI);
-    if (parts.length < 5) {
-      writeError(res, 400, "Invalid path");
-      return;
+  protected void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = openHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-    auto tenantId = precheck.tenantId;
-    auto channelId = ChannelId(parts[$ - 2]);
+  }
 
-    auto result = usecase.closeChannel(tenantId, channelId);
+  protected Json closeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ChannelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid channel ID", 400);
+
+    auto result = usecase.closeChannel(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("status", "closed")
-      .set("message", "Channel closed successfully");
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 400, result.message);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Channel closed successfully", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  protected void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = closeHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = ChannelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid channel ID", 400);
+      
     auto result = usecase.deleteChannel(tenantId, id);
     if (result.hasError)
-            return errorResponse(result.message, 400);
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Channel deleted successfully", "Deleted", 200, responseData);
-}
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Channel deleted successfully", "Deleted", 200, responseData);
+  }
 
-private static string[] splitPath(string uri) {
-  // import std.string : indexOf, split;
+  private static string[] splitPath(string uri) {
+    // import std.string : indexOf, split;
 
-  auto qpos = uri.indexOf('?');
-  string path = qpos >= 0 ? uri[0 .. qpos] : uri;
-  string[] parts;
-  foreach (seg; path.split("/"))
-    if (seg.length > 0)
-      parts ~= seg;
-  return parts;
-}
+    auto qpos = uri.indexOf('?');
+    string path = qpos >= 0 ? uri[0 .. qpos] : uri;
+    string[] parts;
+    foreach (seg; path.split("/"))
+      if (seg.length > 0)
+        parts ~= seg;
+    return parts;
+  }
 }

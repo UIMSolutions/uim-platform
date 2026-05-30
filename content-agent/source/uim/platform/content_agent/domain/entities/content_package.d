@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_package;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -21,7 +21,7 @@ struct ContentItem {
   string[] dependencies;
 
   Json toJson() const {
-    return entityToJson
+    return Json.emptyObject
       .set("id", id)
       .set("name", name)
       .set("category", category.to!string)

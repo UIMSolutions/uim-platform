@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.dto;
-// import uim.platform.content_agent.domain.types;
+
 // import uim.platform.content_agent.domain.entities.content_package : ContentItem;
 import uim.platform.content_agent;
 

@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.presentation.http.controllers.monitoring;
 
-
-
-
-
-
 // import uim.platform.foundry.application.usecases.monitor_apps;
 // import uim.platform.foundry.domain.types;
 import uim.platform.foundry;
@@ -23,82 +18,109 @@ class MonitoringController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/monitoring/apps", &handleListAppHealth);
     router.get("/api/v1/monitoring/spaces/*", &handleSpaceUsage);
     router.get("/api/v1/monitoring/apps/*", &handleAppHealth);
   }
 
-  override protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listAppHealthHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto items = useCase.listAppHealth(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Application health summaries retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-        auto tenantId = precheck.tenantId;
-      auto items = useCase.listAppHealth(tenantId);
-
-      auto arr = items.map!(h => h.toJson()).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("message", "Application health summaries retrieved successfully")
-        .set("resources", arr)
-        .set("totalCount", items.length);
-
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+      auto response = listAppHealthHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json appHealthHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = MonitoringId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
+
+    auto h = useCase.getAppHealth(tenantId, id);
+    if (h.appId.isEmpty)
+      return errorResponse("Application not found", 404);
+
+    auto responseData = serializeHealth(h);
+    return successResponse("Application health summary retrieved successfully", "Retrieved", 200, responseData);
   }
 
   protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = MonitoringId(precheck.id);
-
-      auto tenantId = precheck.tenantId;
-      auto h = useCase.getAppHealth(tenantId, id);
-      if (h.appId.isEmpty) {
-        writeError(res, 404, "Application not found");
-        return;
-      }
-      res.writeJsonBody(h.toJson(), 200);
-    }
-    catch (Exception e) {
+    try {
+      auto response = appHealthHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json spaceUsageHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(precheck.id);
+    if (spaceId.isNull)
+      return errorResponse("Invalid space ID", 400);
+
+    auto u = useCase.getSpaceUsage(tenantId, spaceId);
+    if (u.spaceId.isEmpty)
+      return errorResponse("Space not found", 404);
+
+    auto responseData = Json.emptyObject
+      .set("spaceId", u.spaceId)
+      .set("totalApps", u.totalApps)
+      .set("runningApps", u.runningApps)
+      .set("stoppedApps", u.stoppedApps)
+      .set("crashedApps", u.crashedApps)
+      .set("totalMemoryUsedMb", u.totalMemoryUsedMb)
+      .set("totalDiskUsedMb", u.totalDiskUsedMb)
+      .set("totalServiceInstances", u.totalServiceInstances)
+      .set("totalRoutes", u.totalRoutes);
+
+    return successResponse("Space usage retrieved successfully", "Retrieved", 200, responseData);
+  }
   protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto spaceId = SpaceId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto u = useCase.getSpaceUsage(tenantId, spaceId);
-
-      auto j = Json.emptyObject
-        .set("spaceId", u.spaceId)
-        .set("totalApps", u.totalApps)
-        .set("runningApps", u.runningApps)
-        .set("stoppedApps", u.stoppedApps)
-        .set("crashedApps", u.crashedApps)
-        .set("totalMemoryUsedMb", u.totalMemoryUsedMb)
-        .set("totalDiskUsedMb", u.totalDiskUsedMb)
-        .set("totalServiceInstances", u.totalServiceInstances)
-        .set("totalRoutes", u.totalRoutes);
-        
-      res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+      auto response = spaceUsageHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeHealth(const AppHealthSummary h) {
     return Json.emptyObject
-    .set("appId", Json(h.appId))
-    .set("appName", Json(h.appName))
-    .set("state", Json(h.state.to!string))
-    .set("requestedInstances", Json(h.requestedInstances))
-    .set("runningInstances", Json(h.runningInstances))
-    .set("crashedInstances", Json(h.crashedInstances))
-    .set("totalMemoryMb", Json(h.totalMemoryMb))
-    .set("totalDiskMb", Json(h.totalDiskMb));
+      .set("appId", Json(h.appId))
+      .set("appName", Json(h.appName))
+      .set("state", Json(h.state.to!string))
+      .set("requestedInstances", Json(h.requestedInstances))
+      .set("runningInstances", Json(h.runningInstances))
+      .set("crashedInstances", Json(h.crashedInstances))
+      .set("totalMemoryMb", Json(h.totalMemoryMb))
+      .set("totalDiskMb", Json(h.totalDiskMb));
   }
 }

@@ -28,22 +28,20 @@ class PageController : ManageController {
         router.delete_("/api/v1/build-apps/pages/*", &handleDelete);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.getTenantId();
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
             auto items = usecase.listPages(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+           auto list = items.map!(item => item.toJson()).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Pages retrieved");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Page list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {

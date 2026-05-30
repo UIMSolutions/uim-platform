@@ -41,14 +41,12 @@ class ResourceGroupController : ManageController {
     auto groups = connectionId.isEmpty
       ? usecase.listResourceGroups(tenantId) : usecase.listResourceGroups(tenantId, connectionId);
 
-    auto jarr = groups.map!(g => g.toJson).array.toJson;
+    auto list = groups.map!(item => item.toJson()).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("count", groups.length)
-      .set("resources", jarr)
-      .set("message", "Resource groups retrieved");
-
-    return successResponse("Resource groups retrieved successfully", "Retrieved", 200, resp);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Resource groups retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -83,8 +81,9 @@ class ResourceGroupController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
     auto id = ResourceGroupId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid resource group ID", 400);
 
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
@@ -92,33 +91,43 @@ class ResourceGroupController : ManageController {
     if (g.isNull)
       return errorResponse("Resource group not found", 404);
 
-    return successResponse("Resource group retrieved successfully", 200, g.toJson);
+    auto responseData = g.toJson();
+    return successResponse("Resource group retrieved successfully", 200, responseData);
+  }
+
+  protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ResourceGroupId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid resource group ID", 400);
+
+    auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
+    if (connectionId.isNull)
+      return errorResponse("Invalid connection ID", 400);
+
+    auto data = precheck.data;
+    PatchResourceGroupRequest r;
+    r.tenantId = tenantId;
+    r.connectionId = connectionId;
+    r.resourceGroupId = id;
+    r.labels = jsonPairArray(data, "labels");
+
+    auto result = usecase.patchResourceGroup(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Resource group updated successfully", 200, responseData);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = ResourceGroupId(precheck.id);
-      auto data = precheck.data;
-      auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
-
-      PatchResourceGroupRequest r;
-      r.tenantId = tenantId;
-      r.connectionId = connectionId;
-      r.resourceGroupId = id;
-      r.labels = jsonPairArray(j, "labels");
-
-      auto result = usecase.patchResourceGroup(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Resource group updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto response = patchHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -130,7 +139,6 @@ class ResourceGroupController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
     auto id = ResourceGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid resource group ID", 400);
@@ -143,9 +151,7 @@ class ResourceGroupController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-    auto resp = Json.emptyObject
-      .set("id", id);
-
+    auto resp = Json.emptyObject.set("id", id);
     return successResponse("Resource group deleted successfully", "Deleted", 200, resp);
   }
 }

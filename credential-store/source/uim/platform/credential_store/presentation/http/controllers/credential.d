@@ -72,116 +72,142 @@ class CredentialController : ManageController {
   }
 
   // --- Shared handlers ---
+  protected Json createCredentialHandler(HTTPServerRequest req, string type) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    CreateCredentialRequest r;
+    r.tenantId = tenantId;
+    r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
+    r.name = data.getString("name");
+    r.type = type;
+    r.value = data.getString("value");
+    r.metadata = data.getString("metadata");
+    r.format = data.getString("format");
+    r.username = data.getString("username");
+    r.createdBy = UserId(data.getString("createdBy"));
+    r.ifNoneMatch = req.headers.get("If-None-Match", "");
+
+    auto result = usecase.createCredential(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Credential created successfully", "Created", 201, responseData);
+  }
 
   protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      CreateCredentialRequest r;
-      r.tenantId = tenantId;
-      r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", data.getString("namespaceId")));
-      r.name = data.getString("name");
-      r.type = type;
-      r.value = data.getString("value");
-      r.metadata = data.getString("metadata");
-      r.format = data.getString("format");
-      r.username = data.getString("username");
-      r.createdBy = UserId(data.getString("createdBy"));
-      r.ifNoneMatch = req.headers.get("If-None-Match", "");
+      auto response = createCredentialHandler(req, type);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 
-      auto result = usecase.createCredential(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
+  protected Json listCredentialsHandler(HTTPServerRequest req, string type) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("", 0, responseData);
+    auto tenantId = precheck.tenantId;
+    auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
+
+    Credential[] creds;
+    if (!namespaceId.isEmpty) {
+      creds = usecase.listCredentials(tenantId, namespaceId, type);
     }
 
-    protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-      try {
-        auto tenantId = precheck.tenantId;
-        auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
-
-        Credential[] creds;
-        if (!namespaceId.isEmpty) {
-          creds = usecase.listCredentials(tenantId, namespaceId, type);
-        }
-
-        auto jarr = Json.emptyArray;
-        foreach (c; creds) {
-          jarr ~= Json.emptyObject
-            .set("id", c.id)
-            .set("name", c.name)
-            .set("metadata", c.metadata)
-            .set("format", c.format)
-            .set("status", c.status == CredentialStatus.active ? "active" : "disabled")
-            .set("version", c.version_);
-        }
-
-        auto resp = Json.emptyObject
-          .set("items", jarr)
-          .set("totalCount", creds.length)
-          .set("message", "Credentials retrieved successfully");
-
-        res.writeJsonBody(resp, 200);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
+    auto list = Json.emptyArray;
+    foreach (c; creds) {
+      list ~= Json.emptyObject
+        .set("id", c.id)
+        .set("name", c.name)
+        .set("metadata", c.metadata)
+        .set("format", c.format)
+        .set("status", c.status == CredentialStatus.active ? "active" : "disabled")
+        .set("version", c.version_);
     }
 
-    protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-      try {
-        auto tenantId = precheck.tenantId;
-        auto id = CredentialId(precheck.id);
+    auto resp = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", creds.length);
+    return successResponse("Credentials retrieved successfully", "Retrieved", 200, resp);
+  }
 
-        // Support conditional read via If-None-Match
-        auto ifNoneMatch = req.headers.get("If-None-Match", "");
-
-        auto c = usecase.getCredential(tenantId, id);
-        if (c.isNull) {
-          writeError(res, 404, "Credential not found");
-          return;
-        }
-
-        // If version matches If-None-Match, return 304
-        if (ifNoneMatch.length > 0) {
-          try {
-            auto matchVer = ifNoneMatch.to!long;
-            if (matchVer == c.version_) {
-              res.writeBody("", 304);
-              return;
-            }
-          } catch (Exception) {
-          }
-        }
-
-        auto response = Json.emptyObject
-          .set("id", c.id)
-          .set("name", c.name)
-          .set("value", c.value)
-          .set("metadata", c.metadata)
-          .set("format", c.format)
-          .set("username", c.username)
-          .set("version", c.version_)
-          .set("createdAt", c.createdAt)
-          .set("updatedAt", c.updatedAt);
-
-        res.writeJsonBody(response, 200);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
+  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+    try {
+      auto response = listCredentialsHandler(req, type);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-      try {
-        auto tenantId = precheck.tenantId;
-        auto id = CredentialId(precheck.id);
+  protected Json getCredentialHandler(HTTPServerRequest req, string type) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        usecase.deleteCredential(tenantId, id);
-        if (result.hasError)
-          return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = CredentialId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid credential ID", 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
-      }
+    auto c = usecase.getCredential(tenantId, id);
+    if (c.isNull)
+      return errorResponse("Credential not found", 404);
+
+    auto response = Json.emptyObject
+      .set("id", c.id)
+      .set("name", c.name)
+      .set("value", c.value)
+      .set("metadata", c.metadata)
+      .set("format", c.format)
+      .set("username", c.username)
+      .set("version", c.version_)
+      .set("createdAt", c.createdAt)
+      .set("updatedAt", c.updatedAt);
+
+    return successResponse("Credential retrieved successfully", "Retrieved", 200, response);
+  }
+
+  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+    try {
+      auto response = getCredentialHandler(req, type);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json deleteCredentialHandler(HTTPServerRequest req, string type) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = CredentialId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid credential ID", 400);
+
+    auto result = usecase.deleteCredential(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Credential deleted successfully", "Deleted", 200, responseData);
+  }
+
+  protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
+    try {
+      auto response = deleteCredentialHandler(req, type);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+}

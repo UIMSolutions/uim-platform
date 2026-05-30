@@ -175,5 +175,4 @@ class DataRecordController : ManageController {
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Data record deleted successfully", "Deleted", 200, responseData);
   }
-
 }

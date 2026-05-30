@@ -63,46 +63,42 @@ class SpaceController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto spaces = useCase.listSpaces(tenantId);
-    auto arr = spaces.map!(s => s.toJson).array.toJson;
+    auto list = spaces.map!(item => item.toJson()).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(spaces.length))
-      .set("message", "Spaces retrieved successfully");
-
-    res.writeJsonBody(resp, 200);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Space list retrieved successfully", "Retrieved", 200, responseData);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-    auto id = SpaceId(precheck.id);
     auto tenantId = precheck.tenantId;
-    auto space = useCase.getSpace(tenantId, id);
-    if (space.isNull) {
-      writeError(res, 404, "Space not found");
-      return;
-    }
-    res.writeJsonBody(space.toJson, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
     auto id = SpaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid space ID", 400);
+
+    auto space = useCase.getSpace(tenantId, id);
+    if (space.isNull)
+      return errorResponse("Space not found", 404);
+
+    auto responseData = space.toJson();
+    return successResponse("Space retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = SpaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid space ID", 400);
+
     auto data = precheck.data;
     auto r = UpdateSpaceRequest();
     r.id = id;
@@ -111,38 +107,28 @@ override protected Json updateHandler(HTTPServerRequest req) {
     r.allowSsh = data.getBoolean("allowSsh", true);
 
     auto result = useCase.updateSpace(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Space updated");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 400, result.message);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Space updated successfully", "Updated", 200, responseData);
   }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-    auto id = SpaceId(precheck.id);
     auto tenantId = precheck.tenantId;
-    auto result = useCase.deleteSpace(tenantId, id);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Space deleted");
+    auto id = SpaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid space ID", 400);
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 404, result.message);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    auto result = useCase.deleteSpace(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    aauto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Space deleted successfully", "Deleted", 200, responseData);
   }
-}
 }

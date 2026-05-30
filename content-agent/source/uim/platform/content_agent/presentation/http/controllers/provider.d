@@ -5,13 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.provider_controller;
 
-
-
-
 // import uim.platform.content_agent.application.usecases.manage.content_providers;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_provider;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -35,169 +32,148 @@ class ProviderController : ManageController {
     router.post("/api/v1/providers/sync", &handleSync);
   }
 
+  protected Json registerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = RegisterProviderRequest();
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.endpoint = data.getString("endpoint");
+    r.authToken = data.getString("authToken");
+    r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.registerProvider(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Provider registered successfully", 201, responseData);
+  }
+
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = RegisterProviderRequest();
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.endpoint = data.getString("endpoint");
-      r.authToken = data.getString("authToken");
-      r.registeredBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.registerProvider(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Provider registered successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = registerHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto providers = usecase.listProviders(tenantId);
+    auto tenantId = precheck.tenantId;
 
-      auto arr = providers.map!(p => p.toJson).array.toJson;
+    auto providers = usecase.listProviders(tenantId);
+    auto list = providers.map!(p => p.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(providers.length))
-        .set("message", "Providers retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Providers retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto provider = usecase.getProvider(id);
-      if (provider.isNull) {
-        writeError(res, 404, "Provider not found");
-        return;
-      }
-      res.writeJsonBody(provider.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ProviderId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provider ID", 400);
+
+    auto provider = usecase.getProvider(tenantId, id);
+    if (provider.isNull)
+      return errorResponse("Provider not found", 404);
+
+    auto responseData = provider.toJson();
+    return successResponse("Provider retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = UpdateProviderRequest();
-      r.description = data.getString("description");
-      r.endpoint = data.getString("endpoint");
-      r.authToken = data.getString("authToken");
+    auto tenantId = precheck.tenantId;
+    auto id = ProviderId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provider ID", 400);
 
-      auto result = usecase.updateProvider(id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Provider updated successfully");
+    auto data = precheck.data;
+    auto r = UpdateProviderRequest();
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.endpoint = data.getString("endpoint");
+    r.authToken = data.getString("authToken");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Provider not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateProvider(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Provider updated successfully", 200, responseData);
+  }
+
+  protected Json deregisterHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProviderId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provider ID", 400);
+
+    auto result = usecase.deregisterProvider(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Provider deregistered successfully", 200, responseData);
   }
 
   protected void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deregisterProvider(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Provider deregistered successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+    try {
+      auto response = deregisterHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json syncHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto providerId = data.getString("providerId");
+
+    auto result = usecase.syncProvider(providerId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Provider synced successfully", 200, responseData);
   }
 
   protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto providerId = data.getString("providerId");
-
-      auto result = usecase.syncProvider(providerId);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Provider synced successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = syncHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeProvider(const ContentProvider p) {
-    auto j = Json.emptyObject
-      .set("id", p.id)
-      .set("tenantId", p.tenantId)
-      .set("name", p.name)
-      .set("description", p.description)
-      .set("endpoint", p.endpoint)
-      .set("status", p.status.to!string)
-      .set("createdBy", p.createdBy)
-      .set("registeredAt", p.registeredAt)
-      .set("lastSyncAt", p.lastSyncAt);
-
-    if (p.contentTypes.length > 0) {
-      auto arr = Json.emptyArray;
-      foreach (ct; p.contentTypes) {
-        arr ~= Json.emptyObject
-          .set("typeId", ct.typeId)
-          .set("name", ct.name)
-          .set("category", ct.category.to!string)
-          .set("description", ct.description)
-          .set("version", ct.version_);
-      }
-      j["contentTypes"] = arr;
-    }
-
-    return j;
   }
 }

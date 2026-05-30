@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.export_job;
-// import uim.platform.content_agent.domain.types;
+
 import uim.platform.content_agent;
 
 mixin(ShowModule!());
@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// An export operation that packages and ships content to a transport queue or file.
 struct ExportJob {
-  mixin TenantEntity!(ExportJobId);
+  mixin TenantEntity!ExportJobId;
 
   ContentPackageId packageId;
   TransportRequestId transportRequestId;

@@ -121,21 +121,28 @@ class ApplicationJobController : ManageController {
     return successResponse("Application job updated successfully", 200, responseData);
   }
 
+  protected Json cancelHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ApplicationJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application job ID", 400);
+
+    auto result = usecase.cancelApplicationJob(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Application job canceled successfully", 200, responseData);
+  }
+
   protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = ApplicationJobId(precheck.id);
-
-      auto result = usecase.cancelApplicationJob(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "canceled")
-          .set("message", "Application job canceled successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = cancelHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -143,12 +150,13 @@ class ApplicationJobController : ManageController {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application job ID", 400);
 
     auto result = usecase.deleteApplicationJob(tenantId, id);
     if (result.hasError)

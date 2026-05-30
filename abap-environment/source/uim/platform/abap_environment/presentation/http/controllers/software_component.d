@@ -101,54 +101,68 @@ class SoftwareComponentController : ManageController {
       .set("message", "Software component retrieved successfully");
   }
 
+  protected Json cloneHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = SoftwareComponentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid software component ID", 400);
+
+    auto data = precheck.data;
+    CloneSoftwareComponentRequest request;
+    request.tenantId = tenantId;
+    request.componentId = id;
+    request.branch = data.getString("branch");
+    request.commitId = data.getString("commitId");
+
+    auto result = usecase.cloneSoftwareComponent(request);
+    if (result.hasError())
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Software component cloned successfully", "Cloned", 200, responseData);
+  }
+
   protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = SoftwareComponentId(precheck.id);
-      auto data = precheck.data;
-      
-      CloneSoftwareComponentRequest r;
-      r.tenantId = tenantId;
-      r.softwareComponentId = id;
-      r.branch = data.getString("branch");
-      r.commitId = data.getString("commitId");
-
-      auto result = usecase.cloneSoftwareComponent(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", 200)
-          .set("statusCode", 200)
-          .set("message", "Software component cloned successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = cloneHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json pullHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = SoftwareComponentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid software component ID", 400);
+
+    auto data = precheck.data;
+    PullSoftwareComponentRequest r;
+    r.tenantId = tenantId;
+    r.softwareComponentId = id;
+    r.commitId = data.getString("commitId");
+
+    auto result = usecase.pullSoftwareComponent(r);
+    if (result.hasError())
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Software component pulled successfully", "Pulled", 200, responseData);
+  }
+
   protected void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = SoftwareComponentId(precheck.id);
-      auto data = precheck.data;
-      PullSoftwareComponentRequest r;
-      r.tenantId = tenantId;
-      r.softwareComponentId = id;
-      r.commitId = data.getString("commitId");
-
-      auto result = usecase.pullSoftwareComponent(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", 200)
-          .set("message", "Software component pulled successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = pullHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -159,14 +173,10 @@ class SoftwareComponentController : ManageController {
     auto id = SoftwareComponentId(precheck.id);
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", 404)
-        .set("error", result.message)
-        .set("message", "Software component not found");
-    }
-    return Json.emptyObject
-      .set("status", 200)
-      .set("message", "Software component deleted successfully");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Software component deleted successfully", "Deleted", 200, responseData);
   }
 }
