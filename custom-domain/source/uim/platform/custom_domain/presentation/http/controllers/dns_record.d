@@ -20,7 +20,7 @@ class DnsRecordController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/custom-domain/dns-records", &handleList);
         router.get("/api/v1/custom-domain/dns-records/*", &handleGet);
         router.post("/api/v1/custom-domain/dns-records", &handleCreate);
@@ -36,22 +36,22 @@ class DnsRecordController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateDnsRecordRequest r;
-            r.tenantId = tenantId;
-            r.dnsRecordId = DnsRecordId(precheck.id);
-            r.customDomainId = CustomDomainId(data.getString("customDomainId"));
-            r.recordType = data.getString("recordType");
-            r.hostname = data.getString("hostname");
-            r.value = data.getString("value");
-            r.ttl = data.getInteger("ttl");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateDnsRecordRequest r;
+        r.tenantId = tenantId;
+        r.dnsRecordId = DnsRecordId(precheck.id);
+        r.customDomainId = CustomDomainId(data.getString("customDomainId"));
+        r.recordType = data.getString("recordType");
+        r.hostname = data.getString("hostname");
+        r.value = data.getString("value");
+        r.ttl = data.getInteger("ttl");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createDnsRecord(r);
-            if (result.hasError)
+        auto result = usecase.createDnsRecord(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("DNS record created successfully", 0, responseData);
+        return successResponse("DNS record created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -61,11 +61,10 @@ class DnsRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-
-            auto records = usecase.listDnsRecords(tenantId);
-            auto jarr = Json.emptyArray;
-            foreach (record; records) {
-                jarr ~= Json.emptyObject
+        auto records = usecase.listDnsRecords(tenantId);
+        auto jarr = Json.emptyArray;
+        foreach (record; records) {
+            jarr ~= Json.emptyObject
                 .set("id", record.id)
                 .set("customDomainId", record.customDomainId)
                 .set("recordType", record.recordType.to!string)
@@ -75,17 +74,13 @@ class DnsRecordController : ManageController {
                 .set("validationStatus", record.validationStatus.to!string)
                 .set("createdBy", record.createdBy)
                 .set("createdAt", record.createdAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", Json(records.length))
-                .set("resources", jarr)
-                .set("message", "DNS records retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
         }
+
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("DNS record list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -94,31 +89,26 @@ class DnsRecordController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = DnsRecordId(precheck.id);
-            
-            auto record = usecase.getDnsRecord(tenantId, id);
-            if (record.isNull) {
-                writeError(res, 404, "DNS record not found");
-                return;
-            }
+        auto id = DnsRecordId(precheck.id);
 
-            auto resp = Json.emptyObject
-                .set("id", record.id)
-                .set("customDomainId", record.customDomainId)
-                .set("recordType", record.recordType.to!string)
-                .set("hostname", record.hostname)
-                .set("value", record.value)
-                .set("ttl", record.ttl)
-                .set("validationStatus", record.validationStatus.to!string)
-                .set("lastValidatedAt", record.lastValidatedAt)
-                .set("createdBy", record.createdBy)
-                .set("createdAt", record.createdAt)
-                .set("updatedAt", record.updatedAt);
+        auto record = usecase.getDnsRecord(tenantId, id);
+        if (item.isNull)
+            return errorResponse("DNS record not found", 404);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", record.id)
+            .set("customDomainId", record.customDomainId)
+            .set("recordType", record.recordType.to!string)
+            .set("hostname", record.hostname)
+            .set("value", record.value)
+            .set("ttl", record.ttl)
+            .set("validationStatus", record.validationStatus.to!string)
+            .set("lastValidatedAt", record.lastValidatedAt)
+            .set("createdBy", record.createdBy)
+            .set("createdAt", record.createdAt)
+            .set("updatedAt", record.updatedAt);
+
+        return successResponse("DNS record retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -127,19 +117,19 @@ class DnsRecordController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateDnsRecordRequest r;
-            r.tenantId = tenantId;
-            r.dnsRecordId = DnsRecordId(precheck.id) ;
-            r.value = data.getString("value");
-            r.ttl = data.getInteger("ttl");
+        auto data = precheck.data;
+        UpdateDnsRecordRequest r;
+        r.tenantId = tenantId;
+        r.dnsRecordId = DnsRecordId(precheck.id);
+        r.value = data.getString("value");
+        r.ttl = data.getInteger("ttl");
 
-            auto result = usecase.updateDnsRecord(r);
-            if (result.hasError)
+        auto result = usecase.updateDnsRecord(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
+        return successResponse("DNS record updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -148,21 +138,13 @@ class DnsRecordController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = DnsRecordId(precheck.id);
+        auto id = DnsRecordId(precheck.id);
 
-            auto result = usecase.deleteDnsRecord(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteDnsRecord(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "DNS record deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("DNS record deleted successfully", "Deleted", 200, responseData);
     }
 }

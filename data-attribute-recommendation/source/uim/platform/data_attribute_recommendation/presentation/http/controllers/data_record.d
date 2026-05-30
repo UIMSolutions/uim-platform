@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.presentation.http.controllers.data_record;
 
-
 // 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.manage.data_records;
@@ -37,143 +36,144 @@ class DataRecordController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateDataRecordRequest();
-      r.tenantId = tenantId;
-      r.datasetId = data.getString("datasetId");
-      r.attributes = data.getString("attributes");
-      r.labels = data.getString("labels");
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+    auto data = precheck.data;
+    auto r = CreateDataRecordRequest();
+    r.tenantId = tenantId;
+    r.datasetId = data.getString("datasetId");
+    r.attributes = data.getString("attributes");
+    r.labels = data.getString("labels");
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.createDataRecord(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data record created successfully");
+    auto result = usecase.createDataRecord(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data record created successfully", "Created", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
 
-      auto record = usecase.getDataRecord(tenantId, id);
-      if (record.isNull) {
-        writeError(res, 404, "Record not found");
-        return;
-      }
-      res.writeJsonBody(record.toJson, 200);
-    }
-    catch (Exception e) {
+    auto record = usecase.getDataRecord(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Data record retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json listByDatasetHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto datasetId = DatasetId(precheck.id);
+
+    auto items = usecase.listDataRecords(tenantId, datasetId);
+    auto arr = items.map!(r => r.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Data records retrieved successfully");
+
+    return successResponse("Data records retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = listByDatasetHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto datasetId = DatasetId(precheck.id);
-      
-      auto items = usecase.listDataRecords(tenantId, datasetId);
-      auto arr = items.map!(r => r.toJson).array.toJson;
+  protected Json validateHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Data records retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
 
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.validateDataRecord(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", Json("validated"))
+      .set("message", "Data record validated successfully");
+
+    return successResponse("Data record validated successfully", "Validated", 200, resp);
   }
 
   protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = DataRecordId(precheck.id);
-
-      auto result = usecase.validateDataRecord(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("status", Json("validated"))
-            .set("message", "Data record validated successfully");
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
+      auto response = validateHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = DataRecordId(precheck.id);
-      
-      auto result = usecase.rejectDataRecord(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("status", Json("rejected"))
-            .set("message", "Data record rejected successfully");
+  protected Json rejectHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+
+    auto result = usecase.rejectDataRecord(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", Json("rejected"))
+      .set("message", "Data record rejected successfully");
+
+    return successResponse("Data record rejected successfully", "Rejected", 200, resp);
+  }
+
+  protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = rejectHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataRecordId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataRecordId(precheck.id);
 
-      auto result = usecase.deleteDataRecord(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("deleted", true)
-            .set("message", "Data record deleted successfully");
+    auto result = usecase.deleteDataRecord(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data record deleted successfully", "Deleted", 200, responseData);
   }
-  
+
 }

@@ -65,18 +65,12 @@ class ChannelController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto channels = usecase.listByTenant(tenantId);
-    auto arr = channels.map!(ch => ch.toJson).array.toJson;
+    auto list = channels.map!(item => item.toJson()).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(channels.length))
-      .set("message", "Channels retrieved successfully");
-
-    res.writeJsonBody(resp, 200);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Channel list retrieved successfully", "Retrieved", 200, responseData);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -87,14 +81,11 @@ override protected Json getHandler(HTTPServerRequest req) {
         auto tenantId = precheck.tenantId;
     auto id = ChannelId(precheck.id);
     auto ch = usecase.getChannel(tenantId, id);
-    if (ch.isNull) {
-      writeError(res, 404, "Channel not found");
-      return;
-    }
-    res.writeJsonBody(ch.toJson, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    if (item.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Channel retrieved successfully", "Retrieved", 200, responseData);
 }
 
 protected void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -160,19 +151,10 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     auto id = ChannelId(precheck.id);
     auto result = usecase.deleteChannel(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("deleted", true)
-      .set("message", "Channel deleted successfully");
+            return errorResponse(result.message, 400);
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 404, result.message);
-  }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Channel deleted successfully", "Deleted", 200, responseData);
 }
 
 private static string[] splitPath(string uri) {

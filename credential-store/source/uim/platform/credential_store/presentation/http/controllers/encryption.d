@@ -29,6 +29,10 @@ class EncryptionController : PlatformController {
   }
 
   protected Json generateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)      
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
@@ -53,14 +57,17 @@ class EncryptionController : PlatformController {
 
   protected void handleGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resp = generateHandler(req);
-      res.writeJsonBody(resp, 200);
+      auto response = generateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected Json encryptHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)      return precheck;
+
     auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
@@ -85,14 +92,17 @@ class EncryptionController : PlatformController {
 
   protected void handleEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resp = encryptHandler(req);
-      res.writeJsonBody(resp, 200);
+      auto response = encryptHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected Json decryptHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)      return precheck;
+
     auto tenantId = precheck.tenantId;
     const data = req.json;
     const namespaceIdStr = data.getString("namespaceId");
@@ -116,8 +126,8 @@ class EncryptionController : PlatformController {
 
   protected void handleDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resp = decryptHandler(req);
-      res.writeJsonBody(resp, 200);
+      auto response = decryptHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

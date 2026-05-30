@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.package_;
 
-
-
-
 // import uim.platform.content_agent.application.usecases.manage.content_packages;
 // import uim.platform.content_agent.application.dto;
 // import uim.platform.content_agent.domain.entities.content_package;
@@ -36,129 +33,103 @@ class PackageController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreatePackageRequest();
-      r.tenantId = tenantId;
-      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.version_ = data.getString("version");
-      r.format = data.getString("format");
-      r.tags = data.getStrings("tags");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.items = parseContentItems(j);
+    auto data = precheck.data;
+    auto r = CreatePackageRequest();
+    r.tenantId = tenantId;
+    r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.version_ = data.getString("version");
+    r.format = data.getString("format");
+    r.tags = data.getStrings("tags");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    r.items = parseContentItems(j);
 
-      auto result = usecase.createPackage(r);
-     if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.createPackage(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Package created successfully", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Package created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto packages = usecase.listPackages(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto packages = usecase.listPackages(tenantId);
 
-      auto arr = packages.map!(p => p.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(packages.length))
-        .set("message", "Packages retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Packages retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = PackageId(precheck.id);
-      auto pkg = usecase.getPackage(id);
-      if (pkg.isNull) {
-        writeError(res, 404, "Package not found");
-        return;
-      }
-      auto resp = pkg.toJson()
-        .set("message", "Package retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = PackageId(precheck.id);
+    auto pkg = usecase.getPackage(tenantId, id);
+    if (pkg.isNull)
+      return errorResponse("Package not found", 404);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = pkg.toJson();
+    return successResponse("Package retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = PackageId(precheck.id);
-      auto data = precheck.data;
-      auto r = UpdatePackageRequest();
-      r.description = data.getString("description");
-      r.version_ = data.getString("version");
-      r.tags = data.getStrings("tags");
-      r.items = parseContentItems(j);
+    auto tenantId = precheck.tenantId;
+    auto id = PackageId(precheck.id);
+    auto data = precheck.data;
+    auto r = UpdatePackageRequest();
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.version_ = data.getString("version");
+    r.tags = data.getStrings("tags");
+    r.items = parseContentItems(j);
 
-      auto result = usecase.updatePackage(id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Package updated successfully");
+    auto result = usecase.updatePackage(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Package updated successfully", "Updated", 200, responseData);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Package not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = PackageId(precheck.id);
-      auto result = usecase.deletePackage(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Package deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = PackageId(precheck.id);
+    auto result = usecase.deletePackage(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Package deleted successfully", "Deleted", 200, responseData);
   }
 
   protected void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = AssemblePackageRequest();
@@ -168,75 +139,75 @@ class PackageController : ManageController {
 
       auto result = usecase.assemblePackage(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "assembled")
-          .set("message", "Package assembled successfully");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("status", "assembled")
+        .set("message", "Package assembled successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else {
+      writeError(res, 400, result.message);
     }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+  }
+}
+
+private static ContentItem[] parseContentItems(Json j) {
+  ContentItem[] items;
+
+  foreach (itemJson; j.getArray("items")) {
+    if (!itemJson.isObject)
+      continue;
+    ContentItem item;
+    item.id = itemJson.getString("id");
+    item.name = itemJson.getString("name");
+    item.providerId = itemJson.getString("providerId");
+    item.version_ = itemJson.getString("version");
+    item.description = itemJson.getString("description");
+    item.dependencies = getStrings(itemJson, "dependencies");
+    item.category = itemJson.getString("category").to!ContentCategory;
+    items ~= item;
   }
 
-  private static ContentItem[] parseContentItems(Json j) {
-    ContentItem[] items;
+  return items;
+}
 
-    foreach (itemJson; j.getArray("items")) {
-      if (!itemJson.isObject)
-        continue;
-      ContentItem item;
-      item.id = itemJson.getString("id");
-      item.name = itemJson.getString("name");
-      item.providerId = itemJson.getString("providerId");
-      item.version_ = itemJson.getString("version");
-      item.description = itemJson.getString("description");
-      item.dependencies = getStrings(itemJson, "dependencies");
-      item.category = itemJson.getString("category").to!ContentCategory;
-      items ~= item;
+private static Json serializePackage(const ContentPackage p) {
+  auto j = Json.emptyObject
+    .set("id", p.id)
+    .set("tenantId", p.tenantId)
+    .set("subaccountId", p.subaccountId)
+    .set("name", p.name)
+    .set("description", p.description)
+    .set("version", p.version_)
+    .set("status", p.status.to!string)
+    .set("format", p.format.to!string)
+    .set("createdBy", p.createdBy)
+    .set("createdAt", p.createdAt)
+    .set("updatedAt", p.updatedAt)
+    .set("assembledAt", p.assembledAt)
+    .set("packageSizeBytes", p.packageSizeBytes);
+
+  if (p.items.length > 0) {
+    auto arr = Json.emptyArray;
+    foreach (item; p.items) {
+      arr ~= Json.emptyObject
+        .set("id", item.id)
+        .set("name", item.name)
+        .set("category", item.category.to!string)
+        .set("providerId", item.providerId)
+        .set("version", item.version_)
+        .set("description", item.description)
+        .set("dependencies", item.dependencies);
     }
-    
-    return items;
+    j["items"] = arr;
   }
 
-  private static Json serializePackage(const ContentPackage p) {
-    auto j = Json.emptyObject
-      .set("id", p.id)
-      .set("tenantId", p.tenantId)
-      .set("subaccountId", p.subaccountId)
-      .set("name", p.name)
-      .set("description", p.description)
-      .set("version", p.version_)
-      .set("status", p.status.to!string)
-      .set("format", p.format.to!string)
-      .set("createdBy", p.createdBy)
-      .set("createdAt", p.createdAt)
-      .set("updatedAt", p.updatedAt)
-      .set("assembledAt", p.assembledAt)
-      .set("packageSizeBytes", p.packageSizeBytes);
+  if (p.tags.length > 0)
+    j["tags"] = toJsonArray(p.tags);
 
-    if (p.items.length > 0) {
-      auto arr = Json.emptyArray;
-      foreach (item; p.items) {
-        arr ~= Json.emptyObject
-          .set("id", item.id)
-          .set("name", item.name)
-          .set("category", item.category.to!string)
-          .set("providerId", item.providerId)
-          .set("version", item.version_)
-          .set("description", item.description)
-          .set("dependencies", item.dependencies);
-      }
-      j["items"] = arr;
-    }
-
-    if (p.tags.length > 0)
-      j["tags"] = toJsonArray(p.tags);
-
-    return j;
-  }
+  return j;
+}
 }

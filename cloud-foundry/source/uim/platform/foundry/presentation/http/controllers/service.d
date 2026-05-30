@@ -261,5 +261,4 @@ class ServiceController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }

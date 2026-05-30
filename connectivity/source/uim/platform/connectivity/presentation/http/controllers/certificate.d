@@ -68,45 +68,38 @@ class CertificateController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto certs = usecase.listCertificates(tenantId);
-    auto arr = certs.map!(c => c.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(certs.length))
-      .set("message", "Certificates retrieved successfully");
-
-    res.writeJsonBody(resp, 200);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Certificate list retrieved successfully", "Retrieved", 200, responseData);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
     auto id = CertificateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid certificate ID", 400);
 
-    auto cert = usecase.getCertificate(tenantId, id);
-    if (cert.isNull) {
-      writeError(res, 404, "Certificate not found");
-      return;
-    }
-    res.writeJsonBody(cert.toJson, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    auto item = usecase.getCertificate(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Certificate not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Certificate retrieved successfully", "Retrieved", 200, responseData);
   }
-}
 
-override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = UpdateCertificateRequest();
     r.certificateId = CertificateId(precheck.id);
@@ -117,39 +110,26 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto result = usecase.updateCertificate(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Certificate updated successfully");
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, result.message == "Certificate not found" ? 404 : 400, result.message);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Certificate updated successfully", "Updated", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
     auto id = CertificateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid certificate ID", 400);
+
     auto result = usecase.deleteCertificate(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("deleted", true)
-      .set("message", "Certificate deleted successfully");
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 404, result.message);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Certificate deleted successfully", "Deleted", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 }
