@@ -122,10 +122,12 @@ class SpaceController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       UpdateSpaceRequest r;
       r.tenantId = tenantId;
       r.spaceId = SpaceId(precheck.id);
@@ -150,9 +152,12 @@ class SpaceController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = SpaceId(precheck.id);
 
       auto result = usecase.deleteSpace(tenantId, id);

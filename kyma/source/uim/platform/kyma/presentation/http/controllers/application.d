@@ -109,8 +109,12 @@ class ApplicationController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
       auto data = precheck.data;
       UpdateApplicationRequest r;
@@ -160,9 +164,12 @@ class ApplicationController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = ApplicationId(precheck.id);
       auto result = usecase.deleteApplication(tenantId, id);
       if (result.success)

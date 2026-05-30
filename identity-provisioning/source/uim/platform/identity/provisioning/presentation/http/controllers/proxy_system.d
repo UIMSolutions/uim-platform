@@ -96,9 +96,12 @@ class ProxySystemController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
       auto r = UpdateProxySystemRequest();

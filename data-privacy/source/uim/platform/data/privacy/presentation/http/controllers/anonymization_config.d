@@ -96,9 +96,12 @@ class AnonymizationConfigController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateAnonymizationConfigRequest r;
       r.configId = AnonymizationConfigId(precheck.id);
@@ -145,10 +148,13 @@ class AnonymizationConfigController : ManageController {
         auto tenantId = precheck.tenantId;
       auto id = AnonymizationConfigId(precheck.id);
 
-      usecase.deleteConfig(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      auto result = usecase.deleteConfig(tenantId, id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Anonymization config deleted successfully", 200, responseData);
+   
   }
 
 }

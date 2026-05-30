@@ -115,9 +115,12 @@ class GeocodingController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)

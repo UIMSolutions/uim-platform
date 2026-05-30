@@ -94,9 +94,12 @@ auto list = items.map!(item => item.toJson()).array.toJson;
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       auto data = precheck.data;
       auto r = UpdateRepositoryRequest();
@@ -154,9 +157,12 @@ auto list = items.map!(item => item.toJson()).array.toJson;
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = RepositoryId(precheck.id);
       
       auto result = usecase.deleteRepository(tenantId, id);

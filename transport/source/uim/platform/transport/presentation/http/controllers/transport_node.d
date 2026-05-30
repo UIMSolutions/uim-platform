@@ -88,9 +88,12 @@ class TransportNodeController : ManageController {
         }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = TransportNodeId(precheck.id);
             auto data = precheck.data;
             auto action = data.getString("action");

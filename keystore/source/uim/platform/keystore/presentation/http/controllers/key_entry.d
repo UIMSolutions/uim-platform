@@ -141,8 +141,12 @@ class KeyEntryController : ManageController {
   }
 
   // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto response = deleteHandler(req);
       res.writeJsonBody(response, response.code);
     } catch (Exception e) {

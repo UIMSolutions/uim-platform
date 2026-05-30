@@ -87,14 +87,17 @@ class TransportRequestController : ManageController {
         }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = TransportRequestId(precheck.id);
             auto data = precheck.data;
             auto statusStr = data.getString("status");
             if (statusStr.length > 0) {
-                import std.conv : to;
+                
                 try {
                     auto status = statusStr.to!RequestStatus;
                     auto result = usecase.updateRequestStatus(tenantId, id, status);

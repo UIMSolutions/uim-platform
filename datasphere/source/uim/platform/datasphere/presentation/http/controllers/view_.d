@@ -129,8 +129,12 @@ class ViewController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       
 
       auto data = precheck.data;
@@ -161,8 +165,12 @@ class ViewController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto id = ViewId(precheck.id);

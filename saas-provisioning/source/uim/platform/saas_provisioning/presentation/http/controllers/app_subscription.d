@@ -6,7 +6,7 @@
 module uim.platform.saas_provisioning.presentation.http.controllers.app_subscription;
 
 import uim.platform.saas_provisioning;
-import std.conv : to;
+
 import std.string : indexOf;
 import std.array : split;
 
@@ -101,9 +101,12 @@ class AppSubscriptionController : ManageController {
         }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id       = AppSubscriptionId(precheck.id);
             auto body_    = req.json;
 

@@ -116,9 +116,12 @@ class NamespaceController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = NamespaceId(precheck.id);
       auto data = precheck.data;
       UpdateNamespaceRequest request;
@@ -142,20 +145,19 @@ class NamespaceController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = NamespaceId(precheck.id);
 
       auto result = usecase.deleteNamespace(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Namespace deleted successfully", 200, responseData);
   }
 }

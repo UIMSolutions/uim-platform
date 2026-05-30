@@ -113,9 +113,12 @@ auto tenantId = precheck.tenantId;
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
       auto data = precheck.data;

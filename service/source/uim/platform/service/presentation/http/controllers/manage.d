@@ -129,8 +129,12 @@ class ManageController : PlatformController {
     return successResponse(precheck, "Delete handler not implemented", 200);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto response = deleteHandler(req);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

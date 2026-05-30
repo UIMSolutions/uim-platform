@@ -92,8 +92,12 @@ class SchemaController : ManageController {
     }
   }
 
-  override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto schemaId = precheck.id;
       auto data = precheck.data;
       auto updateReq = UpdateSchemaRequest(schemaId, data.getString("name"),
@@ -114,8 +118,12 @@ class SchemaController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto schemaId = precheck.id;
       auto error = useCase.deleteSchema(schemaId);
       if (error.length > 0)
