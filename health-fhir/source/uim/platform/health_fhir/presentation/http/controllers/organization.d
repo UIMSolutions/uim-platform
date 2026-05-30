@@ -79,9 +79,12 @@ class OrganizationController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = OrganizationId(precheck.id);
       auto o = usecase.getOrganization(tenantId, id);
       if (o.isNull) { writeFhirError(res, 404, "Organization not found"); return; }

@@ -42,9 +42,12 @@ class TransportNodeController : ManageController {
         }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = TransportNodeId(precheck.id);
             auto item = usecase.getNode(tenantId, id);
             if (item.isNull) { writeError(res, 404, "Transport node not found"); return; }

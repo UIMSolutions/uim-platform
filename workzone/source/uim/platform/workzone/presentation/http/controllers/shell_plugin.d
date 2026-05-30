@@ -90,9 +90,12 @@ class ShellPluginController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto p = useCase.getPlugin(tenantId, id);

@@ -85,9 +85,12 @@ class FlexVariantsController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = FlexVariantId(precheck.id);
       auto v = usecase.getVariant(tenantId, id);
       if (v.isNull) { writeError(res, 404, "FlexVariant not found"); return; }

@@ -90,9 +90,12 @@ class ConsentRecordController : ManageController {
         }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
                 return;

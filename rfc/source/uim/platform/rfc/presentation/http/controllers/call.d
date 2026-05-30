@@ -85,9 +85,12 @@ class CallController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id       = extractIdFromPath(req.requestURI.to!string);
             auto call     = _manageUC.getCall(tenantId, id);
             if (call.isNull()) { writeError(res, 404, "RFC call not found"); return; }

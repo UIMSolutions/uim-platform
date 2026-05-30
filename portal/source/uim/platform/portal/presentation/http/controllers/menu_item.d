@@ -77,8 +77,12 @@ class MenuItemController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto menuItemId = precheck.id;
       if (!useCase.existsMenuItem(menuItemId)) {
         writeApiError(res, 404, "Menu item not found");

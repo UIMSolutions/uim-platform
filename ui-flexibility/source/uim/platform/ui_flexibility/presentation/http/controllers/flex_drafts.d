@@ -72,9 +72,12 @@ class FlexDraftsController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = FlexDraftId(precheck.id);
       auto d = usecase.getDraft(tenantId, id);
       if (d.isNull) { writeError(res, 404, "FlexDraft not found"); return; }

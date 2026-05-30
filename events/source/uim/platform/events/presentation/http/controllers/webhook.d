@@ -40,9 +40,12 @@ class WebhookController : ManageController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = precheck.id;
             auto e = usecase.getWebhook(tenantId, WebhookId(id));
             if (e.isNull) { writeError(res, 404, "Webhook not found"); return; }
@@ -87,9 +90,12 @@ class WebhookController : ManageController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId  = req.getTenantId;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto webhookId = WebhookId(precheck.id);
             auto data = precheck.data;
             WebhookDTO dto;

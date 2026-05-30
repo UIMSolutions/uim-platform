@@ -77,9 +77,12 @@ class MedicationController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = MedicationId(precheck.id);
       auto m = usecase.getMedication(tenantId, id);
       if (m.isNull) { writeFhirError(res, 404, "Medication not found"); return; }

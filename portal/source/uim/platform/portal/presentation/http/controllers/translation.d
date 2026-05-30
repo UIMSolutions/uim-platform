@@ -83,9 +83,12 @@ class TranslationController : ManageController {
     }
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto translationId = precheck.id;
       auto translation = useCase.getTranslation(tenantId, translationId);
       if (translation == Translation.init) {
