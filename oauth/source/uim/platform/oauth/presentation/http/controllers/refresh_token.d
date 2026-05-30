@@ -64,10 +64,14 @@ class RefreshTokenController : ManageController {
         }
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
             RefreshTokenDTO dto;
             dto.tokenId = precheck.id;
             dto.tenantId = tenantId;
@@ -116,9 +120,12 @@ class RefreshTokenController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = RefreshTokenId(precheck.id);
 

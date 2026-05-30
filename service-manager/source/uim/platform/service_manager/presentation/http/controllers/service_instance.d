@@ -63,10 +63,14 @@ class ServiceInstanceController : ManageController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
             CreateServiceInstanceRequest r;
             r.name = data.getString("name");
             r.planId = data.getString("planId");

@@ -33,10 +33,16 @@ class ClientController : ManageController {
     router.post("/api/v1/clients/disconnect/*", &handleDisconnect);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScanJobDTO dto;
+        dto.tenantId = tenantId;
       CreateClientRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
@@ -144,9 +150,12 @@ class ClientController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteClient(id);
       if (result.hasError)

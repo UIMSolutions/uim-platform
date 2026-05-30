@@ -30,10 +30,14 @@ class DataContextController : ManageController {
         router.post("/api/v1/situation-automation/data-contexts/delete-personal-data", &handleDeletePersonalData);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
             CreateDataContextRequest r;
             r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
@@ -121,9 +125,12 @@ class DataContextController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
             auto id = DataContextId(precheck.id);
             auto result = usecase.deleteDataContext(tenantId, id);

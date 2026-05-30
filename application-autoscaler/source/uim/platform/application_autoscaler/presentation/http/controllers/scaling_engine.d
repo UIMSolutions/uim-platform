@@ -29,24 +29,35 @@ class ScalingEngineController : PlatformController {
 
   // POST /api/v1/scaling/trigger
   // Body: { "app_id": "...", "metric_type": "cpu", "current_value": 85.0 }
+  protected Json triggerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    TriggerScalingRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("app_id");
+    r.metricType = data.getString("metric_type");
+    r.currentValue = data["current_value"].isFloat
+      ? data["current_value"].get!double : cast(double)data.getInteger("current_value");
+
+    auto result = usecase.triggerScaling(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("scaling_history_id", result.id)
+      .set("message", "Scaling evaluation completed");
+
+    return successResponse("Scaling evaluation completed", 200, responseData);
+  }
+
   protected void handleTrigger(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto data = precheck.data;
-      TriggerScalingRequest r;
-      r.appId        = data.getString("app_id");
-      r.metricType   = data.getString("metric_type");
-      r.currentValue = j["current_value"].isFloat
-        ? j["current_value"].get!double
-        : cast(double) data.getInteger("current_value");
-
-      auto result = usecase.triggerScaling(r);
-      if (result.success)
-        res.writeJsonBody(
-          Json.emptyObject
-            .set("scaling_history_id", result.id)
-            .set("message", "Scaling evaluation completed"), 200);
-      else
-        writeError(res, 400, result.message);
+      auto response = triggerHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

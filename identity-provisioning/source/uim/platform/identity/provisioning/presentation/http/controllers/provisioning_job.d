@@ -36,10 +36,14 @@ class ProvisioningJobController : PlatformController {
     router.delete_("/api/v1/provisioning-jobs/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = tenantId;
       r.sourceSystemId = data.getString("sourceSystemId");
@@ -173,9 +177,12 @@ class ProvisioningJobController : PlatformController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto result = usecase.deleteJob(tenantId, id);

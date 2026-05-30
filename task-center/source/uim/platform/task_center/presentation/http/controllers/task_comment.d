@@ -28,10 +28,14 @@ class TaskCommentController : ManageController {
         router.delete_("/api/v1/task-center/comments/*", &handleDelete);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
             CreateTaskCommentRequest r;
             r.tenantId = tenantId;
             r.taskCommentId = TaskCommentId(precheck.id);
@@ -121,9 +125,12 @@ class TaskCommentController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = TaskCommentId(precheck.id);
             auto result = usecase.deleteTaskComment(tenantId, id);
             if (result.hasError)

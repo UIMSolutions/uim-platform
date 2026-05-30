@@ -35,10 +35,14 @@ class PackageController : ManageController {
     router.post("/api/v1/packages/assemble", &handleAssemble);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreatePackageRequest();
       r.tenantId = tenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
@@ -51,19 +55,11 @@ class PackageController : ManageController {
       r.items = parseContentItems(j);
 
       auto result = usecase.createPackage(r);
-      if (result.hasError)
+     if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Package created successfully");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Package created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -132,9 +128,12 @@ class PackageController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = PackageId(precheck.id);
       auto result = usecase.deletePackage(id);
       if (result.hasError)

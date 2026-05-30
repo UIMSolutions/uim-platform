@@ -61,65 +61,76 @@ class EventMessageController : ManageController {
         if (message.isNull)
             return errorResponse("Event message not found", 404);
 
-        auto responseData = job.toJson();
+        auto responseData = message.toJson();
 
-        return successResponse("");
+        return successResponse("Event message retrieved successfully", "Retrieved", 200, responseData);
+    }
+
+    protected Json publishHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        EventMessageDTO dto;
+        dto.messageId = EventMessageId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.serviceId = BrokerServiceId(data.getString("serviceId"));
+        dto.topicId = data.getString("topicId");
+        dto.queueId = data.getString("queueId"); // TODO: dto.publisherId = data.getString("publisherId");
+        dto.correlationId = data.getString("correlationId");
+        dto.contentType = data.getString("contentType");
+        dto.payload = data.getString("payload");
+        dto.topicString = data.getString("topicString");
+        dto.replyTo = data.getString("replyTo");
+        dto.timeToLive = data.getString("timeToLive");
+        dto.createdBy = UserId(data.getString("createdBy"));
+        auto result = usecase.publishMessage(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Event message published");
+
+        return successResponse("Event message published successfully", "Published", 201, resp);
     }
 
     protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            EventMessageDTO dto;
-            dto.messageId = EventMessageId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.serviceId = BrokerServiceId(data.getString("serviceId"));
-            dto.topicId = data.getString("topicId");
-            dto.queueId = data.getString("queueId"); // TODO: dto.publisherId = data.getString("publisherId");
-            dto.correlationId = data.getString("correlationId");
-            dto.contentType = data.getString("contentType");
-            dto.payload = data.getString("payload");
-            dto.topicString = data.getString("topicString");
-            dto.replyTo = data.getString("replyTo");
-            dto.timeToLive = data.getString("timeToLive");
-            dto.createdBy = UserId(data.getString("createdBy"));
-            auto result = usecase.publishMessage(dto);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Event message published");
-
-            if (result.success) {
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
+            auto response = publishHandler(req);
+            res.writeJsonBody(response.data, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json acknowledgeHandler(HTTPServerRequest req) {
+        auto precheck = super.putHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+
+        auto id = EventMessageId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid message ID", 400);
+
+        auto result = usecase.acknowledgeMessage(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("message", "Event message acknowledged");
+
+        return successResponse("Event message acknowledged successfully", "Acknowledged", 200, resp);
+    }
     protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto path = req
-                .requestURI.to!string;
-            auto id = EventMessageId(precheck.id);
-            auto result = usecase.acknowledgeMessage(
-                tenantId,
-                id);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("message", "Event message acknowledged");
-
-            if (result.success) {
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
+            auto response = acknowledgeHandler(req);
+            res.writeJsonBody(response.data, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

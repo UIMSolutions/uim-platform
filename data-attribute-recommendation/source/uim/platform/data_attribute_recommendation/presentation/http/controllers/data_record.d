@@ -36,10 +36,14 @@ class DataRecordController : ManageController {
     router.delete_("/api/v1/data-records/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreateDataRecordRequest();
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");

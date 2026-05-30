@@ -29,10 +29,16 @@ class SchemaController : ManageController {
     router.delete_("/api/v1/hana/schemas/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScanJobDTO dto;
+        dto.tenantId = tenantId;
       CreateSchemaRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
@@ -142,9 +148,12 @@ class SchemaController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = SchemaId(precheck.id);
       auto result = usecase.deleteSchema(id);
       if (result.hasError)

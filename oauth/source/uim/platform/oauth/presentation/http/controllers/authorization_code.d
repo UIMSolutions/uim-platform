@@ -121,9 +121,12 @@ class AuthorizationCodeController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = AuthorizationCodeId(precheck.id);
             auto result = usecase.deleteCode(tenantId, id);

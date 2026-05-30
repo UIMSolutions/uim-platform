@@ -65,38 +65,39 @@ class TransportController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto transports = usecase.listTransportRequests(tenantId);
-    auto arr = transports.map!(t => t.toJson).array.toJson;
+    auto list = transports.map!(item => item.toJson()).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(transports.length))
-      .set("message", "Transport requests retrieved successfully");
-
-    res.writeJsonBody(resp, 200);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Transport request list retrieved successfully", "Retrieved", 200, responseData);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 
-override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tr = usecase.getTransportRequest(id);
-    if (tr.isNull) {
-      writeError(res, 404, "Transport request not found");
-      return;
-    }
-    res.writeJsonBody(tr.toJson, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+    auto id = TransportRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid transport request ID", 400);
 
-protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+    auto treq = usecase.getTransportRequest(tenantId, id);
+    if (treq.isNull)
+      return errorResponse("Transport request not found", 404);
+
+    auto responseData = treq.toJson();
+    return successResponse("Transport request retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json releaseHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
     auto r = ReleaseTransportRequest();
     r.requestId = data.getString("requestId");
@@ -106,58 +107,50 @@ protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerRespon
     auto result = usecase.releaseTransport(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
+
+    auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("status", "released")
-      .set("message", "Transport request released successfully");
+      .set("status", "released");
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 400, result.message);
+    return successResponse("Transport request released successfully", "Released", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+  protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = releaseHandler(req);
+      res.writeJsonBody(resp, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected Json cancelHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
     auto requestId = data.getString("requestId");
 
-    auto result = usecase.cancelTransport(requestId);
+    auto result = usecase.cancelTransport(tenantId, requestId);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
+
+    auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("status", "cancelled")
-      .set("message", "Transport request cancelled successfully");
-
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 400, result.message);
+      .set("status", "cancelled");
+    return successResponse("Transport request cancelled successfully", "Cancelled", 200, responseData);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-private static Json serializeTransport(const TransportRequest t) {
-  return Json.emptyObject
-    .set("id", t.id)
-    .set("tenantId", t.tenantId)
-    .set("sourceSubaccount", t.sourceSubaccount)
-    .set("targetSubaccount", t.targetSubaccount)
-    .set("description", t.description)
-    .set("status", t.status.to!string)
-    .set("mode", t.mode.to!string)
-    .set("queueId", t.queueId)
-    .set("createdBy", t.createdBy)
-    .set("createdAt", t.createdAt)
-    .set("updatedAt", t.updatedAt)
-    .set("releasedAt", t.releasedAt)
-    .set("errorMessage", t.errorMessage)
-    .set("packageIds", toJsonArray(t.packageIds));
-}
+  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = cancelHandler(req);
+
+      res.writeJsonBody(response.data, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 }

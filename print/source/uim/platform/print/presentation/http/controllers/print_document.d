@@ -58,10 +58,14 @@ class PrintDocumentController : ManageController {
         }
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
             PrintDocumentDTO dto;
             dto.documentId = PrintDocumentId(precheck.id);
             dto.tenantId = tenantId;
@@ -90,9 +94,12 @@ class PrintDocumentController : ManageController {
         writeError(res, 405, "Method not allowed — use POST to upload a new document");
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
             auto id = PrintDocumentId(precheck.id);
             auto result = usecase.deletePrintDocument(tenantId, id);

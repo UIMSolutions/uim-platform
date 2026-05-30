@@ -46,10 +46,14 @@ class RouteController : ManageController {
 
   // --- Routes ---
 
-  override protected void handleCreate(Route(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreateRouteRequest();
       r.tenantId = tenantId;
       r.spaceId = data.getString("spaceId");
@@ -61,17 +65,11 @@ class RouteController : ManageController {
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createRoute(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Route created successfully");
-          
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Route created successfully", 201, responseData);
   }
 
   override protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -168,10 +166,14 @@ class RouteController : ManageController {
 
   // --- Domains ---
 
-  override protected void handleCreate(Domain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+ override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreateDomainRequest();
       r.tenantId = tenantId;
       r.ownerOrgId = data.getString("ownerOrgId");
@@ -181,17 +183,11 @@ class RouteController : ManageController {
       r.createdBy = UserId(data.getString("createdBy"));
 
       auto result = useCase.createDomain(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Domain created successfully")  ;
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Domain created successfully", 201, responseData);
   }
 
   override protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {

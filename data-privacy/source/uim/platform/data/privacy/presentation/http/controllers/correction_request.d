@@ -30,10 +30,16 @@ class CorrectionRequestController : ManageController {
     router.delete_("/api/v1/correction-requests/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScanJobDTO dto;
+        dto.tenantId = tenantId;
       CreateCorrectionRequest r;
       r.tenantId = tenantId;
       r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
@@ -114,9 +120,12 @@ class CorrectionRequestController : ManageController {
       writeError(res, 500, "Internal server error");
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = CorrectionRequestId(precheck.id);
 
       usecase.deleteRequest(tenantId, id);

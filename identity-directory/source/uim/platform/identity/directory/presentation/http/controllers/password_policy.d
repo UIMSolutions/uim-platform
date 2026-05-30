@@ -31,10 +31,14 @@ class PasswordPolicyController : ManageController {
     router.get("/api/v1/password-policies/*", &handleGet);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
           data.getString("name"), data.getString("description"), jsonUint(j,
             "minLength", 8), jsonUint(j, "maxLength", 128), data.getBoolean("requireUppercase",

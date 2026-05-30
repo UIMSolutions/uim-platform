@@ -27,9 +27,12 @@ class TokenController : PlatformController {
 
   // POST /api/v1/oauth/token
   // Accepts form-encoded or JSON body with grant_type, client_id, client_secret, scope
-  override protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  protected Json tokenHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+auto tenantId = precheck.tenantId;
       string grantType;
       string clientId;
       string clientSecret;
@@ -52,19 +55,16 @@ class TokenController : PlatformController {
       }
 
       if (grantType != "client_credentials") {
-        writeError(res, 400, "Unsupported grant_type. Only client_credentials is supported.");
-        return;
+        return errorResponse("Unsupported grant_type. Only client_credentials is supported.", 400);
       }
 
       if (clientId.length == 0 || clientSecret.length == 0) {
-        writeError(res, 400, "client_id and client_secret are required");
-        return;
+        return errorResponse("client_id and client_secret are required", 400);
       }
 
       auto grantedScopes = tokenService.validateClientCredentials(clientId, clientSecret);
       if (grantedScopes.length == 0) {
-        writeError(res, 401, "Invalid client credentials");
-        return;
+        return errorResponse("Invalid client credentials", 401);
       }
 
       int expiresIn = 3600;
@@ -79,8 +79,14 @@ class TokenController : PlatformController {
         .set("token_type",   "Bearer")
         .set("expires_in",   expiresIn)
         .set("scope",        scopeArr);
+  
+    return successResponse("Access token issued successfully", "Issued", 200, resp);
+  }
 
-      res.writeJsonBody(resp, 200);
+  protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = tokenHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

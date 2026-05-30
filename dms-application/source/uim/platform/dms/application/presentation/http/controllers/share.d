@@ -35,10 +35,14 @@ class ShareController : ManageController {
     router.delete_("/api/v1/shares/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto r = CreateShareRequest();
       r.tenantId = tenantId;
       r.documentId = DocumentId(data.getString("documentId"));
@@ -110,9 +114,12 @@ auto list = items.map!(item => item.toJson()).array.toJson;
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
       
       auto result = usecase.deleteShare(tenantId, id);

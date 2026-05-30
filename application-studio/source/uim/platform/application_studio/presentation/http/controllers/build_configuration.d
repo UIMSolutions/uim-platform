@@ -122,10 +122,13 @@ class BuildConfigurationController : ManageController {
         return successResponse("Build configuration updated successfully", "Updated", 200, resp);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+            
             auto id = BuildConfigurationId(precheck.id);
 
             auto result = usecase.deleteBuildConfiguration(tenantId, id);

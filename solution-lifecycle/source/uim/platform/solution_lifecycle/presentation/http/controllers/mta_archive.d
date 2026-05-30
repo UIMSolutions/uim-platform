@@ -90,9 +90,12 @@ class MtaArchiveController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto id = MtaArchiveId(precheck.id);
             auto result = usecase.deleteArchive(tenantId, id);
             if (result.hasError)

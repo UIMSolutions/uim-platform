@@ -34,10 +34,14 @@ class MenuItemController : ManageController {
     router.delete_("/api/v1/menu-items/*", &handleDelete);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto createReq = CreateMenuItemRequest(data.getString("siteId"),
         req.headers.get("X-Tenant-Id", ""), data.getString("title"),
         data.getString("icon"), data.getString("parentId"), data.getString("targetPageId"),

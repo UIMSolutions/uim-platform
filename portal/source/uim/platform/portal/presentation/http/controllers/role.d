@@ -33,10 +33,14 @@ class RoleController : ManageController {
     router.post("/api/v1/roles/assign", &handleAssign);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
       auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
         data.getString("name"), data.getString("description"),
         jsonEnum!RoleScope(j, "scope", RoleScope.site),);

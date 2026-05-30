@@ -86,20 +86,6 @@ class AppBindingController : ManageController {
     return successResponse("Binding retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = AppBindingId(extractIdFromPath(req));
-      auto result = usecase.deleteBinding(tenantId, id);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("message", "Binding deleted"), 200);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError)

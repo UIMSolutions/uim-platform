@@ -31,10 +31,16 @@ class FeatureRestrictionController : ManageController {
     router.post("/api/v1/features/evaluate", &handleEvaluate);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScanJobDTO dto;
+        dto.tenantId = tenantId;
       CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
@@ -149,9 +155,12 @@ class FeatureRestrictionController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = FeatureRestrictionId(precheck.id);
       auto result = usecase.deleteFeatureRestriction(id);
       if (result.hasError)

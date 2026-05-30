@@ -36,10 +36,16 @@ class EventSubscriptionController : ManageController {
     router.post("/api/v1/event-subscriptions/resume/*", &handleResume);
   }
 
-  override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        ScanJobDTO dto;
+        dto.tenantId = tenantId;
       CreateEventSubscriptionRequest r;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
@@ -174,9 +180,12 @@ class EventSubscriptionController : ManageController {
     }
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteSubscription(tenantId, id);
       if (result.success)
