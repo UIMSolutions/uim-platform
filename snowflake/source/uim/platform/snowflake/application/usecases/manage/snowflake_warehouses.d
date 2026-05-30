@@ -7,7 +7,7 @@ class ManageSnowflakeWarehousesUseCase {
   this(SnowflakeWarehouseRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateWarehouseRequest r) {
-    import std.conv : to;
+    
     SnowflakeWarehouse w;
     w.id = SnowflakeWarehouseId(r.id.length > 0 ? r.id : currentTimestamp());
     w.tenantId = TenantId(r.tenantId);
@@ -32,7 +32,7 @@ class ManageSnowflakeWarehousesUseCase {
   }
 
   CommandResult update(UpdateWarehouseRequest r) {
-    import std.conv : to;
+    
     auto w = repo.findById(TenantId(r.tenantId), SnowflakeWarehouseId(r.id));
     if (w.isNull) return CommandResult(false, r.id, "Warehouse not found");
     if (r.size.length > 0) try { w.size = r.size.to!WarehouseSize; } catch(Exception) {}

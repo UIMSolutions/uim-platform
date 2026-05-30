@@ -33,7 +33,7 @@ class DeploymentEngine {
 
     /// Simulate beginning an async deploy operation.
     DeploymentResult beginDeploy(string archiveId, string mtaId, string mtaVersion, TenantId tenantId) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
         auto opId = "op-" ~ tenantId[0 .. (tenantId.length > 8 ? 8 : $)]
                   ~ "-" ~ MonoTime.currTime.ticks.to!string;
@@ -42,7 +42,7 @@ class DeploymentEngine {
 
     /// Simulate beginning an async update operation.
     DeploymentResult beginUpdate(string archiveId, string existingMtaId, TenantId tenantId) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
         auto opId = "op-upd-" ~ MonoTime.currTime.ticks.to!string;
         return DeploymentResult(true, opId, "Update operation queued", 20);
@@ -50,7 +50,7 @@ class DeploymentEngine {
 
     /// Simulate beginning an async delete operation.
     DeploymentResult beginDelete(string mtaId, TenantId tenantId) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
         auto opId = "op-del-" ~ MonoTime.currTime.ticks.to!string;
         return DeploymentResult(true, opId, "Delete operation queued", 10);
@@ -58,7 +58,7 @@ class DeploymentEngine {
 
     /// Simulate beginning a subscribe operation.
     DeploymentResult beginSubscribe(string providerMtaId, string providerTenantId, string subscriberTenantId) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
         auto opId = "op-sub-" ~ MonoTime.currTime.ticks.to!string;
         return DeploymentResult(true, opId, "Subscribe operation queued", 15);
@@ -66,7 +66,7 @@ class DeploymentEngine {
 
     /// Simulate beginning an unsubscribe operation.
     DeploymentResult beginUnsubscribe(string subscriptionId, TenantId tenantId) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
         auto opId = "op-unsub-" ~ MonoTime.currTime.ticks.to!string;
         return DeploymentResult(true, opId, "Unsubscribe operation queued", 10);

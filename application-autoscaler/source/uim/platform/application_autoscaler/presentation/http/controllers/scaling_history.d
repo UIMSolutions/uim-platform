@@ -36,7 +36,7 @@ class ScalingHistoryController : ManageController {
     long since = 0;
     foreach (kv; req.query.byKeyValue()) {
       if (kv.key == "since") {
-        import std.conv : to;
+        
 
         try {
           since = kv.value.to!long;

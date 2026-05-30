@@ -57,7 +57,7 @@ class ManageSyncSessionsUseCase {
             return CommandResult(false, "", "Sync session not found");
 
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             existing.status = dto.status.to!SyncStatus;
         }
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;

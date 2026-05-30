@@ -107,7 +107,7 @@ class ManageDocumentsUseCase {
             return CommandResult(false, "", "Document is already checked out");
         existing.checkoutStatus = CheckoutStatus.checkedOut;
         existing.checkedOutBy = userId;
-        import std.conv : to;
+        
         import std.datetime.systime : Clock;
         existing.checkedOutAt = currentTimestamp;
         existing.versioningState = VersioningState.checkedOut;

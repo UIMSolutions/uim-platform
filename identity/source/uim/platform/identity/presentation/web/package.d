@@ -32,7 +32,7 @@ class IdentityWebView {
 
     string renderGroupList(Group[] groups) {
         import std.array : appender;
-        import std.conv : to;
+        
         auto html = appender!string;
         html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
         html.put("<title>Identity Service - Groups</title></head><body>");

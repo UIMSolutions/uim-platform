@@ -38,7 +38,7 @@ class MongoPrintDocumentRepository : PrintDocumentRepository {
     }
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) @trusted {
-        import std.conv : to;
+        
         PrintDocument[] result;
         foreach (d; coll.find(["tenantId": Bson(tenantId.value), "format": Bson(format.to!string)]))
             result ~= bsonToDoc(d);
@@ -55,7 +55,7 @@ class MongoPrintDocumentRepository : PrintDocumentRepository {
     }
 
     private static Bson docToBson(const PrintDocument d) {
-        import std.conv : to;
+        
         auto b = Bson.emptyObject;
         b["_id"] = Bson(d.id.value);
         b["tenantId"] = Bson(d.tenantId.value);
@@ -70,7 +70,7 @@ class MongoPrintDocumentRepository : PrintDocumentRepository {
     }
 
     private static PrintDocument bsonToDoc(Bson b) {
-        import std.conv : to;
+        
         PrintDocument d;
         d.id = PrintDocumentId(b["_id"].get!string);
         d.tenantId = TenantId(b["tenantId"].get!string);

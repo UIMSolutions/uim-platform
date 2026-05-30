@@ -8,7 +8,7 @@ module uim.platform.appevents.domain.entities.dead_letter_entry;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.dead_letter_status;
-import std.conv : to;
+
 
 @safe:
 

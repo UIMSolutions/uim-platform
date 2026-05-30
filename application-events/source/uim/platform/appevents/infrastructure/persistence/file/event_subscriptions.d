@@ -13,7 +13,7 @@ import uim.platform.appevents.domain.enums.subscription_status;
 import uim.platform.appevents.infrastructure.persistence.memory.event_subscriptions;
 import std.file : mkdirRecurse, write, readText, exists;
 import std.path : buildPath, dirName;
-import std.conv : to;
+
 import std.array : array;
 import std.algorithm : filter;
 

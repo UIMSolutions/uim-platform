@@ -46,7 +46,7 @@ class ManagePrintersUseCase {
         printer.duplexCapable = dto.duplexCapable;
         printer.clientId = PrintClientId(dto.clientId);
         if (dto.protocol.length > 0) {
-            import std.conv : to;
+            
             try { printer.protocol = dto.protocol.to!PrinterProtocol; } catch (Exception) {}
         }
 
@@ -67,7 +67,7 @@ class ManagePrintersUseCase {
         if (dto.host.length > 0) existing.host = dto.host;
         if (dto.location.length > 0) existing.location = dto.location;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = dto.status.to!PrinterStatus; } catch (Exception) {}
         }
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;

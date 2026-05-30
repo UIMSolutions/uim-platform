@@ -26,7 +26,7 @@ class SubscriptionJob {
     string    error;
 
     Json toJson() {
-        import std.conv : to;
+        
         auto j = Json.emptyObject;
         j["id"]             = Json(id.value);
         j["tenantId"]       = Json(tenantId);

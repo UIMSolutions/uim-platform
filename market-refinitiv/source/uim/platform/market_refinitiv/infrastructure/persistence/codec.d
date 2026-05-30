@@ -2,7 +2,7 @@ module uim.platform.market_refinitiv.infrastructure.persistence.codec;
 
 import uim.platform.market_refinitiv;
 import vibe.data.json : Json;
-import std.conv : to;
+
 import std.traits : EnumMembers;
 
 @safe:

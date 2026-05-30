@@ -37,11 +37,11 @@ class ManageUsersUseCase {
         u.timeZone = dto.timeZone.length > 0 ? dto.timeZone : "UTC";
 
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { u.status = dto.status.to!UserStatus; } catch (Exception) { u.status = UserStatus.active; }
         }
         if (dto.type_.length > 0) {
-            import std.conv : to;
+            
             try { u.type_ = dto.type_.to!UserType; } catch (Exception) { u.type_ = UserType.employee; }
         }
         if (dto.password.length > 0) {
@@ -67,7 +67,7 @@ class ManageUsersUseCase {
         if (dto.locale.length > 0) existing.locale = dto.locale;
         if (dto.timeZone.length > 0) existing.timeZone = dto.timeZone;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = dto.status.to!UserStatus; } catch (Exception) {}
         }
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;

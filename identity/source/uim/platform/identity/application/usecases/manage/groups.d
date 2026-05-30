@@ -27,7 +27,7 @@ class ManageGroupsUseCase {
         g.name = dto.name;
         g.description = dto.description;
         if (dto.type_.length > 0) {
-            import std.conv : to;
+            
             try { g.type_ = dto.type_.to!GroupType; } catch (Exception) { g.type_ = GroupType.userGroup; }
         }
         g.memberIds = dto.memberIds;

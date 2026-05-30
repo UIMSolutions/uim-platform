@@ -53,7 +53,7 @@ class FilePrinterRepository : PrinterRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 Printer p;
                 p.id = PrinterId(j["id"].str);
@@ -69,7 +69,7 @@ class FilePrinterRepository : PrinterRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue arr = JSONValue(cast(JSONValue[]) []);
         foreach (p; store.values) {
             JSONValue j;

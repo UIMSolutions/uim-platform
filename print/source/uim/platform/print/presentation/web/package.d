@@ -30,7 +30,7 @@ class PrintWebView {
 
     string renderTaskList(PrintTask[] tasks) {
         import std.array : appender;
-        import std.conv : to;
+        
         auto buf = appender!string;
         buf ~= "<html><head><title>Print Tasks</title></head><body>";
         buf ~= "<h1>Print Tasks</h1>";

@@ -7,7 +7,7 @@ class ManageSnowflakeTenantUsersUseCase {
   this(SnowflakeTenantUserRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateTenantUserRequest r) {
-    import std.conv : to;
+    
     SnowflakeTenantUser u;
     u.id = SnowflakeTenantUserId(r.id.length > 0 ? r.id : currentTimestamp());
     u.tenantId = TenantId(r.tenantId);
@@ -23,7 +23,7 @@ class ManageSnowflakeTenantUsersUseCase {
 
   SnowflakeTenantUser[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
   SnowflakeTenantUser[] listByRole(TenantId tenantId, string roleStr) {
-    import std.conv : to;
+    
     TenantUserRole r;
     try { r = roleStr.to!TenantUserRole; } catch(Exception) { r = TenantUserRole.viewer; }
     return repo.findByRole(TenantId(tenantId), r);
@@ -33,7 +33,7 @@ class ManageSnowflakeTenantUsersUseCase {
   }
 
   CommandResult update(UpdateTenantUserRequest r) {
-    import std.conv : to;
+    
     auto u = repo.findById(TenantId(r.tenantId), SnowflakeTenantUserId(r.id));
     if (u.isNull) return CommandResult(false, r.id, "User not found");
     if (r.firstName.length > 0) u.firstName = r.firstName;

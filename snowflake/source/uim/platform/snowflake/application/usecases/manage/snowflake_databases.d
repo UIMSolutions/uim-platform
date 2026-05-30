@@ -29,7 +29,7 @@ class ManageSnowflakeDatabasesUseCase {
   }
 
   CommandResult update(UpdateDatabaseRequest r) {
-    import std.conv : to;
+    
     auto db = repo.findById(TenantId(r.tenantId), SnowflakeDatabaseId(r.id));
     if (db.isNull) return CommandResult(false, r.id, "Database not found");
     if (r.retentionDays > 0) db.retentionDays = r.retentionDays;

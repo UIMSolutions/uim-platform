@@ -20,7 +20,7 @@ class ManageCustomMetricsUseCase {
 
   CommandResult submit(SubmitCustomMetricRequest r) {
     import core.time : MonoTime;
-    import std.conv : to;
+    
     import std.random : uniform;
 
     if (r.metricName.length == 0)

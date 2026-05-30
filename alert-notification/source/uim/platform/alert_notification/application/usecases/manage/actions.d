@@ -17,7 +17,7 @@ class ManageActionsUseCase {
     this(ActionRepository repo) { this.repo = repo; }
 
     CommandResult createAction(TenantId tenantId, CreateActionRequest req) {
-        import std.conv : to;
+        
         import std.uuid : randomUUID;
 
         auto existing = repo.findByName(tenantId, req.name);
@@ -55,7 +55,7 @@ class ManageActionsUseCase {
     }
 
     CommandResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req) {
-        import std.conv : to;
+        
         auto action = repo.findById(tenantId, id);
         if (action.isNull())
             return CommandResult(false, "", "Action not found");

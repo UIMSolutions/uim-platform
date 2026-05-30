@@ -29,7 +29,7 @@ class UndeliveredEventController : PlatformController {
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto id       = req.requestPath.to!string.pathId;
         auto result   = usecase.getUndeliveredEvent(tenantId, id);

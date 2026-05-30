@@ -32,7 +32,7 @@ class ScalingEngineUseCase {
 
   CommandResult triggerScaling(TriggerScalingRequest r) {
     import core.time : MonoTime;
-    import std.conv : to;
+    
     import std.random : uniform;
 
     // Resolve binding

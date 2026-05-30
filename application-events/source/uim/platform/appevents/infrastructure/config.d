@@ -6,7 +6,7 @@
 module uim.platform.appevents.infrastructure.config;
 
 import std.process : environment;
-import std.conv : to;
+
 
 @safe:
 

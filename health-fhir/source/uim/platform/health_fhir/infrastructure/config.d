@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.infrastructure.config;
 
 import std.process : environment;
-import std.conv : to;
+
 
 import uim.platform.health_fhir;
 

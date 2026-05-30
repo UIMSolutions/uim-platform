@@ -38,7 +38,7 @@ class MongoPrinterRepository : PrinterRepository {
     }
 
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status) @trusted {
-        import std.conv : to;
+        
         Printer[] result;
         foreach (doc; coll.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToPrinter(doc);
@@ -53,7 +53,7 @@ class MongoPrinterRepository : PrinterRepository {
     }
 
     Printer[] findByProtocol(TenantId tenantId, PrinterProtocol protocol) @trusted {
-        import std.conv : to;
+        
         Printer[] result;
         foreach (doc; coll.find(["tenantId": Bson(tenantId.value), "protocol": Bson(protocol.to!string)]))
             result ~= bsonToPrinter(doc);
@@ -61,7 +61,7 @@ class MongoPrinterRepository : PrinterRepository {
     }
 
     private static Bson printerToBson(const Printer p) {
-        import std.conv : to;
+        
         auto b = Bson.emptyObject;
         b["_id"] = Bson(p.id.value);
         b["tenantId"] = Bson(p.tenantId.value);
@@ -82,7 +82,7 @@ class MongoPrinterRepository : PrinterRepository {
     }
 
     private static Printer bsonToPrinter(Bson b) {
-        import std.conv : to;
+        
         Printer p;
         p.id = PrinterId(b["_id"].get!string);
         p.tenantId = TenantId(b["tenantId"].get!string);

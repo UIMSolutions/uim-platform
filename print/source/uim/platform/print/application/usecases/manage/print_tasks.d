@@ -62,7 +62,7 @@ class ManagePrintTasksUseCase {
             return CommandResult(false, "", "Print task not found");
 
         if (status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = status.to!PrintTaskStatus; } catch (Exception) {}
         }
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;

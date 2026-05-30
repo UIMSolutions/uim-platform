@@ -9,7 +9,7 @@ import uim.platform.workzone;
 import uim.platform.workzone.presentation.cli.models.workspace;
 import uim.platform.workzone.presentation.cli.views.table_view;
 import uim.platform.workzone.presentation.cli.views.detail_view;
-import std.conv : to;
+
 
 @safe:
 /// CLI controller for workspace sub-commands.

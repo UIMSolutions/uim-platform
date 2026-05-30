@@ -6,7 +6,7 @@
 module uim.platform.redis.presentation.gui.views.cache_entry;
 
 import uim.platform.redis;
-import std.conv : to;
+
 
 mixin(ShowModule!());
 

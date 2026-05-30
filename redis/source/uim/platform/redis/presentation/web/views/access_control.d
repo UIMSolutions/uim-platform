@@ -6,7 +6,7 @@
 module uim.platform.redis.presentation.web.views.access_control;
 
 import uim.platform.redis;
-import std.conv : to;
+
 import std.format : format;
 
 mixin(ShowModule!());

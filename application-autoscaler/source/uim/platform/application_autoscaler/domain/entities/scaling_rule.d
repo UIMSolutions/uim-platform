@@ -24,7 +24,7 @@ struct ScalingRuleEntity {
   string        adjustment;         // e.g. "+1", "-2", "+100%"
 
   Json toJson() const @safe {
-    import std.conv : to;
+    
     auto j = Json.emptyObject;
     j["id"]                  = Json(id);
     j["metric_type"]         = Json(metricTypeToString(metricType));

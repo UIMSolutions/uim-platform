@@ -43,7 +43,7 @@ class ManageSocialIdentitiesUseCase {
         si.profileData = dto.profileData;
         si.status = SocialIdentityStatus.linked;
 
-        import std.conv : to;
+        
         try { si.provider = dto.provider.to!LoginProvider; }
         catch (Exception) { return CommandResult(false, "", "Invalid social provider"); }
 

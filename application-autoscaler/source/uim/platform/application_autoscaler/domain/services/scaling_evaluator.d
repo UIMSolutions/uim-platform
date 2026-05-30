@@ -42,7 +42,7 @@ class ScalingEvaluatorService {
 
   private int applyAdjustment(string adjustment, int current, int minC, int maxC) @safe {
     import std.string : endsWith, startsWith;
-    import std.conv : to;
+    
     if (adjustment.length == 0) return current;
     bool percentage = adjustment.endsWith("%");
     string raw = percentage ? adjustment[0 .. $-1] : adjustment;

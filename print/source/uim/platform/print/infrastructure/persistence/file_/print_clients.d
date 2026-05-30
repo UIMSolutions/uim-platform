@@ -50,7 +50,7 @@ class FilePrintClientRepository : PrintClientRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 PrintClient c;
                 c.id = PrintClientId(j["id"].str);
@@ -66,7 +66,7 @@ class FilePrintClientRepository : PrintClientRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue arr = JSONValue(cast(JSONValue[]) []);
         foreach (c; store.values) {
             JSONValue j;

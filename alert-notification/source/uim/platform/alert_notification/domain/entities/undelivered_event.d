@@ -31,7 +31,7 @@ class UndeliveredEvent {
     string[string] tags;
 
     Json toJson() {
-        import std.conv : to;
+        
         auto j = Json.emptyObject;
         j["id"]               = id.value;
         j["tenantId"]         = tenantId;

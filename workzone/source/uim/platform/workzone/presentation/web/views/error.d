@@ -10,7 +10,7 @@ import uim.platform.workzone.presentation.web.views.layout;
 @safe:
 /// Render an HTTP error page.
 string renderError(int statusCode, string message, string detail = "") {
-    import std.conv : to;
+    
     auto body_ = `
 <div class="d-flex justify-content-center align-items-center" style="min-height:60vh">
   <div class="text-center">

@@ -25,7 +25,7 @@ struct ScalingHistoryEntity {
   long             timestamp;
 
   Json toJson() const @safe {
-    import std.conv : to;
+    
     auto j = Json.emptyObject;
     j["id"]            = Json(id);
     j["app_id"]        = Json(appId);

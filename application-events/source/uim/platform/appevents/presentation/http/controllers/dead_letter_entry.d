@@ -9,7 +9,7 @@ import uim.platform.service;
 import uim.platform.appevents.application.dto;
 import uim.platform.appevents.application.usecases.manage.dead_letter_entries;
 import uim.platform.appevents.domain.valueobjects;
-import std.conv : to;
+
 import std.array : array;
 import std.algorithm : map;
 

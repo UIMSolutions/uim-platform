@@ -70,12 +70,12 @@ class ManageResponsibilityDefinitionsUseCase {
     }
 
     private static DefinitionStatus parseDefStatus(string s) {
-        import std.conv : to;
+        
         try { return s.to!DefinitionStatus; } catch (Exception) { return DefinitionStatus.active; }
     }
 
     private static AssignmentScope parseScope(string s) {
-        import std.conv : to;
+        
         try { return s.to!AssignmentScope; } catch (Exception) { return AssignmentScope.global_; }
     }
 }

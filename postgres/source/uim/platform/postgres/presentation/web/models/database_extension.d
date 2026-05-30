@@ -6,7 +6,7 @@
 module uim.platform.postgres.presentation.web.models.database_extension;
 
 import uim.platform.postgres;
-import std.conv : to;
+
 
 mixin(ShowModule!());
 

@@ -59,7 +59,7 @@ class FilePrintTaskRepository : PrintTaskRepository {
         if (!filePath().exists) return;
         try {
             auto text = readText(filePath());
-            import std.conv : to;
+            
             foreach (j; parseJSON(text).array) {
                 PrintTask t;
                 t.id = PrintTaskId(j["id"].str);
@@ -76,7 +76,7 @@ class FilePrintTaskRepository : PrintTaskRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue arr = JSONValue(cast(JSONValue[]) []);
         foreach (t; store.values) {
             JSONValue j;

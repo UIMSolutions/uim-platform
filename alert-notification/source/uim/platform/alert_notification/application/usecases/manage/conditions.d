@@ -17,7 +17,7 @@ class ManageConditionsUseCase {
     this(ConditionRepository repo) { this.repo = repo; }
 
     CommandResult createCondition(TenantId tenantId, CreateConditionRequest req) {
-        import std.conv : to;
+        
         import std.uuid : randomUUID;
 
         auto existing = repo.findByName(tenantId, req.name);
@@ -54,7 +54,7 @@ class ManageConditionsUseCase {
     }
 
     CommandResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req) {
-        import std.conv : to;
+        
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond is null || cond.isNull())
             return CommandResult(false, "Condition not found");

@@ -9,7 +9,7 @@ import uim.platform.workzone;
 import uim.platform.workzone.presentation.cli.models.task;
 import uim.platform.workzone.presentation.cli.views.table_view;
 import uim.platform.workzone.presentation.cli.views.detail_view;
-import std.conv : to;
+
 import std.datetime : SysTime, unixTimeToStdTime;
 import std.format  : format;
 

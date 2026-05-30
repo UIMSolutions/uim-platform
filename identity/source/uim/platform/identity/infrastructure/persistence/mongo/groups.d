@@ -37,7 +37,7 @@ class MongoGroupRepository : GroupRepository {
         return doc.isNull ? Group.init : bsonToEntity(doc);
     }
     Group[] findByType(TenantId tenantId, GroupType type_) @trusted {
-        import std.conv : to;
+        
         Group[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "type": Bson(type_.to!string)]))
             result ~= bsonToEntity(doc);
@@ -51,7 +51,7 @@ class MongoGroupRepository : GroupRepository {
     }
 
     private static Bson entityToBson(Group g) @trusted {
-        import std.conv : to;
+        
         Bson[] members;
         foreach (m; g.memberIds) members ~= Bson(m);
         return Bson(["_id": Bson(g.id.value), "tenantId": Bson(g.tenantId.value),
@@ -60,7 +60,7 @@ class MongoGroupRepository : GroupRepository {
     }
 
     private static Group bsonToEntity(Bson doc) @trusted {
-        import std.conv : to;
+        
         Group g;
         g.id = GroupId(doc["_id"].get!string);
         g.tenantId = TenantId(doc["tenantId"].get!string);

@@ -18,7 +18,7 @@ struct SrvConfig {
 
 SrvConfig loadConfig() {
   import std.process : environment;
-  import std.conv : to;
+  
 
   SrvConfig cfg;
   auto host = environment.get("DATASPHERE_COMPOSER_HOST", "");

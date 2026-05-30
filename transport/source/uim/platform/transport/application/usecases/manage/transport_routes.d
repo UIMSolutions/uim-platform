@@ -46,7 +46,7 @@ class ManageTransportRoutesUseCase {
         route.sequence = dto.sequence;
         route.createdBy = dto.createdBy;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { route.status = dto.status.to!RouteStatus; } catch (Exception) {}
         }
         if (!TransportValidator.isValidRoute(route))

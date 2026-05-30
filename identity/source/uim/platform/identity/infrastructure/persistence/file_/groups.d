@@ -47,7 +47,7 @@ class FileGroupRepository : GroupRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 Group g;
                 g.id = GroupId(j["id"].str);
@@ -63,7 +63,7 @@ class FileGroupRepository : GroupRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue[] arr;
         foreach (g; store.values) {
             JSONValue[] members;

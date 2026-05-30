@@ -53,11 +53,11 @@ class ManagePermissionsUseCase {
         perm.grantedBy = dto.grantedBy;
         perm.createdBy = dto.grantedBy;
         if (dto.principalType.length > 0) {
-            import std.conv : to;
+            
             try { perm.principalType = dto.principalType.to!PrincipalType; } catch (Exception) {}
         }
         if (dto.permissionType.length > 0) {
-            import std.conv : to;
+            
             try { perm.permissionType = dto.permissionType.to!PermissionType; } catch (Exception) {}
         }
         import std.datetime.systime : Clock;

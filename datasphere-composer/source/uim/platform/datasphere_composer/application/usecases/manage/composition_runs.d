@@ -36,7 +36,7 @@ class ManageCompositionRunsUseCase {
 
   CompositionRun[] listByStatus(TenantId tenantId, string status) {
     try {
-      import std.conv : to;
+      
       return repo.findByStatus(TenantId(tenantId), status.to!CompositionRunStatus);
     } catch (Exception) {
       return [];

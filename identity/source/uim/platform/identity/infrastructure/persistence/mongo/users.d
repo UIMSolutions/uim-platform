@@ -42,14 +42,14 @@ class MongoUserRepository : UserRepository {
         return doc.isNull ? User.init : bsonToEntity(doc);
     }
     User[] findByStatus(TenantId tenantId, UserStatus status) @trusted {
-        import std.conv : to;
+        
         User[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToEntity(doc);
         return result;
     }
     User[] findByType(TenantId tenantId, UserType type_) @trusted {
-        import std.conv : to;
+        
         User[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "type": Bson(type_.to!string)]))
             result ~= bsonToEntity(doc);
@@ -63,7 +63,7 @@ class MongoUserRepository : UserRepository {
     }
 
     private static Bson entityToBson(User u) @trusted {
-        import std.conv : to;
+        
         return Bson(["_id": Bson(u.id.value), "tenantId": Bson(u.tenantId.value),
             "userName": Bson(u.userName), "email": Bson(u.email),
             "displayName": Bson(u.displayName), "firstName": Bson(u.firstName),
@@ -72,7 +72,7 @@ class MongoUserRepository : UserRepository {
     }
 
     private static User bsonToEntity(Bson doc) @trusted {
-        import std.conv : to;
+        
         User u;
         u.id = UserId(doc["_id"].get!string);
         u.tenantId = TenantId(doc["tenantId"].get!string);

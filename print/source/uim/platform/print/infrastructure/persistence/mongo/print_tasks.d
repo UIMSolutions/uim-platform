@@ -45,7 +45,7 @@ class MongoPrintTaskRepository : PrintTaskRepository {
     }
 
     PrintTask[] findByStatus(TenantId tenantId, PrintTaskStatus status) @trusted {
-        import std.conv : to;
+        
         PrintTask[] result;
         foreach (doc; coll.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToTask(doc);
@@ -64,7 +64,7 @@ class MongoPrintTaskRepository : PrintTaskRepository {
     }
 
     private static Bson taskToBson(const PrintTask t) {
-        import std.conv : to;
+        
         auto b = Bson.emptyObject;
         b["_id"] = Bson(t.id.value);
         b["tenantId"] = Bson(t.tenantId.value);
@@ -80,7 +80,7 @@ class MongoPrintTaskRepository : PrintTaskRepository {
     }
 
     private static PrintTask bsonToTask(Bson b) {
-        import std.conv : to;
+        
         PrintTask t;
         t.id = PrintTaskId(b["_id"].get!string);
         t.tenantId = TenantId(b["tenantId"].get!string);

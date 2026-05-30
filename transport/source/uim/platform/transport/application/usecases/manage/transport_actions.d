@@ -49,7 +49,7 @@ class ManageTransportActionsUseCase {
         action.description = dto.description;
         action.logDetails = dto.logDetails;
         if (dto.actionType.length > 0) {
-            import std.conv : to;
+            
             try { action.actionType = dto.actionType.to!ActionType; } catch (Exception) {}
         }
         action.actionStatus = ActionStatus.initial;

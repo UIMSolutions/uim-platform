@@ -9,7 +9,7 @@ import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.filter_type;
 import uim.platform.appevents.domain.enums.filter_operator;
-import std.conv : to;
+
 
 @safe:
 

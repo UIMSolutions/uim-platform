@@ -60,7 +60,7 @@ class ManagePrintQueuesUseCase {
         if (dto.location.length > 0) existing.location = dto.location;
         if (dto.costCenter.length > 0) existing.costCenter = dto.costCenter;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = dto.status.to!PrintQueueStatus; } catch (Exception) {}
         }
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;

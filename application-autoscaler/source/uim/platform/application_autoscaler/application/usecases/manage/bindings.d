@@ -20,7 +20,7 @@ class ManageAppBindingsUseCase {
 
   CommandResult createBinding(CreateAppBindingRequest r) {
     import core.time : MonoTime;
-    import std.conv : to;
+    
     import std.random : uniform;
 
     auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;

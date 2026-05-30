@@ -10,7 +10,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.core.core : runApplication;
 import std.stdio : writeln;
-import std.conv : to;
+
 
 void main() {
     auto config = loadConfig();

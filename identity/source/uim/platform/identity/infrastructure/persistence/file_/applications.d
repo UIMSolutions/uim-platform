@@ -46,7 +46,7 @@ class FileApplicationRepository : ApplicationRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 Application a;
                 a.id = ApplicationId(j["id"].str);
@@ -61,7 +61,7 @@ class FileApplicationRepository : ApplicationRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue[] arr;
         foreach (a; store.values) {
             arr ~= JSONValue(["id": JSONValue(a.id.value), "tenantId": JSONValue(a.tenantId.value),

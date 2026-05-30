@@ -46,7 +46,7 @@ public:
     auto wo = _repo.findById(tenantId, id);
     if (wo == WarehouseOrder.init) return CommandResult(false, "Warehouse order not found");
 
-    import std.conv : to;
+    
     WarehouseOrder updated;
     updated.id = wo.id;
     updated.tenantId = wo.tenantId;

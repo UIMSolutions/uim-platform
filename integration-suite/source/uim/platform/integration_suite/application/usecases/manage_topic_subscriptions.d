@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.application.usecases.manage_topic_subscriptions;
 import uim.platform.integration_suite;
-import std.conv : to;
+
 mixin(ShowModule!());
 @safe:
 

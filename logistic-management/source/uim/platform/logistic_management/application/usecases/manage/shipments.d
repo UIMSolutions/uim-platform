@@ -22,7 +22,7 @@ public:
     if (req.shipmentNumber.length == 0)
       return CommandResult(false, "Shipment number is required");
 
-    import std.conv : to;
+    
     Shipment s;
     s.id = ShipmentId(generateId());
     s.tenantId = tenantId;
@@ -48,7 +48,7 @@ public:
     auto s = _repo.findById(tenantId, id);
     if (s == Shipment.init) return CommandResult(false, "Shipment not found");
 
-    import std.conv : to;
+    
     Shipment updated;
     updated.id = s.id;
     updated.tenantId = s.tenantId;

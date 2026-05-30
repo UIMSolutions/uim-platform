@@ -50,7 +50,7 @@ class ManageTransportRequestsUseCase {
         req.systemId = dto.systemId;
         req.createdBy = dto.createdBy;
         if (dto.contentType.length > 0) {
-            import std.conv : to;
+            
             try { req.contentType = dto.contentType.to!ContentType; } catch (Exception) {}
         }
         req.status = RequestStatus.initial;

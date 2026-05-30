@@ -53,7 +53,7 @@ string[] jsonStrArray(Json j, string key) {
 
 // Extract the last path segment (used as an ID)
 string extractIdFromPath(HTTPServerRequest req) {
-  import std.conv : to;
+  
   auto p = req.requestPath.to!string;
   import std.algorithm : findSplitBefore;
   import std.string : lastIndexOf;

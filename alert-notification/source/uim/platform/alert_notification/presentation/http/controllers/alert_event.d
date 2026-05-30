@@ -22,7 +22,7 @@ class AlertEventController : PlatformController {
     }
 
     private void handlePost(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto body_    = req.json;
 

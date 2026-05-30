@@ -58,7 +58,7 @@ class ManageMemberFunctionsUseCase {
     }
 
     private static FunctionStatus parseFunctionStatus(string s) {
-        import std.conv : to;
+        
         try { return s.to!FunctionStatus; } catch (Exception) { return FunctionStatus.active; }
     }
 }

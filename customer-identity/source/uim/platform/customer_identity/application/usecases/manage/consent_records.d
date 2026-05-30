@@ -43,7 +43,7 @@ class ManageConsentRecordsUseCase {
         cr.version_ = dto.version_;
         cr.locale = dto.locale;
 
-        import std.conv : to;
+        
         try { cr.consentType = dto.consentType.to!ConsentType; }
         catch (Exception) { return CommandResult(false, "", "Invalid consent type"); }
         try { cr.legalBasis = dto.legalBasis.to!LegalBasis; }

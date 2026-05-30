@@ -38,7 +38,7 @@ class MongoPrintClientRepository : PrintClientRepository {
     }
 
     PrintClient[] findByStatus(TenantId tenantId, PrintClientStatus status) @trusted {
-        import std.conv : to;
+        
         PrintClient[] result;
         foreach (doc; coll.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToClient(doc);
@@ -52,7 +52,7 @@ class MongoPrintClientRepository : PrintClientRepository {
     }
 
     private static Bson clientToBson(const PrintClient c) {
-        import std.conv : to;
+        
         auto b = Bson.emptyObject;
         b["_id"] = Bson(c.id.value);
         b["tenantId"] = Bson(c.tenantId.value);
@@ -69,7 +69,7 @@ class MongoPrintClientRepository : PrintClientRepository {
     }
 
     private static PrintClient bsonToClient(Bson b) {
-        import std.conv : to;
+        
         PrintClient c;
         c.id = PrintClientId(b["_id"].get!string);
         c.tenantId = TenantId(b["tenantId"].get!string);

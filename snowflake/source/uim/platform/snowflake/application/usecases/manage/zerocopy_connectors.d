@@ -45,7 +45,7 @@ class ManageZerocopyConnectorsUseCase {
     if (c.isNull) return CommandResult(false, r.id, "Connector not found");
     if (r.name.length > 0) c.name = r.name;
     if (r.description.length > 0) c.description = r.description;
-    if (r.status.length > 0) { import std.conv : to; try { c.status = r.status.to!ConnectorStatus; } catch(Exception) {} }
+    if (r.status.length > 0) {  try { c.status = r.status.to!ConnectorStatus; } catch(Exception) {} }
     repo.update(c);
     return CommandResult(true, c.id.value, null);
   }

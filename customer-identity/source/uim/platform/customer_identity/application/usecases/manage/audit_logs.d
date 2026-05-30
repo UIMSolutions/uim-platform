@@ -42,7 +42,7 @@ class ManageAuditLogsUseCase {
         al.success = dto.success;
         al.timestamp = MonoTime.currTime.ticks;
 
-        import std.conv : to;
+        
         try { al.action = dto.action.to!AuditAction; }
         catch (Exception) { return CommandResult(false, "", "Invalid audit action"); }
         try { al.resourceType = dto.resourceType.to!ResourceType; }

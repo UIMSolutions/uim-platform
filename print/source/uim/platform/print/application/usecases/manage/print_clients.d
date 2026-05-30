@@ -41,7 +41,7 @@ class ManagePrintClientsUseCase {
 
         import std.digest.sha : sha256Of;
         import std.digest : toHexString;
-        import std.conv : to;
+        
         client.authToken = sha256Of(client.id.value ~ client.hostName).toHexString.to!string;
 
         if (!PrintValidator.isValidPrintClient(client))

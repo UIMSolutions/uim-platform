@@ -6,7 +6,7 @@
 module uim.platform.hana_spatial.infrastructure.config;
 
 import std.process : environment;
-import std.conv : to;
+
 
 import uim.platform.hana_spatial;
 

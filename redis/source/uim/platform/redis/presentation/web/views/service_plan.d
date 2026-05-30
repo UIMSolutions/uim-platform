@@ -6,7 +6,7 @@
 module uim.platform.redis.presentation.web.views.service_plan;
 
 import uim.platform.redis;
-import std.conv : to;
+
 import std.format : format;
 
 mixin(ShowModule!());

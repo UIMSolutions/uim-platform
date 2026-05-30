@@ -135,7 +135,7 @@ class ManageScalingPoliciesUseCase {
   }
 
   private string generateId() @safe {
-    import std.conv : to;
+    
     import core.time : MonoTime;
     import std.random : uniform;
     return "pol-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;

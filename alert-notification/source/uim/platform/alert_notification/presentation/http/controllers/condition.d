@@ -26,7 +26,7 @@ class ConditionController : ManageController {
     }
 
     private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto body_    = req.json;
         CreateConditionRequest dto;
@@ -48,7 +48,7 @@ class ConditionController : ManageController {
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto id       = req.requestPath.to!string.pathId;
         auto result   = usecase.getCondition(tenantId, id);
@@ -57,7 +57,7 @@ class ConditionController : ManageController {
     }
 
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto id       = req.requestPath.to!string.pathId;
         auto body_    = req.json;
@@ -73,7 +73,7 @@ class ConditionController : ManageController {
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        import std.conv : to;
+        
         auto tenantId = req.headers.get("X-Tenant-Id", "default");
         auto id       = req.requestPath.to!string.pathId;
         auto result   = usecase.deleteCondition(tenantId, id);

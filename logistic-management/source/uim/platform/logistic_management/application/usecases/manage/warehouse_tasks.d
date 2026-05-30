@@ -26,7 +26,7 @@ public:
     if (req.productId.length == 0)
       return CommandResult(false, "Product ID is required");
 
-    import std.conv : to;
+    
     WarehouseTask wt;
     wt.id = WarehouseTaskId(generateId());
     wt.tenantId = tenantId;

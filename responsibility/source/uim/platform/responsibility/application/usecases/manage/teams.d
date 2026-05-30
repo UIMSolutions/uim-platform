@@ -65,12 +65,12 @@ class ManageTeamsUseCase {
     }
 
     private static TeamStatus parseStatus(string s) {
-        import std.conv : to;
+        
         try { return s.to!TeamStatus; } catch (Exception) { return TeamStatus.active; }
     }
 
     private static AssignmentScope parseScope(string s) {
-        import std.conv : to;
+        
         try { return s.to!AssignmentScope; } catch (Exception) { return AssignmentScope.global_; }
     }
 }

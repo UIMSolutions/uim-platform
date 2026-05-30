@@ -55,7 +55,7 @@ class TaskInboxView : Box {
             _listBox.remove(child);
 
         immutable overdue = _model.overdueCount();
-        import std.conv : to;
+        
         _summaryLabel.setText(
             _model.count.to!string ~ " task(s)" ~
             (overdue > 0 ? "  ⚠ " ~ overdue.to!string ~ " overdue" : "")

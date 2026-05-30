@@ -53,7 +53,7 @@ class ManageDataProvidersUseCase {
     if (r.connectionUrl.length > 0)  p.connectionUrl = r.connectionUrl;
     if (r.region.length > 0)         p.region = r.region;
     if (r.status.length > 0) {
-      import std.conv : to;
+      
       try { p.status = r.status.to!DataProviderStatus; } catch (Exception) {}
     }
 

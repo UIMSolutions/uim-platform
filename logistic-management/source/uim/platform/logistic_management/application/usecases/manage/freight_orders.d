@@ -31,7 +31,7 @@ public:
         return CommandResult(false, "Carrier is not available or does not exist");
     }
 
-    import std.conv : to;
+    
     FreightOrder fo;
     fo.id = FreightOrderId(generateId());
     fo.tenantId = tenantId;
@@ -62,7 +62,7 @@ public:
     if (fo.status != FreightOrderStatus.draft && fo.status != FreightOrderStatus.planned)
       return CommandResult(false, "Cannot update a freight order that is in transit or completed");
 
-    import std.conv : to;
+    
     FreightOrder updated;
     updated.id = fo.id;
     updated.tenantId = fo.tenantId;
@@ -96,7 +96,7 @@ public:
     auto fo = _repo.findById(tenantId, id);
     if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
 
-    import std.conv : to;
+    
     FreightOrderStatus newStatus;
     try { newStatus = req.status.to!FreightOrderStatus; }
     catch (Exception) { return CommandResult(false, "Invalid status value"); }

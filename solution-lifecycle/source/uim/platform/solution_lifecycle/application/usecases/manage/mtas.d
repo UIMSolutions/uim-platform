@@ -29,7 +29,7 @@ class ManageMtasUseCase {
     // Deploy a new MTA from an uploaded archive
     // ------------------------------------------------------------------
     CommandResult deployMta(DeployMtaRequest r) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
 
         // Locate archive
@@ -90,7 +90,7 @@ class ManageMtasUseCase {
     // Update an existing deployed MTA
     // ------------------------------------------------------------------
     CommandResult updateMta(UpdateMtaRequest r) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
 
         auto mtas = mtaRepo.findByTenant(r.tenantId);
@@ -146,7 +146,7 @@ class ManageMtasUseCase {
     // Delete (async)
     // ------------------------------------------------------------------
     CommandResult deleteMta(DeleteMtaRequest r) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
 
         auto mtas = mtaRepo.findByTenant(r.tenantId);

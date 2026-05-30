@@ -26,7 +26,7 @@ public:
     if (req.deliveryNumber.length == 0)
       return CommandResult(false, "Delivery number is required");
 
-    import std.conv : to;
+    
     Delivery d;
     d.id = DeliveryId(generateId());
     d.tenantId = tenantId;
@@ -63,7 +63,7 @@ public:
     auto d = _repo.findById(tenantId, id);
     if (d == Delivery.init) return CommandResult(false, "Delivery not found");
 
-    import std.conv : to;
+    
     DeliveryStatus newStatus;
     if (req.status.length > 0) {
       try { newStatus = req.status.to!DeliveryStatus; } catch (Exception) { return CommandResult(false, "Invalid status value"); }

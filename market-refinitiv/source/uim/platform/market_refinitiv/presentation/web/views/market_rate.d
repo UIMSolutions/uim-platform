@@ -1,7 +1,7 @@
 module uim.platform.market_refinitiv.presentation.web.views.market_rate;
 
 import uim.platform.market_refinitiv;
-import std.conv : to;
+
 
 @safe:
 

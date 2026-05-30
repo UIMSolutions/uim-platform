@@ -2,7 +2,7 @@ module uim.platform.snowflake.presentation.http.zerocopy_connectors;
 import uim.platform.snowflake;
 import vibe.http.server;
 import vibe.http.router;
-import std.conv : to;
+
 mixin(ShowModule!());
 @safe:
 class ZerocopyConnectorController : ManageController {

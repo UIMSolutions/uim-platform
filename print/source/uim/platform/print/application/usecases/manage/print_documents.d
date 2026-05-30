@@ -38,7 +38,7 @@ class ManagePrintDocumentsUseCase {
         doc.description = dto.description;
         doc.expiresAt = dto.expiresAt;
         if (dto.format.length > 0) {
-            import std.conv : to;
+            
             try { doc.format = dto.format.to!DocumentFormat; } catch (Exception) {}
         }
 

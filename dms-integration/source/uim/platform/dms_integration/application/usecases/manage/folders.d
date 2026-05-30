@@ -54,7 +54,7 @@ class ManageFoldersUseCase {
         folder.customProperties = dto.customProperties;
         folder.createdBy = dto.createdBy;
         if (dto.folderType.length > 0) {
-            import std.conv : to;
+            
             try { folder.folderType = dto.folderType.to!FolderType; } catch (Exception) {}
         }
         if (!DmsValidator.isValidFolder(folder))

@@ -57,7 +57,7 @@ class ManageRepositoriesUseCase {
         r.isDefault = dto.isDefault;
         r.createdBy = dto.createdBy;
         if (dto.repositoryType.length > 0) {
-            import std.conv : to;
+            
             try { r.repositoryType = dto.repositoryType.to!RepositoryType; } catch (Exception) {}
         }
         r.status = RepositoryStatus.provisioning;

@@ -44,7 +44,7 @@ class ManageIdentityProvidersUseCase {
         ip.scopes = dto.scopes;
         ip.status = IdentityProviderStatus.inactive;
 
-        import std.conv : to;
+        
         try { ip.providerType = dto.providerType.to!IdentityProviderType; }
         catch (Exception) { return CommandResult(false, "", "Invalid provider type"); }
 

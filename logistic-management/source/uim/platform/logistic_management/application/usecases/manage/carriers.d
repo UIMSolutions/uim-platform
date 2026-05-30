@@ -40,7 +40,7 @@ public:
     c.status = CarrierStatus.active;
     c.createdAt = currentTimeMs();
     c.updatedAt = c.createdAt;
-    import std.conv : to;
+    
     foreach (m; req.supportedModes) {
       try { c.supportedModes ~= m.to!TransportMode; } catch (Exception) {}
     }
@@ -65,7 +65,7 @@ public:
     updated.taxId = c.taxId;
     updated.createdAt = c.createdAt;
     updated.updatedAt = currentTimeMs();
-    import std.conv : to;
+    
     if (req.status.length > 0) {
       try { updated.status = req.status.to!CarrierStatus; } catch (Exception) { updated.status = c.status; }
     } else {

@@ -6,7 +6,7 @@
 module uim.platform.redis.presentation.web.views.metric;
 
 import uim.platform.redis;
-import std.conv : to;
+
 import std.format : format;
 
 mixin(ShowModule!());

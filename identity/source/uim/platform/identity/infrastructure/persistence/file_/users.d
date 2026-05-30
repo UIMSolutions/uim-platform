@@ -55,7 +55,7 @@ class FileUserRepository : UserRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             auto jarr = parseJSON(readText(filePath())).array;
             foreach (j; jarr) {
                 User u;
@@ -74,7 +74,7 @@ class FileUserRepository : UserRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue[] arr;
         foreach (u; store.values) {
             auto j = JSONValue(["id": JSONValue(u.id.value), "tenantId": JSONValue(u.tenantId.value),

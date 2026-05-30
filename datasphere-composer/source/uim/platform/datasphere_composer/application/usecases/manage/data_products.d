@@ -53,7 +53,7 @@ class ManageDataProductsUseCase {
     if (r.description.length > 0) p.description = r.description;
     p.enabled = r.enabled;
     if (r.status.length > 0) {
-      import std.conv : to;
+      
       try { p.status = r.status.to!DataProductStatus; } catch (Exception) {}
     }
 

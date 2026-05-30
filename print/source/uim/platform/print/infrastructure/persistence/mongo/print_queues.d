@@ -47,7 +47,7 @@ class MongoPrintQueueRepository : PrintQueueRepository {
     }
 
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status) @trusted {
-        import std.conv : to;
+        
         PrintQueue[] result;
         foreach (doc; coll.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToQueue(doc);
@@ -68,7 +68,7 @@ class MongoPrintQueueRepository : PrintQueueRepository {
     }
 
     private static Bson queueToBson(const PrintQueue q) {
-        import std.conv : to;
+        
         auto b = Bson.emptyObject;
         b["_id"] = Bson(q.id.value);
         b["tenantId"] = Bson(q.tenantId.value);
@@ -85,7 +85,7 @@ class MongoPrintQueueRepository : PrintQueueRepository {
     }
 
     private static PrintQueue bsonToQueue(Bson b) {
-        import std.conv : to;
+        
         PrintQueue q;
         q.id = PrintQueueId(b["_id"].get!string);
         q.tenantId = TenantId(b["tenantId"].get!string);

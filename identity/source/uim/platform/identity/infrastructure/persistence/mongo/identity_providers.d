@@ -41,14 +41,14 @@ class MongoIdentityProviderRepository : IdentityProviderRepository {
         return doc.isNull ? IdentityProvider.init : bsonToEntity(doc);
     }
     IdentityProvider[] findByStatus(TenantId tenantId, IdpStatus status) @trusted {
-        import std.conv : to;
+        
         IdentityProvider[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToEntity(doc);
         return result;
     }
     IdentityProvider[] findByType(TenantId tenantId, IdpType type_) @trusted {
-        import std.conv : to;
+        
         IdentityProvider[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "type": Bson(type_.to!string)]))
             result ~= bsonToEntity(doc);
@@ -56,7 +56,7 @@ class MongoIdentityProviderRepository : IdentityProviderRepository {
     }
 
     private static Bson entityToBson(IdentityProvider idp) @trusted {
-        import std.conv : to;
+        
         return Bson(["_id": Bson(idp.id.value), "tenantId": Bson(idp.tenantId.value),
             "name": Bson(idp.name), "entityId": Bson(idp.entityId),
             "type": Bson(idp.type_.to!string), "status": Bson(idp.status.to!string),
@@ -64,7 +64,7 @@ class MongoIdentityProviderRepository : IdentityProviderRepository {
     }
 
     private static IdentityProvider bsonToEntity(Bson doc) @trusted {
-        import std.conv : to;
+        
         IdentityProvider idp;
         idp.id = IdentityProviderId(doc["_id"].get!string);
         idp.tenantId = TenantId(doc["tenantId"].get!string);

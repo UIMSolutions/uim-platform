@@ -38,7 +38,7 @@ class ManageIdentityProvidersUseCase {
         idp.status = IdpStatus.active;
 
         if (dto.type_.length > 0) {
-            import std.conv : to;
+            
             try { idp.type_ = dto.type_.to!IdpType; } catch (Exception) { idp.type_ = IdpType.oidc; }
         }
 
@@ -61,7 +61,7 @@ class ManageIdentityProvidersUseCase {
         if (dto.allowedDomains.length > 0) existing.allowedDomains = dto.allowedDomains;
         existing.isDefault = dto.isDefault;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = dto.status.to!IdpStatus; } catch (Exception) {}
         }
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;

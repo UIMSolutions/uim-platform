@@ -2,7 +2,7 @@ module uim.platform.snowflake.presentation.http.data_product_shares;
 import uim.platform.snowflake;
 import vibe.http.server;
 import vibe.http.router;
-import std.conv : to;
+
 mixin(ShowModule!());
 @safe:
 class DataProductShareController : ManageController {

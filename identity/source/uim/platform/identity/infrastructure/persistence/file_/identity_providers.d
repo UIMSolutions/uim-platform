@@ -50,7 +50,7 @@ class FileIdentityProviderRepository : IdentityProviderRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 IdentityProvider idp;
                 idp.id = IdentityProviderId(j["id"].str);
@@ -66,7 +66,7 @@ class FileIdentityProviderRepository : IdentityProviderRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue[] arr;
         foreach (idp; store.values) {
             arr ~= JSONValue(["id": JSONValue(idp.id.value), "tenantId": JSONValue(idp.tenantId.value),

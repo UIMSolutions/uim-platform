@@ -69,7 +69,7 @@ class FileAuditEntryRepository : AuditEntryRepository {
                 AuditEntry e;
                 e.id          = AuditEntryId(j["id"].get!string);
                 e.tenantId    = j["tenantId"].get!string;
-                import std.conv : to;
+                
                 e.action_     = j["action"].get!string.to!AuditAction;
                 e.entityType  = j["entityType"].get!string;
                 e.entityId    = j["entityId"].get!string;

@@ -8,7 +8,7 @@ module uim.platform.appevents.domain.entities.event_subscription;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.subscription_status;
-import std.conv : to;
+
 
 @safe:
 

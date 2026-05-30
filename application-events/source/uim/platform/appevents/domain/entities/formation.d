@@ -8,7 +8,7 @@ module uim.platform.appevents.domain.entities.formation;
 import uim.platform.service;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.formation_status;
-import std.conv : to;
+
 
 @safe:
 

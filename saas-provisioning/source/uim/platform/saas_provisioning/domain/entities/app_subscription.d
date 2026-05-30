@@ -28,7 +28,7 @@ class AppSubscription {
     string            error;                     /// Last error message (when state == failed)
 
     Json toJson() {
-        import std.conv : to;
+        
         auto j = Json.emptyObject;
         j["id"]                        = Json(id.value);
         j["tenantId"]                  = Json(tenantId);

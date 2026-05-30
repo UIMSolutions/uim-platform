@@ -70,7 +70,7 @@ class ManageTeamMembersUseCase {
     }
 
     private static MemberRole parseRole(string s) {
-        import std.conv : to;
+        
         try { return s.to!MemberRole; } catch (Exception) { return MemberRole.responsible; }
     }
 }

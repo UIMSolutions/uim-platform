@@ -32,7 +32,7 @@ class ManageSnowflakeAccountsUseCase {
     auto a = repo.findById(TenantId(r.tenantId), SnowflakeAccountId(r.id));
     if (a.isNull) return CommandResult(false, r.id, "Account not found");
     if (r.name.length > 0) a.name = r.name;
-    if (r.status.length > 0) { import std.conv : to; try { a.status = r.status.to!AccountStatus; } catch(Exception) {} }
+    if (r.status.length > 0) {  try { a.status = r.status.to!AccountStatus; } catch(Exception) {} }
     repo.update(a);
     return CommandResult(true, a.id.value, null);
   }

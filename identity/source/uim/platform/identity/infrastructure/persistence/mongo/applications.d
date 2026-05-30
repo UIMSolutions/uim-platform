@@ -37,14 +37,14 @@ class MongoApplicationRepository : ApplicationRepository {
         return doc.isNull ? Application.init : bsonToEntity(doc);
     }
     Application[] findByStatus(TenantId tenantId, AppStatus status) @trusted {
-        import std.conv : to;
+        
         Application[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
             result ~= bsonToEntity(doc);
         return result;
     }
     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) @trusted {
-        import std.conv : to;
+        
         Application[] result;
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "protocol": Bson(protocol.to!string)]))
             result ~= bsonToEntity(doc);
@@ -52,14 +52,14 @@ class MongoApplicationRepository : ApplicationRepository {
     }
 
     private static Bson entityToBson(Application a) @trusted {
-        import std.conv : to;
+        
         return Bson(["_id": Bson(a.id.value), "tenantId": Bson(a.tenantId.value),
             "name": Bson(a.name), "clientId": Bson(a.clientId),
             "protocol": Bson(a.protocol.to!string), "status": Bson(a.status.to!string)]);
     }
 
     private static Application bsonToEntity(Bson doc) @trusted {
-        import std.conv : to;
+        
         Application a;
         a.id = ApplicationId(doc["_id"].get!string);
         a.tenantId = TenantId(doc["tenantId"].get!string);

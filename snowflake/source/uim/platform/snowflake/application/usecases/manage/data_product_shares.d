@@ -43,7 +43,7 @@ class ManageDataProductSharesUseCase {
   }
 
   CommandResult update(UpdateShareRequest r) {
-    import std.conv : to;
+    
     auto s = repo.findById(TenantId(r.tenantId), DataProductShareId(r.id));
     if (s.isNull) return CommandResult(false, r.id, "Share not found");
     if (r.status.length > 0) try { s.status = r.status.to!ShareStatus; } catch(Exception) {}

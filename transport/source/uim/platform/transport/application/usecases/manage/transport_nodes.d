@@ -51,7 +51,7 @@ class ManageTransportNodesUseCase {
         node.autoImportSchedule = dto.autoImportSchedule;
         node.createdBy = dto.createdBy;
         if (dto.nodeType.length > 0) {
-            import std.conv : to;
+            
             try { node.nodeType = dto.nodeType.to!NodeType; } catch (Exception) {}
         }
         node.status = NodeStatus.enabled;

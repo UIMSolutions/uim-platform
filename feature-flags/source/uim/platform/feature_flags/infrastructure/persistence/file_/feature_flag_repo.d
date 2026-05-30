@@ -95,7 +95,7 @@ class FileFeatureFlagRepository : FeatureFlagRepository {
         f.tenantId    = j["tenantId"].get!string;
         f.name        = j["name"].get!string;
         f.description = j["description"].get!string;
-        import std.conv : to;
+        
         f.type_       = j["type"].get!string.to!FlagType;
         f.state_      = j["state"].get!string.to!FlagState;
         f.instanceId  = ServiceInstanceId(j["instanceId"].get!string);

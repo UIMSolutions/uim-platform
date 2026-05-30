@@ -17,7 +17,7 @@ class ManageSubscriptionsUseCase {
     this(SubscriptionRepository repo) { this.repo = repo; }
 
     CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
-        import std.conv : to;
+        
         import std.uuid : randomUUID;
 
         auto existing = repo.findByName(tenantId, req.name);
@@ -53,7 +53,7 @@ class ManageSubscriptionsUseCase {
     }
 
     CommandResult updateSubscription(TenantId tenantId, string id, UpdateSubscriptionRequest req) {
-        import std.conv : to;
+        
         auto sub = repo.findById(tenantId, SubscriptionId(id));
         if (sub is null || sub.isNull())
             return CommandResult(false, "Subscription not found");

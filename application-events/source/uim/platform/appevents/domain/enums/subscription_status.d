@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.appevents.domain.enums.subscription_status;
-import std.conv : to;
+
 mixin template ShowModule() { static if (__traits(compiles, { import vibe.d; })) {} }
 @safe:
 enum SubscriptionStatus { active, inactive, pending, error_ }

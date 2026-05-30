@@ -6,7 +6,7 @@
 module uim.platform.redis.presentation.web.controllers.configuration;
 
 import uim.platform.redis;
-import std.conv : to;
+
 
 mixin(ShowModule!());
 

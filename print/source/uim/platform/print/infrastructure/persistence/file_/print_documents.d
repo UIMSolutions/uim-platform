@@ -54,7 +54,7 @@ class FilePrintDocumentRepository : PrintDocumentRepository {
     private void loadFromFile() @trusted {
         if (!filePath().exists) return;
         try {
-            import std.conv : to;
+            
             foreach (j; parseJSON(readText(filePath())).array) {
                 PrintDocument d;
                 d.id = PrintDocumentId(j["id"].str);
@@ -72,7 +72,7 @@ class FilePrintDocumentRepository : PrintDocumentRepository {
     }
 
     private void persist() @trusted {
-        import std.conv : to;
+        
         JSONValue arr = JSONValue(cast(JSONValue[]) []);
         foreach (d; store.values) {
             JSONValue j;

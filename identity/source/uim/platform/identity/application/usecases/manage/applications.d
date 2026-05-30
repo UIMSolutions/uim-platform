@@ -31,11 +31,11 @@ class ManageApplicationsUseCase {
         app.status = AppStatus.active;
 
         if (dto.protocol.length > 0) {
-            import std.conv : to;
+            
             try { app.protocol = dto.protocol.to!AppProtocol; } catch (Exception) { app.protocol = AppProtocol.oidc; }
         }
         if (dto.authScheme.length > 0) {
-            import std.conv : to;
+            
             try { app.authScheme = dto.authScheme.to!AuthScheme; } catch (Exception) { app.authScheme = AuthScheme.form; }
         }
 
@@ -67,7 +67,7 @@ class ManageApplicationsUseCase {
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.status.length > 0) {
-            import std.conv : to;
+            
             try { existing.status = dto.status.to!AppStatus; } catch (Exception) {}
         }
         if (dto.redirectUris.length > 0) existing.redirectUris = dto.redirectUris;

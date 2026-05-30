@@ -34,7 +34,7 @@ class ManageMtaSubscriptionsUseCase {
     }
 
     CommandResult subscribe(SubscribeMtaRequest r) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
 
         auto dres = engine.beginSubscribe(r.providerMtaId, r.providerTenantId, r.tenantId);
@@ -73,7 +73,7 @@ class ManageMtaSubscriptionsUseCase {
     }
 
     CommandResult unsubscribe(UnsubscribeMtaRequest r) {
-        import std.conv : to;
+        
         import core.time : MonoTime;
 
         auto sub = getSubscription(r.tenantId, MtaSubscriptionId(r.subscriptionId));
