@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.presentation.http.controllers.model;
 
-
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.manage.models;
 // import uim.platform.data_attribute_recommendation.application.dto;
@@ -35,211 +34,166 @@ class ModelController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateModelConfigRequest();
-      r.tenantId = tenantId;
-      r.datasetId = data.getString("datasetId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.modelType = parseModelType(data.getString("modelType"));
-      r.targetColumns = data.getString("targetColumns");
-      r.featureColumns = data.getString("featureColumns");
-      r.hyperparameters = data.getString("hyperparameters");
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+    auto data = precheck.data;
+    auto r = CreateModelConfigRequest();
+    r.tenantId = tenantId;
+    r.datasetId = data.getString("datasetId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.modelType = parseModelType(data.getString("modelType"));
+    r.targetColumns = data.getString("targetColumns");
+    r.featureColumns = data.getString("featureColumns");
+    r.hyperparameters = data.getString("hyperparameters");
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.createModelConfig(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Model configuration created successfully");
+    auto result = usecase.createModelConfig(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Model configuration created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listModelConfigs(tenantId);
-      auto arr = items.map!(c => c.toJson).array.toJson;
+    auto items = usecase.listModelConfigs(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", items.length)
-            .set("message", "Model configurations retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Model configuration list retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto config = usecase.getModelConfig(tenantId, id);
-      if (config.isNull) {
-        writeError(res, 404, "Model configuration not found");
-        return;
-      }
-      res.writeJsonBody(config.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+
+    auto id = ModelConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model configuration ID", 400);
+    auto config = usecase.getModelConfig(tenantId, id);
+    if (config.isNull)
+      return errorResponse("Model configuration not found", 404);
+
+    auto responseData = config.toJson();
+    return successResponse("Model configuration retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = UpdateModelConfigRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.modelType = parseModelType(data.getString("modelType"));
-      r.targetColumns = data.getString("targetColumns");
-      r.featureColumns = data.getString("featureColumns");
-      r.hyperparameters = data.getString("hyperparameters");
+    auto tenantId = precheck.tenantId;
+    auto id = ModelConfigurationId(precheck.id);
+    auto data = precheck.data;
+    auto r = UpdateModelConfigRequest();
+    r.id = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.modelType = parseModelType(data.getString("modelType"));
+    r.targetColumns = data.getString("targetColumns");
+    r.featureColumns = data.getString("featureColumns");
+    r.hyperparameters = data.getString("hyperparameters");
 
-      auto result = usecase.updateModelConfig(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Model configuration updated successfully");
+    auto result = usecase.updateModelConfig(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.message == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Model configuration updated successfully", 200, responseData);
+  }
+
+  protected Json activateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ModelConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model configuration ID", 400);
+
+    auto result = usecase.activateModelConfig(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Model configuration activated successfully", 200, responseData);
   }
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.activateConfig(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("status", Json("ready"))
-            .set("message", "Model configuration activated successfully");
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.message == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    }
-    catch (Exception e) {
+    try {
+      auto response = activateHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json trainHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ModelConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model configuration ID", 400);
+
+    auto r = StartTrainingRequest();
+    r.modelConfigId = id;
+    r.tenantId = tenantId;
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+
+    auto result = usecase.startTraining(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("jobId", result.id);
+    return successResponse("Model training started successfully", "Running", 202, responseData);
+  }
+
   protected void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto r = StartTrainingRequest();
-      r.modelConfigId = id;
-      r.tenantId = tenantId;
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
-
-      auto result = usecase.startTraining(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("jobId", result.id)
-            .set("status", Json("running"))
-            .set("message", "Model training started successfully");
-
-        res.writeJsonBody(resp, 202);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    try {
+      auto response = trainHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.deleteModelConfig(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-            .set("deleted", true)
-            .set("message", "Model configuration deleted successfully");
-            
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.message == "Model configuration not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = precheck.tenantId;
+    auto id = ModelConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model configuration ID", 400);
 
-  private static Json serializeConfig(const ModelConfiguration c) {
-    return Json.emptyObject
-    .set("id", c.id)
-    .set("tenantId", c.tenantId)
-    .set("datasetId", c.datasetId)
-    .set("name", c.name)
-    .set("description", c.description)
-    .set("modelType", c.modelType.to!string)
-    .set("targetColumns", c.targetColumns)
-    .set("featureColumns", c.featureColumns)
-    .set("hyperparameters", c.hyperparameters)
-    .set("status", c.status.to!string)
-    .set("createdBy", c.createdBy)
-    .set("createdAt", c.createdAt)
-    .set("updatedAt", c.updatedAt);
+    auto result = usecase.deleteModelConfig(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Model configuration deleted successfully", "Deleted", 200, responseData);
   }
 }

@@ -30,17 +30,17 @@ struct RetentionPolicy {
       .set("isDefault", isDefault);
   }
 
-  static RetentionPolicy fromJson(Json j) {
+  static RetentionPolicy fromJson(Json data) {
     RetentionPolicy p;
-    p.id = RetentionPolicyId(precheck.id);
+    p.id = RetentionPolicyId(data.getString("id"));
     p.tenantId = TenantId(data.getString("tenantId"));
     p.name = data.getString("name");
     p.description = data.getString("description");
     p.retentionDays = data.getInteger("retentionDays");
-    foreach (c; j.getArray("categories"))
+    foreach (c; data.getArray("categories"))
       p.categories ~= toAuditCategory(c.getString);
     //
-    // p.categories = j.getArray("categories").map!(c => toAuditCategory(c.getString)).array.toJson;
+    // p.categories = data.getArray("categories").map!(c => toAuditCategory(c.getString)).array.toJson;
     p.status = data.getString("status").to!RetentionStatus;
     p.isDefault = data.getBoolean("isDefault");
     p.createdAt = data.getLong("createdAt");

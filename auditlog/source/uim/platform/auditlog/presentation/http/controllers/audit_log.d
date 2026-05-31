@@ -55,7 +55,7 @@ class AuditLogController : PlatformController {
     r.objectType = data.getString("objectType");
     r.objectId = data.getString("objectId");
     r.message = data.getString("message");
-    r.attributes = parseAttributes(j);
+    r.attributes = parseAttributes(data);
     r.ipAddress = data.getString("ipAddress");
     r.userAgent = data.getString("userAgent");
     r.correlationId = data.getString("correlationId");
@@ -67,8 +67,7 @@ class AuditLogController : PlatformController {
 
     return successResponse("Audit log entry created successfully", 201,
       Json.emptyObject.set("id", result.id));
-
-  }
+    }
 
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
@@ -139,9 +138,9 @@ class AuditLogController : PlatformController {
     return successResponse("Audit log entry retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  private static AuditAttribute[] parseAttributes(Json j) {
+  private static AuditAttribute[] parseAttributes(Json data) {
     AuditAttribute[] result;
-    foreach (item; j.getArray("attributes")) {
+    foreach (item; data.getArray("attributes")) {
       if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),
           item.getString("oldValue"), item.getString("newValue"));

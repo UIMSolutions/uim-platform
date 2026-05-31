@@ -31,123 +31,115 @@ class ArchiveRequestController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateArchiveRequest r;
-      r.tenantId = tenantId;
-      r.subjectId = data.getString("dataSubjectId");
-      r.requestedBy = data.getString("requestedBy");
-      r.targetSystems = j.getStrings("targetSystems");
-      r.categories = j.getStrings("categories");
-      r.archiveLocation = data.getString("archiveLocation");
-      r.reason = data.getString("reason");
-      r.isTestMode = data.getBoolean("isTestMode", false);
-      r.scheduledAt = data.getLong("scheduledAt");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateArchiveRequest r;
+    r.tenantId = tenantId;
+    r.subjectId = data.getString("dataSubjectId");
+    r.requestedBy = data.getString("requestedBy");
+    r.targetSystems = j.getStrings("targetSystems");
+    r.categories = j.getStrings("categories");
+    r.archiveLocation = data.getString("archiveLocation");
+    r.reason = data.getString("reason");
+    r.isTestMode = data.getBoolean("isTestMode", false);
+    r.scheduledAt = data.getLong("scheduledAt");
 
-      auto result = usecase.createRequest(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Archive request created");
+    auto result = usecase.createRequest(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Archive request created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listRequests(tenantId);
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto items = usecase.listRequests(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Archive requests retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Archive requests retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ArchiveRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = ArchiveRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid archive request ID", 400);
 
-      auto entry = usecase.getRequest(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Archive request not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getRequest(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Archive request retrieved successfully", 200, responseData);
   }
 
-  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UpdateArchiveStatusRequest r;
-      r.tenantId = tenantId;
-      r.requestId = ArchiveRequestId(precheck.id);
-      r.status = data.getString("status");
+  protected Json updateStatusHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateStatus(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Archive request status updated");
+    auto tenantId = precheck.tenantId;
+    auto id = ArchiveRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid archive request ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
+    auto data = precheck.data;
+    UpdateArchiveStatusRequest r;
+    r.tenantId = tenantId;
+    r.requestId = id;
+    r.status = data.getString("status");
+
+    auto result = usecase.updateStatus(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Archive request status updated successfully", 200, responseData);
+  }
+
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = updateStatusHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ArchiveRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = ArchiveRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid archive request ID", 400);
 
-      usecase.deleteRequest(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+    auto result = usecase.deleteRequest(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private static ArchiveStatus parseArchiveStatus(string status) {
-    switch (status) {
-    case "inProgress":
-      return ArchiveStatus.inProgress;
-    case "completed":
-      return ArchiveStatus.completed;
-    case "failed":
-      return ArchiveStatus.failed;
-    default:
-      return ArchiveStatus.scheduled;
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Archive request deleted successfully", 200, responseData);
   }
 }

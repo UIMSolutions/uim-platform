@@ -6,7 +6,6 @@
 module uim.platform.data_attribute_recommendation.presentation.http.controllers
   .monitoring;
 
-
 // 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.monitor_training;
@@ -32,72 +31,95 @@ class MonitoringController : PlatformController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  override protected void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto jobs = usecase.listTrainingJobs(tenantId);
+  protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto arr = jobs.map!(j => j.toJson).array.toJson;
+    auto tenantId = precheck.tenantId;
 
-      auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(jobs.length))
-            .set("message", "Training jobs retrieved successfully");
-            
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto jobs = usecase.listTrainingJobs(tenantId);
+    auto list = jobs.map!(j => j.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse( "Training job list retrieved successfully", 200, responseData);
+  }
+
+  protected Json jobHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = TrainingJobId(precheck.id);
+
+    auto job = usecase.getTrainingJob(tenantId, id);
+    if (job.isNull)
+      return errorResponse("Training job not found", 404);
+
+    auto responseData = job.toJson();
+    return successResponse( "Training job retrieved successfully", 200, responseData);
   }
 
   protected void handleJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto job = usecase.getTrainingJob(tenantId, id);
-      if (job.jobId.isEmpty) {
-        writeError(res, 404, "Training job not found");
-        return;
-      }
-      res.writeJsonBody(job.toJson, 200);
+    try {
+     auto response = jobHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listDeploymentsHandler(HTTPServerRequest req) {
+     auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto deps = usecase.listDeploymentSummaries(tenantId);
+    auto list = deps.map!(d => d.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Deployment list retrieved successfully", 200, responseData);
+  }
+  protected void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto deps = usecase.listDeploymentSummaries(tenantId);
-
-      auto arr = deps.map!(d => d.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", deps.length);
-
-      res.writeJsonBody(resp, 200);
+      auto response = listDeploymentsHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json pipelineHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getPipelineSummary(tenantId);
+
+    auto responseData = Json.emptyObject
+      .set("totalModels", summary.totalModels)
+      .set("trainedModels", summary.trainedModels)
+      .set("activeDeployments", summary.activeDeployments)
+      .set("totalTrainingJobs", summary.totalTrainingJobs)
+      .set("completedJobs", summary.completedJobs)
+      .set("failedJobs", summary.failedJobs)
+      .set("totalInferenceRequests", summary.totalInferenceRequests);
+
+    return successResponse("Pipeline summary retrieved successfully", 200, responseData);
+  }
+
+  protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getPipelineSummary(tenantId);
-
-      auto response = Json.emptyObject
-        .set("totalModels", summary.totalModels)
-        .set("trainedModels", summary.trainedModels)
-        .set("activeDeployments", summary.activeDeployments)
-        .set("totalTrainingJobs", summary.totalTrainingJobs)
-        .set("completedJobs", summary.completedJobs)
-        .set("failedJobs", summary.failedJobs)
-        .set("totalInferenceRequests", summary.totalInferenceRequests);
-
-      res.writeJsonBody(response, 200);
+      auto response = pipelineHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

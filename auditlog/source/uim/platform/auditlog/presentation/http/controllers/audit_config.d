@@ -33,30 +33,40 @@ class AuditConfigController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto tenantId = precheck.tenantId;
-    
-    auto configs = useCase.listAuditConfigs(tenantId);
-    auto arr = configs.map!(c => c.toJson).array.toJson;
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    return Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", configs.length)
-      .set("message", "Audit configs retrieved successfully");
+        auto tenantId = precheck.tenantId;
+
+    auto configs = useCase.listAuditConfigs(tenantId);
+    auto list = configs.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Audit config list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override Json createHandler(HTTPServerRequest req) {
-    auto request = CreateAuditConfigRequest();
-    request.tenantId = TenantId(req.json.getString("tenantId"));
-    request.name = req.json.getString("name");
-    request.logDataAccess = req.json.getBoolean("logDataAccess", true);
-    request.logDataModification = req.json.getBoolean("logDataModification", true);
-    request.logSecurityEvents = req.json.getBoolean("logSecurityEvents", true);
-    request.logConfigurationChanges = req.json.getBoolean("logConfigurationChanges", true);
-    request.enableDataMasking = req.json.getBoolean("enableDataMasking");
-    request.maskedFields = getStrings(req.json, "maskedFields");
-    request.excludedServices = getStrings(req.json, "excludedServices");
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto sevStr = req.json.getString("minimumSeverity");
+        auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto request = CreateAuditConfigRequest();
+    request.tenantId = tenantId;
+    request.name = data.getString("name");
+    request.logDataAccess = data.getBoolean("logDataAccess", true);
+    request.logDataModification = data.getBoolean("logDataModification", true);
+    request.logSecurityEvents = data.getBoolean("logSecurityEvents", true);
+    request.logConfigurationChanges = data.getBoolean("logConfigurationChanges", true);
+    request.enableDataMasking = data.getBoolean("enableDataMasking");
+    request.maskedFields = data.getStrings("maskedFields");
+    request.excludedServices = data.getStrings("excludedServices");
+
+    auto sevStr = data.getString("minimumSeverity");
     if (sevStr == "warning")
       request.minimumSeverity = AuditSeverity.warning;
     else if (sevStr == "error")
@@ -66,40 +76,37 @@ class AuditConfigController : ManageController {
     else
       request.minimumSeverity = AuditSeverity.info;
 
-    request.rateLimitPerSecond = req.json.getInteger("rateLimitPerSecond", 8);
+    request.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
 
     auto result = useCase.createAuditConfig(request);
     if (result.hasError)
-            return errorResponse(result.message, 400);
-      auto response = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Audit config created successfully")
-        .set("statusCode", 201);
+      return errorResponse(result.message, 400);
 
-      return response;
-    } else {
-      return Json.emptyObject
-        .set("error", "Failed to create audit config")
-        .set("statusCode", 400);
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Audit config created successfully", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    auto tenantId = precheck.tenantId;
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
     auto cfg = useCase.getAuditConfig(tenantId);
-    if (cfg.isNull) {
-      return Json.emptyObject
-        .set("error", "Audit config not found")
-        .set("statusCode", 404);
-    }
-    return cfg.toJson
-      .set("statusCode", 200)
-      .set("message", "Audit config retrieved successfully");
+    if (cfg.isNull)
+      return errorResponse("Audit config not found", 404);
+
+    auto responseData = cfg.toJson();
+    return successResponse("Audit config retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-    auto tenantId = precheck.tenantId;
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
     auto r = UpdateAuditConfigRequest();
@@ -115,7 +122,8 @@ class AuditConfigController : ManageController {
     r.excludedServices = data.getStrings("excludedServices");
     r.rateLimitPerSecond = data.getInteger("rateLimitPerSecond", 8);
 
-    r.status = data.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus.enabled;
+    r.status = data.getString("status") == "disabled" ? ConfigStatus.disabled : ConfigStatus
+      .enabled;
 
     auto sevStr = data.getString("minimumSeverity");
     if (sevStr == "warning")
@@ -128,25 +136,28 @@ class AuditConfigController : ManageController {
       r.minimumSeverity = AuditSeverity.info;
 
     auto result = useCase.updateAuditConfig(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("error", result.message)
-        .set("statusCode", 400);
-    }
-    return Json.emptyObject
-      .set("status", "updated")
-      .set("message", "Audit config updated successfully")
-      .set("statusCode", 200);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Audit config updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-      auto tenantId = precheck.tenantId;
-      auto id = AuditConfigId(precheck.id);
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      useCase.deleteAuditConfig(tenantId, id);
-      return Json.emptyObject
-        .set("status", "deleted")
-        .set("statusCode", 200)
-        .set("message", "Audit config deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = AuditConfigId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid audit config ID", 400);
+
+    auto result = useCase.deleteAuditConfig(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Audit config deleted successfully", 200, responseData);
   }
 }

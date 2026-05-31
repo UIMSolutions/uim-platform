@@ -27,33 +27,39 @@ class DataAccessController : PlatformController {
     router.post("/api/v1/data-access", &handleWrite);
   }
 
-  protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = WriteDataAccessLogRequest();
-      r.tenantId = tenantId;
-      r.accessedBy = data.getString("accessedBy");
-      r.dataSubject = data.getString("dataSubject");
-      r.dataObjectType = data.getString("dataObjectType");
-      r.dataObjectId = data.getString("dataObjectId");
-      r.accessedFields = data.getStrings("accessedFields");
-      r.purpose = data.getString("purpose");
-      r.channel = data.getString("channel");
+  protected Json writeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = useCase.writeLog(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-            
-        res.writeJsonBody(resp, 201);
-      }
-      else
-      {
-        writeError(res, 400, result.message);
-      }
-    }
-    catch (Exception e) {
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+
+    auto r = WriteDataAccessLogRequest();
+    r.tenantId = tenantId;
+    r.accessedBy = data.getString("accessedBy");
+    r.dataSubject = data.getString("dataSubject");
+    r.dataObjectType = data.getString("dataObjectType");
+    r.dataObjectId = data.getString("dataObjectId");
+    r.accessedFields = data.getStrings("accessedFields");
+    r.purpose = data.getString("purpose");
+    r.channel = data.getString("channel");
+
+    auto result = useCase.writeLog(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Data access log written successfully", 201, responseData);
+  }
+
+  protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = writeHandler(req);
+      res.writeJsonBody(response, response.code);
+
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

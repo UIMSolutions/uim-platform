@@ -27,43 +27,52 @@ class SecurityEventController : PlatformController {
     router.post("/api/v1/security-events", &handleWrite);
   }
 
+  protected Json writeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+
+    auto r = WriteSecurityEventRequest();
+    r.tenantId = tenantId;
+    r.userId = data.getString("userId");
+    r.userName = data.getString("userName");
+    r.eventType = data.getString("eventType");
+    r.ipAddress = data.getString("ipAddress");
+    r.userAgent = data.getString("userAgent");
+    r.clientId = data.getString("clientId");
+    r.identityProvider = data.getString("identityProvider");
+    r.authMethod = data.getString("authMethod");
+    r.failureReason = data.getString("failureReason");
+    r.riskLevel = data.getString("riskLevel");
+
+    auto outcomeStr = data.getString("outcome");
+    if (outcomeStr == "failure")
+      r.outcome = AuditOutcome.failure;
+    else if (outcomeStr == "denied")
+      r.outcome = AuditOutcome.denied;
+    else if (outcomeStr == "error")
+      r.outcome = AuditOutcome.error;
+    else
+      r.outcome = AuditOutcome.success;
+
+    auto result = useCase.writeEvent(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Security event recorded");
+
+    return successResponse("Security event recorded successfully", 201, resp);
+  }
+
   protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = WriteSecurityEventRequest();
-      r.tenantId = tenantId;
-      r.userId = data.getString("userId");
-      r.userName = data.getString("userName");
-      r.eventType = data.getString("eventType");
-      r.ipAddress = data.getString("ipAddress");
-      r.userAgent = data.getString("userAgent");
-      r.clientId = data.getString("clientId");
-      r.identityProvider = data.getString("identityProvider");
-      r.authMethod = data.getString("authMethod");
-      r.failureReason = data.getString("failureReason");
-      r.riskLevel = data.getString("riskLevel");
-
-      auto outcomeStr = data.getString("outcome");
-      if (outcomeStr == "failure")
-        r.outcome = AuditOutcome.failure;
-      else if (outcomeStr == "denied")
-        r.outcome = AuditOutcome.denied;
-      else if (outcomeStr == "error")
-        r.outcome = AuditOutcome.error;
-      else
-        r.outcome = AuditOutcome.success;
-
-      auto result = useCase.writeEvent(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Security event recorded");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = writeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

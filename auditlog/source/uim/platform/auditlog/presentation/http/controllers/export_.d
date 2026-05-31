@@ -33,32 +33,38 @@ class ExportController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
 
     auto jobs = useCase.listExports(tenantId);
-    auto arr = jobs.map!(j => j.toJson).array.toJson;
+    auto list = jobs.map!(item => item.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("status", 200)
-      .set("items", arr)
-      .set("totalCount", Json(jobs.length))
-      .set("message", "Export jobs retrieved successfully");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Export job list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
     CreateExportJobRequest jobRequest = CreateExportJobRequest();
     jobRequest.tenantId = tenantId;
     jobRequest.requestedBy = data.getString("requestedBy");
-    jobRequest.timeFrom = jsonLong(j, "timeFrom");
-    jobRequest.timeTo = jsonLong(j, "timeTo");
+    jobRequest.timeFrom = jsonLong(data, "timeFrom");
+    jobRequest.timeTo = jsonLong(data, "timeTo");
 
     auto fmtStr = data.getString("format");
     jobRequest.format_ = fmtStr == "csv"
-       ? ExportFormat.csv
-       : ExportFormat.json;
+      ? ExportFormat.csv : ExportFormat.json;
 
     // Parse category filter
     auto cats = data.getStrings("categories");
@@ -66,46 +72,46 @@ class ExportController : ManageController {
       jobRequest.categories ~= toAuditCategory(c);
 
     auto result = useCase.createExport(jobRequest);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("error", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Export job created successfully");
-
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Export job created successfully", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-    ExportJobId jobId = ExportJobId(precheck.id);
-    auto tenantId = precheck.tenantId;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    auto job = useCase.getExport(tenantId, jobId);
-    if (job.isNull) {
-      return Json.emptyObject
-        .set("error", "Export job not found")
-        .set("statusCode", 404);
-    }
-    return job.toJson
-      .set("statusCode", 200)
-      .set("message", "Export job retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = ExportJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid export job ID", 400);
+
+    auto item = useCase.getExport(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Export job retrieved successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-    ExportJobId jobId = ExportJobId(precheck.id);
-    auto tenantId = precheck.tenantId;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    auto result = useCase.deleteExport(tenantId, jobId);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("error", result.message)
-        .set("statusCode", 400);
-    }
-    return Json.emptyObject
-      .set("status", "deleted")
-      .set("statusCode", 200)
-      .set("message", "Export job deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = ExportJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid export job ID", 400);
+
+    auto result = useCase.deleteExport(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Export job deleted successfully", 200, responseData);
   }
 }
