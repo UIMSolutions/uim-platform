@@ -35,8 +35,8 @@ class AgentryValidator {
 
     static bool isValidSyncSession(const SyncSession session) {
         return !session.deviceId.isNull
-            && !session.mobileApplicationId.isNull
-            && !session.backendConnectionId.isNull;
+            && !session.applicationId.isNull
+            && !session.connectionId.isNull;
     }
 
     static bool isValidBackendConnection(const BackendConnection conn) {

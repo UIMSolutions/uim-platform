@@ -9,7 +9,7 @@ import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.gui.views.communication_arrangement;
 import uim.platform.abap_environment.presentation.gui.models.communication_arrangement;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 class CommunicationArrangementGuiController {
   private ManageCommunicationArrangementsUseCase usecase;

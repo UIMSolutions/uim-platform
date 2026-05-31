@@ -14,7 +14,7 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 // Strong-typed IDs
 // ---------------------------------------------------------------------------
-struct ProgramId {
+struct AbapProgramId {
     mixin DomainId;
 
     string value;
@@ -22,7 +22,7 @@ struct ProgramId {
         this.value = value;
     }
 }  /// ABAP program / report name (up to 40 chars, SAP convention)
-struct ClassId {
+struct AbapClassId {
     mixin DomainId;
 
     string value;
@@ -30,7 +30,7 @@ struct ClassId {
         this.value = value;
     }
 }  /// ABAP class name (up to 30 chars)
-struct InterfaceId {
+struct AbapInterfaceId {
     mixin DomainId;
 
     string value;
@@ -38,7 +38,7 @@ struct InterfaceId {
         this.value = value;
     }
 }  /// ABAP interface name
-struct FunctionGroupId {
+struct AbapFunctionGroupId {
     mixin DomainId;
 
     string value;
@@ -46,7 +46,7 @@ struct FunctionGroupId {
         this.value = value;
     }
 }  /// Function-group (fugr) name
-struct FunctionModuleId {
+struct AbapFunctionModuleId {
     mixin DomainId;
 
     string value;
@@ -54,7 +54,7 @@ struct FunctionModuleId {
         this.value = value;
     }
 } /// Function-module name
-struct DataTypeId {
+struct AbapDataTypeId {
     mixin DomainId;
 
     string value;
@@ -76,5 +76,9 @@ struct TokenId {
     string value;
     this(string value) {
         this.value = value;
+    }
+
+    this(ulong value) {
+        this.value = to!string(value);
     }
 }  /// Ordinal position of a token in a source

@@ -42,7 +42,7 @@ class ManageDevicesUseCase {
         Device device;
         device.initEntity(dto.tenantId, dto.createdBy);
         device.id = dto.deviceId;
-        device.mobileApplicationId = dto.mobileApplicationId;
+        device.mobileApplicationId = dto.applicationId;
         device.deviceName = dto.deviceName;
         device.deviceModel = dto.deviceModel;
         device.manufacturer = dto.manufacturer;

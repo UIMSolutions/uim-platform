@@ -11,10 +11,10 @@ mixin(ShowModule!());
 @safe:
 
 /// Primary port: repository contract for compilation jobs.
-interface CompilationJobRepository {
+interface CompilationJobRepository : ITenantRepository!(CompilationJob, CompilationJobId) {
  
-    size_t countByProgram(TenantId tenantId, ProgramId pid);  
-    CompilationJob[] findByProgram(TenantId tenantId, ProgramId pid);
-    void removeByProgram(TenantId tenantId, ProgramId pid);
+    size_t countByProgram(TenantId tenantId, AbapProgramId pid);  
+    CompilationJob[] findByProgram(TenantId tenantId, AbapProgramId pid);
+    void removeByProgram(TenantId tenantId, AbapProgramId pid);
  
 }

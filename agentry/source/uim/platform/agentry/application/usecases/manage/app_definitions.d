@@ -38,7 +38,7 @@ class ManageAppDefinitionsUseCase {
         AppDefinition def;
         def.initEntity(dto.tenantId, dto.createdBy);
         def.id = dto.definitionId;
-        def.mobileApplicationId = dto.mobileApplicationId;
+        def.mobileApplicationId = dto.applicationId;
         def.name = dto.name;
         def.description = dto.description;
         def.definitionContent = dto.definitionContent;

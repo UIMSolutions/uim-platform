@@ -37,7 +37,7 @@ class ManageMobileApplicationsUseCase {
     CommandResult createMobileApplication(MobileApplicationDTO dto) {
         MobileApplication app;
         app.initEntity(dto.tenantId, dto.createdBy);
-        app.id = dto.mobileApplicationId;
+        app.id = dto.applicationId;
         app.name = dto.name;
         app.description = dto.description;
         app.iconUrl = dto.iconUrl;
@@ -58,7 +58,7 @@ class ManageMobileApplicationsUseCase {
     }
 
     CommandResult updateMobileApplication(MobileApplicationDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.mobileApplicationId);
+        auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Mobile application not found");
 

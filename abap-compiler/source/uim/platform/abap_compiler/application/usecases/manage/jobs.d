@@ -18,7 +18,7 @@ class ManageJobsUseCase {
         this.repo = repo;
     }
 
-    CompilationJob   getJob(TenantId tenantId, CompilationJobId id) {
+    CompilationJob getJob(TenantId tenantId, CompilationJobId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -26,7 +26,7 @@ class ManageJobsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CompilationJob[] listJobsForProgram(TenantId tenantId, ProgramId pid) {
+    CompilationJob[] listJobsForProgram(TenantId tenantId, AbapProgramId pid) {
         return repo.findByProgram(tenantId, pid);
     }
 

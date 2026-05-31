@@ -4,16 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.infrastructure.persistence.memory.business_users;
-// import uim.platform.abap_environment.domain.types;
+
 // import uim.platform.abap_environment.domain.entities.business_user;
 // import uim.platform.abap_environment.domain.ports.repositories.business_users;
-// 
-// 
-//  
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {

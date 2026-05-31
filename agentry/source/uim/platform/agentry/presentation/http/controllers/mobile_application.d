@@ -55,7 +55,7 @@ class MobileApplicationController : ManageController {
             return errorResponse("Invalid mobile application ID", 400);
 
         auto e = usecase.getMobileApplication(tenantId, id);
-        if (job.isNull)
+        if (e.isNull)
             return errorResponse("Mobile application not found", 404);
 
         auto responseData = e.toJson();
@@ -105,8 +105,9 @@ class MobileApplicationController : ManageController {
         if (id.isNull)
             return errorResponse("Invalid mobile application ID", 400);
 
+        auto data = precheck.data;
         MobileApplicationDTO dto;
-        dto.mobileApplicationId = id;
+        dto.applicationId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -141,3 +142,4 @@ class MobileApplicationController : ManageController {
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Mobile application deleted successfully", "Deleted", 200, responseData);
     }
+}

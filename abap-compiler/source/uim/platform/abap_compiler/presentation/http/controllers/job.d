@@ -51,7 +51,7 @@ class JobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = JobId(precheck.id);
+        auto id = CompilationJobId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid job ID", 400);
 
@@ -69,7 +69,7 @@ class JobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = JobId(precheck.id);
+        auto id = CompilationJobId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid job ID", 400);
 

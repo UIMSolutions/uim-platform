@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.cli.commands.business_role;
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class BusinessRoleCommand : ManageCommand {

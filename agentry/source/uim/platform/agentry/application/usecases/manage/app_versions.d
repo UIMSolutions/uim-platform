@@ -37,8 +37,8 @@ class ManageAppVersionsUseCase {
     CommandResult createAppVersion(AppVersionDTO dto) {
         AppVersion ver;
         ver.initEntity(dto.tenantId, dto.createdBy);
-        ver.id = dto.appVersionId;
-        ver.mobileApplicationId = dto.mobileApplicationId;
+        ver.id = dto.versionId;
+        ver.mobileApplicationId = dto.applicationId;
         ver.definitionId = dto.definitionId;
         ver.versionNumber = dto.versionNumber;
         ver.releaseNotes = dto.releaseNotes;
@@ -56,7 +56,7 @@ class ManageAppVersionsUseCase {
     }
 
     CommandResult updateAppVersion(AppVersionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.appVersionId);
+        auto existing = repo.findById(dto.tenantId, dto.versionId);
         if (existing.isNull)
             return CommandResult(false, "", "App version not found");
 

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Tracks a single compilation request: input program -> status -> result.
 struct CompilationJob {
     mixin TenantEntity!CompilationJobId;          /// UUID
-    ProgramId        programId;   /// Source program to compile
+    AbapProgramId        programId;   /// Source program to compile
     CompilationStatus status;     /// Current lifecycle state
     Diagnostic[]     diagnostics; /// All diagnostics from this run
     string[]         generatedCode;/// Simplified IR / intermediate code lines
@@ -39,11 +39,11 @@ struct CompilationJob {
             .set("finishedAt",    finishedAt);
     }
 
-    static CompilationJob create(TenantId tenantId, ProgramId pid) {
+    static CompilationJob create(TenantId tenantId, AbapProgramId pid) {
         import core.time : MonoTime;
         import std.uuid  : randomUUID;
         CompilationJob j;
-        j.initEntity(TenantId(tenantId));
+        j.initEntity(tenantId);
         j.id         = randomUUID().toString();
         j.programId  = pid;
         j.status     = CompilationStatus.pending;

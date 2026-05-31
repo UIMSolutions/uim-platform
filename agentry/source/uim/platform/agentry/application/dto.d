@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct MobileApplicationDTO {
-    MobileApplicationId mobileApplicationId;
+    MobileApplicationId applicationId;
     TenantId tenantId;
 
     string name;
@@ -36,7 +36,7 @@ struct MobileApplicationDTO {
 
 struct AppDefinitionDTO {
     AppDefinitionId definitionId;
-    MobileApplicationId mobileApplicationId;
+    MobileApplicationId applicationId;
     TenantId tenantId;
 
     string name;
@@ -55,8 +55,8 @@ struct AppDefinitionDTO {
 }
 
 struct AppVersionDTO {
-    AppVersionId appVersionId;
-    MobileApplicationId mobileApplicationId;
+    AppVersionId versionId;
+    MobileApplicationId applicationId;
     AppDefinitionId definitionId;
     TenantId tenantId;
 
@@ -76,7 +76,7 @@ struct AppVersionDTO {
 
 struct DeviceDTO {
     DeviceId deviceId;
-    MobileApplicationId mobileApplicationId;
+    MobileApplicationId applicationId;
     TenantId tenantId;
 
     string deviceName;
@@ -99,10 +99,10 @@ struct DeviceDTO {
 }
 
 struct SyncSessionDTO {
-    SyncSessionId syncSessionId;
+    SyncSessionId sessionId;
     DeviceId deviceId;
-    MobileApplicationId mobileApplicationId;
-    BackendConnectionId backendConnectionId;
+    MobileApplicationId applicationId;
+    BackendConnectionId connectionId;
     TenantId tenantId;
 
     string status;
@@ -141,8 +141,8 @@ struct BackendConnectionDTO {
 
 struct DeploymentDTO {
     DeploymentId deploymentId;
-    MobileApplicationId mobileApplicationId;
-    AppVersionId appVersionId;
+    MobileApplicationId applicationId;
+    AppVersionId versionId;
     TenantId tenantId;
 
     string status;

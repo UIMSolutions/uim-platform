@@ -71,10 +71,10 @@ class SyncSessionController : ManageController {
 
         auto data = precheck.data;
         SyncSessionDTO dto;
-        dto.syncSessionId = SyncSessionId(precheck.id);
+        dto.sessionId = SyncSessionId(precheck.id);
         dto.deviceId = DeviceId(data.getString("deviceId"));
-        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.backendConnectionId = BackendConnectionId(data.getString("backendConnectionId"));
+        dto.applicationId = MobileApplicationId(data.getString("applicationId"));
+        dto.connectionId = BackendConnectionId(data.getString("connectionId"));
         dto.tenantId = tenantId;
         dto.triggeredBy = data.getString("triggeredBy");
         dto.clientAppVersion = data.getString("clientAppVersion");
@@ -96,7 +96,7 @@ class SyncSessionController : ManageController {
 
         auto data = precheck.data;
         SyncSessionDTO dto;
-        dto.syncSessionId = SyncSessionId(precheck.id);
+        dto.sessionId = SyncSessionId(precheck.id);
         dto.tenantId = tenantId;
         dto.status = data.getString("status");
 

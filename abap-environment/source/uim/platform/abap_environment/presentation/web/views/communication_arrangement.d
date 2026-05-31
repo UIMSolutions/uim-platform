@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.communication_arrang
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.communication_arrangement;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class CommunicationArrangementHtmlView {

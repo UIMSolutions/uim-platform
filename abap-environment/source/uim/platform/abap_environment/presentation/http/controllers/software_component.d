@@ -9,11 +9,11 @@ module uim.platform.abap_environment.presentation.http.controllers.software_comp
 // import uim.platform.abap_environment.application.usecases.manage.software_components;
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.software_component;
-// import uim.platform.abap_environment.domain.types;
+
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class SoftwareComponentController : ManageController {
   private ManageSoftwareComponentsUseCase usecase;

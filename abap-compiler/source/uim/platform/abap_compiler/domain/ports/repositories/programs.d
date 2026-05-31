@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Primary port: repository contract for ABAP program source artefacts.
-interface AbapProgramRepository : ITenantRepository!(AbapProgram, ProgramId) {
+interface AbapProgramRepository : ITenantRepository!(AbapProgram, AbapProgramId) {
 
     size_t countByProgramType(TenantId tenantId, ProgramType programType);
     AbapProgram[]  findByProgramType(TenantId tenantId, ProgramType programType);

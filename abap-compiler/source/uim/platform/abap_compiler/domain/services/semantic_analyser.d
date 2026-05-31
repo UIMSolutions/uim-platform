@@ -16,12 +16,12 @@ mixin(ShowModule!());
 ///   - Missing END* counterparts for block openers
 ///   - Deprecated statements (FORM/PERFORM discouraged in OO programs)
 struct SemanticAnalyser {
-    private static immutable string[] BLOCK_OPENERS = [
+    private static /* immutable */ string[] BLOCK_OPENERS = [
         "IF", "LOOP", "WHILE", "DO", "TRY",
         "CLASS", "METHOD", "FORM", "FUNCTION", "SELECT",
         "CASE"
     ];
-    private static immutable string[string] BLOCK_CLOSERS;
+    private static /* immutable */ string[string] BLOCK_CLOSERS;
 
     shared static this() @trusted {
         (cast() BLOCK_CLOSERS)["IF"]       = "ENDIF";

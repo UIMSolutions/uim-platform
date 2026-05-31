@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.business_role;
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.business_role;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class BusinessRoleHtmlView {

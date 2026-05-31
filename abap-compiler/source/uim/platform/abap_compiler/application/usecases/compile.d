@@ -45,7 +45,7 @@ class CompileUseCase {
             if (prog.isNull)
                 return CompileResponse(
                     "", CompilationStatus.failed, [], [], false,
-                    "Program '" ~ req.programId ~ "' not found"
+                    "Program '" ~ req.programId.value ~ "' not found"
                 );
             source = prog.sourceCode;
         }

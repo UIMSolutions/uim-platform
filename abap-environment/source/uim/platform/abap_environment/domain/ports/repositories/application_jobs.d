@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.ports.repositories.application_jobs;
 // import uim.platform.abap_environment.domain.entities.application_job;
-// import uim.platform.abap_environment.domain.types;
+
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - application job persistence.

@@ -21,7 +21,7 @@ struct Token {
 
     Json toJson() const {
         return Json.emptyObject
-            .set("id",     cast(long) id)
+            .set("id",     id.value)
             .set("type",   to!string(type))
             .set("value",  value)
             .set("line",   cast(long) line)

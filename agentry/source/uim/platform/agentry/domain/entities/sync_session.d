@@ -15,8 +15,8 @@ struct SyncSession {
     mixin TenantEntity!(SyncSessionId);
 
     DeviceId deviceId;
-    MobileApplicationId mobileApplicationId;
-    BackendConnectionId backendConnectionId;
+    MobileApplicationId applicationId;
+    BackendConnectionId connectionId;
     SyncStatus status = SyncStatus.pending;
     SyncDirection direction = SyncDirection.bidirectional;
     long startedAt;
@@ -32,8 +32,8 @@ struct SyncSession {
     Json toJson() const {
         auto j = entityToJson
             .set("deviceId", deviceId.value)
-            .set("mobileApplicationId", mobileApplicationId.value)
-            .set("backendConnectionId", backendConnectionId.value)
+            .set("applicationId", applicationId.value)
+            .set("connectionId", connectionId.value)
             .set("status", status.to!string)
             .set("direction", direction.to!string)
             .set("startedAt", startedAt)

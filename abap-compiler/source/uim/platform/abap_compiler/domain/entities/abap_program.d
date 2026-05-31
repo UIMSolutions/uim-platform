@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Represents a single ABAP program source artefact managed by the compiler service.
 /// Corresponds to an ABAP "Programm" object stored in the Repository (SAP R/3 se38).
 struct AbapProgram {
-    mixin TenantEntity!ProgramId;
+    mixin TenantEntity!AbapProgramId;
 
     ProgramType programType; /// Program type (report, class pool, …)
     string      title;       /// Short text description (up to 70 chars)
@@ -33,7 +33,7 @@ struct AbapProgram {
     static AbapProgram create(string id, TenantId tenantId, ProgramType pt, string title, string language, string src) {
         import core.time : MonoTime;
         AbapProgram p;
-        p.initEntity(TenantId(tenantId));
+        p.initEntity(tenantId);
 
         p.id          = id;
         p.programType = pt;

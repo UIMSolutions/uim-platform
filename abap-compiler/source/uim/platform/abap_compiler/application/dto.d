@@ -15,8 +15,8 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct CreateProgramRequest {
-    string      tenantId;
-    ProgramId   id;
+    TenantId    tenantId;
+    AbapProgramId   programId;
     ProgramType programType;
     string      title;
     string      language;
@@ -24,8 +24,8 @@ struct CreateProgramRequest {
 }
 
 struct UpdateProgramRequest {
-    string    tenantId;
-    ProgramId id;
+    TenantId    tenantId;
+    AbapProgramId programId;
     string    title;
     string    language;
     string    sourceCode;
@@ -36,8 +36,8 @@ struct UpdateProgramRequest {
 // ---------------------------------------------------------------------------
 
 struct CompileRequest {
-    string    tenantId;
-    ProgramId programId;
+    TenantId    tenantId;
+    AbapProgramId programId;
     string    sourceCode; /// Optional override — if empty, source is loaded from repo
 }
 

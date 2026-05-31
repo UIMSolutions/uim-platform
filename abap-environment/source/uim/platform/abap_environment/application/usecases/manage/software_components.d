@@ -8,11 +8,11 @@ module uim.platform.abap_environment.application.usecases.manage.software_compon
 // import uim.platform.abap_environment.domain.entities.software_component;
 // import uim.platform.abap_environment.domain.ports.repositories.software_components;
 // import uim.platform.abap_environment.domain.ports.repositories.system_instances;
-// import uim.platform.abap_environment.domain.types;
+
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for software component lifecycle (clone, pull, manage).

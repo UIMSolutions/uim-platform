@@ -25,17 +25,31 @@ class CompileController : PlatformController {
         router.post("/api/v1/abap/compile", &handleCompile);
     }
 
+    protected Json compileHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto data = precheck.data;
+        CompileRequest r;
+        r.tenantId = req.getTenantId;
+        r.programId = data.getString("programId");
+        r.sourceCode = data.getString("sourceCode");
+
+        auto result = usecase.compile(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("result", result.result.toJson());
+        return successResponse("Compilation successful", "Compilation failed", 200, responseData);
+    }
+
     protected void handleCompile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto data = precheck.data;
-            CompileRequest r;
-            r.tenantId   = req.getTenantId;
-            r.programId  = data.getString("programId");
-            r.sourceCode = data.getString("sourceCode");
-
-            auto response = usecase.compile(r);
-            auto status   = response.success ? 200 : 422;
-            res.writeJsonBody(response.toJson(), status);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            auto response = compileHandler(req);
+            res.writeJsonBody(response, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
     }
 }

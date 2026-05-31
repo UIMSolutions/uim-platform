@@ -38,8 +38,8 @@ class ManageDeploymentsUseCase {
         Deployment dep;
         dep.initEntity(dto.tenantId, dto.createdBy);
         dep.id = dto.deploymentId;
-        dep.mobileApplicationId = dto.mobileApplicationId;
-        dep.appVersionId = dto.appVersionId;
+        dep.mobileApplicationId = dto.applicationId;
+        dep.appVersionId = dto.versionId;
         dep.targetDeviceId = dto.targetDeviceId;
         dep.targetGroupName = dto.targetGroupName;
         dep.scheduledAt = dto.scheduledAt;
@@ -59,7 +59,7 @@ class ManageDeploymentsUseCase {
             return CommandResult(false, "", "Deployment not found");
 
         if (dto.notes.length > 0) existing.notes = dto.notes;
-        if (dto.scheduledAt.length > 0) existing.scheduledAt = dto.scheduledAt;
+        if (dto.scheduledAt > 0) existing.scheduledAt = dto.scheduledAt;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);

@@ -37,10 +37,10 @@ class ManageSyncSessionsUseCase {
     CommandResult createSyncSession(SyncSessionDTO dto) {
         SyncSession session;
         session.initEntity(dto.tenantId, dto.createdBy);
-        session.id = dto.syncSessionId;
+        session.id = dto.sessionId;
         session.deviceId = dto.deviceId;
-        session.mobileApplicationId = dto.mobileApplicationId;
-        session.backendConnectionId = dto.backendConnectionId;
+        session.applicationId = dto.applicationId;
+        session.connectionId = dto.connectionId;
         session.triggeredBy = dto.triggeredBy;
         session.clientAppVersion = dto.clientAppVersion;
 
@@ -52,7 +52,7 @@ class ManageSyncSessionsUseCase {
     }
 
     CommandResult updateSyncSession(SyncSessionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.syncSessionId);
+        auto existing = repo.findById(dto.tenantId, dto.sessionId);
         if (existing.isNull)
             return CommandResult(false, "", "Sync session not found");
 

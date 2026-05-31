@@ -7,9 +7,6 @@ module uim.platform.connectivity.infrastructure.persistence.memory.destinations;
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.destination;
 // import uim.platform.connectivity.domain.ports.repositories.destinations;
-// 
-// 
-//  
 import uim.platform.connectivity;
 
 mixin(ShowModule!());

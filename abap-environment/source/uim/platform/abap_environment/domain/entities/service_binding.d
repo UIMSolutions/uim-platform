@@ -4,11 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.entities.service_binding;
-// import uim.platform.abap_environment.domain.types;
+
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Exposed service endpoint from a binding.
 struct ExposedEndpoint {

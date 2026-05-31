@@ -162,7 +162,7 @@ struct AbapLexer {
                         break;
                 }
                 string word = source[start .. pos];
-                tokens ~= Token(idx++, isKeyword(word) ? TokenType.keyword : TokenType.identifier,
+                tokens ~= Token(TokenId(idx++), isKeyword(word) ? TokenType.keyword : TokenType.identifier,
                                 word, tokLine, tokCol);
                 continue;
             }
@@ -170,31 +170,31 @@ struct AbapLexer {
             // --- Operators / punctuation
             switch (c) {
                 case '.':
-                    tokens ~= Token(idx++, TokenType.period,   ".", tokLine, tokCol); advance(); break;
+                    tokens ~= Token(TokenId(idx++), TokenType.period,   ".", tokLine, tokCol); advance(); break;
                 case ',':
-                    tokens ~= Token(idx++, TokenType.comma,    ",", tokLine, tokCol); advance(); break;
+                    tokens ~= Token(TokenId(idx++), TokenType.comma,    ",", tokLine, tokCol); advance(); break;
                 case ':':
-                    tokens ~= Token(idx++, TokenType.colon,    ":", tokLine, tokCol); advance(); break;
+                    tokens ~= Token(TokenId(idx++), TokenType.colon,    ":", tokLine, tokCol); advance(); break;
                 case '(':
-                    tokens ~= Token(idx++, TokenType.lparen,   "(", tokLine, tokCol); advance(); break;
+                    tokens ~= Token(TokenId(idx++), TokenType.lparen,   "(", tokLine, tokCol); advance(); break;
                 case ')':
-                    tokens ~= Token(idx++, TokenType.rparen,   ")", tokLine, tokCol); advance(); break;
+                    tokens ~= Token(TokenId(idx++), TokenType.rparen,   ")", tokLine, tokCol); advance(); break;
                 default:
                     // Two-char operators
                     string twoChar = pos + 1 < source.length ? source[pos .. pos + 2] : "";
                     if (twoChar == "<=" || twoChar == ">=" || twoChar == "<>" ||
                         twoChar == "&&" || twoChar == "||") {
-                        tokens ~= Token(idx++, TokenType.operator, twoChar, tokLine, tokCol);
+                        tokens ~= Token(TokenId(idx++), TokenType.operator, twoChar, tokLine, tokCol);
                         advance(2);
                     } else {
-                        tokens ~= Token(idx++, TokenType.operator, source[pos .. pos + 1], tokLine, tokCol);
+                        tokens ~= Token(TokenId(idx++), TokenType.operator, source[pos .. pos + 1], tokLine, tokCol);
                         advance();
                     }
                     break;
             }
         }
 
-        tokens ~= Token(idx, TokenType.eof, "", line, col);
+        tokens ~= Token(TokenId(idx), "", TokenType.eof, "", line, col);
         return tokens;
     }
 }

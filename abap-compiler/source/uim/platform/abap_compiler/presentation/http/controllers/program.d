@@ -78,7 +78,7 @@ class ProgramController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = ProgramId(precheck.id);
+        auto id = AbapProgramId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid program ID", 400);
 
@@ -97,7 +97,7 @@ class ProgramController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto id = ProgramId(precheck.id);
+        auto id = AbapProgramId(precheck.id);
 
         UpdateProgramRequest r;
         r.tenantId = tenantId;
@@ -120,7 +120,7 @@ class ProgramController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = ProgramId(precheck.id);
+        auto id = AbapProgramId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid program ID", 400);
 

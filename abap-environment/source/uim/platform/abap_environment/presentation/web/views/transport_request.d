@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.transport_request;
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.transport_request;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class TransportRequestHtmlView {

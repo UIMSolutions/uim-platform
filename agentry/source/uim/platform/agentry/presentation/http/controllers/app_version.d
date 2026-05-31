@@ -71,8 +71,8 @@ class AppVersionController : ManageController {
 
         auto data = precheck.data;
         AppVersionDTO dto;
-        dto.appVersionId = AppVersionId(data.getString("id"));
-        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
+        dto.versionId = AppVersionId(data.getString("id"));
+        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
         dto.definitionId = AppDefinitionId(data.getString("definitionId"));
         dto.tenantId = tenantId;
         dto.versionNumber = data.getString("versionNumber");

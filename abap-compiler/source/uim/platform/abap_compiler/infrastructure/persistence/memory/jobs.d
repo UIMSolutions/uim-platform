@@ -13,19 +13,19 @@ mixin(ShowModule!());
 /// In-memory implementation of CompilationJobRepository (driven adapter).
 class MemoryCompilationJobRepository : TenantRepository!(CompilationJob, CompilationJobId), CompilationJobRepository {
     
-    size_t countByProgram(TenantId tenantId, ProgramId pid) {
+    size_t countByProgram(TenantId tenantId, AbapProgramId pid) {
         return findByProgram(tenantId, pid).length;
     }
 
-    CompilationJob[] filterByProgram(CompilationJob[] jobs, ProgramId pid) {
+    CompilationJob[] filterByProgram(CompilationJob[] jobs, AbapProgramId pid) {
         return jobs.filter!(j => j.programId == pid).array;
     }
 
-    CompilationJob[] findByProgram(TenantId tenantId, ProgramId pid) {
+    CompilationJob[] findByProgram(TenantId tenantId, AbapProgramId pid) {
         return filterByProgram(findByTenant(tenantId), pid);
     }
 
-    void removeByProgram(TenantId tenantId, ProgramId pid) {
+    void removeByProgram(TenantId tenantId, AbapProgramId pid) {
         findByProgram(tenantId, pid).each!(job => remove(job));
     }
 

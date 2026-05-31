@@ -53,8 +53,8 @@ class DeploymentController : ManageController {
         auto data = precheck.data;
         DeploymentDTO dto;
         dto.deploymentId = DeploymentId(precheck.id);
-        dto.mobileApplicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.appVersionId = AppVersionId(data.getString("appVersionId"));
+        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
+        dto.versionId = AppVersionId(data.getString("appVersionId"));
         dto.tenantId = tenantId;
         dto.scope_ = data.getString("scope");
         dto.targetDeviceId = data.getString("targetDeviceId");
@@ -86,10 +86,10 @@ class DeploymentController : ManageController {
             return errorResponse("Invalid deployment ID", 400);
 
         auto e = usecase.getDeployment(tenantId, id);
-        if (job.isNull)
+        if (e.isNull)
             return errorResponse("Deployment not found", 404);
 
-        auto responseData = job.toJson();
+        auto responseData = e.toJson();
 
         return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
     }
@@ -105,6 +105,7 @@ class DeploymentController : ManageController {
         if (id.isNull)
             return errorResponse("Invalid deployment ID", 400);
 
+        auto data = precheck.data;
         DeploymentDTO dto;
         dto.deploymentId = id;
         dto.tenantId = tenantId;

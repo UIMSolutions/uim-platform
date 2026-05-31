@@ -7,11 +7,11 @@ module uim.platform.abap_environment.application.usecases.manage.service_binding
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.service_binding;
 // import uim.platform.abap_environment.domain.ports.repositories.service_bindings;
-// import uim.platform.abap_environment.domain.types;
+
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for service binding CRUD.

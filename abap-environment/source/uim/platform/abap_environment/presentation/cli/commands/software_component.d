@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.cli.commands.software_componen
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class SoftwareComponentCommand : ManageCommand {

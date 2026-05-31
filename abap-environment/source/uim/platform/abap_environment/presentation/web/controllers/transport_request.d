@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.web.controllers.transport_requ
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class TransportRequestWebController : ManageController {

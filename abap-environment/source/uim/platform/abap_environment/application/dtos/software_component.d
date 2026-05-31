@@ -2,7 +2,7 @@ module uim.platform.abap_environment.application.dtos.software_component;
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

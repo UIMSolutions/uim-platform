@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.cli.commands.application_job;
 
 import uim.platform.abap_environment;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ApplicationJobCommand : ManageCommand {

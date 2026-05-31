@@ -9,7 +9,7 @@ import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.gui.views.software_component;
 import uim.platform.abap_environment.presentation.gui.models.software_component;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 class SoftwareComponentGuiController {
   private ManageSoftwareComponentsUseCase usecase;

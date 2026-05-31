@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySyncSessionRepository
-    : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
+class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
 
     SyncSession[] findByDevice(TenantId tenantId, DeviceId deviceId) {
         return findByTenant(tenantId).filter!(s => s.deviceId == deviceId).array;
@@ -23,7 +22,7 @@ class MemorySyncSessionRepository
     }
 
     SyncSession[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return findByTenant(tenantId).filter!(s => s.mobileApplicationId == appId).array;
+        return findByTenant(tenantId).filter!(s => s.applicationId == appId).array;
     }
 
     size_t countByStatus(TenantId tenantId, SyncStatus status) {
