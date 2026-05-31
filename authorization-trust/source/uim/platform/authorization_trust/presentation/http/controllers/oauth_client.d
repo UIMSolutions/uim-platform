@@ -46,20 +46,14 @@ class OAuthClientController : ManageController {
     r.clientType = data.getString("clientType");
     r.appId = data.getString("appId");
 
-    auto gtArr = j["grantTypes"];
-    if (gtArr.isArray)
-      foreach (v; gtArr.byValue)
-        r.grantTypes ~= v.get!string;
+    foreach (v; data.getArray("grantTypes"))
+      r.grantTypes ~= v.get!string;
 
-    auto scArr = j["scopes"];
-    if (scArr.isArray)
-      foreach (v; scArr.byValue)
-        r.scopes ~= v.get!string;
+    foreach (v; data.getArray("scopes"))
+      r.scopes ~= v.get!string;
 
-    auto ruArr = j["redirectUris"];
-    if (ruArr.isArray)
-      foreach (v; ruArr.byValue)
-        r.redirectUris ~= v.get!string;
+    foreach (v; data.getArray("redirectUris"))
+      r.redirectUris ~= v.get!string;
 
     auto result = usecase.createOAuthClient(r);
     if (result.hasError)
@@ -95,11 +89,11 @@ class OAuthClientController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = OAuthClientId(extractIdFromPath(req));
+    auto id = OAuthClientId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid OAuth client ID", 400);
 
-    auto client = usecase.getOAuthClient(tenantId, id);
+    auto client = usecase.getClient(tenantId, id);
     if (client.isNull)
       return errorResponse("OAuth client not found", 404);
 
@@ -115,7 +109,7 @@ class OAuthClientController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = OAuthClientId(extractIdFromPath(req));
+    auto id = OAuthClientId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid OAuth client ID", 400);
 
@@ -126,17 +120,17 @@ class OAuthClientController : ManageController {
     r.name = data.getString("name");
     r.description = data.getString("description");
 
-    auto gtArr = j["grantTypes"];
+    auto gtArr = data["grantTypes"];
     if (gtArr.isArray)
       foreach (v; gtArr.byValue)
         r.grantTypes ~= v.get!string;
 
-    auto scArr = j["scopes"];
+    auto scArr = data["scopes"];
     if (scArr.isArray)
       foreach (v; scArr.byValue)
         r.scopes ~= v.get!string;
 
-    auto ruArr = j["redirectUris"];
+    auto ruArr = data["redirectUris"];
     if (ruArr.isArray)
       foreach (v; ruArr.byValue)
         r.redirectUris ~= v.get!string;

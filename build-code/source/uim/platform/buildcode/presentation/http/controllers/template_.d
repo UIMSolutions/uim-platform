@@ -63,7 +63,7 @@ class TemplateController : SAPController {
 
   private void getTemplate(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto t        = _uc.getById(tenantId, id);
     if (t.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "Template not found");
     res.writeJsonBody(t.toJson(), cast(int) HTTPStatus.ok);
@@ -71,7 +71,7 @@ class TemplateController : SAPController {
 
   private void deleteTemplate(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);

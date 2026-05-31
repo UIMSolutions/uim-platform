@@ -45,9 +45,9 @@ class ChannelController : ManageController {
     r.name = data.getString("name");
     r.channelType = data.getString("type");
     r.virtualHost = data.getString("virtualHost");
-    r.virtualPort = getUshort(j, "virtualPort");
+    r.virtualPort = getUshort(data, "virtualPort");
     r.backendHost = data.getString("backendHost");
-    r.backendPort = getUshort(j, "backendPort");
+    r.backendPort = getUshort(data, "backendPort");
 
     auto result = usecase.createChannel(r);
     if (result.hasError)

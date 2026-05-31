@@ -35,7 +35,7 @@ class IdentityProviderController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto idps = usecase.listIdentityProviders(tenantId);
+    auto idps = usecase.listProviders(tenantId);
     auto jarr = idps.map!(idp => idp.toJson()).array.toJson;
 
     auto responseData = aJson.emptyObject
@@ -66,7 +66,7 @@ class IdentityProviderController : ManageController {
     r.isActive = data.getBoolean("isActive");
     r.isDefault = data.getBoolean("isDefault");
 
-    auto result = usecase.createIdentityProvider(r);
+    auto result = usecase.createProvider(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -88,7 +88,7 @@ class IdentityProviderController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid identity provider ID", 400);
 
-    auto idp = usecase.getIdentityProvider(tenantId, id);
+    auto idp = usecase.getProvider(tenantId, id);
     if (idp.isNull)
       return errorResponse("Identity provider not found", 404);
 
@@ -120,7 +120,7 @@ class IdentityProviderController : ManageController {
     r.isActive = data.getBoolean("isActive");
     r.isDefault = data.getBoolean("isDefault");
 
-    auto result = usecase.updateIdentityProvider(r);
+    auto result = usecase.updateProvider(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -140,7 +140,7 @@ class IdentityProviderController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid identity provider ID", 400);
 
-    auto result = usecase.deleteIdentityProvider(tenantId, id);
+    auto result = usecase.deleteProvider(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

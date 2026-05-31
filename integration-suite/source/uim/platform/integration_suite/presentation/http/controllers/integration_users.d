@@ -37,7 +37,7 @@ public:
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto u = _repo.getById(getTenantId(req.getTenantId), IntegrationUserId(extractIdFromPath(req)));
+      auto u = _repo.getById(getTenantId(req.getTenantId), IntegrationUserId(precheck.id));
       if (u.isNull) { writeError(res, 404, "User not found"); return; }
       res.writeJsonBody(u.toJson(), 200);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }

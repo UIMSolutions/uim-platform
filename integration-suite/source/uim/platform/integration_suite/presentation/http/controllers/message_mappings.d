@@ -61,7 +61,7 @@ public:
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto result = _usecase.getById(req.getTenantId, extractIdFromPath(req));
+      auto result = _usecase.getById(req.getTenantId, precheck.id);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -76,7 +76,7 @@ public:
       auto data = precheck.data;
       UpdateMappingRequest r;
       r.tenantId          = req.getTenantId;
-      r.id                = extractIdFromPath(req);
+      r.id                = precheck.id;
       r.name              = data.getString("name");
       r.description       = data.getString("description");
       r.version_          = data.getString("version");
@@ -95,7 +95,7 @@ public:
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto result = _usecase.remove(req.getTenantId, extractIdFromPath(req));
+      auto result = _usecase.remove(req.getTenantId, precheck.id);
       if (result.success) res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
       else writeError(res, 404, result.message);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }

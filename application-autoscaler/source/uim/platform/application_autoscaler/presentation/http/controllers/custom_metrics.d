@@ -29,7 +29,7 @@ class CustomMetricController : ManageController {
   // POST /api/v1/apps/{appId}/metrics
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = extractIdFromPath(req);
+      auto appId = precheck.id;
       auto data = precheck.data;
       // Support batch: {"metrics": [...]} or single object
       auto metricsJ = j["metrics"];
@@ -66,7 +66,7 @@ class CustomMetricController : ManageController {
   // GET /api/v1/apps/{appId}/metrics
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto appId = extractIdFromPath(req);
+      auto appId = precheck.id;
       string metricName;
       foreach (kv; req.query.byKeyValue()) {
         if (kv.key == "name") { metricName = kv.value; break; }

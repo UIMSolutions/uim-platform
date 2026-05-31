@@ -45,7 +45,7 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  CommandResult updateOAuthClient(UpdateOAuthClientRequest r) {
+  CommandResult updateClient(UpdateOAuthClientRequest r) {
     auto c = repo.findById(r.tenantId, r.id);
     if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
@@ -63,7 +63,7 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, c.id, "");
   }
 
-  CommandResult deleteOAuthClient(TenantId tenantId, OAuthClientId id) {
+  CommandResult deleteClient(TenantId tenantId, OAuthClientId id) {
     auto c = repo.findById(tenantId, id);
     if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
@@ -72,19 +72,19 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, id, "");
   }
 
-  OAuthClient getOAuthClient(TenantId tenantId, OAuthClientId id) {
+  OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
     return repo.findById(tenantId, id);
   }
 
-  OAuthClient getOAuthClient(TenantId tenantId, string clientId) {
+  OAuthClient getClient(TenantId tenantId, string clientId) {
     return repo.findByClientId(tenantId, clientId);
   }
 
-  OAuthClient[] listOAuthClients(TenantId tenantId) {
+  OAuthClient[] listClients(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  OAuthClient[] listOAuthClients(TenantId tenantId, string appId) {
+  OAuthClient[] listClients(TenantId tenantId, string appId) {
     return repo.findByApp(tenantId, appId);
   }
 }

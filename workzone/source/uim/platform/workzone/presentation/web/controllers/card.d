@@ -47,7 +47,7 @@ class CardWebController : ManageController {
 
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
-        immutable id = extractIdFromPath(req);
+        immutable id = precheck.id;
         if (id == "new") { handleNew(req, res); return; }
 
         res.writeBody(renderError(501, "Card detail not yet implemented"),

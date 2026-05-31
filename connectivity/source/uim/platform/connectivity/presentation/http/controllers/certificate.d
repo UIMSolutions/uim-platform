@@ -49,8 +49,8 @@ class CertificateController : ManageController {
     r.issuerDN = data.getString("issuerDN");
     r.serialNumber = data.getString("serialNumber");
     r.fingerprint = data.getString("fingerprint");
-    r.validFrom = jsonLong(j, "validFrom");
-    r.validTo = jsonLong(j, "validTo");
+    r.validFrom = jsonLong(data, "validFrom");
+    r.validTo = jsonLong(data, "validTo");
 
     auto result = usecase.createCertificate(r);
     if (result.hasError)
@@ -68,7 +68,7 @@ class CertificateController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto certs = usecase.listCertificates(tenantId);
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = certs.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)

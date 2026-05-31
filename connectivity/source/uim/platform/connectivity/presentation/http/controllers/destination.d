@@ -30,19 +30,26 @@ class DestinationController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
 
     auto dests = usecase.listDestinations(tenantId);
     auto arr = dests.map!(d => d.toJson).array.toJson;
 
-    return Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", Json(dests.length))
-      .set("message", "Destinations retrieved successfully")
-      .set("statusCode", 200);
+      .set("totalCount", Json(dests.length));
+    return successResponse("Destination list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CreateDestinationRequest();
@@ -63,13 +70,13 @@ class DestinationController : ManageController {
     r.certificateId = data.getString("certificateId");
     r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
 
-    foreach(prop; j.getArray("properties")) {
+    foreach(prop; data.getArray("properties")) {
       auto key = prop.getString("key");
       auto value = prop.getString("value");
       r.properties ~= DestinationProperty(key, value);
     }
 
-    foreach (header; j.getArray("additionalHeaders")) {
+    foreach (header; data.getArray("additionalHeaders")) {
       auto key = header.getString("key");
       auto value = header.getString("value");
       r.additionalHeaders ~= DestinationProperty(key, value);
@@ -82,30 +89,37 @@ class DestinationController : ManageController {
         .set("statusCode", 400);
     }
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Destination created")
-      .set("statusCode", 201);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Destination created successfully", "Created", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid destination ID", 400);
 
     auto dest = usecase.getDestination(tenantId, id);
-    if (dest.isNull) {
-      return Json.emptyObject
-        .set("message", "Destination not found")
-        .set("statusCode", 404);
-    }
-    return dest.toJson
-      .set("message", "Destination retrieved successfully")
-      .set("statusCode", 200);
+    if (dest.isNull) 
+      return errorResponse("Destination not found", 404);
+    
+    return successResponse("Destination retrieved successfully", "Retrieved", 200, dest.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
+      if (id.isNull)
+      return errorResponse("Invalid destination ID", 400);
+
     auto data = precheck.data;
 
     auto r = UpdateDestinationRequest();
@@ -124,45 +138,42 @@ class DestinationController : ManageController {
     r.certificateId = data.getString("certificateId");
     r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
 
-    foreach(prop; j.getArray("properties")) {
+    foreach(prop; data.getArray("properties")) {
       auto key = prop.getString("key");
       auto value = prop.getString("value");
       r.properties ~= DestinationProperty(key, value);
     }
 
-    foreach(header; j.getArray("additionalHeaders")) {
+    foreach(header; data.getArray("additionalHeaders")) {
       auto key = header.getString("key");
       auto value = header.getString("value");
       r.additionalHeaders ~= DestinationProperty(key, value);
     }
 
     auto result = usecase.updateDestination(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("message", result.message)
-        .set("statusCode", result.message == "Destination not found" ? 404 : 400);
-    }
+    if (result.hasError())
+      return errorResponse(result.message, result.message == "Destination not found" ? 404 : 400);
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Destination updated")
-      .set("statusCode", 200);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Destination updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = DestinationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid destination ID", 400);
 
     auto result = usecase.deleteDestination(tenantId, id);
-    if (result.hasError()) {
-        return Json.emptyObject
-          .set("message", result.message)
-          .set("statusCode", result.message == "Destination not found" ? 404 : 400);
-    }
+    if (result.hasError()) 
+    return errorResponse(result.message, result.message == "Destination not found" ? 404 : 400);
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Destination deleted")
-      .set("statusCode", 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Destination deleted successfully", "Deleted", 200, responseData);
   }
 }

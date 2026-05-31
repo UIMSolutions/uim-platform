@@ -54,7 +54,7 @@ class ServiceBindingController : SAPController {
 
   private void getBinding(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto sb       = _uc.getById(tenantId, id);
     if (sb.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "Service binding not found");
     res.writeJsonBody(sb.toJson(), cast(int) HTTPStatus.ok);
@@ -62,7 +62,7 @@ class ServiceBindingController : SAPController {
 
   private void deleteBinding(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);

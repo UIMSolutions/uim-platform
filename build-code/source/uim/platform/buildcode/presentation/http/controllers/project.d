@@ -60,7 +60,7 @@ class ProjectController : SAPController {
 
   private void getProject(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto p        = _uc.getById(tenantId, id);
     if (p.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "Project not found");
     res.writeJsonBody(p.toJson(), cast(int) HTTPStatus.ok);
@@ -68,7 +68,7 @@ class ProjectController : SAPController {
 
   private void updateProject(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto body_    = req.json;
     UpdateProjectRequest dto;
     dto.description   = body_["description"].get!string("");
@@ -85,7 +85,7 @@ class ProjectController : SAPController {
 
   private void deleteProject(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);

@@ -159,7 +159,7 @@ class MarketRateController : SAPController {
   // Get single rate
   // ------------------------------------------------------------------
   private void handleGetRate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
     auto rate     = ratesUC.getById(tenantId, MarketRateId(id));
 
@@ -237,7 +237,7 @@ class MarketRateController : SAPController {
   }
 
   private void handleGetProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
     auto p        = providersUC.getById(tenantId, ProviderId(id));
 
@@ -249,7 +249,7 @@ class MarketRateController : SAPController {
   }
 
   private void handleUpdateProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id    = extractIdFromPath(req);
+    auto id    = precheck.id;
     auto body_ = req.json;
     if (body_.type == Json.Type.undefined) {
       writeError(res, 400, "Request body must be JSON");
@@ -273,7 +273,7 @@ class MarketRateController : SAPController {
   }
 
   private void handleDeleteProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));

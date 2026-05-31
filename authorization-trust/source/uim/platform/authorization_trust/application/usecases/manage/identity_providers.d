@@ -44,7 +44,7 @@ class ManageIdentityProvidersUseCase {
     return CommandResult(true, idp.id.value, "");
   }
 
-  CommandResult updateIdentityProvider(UpdateIdentityProviderRequest r) {
+  CommandResult updateProvider(UpdateIdentityProviderRequest r) {
     auto idp = repo.findById(r.tenantId, r.id);
     if (idp.isNull)
       return CommandResult(false, "", "Identity provider not found");
@@ -62,7 +62,7 @@ class ManageIdentityProvidersUseCase {
     return CommandResult(true, idp.id.value, "");
   }
 
-  CommandResult deleteIdentityProviderv(TenantId tenantId, IdentityProviderId id) {
+  CommandResult deleteProvider(TenantId tenantId, IdentityProviderId id) {
     auto provider = repo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Identity provider not found");
@@ -71,11 +71,11 @@ class ManageIdentityProvidersUseCase {
     return CommandResult(true, provider.id.value, "");
   }
 
-  IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
+  IdentityProvider getProvider(TenantId tenantId, IdentityProviderId id) {
     return repo.findById(tenantId, id);
   }
 
-  IdentityProvider[] listIdentityProviders(TenantId tenantId) {
+  IdentityProvider[] listProviders(TenantId tenantId) {
     return repo.findAll(tenantId);
   }
 }

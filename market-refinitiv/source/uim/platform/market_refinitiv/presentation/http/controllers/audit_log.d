@@ -37,7 +37,7 @@ class AuditLogController : SAPController {
   }
 
   private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
     auto entry    = uc.getById(tenantId, AuditLogId(id));
 

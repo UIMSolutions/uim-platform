@@ -57,7 +57,7 @@ class AIRequestController : SAPController {
 
   private void getRequest(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto r        = _uc.getById(tenantId, id);
     if (r.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "AI request not found");
     res.writeJsonBody(r.toJson(), cast(int) HTTPStatus.ok);
@@ -65,7 +65,7 @@ class AIRequestController : SAPController {
 
   private void updateStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId      = req.headers.get("X-Tenant-Id", "default");
-    auto id            = extractIdFromPath(req);
+    auto id            = precheck.id;
     auto body_         = req.json;
     auto statusStr     = body_["status"].get!string("");
     auto generatedCode = body_["generatedCode"].get!string("");

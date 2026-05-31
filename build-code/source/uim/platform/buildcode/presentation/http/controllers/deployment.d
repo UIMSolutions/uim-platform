@@ -59,7 +59,7 @@ class DeploymentController : SAPController {
 
   private void getDeployment(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto d        = _uc.getById(tenantId, id);
     if (d.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "Deployment not found");
     res.writeJsonBody(d.toJson(), cast(int) HTTPStatus.ok);
@@ -67,7 +67,7 @@ class DeploymentController : SAPController {
 
   private void updateDeploymentStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId  = req.headers.get("X-Tenant-Id", "default");
-    auto id        = extractIdFromPath(req);
+    auto id        = precheck.id;
     auto body_     = req.json;
     auto statusStr = body_["status"].get!string("");
     auto url       = body_["targetUrl"].get!string("");

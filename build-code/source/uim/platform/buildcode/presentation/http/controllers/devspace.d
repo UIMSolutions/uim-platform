@@ -56,7 +56,7 @@ class DevSpaceController : SAPController {
 
   private void getDevSpace(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto ds       = _uc.getById(tenantId, id);
     if (ds.isNull) return writeError(res, cast(int) HTTPStatus.notFound, "Dev space not found");
     res.writeJsonBody(ds.toJson(), cast(int) HTTPStatus.ok);
@@ -64,7 +64,7 @@ class DevSpaceController : SAPController {
 
   private void updateDevSpaceStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto body_    = req.json;
     auto status_  = body_["status"].get!string("");
     auto result   = _uc.setStatus(tenantId, id, status_);
@@ -74,7 +74,7 @@ class DevSpaceController : SAPController {
 
   private void deleteDevSpace(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto id       = extractIdFromPath(req);
+    auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);

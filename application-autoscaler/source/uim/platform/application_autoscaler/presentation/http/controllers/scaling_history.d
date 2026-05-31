@@ -32,7 +32,7 @@ class ScalingHistoryController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(extractIdFromPath(req));
+    auto appId = AppId(precheck.id);
     long since = 0;
     foreach (kv; req.query.byKeyValue()) {
       if (kv.key == "since") {

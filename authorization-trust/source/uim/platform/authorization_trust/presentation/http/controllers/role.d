@@ -78,7 +78,7 @@ class RoleController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = RoleId(extractIdFromPath(req));
+    auto id = RoleId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role ID", 400);
 
@@ -97,7 +97,7 @@ class RoleController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = RoleId(extractIdFromPath(req));
+    auto id = RoleId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role ID", 400);
 
@@ -127,7 +127,7 @@ class RoleController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = RoleId(extractIdFromPath(req));
+    auto id = RoleId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role ID", 400);
 

@@ -97,7 +97,7 @@ class UserAssignmentController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = UserAssignmentId(extractIdFromPath(req));
+    auto id = UserAssignmentId(precheck.id);
 
     auto result = usecase.deleteUserAssignment(tenantId, id);
     if (result.hasError)

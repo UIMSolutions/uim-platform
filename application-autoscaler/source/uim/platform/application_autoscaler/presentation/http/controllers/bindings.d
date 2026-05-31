@@ -93,7 +93,7 @@ class AppBindingController : ManageController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = AppBindingId(extractIdFromPath(req));
+    auto id = AppBindingId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid binding ID", 400);
 

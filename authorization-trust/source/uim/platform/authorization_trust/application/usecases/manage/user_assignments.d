@@ -16,7 +16,7 @@ class ManageUserAssignmentsUseCase {
   private RoleCollectionRepository roleCollectionRepo;
 
   this(UserAssignmentRepository repo, RoleCollectionRepository roleCollectionRepo) {
-    this.repo             = repo;
+    this.repo = repo;
     this.roleCollectionRepo = roleCollectionRepo;
   }
 
@@ -26,19 +26,20 @@ class ManageUserAssignmentsUseCase {
 
     if (r.roleCollectionId.isEmpty)
       return CommandResult(false, "", "roleCollectionId is required");
-      
+
     if (!roleCollectionRepo.existsById(r.tenantId, r.roleCollectionId))
       return CommandResult(false, "", "Role collection not found");
 
     import std.uuid : randomUUID;
+
     UserAssignment ua;
-    ua.tenantId       = r.tenantId;
-    ua.id               = randomUUID().toString();
-    ua.userId           = r.userId;
-    ua.userEmail        = r.userEmail;
+    ua.tenantId = r.tenantId;
+    ua.id = randomUUID().toString();
+    ua.userId = r.userId;
+    ua.userEmail = r.userEmail;
     ua.roleCollectionId = r.roleCollectionId;
-    ua.origin           = r.origin;
-    ua.createdAt        = currentTimestamp();
+    ua.origin = r.origin;
+    ua.createdAt = currentTimestamp();
 
     repo.save(ua);
     return CommandResult(true, ua.id.value, "");
@@ -57,7 +58,11 @@ class ManageUserAssignmentsUseCase {
     return repo.findById(tenantId, id);
   }
 
-  UserAssignment[] listAssignments(TenantId tenantId, UserAssignmentId userId) {
+  UserAssignment[] listAssignments(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  UserAssignment[] listAssignments(TenantId tenantId, UserId userId) {
     return repo.findByUser(tenantId, userId);
   }
 }

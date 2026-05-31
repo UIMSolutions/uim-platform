@@ -53,7 +53,7 @@ class WorkspaceWebController : ManageController {
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
         immutable tenantId = req.getTenantId;
-        immutable id       = extractIdFromPath(req);
+        immutable id       = precheck.id;
         // skip sub-routes like /ui/workspaces/new (handled by handleNewForm)
         if (id == "new") { handleNewForm(req, res); return; }
 

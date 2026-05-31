@@ -44,7 +44,7 @@ class ConnectorController : ManageController {
     r.description = data.getString("description");
     r.connectorVersion = data.getString("connectorVersion");
     r.host = data.getString("host");
-    r.port = getUshort(j, "port");
+    r.port = getUshort(data, "port");
     r.tunnelEndpoint = data.getString("tunnelEndpoint");
 
     auto result = usecase.registerConnector(r);
