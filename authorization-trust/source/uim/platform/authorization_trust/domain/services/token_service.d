@@ -23,9 +23,11 @@ class TokenService {
   /// Validate client credentials and return the granted scopes.
   /// Returns empty array when credentials are invalid.
   string[] validateClientCredentials(string clientId, string clientSecret) {
-    auto client = clientRepo.findByClient(clientId);
-    if (client.isNull)
+    auto candidates = clientRepo.findAll().filter!(c => c.clientId == clientId).array;
+    if (candidates.empty)
       return [];
+
+    auto client = candidates[0];
     if (client.clientSecret != hashSecret(clientSecret))
       return [];
     return client.scopes;

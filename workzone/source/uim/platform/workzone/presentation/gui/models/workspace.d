@@ -18,7 +18,7 @@ import uim.platform.workzone;
 final class WorkspaceGuiModel {
     private Workspace[] _workspaces;
     private ManageWorkspacesUseCase _useCase;
-    private string _tenantId;
+    private TenantId _tenantId;
 
     /// Fired after the workspace list is refreshed or mutated.
     void delegate() @safe onChanged;
@@ -62,7 +62,7 @@ final class WorkspaceGuiModel {
     }
 
     CommandResult removeWorkspace(string id) {
-        auto result = _useCase.removeWorkspace(_tenantId, WorkspaceId(id));
+        auto result = _useCase.deleteWorkspace(_tenantId, WorkspaceId(id));
         if (result.success) refresh();
         return result;
     }

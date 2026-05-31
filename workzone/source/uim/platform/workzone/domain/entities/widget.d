@@ -48,11 +48,12 @@ struct WidgetConfig {
   string[string] parameters;
 
   Json toJson() const {
+    auto params = parameters.dup;
     return Json.emptyObject
       .set("customTitle", customTitle)
       .set("maxItems", maxItems)
       .set("refreshIntervalSec", refreshIntervalSec)
       .set("filterExpression", filterExpression)
-      .set("parameters", parameters.toJson());
+      .set("parameters", params.toJson());
   }
 }

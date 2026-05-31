@@ -309,44 +309,6 @@ NotificationStatus toNotificationStatus(string s) {
     default: return NotificationStatus.unread; // default
   }
 }
-
-
-
-/// Site status.
-enum SiteStatus {
-  draft,
-  published,
-  maintenance,
-  archived,
-}
-
-SiteStatus toSiteStatus(string s) {
-  switch (s.toLower()) {
-    case "draft": return SiteStatus.draft;
-    case "published": return SiteStatus.published;
-    case "maintenance": return SiteStatus.maintenance;
-    case "archived": return SiteStatus.archived;
-    default: return SiteStatus.draft; // default
-  }
-}
-
-/// Survey status.
-enum SurveyStatus {
-  draft,
-  active,
-  closed,
-  archived,
-}
-
-SurveyStatus toSurveyStatus(string s) {
-  switch (s.toLower()) {
-    case "draft": return SurveyStatus.draft;
-    case "active": return SurveyStatus.active;
-    case "closed": return SurveyStatus.closed;
-    case "archived": return SurveyStatus.archived;
-    default: return SurveyStatus.draft; // default
-  }
-}
 /// KB article status.
 enum KBArticleStatus {
   draft,

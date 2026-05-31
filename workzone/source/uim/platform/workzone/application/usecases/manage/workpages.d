@@ -28,7 +28,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
 
     auto now = currentTimestamp();
     Workpage page;
-    page.initEntity(req.tenantId, req.createdBy);
+    page.initEntity(req.tenantId);
     
     page.workspaceId = req.workspaceId;
     page.title = req.title;

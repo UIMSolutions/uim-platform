@@ -11,7 +11,7 @@ import uim.platform.workzone;
 /// CLI model for task inbox operations.
 struct TaskCliModel {
     private ManageTasksUseCase _useCase;
-    private string _tenantId;
+    private TenantId _tenantId;
 
     this(ManageTasksUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
@@ -29,7 +29,7 @@ struct TaskCliModel {
     }
 
     CommandResult complete(string id) {
-        return _useCase.updateTaskStatus(_tenantId, TaskId(id), TaskStatus.completed);
+        return _useCase.completeTask(_tenantId, TaskId(id));
     }
 
     private static TaskStatus parseStatus(string s) @safe pure {

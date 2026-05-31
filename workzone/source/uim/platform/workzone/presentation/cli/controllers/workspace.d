@@ -30,9 +30,15 @@ class WorkspaceCliController {
         if (args.length == 0) { printHelp(); return 1; }
         switch (args[0]) {
             case "list":   return cmdList();
-            case "get":    return args.length >= 2 ? cmdGet(args[1]) : (printHelp(), 1);
+            case "get":
+                if (args.length >= 2) return cmdGet(args[1]);
+                printHelp();
+                return 1;
             case "create": return cmdCreate(args[1 .. $]);
-            case "delete": return args.length >= 2 ? cmdDelete(args[1]) : (printHelp(), 1);
+            case "delete":
+                if (args.length >= 2) return cmdDelete(args[1]);
+                printHelp();
+                return 1;
             default:       printHelp(); return 1;
         }
     }
@@ -69,20 +75,17 @@ class WorkspaceCliController {
     }
 
     private int cmdCreate(string[] args) {
-        import std.getopt : getopt, config;
         string name, desc, alias_, type_ = "team";
-        try {
-            getopt(args,
-                config.passThrough,
-                "name",   &name,
-                "desc",   &desc,
-                "alias",  &alias_,
-                "type",   &type_
-            );
-        } catch (Exception e) {
-            auto dv = DetailView("create");
-            dv.renderError(e.msg);
-            return 1;
+        foreach (arg; args) {
+            if (arg.length > 7 && arg[0 .. 7] == "--name=") {
+                name = arg[7 .. $];
+            } else if (arg.length > 7 && arg[0 .. 7] == "--desc=") {
+                desc = arg[7 .. $];
+            } else if (arg.length > 8 && arg[0 .. 8] == "--alias=") {
+                alias_ = arg[8 .. $];
+            } else if (arg.length > 7 && arg[0 .. 7] == "--type=") {
+                type_ = arg[7 .. $];
+            }
         }
         if (name.length == 0) {
             auto dv = DetailView("create");

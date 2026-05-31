@@ -32,7 +32,7 @@ class MemoryTagRepository : TenantRepository!(Tag, TagId), TagRepository {
   void removeByName(TenantId tenantId, string name) {
     foreach (t; findByTenant(tenantId))
       if (t.name == name) {
-        store.remove(t);
+        remove(t);
         break;
       }
   }
@@ -44,7 +44,7 @@ class MemoryTagRepository : TenantRepository!(Tag, TagId), TagRepository {
   }
 
   Tag[] findByParent(TenantId tenantId, TagId parentTagId) {
-    return findByTenant(tenantId).filter!(t => t.parentTagId == parentTagId).array;
+    return findByTenant(tenantId).filter!(t => t.parentTagId == parentTagId.value).array;
   }
 
   void removeByParent(TenantId tenantId, TagId parentTagId) {

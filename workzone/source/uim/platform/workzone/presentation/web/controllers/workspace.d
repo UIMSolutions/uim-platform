@@ -53,7 +53,7 @@ class WorkspaceWebController : ManageController {
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
         immutable tenantId = req.getTenantId;
-        immutable id       = precheck.id;
+        immutable id       = extractLastSegment(req.requestPath.to!string, '/');
         // skip sub-routes like /ui/workspaces/new (handled by handleNewForm)
         if (id == "new") { handleNewForm(req, res); return; }
 
@@ -107,6 +107,13 @@ class WorkspaceWebController : ManageController {
                           "text/html; charset=utf-8");
         }
     }
+}
+
+private string extractLastSegment(string path, char sep) @safe pure {
+    import std.string : lastIndexOf;
+    immutable last = lastIndexOf(path, sep);
+    if (last < 0 || cast(size_t) last + 1 >= path.length) return path;
+    return path[last + 1 .. $];
 }
 
 /// Extract the path segment immediately before the last `/` separator.

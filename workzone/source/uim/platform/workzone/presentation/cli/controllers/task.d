@@ -29,20 +29,27 @@ class TaskCliController {
         if (args.length == 0) { printHelp(); return 1; }
         switch (args[0]) {
             case "list":     return cmdList(args[1 .. $]);
-            case "get":      return args.length >= 2 ? cmdGet(args[1]) : (printHelp(), 1);
-            case "complete": return args.length >= 2 ? cmdComplete(args[1]) : (printHelp(), 1);
+            case "get":
+                if (args.length >= 2) return cmdGet(args[1]);
+                printHelp();
+                return 1;
+            case "complete":
+                if (args.length >= 2) return cmdComplete(args[1]);
+                printHelp();
+                return 1;
             default:         printHelp(); return 1;
         }
     }
 
     private int cmdList(string[] args) {
-        import std.getopt : getopt, config;
         string assignee, status;
-        try {
-            getopt(args, config.passThrough,
-                "assignee", &assignee,
-                "status",   &status);
-        } catch (Exception) {}
+        foreach (arg; args) {
+            if (arg.length > 11 && arg[0 .. 11] == "--assignee=") {
+                assignee = arg[11 .. $];
+            } else if (arg.length > 9 && arg[0 .. 9] == "--status=") {
+                status = arg[9 .. $];
+            }
+        }
 
         WZTask[] tasks;
         if (assignee.length > 0)

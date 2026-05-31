@@ -27,7 +27,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Page template name is required");
 
     PageTemplate t;
-    t.initEntity(req.tenantId, req.requestedBy);
+    t.initEntity(req.tenantId);
 
     t.name = req.name;
     t.description = req.description;

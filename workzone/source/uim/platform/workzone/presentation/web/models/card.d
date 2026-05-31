@@ -35,13 +35,14 @@ struct CardViewModel {
 
     private static string labelForType(CardType t) {
         final switch (t) {
+            case CardType.adaptive:   return "Adaptive";
             case CardType.list:       return "List";
-            case CardType.table:      return "Table";
+            case CardType.table_:     return "Table";
             case CardType.object_:    return "Object";
             case CardType.analytical: return "Analytical";
             case CardType.timeline:   return "Timeline";
+            case CardType.component:  return "Component";
             case CardType.calendar:   return "Calendar";
-            case CardType.custom:     return "Custom";
         }
     }
 }

@@ -41,7 +41,7 @@ class CliRouter {
         // args[0] is the program name; we work with args[1 ..]
         if (args.length < 2) { printHelp(); return 1; }
         immutable resource = args[1];
-        immutable rest     = args.length > 2 ? args[2 .. $] : [];
+        string[] rest      = args.length > 2 ? args[2 .. $] : [];
 
         switch (resource) {
             case "workspace": return _workspaceCtrl.dispatch(rest);

@@ -41,7 +41,7 @@ class MemoryPageTemplateRepository : TenantRepository!(PageTemplate, PageTemplat
   }
 
   PageTemplate[] findPublic() {
-    return findByTenant(tenantId).filter!(t => t.isPublic).array;
+    return findAll().filter!(t => t.isPublic).array;
   }
 
   void removePublic() {

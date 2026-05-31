@@ -11,7 +11,7 @@ import uim.platform.workzone;
 /// CLI model for workspace operations — thin wrapper around the use case.
 struct WorkspaceCliModel {
     private ManageWorkspacesUseCase _useCase;
-    private string _tenantId;
+    private TenantId _tenantId;
 
     this(ManageWorkspacesUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
@@ -36,7 +36,7 @@ struct WorkspaceCliModel {
     }
 
     CommandResult remove(string id) {
-        return _useCase.removeWorkspace(_tenantId, WorkspaceId(id));
+        return _useCase.deleteWorkspace(_tenantId, WorkspaceId(id));
     }
 
     private static WorkspaceType parseType(string s) @safe pure {

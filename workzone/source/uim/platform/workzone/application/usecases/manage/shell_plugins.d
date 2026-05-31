@@ -28,7 +28,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
 
     auto now = currentTimestamp();
     ShellPlugin p;
-    p.initEntity(req.tenantId, req.requestedBy);
+    p.initEntity(req.tenantId);
 
     p.name = req.name;
     p.description = req.description;

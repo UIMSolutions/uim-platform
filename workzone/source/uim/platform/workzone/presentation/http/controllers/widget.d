@@ -1,17 +1,5 @@
-/****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
-* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
-*****************************************************************************************************************/
 module uim.platform.workzone.presentation.http.controllers.widget;
 
-
-
-// import uim.platform.workzone.application.usecases.manage.widgets;
-// import uim.platform.workzone.application.dto;
-// import uim.platform.workzone.domain.types;
-// import uim.platform.workzone.domain.entities.widget;
-// import uim.platform.identity.authentication.presentation.http
 import uim.platform.workzone;
 
 mixin(ShowModule!());
@@ -26,199 +14,25 @@ class WidgetController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-
-    router.post("/api/v1/widgets", &handleCreate);
-    router.get("/api/v1/widgets", &handleList);
-    router.get("/api/v1/widgets/*", &handleGet);
-    router.put("/api/v1/widgets/*", &handleUpdate);
-    router.delete_("/api/v1/widgets/*", &handleDelete);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto data = precheck.data;
-      auto r = CreateWidgetRequest();
-      r.pageId = data.getString("pageId");
-      r.tenantId = tenantId;
-      r.title = data.getString("title");
-      r.cardId = data.getString("cardId");
-      r.appId = data.getString("appId");
-      r.row = data.getInteger("row");
-      r.col = data.getInteger("col");
-      r.sortOrder = data.getInteger("sortOrder");
-
-      auto sStr = data.getString("size");
-      if (sStr == "small")
-        r.size = WidgetSize.small;
-      else if (sStr == "large")
-        r.size = WidgetSize.large;
-      else if (sStr == "fullWidth")
-        r.size = WidgetSize.fullWidth;
-      else
-        r.size = WidgetSize.medium;
-
-      r.config = parseWidgetConfig(j);
-
-      auto result = useCase.createWidget(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Widget created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return super.createHandler(req);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto pageId = req.params.get("pageId", "");
-      auto widgets = useCase.listByPage(tenantId, pageId);
-      auto arr = widgets.map!(w => w.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", widgets.length)
-        .set("message", "Widgets retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return super.listHandler(req);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto w = useCase.getWidget(tenantId, id);
-      if (w.isNull) {
-        writeError(res, 404, "Widget not found");
-        return;
-      }
-      res.writeJsonBody(w.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return super.getHandler(req);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = UpdateWidgetRequest();
-      r.id = precheck.id;
-      r.tenantId = tenantId;
-      r.title = data.getString("title");
-      r.row = data.getInteger("row");
-      r.col = data.getInteger("col");
-      r.sortOrder = data.getInteger("sortOrder");
-      r.visible = data.getBoolean("visible", true);
-      r.config = parseWidgetConfig(j);
-
-      auto sStr = data.getString("size");
-      if (sStr == "small")
-        r.size = WidgetSize.small;
-      else if (sStr == "large")
-        r.size = WidgetSize.large;
-      else if (sStr == "fullWidth")
-        r.size = WidgetSize.fullWidth;
-      else
-        r.size = WidgetSize.medium;
-
-      auto result = useCase.updateWidget(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("status", "updated")
-          .set("message", "Widget updated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return super.updateHandler(req);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.deleteWidget(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("message", "Widget deleted successfully");
-        res.writeJsonBody(resp, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return super.deleteHandler(req);
   }
-}
-
-private WidgetConfig parseWidgetConfig(Json j) {
-  
-  WidgetConfig cfg;
-  if (j.isObject("config")) {
-    auto c = j["config"];
-    cfg.customTitle = c.getString("customTitle");
-    cfg.maxItems = c.getInteger("maxItems");
-    cfg.refreshIntervalSec = c.getInteger("refreshIntervalSec");
-    cfg.filterExpression = c.getString("filterExpression");
-  }
-  return cfg;
-}
-
-private Json serializeWidget(Widget w) {
-  
-  auto j = Json.emptyObject
-    .set("id", w.id)
-    .set("pageId", w.pageId)
-    .set("tenantId", w.tenantId)
-    .set("title", w.title)
-    .set("cardId", w.cardId)
-    .set("appId", w.appId)
-    .set("size", w.size.to!string)
-    .set("row", w.row)
-    .set("col", w.col)
-    .set("sortOrder", w.sortOrder)
-    .set("visible", w.visible)
-    .set("createdAt", w.createdAt)
-    .set("updatedAt", w.updatedAt);
-
-  auto cfg = Json.emptyObject;
-  cfg["customTitle"] = Json(w.config.customTitle);
-  cfg["maxItems"] = Json(w.config.maxItems);
-  cfg["refreshIntervalSec"] = Json(w.config.refreshIntervalSec);
-  cfg["filterExpression"] = Json(w.config.filterExpression);
-  j["config"] = cfg;
-
-  return j;
 }

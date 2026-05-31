@@ -54,7 +54,7 @@ configuration "gui" {
     targetName "uim-workzone-gui"
     targetPath "build"
     mainSourceFile "source/ui_main.d"
-    dependency "gtkd" version=">=3.11.0 <4.0.0"
+    dependency "gtk-d" version=">=3.11.0 <4.0.0"
     versions "WorkzoneGui"
 }
 

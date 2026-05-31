@@ -49,6 +49,7 @@ struct TaskViewModel {
             case TaskStatus.inProgress: return "In Progress";
             case TaskStatus.completed:  return "Completed";
             case TaskStatus.cancelled:  return "Cancelled";
+            case TaskStatus.overdue:    return "Overdue";
         }
     }
 
@@ -58,6 +59,7 @@ struct TaskViewModel {
             case TaskStatus.inProgress: return "badge-warning";
             case TaskStatus.completed:  return "badge-success";
             case TaskStatus.cancelled:  return "badge-secondary";
+            case TaskStatus.overdue:    return "badge-danger";
         }
     }
 
@@ -66,7 +68,7 @@ struct TaskViewModel {
             case TaskPriority.low:      return "Low";
             case TaskPriority.medium:   return "Medium";
             case TaskPriority.high:     return "High";
-            case TaskPriority.critical: return "Critical";
+            case TaskPriority.veryHigh: return "Very High";
         }
     }
 
@@ -75,7 +77,7 @@ struct TaskViewModel {
             case TaskPriority.low:      return "text-muted";
             case TaskPriority.medium:   return "text-info";
             case TaskPriority.high:     return "text-warning";
-            case TaskPriority.critical: return "text-danger fw-bold";
+            case TaskPriority.veryHigh: return "text-danger fw-bold";
         }
     }
 }

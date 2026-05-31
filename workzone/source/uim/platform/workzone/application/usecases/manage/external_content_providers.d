@@ -28,7 +28,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
 
     auto now = currentTimestamp();
     ExternalContentProvider p;
-    p.initEntity8(req.tenantId);
+    p.initEntity(req.tenantId);
 
     p.name = req.name;
     p.description = req.description;

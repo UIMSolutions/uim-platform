@@ -28,7 +28,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
 
     auto now = currentTimestamp();
     UserProfile p;
-    p.initEntity(req.tenantId, req.createdBy);
+    p.initEntity(req.tenantId, req.userId);
 
     p.userId = req.userId;
     p.displayName = req.displayName;

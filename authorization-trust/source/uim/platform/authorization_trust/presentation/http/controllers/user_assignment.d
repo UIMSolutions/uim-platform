@@ -37,7 +37,7 @@ class UserAssignmentController : ManageController {
     auto data = precheck.data;
     CreateUserAssignmentRequest r;
     r.tenantId = tenantId;
-    r.userId = UserId(data.getString("userId"));
+    r.userId = data.getString("userId");
     r.userEmail = data.getString("userEmail");
     r.roleCollectionId = RoleCollectionId(data.getString("roleCollectionId"));
     r.origin = data.getString("origin");
@@ -51,13 +51,13 @@ class UserAssignmentController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
 
-    auto userId = UserId(req.params.get("userId", ""));
+    auto userId = UserId(req.query.get("userId", ""));
 
     auto assignments =
       userId.isEmpty ? usecase.listAssignments(

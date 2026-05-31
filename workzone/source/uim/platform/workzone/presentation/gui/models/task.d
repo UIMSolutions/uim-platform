@@ -12,7 +12,7 @@ import uim.platform.workzone;
 final class TaskGuiModel {
     private WZTask[] _tasks;
     private ManageTasksUseCase _useCase;
-    private string _tenantId;
+    private TenantId _tenantId;
     private string _assigneeId;
 
     void delegate() @safe onChanged;
@@ -54,8 +54,7 @@ final class TaskGuiModel {
     }
 
     CommandResult completeTask(string id) {
-        auto result = _useCase.updateTaskStatus(
-            _tenantId, TaskId(id), TaskStatus.completed);
+        auto result = _useCase.completeTask(_tenantId, TaskId(id));
         if (result.success) refresh();
         return result;
     }

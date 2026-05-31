@@ -12,7 +12,7 @@ import uim.platform.workzone;
 final class WorkpageGuiModel {
     private Workpage[] _pages;
     private ManageWorkpagesUseCase _useCase;
-    private string _tenantId;
+    private TenantId _tenantId;
     private string _workspaceId;
 
     void delegate() @safe onChanged;

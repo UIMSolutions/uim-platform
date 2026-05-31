@@ -47,7 +47,8 @@ class CardWebController : ManageController {
 
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
-        immutable id = precheck.id;
+        immutable rawPath = req.requestPath.to!string;
+        immutable id = extractLastSegment(rawPath, '/');
         if (id == "new") { handleNew(req, res); return; }
 
         res.writeBody(renderError(501, "Card detail not yet implemented"),
@@ -59,4 +60,11 @@ class CardWebController : ManageController {
         res.writeBody(renderError(501, "Card creation UI not yet implemented"),
                       "text/html; charset=utf-8");
     }
+}
+
+private string extractLastSegment(string path, char sep) @safe pure {
+    import std.string : lastIndexOf;
+    immutable last = lastIndexOf(path, sep);
+    if (last < 0 || cast(size_t) last + 1 >= path.length) return path;
+    return path[last + 1 .. $];
 }

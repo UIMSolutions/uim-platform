@@ -47,7 +47,7 @@ struct TemplateSection {
       .set("columns", columns)
       .set("layoutType", layoutType)
       .set("sortOrder", sortOrder)
-      .set("allowedWidgetSizes", allowedWidgetSizes.map!(s => s.toJson()).array.toJson());
+      .set("allowedWidgetSizes", allowedWidgetSizes.map!(s => Json(s.to!string)).array.toJson());
   }
 
 }

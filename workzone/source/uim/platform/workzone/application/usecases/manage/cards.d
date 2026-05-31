@@ -27,7 +27,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Card title is required");
 
     Card c;
-    c.initEntity(req.tenantId, req.authorId);
+    c.initEntity(req.tenantId);
 
     c.title = req.title;
     c.subtitle = req.subtitle;

@@ -25,7 +25,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   CommandResult createWidget(CreateWidgetRequest req) {
     auto now = currentTimestamp();
     Widget w;
-    w.initEntity8(req.tenantId);
+    w.initEntity(req.tenantId);
     
     w.pageId = req.pageId;
     w.title = req.title;
@@ -46,7 +46,12 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   Widget[] listWidgets(TenantId tenantId, WorkpageId pageId) {
-    return repo.findByPage(tenantId, pageId);
+    Widget[] result;
+    foreach (w; repo.findByTenant(tenantId)) {
+      if (w.pageId == pageId)
+        result ~= w;
+    }
+    return result;
   }
 
   CommandResult updateWidget(UpdateWidgetRequest req) {

@@ -32,7 +32,7 @@ class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId
   void removeByUser(TenantId tenantId, UserId userId) {
     foreach (p; findByTenant(tenantId))
       if (p.userId == userId) {
-        remove(p.id);
+        remove(p);
         break;
       }
   }

@@ -65,12 +65,12 @@ class OAuthClientController : ManageController {
 
   // GET /api/v1/oauth/clients
   override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(req.params.get("appId", ""));
+    auto appId = req.query.get("appId", "");
     auto clients = appId.length > 0
       ? usecase.listClients(tenantId, appId) : usecase.listClients(
         tenantId);

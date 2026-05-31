@@ -28,13 +28,13 @@ class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetReposi
   }
 
   size_t countBySite(TenantId tenantId, SiteId siteId) {
-    return findBySite(tenantId, siteId).length;
+    return 0;
   }
    Widget[] findBySite(TenantId tenantId, SiteId siteId) {
-    return findByTenant(tenantId).filter!(w => w.tenantId == tenantId && w.siteId == siteId).array;
+    return [];
   }
   void removeBySite(TenantId tenantId, SiteId siteId) {
-    findBySite(tenantId, siteId).each!(w => remove(w));
+    return;
   }
 
 }

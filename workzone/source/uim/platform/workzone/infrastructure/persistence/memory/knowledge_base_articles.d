@@ -26,7 +26,7 @@ class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArti
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByWorkspace(tenantId, workspaceId).each!(a => remove(a));
+    findByWorkspace(tenantId, workspaceId).each!(a => remove(a));
   }
 
   size_t countByCategory(TenantId tenantId, string category) {
@@ -38,7 +38,7 @@ class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArti
   }
 
   void removeByCategory(TenantId tenantId, string category) {
-    return findByCategory(tenantId, category).each!(a => remove(a));
+    findByCategory(tenantId, category).each!(a => remove(a));
   }
 
 }

@@ -37,7 +37,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   Survey[] findByOrganizer(TenantId tenantId, UserId organizerId) {
-    return findByTenant(tenantId).filter!(s => s.organizerId == organizerId).array;
+    return findByTenant(tenantId).filter!(s => s.creatorId == organizerId).array;
   }
 
   void removeByOrganizer(TenantId tenantId, UserId organizerId) {

@@ -45,7 +45,7 @@ class ManageIdentityProvidersUseCase {
   }
 
   CommandResult updateProvider(UpdateIdentityProviderRequest r) {
-    auto idp = repo.findById(r.tenantId, r.id);
+    auto idp = repo.findById(r.tenantId, r.providerId);
     if (idp.isNull)
       return CommandResult(false, "", "Identity provider not found");
 
@@ -76,6 +76,6 @@ class ManageIdentityProvidersUseCase {
   }
 
   IdentityProvider[] listProviders(TenantId tenantId) {
-    return repo.findAll(tenantId);
+    return repo.findByTenant(tenantId);
   }
 }

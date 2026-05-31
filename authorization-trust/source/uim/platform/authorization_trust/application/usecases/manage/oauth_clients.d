@@ -21,7 +21,9 @@ class ManageOAuthClientsUseCase {
   CommandResult createOAuthClient(CreateOAuthClientRequest r) {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "clientId is required");
-    if (repo.existsByClient(r.tenantId, r.clientId))
+
+    auto existingClients = repo.findByTenant(r.tenantId).filter!(c => c.clientId == r.clientId).array;
+    if (!existingClients.empty)
       return CommandResult(false, "", "A client with this clientId already exists");
 
     import std.uuid : randomUUID;
@@ -33,20 +35,20 @@ class ManageOAuthClientsUseCase {
     c.name        = r.name;
     c.description = r.description;
     foreach (gt; r.grantTypes)
-      c.grantTypes ~= parseGrantType(gt);
+      c.grantTypes ~= gt.toGrantType;
     c.scopes       = r.scopes.dup;
     c.redirectUris = r.redirectUris.dup;
-    c.clientType   = parseClientType(r.clientType);
+    c.clientType   = r.clientType.toClientType;
     c.appId        = r.appId;
     c.createdAt    = currentTimestamp();
     c.updatedAt    = c.createdAt;
 
     repo.save(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   CommandResult updateClient(UpdateOAuthClientRequest r) {
-    auto c = repo.findById(r.tenantId, r.id);
+    auto c = repo.findById(r.tenantId, r.clientId);
     if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
 
@@ -55,12 +57,12 @@ class ManageOAuthClientsUseCase {
     if (r.scopes.length > 0)     c.scopes = r.scopes.dup;
     if (r.redirectUris.length > 0) c.redirectUris = r.redirectUris.dup;
     if (r.grantTypes.length > 0) {
-      c.grantTypes = r.grantTypes.map!(gt => parseGrantType(gt)).array;
+      c.grantTypes = r.grantTypes.map!(gt => gt.toGrantType).array;
     }
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id, "");
+    return CommandResult(true, c.id.value, "");
   }
 
   CommandResult deleteClient(TenantId tenantId, OAuthClientId id) {
@@ -74,10 +76,6 @@ class ManageOAuthClientsUseCase {
 
   OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
     return repo.findById(tenantId, id);
-  }
-
-  OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
-    return repo.findByClient(tenantId, id);
   }
 
   OAuthClient[] listClients(TenantId tenantId) {
