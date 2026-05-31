@@ -70,9 +70,7 @@ class DeviceController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Device enrolled successfully", "Created", 201, resp);
     }
 
@@ -113,9 +111,7 @@ class DeviceController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Device updated successfully", "Updated", 200, resp);
     }
 

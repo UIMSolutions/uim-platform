@@ -38,7 +38,7 @@ class ManageProgramsUseCase {
     }
 
     AbapProgram[] listPrograms(TenantId tenantId) {
-        return repo.findAll().filter!(p => p.tenantId == tenantId).array;
+        return repo.findAll().filter!(p => p.tenantId.value == tenantId.value).array;
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {

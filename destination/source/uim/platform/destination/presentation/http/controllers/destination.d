@@ -30,7 +30,7 @@ class DestinationController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = listHandler(req);
+    auto precheck = super.listHandler(req);
     if (precheck.hasError)
       return precheck;
 

@@ -69,15 +69,15 @@ class ManageOAuthClientsUseCase {
       return CommandResult(false, "", "OAuth client not found");
 
     repo.remove(c);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
     return repo.findById(tenantId, id);
   }
 
-  OAuthClient getClient(TenantId tenantId, string clientId) {
-    return repo.findByClient(tenantId, clientId);
+  OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
+    return repo.findByClient(tenantId, id);
   }
 
   OAuthClient[] listClients(TenantId tenantId) {

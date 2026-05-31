@@ -49,9 +49,8 @@ class AppBuildController : ManageController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -70,59 +69,38 @@ class AppBuildController : ManageController {
         auto result = usecase.createAppBuild(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "App build created");
 
-            return resp.set("status", "success").set("statusCode", 201);
-        } else {
-            return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("App build created successfully", "Created", 201, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
         auto id = AppBuildId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid App Build ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid App Build ID", 400);
 
         auto e = usecase.getAppBuild(tenantId, id);
-        if (e.isNull) {
-            return Json.emptyObject
-                .set("error", "App build not found")
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
-        return e.toJson()
-            .set("status", "success")
-            .set("statusCode", 200);
+        if (e.isNull)
+            return errorResponse("App build not found", 404);
+
+        return successResponse("App build retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = AppBuildId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid App Build ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid App Build ID", 400);
 
         auto data = precheck.data;
         AppBuildDTO dto;
@@ -134,45 +112,27 @@ class AppBuildController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateAppBuild(dto);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "App build updated")
-            .set("status", "success")
-            .set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        return successResponse("App build updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+                .id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = AppBuildId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid App Build ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid App Build ID", 400);
 
         auto result = usecase.deleteAppBuild(tenantId, id);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
-        return Json.emptyObject
-            .set("message", "App build deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        return successResponse("App build deleted successfully", "Deleted", 200, Json.emptyObject);
     }
 }

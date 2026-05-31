@@ -69,9 +69,7 @@ class RegisteredApplicationController : ManageController {
         if (result.hasError)
             return errorResponse(result.message);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Application registered", "Registered", 201, resp);
 
     }

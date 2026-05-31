@@ -61,7 +61,7 @@ class CertificateController : ManageController {
         return errorResponse(result.message, 400);
 
       auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("Certificate uploaded successfully", 201, resp);
+      return successResponse("Certificate uploaded successfully", 201, responseData);
   }
 
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -166,7 +166,7 @@ class CertificateController : ManageController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Certificate updated successfully", 200, resp);
+    return successResponse("Certificate updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -185,7 +185,7 @@ class CertificateController : ManageController {
       return errorResponse(result.message, 404);
 
     auto responseData = Json.emptyObject.set("id", id);
-    return successResponse("Certificate deleted successfully", 200, resp);
+    return successResponse("Certificate deleted successfully", 200, responseData);
   }
 
   protected Json validateHandler(HTTPServerRequest req) {
@@ -206,8 +206,7 @@ class CertificateController : ManageController {
         .set("isValid", result.isValid)
         .set("status", result.status.to!string)
         .set("message", (result.message))
-        .set("daysUntilExpiry", Json(result.daysUntilExpiry))
-        .set("message", "Certificate validation completed");
+        .set("daysUntilExpiry", Json(result.daysUntilExpiry));
 
       return successResponse("Certificate validation completed", 200, resp);
   }

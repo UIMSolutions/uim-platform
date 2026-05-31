@@ -30,7 +30,7 @@ class JobController : ManageController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
 

@@ -32,8 +32,8 @@ class FindController : PlatformController {
     FindDestinationRequest r;
     r.tenantId = precheck.tenantId;
     r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
-    r.name = req.params.get("name");
-    r.headerProvider = req.params.get("headerProvider");
+    r.name = req.query.get("name", "");
+    r.headerProvider = req.query.get("headerProvider", "");
 
     auto result = usecase.find(r);
     if (!result.found)
@@ -81,7 +81,7 @@ class FindController : PlatformController {
   protected void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = findHandler(req);
-      res.writeJsonBody(response, 200);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
