@@ -35,10 +35,13 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     CommandResult createAppBuild(AppBuildDTO dto) {
         AppBuild e;
         e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.appBuildId;
+        if (!dto.appBuildId.isNull)
+            e.id = dto.appBuildId;
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
+        if (dto.buildTarget.length > 0)
+            e.buildTarget = toBuildTarget(dto.buildTarget);
         e.version_ = dto.version_;
         e.buildConfig = dto.buildConfig;
         e.signingConfig = dto.signingConfig;
@@ -55,6 +58,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
+        if (dto.buildTarget.length > 0) existing.buildTarget = toBuildTarget(dto.buildTarget);
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
@@ -69,5 +73,19 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
 
         repo.remove(entity);
         return CommandResult(true, entity.id.value, "");
+    }
+
+    private static BuildTarget toBuildTarget(string value) {
+        switch (value) {
+            case "ios":
+                return BuildTarget.ios;
+            case "android":
+                return BuildTarget.android;
+            case "webAndMobile":
+                return BuildTarget.webAndMobile;
+            case "web":
+            default:
+                return BuildTarget.web;
+        }
     }
 }

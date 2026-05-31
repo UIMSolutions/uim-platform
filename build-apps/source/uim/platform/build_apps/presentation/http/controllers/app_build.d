@@ -35,8 +35,13 @@ class AppBuildController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
+        auto applicationIdRaw = req.query.get("applicationId", "");
+        AppBuild[] items;
+        if (applicationIdRaw.length > 0)
+            items = usecase.listAppBuilds(tenantId, ApplicationId(applicationIdRaw));
+        else
+            items = usecase.listAppBuilds(tenantId);
 
-        auto items = usecase.listAppBuilds(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
         return Json.emptyObject
@@ -80,7 +85,6 @@ class AppBuildController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = AppBuildId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid App Build ID", 400);
@@ -108,6 +112,7 @@ class AppBuildController : ManageController {
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
+        dto.buildTarget = data.getString("buildTarget");
         dto.version_ = data.getString("version");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
