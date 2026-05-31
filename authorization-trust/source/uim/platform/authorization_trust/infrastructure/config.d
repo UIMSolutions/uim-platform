@@ -6,8 +6,11 @@
 module uim.platform.authorization_trust.infrastructure.config;
 
 import std.process : environment;
+import uim.platform.authorization_trust;
 
+mixin(ShowModule!());
 
+@safe:
 struct SrvConfig {
   string host        = "0.0.0.0";
   ushort port        = 8116;

@@ -24,19 +24,18 @@ class ManageRolesUseCase {
     if (repo.existsByName(r.tenantId, r.name, r.appId))
       return CommandResult(false, "", "A role with this name already exists for the application");
 
-    RoleEntity role;
-    role.initEntity(r.tenantId);
+    auto role = RoleEntity(r.tenantId);
     role.name            = r.name;
     role.description     = r.description;
     role.scopeReferences = r.scopeReferences.dup;
     role.appId           = r.appId;
 
     repo.save(role);
-    return CommandResult(true, role.id, "");
+    return CommandResult(true, role.id.value, "");
   }
 
   CommandResult updateRole(UpdateRoleRequest r) {
-    auto role = repo.findById(r.tenantId, r.id);
+    auto role = repo.findById(r.tenantId, r.roleId);
     if (role.isNull )
       return CommandResult(false, "", "Role not found");
 
@@ -45,7 +44,7 @@ class ManageRolesUseCase {
     role.updatedAt = currentTimestamp();
 
     repo.update(role);
-    return CommandResult(true, role.id, "");
+    return CommandResult(true, role.id.value, "");
   }
 
   CommandResult deleteRole(TenantId tenantId, RoleId id) {

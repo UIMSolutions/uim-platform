@@ -21,15 +21,15 @@ class ManageIdentityProvidersUseCase {
   CommandResult createIdentityProvider(CreateIdentityProviderRequest r) {
     if (r.alias_.length == 0)
       return CommandResult(false, "", "IdP alias is required");
-    if (repo.existsByAlias(r.alias_))
+    if (repo.existsByAlias(r.tenantId, r.alias_))
       return CommandResult(false, "", "An identity provider with this alias already exists");
 
     import std.uuid : randomUUID;
-    IdentityProviderEntity idp;
+    IdentityProvider idp;
     idp.id          = randomUUID().toString();
     idp.alias_      = r.alias_;
     idp.displayName = r.displayName;
-    idp.idpType     = parseIdpType(r.idpType);
+    idp.idpType     = r.idpType.toIdpType;
     idp.metadataUrl = r.metadataUrl;
     idp.entityId    = r.entityId;
     idp.ssoUrl      = r.ssoUrl;
@@ -41,7 +41,7 @@ class ManageIdentityProvidersUseCase {
     idp.updatedAt   = idp.createdAt;
 
     repo.save(idp);
-    return CommandResult(true, idp.id, "");
+    return CommandResult(true, idp.id.value, "");
   }
 
   CommandResult updateIdentityProvider(UpdateIdentityProviderRequest r) {
@@ -71,11 +71,11 @@ class ManageIdentityProvidersUseCase {
     return CommandResult(true, provider.id.value, "");
   }
 
-  IdentityProviderEntity getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
+  IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
     return repo.findById(tenantId, id);
   }
 
-  IdentityProviderEntity[] listIdentityProviders(TenantId tenantId) {
+  IdentityProvider[] listIdentityProviders(TenantId tenantId) {
     return repo.findAll(tenantId);
   }
 }

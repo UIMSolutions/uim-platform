@@ -20,26 +20,30 @@ class StoryUseCases {
     this.repo = repo;
   }
 
-  StoryResponse createStory(CreateStoryRequest req) {
-    auto story = Story.create(req.title, req.description, req.ownerId);
+  StoryResponse createStory(TenantId tenantId, CreateStoryRequest req) {
+    auto story = Story(tenantId);
+    story.title = req.title;
+    story.description = req.description;
+    story.ownerId = req.ownerId;
+    
     repo.save(story);
     return StoryResponse.fromEntity(story);
   }
 
-  StoryResponse getStory(string id) {
-    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+  StoryResponse getStory(TenantId tenantId, StoryId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     return StoryResponse.fromEntity(found.empty ? Story.init : found[0]);
   }
 
-  StoryResponse[] listStories() {
+  StoryResponse[] listStories(TenantId tenantId) {
     StoryResponse[] result;
-    foreach (s; repo.findAll())
+    foreach (s; repo.findByTenant(tenantId))
       result ~= StoryResponse.fromEntity(s);
     return result;
   }
 
-  StoryResponse addSectionToStory(string storyId, string heading, string narrative) {
-    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+  StoryResponse addSectionToStory(TenantId tenantId, StoryId storyId, string heading, string narrative) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
@@ -48,8 +52,8 @@ class StoryUseCases {
     return StoryResponse.fromEntity(s);
   }
 
-  StoryResponse publishStory(string storyId) {
-    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+  StoryResponse publishStory(TenantId tenantId, StoryId storyId) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
@@ -58,8 +62,8 @@ class StoryUseCases {
     return StoryResponse.fromEntity(s);
   }
 
-  CommandResult deleteStory(string storyId) {
-    auto found = repo.findAll().filter!(e => e.id.value == storyId).array;
+  CommandResult deleteStory(TenantId tenantId, StoryId storyId) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return CommandResult(false, "", "Story not found");

@@ -23,7 +23,7 @@ class MemoryScalingHistoryRepository : ScalingHistoryRepository {
     return p ? *p : ScalingHistoryEntity.init;
   }
 
-  override ScalingHistoryEntity[] findByAppId(AppBindingId appId) {
+  override ScalingHistoryEntity[] findByApp(AppBindingId appId) {
     ScalingHistoryEntity[] result;
     foreach (e; store.byValue)
       if (e.appId == appId) result ~= e;
@@ -41,7 +41,7 @@ class MemoryScalingHistoryRepository : ScalingHistoryRepository {
     store[event.id] = event;
   }
 
-  override size_t countByAppId(AppBindingId appId) {
+  override size_t countByApp(AppBindingId appId) {
     size_t n;
     foreach (e; store.byValue)
       if (e.appId == appId) n++;

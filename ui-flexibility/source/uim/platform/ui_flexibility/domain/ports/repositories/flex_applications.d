@@ -18,7 +18,7 @@ interface FlexApplicationRepository : ITenantRepository!(FlexApplication, FlexAp
   FlexApplication[] findByTenantAll(TenantId tenantId);
 
   /// Find by application ID within a tenant
-  FlexApplication findByAppId(TenantId tenantId, string appId);
+  FlexApplication findByApp(TenantId tenantId, string appId);
 
   /// All active applications for a tenant
   FlexApplication[] findActiveByTenant(TenantId tenantId);

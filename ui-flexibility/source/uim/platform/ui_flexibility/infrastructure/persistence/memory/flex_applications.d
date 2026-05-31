@@ -34,7 +34,7 @@ class MemoryFlexApplicationRepository : TenantRepository!(FlexApplication, FlexA
     return findByTenant(tenantId);
   }
 
-  FlexApplication findByAppId(TenantId tenantId, string appId) {
+  FlexApplication findByApp(TenantId tenantId, string appId) {
     foreach (a; findByTenant(tenantId))
       if (a.appId_ == appId) return a;
     return FlexApplication.init;

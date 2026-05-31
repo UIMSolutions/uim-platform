@@ -11,45 +11,20 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRoleCollectionRepository : RoleCollectionRepository {
-  private RoleCollectionEntity[RoleCollectionId] store;
+class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, RoleCollectionId), RoleCollectionRepository {
 
-  bool existsById(RoleCollectionId id) {
-    return (id in store) !is null;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).id.length > 0;
   }
 
-  RoleCollectionEntity findById(RoleCollectionId id) {
-    return existsById(id) ? store[id] : RoleCollectionEntity.init;
-  }
-
-  bool existsByName(string name) {
-    return findByName(name).id.length > 0;
-  }
-
-  RoleCollectionEntity findByName(string name) {
-    foreach (rc; store.values)
+  RoleCollectionEntity findByName(TenantId tenantId, string name) {
+    foreach (rc; findByTenant(tenantId))
       if (rc.name == name)
         return rc;
     return RoleCollectionEntity.init;
   }
 
-  RoleCollectionEntity[] findByTenant(tenantId) {
-    return store.values.dup;
-  }
-
-  void save(RoleCollectionEntity rc) {
-    store[rc.id] = rc;
-  }
-
-  void update(RoleCollectionEntity rc) {
-    store[rc.id] = rc;
-  }
-
-  void remove(RoleCollectionId id) {
-    store.remove(id);
-  }
-
-  size_t count() {
-    return store.length;
+  void removeByName(TenantId tenantId, string name) {
+    remove(findByName(tenantId, name));
   }
 }

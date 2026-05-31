@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface RoleRepository : ITenantRepository!(RoleEntity, RoleId) {
 
-  bool existsByName(string name, string appId);
-  RoleEntity findByName(string name, string appId);
-  void removeByName(string name, string appId);
+  bool existsByName(TenantId tenantId, string name, string appId);
+  RoleEntity findByName(TenantId tenantId, string name, string appId);
+  void removeByName(TenantId tenantId, string name, string appId);
 
 }

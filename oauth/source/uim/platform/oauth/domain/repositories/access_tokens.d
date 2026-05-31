@@ -21,9 +21,9 @@ interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId)
     AccessToken[] findByClientId(TenantId tenantId, string clientId);
     void removeByClientId(TenantId tenantId, string clientId);
 
-    size_t countByUserId(TenantId tenantId, UserId userId);
-    AccessToken[] findByUserId(TenantId tenantId, UserId userId);
-    void removeByUserId(TenantId tenantId, UserId userId);
+    size_t countByUser(TenantId tenantId, UserId userId);
+    AccessToken[] findByUser(TenantId tenantId, UserId userId);
+    void removeByUser(TenantId tenantId, UserId userId);
 
     size_t countByStatus(TenantId tenantId, TokenStatus status);
     AccessToken[] findByStatus(TenantId tenantId, TokenStatus status);

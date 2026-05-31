@@ -35,8 +35,8 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse getById(TenantId tenantId, string id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
+  PlanningModelResponse getById(TenantId tenantId, PlanningModelId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     return PlanningModelResponse.fromEntity(found.empty ? PlanningModel.init : found[0]);
   }
 
@@ -44,8 +44,8 @@ class PlanningUseCases {
     return repo.findByTenant(tenantId).map!(pm => PlanningModelResponse.fromEntity(pm)).array;
   }
 
-  PlanningModelResponse lockPlanningModel(TenantId tenantId, string id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
+  PlanningModelResponse lockPlanningModel(TenantId tenantId, PlanningModelId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     auto pm = found.empty ? PlanningModel.init : found[0];
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -54,8 +54,8 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse approvePlanningModel(TenantId tenantId, string id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
+  PlanningModelResponse approvePlanningModel(TenantId tenantId, PlanningModelId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     auto pm = found.empty ? PlanningModel.init : found[0];
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -64,9 +64,9 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  CommandResult deletePlanningModel(TenantId tenantId, string id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
+  CommandResult deletePlanningModel(TenantId tenantId, PlanningModelId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 }

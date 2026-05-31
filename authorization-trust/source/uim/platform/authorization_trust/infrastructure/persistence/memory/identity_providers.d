@@ -11,52 +11,35 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryIdentityProviderRepository : IdentityProviderRepository {
-  private IdentityProviderEntity[IdentityProviderId] store;
+class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
-  bool existsById(IdentityProviderId id) {
-    return (id in store) !is null;
+  bool existsByAlias(TenantId tenantId, string alias_) {
+    return findByTenant(tenantId).any!(idp => idp.alias_ == alias_);
   }
 
-  IdentityProviderEntity findById(IdentityProviderId id) {
-    return existsById(id) ? store[id] : IdentityProviderEntity.init;
-  }
-
-  bool existsByAlias(string alias_) {
-    return findByAlias(alias_).id.length > 0;
-  }
-
-  IdentityProviderEntity findByAlias(string alias_) {
-    foreach (idp; store.values)
+  IdentityProvider findByAlias(TenantId tenantId, string alias_) {
+    foreach (idp; findByTenant(tenantId))
       if (idp.alias_ == alias_)
         return idp;
-    return IdentityProviderEntity.init;
+    return IdentityProvider.init;
+  }
+  void removeByAlias(TenantId tenantId, string alias_) {
+    remove(findByAlias(tenantId, alias_));
   }
 
-  IdentityProviderEntity[] findByTenant(tenantId) {
-    return store.values.dup;
+  bool existsDefault(TenantId tenantId) {
+    foreach (idp; findByTenant(tenantId))
+      if (idp.isDefault)
+        return true;
+    return false;
   }
-
-  IdentityProviderEntity findDefault() {
-    foreach (idp; store.values)
+  IdentityProvider findDefault(TenantId tenantId) {
+    foreach (idp; findByTenant(tenantId))
       if (idp.isDefault)
         return idp;
-    return IdentityProviderEntity.init;
+    return IdentityProvider.init;
   }
-
-  void save(IdentityProviderEntity idp) {
-    store[idp.id] = idp;
-  }
-
-  void update(IdentityProviderEntity idp) {
-    store[idp.id] = idp;
-  }
-
-  void remove(IdentityProviderId id) {
-    store.remove(id);
-  }
-
-  size_t count() {
-    return store.length;
+  void removeDefault(TenantId tenantId) {
+    remove(findDefault(tenantId));
   }
 }

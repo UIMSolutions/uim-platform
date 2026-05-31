@@ -38,9 +38,9 @@ class MetricController : PlatformController {
     r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.executionId = ExecutionId(data.getString("executionId"));
-    r.metrics = jsonKeyValuePairs(j, "metrics");
-    r.tags = jsonKeyValuePairs(j, "tags");
-    r.customInfo = jsonKeyValuePairs(j, "customInfo");
+    r.metrics = jsonKeyValuePairs(data, "metrics");
+    r.tags = jsonKeyValuePairs(data, "tags");
+    r.customInfo = jsonKeyValuePairs(data, "customInfo");
 
     auto result = usecase.patchMetric(r);
     if (result.hasError)

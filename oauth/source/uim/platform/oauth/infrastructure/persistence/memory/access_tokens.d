@@ -50,20 +50,20 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
         findByClientId(tenantId, clientId).each!(e => remove(e));
     }
 
-    size_t countByUserId(TenantId tenantId, UserId userId) {
-        return findByUserId(tenantId, userId).length;
+    size_t countByUser(TenantId tenantId, UserId userId) {
+        return findByUser(tenantId, userId).length;
     }
 
-    AccessToken[] filterByUserId(AccessToken[] tokens, UserId userId) {
+    AccessToken[] filterByUser(AccessToken[] tokens, UserId userId) {
         return tokens.filter!(e => e.userId == userId).array;
     }
 
-    AccessToken[] findByUserId(TenantId tenantId, UserId userId) {
-        return filterByUserId(findByTenant(tenantId), userId);
+    AccessToken[] findByUser(TenantId tenantId, UserId userId) {
+        return filterByUser(findByTenant(tenantId), userId);
     }
 
-    void removeByUserId(TenantId tenantId, UserId userId) {
-        findByUserId(tenantId, userId).each!(e => remove(e));
+    void removeByUser(TenantId tenantId, UserId userId) {
+        findByUser(tenantId, userId).each!(e => remove(e));
     }
 
     size_t countByStatus(TenantId tenantId, TokenStatus status) {

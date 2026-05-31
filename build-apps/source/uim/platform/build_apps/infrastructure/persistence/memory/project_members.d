@@ -37,16 +37,16 @@ class MemoryProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMe
         findByRole(role).each!(e => remove(e));
     }
 
-     size_t countByUserId(UserId userId) {
-        return findByUserId(userId).length;
+     size_t countByUser(UserId userId) {
+        return findByUser(userId).length;
     }
 
-    ProjectMember[] findByUserId(UserId userId) {
+    ProjectMember[] findByUser(UserId userId) {
         return findAll.filter!(e => e.userId == userId).array;
     }
 
-    void removeByUserId(UserId userId) {
-        findByUserId(userId).each!(e => remove(e));
+    void removeByUser(UserId userId) {
+        findByUser(userId).each!(e => remove(e));
     }
 
 }

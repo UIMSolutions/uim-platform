@@ -81,7 +81,7 @@ class ExecutableController : ManageController {
     }
 
     auto responseData = Json.emptyObject
-      .set("count", items.length)
+      .set("count", list.length)
       .set("resources", list);
     return successResponse("Executables retrieved successfully", 200, responseData);
   }

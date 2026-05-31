@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IdentityProviderRepository : ITenantRepository!(IdentityProviderEntity, IdentityProviderId) {
+interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
-  IdentityProviderEntity findByAlias(TenantId tenantId, string alias_);
+  IdentityProvider findByAlias(TenantId tenantId, string alias_);
   void removeByAlias(TenantId tenantId, string alias_);
 
   bool existsDefault(TenantId tenantId);
-  IdentityProviderEntity findDefault(TenantId tenantId);
+  IdentityProvider findDefault(TenantId tenantId);
   void removeDefault(TenantId tenantId);
 
 }

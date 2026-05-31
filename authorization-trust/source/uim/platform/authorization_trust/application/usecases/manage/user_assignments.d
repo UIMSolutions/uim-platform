@@ -20,16 +20,19 @@ class ManageUserAssignmentsUseCase {
     this.roleCollectionRepo = roleCollectionRepo;
   }
 
-  CommandResult createUserAssignment(CreateUserAssignmentRequest r) {
-    if (r.userId.length == 0)
+  CommandResult createAssignment(CreateUserAssignmentRequest r) {
+    if (r.userId.isEmpty)
       return CommandResult(false, "", "userId is required");
-    if (r.roleCollectionId.length == 0)
+
+    if (r.roleCollectionId.isEmpty)
       return CommandResult(false, "", "roleCollectionId is required");
+      
     if (!roleCollectionRepo.existsById(r.tenantId, r.roleCollectionId))
       return CommandResult(false, "", "Role collection not found");
 
     import std.uuid : randomUUID;
-    UserAssignmentEntity ua;
+    UserAssignment ua;
+    ua.tenantId       = r.tenantId;
     ua.id               = randomUUID().toString();
     ua.userId           = r.userId;
     ua.userEmail        = r.userEmail;
@@ -38,23 +41,23 @@ class ManageUserAssignmentsUseCase {
     ua.createdAt        = currentTimestamp();
 
     repo.save(ua);
-    return CommandResult(true, ua.id, "");
+    return CommandResult(true, ua.id.value, "");
   }
 
-  CommandResult deleteUserAssignment(TenantId tenantId, UserAssignmentId id) {
+  CommandResult deleteAssignment(TenantId tenantId, UserAssignmentId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "User assignment not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id, "");
+    return CommandResult(true, existing.id.value, "");
   }
 
-  UserAssignmentEntity getUserAssignment(TenantId tenantId, UserAssignmentId id) {
+  UserAssignment getAssignment(TenantId tenantId, UserAssignmentId id) {
     return repo.findById(tenantId, id);
   }
 
-  UserAssignmentEntity[] listUserAssignments(TenantId tenantId, Tstring userId) {
-    return repo.findByUserId(tenantId, userId);
+  UserAssignment[] listAssignments(TenantId tenantId, UserAssignmentId userId) {
+    return repo.findByUser(tenantId, userId);
   }
 }

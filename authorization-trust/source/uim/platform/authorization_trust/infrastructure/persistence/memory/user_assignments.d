@@ -11,38 +11,34 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUserAssignmentRepository : UserAssignmentRepository {
-  private UserAssignmentEntity[UserAssignmentId] store;
+class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAssignmentId), UserAssignmentRepository {
 
-  bool existsById(UserAssignmentId id) {
-    return (id in store) !is null;
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
   }
 
-  UserAssignmentEntity findById(UserAssignmentId id) {
-    return existsById(id) ? store[id] : UserAssignmentEntity.init;
+  UserAssignment[] filterByUser(UserAssignment[] uas, UserId userId) {
+    return uas.filter!(ua => ua.userId == userId).array;
+  }
+  UserAssignment[] findByUser(TenantId tenantId, UserId userId) {
+    return filterByUser(findByTenant(tenantId).values.array, userId);
   }
 
-  UserAssignmentEntity[] findByTenant(tenantId) {
-    return store.values.dup;
+  void removeByUser(TenantId tenantId, UserId userId) {
+    findByUser(tenantId, userId).each!(ua => remove(ua));
   }
 
-  UserAssignmentEntity[] findByUserId(string userId) {
-    return store.values.filter!(ua => ua.userId == userId).array;
+  size_t countByRoleCollection(TenantId tenantId, RoleCollectionId rcId) {
+    return findByRoleCollection(tenantId, rcId).length;
+  }
+  UserAssignment[] filterByRoleCollection(UserAssignment[] uas, RoleCollectionId rcId) {
+    return uas.filter!(ua => ua.roleCollectionId == rcId).array;
+  }
+  UserAssignment[] findByRoleCollection(TenantId tenantId, RoleCollectionId rcId) {
+    return filterByRoleCollection(findByTenant(tenantId).values.array, rcId);
+  }
+  void removeByRoleCollection(TenantId tenantId, RoleCollectionId rcId) {
+    findByRoleCollection(tenantId, rcId).each!(ua => remove(ua));
   }
 
-  UserAssignmentEntity[] findByRoleCollectionId(RoleCollectionId rcId) {
-    return store.values.filter!(ua => ua.roleCollectionId == rcId).array;
-  }
-
-  void save(UserAssignmentEntity ua) {
-    store[ua.id] = ua;
-  }
-
-  void remove(UserAssignmentId id) {
-    store.remove(id);
-  }
-
-  size_t count() {
-    return store.length;
-  }
 }

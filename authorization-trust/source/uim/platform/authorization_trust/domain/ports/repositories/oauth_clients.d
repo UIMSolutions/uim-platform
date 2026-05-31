@@ -11,14 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OAuthClientRepository : ITenantRepository!(OAuthClientEntity, OAuthClientId) {
+interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
 
-  bool existsByClientId(TenantId tenantId, string clientId);
-  OAuthClientEntity findByClientId(TenantId tenantId, string clientId);
-  void removeByClientId(TenantId tenantId, string clientId);
-
-  size_t countByAppId(TenantId tenantId, string appId);
-  OAuthClientEntity[] findByAppId(TenantId tenantId, string appId);
-  void removeByAppId(TenantId tenantId, string appId);
+  size_t countByApp(TenantId tenantId, string appId);
+  OAuthClient[] findByApp(TenantId tenantId, string appId);
+  void removeByApp(TenantId tenantId, string appId);
 
 }

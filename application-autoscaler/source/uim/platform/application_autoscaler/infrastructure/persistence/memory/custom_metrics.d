@@ -23,7 +23,7 @@ class MemoryCustomMetricRepository : CustomMetricRepository {
     return p ? *p : CustomMetricEntity.init;
   }
 
-  override CustomMetricEntity[] findByAppId(AppBindingId appId) {
+  override CustomMetricEntity[] findByApp(AppBindingId appId) {
     CustomMetricEntity[] result;
     foreach (m; store.byValue)
       if (m.appId == appId) result ~= m;
@@ -48,7 +48,7 @@ class MemoryCustomMetricRepository : CustomMetricRepository {
     foreach (k; toRemove) store.remove(k);
   }
 
-  override size_t countByAppId(AppBindingId appId) {
+  override size_t countByApp(AppBindingId appId) {
     size_t n;
     foreach (m; store.byValue)
       if (m.appId == appId) n++;

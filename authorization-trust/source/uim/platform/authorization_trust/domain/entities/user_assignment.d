@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 /// Assignment of a role collection to a specific user (or user group).
 /// Mirrors the SAP BTP user-role-collection assignment.
-struct UserAssignmentEntity {
+struct UserAssignment {
   mixin TenantEntity!UserAssignmentId;
 
-  string           userId;           // subject identifier from IdP
+  UserId           userId;           // subject identifier from IdP
   string           userEmail;        // human-readable email
   RoleCollectionId roleCollectionId; // assigned role collection
   string           origin;           // IdP alias from which the user originates

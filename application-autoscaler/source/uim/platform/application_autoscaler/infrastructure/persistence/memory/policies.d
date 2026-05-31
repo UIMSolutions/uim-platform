@@ -23,7 +23,7 @@ class MemoryScalingPolicyRepository : ScalingPolicyRepository {
     return p ? *p : ScalingPolicyEntity.init;
   }
 
-  override ScalingPolicyEntity findByAppId(AppBindingId appId) {
+  override ScalingPolicyEntity findByApp(AppBindingId appId) {
     foreach (p; store.byValue)
       if (p.appId == appId && p.status == PolicyStatus.active) return p;
     return ScalingPolicyEntity.init;

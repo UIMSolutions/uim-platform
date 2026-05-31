@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface ScalingPolicyRepository : ITenantRepository!(ScalingPolicyEntity, PolicyId) {
 
-  size_t countByAppId(TenantId tenantId, AppBindingId appId);
-  ScalingPolicyEntity findByAppId(TenantId tenantId, AppBindingId appId);
-  void removeByAppId(TenantId tenantId, AppBindingId appId);
+  size_t countByApp(TenantId tenantId, AppBindingId appId);
+  ScalingPolicyEntity findByApp(TenantId tenantId, AppBindingId appId);
+  void removeByApp(TenantId tenantId, AppBindingId appId);
   
 }

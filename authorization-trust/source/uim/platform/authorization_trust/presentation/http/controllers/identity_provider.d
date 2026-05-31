@@ -38,11 +38,11 @@ class IdentityProviderController : ManageController {
     auto idps = usecase.listIdentityProviders(tenantId);
     auto jarr = idps.map!(idp => idp.toJson()).array.toJson;
 
-    Json.emptyObject
+    auto responseData = aJson.emptyObject
       .set("items", jarr)
       .set("totalCount", idps.length);
 
-    return successResponse("Identity provider list retrieved successfully", "Retrieved", 200);
+    return successResponse("Identity provider list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {

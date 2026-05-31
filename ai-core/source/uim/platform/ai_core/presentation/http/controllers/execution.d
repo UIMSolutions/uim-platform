@@ -85,11 +85,11 @@ class ExecutionController : ManageController {
     if (ex.isNull)
       return errorResponse("Execution not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = ex.toJson();
     return successResponse("Execution retrieved successfully", 200, responseData);
   }
 
-  protected Json patchHandler(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;

@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface CustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
 
-  size_t countByAppId(TenantId tenantId, AppBindingId appId);
-  CustomMetricEntity[] findByAppId(AppBindingId appId);
-  void removeByAppId(TenantId tenantId, AppBindingId appId);
+  size_t countByApp(TenantId tenantId, AppBindingId appId);
+  CustomMetricEntity[] findByApp(AppBindingId appId);
+  void removeByApp(TenantId tenantId, AppBindingId appId);
 
   size_t countByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
   CustomMetricEntity[] findByAppIdAndName(AppBindingId appId, string metricName);

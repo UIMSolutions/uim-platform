@@ -25,7 +25,7 @@ class ManageOAuthClientsUseCase {
       return CommandResult(false, "", "A client with this clientId already exists");
 
     import std.uuid : randomUUID;
-    OAuthClientEntity c;
+    OAuthClient c;
     c.id          = randomUUID().toString();
     c.tenantId    = r.tenantId;
     c.clientId    = r.clientId;
@@ -72,19 +72,19 @@ class ManageOAuthClientsUseCase {
     return CommandResult(true, id, "");
   }
 
-  OAuthClientEntity getOAuthClient(TenantId tenantId, OAuthClientId id) {
+  OAuthClient getOAuthClient(TenantId tenantId, OAuthClientId id) {
     return repo.findById(tenantId, id);
   }
 
-  OAuthClientEntity getOAuthClient(TenantId tenantId, string clientId) {
+  OAuthClient getOAuthClient(TenantId tenantId, string clientId) {
     return repo.findByClientId(tenantId, clientId);
   }
 
-  OAuthClientEntity[] listOAuthClients(TenantId tenantId) {
-    return repo.findAll(tenantId);
+  OAuthClient[] listOAuthClients(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 
-  OAuthClientEntity[] listOAuthClients(TenantId tenantId, string appId) {
-    return repo.findByAppId(tenantId, appId);
+  OAuthClient[] listOAuthClients(TenantId tenantId, string appId) {
+    return repo.findByApp(tenantId, appId);
   }
 }

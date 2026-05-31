@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
 
-  bool existsByName(string name);
-  ScopeEntity findByName(string name);
-  void removeByName(string name);
+  bool existsByName(TenantId tenantId, string name);
+  ScopeEntity findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
 
-  size_t countByAppId(string appId);
-  ScopeEntity[] findByAppId(string appId);
-  void removeByAppId(string appId);
+  size_t countByApp(TenantId tenantId, string appId);
+  ScopeEntity[] findByApp(TenantId tenantId, string appId);
+  void removeByApp(TenantId tenantId, string appId);
 
 }

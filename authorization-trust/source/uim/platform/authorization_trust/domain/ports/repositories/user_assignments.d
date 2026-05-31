@@ -11,14 +11,15 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UserAssignmentRepository : ITenantRepository!(UserAssignmentEntity, UserAssignmentId) {
+interface UserAssignmentRepository : ITenantRepository!(UserAssignment, UserAssignmentId) {
 
-  size_t countByUserId(string userId);
-  UserAssignmentEntity[] findByUserId(string userId);
-  void removeByUserId(string userId);
+  size_t countByUser(TenantId tenantId, UserId userId);
+  UserAssignment[] findByUser(TenantId tenantId, UserId userId);
+  void removeByUser(TenantId tenantId, UserId userId);
 
-  size_t countByRoleCollectionId(RoleCollectionId rcId);
-  UserAssignmentEntity[] findByRoleCollectionId(RoleCollectionId rcId);
-  void removeByRoleCollectionId(RoleCollectionId rcId);
+  size_t countByRoleCollection(TenantId tenantId, RoleCollectionId rcId);
+  UserAssignment[] findByRoleCollection(TenantId tenantId, RoleCollectionId rcId);
+  void removeByRoleCollection(TenantId tenantId, RoleCollectionId rcId);
+
   
 }

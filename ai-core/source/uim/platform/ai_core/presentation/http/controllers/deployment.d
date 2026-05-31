@@ -90,8 +90,8 @@ class DeploymentController : ManageController {
     return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected Json patchHandler(HTTPServerRequest req) {
-    auto precheck = super.precheckHandler(req);
+  override protected Json patchHandler(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -115,15 +115,6 @@ class DeploymentController : ManageController {
 
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Deployment updated successfully", "Updated", 200, responseData);
-  }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

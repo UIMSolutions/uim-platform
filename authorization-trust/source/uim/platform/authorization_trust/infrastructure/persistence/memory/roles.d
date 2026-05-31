@@ -11,49 +11,37 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRoleRepository : RoleRepository {
-  private RoleEntity[RoleId] store;
+class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleRepository {
 
-  bool existsById(RoleId id) {
-    return (id in store) !is null;
+  bool existsByName(TenantId tenantId, string name, string appId) {
+    return findByTenant(tenantId).any!(r => r.name == name && r.appId == appId);
   }
 
-  RoleEntity findById(RoleId id) {
-    return existsById(id) ? store[id] : RoleEntity.init;
-  }
-
-  bool existsByName(string name, string appId) {
-    return findByName(name, appId).id.length > 0;
-  }
-
-  RoleEntity findByName(string name, string appId) {
-    foreach (r; store.values)
+  RoleEntity findByName(TenantId tenantId, string name, string appId) {
+    foreach (r; findByTenant(tenantId))
       if (r.name == name && r.appId == appId)
         return r;
     return RoleEntity.init;
   }
 
-  RoleEntity[] findByTenant(tenantId) {
-    return store.values.dup;
+  void removeByName(TenantId tenantId, string name, string appId) {
+    remove(findByName(tenantId, name, appId));
   }
 
-  RoleEntity[] findByAppId(string appId) {
-    return store.values.filter!(r => r.appId == appId).array;
+  size_t countByApp(TenantId tenantId, string appId) {
+    return findByTenant(tenantId).count!(r => r.appId == appId);
   }
 
-  void save(RoleEntity role) {
-    store[role.id] = role;
+  RoleEntity[] filterByApp(TenantId tenantId, RoleEntity[] roles, string appId) {
+    return roles.filter!(r => r.appId == appId).array;
   }
 
-  void update(RoleEntity role) {
-    store[role.id] = role;
+  RoleEntity[] findByApp(TenantId tenantId, string appId) {
+    return findByTenant(tenantId).filter!(r => r.appId == appId).array;
   }
 
-  void remove(RoleId id) {
-    store.remove(id);
+  void removeByApp(TenantId tenantId, string appId) {
+    findByApp(tenantId, appId).each!(r => remove(r));
   }
 
-  size_t count() {
-    return store.length;
-  }
 }

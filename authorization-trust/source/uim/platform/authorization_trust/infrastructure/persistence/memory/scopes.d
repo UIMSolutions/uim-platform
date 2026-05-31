@@ -11,49 +11,33 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScopeRepository : ScopeRepository {
-  private ScopeEntity[ScopeId] store;
+class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
 
-  bool existsById(ScopeId id) {
-    return (id in store) !is null;
+  bool existsByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).id.length > 0;
   }
 
-  ScopeEntity findById(ScopeId id) {
-    return existsById(id) ? store[id] : ScopeEntity.init;
-  }
-
-  bool existsByName(string name) {
-    return findByName(name).id.length > 0;
-  }
-
-  ScopeEntity findByName(string name) {
-    foreach (s; store.values)
+  ScopeEntity findByName(TenantId tenantId, string name) {
+    foreach (s; findByTenant(tenantId))
       if (s.name == name)
         return s;
     return ScopeEntity.init;
   }
-
-  ScopeEntity[] findByTenant(tenantId) {
-    return store.values.dup;
+  void removeByName(TenantId tenantId, string name) {
+    remove(findByName(tenantId, name));
   }
 
-  ScopeEntity[] findByAppId(string appId) {
-    return store.values.filter!(s => s.appId == appId).array;
+  size_t countByApp(TenantId tenantId, string appId) {
+    return findByTenant(tenantId).length;
+  }
+  ScopeEntity[] filterByApp(ScopeEntity[] scopes, string appId) {
+    return scopes.filter!(s => s.appId == appId).array;
+  }
+  ScopeEntity[] findByApp(TenantId tenantId, string appId) {
+    return filterByApp(findByTenant(tenantId), appId);
+  }
+  void removeByApp(TenantId tenantId, string appId) {
+    findByApp(tenantId, appId).each!(s => remove(s));
   }
 
-  void save(ScopeEntity scope_) {
-    store[scope_.id] = scope_;
-  }
-
-  void update(ScopeEntity scope_) {
-    store[scope_.id] = scope_;
-  }
-
-  void remove(ScopeId id) {
-    store.remove(id);
-  }
-
-  size_t count() {
-    return store.length;
-  }
 }

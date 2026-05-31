@@ -50,7 +50,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   UserProfile getUserProfile(TenantId tenantId, UserId id) {
-    return repo.findByUserId(tenantId, id);
+    return repo.findByUser(tenantId, id);
   }
 
   UserProfile[] listUserProfiles(TenantId tenantId) {

@@ -23,18 +23,18 @@ class ManageJobsUseCase {
     }
 
     CompilationJob[] listJobs(TenantId tenantId) {
-        return repo.findAll().filter!(j => j.tenantId == tenantId).array;
+        return repo.findByTenant(tenantId);
     }
 
     CompilationJob[] listJobsForProgram(TenantId tenantId, AbapProgramId pid) {
-        return listJobs(tenantId).filter!(j => j.programId == pid).array;
+        return repo.findByProgram(tenantId, pid);
     }
 
     CommandResult deleteJob(TenantId tenantId, CompilationJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
-            return CommandResult(false, "", "Job '" ~ id.toString() ~ "' not found");
+            return CommandResult(false, "", "Job '" ~ id ~ "' not found");
         repo.remove(job);
-        return CommandResult(true, id.toString(), "");
+        return CommandResult(true, id, "");
     }
 }

@@ -35,21 +35,21 @@ class WidgetUseCases {
     return WidgetResponse.fromEntity(w);
   }
 
-  WidgetResponse getWidget(string id) {
-    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+  WidgetResponse getWidget(TenantId tenantId, WidgetId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     return WidgetResponse.fromEntity(found.empty ? Widget.init : found[0]);
   }
 
-  WidgetResponse[] listWidgets() {
+  WidgetResponse[] listWidgets(TenantId tenantId) {
     WidgetResponse[] result;
-    foreach (w; repo.findAll())
+    foreach (w; repo.findByTenant(tenantId))
       result ~= WidgetResponse.fromEntity(w);
     return result;
   }
 
-  CommandResult deleteWidget(string id) {
-    auto found = repo.findAll().filter!(e => e.id.value == id).array;
+  CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A registered OAuth 2.0 client application.
 /// Corresponds to an SAP BTP XSUAA service instance binding.
-struct OAuthClientEntity {
+struct OAuthClient {
   mixin TenantEntity!OAuthClientId;
   
   string clientId; // OAuth 2.0 client_id (unique per application)
@@ -28,9 +28,9 @@ struct OAuthClientEntity {
   Json toJson() const {
     auto gtArr = grantTypes.map!(gt => gt.to!string).array.toJson;
 
-    auto scArr = Json.c.scopes.map!(s => Json(s)).array.toJson;
+    auto scArr = scopes.map!(s => Json(s)).array.toJson;
 
-    auto ruArr = Json.c.redirectUris.map!(u => Json(u)).array.toJson;
+    auto ruArr = redirectUris.map!(u => Json(u)).array.toJson;
 
     return entityToJson
       .set("clientId", clientId)

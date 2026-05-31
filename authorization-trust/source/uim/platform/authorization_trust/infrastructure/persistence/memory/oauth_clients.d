@@ -11,49 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthClientRepository : OAuthClientRepository {
-  private OAuthClientEntity[OAuthClientId] store;
-
-  bool existsById(OAuthClientId id) {
-    return (id in store) !is null;
+class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
+  
+  size_t countByApp(TenantId tenantId, string appId) {
+    return filterByApp(findByTenant(tenantId), appId).length;
   }
-
-  OAuthClientEntity findById(OAuthClientId id) {
-    return existsById(id) ? store[id] : OAuthClientEntity.init;
+  OAuthClient[] filterByApp(OAuthClient[] clients, string appId) {
+    return clients.filter!(c => c.appId == appId).array;
   }
-
-  bool existsByClientId(string clientId) {
-    return findByClientId(clientId).id.length > 0;
+  OAuthClient[] findByApp(TenantId tenantId, string  appId) {
+    return filterByApp(findByTenant(tenantId), appId);
   }
-
-  OAuthClientEntity findByClientId(string clientId) {
-    foreach (c; store.values)
-      if (c.clientId == clientId)
-        return c;
-    return OAuthClientEntity.init;
-  }
-
-  OAuthClientEntity[] findByTenant(tenantId) {
-    return store.values.dup;
-  }
-
-  OAuthClientEntity[] findByAppId(string appId) {
-    return store.values.filter!(c => c.appId == appId).array;
-  }
-
-  void save(OAuthClientEntity client) {
-    store[client.id] = client;
-  }
-
-  void update(OAuthClientEntity client) {
-    store[client.id] = client;
-  }
-
-  void remove(OAuthClientId id) {
-    store.remove(id);
-  }
-
-  size_t count() {
-    return store.length;
+  void removeByApp(TenantId tenantId, string appId) {
+    findByApp(tenantId, appId).each!(c => remove(c));
   }
 }

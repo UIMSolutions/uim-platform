@@ -55,8 +55,8 @@ class ResourceGroupController : ManageController {
     }
 
     auto responseData = Json.emptyObject
-      .set("count", items.length)
-      .set("resources", list);
+      .set("count", groups.length)
+      .set("resources", jarr);
     return successResponse("Resource group list retrieved successfully", 200, responseData);
   }
 
@@ -71,9 +71,9 @@ class ResourceGroupController : ManageController {
     CreateResourceGroupRequest r;
     r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(data.getString("resourceGroupId"));
-    r.status = data.getString("status");
-    r.description = data.getString("description");
-    r.labels = jsonKeyValuePairs(j, "labels");
+    // r.status = data.getString("status");
+    // r.description = data.getString("description");
+    r.labels = jsonKeyValuePairs(data, "labels");
 
     auto result = groups.createResourceGroup(r);
     if (result.hasError)
@@ -95,9 +95,9 @@ class ResourceGroupController : ManageController {
 
     auto rg = groups.getResourceGroup(tenantId, id);
     if (rg.isNull)
-      return errorResponse("Scan job not found", 404);
+      return errorResponse("Resource group not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = rg.toJson();
     return successResponse("Resource group retrieved successfully", 200, responseData);
   }
 

@@ -126,8 +126,8 @@ class ManageScalingPoliciesUseCase {
     return repo.findById(tenantId, id);
   }
 
-  ScalingPolicyEntity getPolicyByAppId(TenantId tenantId, AppBindingId appId) {
-    return repo.findByAppId(tenantId, appId);
+  ScalingPolicyEntity getPolicyByApp(TenantId tenantId, AppBindingId appId) {
+    return repo.findByApp(tenantId, appId);
   }
 
   ScalingPolicyEntity[] listPolicies(TenantId tenantId) {

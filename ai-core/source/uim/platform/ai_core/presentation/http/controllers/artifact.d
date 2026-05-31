@@ -51,7 +51,7 @@ class ArtifactController : ManageController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Artifact created successfully", "Created", 201, resp);
+    return successResponse("Artifact created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -66,11 +66,10 @@ class ArtifactController : ManageController {
 
     auto artifacts = scenarioId.isEmpty
       ? usecase.listArtifacts(tenantId, rgId) : usecase.listArtifacts(tenantId, rgId, scenarioId);
-
-    auto jarr = artifacts.map!(a => a.toJson).array.toJson;
+    auto list = artifacts.map!(a => a.toJson).array.toJson;
 
     auto resp = Json.emptyObject
-      .set("count", artifacts.length)
+      .set("count", list.length)
       .set("resources", list);
 
     return successResponse("Artifact list retrieved successfully", "Retrieved", 200, resp);

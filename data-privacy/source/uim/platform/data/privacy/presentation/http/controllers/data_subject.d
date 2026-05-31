@@ -111,17 +111,11 @@ class DataSubjectController : ManageController {
     r.isActive = data.getBoolean("isActive", true);
 
     auto result = usecase.updateSubject(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Data subject updated successfully");
+    if (result.hasError)
+            return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e)
-    writeError(res, 500, "Internal server error");
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Data subject updated successfully", "Updated", 200, responseData);
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -132,42 +126,11 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
   auto id = DataSubjectId(precheck.id);
 
-  usecase.deleteSubject(tenantId, id);
-  res.writeJsonBody(Json.emptyObject, 204);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
-}
+  auto result = usecase.deleteSubject(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-private static Json serialize(const DataSubject e) {
-  return Json.emptyObject
-    .set("id", e.id)
-    .set("tenantId", e.tenantId)
-    .set("subjectType", e.subjectType.to!string)
-    .set("externalId", e.externalId)
-    .set("displayName", e.displayName)
-    .set("email", e.email)
-    .set("sourceSystem", e.sourceSystem)
-    .set("country", e.country)
-    .set("isActive", e.isActive)
-    .set("createdAt", e.createdAt)
-    .set("updatedAt", e.updatedAt);
-}
-
-private static DataSubjectType parseSubjectType(string type) {
-  switch (type) {
-  case "employee":
-    return DataSubjectType.employee;
-  case "customer":
-    return DataSubjectType.customer;
-  case "vendor":
-    return DataSubjectType.vendor;
-  case "partner":
-    return DataSubjectType.partner;
-  case "applicant":
-    return DataSubjectType.applicant;
-  default:
-    return DataSubjectType.naturalPerson;
-  }
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Data subject deleted successfully", "Deleted", 200, responseData);
 }
 }

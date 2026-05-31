@@ -54,8 +54,8 @@ class ManageFlexApplicationsUseCase {
     return repo.findById(tenantId, id);
   }
 
-  FlexApplication getApplicationByAppId(TenantId tenantId, string appId) {
-    return repo.findByAppId(tenantId, appId);
+  FlexApplication getApplicationByApp(TenantId tenantId, string appId) {
+    return repo.findByApp(tenantId, appId);
   }
 
   FlexApplication[] listApplications(TenantId tenantId) {

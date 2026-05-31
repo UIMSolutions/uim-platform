@@ -17,6 +17,7 @@ mixin(ShowModule!());
 // OAuth 2.0 Client DTOs
 // ---------------------------------------------------------------------------
 struct CreateOAuthClientRequest {
+  TenantId tenantId;
   string   clientId;
   string   clientSecret;
   string   name;
@@ -29,7 +30,8 @@ struct CreateOAuthClientRequest {
 }
 
 struct UpdateOAuthClientRequest {
-  OAuthClientId id;
+  TenantId      tenantId;
+  OAuthClientId clientId;
   string        name;
   string        description;
   string[]      grantTypes;
@@ -40,27 +42,33 @@ struct UpdateOAuthClientRequest {
 // Scope DTOs
 // ---------------------------------------------------------------------------
 struct CreateScopeRequest {
+  TenantId tenantId;
+
   string name;
   string description;
   string appId;
 }
 
 struct UpdateScopeRequest {
-  ScopeId id;
-  string  description;
+  TenantId tenantId;
+  ScopeId  scopeId;
+  string   description;
 }
 // ---------------------------------------------------------------------------
 // Role DTOs
 // ---------------------------------------------------------------------------
 struct CreateRoleRequest {
+  TenantId tenantId;
+
   string   name;
   string   description;
   string[] scopeReferences;
   string   appId;
 }
 
-struct UpdateRoleRequest {
-  RoleId   id;
+struct UpdateRoleRequest {  
+  TenantId tenantId;
+  RoleId   roleId;
   string   description;
   string[] scopeReferences;
 }
@@ -68,13 +76,17 @@ struct UpdateRoleRequest {
 // Role Collection DTOs
 // ---------------------------------------------------------------------------
 struct CreateRoleCollectionRequest {
+  TenantId tenantId;
+
   string   name;
   string   description;
   string[] roleReferences;
 }
 
 struct UpdateRoleCollectionRequest {
-  RoleCollectionId id;
+  TenantId tenantId;
+  RoleCollectionId collectionId;
+
   string           description;
   string[]         roleReferences;
 }
@@ -82,6 +94,8 @@ struct UpdateRoleCollectionRequest {
 // User Assignment DTOs
 // ---------------------------------------------------------------------------
 struct CreateUserAssignmentRequest {
+  TenantId tenantId;
+
   string           userId;
   string           userEmail;
   RoleCollectionId roleCollectionId;
@@ -91,6 +105,8 @@ struct CreateUserAssignmentRequest {
 // Identity Provider DTOs
 // ---------------------------------------------------------------------------
 struct CreateIdentityProviderRequest {
+  TenantId tenantId;
+
   string alias_;
   string displayName;
   string idpType;       // "saml2" | "oidc"
@@ -104,7 +120,8 @@ struct CreateIdentityProviderRequest {
 }
 
 struct UpdateIdentityProviderRequest {
-  IdentityProviderId id;
+  TenantId tenantId;
+  IdentityProviderId providerId;
   string             displayName;
   string             metadataUrl;
   string             ssoUrl;

@@ -36,6 +36,10 @@ enum IdpType {
   saml2,
   oidc,
 }
+IdpType toIdpType(string s) @safe {
+  import std.uni : toLower;
+  return (s.toLower == "oidc") ? IdpType.oidc : IdpType.saml2;
+}
 // ---------------------------------------------------------------------------
 // Helpers — GrantType
 // ---------------------------------------------------------------------------
@@ -71,19 +75,5 @@ string toString(ClientType c) @safe {
   final switch (c) {
     case ClientType.confidential: return "confidential";
     case ClientType.public_:      return "public";
-  }
-}
-// ---------------------------------------------------------------------------
-// Helpers — IdpType
-// ---------------------------------------------------------------------------
-IdpType toIdpType(string s) @safe {
-  import std.uni : toLower;
-  return (s.toLower == "oidc") ? IdpType.oidc : IdpType.saml2;
-}
-
-string toString(IdpType t) @safe {
-  final switch (t) {
-    case IdpType.saml2: return "saml2";
-    case IdpType.oidc:  return "oidc";
   }
 }

@@ -18,18 +18,18 @@ mixin(ShowModule!());
 class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId), UserProfileRepository {
 
   // #region ByUserId
-  bool existsByUserId(TenantId tenantId, UserId userId) {
+  bool existsByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).any!(p => p.userId == userId);
   }
 
-  UserProfile findByUserId(TenantId tenantId, UserId userId) {
+  UserProfile findByUser(TenantId tenantId, UserId userId) {
     foreach (p; findByTenant(tenantId))
       if (p.userId == userId)
         return p;
     return UserProfile.init;
   }
 
-  void removeByUserId(TenantId tenantId, UserId userId) {
+  void removeByUser(TenantId tenantId, UserId userId) {
     foreach (p; findByTenant(tenantId))
       if (p.userId == userId) {
         remove(p.id);

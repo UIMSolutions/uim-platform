@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface ScalingHistoryRepository : ITenantRepository!(ScalingHistoryEntity, ScalingHistoryId) {
 
-  size_t countByAppId(TenantId tenantId, AppBindingId appId);
-  ScalingHistoryEntity[] findByAppId(TenantId tenantId, AppBindingId appId);
-  void removeByAppId(TenantId tenantId, AppBindingId appId);
+  size_t countByApp(TenantId tenantId, AppBindingId appId);
+  ScalingHistoryEntity[] findByApp(TenantId tenantId, AppBindingId appId);
+  void removeByApp(TenantId tenantId, AppBindingId appId);
 
   size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
   ScalingHistoryEntity[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);

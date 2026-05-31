@@ -29,6 +29,10 @@ class ConfigurationController : ManageController {
   }
 
   protected override Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     auto scenarioId = ScenarioId(req.params.get("scenarioId", ""));
@@ -36,7 +40,7 @@ class ConfigurationController : ManageController {
     auto configs = scenarioId.isEmpty
       ? usecase.listConfigurations(tenantId, rgId) : usecase.listConfigurations(tenantId, rgId, scenarioId);
 
-    auto jarr = Json.emptyArray;
+    auto list = Json.emptyArray;
     foreach (c; configs) {
       // Parameter bindings
       auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv
@@ -44,7 +48,7 @@ class ConfigurationController : ManageController {
       auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia
           .artifactId)).array.toJson;
 
-      jarr ~= Json.emptyObject
+      list ~= Json.emptyObject
         .set("id", c.id)
         .set("scenarioId", c.scenarioId)
         .set("executableId", c.executableId)
@@ -54,13 +58,19 @@ class ConfigurationController : ManageController {
         .set("inputArtifactBindings", iaArr);
     }
 
-    return Json.emptyObject
-      .set("count", configs.length)
-      .set("resources", jarr)
-      .set("message", "Configurations retrieved");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Configurations retrieved successfully", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
     CreateConfigurationRequest r;
     r.tenantId = tenantId;
     auto data = precheck.data;
@@ -72,59 +82,56 @@ class ConfigurationController : ManageController {
     // TODO: Decide if we want to allow parameter and artifact bindings at configuration level or only at execution level. If we allow at configuration level, we need to add them to the create configuration request and handle them here. 
     //  r.parameterValues = jsonKeyValuePairs(j, "parameterBindings");
     // r.inputArtifacts = jsonKeyValuePairs(j, "inputArtifactBindings");
-  
+
     auto result = usecase.createConfiguration(r);
     if (result.hasError)
-            return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Configuration created");
+      return errorResponse(result.message, 400);
 
-      return resp;
-    } else {
-      auto resp = Json.emptyObject
-        .set("error", result.message);
-      return resp;
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Configuration created successfully", "Created", 201, responseData);
   }
 
   protected override Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
+
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto c = usecase.getConfiguration(tenantId, rgId, id);
-    if (c.isNull) {
-      return Json.emptyObject
-        .set("error", "Configuration not found")
-        .set("message", "No configuration found with the given ID")
-        .set("statusCode", 404);
-    }
+    if (c.isNull)
+      return errorResponse("Configuration not found", 404);
 
-    return Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("id", c.id)
       .set("scenarioId", c.scenarioId)
       .set("executableId", c.executableId)
       .set("name", c.name)
-      .set("createdAt", c.createdAt)
-      .set("statusCode", 200);
+      .set("createdAt", c.createdAt);
+    return successResponse("Configuration retrieved successfully", "OK", 200, responseData);
   }
 
   protected override Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     auto result = usecase.deleteConfiguration(tenantId, rgId, id);
-    if (result.hasError) {
-      return Json.emptyObject
-        .set("error", result.message)
-        .set("message", "Failed to delete configuration")
-        .set("statusCode", 404);
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 404);
 
-    return Json.emptyObject
-      .set("message", "Configuration deleted")
-      .set("statusCode", 200);
+    auto responseData = Json.emptyObject;
+    return successResponse("Configuration deleted successfully", "OK", 200, responseData);
   }
 }

@@ -46,7 +46,7 @@ class ManageCustomMetricsUseCase {
   CustomMetricEntity[] getMetrics(AppBindingId appId, string metricName = "") {
     if (metricName.length > 0)
       return repo.findByAppIdAndName(appId, metricName);
-    return repo.findByAppId(appId);
+    return repo.findByApp(appId);
   }
 
   /// Latest value for a named custom metric (used by scaling engine)
