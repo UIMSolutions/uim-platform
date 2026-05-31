@@ -21,7 +21,7 @@ class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, Ide
         return findByTenant(tenantId).filter!(ip => ip.status == IdentityProviderStatus.active).array;
     }
 
-    IdentityProvider findByClientId(TenantId tenantId, string clientId) {
+    IdentityProvider findByClient(TenantId tenantId, string clientId) {
         auto items = findByTenant(tenantId).filter!(ip => ip.clientId == clientId).array;
         return items.length > 0 ? items[0] : IdentityProvider.init;
     }

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, RoleCollectionId), RoleCollectionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByName(tenantId, name).id.length > 0;
+    return findByTenant(tenantId).any!(rc => rc.name == name);
   }
 
   RoleCollectionEntity findByName(TenantId tenantId, string name) {

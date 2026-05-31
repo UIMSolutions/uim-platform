@@ -25,21 +25,30 @@ class OverviewController : PlatformController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
+  protected Json overviewHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getSummary(tenantId);
+
+    auto responseData = Json.emptyObject
+      .set("totalNamespaces", summary.totalNamespaces)
+      .set("totalCredentials", summary.totalCredentials)
+      .set("totalPasswords", summary.totalPasswords)
+      .set("totalKeys", summary.totalKeys)
+      .set("totalKeyrings", summary.totalKeyrings)
+      .set("totalBindings", summary.totalBindings)
+      .set("totalAuditEntries", summary.totalAuditEntries);
+
+    return successResponse("Overview retrieved successfully", "Retrieved", 200, responseData);
+  }
+  
   protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getSummary(tenantId);
-
-      auto j = Json.emptyObject
-        .set("totalNamespaces", summary.totalNamespaces)
-        .set("totalCredentials", summary.totalCredentials)
-        .set("totalPasswords", summary.totalPasswords)
-        .set("totalKeys", summary.totalKeys)
-        .set("totalKeyrings", summary.totalKeyrings)
-        .set("totalBindings", summary.totalBindings)
-        .set("totalAuditEntries", summary.totalAuditEntries);
-
-      res.writeJsonBody(j, 200);
+      auto response = overviewHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

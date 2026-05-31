@@ -76,10 +76,9 @@ class DnsRecordController : ManageController {
                 .set("createdAt", record.createdAt);
         }
 
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
+        auto responseData = Json.emptyObject
+            .set("count", records.length)
+            .set("resources", jarr);
         return successResponse("DNS record list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -92,7 +91,7 @@ class DnsRecordController : ManageController {
         auto id = DnsRecordId(precheck.id);
 
         auto record = usecase.getDnsRecord(tenantId, id);
-        if (item.isNull)
+        if (record.isNull)
             return errorResponse("DNS record not found", 404);
 
         auto resp = Json.emptyObject

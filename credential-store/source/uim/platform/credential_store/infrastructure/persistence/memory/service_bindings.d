@@ -17,16 +17,16 @@ mixin(ShowModule!());
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-  size_t countByClientId(TenantId tenantId, string clientId) {
-    return findByClientId(tenantId, clientId).length;
+  size_t countByClient(TenantId tenantId, string clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  ServiceBinding[] findByClientId(TenantId tenantId, string clientId) {
+  ServiceBinding[] findByClient(TenantId tenantId, string clientId) {
     return findByTenant(tenantId).filter!(b => b.clientId == clientId).array; 
   }
 
-  void removeByClientId(TenantId tenantId, string clientId) {
-    findByClientId(tenantId, clientId).each!(b => remove(b));
+  void removeByClient(TenantId tenantId, string clientId) {
+    findByClient(tenantId, clientId).each!(b => remove(b));
   }
 
     // ByStatus

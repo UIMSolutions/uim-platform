@@ -30,7 +30,7 @@ class FileApplicationRepository : ApplicationRepository {
     Application[] findByTenant(TenantId tenantId) {
         return store.values.filter!(a => a.tenantId == tenantId).array;
     }
-    Application findByClientId(TenantId tenantId, string clientId) {
+    Application findByClient(TenantId tenantId, string clientId) {
         foreach (a; findByTenant(tenantId)) if (a.clientId == clientId) return a;
         return Application.init;
     }

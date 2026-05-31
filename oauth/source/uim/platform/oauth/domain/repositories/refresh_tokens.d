@@ -17,9 +17,9 @@ interface RefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshToken
     RefreshToken findByTokenValue(TenantId tenantId, string tokenValue);
     void removeByTokenValue(TenantId tenantId, string tokenValue);
 
-    size_t countByClientId(TenantId tenantId, string clientId);
-    RefreshToken[] findByClientId(TenantId tenantId, string clientId);
-    void removeByClientId(TenantId tenantId, string clientId);
+    size_t countByClient(TenantId tenantId, string clientId);
+    RefreshToken[] findByClient(TenantId tenantId, string clientId);
+    void removeByClient(TenantId tenantId, string clientId);
 
     size_t countByStatus(TenantId tenantId, TokenStatus status);
     RefreshToken[] findByStatus(TenantId tenantId, TokenStatus status);

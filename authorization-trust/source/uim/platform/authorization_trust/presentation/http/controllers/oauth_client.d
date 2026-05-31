@@ -72,7 +72,7 @@ class OAuthClientController : ManageController {
     auto tenantId = precheck.tenantId;
     auto appId = AppId(req.params.get("appId", ""));
     auto clients = appId.length > 0
-      ? usecase.listOAuthClients(tenantId, appId) : usecase.listOAuthClients(
+      ? usecase.listClients(tenantId, appId) : usecase.listClients(
         tenantId);
     auto list = clients.map!(item => item.toJson()).array.toJson;
 
@@ -115,7 +115,7 @@ class OAuthClientController : ManageController {
 
     auto data = precheck.data;
     UpdateOAuthClientRequest r;
-    r.id = id;
+    r.clientId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -155,7 +155,7 @@ class OAuthClientController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid OAuth client ID", 400);
 
-    auto result = usecase.deleteOAuthClient(tenantId, id);
+    auto result = usecase.deleteClient(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

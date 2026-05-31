@@ -42,10 +42,8 @@ class RoleController : ManageController {
     r.description = data.getString("description");
     r.appId = data.getString("appId");
 
-    auto srArr = j["scopeReferences"];
-    if (srArr.isArray)
-      foreach (v; srArr.byValue)
-        r.scopeReferences ~= v.get!string;
+    foreach (v; data.getArray("scopeReferences"))
+      r.scopeReferences ~= v.get!string;
 
     auto result = usecase.createRole(r);
     if (result.hasError)
@@ -107,10 +105,8 @@ class RoleController : ManageController {
     r.roleId = id;
     r.description = data.getString("description");
 
-    auto srArr = j["scopeReferences"];
-    if (srArr.isArray)
-      foreach (v; srArr.byValue)
-        r.scopeReferences ~= v.get!string;
+    foreach (v; data.getArray("scopeReferences"))
+      r.scopeReferences ~= v.get!string;
 
     auto result = usecase.updateRole(r);
     if (result.hasError)

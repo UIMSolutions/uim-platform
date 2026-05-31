@@ -39,8 +39,6 @@ class KeyringController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateKeyringRequest r;
     r.tenantId = tenantId;
     r.namespaceId = req.headers.get("X-Namespace-Id", data.getString("namespaceId"));
@@ -67,9 +65,9 @@ class KeyringController : ManageController {
     auto namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", req.params.get("namespaceId", "")));
 
     auto rings = usecase.listCredentials(tenantId, namespaceId);
-    auto jarr = Json.emptyArray;
+    auto list = Json.emptyArray;
     foreach (k; rings) {
-      jarr ~= Json.emptyObject
+      list ~= Json.emptyObject
         .set("id", k.id)
         .set("name", k.name)
         .set("metadata", k.metadata)
@@ -77,8 +75,8 @@ class KeyringController : ManageController {
     }
 
     auto responseData = Json.emptyObject
-      .set("count", jarr.length)
-      .set("resources", jarr);
+      .set("count", list.length)
+      .set("resources", list);
     return successResponse("Keyring list retrieved successfully", "Retrieved", 200, responseData);
   }
 

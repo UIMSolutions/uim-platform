@@ -159,6 +159,10 @@ class CustomDomainController : ManageController {
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req); // Reuse getHandler for pre-checks
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
@@ -167,7 +171,7 @@ class CustomDomainController : ManageController {
         // Path: /api/v1/custom-domain/domains/{id}/activate
         // Extract ID: strip "/activate" suffix, then extract last segment
         enum ACTIVATE_SUFFIX_LEN = "/activate".length;
-        auto stripped = path[0 .. $ - 9]; // remove "/activate"
+        auto stripped = path[0 .. $ - ACTIVATE_SUFFIX_LEN]; // remove "/activate"
         auto id = CustomDomainId(extractIdFromPath(stripped));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
@@ -182,13 +186,17 @@ class CustomDomainController : ManageController {
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto resp = activateHandler(req);
-            res.writeJsonBody(resp, resp.statusCode);
+            res.writeJsonBody(resp, resp.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
     protected Json deactivateHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req); // Reuse postHandler for pre-checks
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
@@ -203,6 +211,7 @@ class CustomDomainController : ManageController {
         auto result = usecase.deactivateDomain(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);
+
         return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 

@@ -15,8 +15,8 @@ mixin(ShowModule!());
 /// Port: outgoing — API client persistence.
 interface ApiClientRepository : ITenantRepository!(ApiClient, ApiClientId) {
 
-  size_t countByClientId(string clientId);
-  ApiClient findByClientId(string clientId);
-  void removeByClientId(string clientId);
+  size_t countByClient(string clientId);
+  ApiClient findByClient(string clientId);
+  void removeByClient(string clientId);
 
 }

@@ -42,7 +42,7 @@ class UserAssignmentController : ManageController {
     r.roleCollectionId = RoleCollectionId(data.getString("roleCollectionId"));
     r.origin = data.getString("origin");
 
-    auto result = usecase.createUserAssignment(r);
+    auto result = usecase.createAssignment(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -60,8 +60,8 @@ class UserAssignmentController : ManageController {
     auto userId = UserId(req.params.get("userId", ""));
 
     auto assignments =
-      userId.isEmpty ? usecase.listUserAssignments(
-        tenantId) : usecase.listUserAssignments(tenantId, userId);
+      userId.isEmpty ? usecase.listAssignments(
+        tenantId) : usecase.listAssignments(tenantId, userId);
 
     auto list = assignments.map!(item => item.toJson()).array.toJson;
 
@@ -82,7 +82,7 @@ class UserAssignmentController : ManageController {
     if (id.isNull)
       return errorResponse("Invalid user assignment ID", 400);
 
-    auto ua = usecase.getUserAssignment(tenantId, id);
+    auto ua = usecase.getAssignment(tenantId, id);
     if (ua.isNull)
       return errorResponse("User assignment not found", 404);
 
@@ -99,7 +99,7 @@ class UserAssignmentController : ManageController {
 
     auto id = UserAssignmentId(precheck.id);
 
-    auto result = usecase.deleteUserAssignment(tenantId, id);
+    auto result = usecase.deleteAssignment(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

@@ -51,7 +51,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     if (user == User.init)
       return TokenResponse("", "", "", "User not found");
 
-    auto app = appRepo.findByClientId(req.clientId);
+    auto app = appRepo.findByClient(req.clientId);
     if (app == Application.init)
       return TokenResponse("", "", "", "Unknown application");
 

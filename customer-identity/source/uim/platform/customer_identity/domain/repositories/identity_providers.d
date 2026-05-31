@@ -14,5 +14,5 @@ mixin(ShowModule!());
 interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
     IdentityProvider[] findByType(TenantId tenantId, IdentityProviderType providerType);
     IdentityProvider[] findActive(TenantId tenantId);
-    IdentityProvider findByClientId(TenantId tenantId, string clientId);
+    IdentityProvider findByClient(TenantId tenantId, string clientId);
 }

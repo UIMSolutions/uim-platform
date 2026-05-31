@@ -99,7 +99,7 @@ sequenceDiagram
 
     A->>R: POST /api/v1/access-tokens {clientId, clientSecret, scope}
     R->>UC: issueToken(clientId, secret, scope)
-    UC->>CR: findByClientId(clientId)
+    UC->>CR: findByClient(clientId)
     CR-->>UC: client
     UC->>TR: save(accessToken)
     TR-->>UC: saved

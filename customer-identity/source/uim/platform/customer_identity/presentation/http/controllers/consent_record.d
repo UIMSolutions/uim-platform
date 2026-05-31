@@ -31,23 +31,24 @@ class ConsentRecordController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
+
         auto items = consentRecords.listConsentRecords(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", list);
+
+        return successResponse("Consent records retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -65,60 +66,63 @@ class ConsentRecordController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = consentRecords.grantConsent(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Consent recorded").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Consent recorded successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Consent Record ID", 400);
 
         auto e = consentRecords.getConsentRecord(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Consent record not found").set("status", "error").set("statusCode", 404);
+            return errorResponse("Consent record not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Consent record retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Consent Record ID", 400);
 
         auto result = consentRecords.revokeConsent(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Consent revoked").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Consent revoked successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
         auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Consent Record ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Consent Record ID", 400);
 
         auto result = consentRecords.deleteConsentRecord(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("message", "Consent record deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Consent record deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -36,11 +36,11 @@ class IdentityProviderController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto idps = usecase.listProviders(tenantId);
-    auto jarr = idps.map!(idp => idp.toJson()).array.toJson;
+    auto list = idps.map!(idp => idp.toJson()).array.toJson;
 
-    auto responseData = aJson.emptyObject
-      .set("items", jarr)
-      .set("totalCount", idps.length);
+    auto responseData = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", list.length);
 
     return successResponse("Identity provider list retrieved successfully", "Retrieved", 200, responseData);
   }
@@ -70,9 +70,7 @@ class IdentityProviderController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
-
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Identity provider created successfully", "Created", 201, responseData);
   }
 
@@ -111,7 +109,7 @@ class IdentityProviderController : ManageController {
 
     UpdateIdentityProviderRequest r;
     r.tenantId = tenantId;
-    r.identityProviderId = id;
+    r.providerId = id;
     r.displayName = data.getString("displayName");
     r.metadataUrl = data.getString("metadataUrl");
     r.ssoUrl = data.getString("ssoUrl");

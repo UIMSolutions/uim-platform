@@ -133,6 +133,10 @@ class CertificateController : ManageController {
     }
 
     protected Json uploadChainHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
@@ -162,13 +166,17 @@ class CertificateController : ManageController {
     protected void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto resp = uploadChainHandler(req);
-            res.writeJsonBody(resp, resp.statusCode);
+            res.writeJsonBody(resp, resp.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
     protected Json activateHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
@@ -197,13 +205,17 @@ class CertificateController : ManageController {
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto resp = activateHandler(req);
-            res.writeJsonBody(resp, resp.statusCode);
+            res.writeJsonBody(resp, resp.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
     protected Json deactivateHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         if (tenantId.isNull) return errorResponse("Tenant ID is required", 400);
 
@@ -221,7 +233,7 @@ class CertificateController : ManageController {
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto resp = deactivateHandler(req);
-            res.writeJsonBody(resp, resp.statusCode);
+            res.writeJsonBody(resp, resp.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

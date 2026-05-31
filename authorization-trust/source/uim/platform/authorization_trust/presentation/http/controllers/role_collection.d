@@ -57,7 +57,7 @@ class RoleCollectionController : ManageController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.roleReferences = data.getArray("roleReferences").map!(e ~= e.getString).array;
+    r.roleReferences = data.getArray("roleReferences").map!(e => e.getString).array;
 
     auto result = usecase.createRoleCollection(r);
     if (result.hasError)
@@ -93,7 +93,6 @@ class RoleCollectionController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
     auto id = RoleCollectionId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid role collection ID", 400);
@@ -101,10 +100,10 @@ class RoleCollectionController : ManageController {
     auto data = precheck.data;
     UpdateRoleCollectionRequest r;
     r.tenantId = tenantId;
-    r.id = id;
-    r.name = data.getString("name");
+    r.collectionId = id;
+    // r.name = data.getString("name");
     r.description = data.getString("description");
-    r.roleReferences = data.getArray("roleReferences").map!(e ~= e.getString).array;
+    r.roleReferences = data.getArray("roleReferences").map!(e => e.getString).array;
 
     auto result = usecase.updateRoleCollection(r);
     if (result.hasError)

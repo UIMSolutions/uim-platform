@@ -13,8 +13,8 @@ mixin(ShowModule!());
 /// Port: outgoing — application/service provider persistence.
 interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
-  bool existsByClientId(string clientId);
-  Application findByClientId(string clientId);
-  void removeByClientId(string clientId);
+  bool existsByClient(string clientId);
+  Application findByClient(string clientId);
+  void removeByClient(string clientId);
 
 }

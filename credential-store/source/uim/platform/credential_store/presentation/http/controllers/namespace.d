@@ -38,8 +38,6 @@ class NamespaceController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateNamespaceRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");

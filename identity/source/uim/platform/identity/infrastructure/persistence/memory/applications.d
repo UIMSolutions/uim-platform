@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
-    Application findByClientId(TenantId tenantId, string clientId) {
+    Application findByClient(TenantId tenantId, string clientId) {
         foreach (a; findByTenant(tenantId))
             if (a.clientId == clientId) return a;
         return Application.init;

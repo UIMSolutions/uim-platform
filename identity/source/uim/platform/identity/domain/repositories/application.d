@@ -17,7 +17,7 @@ interface ApplicationRepository {
     void remove(Application entity);
     Application findById(TenantId tenantId, ApplicationId id);
     Application[] findByTenant(TenantId tenantId);
-    Application findByClientId(TenantId tenantId, string clientId);
+    Application findByClient(TenantId tenantId, string clientId);
     Application[] findByStatus(TenantId tenantId, AppStatus status);
     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol);
 }

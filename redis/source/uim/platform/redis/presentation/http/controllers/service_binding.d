@@ -29,7 +29,7 @@ class ServiceBindingController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
@@ -44,7 +44,7 @@ class ServiceBindingController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
@@ -61,7 +61,7 @@ class ServiceBindingController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -88,7 +88,7 @@ class ServiceBindingController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);

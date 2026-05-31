@@ -34,20 +34,20 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
             }
     }
 
-    size_t countByClientId(TenantId tenantId, string clientId) {
-        return findByClientId(tenantId, clientId).length;
+    size_t countByClient(TenantId tenantId, string clientId) {
+        return findByClient(tenantId, clientId).length;
     }
 
-    AccessToken[] filterByClientId(AccessToken[] tokens, string clientId) {
+    AccessToken[] filterByClient(AccessToken[] tokens, string clientId) {
         return tokens.filter!(e => e.clientId == clientId).array;
     }
 
-    AccessToken[] findByClientId(TenantId tenantId, string clientId) {
-        return filterByClientId(findByTenant(tenantId), clientId);
+    AccessToken[] findByClient(TenantId tenantId, string clientId) {
+        return filterByClient(findByTenant(tenantId), clientId);
     }
 
-    void removeByClientId(TenantId tenantId, string clientId) {
-        findByClientId(tenantId, clientId).each!(e => remove(e));
+    void removeByClient(TenantId tenantId, string clientId) {
+        findByClient(tenantId, clientId).each!(e => remove(e));
     }
 
     size_t countByUser(TenantId tenantId, UserId userId) {

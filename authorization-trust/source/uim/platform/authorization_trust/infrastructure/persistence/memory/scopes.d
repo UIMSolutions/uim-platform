@@ -14,7 +14,7 @@ mixin(ShowModule!());
 class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByName(tenantId, name).id.length > 0;
+    return findByTenant(tenantId).any!(s => s.name == name);
   }
 
   ScopeEntity findByName(TenantId tenantId, string name) {
@@ -28,7 +28,7 @@ class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepo
   }
 
   size_t countByApp(TenantId tenantId, string appId) {
-    return findByTenant(tenantId).length;
+    return findByApp(tenantId, appId).length;
   }
   ScopeEntity[] filterByApp(ScopeEntity[] scopes, string appId) {
     return scopes.filter!(s => s.appId == appId).array;

@@ -31,23 +31,22 @@ class ScreenSetController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto items = screenSets.listScreenSets(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
-            .set("count", items.length)
-            .set("resources", jarr)
-            .set("status", "success")
-            .set("statusCode", 200);
+        auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Screen sets retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -72,7 +71,7 @@ class ScreenSetController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
@@ -90,7 +89,7 @@ class ScreenSetController : ManageController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;
@@ -120,7 +119,7 @@ class ScreenSetController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto path = req.requestURI.to!string;

@@ -32,7 +32,7 @@ class MongoApplicationRepository : ApplicationRepository {
         foreach (doc; collection.find(["tenantId": Bson(tenantId.value)])) result ~= bsonToEntity(doc);
         return result;
     }
-    Application findByClientId(TenantId tenantId, string clientId) @trusted {
+    Application findByClient(TenantId tenantId, string clientId) @trusted {
         auto doc = collection.findOne(["tenantId": Bson(tenantId.value), "clientId": Bson(clientId)]);
         return doc.isNull ? Application.init : bsonToEntity(doc);
     }

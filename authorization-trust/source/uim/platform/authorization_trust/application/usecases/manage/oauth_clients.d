@@ -21,7 +21,7 @@ class ManageOAuthClientsUseCase {
   CommandResult createOAuthClient(CreateOAuthClientRequest r) {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "clientId is required");
-    if (repo.existsByClientId(r.clientId))
+    if (repo.existsByClient(r.tenantId, r.clientId))
       return CommandResult(false, "", "A client with this clientId already exists");
 
     import std.uuid : randomUUID;
@@ -77,7 +77,7 @@ class ManageOAuthClientsUseCase {
   }
 
   OAuthClient getClient(TenantId tenantId, string clientId) {
-    return repo.findByClientId(tenantId, clientId);
+    return repo.findByClient(tenantId, clientId);
   }
 
   OAuthClient[] listClients(TenantId tenantId) {

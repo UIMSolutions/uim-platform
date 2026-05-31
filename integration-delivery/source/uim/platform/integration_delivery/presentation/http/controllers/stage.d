@@ -30,7 +30,7 @@ class StageController : ManageController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto items = stages.listStages(tenantId);
@@ -45,7 +45,7 @@ class StageController : ManageController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto id = StageId(precheck.id);
@@ -62,7 +62,7 @@ class StageController : ManageController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -84,7 +84,7 @@ class StageController : ManageController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -108,7 +108,7 @@ class StageController : ManageController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return precheck;
 
         auto tenantId = precheck.tenantId;
         auto id = StageId(precheck.id);

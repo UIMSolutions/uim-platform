@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// In-memory adapter for application/service provider persistence.
 class MemoryApplicationRepository : ApplicationRepository {
   
-  bool existsByClientId(string clientId) {
+  bool existsByClient(string clientId) {
     foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return true;
@@ -23,7 +23,7 @@ class MemoryApplicationRepository : ApplicationRepository {
     return false;
   }
 
-  Application findByClientId(string clientId) {
+  Application findByClient(string clientId) {
     foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return a;

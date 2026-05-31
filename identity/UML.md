@@ -85,7 +85,7 @@ classDiagram
     class ApplicationRepository {
         <<interface>>
         +save(Application)
-        +findByClientId(TenantId, string) Application
+        +findByClient(TenantId, string) Application
         +findByProtocol(TenantId, AppProtocol) Application[]
     }
 

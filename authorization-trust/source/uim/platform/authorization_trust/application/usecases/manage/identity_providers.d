@@ -18,7 +18,7 @@ class ManageIdentityProvidersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createIdentityProvider(CreateIdentityProviderRequest r) {
+  CommandResult createProvider(CreateIdentityProviderRequest r) {
     if (r.alias_.length == 0)
       return CommandResult(false, "", "IdP alias is required");
     if (repo.existsByAlias(r.tenantId, r.alias_))

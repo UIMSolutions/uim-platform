@@ -35,20 +35,20 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
     // #endregion ByTokenValue
 
     // #region ByClientId
-    size_t countByClientId(TenantId tenantId, string clientId) {
-        return findByClientId(tenantId, clientId).length;
+    size_t countByClient(TenantId tenantId, string clientId) {
+        return findByClient(tenantId, clientId).length;
     }
 
-    RefreshToken[] filterByClientId(TenantId tenantId, string clientId) {
+    RefreshToken[] filterByClient(TenantId tenantId, string clientId) {
         return findByTenant(tenantId).filter!(e => e.clientId == clientId).array;
     }
 
-    RefreshToken[] findByClientId(TenantId tenantId, string clientId) {
-        return filterByClientId(tenantId, clientId);
+    RefreshToken[] findByClient(TenantId tenantId, string clientId) {
+        return filterByClient(tenantId, clientId);
     }
 
-    void removeByClientId(TenantId tenantId, string clientId) {
-        findByClientId(tenantId, clientId).each!(e => remove(e));
+    void removeByClient(TenantId tenantId, string clientId) {
+        findByClient(tenantId, clientId).each!(e => remove(e));
     }
     // #endregion ByClientId
 
