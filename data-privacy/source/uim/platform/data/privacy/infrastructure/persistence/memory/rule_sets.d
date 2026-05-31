@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence.memory.rule_sets;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.rule_set;
 // import uim.platform.data.privacy.domain.ports.repositories.rule_sets;
 import uim.platform.data.privacy;

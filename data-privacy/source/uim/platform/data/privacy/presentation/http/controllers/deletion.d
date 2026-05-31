@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.deletion;
 
 // import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.deletion_request;
 import uim.platform.data.privacy;
 
@@ -49,16 +49,11 @@ class DeletionController : ManageController {
       r.reason = data.getString("reason");
 
       auto result = usecase.createRequest(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Deletion request created successfully");
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Deletion request created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -78,16 +73,12 @@ class DeletionController : ManageController {
       else
         items = usecase.listRequests(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Deletion requests retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Deletion request list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -99,13 +90,11 @@ class DeletionController : ManageController {
       auto id = DeletionRequestId(precheck.id);
 
       auto entry = usecase.getRequest(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Deletion request not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      if (item.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Deletion request retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {

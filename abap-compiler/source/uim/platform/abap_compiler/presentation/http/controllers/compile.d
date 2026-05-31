@@ -37,11 +37,11 @@ class CompileController : PlatformController {
         r.sourceCode = data.getString("sourceCode");
 
         auto result = usecase.compile(r);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+        if (!result.success)
+            return errorResponse(result.error, 400);
 
-        auto responseData = Json.emptyObject.set("result", result.result.toJson());
-        return successResponse("Compilation successful", "Compilation failed", 200, responseData);
+        auto responseData = result.toJson();
+        return successResponse("Compilation successful", "Retrieved", 200, responseData);
     }
 
     protected void handleCompile(scope HTTPServerRequest req, scope HTTPServerResponse res) {

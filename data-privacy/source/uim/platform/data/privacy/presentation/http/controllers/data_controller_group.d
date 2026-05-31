@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.presentation.http.controllers.data_controller_group;
 // import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.data_controller_group;
 import uim.platform.data.privacy;
 
@@ -31,125 +31,98 @@ class DataControllerGroupController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDataControllerGroupRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.controllerIds = data.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateDataControllerGroupRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.controllerIds = data.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
 
-      auto result = usecase.createGroup(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data controller group created successfully");
+    auto result = usecase.createGroup(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data controller group created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.listGroups(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listGroups(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Data controller groups retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Data controller group list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataControllerGroupId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataControllerGroupId(precheck.id);
 
-      auto entry = usecase.getGroup(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Controller group not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getGroup(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Data controller group not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Data controller group retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataControllerGroupId(precheck.id);
-      auto data = precheck.data;
-      UpdateDataControllerGroupRequest r;
-      r.groupId = id;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.controllerIds = j.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
+    auto tenantId = precheck.tenantId;
+    auto id = DataControllerGroupId(precheck.id);
+    auto data = precheck.data;
+    UpdateDataControllerGroupRequest r;
+    r.groupId = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.controllerIds = data.getStrings("controllerIds").map!(cid => DataControllerId(cid)).array;
 
-      auto result = usecase.updateGroup(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data controller group updated successfully");
+    auto result = usecase.updateGroup(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data controller group updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataControllerGroupId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataControllerGroupId(precheck.id);
 
-      usecase.deleteGroup(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+    auto result = usecase.deleteGroup(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private static Json serialize(const DataControllerGroup e) {
-    auto ids = e.controllerIds.map!(cid => cid.value).array.toJson;
-
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("isActive", e.isActive)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("controllerIds", ids);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data controller group deleted successfully", "Deleted", 200, responseData);
   }
 }
+

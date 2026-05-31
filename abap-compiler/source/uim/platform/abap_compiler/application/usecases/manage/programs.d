@@ -19,18 +19,18 @@ class ManageProgramsUseCase {
     }
 
     CommandResult createProgram(CreateProgramRequest r) {
-        if (r.programId.length == 0)
+        if (r.programId.isNull())
             return CommandResult(false, "", "Program ID is required");
-        if (r.tenantId.length == 0)
+        if (r.tenantId.isNull())
             return CommandResult(false, "", "Tenant ID is required");
 
         auto existing = repo.findById(r.tenantId, r.programId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Program '" ~ r.programId ~ "' already exists");
+            return CommandResult(false, "", "Program '" ~ r.programId.toString() ~ "' already exists");
 
-        auto program = AbapProgram.create(r.programId, r.tenantId, r.programType, r.title, r.language, r.sourceCode);
+        auto program = AbapProgram.create(r.programId.toString(), r.tenantId, r.programType, r.title, r.language, r.sourceCode);
         repo.save(program);
-        return CommandResult(true, program.programId, "");
+        return CommandResult(true, program.id.toString(), "");
     }
 
     AbapProgram getProgram(TenantId tenantId, AbapProgramId programId) {
@@ -38,7 +38,7 @@ class ManageProgramsUseCase {
     }
 
     AbapProgram[] listPrograms(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.findAll().filter!(p => p.tenantId == tenantId).array;
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {

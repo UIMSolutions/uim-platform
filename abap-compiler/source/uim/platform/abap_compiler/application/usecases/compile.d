@@ -44,7 +44,7 @@ class CompileUseCase {
             auto prog = programRepo.findById(req.tenantId, req.programId);
             if (prog.isNull)
                 return CompileResponse(
-                    "", CompilationStatus.failed, [], [], false,
+                    CompilationJobId(""), CompilationStatus.failed, [], [], false,
                     "Program '" ~ req.programId.value ~ "' not found"
                 );
             source = prog.sourceCode;

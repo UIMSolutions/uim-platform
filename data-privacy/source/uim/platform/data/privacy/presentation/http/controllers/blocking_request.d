@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.blocking_request;
 
 // import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.blocking_request;
 import uim.platform.data.privacy;
 

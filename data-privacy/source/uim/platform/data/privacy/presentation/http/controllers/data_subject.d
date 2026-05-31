@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.data_subject;
 
 // import uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy;
 
@@ -32,151 +32,142 @@ class DataSubjectController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDataSubjectRequest r;
-      r.tenantId = tenantId;
-      r.displayName = data.getString("displayName");
-      r.email = data.getString("email");
-      r.externalId = data.getString("externalId");
-      r.sourceSystem = data.getString("sourceSystem");
-      r.country = data.getString("country");
-      r.subjectType = parseSubjectType(data.getString("subjectType"));
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateDataSubjectRequest r;
+    r.tenantId = tenantId;
+    r.displayName = data.getString("displayName");
+    r.email = data.getString("email");
+    r.externalId = data.getString("externalId");
+    r.sourceSystem = data.getString("sourceSystem");
+    r.country = data.getString("country");
+    r.subjectType = parseSubjectType(data.getString("subjectType"));
 
-      auto result = usecase.createSubject(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data subject created successfully");
+    auto result = usecase.createSubject(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data subject created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto typeParam = req.headers.get("X-Subject-Type", "");
+    auto tenantId = precheck.tenantId;
+    auto typeParam = req.headers.get("X-Subject-Type", "");
 
-      DataSubject[] items = typeParam.length > 0
-        ? usecase.listByType(tenantId, parseSubjectType(typeParam)) : usecase.listSubjects(
-          tenantId);
+    DataSubject[] items = typeParam.length > 0
+      ? usecase.listByType(tenantId, parseSubjectType(typeParam)) : usecase.listSubjects(
+        tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Data subjects retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Data subject list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataSubjectId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataSubjectId(precheck.id);
 
-      auto entry = usecase.getSubject(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Data subject not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getSubject(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = serialize(entry);
+    return successResponse("Data subject retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateDataSubjectRequest r;
-      r.id = DataSubjectId(precheck.id);
-      r.tenantId = tenantId;
-      r.displayName = data.getString("displayName");
-      r.email = data.getString("email");
-      r.sourceSystem = data.getString("sourceSystem");
-      r.country = data.getString("country");
-      r.subjectType = parseSubjectType(data.getString("subjectType"));
-      r.isActive = data.getBoolean("isActive", true);
+    auto tenantId = precheck.tenantId;
+    UpdateDataSubjectRequest r;
+    r.id = DataSubjectId(precheck.id);
+    r.tenantId = tenantId;
+    r.displayName = data.getString("displayName");
+    r.email = data.getString("email");
+    r.sourceSystem = data.getString("sourceSystem");
+    r.country = data.getString("country");
+    r.subjectType = parseSubjectType(data.getString("subjectType"));
+    r.isActive = data.getBoolean("isActive", true);
 
-      auto result = usecase.updateSubject(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data subject updated successfully");
+    auto result = usecase.updateSubject(r);
+    if (result.isSuccess()) {
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Data subject updated successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else
+      writeError(res, 400, result.message);
   }
+ catch (Exception e)
+    writeError(res, 500, "Internal server error");
+}
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataSubjectId(precheck.id);
+  auto tenantId = precheck.tenantId;
+  auto id = DataSubjectId(precheck.id);
 
-      usecase.deleteSubject(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+  usecase.deleteSubject(tenantId, id);
+  res.writeJsonBody(Json.emptyObject, 204);
+}
+ catch (Exception e)
+  writeError(res, 500, "Internal server error");
+}
+
+private static Json serialize(const DataSubject e) {
+  return Json.emptyObject
+    .set("id", e.id)
+    .set("tenantId", e.tenantId)
+    .set("subjectType", e.subjectType.to!string)
+    .set("externalId", e.externalId)
+    .set("displayName", e.displayName)
+    .set("email", e.email)
+    .set("sourceSystem", e.sourceSystem)
+    .set("country", e.country)
+    .set("isActive", e.isActive)
+    .set("createdAt", e.createdAt)
+    .set("updatedAt", e.updatedAt);
+}
+
+private static DataSubjectType parseSubjectType(string type) {
+  switch (type) {
+  case "employee":
+    return DataSubjectType.employee;
+  case "customer":
+    return DataSubjectType.customer;
+  case "vendor":
+    return DataSubjectType.vendor;
+  case "partner":
+    return DataSubjectType.partner;
+  case "applicant":
+    return DataSubjectType.applicant;
+  default:
+    return DataSubjectType.naturalPerson;
   }
-
-  private static Json serialize(const DataSubject e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("subjectType", e.subjectType.to!string)
-      .set("externalId", e.externalId)
-      .set("displayName", e.displayName)
-      .set("email", e.email)
-      .set("sourceSystem", e.sourceSystem)
-      .set("country", e.country)
-      .set("isActive", e.isActive)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt);
-  }
-
-  private static DataSubjectType parseSubjectType(string type) {
-    switch (type) {
-    case "employee":
-      return DataSubjectType.employee;
-    case "customer":
-      return DataSubjectType.customer;
-    case "vendor":
-      return DataSubjectType.vendor;
-    case "partner":
-      return DataSubjectType.partner;
-    case "applicant":
-      return DataSubjectType.applicant;
-    default:
-      return DataSubjectType.naturalPerson;
-    }
-  }
+}
 }

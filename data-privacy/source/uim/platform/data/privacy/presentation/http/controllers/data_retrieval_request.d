@@ -5,12 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.data_retrieval_request;
 
-
-
-
 // import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 import uim.platform.data.privacy;
 
@@ -35,136 +32,111 @@ class DataRetrievalController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDataRetrievalRequest r;
-      r.tenantId = tenantId;
-      r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
-      r.requestedBy = data.getString("requestedBy");
-      r.targetSystems = data.getStrings("targetSystems");
-      r.reason = data.getString("reason");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateDataRetrievalRequest r;
+    r.tenantId = tenantId;
+    r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+    r.requestedBy = data.getString("requestedBy");
+    r.targetSystems = data.getStrings("targetSystems");
+    r.reason = data.getString("reason");
 
-      auto result = usecase.createRequest(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data retrieval request created successfully");
+    auto result = usecase.createRequest(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data retrieval request created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto statusParam = req.headers.get("X-Status-Filter", "");
-      auto subjectParam = req.headers.get("X-Subject-Filter", "");
+    auto tenantId = precheck.tenantId;
+    auto statusParam = req.headers.get("X-Status-Filter", "");
+    auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
-      DataRetrievalRequest[] items = statusParam.length > 0
-        ? usecase.listByStatus(tenantId, toRetrievalStatus(statusParam))
-        : usecase.listRequests(tenantId);
+    DataRetrievalRequest[] items = statusParam.length > 0
+      ? usecase.listByStatus(tenantId, toRetrievalStatus(statusParam)) 
+      : usecase.listRequests(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", items.length);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Data retrieval request list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataRetrievalRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataRetrievalRequestId(precheck.id);
 
-      auto entry = usecase.getRequest(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Data retrieval request not found");
-        return;
-      } 
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getRequest(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Data retrieval request retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UpdateRetrievalStatusRequest r;
-      r.id = DataRetrievalRequestId(precheck.id);
-      r.tenantId = tenantId;
-      r.status = data.getString("status");
-      r.downloadUrl = data.getString("downloadUrl");
-      r.totalFields = jsonLong(j, "totalFields");
+  protected Json updateStatusHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateStatus(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data retrieval request status updated successfully");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    UpdateRetrievalStatusRequest r;
+    r.id = DataRetrievalRequestId(precheck.id);
+    r.tenantId = tenantId;
+    r.status = data.getString("status");
+    r.downloadUrl = data.getString("downloadUrl");
+    r.totalFields = jsonLong(j, "totalFields");
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
+    auto result = usecase.updateStatus(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data retrieval request status updated successfully", "Updated", 200, responseData);
+  }
+
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = updateStatusHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
+    }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataRetrievalRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataRetrievalRequestId(precheck.id);
 
-      usecase.deleteRequest(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+    auto result = usecase.deleteRequest(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private static Json serialize(const DataRetrievalRequest e) {
-    auto systems = Json.emptyArray;
-    foreach (s; e.targetSystems)
-      systems ~= Json(s);
-
-    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
-
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("dataSubjectId", e.dataSubjectId)
-      .set("requestedBy", e.requestedBy)
-      .set("requestType", e.requestType.to!string)
-      .set("status", e.status.to!string)
-      .set("downloadUrl", e.downloadUrl)
-      .set("totalFields", e.totalFields)
-      .set("reason", e.reason)
-      .set("requestedAt", e.requestedAt)
-      .set("completedAt", e.completedAt)
-      .set("deadline", e.deadline)
-      .set("targetSystems", systems)
-      .set("categories", cats);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data retrieval request deleted successfully", "Deleted", 200, responseData);
   }
 }

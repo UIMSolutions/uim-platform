@@ -100,7 +100,7 @@ struct AbapLexer {
 
             // --- Newline
             if (c == '\n') {
-                tokens ~= Token(idx++, TokenType.newline, "\n", tokLine, tokCol);
+                tokens ~= Token(TokenId(idx++), TokenType.newline, "\n", tokLine, tokCol);
                 advance();
                 continue;
             }
@@ -115,7 +115,7 @@ struct AbapLexer {
             if (c == '*' && col == 1) {
                 size_t start = pos;
                 while (pos < source.length && source[pos] != '\n') advance();
-                tokens ~= Token(idx++, TokenType.comment, source[start .. pos], tokLine, tokCol);
+                tokens ~= Token(TokenId(idx++), TokenType.comment, source[start .. pos], tokLine, tokCol);
                 continue;
             }
 
@@ -124,7 +124,7 @@ struct AbapLexer {
                 size_t start = pos;
                 advance();
                 while (pos < source.length && source[pos] != '\n') advance();
-                tokens ~= Token(idx++, TokenType.comment, source[start .. pos], tokLine, tokCol);
+                tokens ~= Token(TokenId(idx++), TokenType.comment, source[start .. pos], tokLine, tokCol);
                 continue;
             }
 
@@ -138,7 +138,7 @@ struct AbapLexer {
                     advance();
                 }
                 advance(); // closing delimiter
-                tokens ~= Token(idx++, TokenType.literal_string, source[start .. pos], tokLine, tokCol);
+                tokens ~= Token(TokenId(idx++), TokenType.literal_string, source[start .. pos], tokLine, tokCol);
                 continue;
             }
 
@@ -146,7 +146,7 @@ struct AbapLexer {
             if (c >= '0' && c <= '9') {
                 size_t start = pos;
                 while (pos < source.length && source[pos] >= '0' && source[pos] <= '9') advance();
-                tokens ~= Token(idx++, TokenType.literal_integer, source[start .. pos], tokLine, tokCol);
+                tokens ~= Token(TokenId(idx++), TokenType.literal_integer, source[start .. pos], tokLine, tokCol);
                 continue;
             }
 
@@ -194,7 +194,7 @@ struct AbapLexer {
             }
         }
 
-        tokens ~= Token(TokenId(idx), "", TokenType.eof, "", line, col);
+        tokens ~= Token(TokenId(idx), TokenType.eof, "", line, col);
         return tokens;
     }
 }

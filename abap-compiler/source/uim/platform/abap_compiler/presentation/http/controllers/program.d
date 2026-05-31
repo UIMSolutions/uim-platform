@@ -45,7 +45,7 @@ class ProgramController : ManageController {
 
         auto responseData = Json.emptyObject
             .set("count", programs.length)
-            .set("resources", list);
+            .set("resources", jarr);
 
         return successResponse("Program list retrieved successfully", "Retrieved", 200, responseData);
     }
@@ -59,10 +59,11 @@ class ProgramController : ManageController {
         auto data = precheck.data;
         CreateProgramRequest r;
         r.tenantId = tenantId;
+        r.programId = AbapProgramId(data.getString("programId"));
         r.title = data.getString("title");
         r.language = data.getString("language", "EN");
         r.sourceCode = data.getString("sourceCode");
-        r.programType = cast(ProgramType)data.getString("programType", "report").to!int;
+        r.programType = data.getString("programType", "report").to!ProgramType;
 
         auto result = usecase.createProgram(r);
         if (result.hasError)

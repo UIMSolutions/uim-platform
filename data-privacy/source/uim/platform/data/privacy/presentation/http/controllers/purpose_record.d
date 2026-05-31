@@ -7,7 +7,7 @@ module uim.platform.data.privacy.presentation.http.controllers.purpose_record;
 // 
 // import uim.platform.data.privacy.application.usecases.manage.purpose_records;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.purpose_record;
 import uim.platform.data.privacy;
 

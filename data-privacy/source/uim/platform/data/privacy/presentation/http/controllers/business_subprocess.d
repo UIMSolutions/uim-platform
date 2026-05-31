@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.presentation.http.controllers.business_subprocess;
 // import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.business_subprocess;
 import uim.platform.data.privacy;
 
@@ -31,118 +31,100 @@ class BusinessSubprocessController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateBusinessSubprocessRequest r;
-      r.tenantId = tenantId;
-      r.parentProcessId = BusinessProcessId(data.getString("parentProcessId"));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.purposes = j.getStrings("purposes");
-      r.dataCategories = j.getStrings("dataCategories");
-      r.owner = data.getString("owner");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateBusinessSubprocessRequest r;
+    r.tenantId = tenantId;
+    r.parentProcessId = BusinessProcessId(data.getString("parentProcessId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.purposes = data.getStrings("purposes");
+    r.dataCategories = data.getStrings("dataCategories");
+    r.owner = data.getString("owner");
 
-      auto result = usecase.createSubprocess(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Business subprocess created");
+    auto result = usecase.createSubprocess(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business subprocess created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listSubprocesses(tenantId);
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto items = usecase.listSubprocesses(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Business subprocesses retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Business subprocess list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = BusinessSubprocessId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = BusinessSubprocessId(precheck.id);
 
-      auto entry = usecase.getSubprocess(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Business subprocess not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getSubprocess(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Business subprocess not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Business subprocess retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateBusinessSubprocessRequest r;
-      r.tenantId = tenantId;
-      r.subprocessId = BusinessSubprocessId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.purposes = j.getStrings("purposes");
-      r.dataCategories = j.getStrings("dataCategories");
-      r.owner = data.getString("owner");
+    auto tenantId = precheck.tenantId;
+    UpdateBusinessSubprocessRequest r;
+    r.tenantId = tenantId;
+    r.subprocessId = BusinessSubprocessId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.purposes = data.getStrings("purposes");
+    r.dataCategories = data.getStrings("dataCategories");
+    r.owner = data.getString("owner");
 
-      auto result = usecase.updateSubprocess(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Business subprocess updated successfully");
+    auto result = usecase.updateSubprocess(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business subprocess updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = BusinessSubprocessId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = BusinessSubprocessId(precheck.id);
 
-      auto result = usecase.deleteSubprocess(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.deleteSubprocess(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Business subprocess deleted successfully", 200, responseData);
-
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business subprocess deleted successfully", "Deleted", 200, responseData);
   }
 }
-

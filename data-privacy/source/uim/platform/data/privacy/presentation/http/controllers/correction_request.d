@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.presentation.http.controllers.correction_request;
 // import uim.platform.data.privacy.application.usecases.manage.correction_requests;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.correction_request;
 import uim.platform.data.privacy;
 
@@ -31,138 +31,108 @@ class CorrectionRequestController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateCorrectionRequest r;
-      r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
-      r.requestedBy = UserId(data.getString("requestedBy"));
-      r.targetSystems = data.getStrings("targetSystems");
-      r.fieldName = data.getString("fieldName");
-      r.currentValue = data.getString("currentValue");
-      r.correctedValue = data.getString("correctedValue");
-      r.reason = data.getString("reason");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateCorrectionRequest r;
+    r.tenantId = tenantId;
+    r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+    r.requestedBy = UserId(data.getString("requestedBy"));
+    r.targetSystems = data.getStrings("targetSystems");
+    r.fieldName = data.getString("fieldName");
+    r.currentValue = data.getString("currentValue");
+    r.correctedValue = data.getString("correctedValue");
+    r.reason = data.getString("reason");
 
-      auto result = usecase.createRequest(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Correction request created successfully");
+    auto result = usecase.createRequest(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Correction request created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.listRequests(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listRequests(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "Correction requests retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Correction request list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = CorrectionRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = CorrectionRequestId(precheck.id);
 
-      auto entry = usecase.getRequest(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Correction request not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getRequest(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Correction request not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Correction request retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UpdateCorrectionStatusRequest r;
-      r.tenantId = tenantId;
-      r.requestId = CorrectionRequestId(precheck.id);
-      r.status = data.getString("status");
+  protected Json updateStatusHandler(HTTPServerRequest req) {
+    auto precheck = super.putHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.updateStatus(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Correction request status updated successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = CorrectionRequestId(precheck.id);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
+    auto data = precheck.data;
+    UpdateCorrectionStatusRequest r;
+    r.tenantId = tenantId;
+    r.requestId = id;
+    r.status = data.getString("status");
+
+    auto result = usecase.updateStatus(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Correction request status updated successfully", "Updated", 200, responseData);
+  }
+
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = updateStatusHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = CorrectionRequestId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = CorrectionRequestId(precheck.id);
 
-      usecase.deleteRequest(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+    auto result = usecase.deleteRequest(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private static Json serialize(const CorrectionRequest e) {
-    return Json.emptyObject
-    .set("id", e.id)
-    .set("tenantId", e.tenantId)
-    .set("dataSubjectId", e.dataSubjectId)
-    .set("requestedBy", e.requestedBy)
-    .set("status", e.status.to!string)
-    .set("fieldName", e.fieldName)
-    .set("currentValue", e.currentValue)
-    .set("correctedValue", e.correctedValue)
-    .set("reason", e.reason)
-    .set("requestedAt", e.requestedAt)
-    .set("completedAt", e.completedAt)
-    .set("deadline", e.deadline);
-  }
-
-  private static CorrectionStatus parseCorrectionStatus(string status) {
-    switch (status) {
-    case "inProgress":
-      return CorrectionStatus.inProgress;
-    case "completed":
-      return CorrectionStatus.completed;
-    case "rejected":
-      return CorrectionStatus.rejected;
-    default:
-      return CorrectionStatus.requested;
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Correction request deleted successfully", "Deleted", 200, responseData);
   }
 }

@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.presentation.http.controllers.archive_request;
 // import uim.platform.data.privacy.application.usecases.manage.archive_requests;
 // import uim.platform.data.privacy.application.dto;
-// import uim.platform.data.privacy.domain.types;
+
 // import uim.platform.data.privacy.domain.entities.archive_request;
 import uim.platform.data.privacy;
 

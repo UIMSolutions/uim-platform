@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.data_controller_group;
-// import uim.platform.data.privacy.domain.types;
+
 import uim.platform.data.privacy;
 
 mixin(ShowModule!());
@@ -25,6 +25,5 @@ struct DataControllerGroup {
       .set("description", description)
       .set("controllerIds", controllerIds.map!(id => id.value).array.toJson())
       .set("isActive", isActive);
-
   }
 }
