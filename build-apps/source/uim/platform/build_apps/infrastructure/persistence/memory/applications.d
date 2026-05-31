@@ -18,7 +18,7 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     }
 
     Application[] findByOwner(string owner) {
-        return findByTenant(tenantId).filter!(e => e.owner == owner).array;
+        return findAll().filter!(e => e.owner == owner).array;
     }
 
     void removeByOwner(string owner) {
@@ -30,7 +30,7 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     }
 
     Application[] findByStatus(ApplicationStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return findAll().filter!(e => e.status == status).array;
     }
 
     void removeByStatus(ApplicationStatus status) {

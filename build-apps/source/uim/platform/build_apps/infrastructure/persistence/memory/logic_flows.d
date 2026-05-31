@@ -18,7 +18,7 @@ class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), Log
     }
 
     LogicFlow[] findByApplication(ApplicationId applicationId) {
-        return findByTenant(tenantId).filter!(e => e.applicationId == applicationId).array;
+        return findAll().filter!(e => e.applicationId == applicationId).array;
     }
 
     void removeByApplication(ApplicationId applicationId) {
@@ -30,7 +30,7 @@ class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), Log
     }
 
     LogicFlow[] findByPage(PageId pageId) {
-        return findByTenant(tenantId).filter!(e => e.pageId == pageId).array;
+        return findAll().filter!(e => e.pageId == pageId).array;
     }
 
     void removeByPage(PageId pageId) {

@@ -49,7 +49,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProjectMember(ProjectMemberDTO dto) {
-        auto existing = repo.findById(ProjectMemberId(dto.id));
+        auto existing = repo.findById(dto.tenantId, ProjectMemberId(dto.id));
         if (existing.isNull)
             return CommandResult(false, "", "Project member not found");
 

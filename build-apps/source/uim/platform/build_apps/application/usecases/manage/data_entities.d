@@ -27,15 +27,17 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     DataEntity[] listDataEntities(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(tenantId, applicationId);
+        return repo.findByApplication(applicationId)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     CommandResult createDataEntity(DataEntityDTO dto) {
         DataEntity e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = DataEntityId(dto.id);
-        e.applicationId = ApplicationId(dto.applicationId);
+        e.id = dto.dataEntityId;
+        e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
         e.fields = dto.fields;
@@ -52,7 +54,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataEntity(DataEntityDTO dto) {
-        auto existing = repo.findById(dto.tenantId, DataEntityId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.dataEntityId);
         if (existing.isNull)
             return CommandResult(false, "", "Data entity not found");
 

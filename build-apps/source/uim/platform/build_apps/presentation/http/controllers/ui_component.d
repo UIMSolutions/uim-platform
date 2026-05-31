@@ -36,7 +36,7 @@ class UIComponentController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto items = components.listUIComponents(tenantId);
-        auto list = components.map!(item => item.toJson()).array.toJson;
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", list.length)
@@ -117,6 +117,7 @@ class UIComponentController : ManageController {
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("UI component updated successfully", "Updated", 200, responseData);
+    }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

@@ -29,7 +29,7 @@ class AppBuildController : ManageController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req);
         if (precheck.hasError) {
             return precheck;
         }
@@ -41,7 +41,7 @@ class AppBuildController : ManageController {
 
         return Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
+            .set("resources", list)
             .set("message", "App builds retrieved successfully")
             .set("status", "success")
             .set("statusCode", 200);

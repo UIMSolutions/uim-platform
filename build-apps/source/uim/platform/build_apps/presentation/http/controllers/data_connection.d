@@ -29,7 +29,7 @@ class DataConnectionController : ManageController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
 
@@ -54,7 +54,7 @@ class DataConnectionController : ManageController {
         if (id.isNull)
             return errorResponse("Invalid data connection ID", 400);
 
-        auto connection = usecase.getDataConnection(tenantId, dataConnectionId);
+        auto connection = usecase.getDataConnection(tenantId, id);
         if (connection.isNull)
             return errorResponse("Data connection not found", 404);
 
@@ -104,7 +104,7 @@ class DataConnectionController : ManageController {
 
         auto data = precheck.data;
         DataConnectionDTO dto;
-        dto.connectionId = DataConnectionId(precheck.id);
+        dto.dataConnectionId = DataConnectionId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

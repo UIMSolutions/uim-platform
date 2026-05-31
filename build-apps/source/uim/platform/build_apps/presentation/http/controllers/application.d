@@ -29,7 +29,7 @@ class ApplicationController : ManageController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req);
         if (precheck.hasError) {
             return precheck;
         }
@@ -41,7 +41,7 @@ class ApplicationController : ManageController {
 
         return Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
+            .set("resources", list)
             .set("message", "Applications retrieved successfully")
             .set("status", "success")
             .set("statusCode", 200);
@@ -163,7 +163,7 @@ class ApplicationController : ManageController {
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
+        auto precheck = super.deleteHandler(req);
         if (precheck.hasError) {
             return precheck
                 .set("status", "error")

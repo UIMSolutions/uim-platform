@@ -28,7 +28,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
 
     CommandResult createUIComponent(UIComponentDTO dto) {
         UIComponent e;
-        e.id = UIComponentId(dto.id);
+        e.id = dto.uiComponentId;
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
@@ -44,11 +44,11 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         if (!BuildAppsValidator.isValidUIComponent(e))
             return CommandResult(false, "", "Invalid UI component data");
         repo.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.uiComponentId.value, "");
     }
 
     CommandResult updateUIComponent(UIComponentDTO dto) {
-        auto existing = repo.findById(UIComponentId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.uiComponentId);
         if (existing.isNull)
             return CommandResult(false, "", "UI component not found");
             
@@ -58,7 +58,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.uiComponentId.value, "");
     }
 
     CommandResult deleteUIComponent(TenantId tenantId, UIComponentId id) {

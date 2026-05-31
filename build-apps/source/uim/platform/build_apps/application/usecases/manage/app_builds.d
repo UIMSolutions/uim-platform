@@ -18,7 +18,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    AppBuild getlistAppBuild(TenantId tenantId, AppBuildId id) {
+    AppBuild getAppBuild(TenantId tenantId, AppBuildId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -27,14 +27,16 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(tenantId, applicationId);
+        return repo.findByApplication(applicationId)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     CommandResult createAppBuild(AppBuildDTO dto) {
         AppBuild e;
         e.initEntity(dto.tenantId, dto.createdBy);
         e.id = dto.appBuildId;
-        e.applicationId = ApplicationId(dto.applicationId);
+        e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
@@ -47,7 +49,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppBuild(AppBuildDTO dto) {
-        auto existing = repo.findById(dto.tenantId, AppBuildId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.appBuildId);
         if (existing.isNull)
             return CommandResult(false, "", "App build not found");
             

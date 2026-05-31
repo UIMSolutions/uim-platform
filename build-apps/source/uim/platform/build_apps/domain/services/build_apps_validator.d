@@ -41,6 +41,6 @@ struct BuildAppsValidator {
     }
 
     static bool isValidProjectMember(ProjectMember pm) {
-        return pm.userId.length > 0 && pm.tenantId.value.length > 0 && pm.applicationId.value.length > 0;
+        return pm.userId.value.length > 0 && pm.tenantId.value.length > 0 && pm.applicationId.value.length > 0;
     }
 }

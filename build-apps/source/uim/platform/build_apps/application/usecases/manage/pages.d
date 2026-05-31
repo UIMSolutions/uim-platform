@@ -27,15 +27,17 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     Page[] listPages(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(tenantId, applicationId);
+        return repo.findByApplication(applicationId)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     CommandResult createPage(PageDTO dto) {
         Page e;
         e.initEntity(dto.tenantId, dto.createdBy);
         
-        e.id = PageId(dto.id);
-        e.applicationId = ApplicationId(dto.applicationId);
+        e.id = dto.pageId;
+        e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
         e.route = dto.route;
@@ -53,7 +55,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updatePage(PageDTO dto) {
-        auto existing = repo.findById(dto.tenantId, PageId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.pageId);
         if (existing.isNull )
             return CommandResult(false, "", "Page not found");
 

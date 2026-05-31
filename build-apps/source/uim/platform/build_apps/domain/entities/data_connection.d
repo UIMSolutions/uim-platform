@@ -19,7 +19,8 @@ struct DataConnection {
     string description;
     ConnectionType connectionType = ConnectionType.restApi;
     ConnectionStatus status = ConnectionStatus.pending;
-    AuthMethod authMethod = AuthMethod.none;
+    uim.platform.build_apps.domain.enumerations.AuthMethod authMethod =
+        uim.platform.build_apps.domain.enumerations.AuthMethod.none;
     string baseUrl;
     string basePath;
     string credentials;

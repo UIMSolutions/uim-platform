@@ -27,7 +27,9 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     LogicFlow[] listLogicFlows(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(tenantId, applicationId);
+        return repo.findByApplication(applicationId)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     LogicFlow[] listByPage(PageId pageId) {
@@ -38,9 +40,9 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         LogicFlow e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = LogicFlowId(dto.id);
-        e.applicationId = ApplicationId(dto.applicationId);
-        e.pageId = PageId(dto.pageId);
+        e.id = dto.logicFlowId;
+        e.applicationId = dto.applicationId;
+        e.pageId = dto.pageId;
         e.name = dto.name;
         e.description = dto.description;
         e.triggerConfig = dto.triggerConfig;
@@ -56,7 +58,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateLogicFlow(LogicFlowDTO dto) {
-        auto existing = repo.findById(dto.tenantId, LogicFlowId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.logicFlowId);
         if (existing.isNull)
             return CommandResult(false, "", "Logic flow not found");
             

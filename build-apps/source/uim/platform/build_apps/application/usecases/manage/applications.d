@@ -27,13 +27,15 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     Application[] listApplications(TenantId tenantId, string owner) {
-        return repo.findByOwner(tenantId, owner);
+        return repo.findByOwner(owner)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     CommandResult createApplication(ApplicationDTO dto) {
         Application e;
         e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = ApplicationId(dto.id);
+        e.id = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
@@ -51,7 +53,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateApplication(ApplicationDTO dto) {
-        auto existing = repo.findById(ApplicationId(dto.tenantId, dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
 

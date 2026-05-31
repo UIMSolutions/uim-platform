@@ -29,7 +29,7 @@ class ProjectMemberController : ManageController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
+        auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
 
@@ -70,9 +70,9 @@ class ProjectMemberController : ManageController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ProjectMemberDTO dto;
-        dto.projectMemberId = ProjectMemberId(precheck.id);
+        dto.id = precheck.id;
         dto.tenantId = tenantId;
-        dto.applicationId = ApplicationId(data.getString("applicationId"));
+        dto.applicationId = data.getString("applicationId");
         dto.userId = UserId(data.getString("userId"));
         dto.displayName = data.getString("displayName");
         dto.email = data.getString("email");
@@ -101,7 +101,7 @@ class ProjectMemberController : ManageController {
         auto data = precheck.data;
         ProjectMemberDTO dto;
         dto.tenantId = tenantId;
-        dto.projectMemberId = ProjectMemberId(precheck.id);
+        dto.id = precheck.id;
         dto.displayName = data.getString("displayName");
         dto.email = data.getString("email");
         dto.permissions = data.getString("permissions");

@@ -55,10 +55,10 @@ class DataEntityController : ManageController {
             return errorResponse("Invalid data entity ID", 400);
 
         auto e = usecase.getDataEntity(tenantId, id);
-        f(job.isNull)
-        return errorResponse("Scan job not found", 404);
+        if (e.isNull)
+            return errorResponse("Data entity not found", 404);
 
-        auto responseData = job.toJson();
+        auto responseData = e.toJson();
         return successResponse("Data entity retrieved successfully", "Retrieved", 200, responseData);
     }
 

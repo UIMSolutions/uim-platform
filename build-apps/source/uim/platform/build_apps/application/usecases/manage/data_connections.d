@@ -26,16 +26,22 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
+    DataConnection[] listConnections(TenantId tenantId) {
+        return listDataConnections(tenantId);
+    }
+
     DataConnection[] listDataConnections(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(tenantId, applicationId);
+        return repo.findByApplication(applicationId)
+            .filter!(e => e.tenantId.value == tenantId.value)
+            .array;
     }
 
     CommandResult createDataConnection(DataConnectionDTO dto) {
         DataConnection e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = DataConnectionId(dto.id);
-        e.applicationId = ApplicationId(dto.applicationId);
+        e.id = dto.dataConnectionId;
+        e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
         e.baseUrl = dto.baseUrl;
@@ -52,8 +58,8 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult update(DataConnectionDTO dto) {
-        auto existing = repo.findById(DataConnectionId(dto.id));        
+    CommandResult updateDataConnection(DataConnectionDTO dto) {
+        auto existing = repo.findById(dto.tenantId, dto.dataConnectionId);
         if (existing.isNull)
             return CommandResult(false, "", "Data connection not found");
             
@@ -67,7 +73,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDataConnection(DataConnectionId id) {
+    CommandResult deleteDataConnection(TenantId tenantId, DataConnectionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data connection not found");
