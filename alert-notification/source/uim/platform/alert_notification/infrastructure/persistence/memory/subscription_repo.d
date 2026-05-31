@@ -16,15 +16,14 @@ class MemorySubscriptionRepository
       SubscriptionRepository
 {
     Subscription findByName(TenantId tenantId, string name) {
-        foreach (s; findAll(tenantId))
+        foreach (s; findByTenant(tenantId))
             if (s.name == name) return s;
-        auto empty = new Subscription();
-        return empty;
+        return null;
     }
 
     Subscription[] findEnabled(TenantId tenantId) {
         Subscription[] result;
-        foreach (s; findAll(tenantId))
+        foreach (s; findByTenant(tenantId))
             if (s.isEnabled()) result ~= s;
         return result;
     }

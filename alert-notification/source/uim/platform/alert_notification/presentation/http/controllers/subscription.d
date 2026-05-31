@@ -26,54 +26,58 @@ class SubscriptionController : ManageController {
     }
 
     private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto body_    = req.json;
         CreateSubscriptionRequest dto;
         dto.name        = body_["name"].to!string;
         dto.description = body_["description"].opt!string("");
         dto.state       = body_["state"].opt!string("ENABLED");
-        foreach (v; body_["conditions"]) dto.conditions ~= v.to!string;
-        foreach (v; body_["actions"])    dto.actions    ~= v.to!string;
+        auto conditionsNode = body_["conditions"];
+        if (conditionsNode.isArray)
+            foreach (v; conditionsNode.byValue) dto.conditions ~= v.to!string;
+        auto actionsNode = body_["actions"];
+        if (actionsNode.isArray)
+            foreach (v; actionsNode.byValue) dto.actions ~= v.to!string;
         auto result = usecase.createSubscription(tenantId, dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.badRequest, result.message); return; }
         res.writeBody(result.message, cast(int)HTTPStatus.created, "application/json");
     }
 
     private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto result   = usecase.listSubscriptions(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getSubscription(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto body_    = req.json;
         UpdateSubscriptionRequest dto;
         dto.description = body_["description"].opt!string("");
         dto.state       = body_["state"].opt!string("");
-        foreach (v; body_["conditions"]) dto.conditions ~= v.to!string;
-        foreach (v; body_["actions"])    dto.actions    ~= v.to!string;
+        auto conditionsNode = body_["conditions"];
+        if (conditionsNode.isArray)
+            foreach (v; conditionsNode.byValue) dto.conditions ~= v.to!string;
+        auto actionsNode = body_["actions"];
+        if (actionsNode.isArray)
+            foreach (v; actionsNode.byValue) dto.actions ~= v.to!string;
         auto result = usecase.updateSubscription(tenantId, id, dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeBody(result.message, cast(int)HTTPStatus.ok, "application/json");
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.deleteSubscription(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");

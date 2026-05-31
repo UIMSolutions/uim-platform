@@ -34,7 +34,7 @@ class UndeliveredEvent {
         
         auto j = Json.emptyObject;
         j["id"]               = id.value;
-        j["tenantId"]         = tenantId;
+        j["tenantId"]         = tenantId.toString();
         j["eventId"]          = eventId;
         j["eventType"]        = eventType;
         j["category"]         = category.to!string;

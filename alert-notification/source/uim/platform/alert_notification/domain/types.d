@@ -16,25 +16,61 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct ConditionId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct ActionId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct SubscriptionId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct AlertEventId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct MatchedEventId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }
 
 struct UndeliveredEventId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
     mixin DomainId;
 }

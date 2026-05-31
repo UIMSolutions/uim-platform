@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActionCommand : ManageCommand {
-    this() { super("action", "Manage alert notification actions"); }
+class ActionCommand {
+    this() {}
 }

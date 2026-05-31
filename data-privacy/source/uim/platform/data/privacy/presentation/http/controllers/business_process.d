@@ -31,138 +31,105 @@ class BusinessProcessController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateBusinessProcessRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.controllerId = data.getString("controllerId");
-      r.purposes = data.getStrings("purposes");
-      r.legalBases = data.getStrings("legalBases");
-      r.owner = data.getString("owner");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateBusinessProcessRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.controllerId = data.getString("controllerId");
+    r.purposes = data.getStrings("purposes");
+    r.legalBases = data.getStrings("legalBases");
+    r.owner = data.getString("owner");
 
-      auto result = usecase.createProcess(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Business process created successfully");
+    auto result = usecase.createProcess(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business process created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listProcesses(tenantId);
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto items = usecase.listProcesses(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Business processes retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Business process list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = BusinessProcessId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = BusinessProcessId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid business process ID", 400);
 
-      auto entry = usecase.getProcess(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Business process not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getProcess(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Business process not found", 404);
+
+    auto responseData = serialize(entry);
+    return successResponse("Business process retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
-      UpdateBusinessProcessRequest r;
-      r.processId = BusinessProcessId(precheck.id);
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.purposes = data.getStrings("purposes");
-      r.legalBases = data.getStrings("legalBases");
-      r.owner = data.getString("owner");
+    auto tenantId = precheck.tenantId;
 
-      auto result = usecase.updateProcess(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Business process updated successfully");
+    UpdateBusinessProcessRequest r;
+    r.processId = BusinessProcessId(precheck.id);
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.purposes = data.getStrings("purposes");
+    r.legalBases = data.getStrings("legalBases");
+    r.owner = data.getString("owner");
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.updateProcess(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business process updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = BusinessProcessId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = BusinessProcessId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid business process ID", 400);
 
-      usecase.deleteProcess(tenantId, id);
+    auto result = usecase.deleteProcess(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("message", "Business process deleted successfully");
-
-      res.writeJsonBody(resp, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
-
-  private static Json serialize(const BusinessProcess e) {
-    auto purps = e.purposes.map!(p => p.to!string).array.toJson;
-
-    auto bases = e.legalBases.map!(b => b.to!string).array.toJson;
-
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("name", e.name)
-      .set("description", e.description)
-      .set("controllerId", e.controllerId)
-      .set("owner", e.owner)
-      .set("isActive", e.isActive)
-      .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("purposes", purps)
-      .set("legalBases", bases);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Business process deleted successfully", "Deleted", 200, responseData);
   }
 }

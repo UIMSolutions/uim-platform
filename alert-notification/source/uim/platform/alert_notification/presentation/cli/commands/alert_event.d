@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-class AlertEventCommand : ManageCommand {
-    this() { super("alert-event", "Post and query alert events"); }
+class AlertEventCommand {
+    this() {}
 }

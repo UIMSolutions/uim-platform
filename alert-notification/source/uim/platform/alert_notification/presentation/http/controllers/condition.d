@@ -26,8 +26,7 @@ class ConditionController : ManageController {
     }
 
     private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto body_    = req.json;
         CreateConditionRequest dto;
         dto.name          = body_["name"].to!string;
@@ -42,24 +41,22 @@ class ConditionController : ManageController {
     }
 
     private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto result   = usecase.listConditions(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getCondition(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto body_    = req.json;
         UpdateConditionRequest dto;
         dto.description   = body_["description"].opt!string("");
@@ -73,9 +70,8 @@ class ConditionController : ManageController {
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.deleteCondition(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");

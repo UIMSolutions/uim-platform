@@ -17,7 +17,7 @@ class MemoryUndeliveredEventRepository
 {
     UndeliveredEvent[] findBySubscription(TenantId tenantId, string subscriptionName) {
         UndeliveredEvent[] result;
-        foreach (e; findAll(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.subscriptionName == subscriptionName) result ~= e;
         return result;
     }

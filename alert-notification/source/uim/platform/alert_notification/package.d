@@ -6,6 +6,8 @@
 module uim.platform.alert_notification;
 
 public {
+    import uim.platform.service;
+
     import uim.platform.alert_notification.application;
     import uim.platform.alert_notification.domain;
     import uim.platform.alert_notification.infrastructure;

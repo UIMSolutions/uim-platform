@@ -6,8 +6,10 @@
 module app;
 
 import uim.platform.alert_notification;
-import vibe.d;
 
+version(unittest) {
+    // DUB provides its own test runner main during unittest builds.
+} else
 void main() {
     auto cfg    = loadConfig();
     auto router = new URLRouter();

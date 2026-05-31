@@ -23,15 +23,14 @@ class MatchedEventController : PlatformController {
     }
 
     private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto result   = usecase.listMatchedEvents(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getMatchedEvent(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);

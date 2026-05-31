@@ -17,16 +17,11 @@ class ManageActionsUseCase {
     this(ActionRepository repo) { this.repo = repo; }
 
     CommandResult createAction(TenantId tenantId, CreateActionRequest req) {
-        
-        import std.uuid : randomUUID;
-
         auto existing = repo.findByName(tenantId, req.name);
-        if (!existing.isNull())
-            return CommandResult(false, "Action '" ~ req.name ~ "' already exists");
+        if (existing !is null && !existing.isNull())
+            return CommandResult(false, "", "Action '" ~ req.name ~ "' already exists");
 
-        Action action;
-        action.id          = ActionId(randomUUID().toString());
-        action.tenantId    = tenantId;
+        auto action = new Action(tenantId);
         action.name        = req.name;
         action.description = req.description;
         action.type_       = req.type_.to!ActionType;
@@ -37,7 +32,7 @@ class ManageActionsUseCase {
         action.enableDeliveryStatus = req.enableDeliveryStatus;
 
         repo.save(action);
-        return CommandResult(true, action.toJson().toString());
+        return CommandResult(true, action.id.toString(), action.toJson().toString());
     }
 
     QueryResult getAction(TenantId tenantId, ActionId id) {
@@ -48,16 +43,15 @@ class ManageActionsUseCase {
     }
 
     QueryResult listActions(TenantId tenantId) {
-        auto items = repo.findAll(tenantId);
+        auto items = repo.findByTenant(tenantId);
         auto arr   = items.map!(a => a.toJson).array.toJson;
 
         return QueryResult(true, "", arr);
     }
 
     CommandResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req) {
-        
         auto action = repo.findById(tenantId, id);
-        if (action.isNull())
+        if (action is null || action.isNull())
             return CommandResult(false, "", "Action not found");
 
         if (req.description.length) action.description = req.description;
@@ -68,15 +62,15 @@ class ManageActionsUseCase {
         action.enableDeliveryStatus = req.enableDeliveryStatus;
 
         repo.save(action);
-        return CommandResult(true, action.toJson().toString());
+        return CommandResult(true, action.id.toString(), action.toJson().toString());
     }
 
     CommandResult deleteAction(TenantId tenantId, ActionId id) {
         auto action = repo.findById(tenantId, id);
-        if (action.isNull())
+        if (action is null || action.isNull())
             return CommandResult(false, "", "Action not found");
 
         repo.remove(action);
-        return CommandResult(true, action.id.value, "Action deleted");
+        return CommandResult(true, action.id.toString(), "Action deleted");
     }
 }

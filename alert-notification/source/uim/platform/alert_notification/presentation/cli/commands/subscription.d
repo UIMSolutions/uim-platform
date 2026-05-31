@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubscriptionCommand : ManageCommand {
-    this() { super("subscription", "Manage alert notification subscriptions"); }
+class SubscriptionCommand {
+    this() {}
 }

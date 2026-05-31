@@ -16,9 +16,8 @@ class MemoryActionRepository
       ActionRepository
 {
     Action findByName(TenantId tenantId, string name) {
-        foreach (a; findAll(tenantId))
+        foreach (a; findByTenant(tenantId))
             if (a.name == name) return a;
-        auto empty = new Action();
-        return empty;
+        return null;
     }
 }

@@ -106,3 +106,33 @@ struct UpdateSubscriptionRequest {
     string[] labels;
     UserId   updatedBy;
 }
+
+// ---------------------------------------------------------------------------
+// Query DTOs
+// ---------------------------------------------------------------------------
+
+struct QueryResult {
+    bool   success;
+    string message;
+    Json   data;
+    size_t errorCode;
+
+    this(bool success, string message = "", Json data = Json.emptyObject, size_t errorCode = 0) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
+        this.errorCode = errorCode;
+    }
+
+    bool hasError() const {
+        return !success;
+    }
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("success", success)
+            .set("message", message)
+            .set("data", data)
+            .set("errorCode", errorCode);
+    }
+}

@@ -42,12 +42,9 @@ class ProduceEventsUseCase {
 
     CommandResult postEvent(TenantId tenantId, PostAlertEventRequest req) {
         import std.conv  : to;
-        import std.uuid  : randomUUID;
         import std.datetime.systime : Clock;
 
-        auto event       = new AlertEvent();
-        event.id         = AlertEventId(randomUUID().toString());
-        event.tenantId   = tenantId;
+        auto event       = new AlertEvent(tenantId);
         event.eventType  = req.eventType;
         event.category   = req.category.to!EventCategory;
         event.severity   = req.severity.to!EventSeverity;
@@ -63,7 +60,7 @@ class ProduceEventsUseCase {
 
         // Walk all enabled subscriptions and dispatch matching ones
         auto enabledSubs = subscriptions.findEnabled(tenantId);
-        auto allConds    = conditions.findAll(tenantId);
+        auto allConds    = conditions.findByTenant(tenantId);
 
         foreach (sub; enabledSubs) {
             if (!matcher.subscriptionMatches(event, sub, allConds)) continue;
@@ -73,10 +70,8 @@ class ProduceEventsUseCase {
                 auto result = dispatcher.dispatch(event, action, sub.name);
 
                 if (result.success && action !is null && action.type_ == ActionType.store) {
-                    auto me         = new MatchedEvent();
-                    me.id           = MatchedEventId(randomUUID().toString());
-                    me.tenantId     = tenantId;
-                    me.eventId      = event.id.value;
+                    auto me         = new MatchedEvent(tenantId);
+                    me.eventId      = event.id.toString();
                     me.eventType    = event.eventType;
                     me.category     = event.category;
                     me.severity     = event.severity;
@@ -91,10 +86,8 @@ class ProduceEventsUseCase {
                     me.retentionPeriod = 604_800;
                     matchedEvents.save(me);
                 } else if (!result.success) {
-                    auto ue              = new UndeliveredEvent();
-                    ue.id                = UndeliveredEventId(randomUUID().toString());
-                    ue.tenantId          = tenantId;
-                    ue.eventId           = event.id.value;
+                    auto ue              = new UndeliveredEvent(tenantId);
+                    ue.eventId           = event.id.toString();
                     ue.eventType         = event.eventType;
                     ue.category          = event.category;
                     ue.severity          = event.severity;
@@ -114,6 +107,6 @@ class ProduceEventsUseCase {
         }
 
         event.status = EventStatus.sent;
-        return CommandResult(true, event.toJson().toString());
+        return CommandResult(true, event.id.toString(), event.toJson().toString());
     }
 }

@@ -14,12 +14,15 @@ mixin(ShowModule!());
 class ConsumeMatchedEventsUseCase {
     private MatchedEventRepository repo;
 
-    this(MatchedEventRepository repo) { this.repo = repo; }
+    this(MatchedEventRepository repo) {
+        this.repo = repo;
+    }
 
     QueryResult listMatchedEvents(TenantId tenantId) {
-        auto items = repo.findAll(tenantId);
-        auto arr   = Json.emptyArray;
-        foreach (e; items) arr ~= e.toJson();
+        auto items = repo.findByTenant(tenantId);
+        auto arr = Json.emptyArray;
+        foreach (e; items)
+            arr ~= e.toJson();
         return QueryResult(true, "", arr);
     }
 

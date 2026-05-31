@@ -22,8 +22,7 @@ class AlertEventController : PlatformController {
     }
 
     private void handlePost(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto body_    = req.json;
 
         PostAlertEventRequest dto;
@@ -35,16 +34,16 @@ class AlertEventController : PlatformController {
         dto.region    = body_["region"].opt!string("");
 
         auto tagsNode = body_["tags"];
-        if (tagsNode.isObject_)
+        if (tagsNode.isObject())
             foreach (k, v; tagsNode.byKeyValue()) dto.tags[k] = v.to!string;
 
         auto arNode   = body_["affectedResource"];
-        if (arNode.isObject_) {
+        if (arNode.isObject()) {
             dto.affectedResource.name      = arNode["name"].opt!string("");
             dto.affectedResource.type_     = arNode["type"].opt!string("");
             dto.affectedResource.instance_ = arNode["instance"].opt!string("");
             auto arTags = arNode["tags"];
-            if (arTags.isObject_)
+            if (arTags.isObject())
                 foreach (k, v; arTags.byKeyValue()) dto.affectedResource.tags[k] = v.to!string;
         }
 

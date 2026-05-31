@@ -49,7 +49,7 @@ class AlertEvent {
         
         auto j = Json.emptyObject;
         j["id"]        = id.value;
-        j["tenantId"]  = tenantId;
+        j["tenantId"]  = tenantId.toString();
         j["eventType"] = eventType;
         j["category"]  = category.to!string;
         j["severity"]  = severity.to!string;

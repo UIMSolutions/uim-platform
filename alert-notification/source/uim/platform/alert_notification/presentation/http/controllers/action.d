@@ -26,8 +26,7 @@ class ActionController : ManageController {
     }
 
     private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto body_    = req.json;
         CreateActionRequest dto;
         dto.name        = body_["name"].to!string;
@@ -38,7 +37,7 @@ class ActionController : ManageController {
         dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
         // parse properties object
         auto propsNode = body_["properties"];
-        if (propsNode.isObject_)
+        if (propsNode.isObject())
             foreach (k, v; propsNode.byKeyValue()) dto.properties[k] = v.to!string;
         auto result = usecase.createAction(tenantId, dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.badRequest, result.message); return; }
@@ -46,24 +45,22 @@ class ActionController : ManageController {
     }
 
     private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto result   = usecase.listActions(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
-        auto result   = usecase.getAction(tenantId, id);
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
+        auto result   = usecase.getAction(tenantId, ActionId(id));
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
         auto body_    = req.json;
         UpdateActionRequest dto;
         dto.description          = body_["description"].opt!string("");
@@ -71,18 +68,17 @@ class ActionController : ManageController {
         dto.fallbackAction       = body_["fallbackAction"].opt!string("");
         dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
         auto propsNode = body_["properties"];
-        if (propsNode.isObject_)
+        if (propsNode.isObject())
             foreach (k, v; propsNode.byKeyValue()) dto.properties[k] = v.to!string;
-        auto result = usecase.updateAction(tenantId, id, dto);
+        auto result = usecase.updateAction(tenantId, ActionId(id), dto);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeBody(result.message, cast(int)HTTPStatus.ok, "application/json");
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        
-        auto tenantId = req.headers.get("X-Tenant-Id", "default");
-        auto id       = req.requestPath.to!string.pathId;
-        auto result   = usecase.deleteAction(tenantId, id);
+        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto id       = req.requestPath.to!string.split("/")[$-1];
+        auto result   = usecase.deleteAction(tenantId, ActionId(id));
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
     }

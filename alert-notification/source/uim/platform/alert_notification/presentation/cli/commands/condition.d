@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConditionCommand : ManageCommand {
-    this() { super("condition", "Manage alert notification conditions"); }
+class ConditionCommand {
+    this() {}
 }

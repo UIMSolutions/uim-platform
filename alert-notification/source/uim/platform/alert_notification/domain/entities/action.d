@@ -30,7 +30,7 @@ class Action {
         
         auto j = Json.emptyObject;
         j["id"]                   = id.value;
-        j["tenantId"]             = tenantId;
+        j["tenantId"]             = tenantId.toString();
         j["name"]                 = name;
         j["description"]          = description;
         j["type"]                 = type_.to!string;
