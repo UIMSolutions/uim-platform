@@ -56,7 +56,7 @@ struct WorkspaceViewModel {
     private static string labelForStatus(WorkspaceStatus s) {
         final switch (s) {
             case WorkspaceStatus.active:   return "Active";
-            case WorkspaceStatus.inactive: return "Inactive";
+            case WorkspaceStatus.suspended:return "Suspended";
             case WorkspaceStatus.archived: return "Archived";
         }
     }
@@ -64,7 +64,7 @@ struct WorkspaceViewModel {
     private static string cssForStatus(WorkspaceStatus s) {
         final switch (s) {
             case WorkspaceStatus.active:   return "badge-success";
-            case WorkspaceStatus.inactive: return "badge-warning";
+            case WorkspaceStatus.suspended:return "badge-warning";
             case WorkspaceStatus.archived: return "badge-secondary";
         }
     }

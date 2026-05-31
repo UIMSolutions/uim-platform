@@ -6,6 +6,7 @@
 module uim.platform.workzone.presentation.web.views.error;
 
 import uim.platform.workzone.presentation.web.views.layout;
+import std.conv : to;
 
 @safe:
 /// Render an HTTP error page.
