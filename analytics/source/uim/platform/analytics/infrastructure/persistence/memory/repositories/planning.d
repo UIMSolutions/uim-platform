@@ -14,7 +14,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
  
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findByDataset(findByTenant(tenantId), datasetId).length;
+    return findByDataset(tenantId, datasetId).length;
   }
   PlanningModel[] filterByDataset(PlanningModel[] models, DatasetId datasetId) {
     return models.filter!(m => m.datasetId == datasetId).array;
@@ -29,7 +29,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
  
   // #region ByStatus
   size_t countByStatus(TenantId tenantId, PlanningStatus status) {
-    return findByStatus(findByTenant(tenantId), status).length;
+    return findByStatus(tenantId, status).length;
   }
   PlanningModel[] filterByStatus(PlanningModel[] models, PlanningStatus status) {
     return models.filter!(m => m.planStatus == status).array;
@@ -44,7 +44,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
 
   // #region ByVersion
   size_t countByVersion(TenantId tenantId, PlanningVersion version_) {
-    return findByVersion(findByTenant(tenantId), version_).length;
+    return findByVersion(tenantId, version_).length;
   }
   PlanningModel[] filterByVersion(PlanningModel[] models, PlanningVersion version_) {
     return models.filter!(m => m.versions.any!(v => v.id == version_.id)).array;
@@ -58,16 +58,16 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
   // #endregion ByVersion
 
   // #region ByVersionType
-  size_t countByVersionType(TenantId tenantId, PlanningVersionType versionType) {
-    return findByVersionType(findByTenant(tenantId), versionType).length;
+  size_t countByVersionType(TenantId tenantId, VersionType versionType) {
+    return findByVersionType(tenantId, versionType).length;
   }
-  PlanningModel[] filterByVersionType(PlanningModel[] models, PlanningVersionType versionType) {
+  PlanningModel[] filterByVersionType(PlanningModel[] models, VersionType versionType) {
     return models.filter!(m => m.versions.any!(v => v.versionType == versionType)).array;
   }
-  PlanningModel[] findByVersionType(TenantId tenantId, PlanningVersionType versionType) {
+  PlanningModel[] findByVersionType(TenantId tenantId, VersionType versionType) {
     return filterByVersionType(findByTenant(tenantId), versionType);
   }
-  void removeByVersionType(TenantId tenantId, PlanningVersionType versionType) {
+  void removeByVersionType(TenantId tenantId, VersionType versionType) {
     findByVersionType(tenantId, versionType).each!(m => remove(m));
   } 
   // #endregion ByVersionType
