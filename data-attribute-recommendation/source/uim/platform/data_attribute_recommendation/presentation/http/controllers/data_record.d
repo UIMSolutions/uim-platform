@@ -64,13 +64,15 @@ class DataRecordController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DataRecordId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data record ID", 400);
 
     auto record = usecase.getDataRecord(tenantId, id);
-    if (item.isNull)
-      return errorResponse("Scan job not found", 404);
+    if (record.isNull)
+      return errorResponse("Data record not found", 404);
 
-    auto responseData = item.toJson();
+    auto responseData = record.toJson();
     return successResponse("Data record retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -83,12 +85,11 @@ class DataRecordController : ManageController {
     auto datasetId = DatasetId(precheck.id);
 
     auto items = usecase.listDataRecords(tenantId, datasetId);
-    auto arr = items.map!(r => r.toJson).array.toJson;
+    auto list = items.map!(r => r.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Data records retrieved successfully");
+      .set("items", list)
+      .set("totalCount", items.length);
 
     return successResponse("Data records retrieved successfully", "Retrieved", 200, responseData);
   }
@@ -137,7 +138,9 @@ class DataRecordController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DataRecordId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data record ID", 400);
 
     auto result = usecase.rejectDataRecord(tenantId, id);
     if (result.hasError)
@@ -145,8 +148,7 @@ class DataRecordController : ManageController {
 
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", Json("rejected"))
-      .set("message", "Data record rejected successfully");
+      .set("status", Json("rejected"));
 
     return successResponse("Data record rejected successfully", "Rejected", 200, resp);
   }
@@ -167,6 +169,8 @@ class DataRecordController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = DataRecordId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data record ID", 400);
 
     auto result = usecase.deleteDataRecord(tenantId, id);
     if (result.hasError)

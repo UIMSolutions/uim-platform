@@ -53,7 +53,7 @@ class MtaOperationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             // /api/v1/slm/operations/{id}  — exclude sub-paths like /poll /abort /logs
             auto id = MtaOperationId(precheck.id);
             auto op = usecase.getOperation(tenantId, id);
@@ -67,7 +67,7 @@ class MtaOperationController : ManageController {
     protected void handlePoll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             // path: /api/v1/slm/operations/{id}/poll  — strip /poll suffix
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/poll")];
@@ -90,7 +90,7 @@ class MtaOperationController : ManageController {
             auto data = precheck.data;
             AbortOperationRequest r;
             r.tenantId    = req.getTenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/abort")];
             r.operationId = extractIdFromPath(bare);
@@ -111,7 +111,7 @@ class MtaOperationController : ManageController {
     protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/logs")];
             auto id = MtaOperationId(extractIdFromPath(bare));

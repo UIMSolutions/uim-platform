@@ -131,7 +131,7 @@ class DataSubjectController : ManageController {
     protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto parts = path.split("/");
             string id = "";
             if (parts.length >= 6)

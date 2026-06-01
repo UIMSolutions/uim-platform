@@ -56,7 +56,7 @@ class RefreshTokenController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = RefreshTokenId(precheck.id);
 
             auto e = usecase.getToken(tenantId, id);
@@ -105,7 +105,7 @@ class RefreshTokenController : ManageController {
     protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = RefreshTokenId(precheck.id);
 
             auto result = usecase.revokeToken(tenantId, id);
@@ -129,7 +129,7 @@ class RefreshTokenController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = RefreshTokenId(precheck.id);
 
             auto result = usecase.deleteToken(tenantId, id);

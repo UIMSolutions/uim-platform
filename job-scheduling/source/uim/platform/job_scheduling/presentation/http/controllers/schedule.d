@@ -38,7 +38,7 @@ class ScheduleController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto jobId = extractJobIdFromSchedulePath(path);
             auto data = precheck.data;
             CreateScheduleRequest r;
@@ -80,7 +80,7 @@ class ScheduleController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto jobId = JobId(extractJobIdFromSchedulePath(path));
 
             auto schedules = usecase.listSchedules(tenantId, jobId);
@@ -102,7 +102,7 @@ class ScheduleController : ManageController {
 
             auto tenantId = precheck.tenantId;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto ids = extractJobAndScheduleIds(path);
 
             auto s = usecase.getSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
@@ -123,7 +123,7 @@ class ScheduleController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto ids = extractJobAndScheduleIds(path);
             auto data = precheck.data;
             UpdateScheduleRequest r;
@@ -162,7 +162,7 @@ class ScheduleController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto ids = extractJobAndScheduleIds(path);
 
             auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
@@ -180,7 +180,7 @@ class ScheduleController : ManageController {
     protected void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto jobId = JobId(extractJobIdFromSchedulePath(path));
             auto data = precheck.data;
             ActivateAllSchedulesRequest r;

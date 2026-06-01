@@ -129,7 +129,7 @@ class ProcessInstanceController : ManageController {
             auto tenantId = precheck.tenantId;
             import std.string : lastIndexOf;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto actionIdx = lastIndexOf(path, "/action");
             if (actionIdx < 0) {
                 writeError(res, 400, "Invalid action path");

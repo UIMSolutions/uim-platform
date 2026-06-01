@@ -179,7 +179,7 @@ class TaskController : ManageController {
 
       auto tenantId = precheck.tenantId;
 
-      auto path = req.requestURI.to!string;
+      auto path = precheck.path;
       auto claimIdx = lastIndexOf(path, "/claim");
       if (claimIdx < 0) {
         writeError(res, 400, "Invalid claim path");
@@ -216,7 +216,7 @@ class TaskController : ManageController {
 
       import std.string : lastIndexOf;
 
-      auto path = req.requestURI.to!string;
+      auto path = precheck.path;
       auto completeIdx = lastIndexOf(path, "/complete");
       if (completeIdx < 0) {
         writeError(res, 400, "Invalid complete path");

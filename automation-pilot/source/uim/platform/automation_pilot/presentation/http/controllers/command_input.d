@@ -86,7 +86,7 @@ class CommandInputController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
@@ -116,7 +116,7 @@ class CommandInputController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
@@ -156,7 +156,7 @@ class CommandInputController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject

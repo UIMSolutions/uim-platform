@@ -74,7 +74,7 @@ class AuditLogController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = AuditLogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Audit Log ID", 400);
@@ -92,7 +92,7 @@ class AuditLogController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = AuditLogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid Audit Log ID", 400);

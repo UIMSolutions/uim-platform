@@ -55,7 +55,7 @@ class BrandingConfigController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = BrandingConfigId(precheck.id);
 
             auto e = usecase.getConfig(tenantId, id);
@@ -110,7 +110,7 @@ class BrandingConfigController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             BrandingConfigDTO dto;
             dto.tenantId = tenantId;
@@ -148,7 +148,7 @@ class BrandingConfigController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = BrandingConfigId(precheck.id);
             auto result = usecase.deleteConfig(tenantId, id);
 

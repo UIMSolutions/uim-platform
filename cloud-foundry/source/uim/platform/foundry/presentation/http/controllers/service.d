@@ -106,13 +106,14 @@ class ServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service instance ID", 400);
 
     auto si = useCase.getInstance(tenantId, id);
-    if (si.isNull) {
+    if (si.isNull) 
       return errorResponse("Service instance not found", 404);
-    }
-    auto responseData = si.toJson
-      .set("message", "Service instance retrieved successfully");
+    
+    auto responseData = si.toJson;
     return successResponse("Service instance retrieved successfully", 200, responseData);
   }
 
@@ -132,6 +133,9 @@ class ServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service instance ID", 400);
+
     auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
     r.id = id;
@@ -144,8 +148,8 @@ class ServiceController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Service instance updated successfully", 200, Json.emptyObject.set("id", result
-        .id));
+    Json responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Service instance updated successfully", 200, responseData);
   }
 
   protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -168,8 +172,8 @@ class ServiceController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-    return successResponse("Service instance deleted successfully", 200, Json.emptyObject.set("id", result
-        .id));
+  auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Service instance deleted successfully", 200, responseData);
   }
 
   override protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -225,8 +229,7 @@ class ServiceController : ManageController {
 
     auto responseData = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Service bindings retrieved successfully");
+      .set("totalCount", items.length);
     return successResponse("Service bindings retrieved successfully", 200, responseData);
   }
 
@@ -246,11 +249,15 @@ class ServiceController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
+
     auto result = useCase.deleteBinding(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 404);
-    return successResponse("Service binding deleted successfully", 200, Json.emptyObject.set("id", result
-        .id));
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Service binding deleted successfully", 200, responseData);
   }
 
   protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {

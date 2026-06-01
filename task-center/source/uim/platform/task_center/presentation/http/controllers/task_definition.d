@@ -51,17 +51,9 @@ class TaskDefinitionController : ManageController {
             auto result = usecase.createTaskDefinition(r);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Task definition created");
-                    
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Task definition created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -76,24 +68,18 @@ class TaskDefinitionController : ManageController {
 
             TaskDefinition[] defs = !providerId.isEmpty 
                 ? usecase.listTaskDefinitions(tenantId, providerId) : usecase.listTaskDefinitions(tenantId);
+            auto list = defs.map!(item => item.toJson()).array.toJson;
 
-            auto jarr = defs.map!(d => toJson(d)).array.toJson;
-
-            auto resp = Json.emptyObject
-                .set("count", defs.length)
-                .set("resources", jarr)
-                .set("message", "Task definition list retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Task definitions retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.algorithm : endsWith;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
             auto tenantId = precheck.tenantId;
@@ -146,7 +132,7 @@ class TaskDefinitionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = TaskDefinitionId(extractIdFromPath(stripped));
 
@@ -170,7 +156,7 @@ class TaskDefinitionController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = TaskDefinitionId(extractIdFromPath(stripped));
 

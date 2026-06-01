@@ -56,7 +56,7 @@ class AccessTokenController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AccessTokenId(precheck.id);
 
             auto e = usecase.getToken(tenantId, id);
@@ -107,7 +107,7 @@ class AccessTokenController : ManageController {
     protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AccessTokenId(precheck.id);
 
             auto result = usecase.revokeToken(tenantId, id);
@@ -131,7 +131,7 @@ class AccessTokenController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AccessTokenId(precheck.id);
             
             auto result = usecase.deleteToken(tenantId, id);

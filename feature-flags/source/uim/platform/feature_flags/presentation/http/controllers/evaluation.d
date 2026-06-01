@@ -36,7 +36,7 @@ class EvaluationController {
     // GET /api/v1/feature-flags/evaluate/:flagName?instanceId=...&tenantId=...&userId=...
     private void handleEvaluate(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto path     = req.requestPath.to!string;
-        auto flagName = extractIdFromPath(path);
+        auto flagName = precheck.id;
         if (flagName.length == 0) { writeError(res, 400, "Flag name required"); return; }
 
         EvaluationRequest dto;

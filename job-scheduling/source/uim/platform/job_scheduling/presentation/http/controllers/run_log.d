@@ -35,7 +35,7 @@ class RunLogController : ManageController {
         try {
             
             import std.string : split;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto ids = extractIds(path);
             auto tenantId = precheck.tenantId;
 
@@ -58,7 +58,7 @@ class RunLogController : ManageController {
         try {
             
             import std.string : split;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto jobId = JobId(extractJobId(path));
             auto tenantId = precheck.tenantId;
 
@@ -79,7 +79,7 @@ class RunLogController : ManageController {
     protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto runLogId = RunLogId(precheck.id);
             auto data = precheck.data;
             UpdateRunLogRequest r;

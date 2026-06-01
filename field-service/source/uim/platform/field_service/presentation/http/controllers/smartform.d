@@ -54,7 +54,7 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = SmartformId(precheck.id);
 
             auto e = usecase.getSmartform(tenantId, id);
@@ -107,7 +107,7 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             SmartformDTO dto;
             dto.smartformId = SmartformId(precheck.id);
@@ -143,7 +143,7 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = SmartformId(precheck.id);
             auto result = usecase.deleteSmartform(tenantId, id);
             if (result.hasError)

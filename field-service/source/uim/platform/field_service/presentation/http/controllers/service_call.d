@@ -54,7 +54,7 @@ class ServiceCallController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ServiceCallId(precheck.id);
             auto serviceCall = usecase.getServiceCall(tenantId, id);
             if (serviceCall.isNull) { writeError(res, 404, "Service call not found"); return; }
@@ -112,7 +112,7 @@ class ServiceCallController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             ServiceCallDTO dto;
             dto.serviceCallId = ServiceCallId(precheck.id);
@@ -147,7 +147,7 @@ class ServiceCallController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ServiceCallId(precheck.id);
             
             auto result = usecase.deleteServiceCall(tenantId, id);

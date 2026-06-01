@@ -57,8 +57,8 @@ class AuthorizationCodeController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto path = req.requestURI.to!string;
-            auto id = extractIdFromPath(path);
+            auto path = precheck.path;
+            auto id = precheck.id;
             auto e = usecase.getCode(req.getTenantId, AuthorizationCodeId(id));
             if (e.isNull) {
                 writeError(res, 404, "Authorization code not found");
@@ -105,7 +105,7 @@ class AuthorizationCodeController : ManageController {
     protected void handleMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AuthorizationCodeId(precheck.id);
 
             auto result = usecase.markUsedCode(tenantId, id);
@@ -130,7 +130,7 @@ class AuthorizationCodeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AuthorizationCodeId(precheck.id);
             auto result = usecase.deleteCode(tenantId, id);
             if (result.hasError)

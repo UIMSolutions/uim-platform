@@ -131,10 +131,8 @@ class ModelController : ManageController {
     auto result = usecase.patchModel(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Model updated");
 
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Model updated successfully", "Updated", 200, resp);
   }
 

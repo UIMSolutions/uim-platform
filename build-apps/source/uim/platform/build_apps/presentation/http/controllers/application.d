@@ -100,7 +100,7 @@ class ApplicationController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = ApplicationId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
@@ -130,7 +130,7 @@ class ApplicationController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = ApplicationId(precheck.id);
         if (id.isNull) {
             return Json.emptyObject
@@ -171,7 +171,7 @@ class ApplicationController : ManageController {
         }
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto applicationId = ApplicationId(precheck.id);
 
         auto result = usecase.deleteApplication(tenantId, applicationId);

@@ -115,7 +115,7 @@ class TranslationJobController : ManageController {
         try {
             auto tenantId = precheck.tenantId;
             // Path is /api/v1/translation/jobs/{id}/cancel — extract id from second-to-last segment
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto parts = path.split("/");
             string id = parts.length >= 2 ? parts[$ - 2] : "";
 

@@ -166,7 +166,7 @@ class ProcessController : ManageController {
 
             import std.string : lastIndexOf;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto deployIdx = lastIndexOf(path, "/deploy");
             if (deployIdx < 0) {
                 writeError(res, 400, "Invalid deploy path");

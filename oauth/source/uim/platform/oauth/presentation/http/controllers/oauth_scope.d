@@ -54,7 +54,7 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = OAuthScopeId(precheck.id);
 
             auto e = usecase.getScope(tenantId, id);
@@ -106,7 +106,7 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             OAuthScopeDTO dto;
             dto.tenantId = tenantId;
@@ -137,7 +137,7 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = OAuthScopeId(precheck.id);
             auto result = usecase.deleteOAuthScope(tenantId, id);
             if (result.hasError)

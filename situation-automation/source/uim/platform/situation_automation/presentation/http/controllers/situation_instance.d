@@ -185,7 +185,7 @@ class SituationInstanceController : ManageController {
             import std.string : lastIndexOf;
             auto tenantId = precheck.tenantId;
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto resolveIdx = lastIndexOf(path, "/resolve");
             if (resolveIdx < 0) {
                 writeError(res, 400, "Invalid resolve path");

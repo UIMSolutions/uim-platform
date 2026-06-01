@@ -83,6 +83,8 @@ class DataSubjectController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = DataSubjectId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data subject ID", 400);
 
     auto entry = usecase.getSubject(tenantId, id);
     if (entry.isNull)
@@ -125,6 +127,8 @@ class DataSubjectController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = DataSubjectId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data subject ID", 400);
 
     auto result = usecase.deleteSubject(tenantId, id);
     if (result.hasError)

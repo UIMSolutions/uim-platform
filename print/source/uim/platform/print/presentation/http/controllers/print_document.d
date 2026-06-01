@@ -51,7 +51,7 @@ class PrintDocumentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintDocumentId(precheck.id);
             auto e = usecase.getPrintDocument(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Document not found"); return; }
@@ -103,7 +103,7 @@ class PrintDocumentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintDocumentId(precheck.id);
             auto result = usecase.deletePrintDocument(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

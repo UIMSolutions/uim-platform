@@ -82,7 +82,7 @@ class SitePolicyController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SitePolicyId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Site Policy ID").set("status", "error").set("statusCode", 400);
@@ -100,7 +100,7 @@ class SitePolicyController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SitePolicyId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Site Policy ID").set("status", "error").set("statusCode", 400);
@@ -131,7 +131,7 @@ class SitePolicyController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SitePolicyId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Site Policy ID").set("status", "error").set("statusCode", 400);

@@ -80,7 +80,7 @@ class RegisteredApplicationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         if (path.length > 9 && path[$ - 9 .. $] == "/activate")
             return errorResponse("Use the activate endpoint to activate the application");
 
@@ -169,7 +169,7 @@ class RegisteredApplicationController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto stripped = path[0 .. $ - 8]; // remove "/suspend"
         auto id = RegisteredApplicationId(extractIdFromPath(stripped));
         if (id.isNull)

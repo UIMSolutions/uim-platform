@@ -55,7 +55,7 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ActivityId(precheck.id);
             Activity activity = usecase.getActivity(tenantId, id);
             if (activity.isNull) {
@@ -114,7 +114,7 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             ActivityDTO dto;
             dto.activityId = ActivityId(precheck.id);
@@ -151,7 +151,7 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ActivityId(precheck.id);
             auto result = usecase.deleteActivity(tenantId, id);
             if (result.hasError)

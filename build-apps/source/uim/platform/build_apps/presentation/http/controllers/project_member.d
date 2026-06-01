@@ -121,7 +121,7 @@ class ProjectMemberController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = ProjectMemberId(precheck.id);
 
         auto result = usecase.deleteProjectMember(tenantId, id);

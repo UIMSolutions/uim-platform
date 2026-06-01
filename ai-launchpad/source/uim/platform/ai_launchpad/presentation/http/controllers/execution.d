@@ -120,10 +120,8 @@ class ExecutionController : ManageController {
     auto result = usecase.patchExecution(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Execution updated");
 
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Execution updated successfully", 200, resp);
   }
 
@@ -156,18 +154,14 @@ class ExecutionController : ManageController {
     foreach (result; results) {
       auto rj = Json.emptyObject
         .set("id", result.id)
-        .set("success", result.success)
-        .set("message", result.success ? "Execution updated" : "Failed to update execution");
+        .set("success", result.success);
 
       if (result.message.length > 0)
         rj["error"] = Json(result.message);
       jarr ~= rj;
     }
 
-    auto resp = Json.emptyObject
-      .set("results", jarr)
-      .set("message", "Bulk update completed");
-
+    auto resp = Json.emptyObject.set("results", jarr);
     return successResponse("Bulk update completed", 200, resp);
   }
 
@@ -196,6 +190,7 @@ class ExecutionController : ManageController {
     auto result = usecase.deleteExecution(tenantId, connectionId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Execution deleted successfully", 200, responseData);
   }

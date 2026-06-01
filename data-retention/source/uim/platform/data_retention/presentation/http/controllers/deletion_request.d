@@ -41,13 +41,9 @@ class DeletionRequestController : ManageController {
         auto result = usecase.createDeletionRequest(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-    } else {
-        writeError(res, 400, result.message);
-    }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Scan job created successfully", "Created", 201, responseData);
 }
 
 override protected Json listHandler(HTTPServerRequest req) {
@@ -58,50 +54,45 @@ override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
 
     auto items = usecase.listDeletionRequests(tenantId);
-    auto jarr = Json.emptyArray;
+    auto list = Json.emptyArray;
     foreach (dr; items) {
-        jarr ~= Json.emptyObject
+        list ~= Json.emptyObject
             .set("id", dr.id.value)
             .set("dataSubjectId", dr.dataSubjectId.value)
             .set("applicationGroupId", dr.applicationGroupId.value)
             .set("actionType", dr.actionType.to!string)
             .set("status", dr.status.to!string);
     }
-    res.writeJsonBody(Json.emptyObject.set("items", jarr)
-            .set("totalCount", items.length), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+    auto responseData = Json.emptyObject
+        .set("count", list.length)
+        .set("resources", list);
+    return successResponse("Data subject list retrieved successfully", "Retrieved", 200, responseData);
 }
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto id = DeletionRequestId(precheck.id);
-        auto dr = usecase.getDeletionRequest(tenantId, id);
-        if (dr.isNull) {
-            writeError(res, 404, "Deletion request not found");
-            return;
-        }
+    auto tenantId = precheck.tenantId;
+    auto id = DeletionRequestId(precheck.id);
+    auto dr = usecase.getDeletionRequest(tenantId, id);
+    if (dr.isNull)
+        return errorResponse("Data subject not found", 404);
 
-        auto response = Json.emptyObject
-            .set("id", dr.id.value)
-            .set("dataSubjectId", dr.dataSubjectId.value)
-            .set("applicationGroupId", dr.applicationGroupId.value)
-            .set("actionType", dr.actionType.to!string)
-            .set("status", dr.status.to!string)
-            .set("reason", dr.reason)
-            .set("requestedBy", dr.requestedBy)
-            .set("requestedAt", dr.requestedAt);
+    auto responseData = Json.emptyObject
+        .set("id", dr.id.value)
+        .set("dataSubjectId", dr.dataSubjectId.value)
+        .set("applicationGroupId", dr.applicationGroupId.value)
+        .set("actionType", dr.actionType.to!string)
+        .set("status", dr.status.to!string)
+        .set("reason", dr.reason)
+        .set("requestedBy", dr.requestedBy)
+        .set("requestedAt", dr.requestedAt);
 
-        res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Data subject retrieved successfully", "Retrieved", 200, responseData);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {

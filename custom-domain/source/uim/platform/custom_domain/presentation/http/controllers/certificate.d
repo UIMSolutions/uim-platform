@@ -90,7 +90,7 @@ class CertificateController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         enum UPLOAD_CHAIN_SUFFIX = "/upload-chain";
         enum ACTIVATE_SUFFIX = "/activate";
         enum DEACTIVATE_SUFFIX = "/deactivate";
@@ -100,7 +100,7 @@ class CertificateController : ManageController {
         if (path.endsWith(DEACTIVATE_SUFFIX)) return errorResponse("Use the /deactivate endpoint to deactivate certificates", 400);
 
         // Extract ID from path, ensuring no suffix is present
-        const idStr = extractIdFromPath(path);
+        const idStr = precheck.id;
         auto id = CertificateId(idStr);
         if (id.isNull)
             return errorResponse("Invalid Certificate ID", 400);

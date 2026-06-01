@@ -124,7 +124,7 @@ class DataSubjectController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             if (path.length > 6 && path[$ - 6 .. $] == "/block")
                 return;
             if (path.length > 6 && path[$ - 6 .. $] == "/erase")
@@ -181,7 +181,7 @@ class DataSubjectController : ManageController {
     protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 6]; // remove "/block"
             auto id = DataSubjectId(extractIdFromPath(stripped));
 
@@ -204,7 +204,7 @@ class DataSubjectController : ManageController {
     protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 6]; // remove "/erase"
             auto id = DataSubjectId(extractIdFromPath(stripped));
 

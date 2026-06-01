@@ -96,7 +96,7 @@ class ConsentRecordController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
                 return;
 
@@ -116,7 +116,7 @@ class ConsentRecordController : ManageController {
     protected void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
             auto id = ConsentRecordId(extractIdFromPath(stripped));
 

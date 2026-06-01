@@ -30,28 +30,20 @@ class ArchivingJobController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateArchivingJobRequest r;
-            r.tenantId = tenantId;
-            r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
-            r.operationType = data.getString("operationType");
-            r.selectionCriteria = data.getString("selectionCriteria");
-            r.scheduledAt = data.getLong("scheduledAt");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateArchivingJobRequest r;
+        r.tenantId = tenantId;
+        r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+        r.operationType = data.getString("operationType");
+        r.selectionCriteria = data.getString("selectionCriteria");
+        r.scheduledAt = data.getLong("scheduledAt");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createArchivingJob(r);
-            if (result.hasError)
+        auto result = usecase.createArchivingJob(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Archiving job created");
 
-                res.writeJsonBody(response, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Archiving job created successfully", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -61,27 +53,21 @@ class ArchivingJobController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-
-            auto items = usecase.listArchivingJobs(tenantId);
-            auto jarr = Json.emptyArray;
-            foreach (aj; items) {
-                jarr ~= Json.emptyObject
-                    .set("id", aj.id.value)
-                    .set("applicationGroupId", aj.applicationGroupId.value)
-                    .set("operationType", aj.operationType.to!string)
-                    .set("status", aj.status.to!string)
-                    .set("recordsProcessed", aj.recordsProcessed);
-            }
-
-            auto response = Json.emptyObject
-                .set("items", jarr)
-                .set("totalCount", items.length)
-                .set("message", "Archiving jobs retrieved");
-
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto items = usecase.listArchivingJobs(tenantId);
+        auto jarr = Json.emptyArray;
+        foreach (aj; items) {
+            jarr ~= Json.emptyObject
+                .set("id", aj.id.value)
+                .set("applicationGroupId", aj.applicationGroupId.value)
+                .set("operationType", aj.operationType.to!string)
+                .set("status", aj.status.to!string)
+                .set("recordsProcessed", aj.recordsProcessed);
         }
+
+        auto responseData = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
+        return successResponse("Archiving jobs retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -90,27 +76,25 @@ class ArchivingJobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ArchivingJobId(precheck.id);
+        auto id = ArchivingJobId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid archiving job ID", 400);
 
-            auto aj = usecase.getArchivingJob(tenantId, id);
-            if (aj.isNull) {
-                writeError(res, 404, "Archiving job not found");
-                return;
-            }
-            auto response = Json.emptyObject
-                    .set("id", aj.id.value)
-                    .set("applicationGroupId", aj.applicationGroupId.value)
-                    .set("operationType", aj.operationType.to!string)
-                    .set("status", aj.status.to!string)
-                    .set("selectionCriteria", aj.selectionCriteria)
-                    .set("recordsProcessed", aj.recordsProcessed)
-                    .set("recordsFailed", aj.recordsFailed)
-                    .set("scheduledAt", aj.scheduledAt);
+        auto aj = usecase.getArchivingJob(tenantId, id);
+        if (aj.isNull)
+            return errorResponse("Data subject not found", 404);
 
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("id", aj.id.value)
+            .set("applicationGroupId", aj.applicationGroupId.value)
+            .set("operationType", aj.operationType.to!string)
+            .set("status", aj.status.to!string)
+            .set("selectionCriteria", aj.selectionCriteria)
+            .set("recordsProcessed", aj.recordsProcessed)
+            .set("recordsFailed", aj.recordsFailed)
+            .set("scheduledAt", aj.scheduledAt);
+
+        return successResponse("Archiving job retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -119,31 +103,23 @@ class ArchivingJobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ArchivingJobId(precheck.id);
-            auto data = precheck.data;
-            UpdateArchivingJobRequest r;
-            r.tenantId = tenantId;
-            r.archivingJobId = id;
-            r.operationType = data.getString("operationType").to!OperationType;
-            r.status = data.getString("status");
-            r.recordsProcessed = jsonInt(j, "recordsProcessed");
-            r.recordsFailed = jsonInt(j, "recordsFailed");
-            r.errorMessage = data.getString("errorMessage");
+        auto id = ArchivingJobId(precheck.id);
+        auto data = precheck.data;
+        UpdateArchivingJobRequest r;
+        r.tenantId = tenantId;
+        r.archivingJobId = id;
+        r.operationType = data.getString("operationType").to!OperationType;
+        r.status = data.getString("status");
+        r.recordsProcessed = jsonInt(j, "recordsProcessed");
+        r.recordsFailed = jsonInt(j, "recordsFailed");
+        r.errorMessage = data.getString("errorMessage");
 
-            auto result = usecase.updateArchivingJob(id, r);
-            if (result.hasError)
+        auto result = usecase.updateArchivingJob(id, r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Archiving job updated");
 
-                res.writeJsonBody(response, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Archiving job updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -152,16 +128,13 @@ class ArchivingJobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ArchivingJobId(precheck.id);
+        auto id = ArchivingJobId(precheck.id);
 
-            usecase.deleteArchivingJob(tenantId, id);
-            auto response = Json.emptyObject
-                .set("id", id)
-                .set("message", "Archiving job deleted");
+        auto result = usecase.deleteArchivingJob(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-            res.writeJsonBody(response, 204);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Archiving job deleted successfully", 200, responseData);
     }
 }

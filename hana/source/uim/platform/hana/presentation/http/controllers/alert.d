@@ -172,7 +172,7 @@ class AlertController : ManageController {
       
       import std.string : lastIndexOf;
 
-      auto path = req.requestURI.to!string;
+      auto path = precheck.path;
       auto ackIdx = lastIndexOf(path, "/acknowledge");
       if (ackIdx < 0) {
         writeError(res, 400, "Invalid path");

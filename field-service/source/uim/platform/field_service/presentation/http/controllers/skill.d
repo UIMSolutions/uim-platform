@@ -55,7 +55,7 @@ class SkillController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = SkillId(precheck.id);
             auto e = usecase.getSkill(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Skill not found"); return; }
@@ -109,7 +109,7 @@ class SkillController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             SkillDTO dto;
             dto.skillId = SkillId(precheck.id);
@@ -143,7 +143,7 @@ class SkillController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = SkillId(precheck.id);
             auto result = usecase.deleteSkill(tenantId, id);
             if (result.hasError)

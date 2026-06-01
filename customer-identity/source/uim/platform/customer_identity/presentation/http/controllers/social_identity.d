@@ -75,7 +75,7 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);
@@ -93,7 +93,7 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);
@@ -110,7 +110,7 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);

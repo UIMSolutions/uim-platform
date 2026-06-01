@@ -54,7 +54,7 @@ class CustomerController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = CustomerId(precheck.id);
             
             auto customer = usecase.getCustomer(tenantId, id);
@@ -112,7 +112,7 @@ class CustomerController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             CustomerDTO dto;
             dto.customerId = CustomerId(precheck.id);
@@ -147,7 +147,7 @@ class CustomerController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = CustomerId(precheck.id);
             auto result = usecase.deleteCustomer(tenantId, id);
             if (result.hasError)

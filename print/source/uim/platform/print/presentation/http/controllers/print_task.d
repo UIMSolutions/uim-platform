@@ -52,7 +52,7 @@ class PrintTaskController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintTaskId(precheck.id);
             auto e = usecase.getPrintTask(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print task not found"); return; }
@@ -102,7 +102,7 @@ class PrintTaskController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintTaskId(precheck.id);
             auto data = precheck.data;
             auto status = data.getString("status");
@@ -126,7 +126,7 @@ class PrintTaskController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintTaskId(precheck.id);
             auto result = usecase.deletePrintTask(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

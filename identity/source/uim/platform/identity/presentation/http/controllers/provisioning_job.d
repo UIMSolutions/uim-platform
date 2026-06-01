@@ -50,7 +50,7 @@ class ProvisioningJobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ProvisioningJobId(precheck.id);
             auto e = usecase.getJob(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Provisioning job not found"); return; }
@@ -92,7 +92,7 @@ class ProvisioningJobController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = ProvisioningJobId(precheck.id);
             auto result = usecase.deleteJob(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

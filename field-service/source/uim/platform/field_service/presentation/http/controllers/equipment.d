@@ -55,7 +55,7 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = EquipmentId(precheck.id);
             auto equipment = usecase.getEquipment(tenantId, id);
             if (equipment.isNull) { writeError(res, 404, "Equipment not found"); return; }
@@ -113,7 +113,7 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             EquipmentDTO dto;
             dto.equipmentId = EquipmentId(precheck.id);
@@ -149,7 +149,7 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = EquipmentId(precheck.id);
             auto result = usecase.deleteEquipment(tenantId, id);
             if (result.hasError)

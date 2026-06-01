@@ -52,7 +52,7 @@ class PrintQueueController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintQueueId(precheck.id);
             auto e = usecase.getPrintQueue(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print queue not found"); return; }
@@ -100,7 +100,7 @@ class PrintQueueController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
@@ -129,7 +129,7 @@ class PrintQueueController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintQueueId(precheck.id);
             auto result = usecase.deletePrintQueue(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

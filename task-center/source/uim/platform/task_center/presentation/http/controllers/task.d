@@ -111,7 +111,7 @@ class TaskController : ManageController {
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             if (pathEndsWithAction(path))
                 return;
 
@@ -164,7 +164,7 @@ class TaskController : ManageController {
 
     protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-                auto path = req.requestURI.to!string;
+                auto path = precheck.path;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;
@@ -189,7 +189,7 @@ class TaskController : ManageController {
 
     protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;
@@ -213,7 +213,7 @@ class TaskController : ManageController {
     protected void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = TaskId(extractIdFromPath(stripped));
             auto data = precheck.data;
@@ -240,7 +240,7 @@ class TaskController : ManageController {
         try {
             
 
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;
@@ -263,7 +263,7 @@ class TaskController : ManageController {
 
     protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
             auto id = TaskId(extractIdFromPath(stripped));
             auto tenantId = precheck.tenantId;

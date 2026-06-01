@@ -35,29 +35,21 @@ class TaskAttachmentController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateTaskAttachmentRequest r;
-            r.tenantId = tenantId;
-            r.taskAttachmentId = TaskAttachmentId(precheck.id);
-            r.taskId = TaskId(data.getString("taskId"));
-            r.fileName = data.getString("fileName");
-            r.fileSize = data.getString("fileSize");
-            r.mimeType = data.getString("mimeType");
-            r.uploadedBy = UserId(data.getString("uploadedBy"));
+        CreateTaskAttachmentRequest r;
+        r.tenantId = tenantId;
+        r.taskAttachmentId = TaskAttachmentId(precheck.id);
+        r.taskId = TaskId(data.getString("taskId"));
+        r.fileName = data.getString("fileName");
+        r.fileSize = data.getString("fileSize");
+        r.mimeType = data.getString("mimeType");
+        r.uploadedBy = UserId(data.getString("uploadedBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Attachment created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Attachment created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -67,23 +59,18 @@ class TaskAttachmentController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto taskId = TaskId(params.get("taskId", ""));
+        auto params = req.queryParams();
+        auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskAttachment[] attachments = !taskId.isEmpty
-                ? usecase.listTaskAttachments(tenantId, taskId) : [];
+        TaskAttachment[] attachments = !taskId.isEmpty
+            ? usecase.listTaskAttachments(tenantId, taskId) : [];
 
-            auto jarr = attachments.map!(a => a.toJson).array.toJson;
+        auto list = attachments.map!(item => item.toJson()).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", attachments.length)
-                .set("resources", jarr)
-                .set("message", "Attachment list retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Attachment list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -92,17 +79,14 @@ class TaskAttachmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskAttachmentId(precheck.id);
-            
-            auto a = usecase.getById(tenantId, id);
-            if (a.isNull) {
-                writeError(res, 404, "Attachment not found");
-                return;
-            }
-            res.writeJsonBody(toJson(a), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TaskAttachmentId(precheck.id);
+
+        auto a = usecase.getById(tenantId, id);
+        if (a.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = a.toJson();
+        return successResponse("Attachment retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -111,34 +95,13 @@ class TaskAttachmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskAttachmentId(precheck.id);
+        auto id = TaskAttachmentId(precheck.id);
 
-            auto result = usecase.deleteTaskAttachment(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteTaskAttachment(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Attachment deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    private Json attachmentToJson(TaskAttachment a) {
-        return Json.emptyObject
-            .set("id", a.id)
-            .set("tenantId", a.tenantId)
-            .set("taskId", a.taskId)
-            .set("fileName", a.fileName)
-            .set("fileSize", a.fileSize)
-            .set("mimeType", a.mimeType)
-            .set("status", a.status.to!string)
-            .set("uploadedBy", a.uploadedBy)
-            .set("uploadedAt", a.uploadedAt);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Attachment deleted successfully", "Deleted", 200, responseData);
     }
 }

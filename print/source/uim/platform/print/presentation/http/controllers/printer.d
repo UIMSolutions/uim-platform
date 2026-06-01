@@ -52,7 +52,7 @@ class PrinterController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrinterId(precheck.id);
             auto e = usecase.getPrinter(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Printer not found"); return; }
@@ -105,7 +105,7 @@ class PrinterController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             PrinterDTO dto;
             dto.printerId = PrinterId(precheck.id);
@@ -134,7 +134,7 @@ class PrinterController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrinterId(precheck.id);
             auto result = usecase.deletePrinter(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

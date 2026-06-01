@@ -20,7 +20,7 @@ class UserTaskFilterController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/task-center/filters", &handleList);
         router.get("/api/v1/task-center/filters/*", &handleGet);
         router.post("/api/v1/task-center/filters", &handleCreate);
@@ -37,27 +37,19 @@ class UserTaskFilterController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateUserTaskFilterRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.userId = data.getString("userId");
-            r.name = data.getString("name");
-            r.description = data.getString("description");
+        CreateUserTaskFilterRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.userId = data.getString("userId");
+        r.name = data.getString("name");
+        r.description = data.getString("description");
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Filter created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Filter created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -67,95 +59,89 @@ class UserTaskFilterController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto userId = params.get("userId", "");
+        auto params = req.queryParams();
+        auto userId = params.get("userId", "");
 
-            UserTaskFilter[] filters = !userId.isEmpty
-                ? usecase.listUserTaskFilters(tenantId, userId) : [];
+        UserTaskFilter[] filters = !userId.isEmpty
+            ? usecase.listUserTaskFilters(tenantId, userId) : [];
 
-            auto jarr = filters.map!(f => toJson(f)).array.toJson;
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", filters.length)
-                .set("resources", jarr)
-                .set("message", "Filter list retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Filter list retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
-            import std.algorithm : endsWith;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto path = req.requestURI.to!string;
-            if (path.endsWith("/default"))
-                return;
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        if (path.endsWith("/default"))
+            return errorResponse("Use the /default endpoint to get the default filter", 400);
 
-            auto tenantId = precheck.tenantId;
-            auto id = UserTaskFilterId(precheck.id);
-            auto f = usecase.getUserTaskFilter(tenantId, id);
-            if (f.isNull) {
-                writeError(res, 404, "Filter not found");
-                return;
-            }
-            res.writeJsonBody(toJson(f), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = UserTaskFilterId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid filter ID", 400);
+
+        auto f = usecase.getUserTaskFilter(tenantId, id);
+        if (f.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = f.toJson();
+        return successResponse("Filter retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto id = UserTaskFilterId(precheck.id);
-            auto data = precheck.data;
-            UpdateUserTaskFilterRequest r;
-            r.tenantId = tenantId;
-            r.userTaskFilterId = id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
+        auto tenantId = precheck.tenantId;
+        auto id = UserTaskFilterId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid filter ID", 400);
 
-            auto result = usecase.update(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateUserTaskFilterRequest r;
+        r.tenantId = tenantId;
+        r.userTaskFilterId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+
+        auto result = usecase.update(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Filter updated");
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Filter updated successfully", "Updated", 200, responseData);
+    }
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    protected Json setDefaultHandler(HTTPServerRequest req) {
+        auto precheck = super.ostHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 8]; // remove "/default"
+        auto id = UserTaskFilterId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid filter ID", 400);
+
+        auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Filter set as default successfully", "Updated", 200, responseData);
     }
 
     protected void handleSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
-
-            auto path = req.requestURI.to!string;
-            auto stripped = path[0 .. $ - 8]; // remove "/default"
-            auto id = UserTaskFilterId(extractIdFromPath(stripped));
-            auto tenantId = precheck.tenantId;
-
-            auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Filter set as default");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = setDefaultHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -167,21 +153,12 @@ class UserTaskFilterController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = UserTaskFilterId(precheck.id);
-            auto result = usecase.deleteUserTaskFilter(tenantId, id);
-            if (result.hasError)
+        auto id = UserTaskFilterId(precheck.id);
+        auto result = usecase.deleteUserTaskFilter(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Filter deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Filter deleted successfully", "Deleted", 200, responseData);
     }
-
 }

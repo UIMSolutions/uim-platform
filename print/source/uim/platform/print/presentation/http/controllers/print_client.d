@@ -52,7 +52,7 @@ class PrintClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintClientId(precheck.id);
             auto e = usecase.getPrintClient(tenantId, id);
             if (e.isNull) { writeError(res, 404, "Print client not found"); return; }
@@ -99,7 +99,7 @@ class PrintClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             PrintClientDTO dto;
             dto.clientId = PrintClientId(precheck.id);
@@ -127,7 +127,7 @@ class PrintClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = PrintClientId(precheck.id);
             auto result = usecase.deletePrintClient(tenantId, id);
             if (!result.success) { writeError(res, 404, result.message); return; }

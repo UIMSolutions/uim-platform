@@ -54,7 +54,7 @@ class AssignmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AssignmentId(precheck.id);
 
             auto e = usecase.getAssignment(tenantId, id);
@@ -108,7 +108,7 @@ class AssignmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto data = precheck.data;
             AssignmentDTO dto;
             dto.assignmentId = AssignmentId(precheck.id);
@@ -141,7 +141,7 @@ class AssignmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = req.requestURI.to!string;
+            auto path = precheck.path;
             auto id = AssignmentId(precheck.id);
             auto result = usecase.deleteAssignment(tenantId, id);
             if (result.hasError)

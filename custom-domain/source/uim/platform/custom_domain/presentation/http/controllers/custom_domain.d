@@ -89,7 +89,7 @@ class CustomDomainController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
 
         // Check for /activate or /deactivate suffix — skip
         if (path.length > 9 && path[$ - 9 .. $] == "/activate")
@@ -98,7 +98,7 @@ class CustomDomainController : ManageController {
             return errorResponse("Use the /deactivate endpoint to deactivate custom domains", 400); // Should be a 405 Method Not Allowed, but 400 is acceptable
 
         // Extract ID from path, ensuring no suffix is present
-        const idStr = extractIdFromPath(path);
+        const idStr = precheck.id;
         auto id = CustomDomainId(idStr);
         if (id.isNull) {
             return errorResponse("Invalid Custom Domain ID", 400);
@@ -167,7 +167,7 @@ class CustomDomainController : ManageController {
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         // Path: /api/v1/custom-domain/domains/{id}/activate
         // Extract ID: strip "/activate" suffix, then extract last segment
         enum ACTIVATE_SUFFIX_LEN = "/activate".length;
@@ -201,7 +201,7 @@ class CustomDomainController : ManageController {
         if (tenantId.isNull)
             return errorResponse("Tenant ID is required", 400);
 
-        auto path = req.requestURI.to!string;
+        auto path = precheck.path;
         enum DEACTIVATE_SUFFIX_LEN = "/deactivate".length;
         auto stripped = path[0 .. $ - DEACTIVATE_SUFFIX_LEN]; // remove "/deactivate"
         auto id = CustomDomainId(extractIdFromPath(stripped));

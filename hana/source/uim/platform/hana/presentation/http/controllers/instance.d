@@ -192,7 +192,7 @@ class InstanceController : ManageController {
       
       import std.string : lastIndexOf;
 
-      auto path = req.requestURI.to!string;
+      auto path = precheck.path;
       // extract id from /api/v1/hana/instances/{id}/action
       auto actionIdx = lastIndexOf(path, "/action");
       if (actionIdx < 0) {
