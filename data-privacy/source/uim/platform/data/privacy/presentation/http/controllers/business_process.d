@@ -38,8 +38,6 @@ class BusinessProcessController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateBusinessProcessRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -87,7 +85,7 @@ class BusinessProcessController : ManageController {
     if (entry.isNull)
       return errorResponse("Business process not found", 404);
 
-    auto responseData = serialize(entry);
+    auto responseData = entry.toJson();
     return successResponse("Business process retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -97,6 +95,7 @@ class BusinessProcessController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     UpdateBusinessProcessRequest r;
     r.processId = BusinessProcessId(precheck.id);

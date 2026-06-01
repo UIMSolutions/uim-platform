@@ -40,8 +40,8 @@ class TraceController : PlatformController {
       r.parentSpanId = data.getString("parentSpanId");
       r.operationName = data.getString("operationName");
       r.serviceName = data.getString("serviceName");
-      r.startTime = jsonLong(j, "startTime");
-      r.endTime = jsonLong(j, "endTime");
+      r.startTime = data.getLong("startTime");
+      r.endTime = data.getLong("endTime");
       r.status = data.getString("status");
       r.kind = data.getString("kind");
       r.attributes = data.jsonStrMap("attributes");

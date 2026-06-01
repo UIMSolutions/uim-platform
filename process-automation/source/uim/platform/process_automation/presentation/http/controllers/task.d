@@ -49,7 +49,7 @@ class TaskController : ManageController {
       r.candidateUsers = data.getStrings("candidateUsers");
       r.candidateGroups = data.getStrings("candidateGroups");
       r.formId = data.getString("formId");
-      r.dueDate = jsonLong(j, "dueDate");
+      r.dueDate = data.getLong("dueDate");
 
       auto result = taskUsecase.createTask(r);
       if (result.hasError)
@@ -156,7 +156,7 @@ class TaskController : ManageController {
       r.description = data.getString("description");
       r.priority = data.getString("priority");
       r.assignee = data.getString("assignee");
-      r.dueDate = jsonLong(j, "dueDate");
+      r.dueDate = data.getLong("dueDate");
 
       auto result = taskUsecase.updateTask(r);
       if (result.hasError)

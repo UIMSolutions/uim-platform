@@ -39,8 +39,6 @@ class BlockingController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateBlockingRequest r;
     r.tenantId = tenantId;
     r.dataSubjectId = data.getString("dataSubjectId");
@@ -65,7 +63,7 @@ class BlockingController : ManageController {
     auto statusParam = req.headers.get("X-Status-Filter", "");
 
     BlockingRequest[] items = statusParam.length > 0
-      ? usecase.listByStatus(tenantId, parseBlockingStatus(statusParam)) : usecase.listRequests(
+      ? usecase.listByStatus(tenantId, statusParam.toBlockingStatus) : usecase.listRequests(
         tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;

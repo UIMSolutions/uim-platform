@@ -39,8 +39,6 @@ class DataRetrievalController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateDataRetrievalRequest r;
     r.tenantId = tenantId;
     r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
@@ -105,7 +103,7 @@ class DataRetrievalController : ManageController {
     r.tenantId = tenantId;
     r.status = data.getString("status");
     r.downloadUrl = data.getString("downloadUrl");
-    r.totalFields = jsonLong(j, "totalFields");
+    r.totalFields = data.getLong("totalFields");
 
     auto result = usecase.updateStatus(r);
     if (result.hasError)

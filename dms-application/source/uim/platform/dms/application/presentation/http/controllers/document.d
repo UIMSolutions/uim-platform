@@ -49,7 +49,7 @@ class DocumentController : ManageController {
       r.description = data.getString("description");
       r.contentCategory = data.getString("contentCategory").to!ContentCategory;
       r.mimeType = data.getString("mimeType");
-      r.fileSize = jsonLong(j, "fileSize");
+      r.fileSize = data.getLong("fileSize");
       r.tags = data.getString("tags");
       r.properties = data.getString("properties");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));

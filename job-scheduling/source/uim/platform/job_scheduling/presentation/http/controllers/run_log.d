@@ -76,7 +76,7 @@ class RunLogController : ManageController {
         }
     }
 
-    override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
             auto path = req.requestURI.to!string;
@@ -88,8 +88,8 @@ class RunLogController : ManageController {
             r.status = data.getString("status");
             r.statusMessage = data.getString("statusMessage");
             r.httpStatus = data.getInteger("httpStatus");
-            r.completedAt = jsonLong(j, "completedAt");
-            r.executionDurationMs = jsonLong(j, "executionDurationMs");
+            r.completedAt = data.getLong("completedAt");
+            r.executionDurationMs = data.getLong("executionDurationMs");
 
             auto result = usecase.updateStatus(r);
             if (result.hasError)

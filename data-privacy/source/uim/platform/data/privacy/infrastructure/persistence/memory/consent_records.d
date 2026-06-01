@@ -62,6 +62,22 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
     findByStatus(tenantId, status).each!(entity => remove(entity));
   }
 
+size_t countActiveConsents(TenantId tenantId) {
+    return findActiveConsents(tenantId).length;
+  }
+
+  ConsentRecord[] filterActiveConsents(ConsentRecord[] records) {
+    return records.filter!(r => r.status == ConsentStatus.granted).array;
+  }
+
+  ConsentRecord[] findActiveConsents(TenantId tenantId  ) {
+    return filterActiveConsents(findByTenant(tenantId));
+  }
+
+  void removeActiveConsents(TenantId tenantId) {
+    findActiveConsents(tenantId).each!(entity => remove(entity));
+  }
+
   size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
     return findActiveConsents(tenantId, dataSubjectId).length;
   }

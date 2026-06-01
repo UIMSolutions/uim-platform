@@ -53,7 +53,7 @@ class UnificationRuleController : ManageController {
     r.unique_     = data.getBoolean("unique");
     r.triggerMerge  = data.getBoolean("triggerMerge");
     r.preventMerge  = data.getBoolean("preventMerge");
-    r.identifierAttributes = j.getStrings("identifierAttributes");
+    r.identifierAttributes = data.getStrings("identifierAttributes");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -65,7 +65,7 @@ class UnificationRuleController : ManageController {
     auto data = precheck.data;
     ReorderRulesRequest r;
     r.tenantId  = req.getTenantId;
-    r.orderedIds = j.getStrings("orderedIds");
+    r.orderedIds = data.getStrings("orderedIds");
     // Update priority of each rule per ordered list
     foreach (int i, string id; r.orderedIds) {
       auto rule = usecase.getById(r.tenantId, id);
@@ -98,7 +98,7 @@ class UnificationRuleController : ManageController {
     r.triggerMerge  = data.getBoolean("triggerMerge");
     r.preventMerge  = data.getBoolean("preventMerge");
     r.active      = data.getBoolean("active");
-    r.identifierAttributes = j.getStrings("identifierAttributes");
+    r.identifierAttributes = data.getStrings("identifierAttributes");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

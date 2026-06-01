@@ -49,7 +49,7 @@ class ObjectController : ManageController {
     r.bucketId = data.getString("bucketId");
     r.key = data.getString("key");
     r.contentType = data.getString("contentType");
-    r.size = jsonLong(j, "size");
+    r.size = data.getLong("size");
     r.metadata = data.getString("metadata");
     r.storageClass = data.getString("storageClass");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));

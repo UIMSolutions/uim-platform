@@ -75,6 +75,10 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     return repo.findActiveConsents(tenantId, subjectId);
   }
 
+  ConsentRecord[] listActiveConsents(TenantId tenantId) {
+    return repo.findActiveConsents(tenantId);
+  }
+
   CommandResult revokeConsent(RevokeConsentRequest req) {
     auto record = repo.findById(req.tenantId, req.id);
     if (record.isNull)

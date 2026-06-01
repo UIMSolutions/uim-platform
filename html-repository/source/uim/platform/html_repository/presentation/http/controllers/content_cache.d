@@ -48,7 +48,7 @@ class ContentCacheController : ManageController {
       r.contentType = data.getString("contentType");
       r.data = data.getString("data");
       r.etag = data.getString("etag");
-      r.ttlSeconds = jsonLong(j, "ttlSeconds");
+      r.ttlSeconds = data.getLong("ttlSeconds");
 
       auto result = usecase.create(r);
       if (result.isSuccess()) {

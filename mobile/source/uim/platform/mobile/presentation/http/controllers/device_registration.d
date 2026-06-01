@@ -116,7 +116,7 @@ class DeviceRegistrationController : ManageController {
     }
   }
 
-  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;

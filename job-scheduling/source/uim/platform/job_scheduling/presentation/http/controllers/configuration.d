@@ -59,8 +59,8 @@ class ConfigurationController : ManageController {
             UpdateConfigurationRequest r;
             r.tenantId = tenantId;
             r.defaultRetries = data.getInteger("defaultRetries", 3);
-            r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
-            r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);
+            r.defaultRetryDelayMs = data.getLong("defaultRetryDelayMs", 30000);
+            r.maxRunDurationMs = data.getLong("maxRunDurationMs", 600000);
             r.enableAsyncMode = data.getBoolean("enableAsyncMode", true);
             r.enableAlertNotifications = data.getBoolean("enableAlertNotifications", false);
 

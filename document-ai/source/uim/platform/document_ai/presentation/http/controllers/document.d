@@ -42,7 +42,7 @@ class DocumentController : PlatformController {
       r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
       r.fileName = data.getString("fileName");
       r.mimeType = data.getString("mimeType");
-      r.fileSize = jsonLong(j, "fileSize");
+      r.fileSize = data.getLong("fileSize");
       r.schemaId = data.getString("schemaId");
       r.templateId = data.getString("templateId");
       r.documentTypeId = data.getString("documentTypeId");

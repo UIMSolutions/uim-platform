@@ -31,112 +31,109 @@ class InformationReportController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateInformationReportRequest r;
-      r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
-      r.requestedBy = UserId(data.getString("requestedBy"));
-      r.format = data.getString("format");
-      r.targetSystems = data.getStrings("targetSystems");
-      r.categories = data.getStrings("categories");
-      r.reason = data.getString("reason");
+    auto data = precheck.data;
+    CreateInformationReportRequest r;
+    r.tenantId = tenantId;
+    r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+    r.requestedBy = UserId(data.getString("requestedBy"));
+    r.format = data.getString("format");
+    r.targetSystems = data.getStrings("targetSystems");
+    r.categories = data.getStrings("categories");
+    r.reason = data.getString("reason");
 
-      auto result = usecase.createReport(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Information report created successfully");
+    auto result = usecase.createReport(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Information report created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listReports(tenantId);
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto items = usecase.listReports(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Information reports retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Information reports retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = InformationReportId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = InformationReportId(precheck.id);
 
-      auto entry = usecase.getReport(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Information report not found");
-        return;
-      }
-      auto resp = entry.toJson
-        .set("message", "Information report retrieved successfully");
+    auto entry = usecase.getReport(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Information report not found", 404);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = entry.toJson();
+    return successResponse("Information report retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json updateStatusHandler(HTTPServerRequest req) {
+    auto precheck = super.putHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = InformationReportId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid information report ID", 400);
+
+    auto data = precheck.data;
+    UpdateInformationReportStatusRequest r;
+    r.reportId = id;
+    r.tenantId = tenantId;
+    r.status = data.getString("status");
+    r.downloadUrl = data.getString("downloadUrl");
+    r.totalRecords = data.getLong("totalRecords");
+
+    auto result = usecase.updateReportStatus(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Information report status updated successfully", "Updated", 200, responseData);
+  }
+
+  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UpdateInformationReportStatusRequest r;
-      r.reportId = InformationReportId(precheck.id);
-      r.tenantId = tenantId;
-      r.status = data.getString("status");
-      r.downloadUrl = data.getString("downloadUrl");
-      r.totalRecords = data.getLong("totalRecords");
-
-      auto result = usecase.updateReportStatus(r);
-      if (result.isSuccess()) {
-        auto response = Json.emptyObject
-          .set("id", result.id);
-
-        res.writeJsonBody(response, 200);
-      } else
-        writeError(res, 400, result.message);
+      auto response = updateStatusHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = InformationReportId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = InformationReportId(precheck.id);
 
-      usecase.deleteReport(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteReport(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Information report deleted successfully", "Deleted", 200, responseData);
   }
 }

@@ -39,8 +39,6 @@ class DataSubjectController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateDataSubjectRequest r;
     r.tenantId = tenantId;
     r.displayName = data.getString("displayName");
@@ -48,7 +46,7 @@ class DataSubjectController : ManageController {
     r.externalId = data.getString("externalId");
     r.sourceSystem = data.getString("sourceSystem");
     r.country = data.getString("country");
-    r.subjectType = parseSubjectType(data.getString("subjectType"));
+    r.subjectType = data.getString("subjectType").toDataSubjectType();
 
     auto result = usecase.createSubject(r);
     if (result.hasError)
@@ -67,7 +65,7 @@ class DataSubjectController : ManageController {
     auto typeParam = req.headers.get("X-Subject-Type", "");
 
     DataSubject[] items = typeParam.length > 0
-      ? usecase.listByType(tenantId, parseSubjectType(typeParam)) : usecase.listSubjects(
+      ? usecase.listByType(tenantId, typeParam.toDataSubjectType()) : usecase.listSubjects(
         tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
@@ -87,10 +85,10 @@ class DataSubjectController : ManageController {
     auto id = DataSubjectId(precheck.id);
 
     auto entry = usecase.getSubject(tenantId, id);
-    if (item.isNull)
-      return errorResponse("Scan job not found", 404);
+    if (entry.isNull)
+      return errorResponse("Data subject not found", 404);
 
-    auto responseData = serialize(entry);
+    auto responseData = entry.toJson();
     return successResponse("Data subject retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -100,6 +98,8 @@ class DataSubjectController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+
     UpdateDataSubjectRequest r;
     r.id = DataSubjectId(precheck.id);
     r.tenantId = tenantId;
@@ -107,30 +107,30 @@ class DataSubjectController : ManageController {
     r.email = data.getString("email");
     r.sourceSystem = data.getString("sourceSystem");
     r.country = data.getString("country");
-    r.subjectType = parseSubjectType(data.getString("subjectType"));
+    r.subjectType = data.getString("subjectType").toDataSubjectType();
     r.isActive = data.getBoolean("isActive", true);
 
     auto result = usecase.updateSubject(r);
     if (result.hasError)
-            return errorResponse(result.message, 400);
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Data subject updated successfully", "Updated", 200, responseData);
-}
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data subject updated successfully", "Updated", 200, responseData);
+  }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = DataSubjectId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DataSubjectId(precheck.id);
 
-  auto result = usecase.deleteSubject(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto result = usecase.deleteSubject(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("Data subject deleted successfully", "Deleted", 200, responseData);
-}
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data subject deleted successfully", "Deleted", 200, responseData);
+  }
 }

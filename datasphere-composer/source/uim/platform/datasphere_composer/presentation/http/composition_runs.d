@@ -47,7 +47,7 @@ class CompositionRunController : ManageController {
     r.id            = precheck.id;
     r.name          = data.getString("name");
     r.triggeredBy   = data.getString("triggeredBy");
-    r.dataProductIds = j.getStrings("dataProductIds");
+    r.dataProductIds = data.getStrings("dataProductIds");
     auto result = usecase.start(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;

@@ -48,7 +48,7 @@ class RepositoryController : ManageController {
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.maxFileSize = jsonLong(j, "maxFileSize");
+      r.maxFileSize = data.getLong("maxFileSize");
       r.allowedFileTypes = data.getString("allowedFileTypes");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
@@ -110,7 +110,7 @@ auto list = items.map!(item => item.toJson()).array.toJson;
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.maxFileSize = jsonLong(j, "maxFileSize");
+      r.maxFileSize = data.getLong("maxFileSize");
       r.allowedFileTypes = data.getString("allowedFileTypes");
 
       auto result = usecase.updateRepository(r);

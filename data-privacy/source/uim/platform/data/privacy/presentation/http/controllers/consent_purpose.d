@@ -38,8 +38,6 @@ class ConsentPurposeController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateConsentPurposeRequest r;
     r.tenantId = tenantId;
     r.controllerId = DataControllerId(data.getString("controllerId"));
@@ -50,8 +48,8 @@ class ConsentPurposeController : ManageController {
     r.consentFormTemplate = data.getString("consentFormTemplate");
     r.version_ = data.getString("version");
     r.requiresExplicitConsent = data.getBoolean("requiresExplicitConsent", true);
-    r.validFrom = jsonLong(j, "validFrom");
-    r.validUntil = jsonLong(j, "validUntil");
+    r.validFrom = data.getLong("validFrom");
+    r.validUntil = data.getLong("validUntil");
 
     auto result = usecase.createPurpose(r);
     if (result.hasError)

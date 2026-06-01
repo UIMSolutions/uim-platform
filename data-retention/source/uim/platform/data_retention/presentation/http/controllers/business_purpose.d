@@ -38,7 +38,7 @@ class BusinessPurposeController : ManageController {
             r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
             r.dataSubjectRoleId = DataSubjectRoleId(data.getString("dataSubjectRoleId"));
             r.legalEntityId = LegalEntityId(data.getString("legalEntityId"));
-            r.referenceDate = jsonLong(j, "referenceDate");
+            r.referenceDate = data.getLong("referenceDate");
             r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createBusinessPurpose(r);
@@ -125,7 +125,7 @@ class BusinessPurposeController : ManageController {
             r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
             r.dataSubjectRoleId = DataSubjectRoleId(data.getString("dataSubjectRoleId"));
             r.legalEntityId = LegalEntityId(data.getString("legalEntityId"));
-            r.referenceDate = jsonLong(j, "referenceDate");
+            r.referenceDate = data.getLong("referenceDate");
 
             auto result = usecase.updateBusinessPurpose(r);
             if (result.hasError)

@@ -45,7 +45,7 @@ class ClientLogController : ManageController {
       r.metadata = data.getString("metadata");
       r.platform = data.getString("platform");
       r.appVersion = data.getString("appVersion");
-      r.timestamp = jsonLong(j, "timestamp");
+      r.timestamp = data.getLong("timestamp");
       auto result = usecase.upload(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

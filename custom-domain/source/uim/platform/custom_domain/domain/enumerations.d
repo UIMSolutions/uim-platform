@@ -12,11 +12,29 @@ enum DomainStatus {
     error,
     deactivated,
 }
+DomainStatus toDomainStatus(string s) {
+    final map = [
+        "pending": DomainStatus.pending,
+        "active": DomainStatus.active,
+        "inactive": DomainStatus.inactive,
+        "error": DomainStatus.error,
+        "deactivated": DomainStatus.deactivated,
+    ];
+    return map.get(s, DomainStatus.error);
+}
 
 enum DomainEnvironment {
     cloudFoundry,
     kyma,
     neo,
+}
+DomainEnvironment toDomainEnvironment(string s) {
+    final map = [
+        "cloudFoundry": DomainEnvironment.cloudFoundry,
+        "kyma": DomainEnvironment.kyma,
+        "neo": DomainEnvironment.neo,
+    ];
+    return map.get(s, DomainEnvironment.cloudFoundry);
 }
 // --- Private Key ---
 
@@ -27,11 +45,31 @@ enum KeyAlgorithm {
     ecdsaP384,
 }
 
+KeyAlgorithm toKeyAlgorithm(string s) {
+    final map = [
+        "rsa2048": KeyAlgorithm.rsa2048,
+        "rsa4096": KeyAlgorithm.rsa4096,
+        "ecdsaP256": KeyAlgorithm.ecdsaP256,
+        "ecdsaP384": KeyAlgorithm.ecdsaP384,
+    ];
+    return map.get(s, KeyAlgorithm.rsa2048);
+}
+
 enum KeyStatus {
     active,
     inactive,
     deleted,
 }
+
+KeyStatus toKeyStatus(string s) {
+    final map = [
+        "active": KeyStatus.active,
+        "inactive": KeyStatus.inactive,
+        "deleted": KeyStatus.deleted,
+    ];
+    return map.get(s, KeyStatus.active);
+}
+
 // --- Certificate ---
 
 enum CertificateStatus {
@@ -41,11 +79,29 @@ enum CertificateStatus {
     revoked,
     deactivated,
 }
+CertificateStatus toCertificateStatus(string s) {
+    final map = [
+        "pending": CertificateStatus.pending,
+        "active": CertificateStatus.active,
+        "expired": CertificateStatus.expired,
+        "revoked": CertificateStatus.revoked,
+        "deactivated": CertificateStatus.deactivated,
+    ];
+    return map.get(s, CertificateStatus.pending);
+}
 
 enum CertificateType {
     standard,
     wildcard,
     multiDomain,
+}
+CertificateType toCertificateType(string s) {
+    final map = [
+        "standard": CertificateType.standard,
+        "wildcard": CertificateType.wildcard,
+        "multiDomain": CertificateType.multiDomain,
+    ];
+    return map.get(s, CertificateType.standard);
 }
 // --- TLS Configuration ---
 
@@ -55,11 +111,28 @@ enum TlsProtocolVersion {
     tls1_2,
     tls1_3,
 }
+TlsProtocolVersion toTlsProtocolVersion(string s) {
+    final map = [
+        "tls1_0": TlsProtocolVersion.tls1_0,
+        "tls1_1": TlsProtocolVersion.tls1_1,
+        "tls1_2": TlsProtocolVersion.tls1_2,
+        "tls1_3": TlsProtocolVersion.tls1_3,
+    ];
+    return map.get(s, TlsProtocolVersion.tls1_2);
+}
 
 enum CipherSuiteStrength {
     strong,
     medium,
     weak,
+}
+CipherSuiteStrength toCipherSuiteStrength(string s) {
+    final map = [
+        "strong": CipherSuiteStrength.strong,
+        "medium": CipherSuiteStrength.medium,
+        "weak": CipherSuiteStrength.weak,
+    ];
+    return map.get(s, CipherSuiteStrength.strong);
 }
 // --- Domain Mapping ---
 
@@ -69,11 +142,28 @@ enum MappingStatus {
     pending,
     error,
 }
+MappingStatus toMappingStatus(string s) {
+    final map = [
+        "active": MappingStatus.active,
+        "inactive": MappingStatus.inactive,
+        "pending": MappingStatus.pending,
+        "error": MappingStatus.error,
+    ];
+    return map.get(s, MappingStatus.error);
+}
 
 enum MappingType {
     applicationRoute,
     saasRoute,
     staticRoute,
+}
+MappingType toMappingType(string s) {
+    final map = [
+        "applicationRoute": MappingType.applicationRoute,
+        "saasRoute": MappingType.saasRoute,
+        "staticRoute": MappingType.staticRoute,
+    ];
+    return map.get(s, MappingType.applicationRoute);
 }
 // --- Trusted Certificate ---
 
@@ -82,11 +172,27 @@ enum TrustedCertificateStatus {
     inactive,
     expired,
 }
+TrustedCertificateStatus toTrustedCertificateStatus(string s) {
+    final map = [
+        "active": TrustedCertificateStatus.active,
+        "inactive": TrustedCertificateStatus.inactive,
+        "expired": TrustedCertificateStatus.expired,
+    ];
+    return map.get(s, TrustedCertificateStatus.active);
+}
 
 enum ClientAuthMode {
     required,
     optional,
     disabled,
+}
+ClientAuthMode toClientAuthMode(string s) {
+    final map = [
+        "required": ClientAuthMode.required,
+        "optional": ClientAuthMode.optional,
+        "disabled": ClientAuthMode.disabled,
+    ];
+    return map.get(s, ClientAuthMode.disabled);
 }
 // --- DNS Record ---
 
@@ -97,12 +203,31 @@ enum DnsRecordType {
     txtRecord,
     mxRecord,
 }
+DnsRecordType toDnsRecordType(string s) {
+    final map = [
+        "aRecord": DnsRecordType.aRecord,
+        "aaaaRecord": DnsRecordType.aaaaRecord,
+        "cnameRecord": DnsRecordType.cnameRecord,
+        "txtRecord": DnsRecordType.txtRecord,
+        "mxRecord": DnsRecordType.mxRecord,
+    ];
+    return map.get(s, DnsRecordType.aRecord);
+}
 
 enum DnsValidationStatus {
     pending,
     validated,
     failed,
     expired,
+}
+DnsValidationStatus toDnsValidationStatus(string s) {
+    final map = [
+        "pending": DnsValidationStatus.pending,
+        "validated": DnsValidationStatus.validated,
+        "failed": DnsValidationStatus.failed,
+        "expired": DnsValidationStatus.expired,
+    ];
+    return map.get(s, DnsValidationStatus.pending);
 }
 // --- Dashboard ---
 
@@ -116,12 +241,34 @@ enum DashboardMetricType {
     domainCount,
     mappingCount,
 }
+DashboardMetricType toDashboardMetricType(string s) {
+    final map = [
+        "certificateExpiration": DashboardMetricType.certificateExpiration,
+        "domainHealth": DashboardMetricType.domainHealth,
+        "requestVolume": DashboardMetricType.requestVolume,
+        "tlsHandshakeErrors": DashboardMetricType.tlsHandshakeErrors,
+        "dnsResolutionTime": DashboardMetricType.dnsResolutionTime,
+        "certificateCount": DashboardMetricType.certificateCount,
+        "domainCount": DashboardMetricType.domainCount,
+        "mappingCount": DashboardMetricType.mappingCount,
+    ];
+    return map.get(s, DashboardMetricType.domainHealth);
+}
 
 enum HealthStatus {
     healthy,
     warning,
     critical,
     unknown,
+}
+HealthStatus toHealthStatus(string s) {
+    final map = [
+        "healthy": HealthStatus.healthy,
+        "warning": HealthStatus.warning,
+        "critical": HealthStatus.critical,
+        "unknown": HealthStatus.unknown,
+    ];
+    return map.get(s, HealthStatus.unknown);
 }
 
 enum ExpirationSeverity {
@@ -130,4 +277,14 @@ enum ExpirationSeverity {
     warning,
     critical,
     expired,
+}
+ExpirationSeverity toExpirationSeverity(string s) {
+    final map = [
+        "none": ExpirationSeverity.none,
+        "info": ExpirationSeverity.info,
+        "warning": ExpirationSeverity.warning,
+        "critical": ExpirationSeverity.critical,
+        "expired": ExpirationSeverity.expired,
+    ];
+    return map.get(s, ExpirationSeverity.none);
 }

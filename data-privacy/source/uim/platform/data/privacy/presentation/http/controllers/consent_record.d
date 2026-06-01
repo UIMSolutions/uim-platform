@@ -47,7 +47,7 @@ class ConsentController : ManageController {
     r.consentText = data.getString("consentText");
     r.version_ = data.getString("version");
     r.ipAddress = data.getString("ipAddress");
-    r.expiresAt = jsonLong(j, "expiresAt");
+    r.expiresAt = data.getLong("expiresAt");
 
     auto result = usecase.grantConsent(r);
     if (result.isSuccess()) {
@@ -101,8 +101,8 @@ class ConsentController : ManageController {
     auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
     ConsentRecord[] items = subjectParam.length > 0
-      ? usecase.listActiveConsents(tenantId, DataSubjectId(subjectParam)) : usecase.listActiveConsents(
-        tenantId);
+      ? usecase.listActiveConsents(tenantId, DataSubjectId(subjectParam)) 
+      : usecase.listActiveConsents(tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
 
@@ -112,7 +112,7 @@ class ConsentController : ManageController {
     return successResponse("Active consent record list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listActiveHandler(req);
       res.writeJsonBody(response, response.code);

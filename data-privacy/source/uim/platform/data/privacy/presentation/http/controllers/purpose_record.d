@@ -32,107 +32,103 @@ class PurposeRecordController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreatePurposeRecordRequest r;
-      r.tenantId = tenantId;
-      r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
-      r.contextId = BusinessContextId(data.getString("businessContextId"));
-      r.purpose = data.getString("purpose");
-      r.legalBasis = data.getString("legalBasis");
-      r.residenceDays = data.getInteger("residenceDays");
-      r.retentionDays = data.getInteger("retentionDays");
-      r.validFrom = data.getLong("validFrom");
-      r.validUntil = data.getLong("validUntil");
+    auto data = precheck.data;
+    CreatePurposeRecordRequest r;
+    r.tenantId = tenantId;
+    r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+    r.contextId = BusinessContextId(data.getString("businessContextId"));
+    r.purpose = data.getString("purpose");
+    r.legalBasis = data.getString("legalBasis");
+    r.residenceDays = data.getInteger("residenceDays");
+    r.retentionDays = data.getInteger("retentionDays");
+    r.validFrom = data.getLong("validFrom");
+    r.validUntil = data.getLong("validUntil");
 
-      auto result = usecase.createRecord(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Purpose record created successfully");
+    auto result = usecase.createRecord(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Purpose record created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = usecase.listRecords(tenantId);
-      auto arr = items.map!(record => record.toJson).array.toJson;
+    auto items = usecase.listRecords(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Purpose records retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Purpose records retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto recordId = PurposeRecordId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto recordId = PurposeRecordId(precheck.id);
 
-      auto record = usecase.getRecord(tenantId, recordId);
-      if (record.isNull) {
-        writeError(res, 404, "Purpose record not found");
-        return;
-      }
-      res.writeJsonBody(record.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto record = usecase.getRecord(tenantId, recordId);
+    if (record.isNull)
+      return errorResponse("Purpose record not found", 404);
+
+    auto responseData = record.toJson();
+    return successResponse("Purpose record retrieved successfully", "Retrieved", 200, responseData);
+  }
+
+  protected Json deactivateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    DeactivatePurposeRecordRequest r;
+    r.tenantId = tenantId;
+    r.recordId = PurposeRecordId(precheck.id);
+
+    auto result = usecase.deactivateRecord(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Purpose record deactivated successfully", "Updated", 200, responseData);
   }
 
   protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      DeactivatePurposeRecordRequest r;
-      r.tenantId = tenantId;
-      r.recordId = PurposeRecordId(precheck.id);
-
-      auto result = usecase.deactivateRecord(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
+      auto response = deactivateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto recordId = PurposeRecordId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto recordId = PurposeRecordId(precheck.id);
 
-      usecase.deleteRecord(tenantId, recordId);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteRecord(tenantId, recordId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Purpose record deleted successfully", "Deleted", 200, responseData);
   }
 }

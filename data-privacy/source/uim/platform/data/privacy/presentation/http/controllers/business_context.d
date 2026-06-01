@@ -39,16 +39,14 @@ class BusinessContextController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateBusinessContextRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.controllerGroupId = data.getString("controllerGroupId");
-    r.dataCategories = j.getStrings("dataCategories");
-    r.purposes = j.getStrings("purposes");
-    r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");
+    r.dataCategories = data.getStrings("dataCategories");
+    r.purposes = data.getStrings("purposes");
+    r.dataCategoryAttributes = data.getStrings("dataCategoryAttributes");
     r.isCrossRoleEnabled = data.getBoolean("isCrossRoleEnabled", false);
 
     auto result = usecase.createContext(r);
@@ -103,9 +101,9 @@ class BusinessContextController : ManageController {
     r.contextId = BusinessContextId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.dataCategories = j.getStrings("dataCategories");
-    r.purposes = j.getStrings("purposes");
-    r.dataCategoryAttributes = j.getStrings("dataCategoryAttributes");
+    r.dataCategories = data.getStrings("dataCategories");
+    r.purposes = data.getStrings("purposes");
+    r.dataCategoryAttributes = data.getStrings("dataCategoryAttributes");
     r.isCrossRoleEnabled = data.getBoolean("isCrossRoleEnabled", false);
 
     auto result = usecase.updateContext(r);

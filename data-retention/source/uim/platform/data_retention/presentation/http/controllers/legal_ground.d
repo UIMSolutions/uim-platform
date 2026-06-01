@@ -36,7 +36,7 @@ class LegalGroundController : ManageController {
             r.description = data.getString("description");
             r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
             r.type = data.getString("type");
-            r.referenceDate = jsonLong(j, "referenceDate");
+            r.referenceDate = data.getLong("referenceDate");
             r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createLegalGround(r);
@@ -121,7 +121,7 @@ class LegalGroundController : ManageController {
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.type = data.getString("type");
-            r.referenceDate = jsonLong(j, "referenceDate");
+            r.referenceDate = data.getLong("referenceDate");
 
             auto result = usecase.updateLegalGround(r);
             if (result.hasError)

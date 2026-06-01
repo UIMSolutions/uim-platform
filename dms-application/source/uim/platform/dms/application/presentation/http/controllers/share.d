@@ -49,7 +49,7 @@ class ShareController : ManageController {
       r.shareType = data.getString("shareType").to!ShareType;
       r.sharedWith = data.getString("sharedWith");
       r.permissionLevel = data.getString("permissionLevel").to!PermissionLevel;
-      r.expiresAt = jsonLong(j, "expiresAt");
+      r.expiresAt = data.getLong("expiresAt");
       r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
       auto result = usecase.createShare(r);

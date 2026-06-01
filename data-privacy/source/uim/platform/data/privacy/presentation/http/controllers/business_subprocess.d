@@ -38,8 +38,6 @@ class BusinessSubprocessController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateBusinessSubprocessRequest r;
     r.tenantId = tenantId;
     r.parentProcessId = BusinessProcessId(data.getString("parentProcessId"));
@@ -95,6 +93,8 @@ class BusinessSubprocessController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    
     UpdateBusinessSubprocessRequest r;
     r.tenantId = tenantId;
     r.subprocessId = BusinessSubprocessId(precheck.id);

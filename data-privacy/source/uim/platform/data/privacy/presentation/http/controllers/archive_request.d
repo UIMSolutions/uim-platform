@@ -38,14 +38,12 @@ class ArchiveRequestController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateArchiveRequest r;
     r.tenantId = tenantId;
     r.subjectId = data.getString("dataSubjectId");
     r.requestedBy = data.getString("requestedBy");
-    r.targetSystems = j.getStrings("targetSystems");
-    r.categories = j.getStrings("categories");
+    r.targetSystems = data.getStrings("targetSystems");
+    r.categories = data.getStrings("categories");
     r.archiveLocation = data.getString("archiveLocation");
     r.reason = data.getString("reason");
     r.isTestMode = data.getBoolean("isTestMode", false);

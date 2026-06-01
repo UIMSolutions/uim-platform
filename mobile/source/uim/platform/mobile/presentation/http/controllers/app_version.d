@@ -49,7 +49,7 @@ class AppVersionController : ManageController {
       r.platform = data.getString("platform");
       r.releaseNotes = data.getString("releaseNotes");
       r.downloadUrl = data.getString("downloadUrl");
-      r.sizeBytes = jsonLong(j, "sizeBytes");
+      r.sizeBytes = data.getLong("sizeBytes");
       r.createdBy = UserId(data.getString("createdBy"));
       auto result = usecase.create(r);
       if (result.hasError)
@@ -140,7 +140,7 @@ class AppVersionController : ManageController {
       r.id = id;
       r.releaseNotes = data.getString("releaseNotes");
       r.downloadUrl = data.getString("downloadUrl");
-      r.sizeBytes = jsonLong(j, "sizeBytes");
+      r.sizeBytes = data.getLong("sizeBytes");
       r.status = data.getString("status");
       r.updatedBy = UserId(data.getString("updatedBy"));
       auto result = usecase.update(r);

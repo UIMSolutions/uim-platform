@@ -23,7 +23,7 @@ struct BusinessProcess {
   bool isActive = true;
   
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("name", name)
       .set("description", description)
       .set("controllerId", controllerId)
@@ -31,7 +31,5 @@ struct BusinessProcess {
       .set("legalBases", legalBases.map!(l => l.to!string).array.toJson())
       .set("owner", owner)
       .set("isActive", isActive);
-
-    return j;
   }
 }

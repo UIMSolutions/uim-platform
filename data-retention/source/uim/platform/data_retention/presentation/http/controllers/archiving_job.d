@@ -35,7 +35,7 @@ class ArchivingJobController : ManageController {
             r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
             r.operationType = data.getString("operationType");
             r.selectionCriteria = data.getString("selectionCriteria");
-            r.scheduledAt = jsonLong(j, "scheduledAt");
+            r.scheduledAt = data.getLong("scheduledAt");
             r.createdBy = UserId(data.getString("createdBy"));
 
             auto result = usecase.createArchivingJob(r);

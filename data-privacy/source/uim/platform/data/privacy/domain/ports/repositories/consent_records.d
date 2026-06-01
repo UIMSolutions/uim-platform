@@ -26,6 +26,10 @@ interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRec
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status);
   void removeByStatus(TenantId tenantId, ConsentStatus status);
 
+  size_t countActiveConsents(TenantId tenantId);
+  ConsentRecord[] findActiveConsents(TenantId tenantId);
+  void removeActiveConsents(TenantId tenantId);
+
   size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);
   void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId);

@@ -50,9 +50,9 @@ class InstanceController : ManageController {
       r.version_ = data.getString("version");
       r.region = data.getString("region");
       r.availabilityZone = data.getString("availabilityZone");
-      r.memoryGB = jsonLong(j, "memoryGB");
+      r.memoryGB = data.getLong("memoryGB");
       r.vcpus = data.getInteger("vcpus");
-      r.storageGB = jsonLong(j, "storageGB");
+      r.storageGB = data.getLong("storageGB");
       r.enableScriptServer = data.getBoolean("enableScriptServer");
       r.enableDocStore = data.getBoolean("enableDocStore");
       r.enableDataLake = data.getBoolean("enableDataLake");
@@ -163,9 +163,9 @@ class InstanceController : ManageController {
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
-      r.memoryGB = jsonLong(j, "memoryGB");
+      r.memoryGB = data.getLong("memoryGB");
       r.vcpus = data.getInteger("vcpus");
-      r.storageGB = jsonLong(j, "storageGB");
+      r.storageGB = data.getLong("storageGB");
       r.enableScriptServer = data.getBoolean("enableScriptServer");
       r.enableDocStore = data.getBoolean("enableDocStore");
       r.allowAllIpAccess = data.getBoolean("allowAllIpAccess");

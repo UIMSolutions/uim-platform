@@ -66,7 +66,7 @@ class ApiClientController : ManageController {
     createReq.name = data.getString("name");
     createReq.description = data.getString("description");
     createReq.scopes = getStrings(j, "scopes");
-    createReq.expiresAt = jsonLong(j, "expiresAt");
+    createReq.expiresAt = data.getLong("expiresAt");
 
     auto result = useCase.createClient(createReq);
     if (result.hasError)

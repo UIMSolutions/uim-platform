@@ -38,8 +38,6 @@ class CorrectionRequestController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateCorrectionRequest r;
     r.tenantId = tenantId;
     r.subjectId = DataSubjectId(data.getString("dataSubjectId"));

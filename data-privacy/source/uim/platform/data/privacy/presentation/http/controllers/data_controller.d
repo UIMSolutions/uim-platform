@@ -38,8 +38,6 @@ class DataControllerController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateDataControllerRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -98,6 +96,7 @@ class DataControllerController : ManageController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     UpdateDataControllerRequest r;
     r.tenantId = tenantId;

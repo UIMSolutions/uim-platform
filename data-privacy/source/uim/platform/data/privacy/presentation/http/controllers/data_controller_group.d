@@ -38,8 +38,6 @@ class DataControllerGroupController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateDataControllerGroupRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");

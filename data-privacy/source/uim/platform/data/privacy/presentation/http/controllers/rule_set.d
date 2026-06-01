@@ -32,129 +32,126 @@ class RuleSetController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateRuleSetRequest r;
-      r.tenantId = tenantId;
-      r.contextId = data.getString("businessContextId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.priority = cast(int)jsonLong(j, "priority");
+    auto data = precheck.data;
+    CreateRuleSetRequest r;
+    r.tenantId = tenantId;
+    r.contextId = data.getString("businessContextId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.priority = data.getInteger("priority");
 
-      auto result = usecase.createRuleSet(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Rule set created successfully");
+    auto result = usecase.createRuleSet(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Rule set created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.listRuleSets(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listRuleSets(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Rule sets retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Rule sets retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = RuleSetId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = RuleSetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid rule set ID", 400);
 
-      auto entry = usecase.getRuleSet(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Rule set not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getRuleSet(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Rule set not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Rule set retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateRuleSetRequest r;
-      r.tenantId = tenantId;
-      r.setId = RuleSetId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.priority = data.getInteger("priority");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-      auto result = usecase.updateRuleSet(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Rule set updated successfully");
+    UpdateRuleSetRequest r;
+    r.tenantId = tenantId;
+    r.setId = RuleSetId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.priority = data.getInteger("priority");
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.updateRuleSet(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Rule set updated successfully", "Updated", 200, responseData);
+  }
+
+  protected Json activateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = RuleSetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid rule set ID", 400);
+
+    auto result = usecase.activateRuleSet(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Rule set activated successfully", "Activated", 200, responseData);
   }
 
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = RuleSetId(precheck.id);
-
-      auto result = usecase.activateRuleSet(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Rule set activated successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
+      auto response = activateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = RuleSetId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = RuleSetId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid rule set ID", 400);
 
-      usecase.deleteRuleSet(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteRuleSet(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Rule set deleted successfully", "Deleted", 200, responseData);
   }
-
 }

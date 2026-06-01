@@ -39,8 +39,6 @@ class AnonymizationConfigController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     CreateAnonymizationConfigRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -102,7 +100,7 @@ class AnonymizationConfigController : ManageController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.isReversible = data.getBoolean("isReversible", false);
-    r.targetSystems = getArray(j, "targetSystems").map!(c => c.to!string).array;
+    r.targetSystems = data.getArray("targetSystems").map!(c => c.to!string).array;
 
     auto result = usecase.updateConfig(r);
     if (result.hasError)

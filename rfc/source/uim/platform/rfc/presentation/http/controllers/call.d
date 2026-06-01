@@ -28,6 +28,7 @@ class CallController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post   ("/api/v1/rfc/calls",   &handleInvoke);
         router.get    ("/api/v1/rfc/calls",   &handleList);
         router.get    ("/api/v1/rfc/calls/*",  &handleGet);

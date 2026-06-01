@@ -44,7 +44,7 @@ class UsageReportController : ManageController {
       r.sessionId = data.getString("sessionId");
       r.platform = data.getString("platform");
       r.appVersion = data.getString("appVersion");
-      r.timestamp = jsonLong(j, "timestamp");
+      r.timestamp = data.getLong("timestamp");
       auto result = usecase.report(r);
       if (result.hasError)
             return errorResponse(result.message, 400);

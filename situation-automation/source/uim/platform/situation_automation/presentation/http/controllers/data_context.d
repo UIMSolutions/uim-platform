@@ -47,7 +47,7 @@ class DataContextController : ManageController {
             r.data = jsonKeyValuePairs(j, "data");
             r.sourceSystem = data.getString("sourceSystem");
             r.containsPersonalData = data.getBoolean("containsPersonalData");
-            r.expiresAt = jsonLong(j, "expiresAt");
+            r.expiresAt = data.getLong("expiresAt");
 
             auto result = usecase.createDataContext(r);
             if (result.hasError)

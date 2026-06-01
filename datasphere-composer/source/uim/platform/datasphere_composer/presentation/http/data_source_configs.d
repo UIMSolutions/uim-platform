@@ -53,7 +53,7 @@ class DataSourceConfigController : ManageController {
     r.timestampField    = data.getString("timestampField");
     r.timestampCustomPattern = data.getString("timestampCustomPattern");
     r.enabled           = data.getBoolean("enabled");
-    r.disabledRuleIds   = j.getStrings("disabledRuleIds");
+    r.disabledRuleIds   = data.getStrings("disabledRuleIds");
     auto result = usecase.create(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
@@ -71,7 +71,7 @@ class DataSourceConfigController : ManageController {
     r.timestampField    = data.getString("timestampField");
     r.timestampCustomPattern = data.getString("timestampCustomPattern");
     r.enabled           = data.getBoolean("enabled");
-    r.disabledRuleIds   = j.getStrings("disabledRuleIds");
+    r.disabledRuleIds   = data.getStrings("disabledRuleIds");
     auto result = usecase.update(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

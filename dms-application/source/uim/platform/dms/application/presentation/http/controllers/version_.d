@@ -70,7 +70,7 @@ class VersionController : ManageController {
       r.comment = data.getString("comment");
       r.fileName = data.getString("fileName");
       r.mimeType = data.getString("mimeType");
-      r.fileSize = jsonLong(j, "fileSize");
+      r.fileSize = data.getLong("fileSize");
       r.checksum = data.getString("checksum");
 
       auto result = usecase.checkIn(r);

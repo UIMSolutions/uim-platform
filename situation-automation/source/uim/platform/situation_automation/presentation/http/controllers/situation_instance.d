@@ -51,7 +51,7 @@ class SituationInstanceController : ManageController {
             r.assignedTo = data.getString("assignedTo");
             r.sourceSystem = data.getString("sourceSystem");
             r.sourceInstanceId = data.getString("sourceInstanceId");
-            r.dueAt = jsonLong(j, "dueAt");
+            r.dueAt = data.getLong("dueAt");
 
             auto result = usecase.createSituationInstance(r);
             if (result.hasError)

@@ -32,126 +32,112 @@ class LegalGroundController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateLegalGroundRequest r;
-      r.tenantId = tenantId;
-      r.dataSubjectId = data.getString("dataSubjectId");
-      r.basis = data.getString("basis").to!LegalBasis;
-      r.purpose = data.getString("purpose");
-      r.description = data.getString("description");
-      r.legalReference = data.getString("legalReference");
-      r.validFrom = data.getLong("validFrom");
-      r.validUntil = data.getLong("validUntil");
+    auto data = precheck.data;
+    CreateLegalGroundRequest r;
+    r.tenantId = tenantId;
+    r.dataSubjectId = data.getString("dataSubjectId");
+    r.basis = data.getString("basis").to!LegalBasis;
+    r.purpose = data.getString("purpose");
+    r.description = data.getString("description");
+    r.legalReference = data.getString("legalReference");
+    r.validFrom = data.getLong("validFrom");
+    r.validUntil = data.getLong("validUntil");
 
-      auto result = usecase.createGround(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Legal ground created successfully");
+    auto result = usecase.createGround(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Legal ground created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto basisParam = req.headers.get("X-Basis-Filter", "");
-      auto purposeParam = req.headers.get("X-Purpose-Filter", "");
-      auto subjectParam = req.headers.get("X-Subject-Filter", "");
+    auto tenantId = precheck.tenantId;
+    auto basisParam = req.headers.get("X-Basis-Filter", "");
+    auto purposeParam = req.headers.get("X-Purpose-Filter", "");
+    auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
-      LegalGround[] items;
-      if (basisParam.length > 0)
-        items = usecase.listGrounds(tenantId, basisParam.toLegalBasis);
-      else if (purposeParam.length > 0)
-        items = usecase.listGrounds(tenantId, purposeParam.toProcessingPurpose);
-      else if (subjectParam.length > 0)
-        items = usecase.listGrounds(tenantId, DataSubjectId(subjectParam));
-      else
-        items = usecase.listGrounds(tenantId);
+    LegalGround[] items;
+    if (basisParam.length > 0)
+      items = usecase.listGrounds(tenantId, basisParam.toLegalBasis);
+    else if (purposeParam.length > 0)
+      items = usecase.listGrounds(tenantId, purposeParam.toProcessingPurpose);
+    else if (subjectParam.length > 0)
+      items = usecase.listGrounds(tenantId, DataSubjectId(subjectParam));
+    else
+      items = usecase.listGrounds(tenantId);
 
-      auto arr = items.map!(e => e.toJson).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Legal grounds retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Legal ground list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = LegalGroundId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = LegalGroundId(precheck.id);
 
-      auto entry = usecase.getGround(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Legal ground not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto entry = usecase.getGround(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Legal ground not found", 404);
+
+    auto responseData = entry.toJson();
+    return successResponse("Legal ground retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateLegalGroundRequest r;
-      r.id = LegalGroundId(precheck.id);
-      r.tenantId = tenantId;
-      r.description = data.getString("description");
-      r.legalReference = data.getString("legalReference");
-      r.isActive = data.getBoolean("isActive", true);
-      r.validUntil = data.getLong("validUntil");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    
+    UpdateLegalGroundRequest r;
+    r.id = LegalGroundId(precheck.id);
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.legalReference = data.getString("legalReference");
+    r.isActive = data.getBoolean("isActive", true);
+    r.validUntil = data.getLong("validUntil");
 
-      auto result = usecase.updateGround(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Legal ground updated successfully");
+    auto result = usecase.updateGround(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Legal ground updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = LegalGroundId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = LegalGroundId(precheck.id);
 
-      usecase.deleteGround(tenantId, id);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.deleteGround(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Legal ground deleted successfully", "Deleted", 200, responseData);
   }
 }
