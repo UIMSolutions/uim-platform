@@ -241,6 +241,6 @@ class TaskProviderController : ManageController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Provider deleted successfully", "Deleted", 200, responseData);  
-}
+        return successResponse("Provider deleted successfully", "Deleted", 200, responseData);
+    }
 }

@@ -83,9 +83,9 @@ class KeystoreController : ManageController {
     Keystore[] keystores = applicationId.isEmpty
       ? usecase.listKeystores(tenantId, accountId) : usecase.listKeystores(tenantId, accountId, applicationId);
 
-    auto jarr = Json.emptyArray;
+    auto list = Json.emptyArray;
     foreach (ks; keystores) {
-      jarr ~= Json.emptyObject
+      list ~= Json.emptyObject
         .set("id", ks.id)
         .set("name", ks.name)
         .set("description", ks.description)

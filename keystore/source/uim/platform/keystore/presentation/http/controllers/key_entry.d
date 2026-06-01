@@ -140,20 +140,6 @@ class KeyEntryController : ManageController {
     return successResponse("Key entry deleted successfully", 204);
   }
 
-  // DELETE /api/v1/keystores/{keystoreId}/entries/{id}
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto response = deleteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
   // Extract path segment at 1-based position (split by '/')
   private string extractSegment(string path, size_t pos) @safe {
     import std.string : split;
