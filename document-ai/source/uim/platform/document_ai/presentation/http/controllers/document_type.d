@@ -40,8 +40,7 @@ class DocumentTypeController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateDocumentTypeRequest r;
     r.tenantId = tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

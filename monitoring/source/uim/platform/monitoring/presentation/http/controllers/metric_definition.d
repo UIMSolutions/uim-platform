@@ -40,8 +40,7 @@ class MetricDefinitionController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateMetricDefinitionRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");

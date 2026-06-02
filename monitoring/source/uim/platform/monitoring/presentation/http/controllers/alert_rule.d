@@ -39,8 +39,7 @@ class AlertRuleController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateAlertRuleRequest r;
     r.tenantId = tenantId;
     r.resourceId = data.getString("resourceId");

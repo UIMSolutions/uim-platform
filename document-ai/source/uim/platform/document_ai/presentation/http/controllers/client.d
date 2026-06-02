@@ -39,8 +39,7 @@ class ClientController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateClientRequest r;
     r.tenantId = tenantId;
     r.clientName = data.getString("clientName");

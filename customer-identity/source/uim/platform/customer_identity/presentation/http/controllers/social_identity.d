@@ -64,9 +64,11 @@ class SocialIdentityController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = socialIdentities.linkSocialIdentity(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Social identity linked").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("Social identity linked successfully", 201, Json.emptyObject.set("id", result
+                .id));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -75,16 +77,15 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Social Identity ID", 400);
 
         auto e = socialIdentities.getSocialIdentity(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Social identity not found").set("status", "error").set("statusCode", 404);
+            return errorResponse("Social identity not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Social identity retrieved successfully", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -93,15 +94,15 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Social Identity ID", 400);
 
         auto result = socialIdentities.unlinkSocialIdentity(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Social identity unlinked").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("Social identity unlinked successfully", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -110,14 +111,14 @@ class SocialIdentityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = SocialIdentityId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Social Identity ID").set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Social Identity ID", 400);
 
         auto result = socialIdentities.deleteSocialIdentity(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("message", "Social identity deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        return successResponse("Social identity deleted successfully", 200);
     }
 }

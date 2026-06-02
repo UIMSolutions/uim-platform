@@ -37,8 +37,7 @@ class DataAccessControlController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateDataAccessControlRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));

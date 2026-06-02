@@ -38,8 +38,7 @@ class SpaceController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateSpaceRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(precheck.id);

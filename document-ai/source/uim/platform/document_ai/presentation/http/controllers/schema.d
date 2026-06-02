@@ -39,8 +39,7 @@ class SchemaController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateSchemaRequest r;
     r.tenantId = tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));

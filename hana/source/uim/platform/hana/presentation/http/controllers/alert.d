@@ -31,55 +31,49 @@ class AlertController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateAlertRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.severity = data.getString("severity");
-      r.category = data.getString("category");
-      r.metricName = data.getString("metricName");
-      r.warningValue = getDouble(j, "warningValue");
-      r.criticalValue = getDouble(j, "criticalValue");
-      r.unit = data.getString("unit");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateAlertRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.severity = data.getString("severity");
+    r.category = data.getString("category");
+    r.metricName = data.getString("metricName");
+    r.warningValue = getDouble(j, "warningValue");
+    r.criticalValue = getDouble(j, "criticalValue");
+    r.unit = data.getString("unit");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Alert created");
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Alert created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto alerts = usecase.list(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto alerts = usecase.list(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (a; alerts) {
-        jarr ~= Json.emptyObject
+    auto list = Json.emptyArray;
+    foreach (a; alerts) {
+      list ~= Json.emptyObject
         .set("id", a.id)
         .set("instanceId", a.instanceId)
         .set("name", a.name)
@@ -87,126 +81,123 @@ class AlertController : ManageController {
         .set("status", a.status.to!string)
         .set("category", a.category.to!string)
         .set("triggeredAt", a.triggeredAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", alerts.length)
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
+
+    auto resp = Json.emptyObject
+      .set("count", alerts.length)
+      .set("resources", list);
+    return successResponse("Alerts retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto a = usecase.getById(tenantId, id);
-      if (a.isNull) {
-        writeError(res, 404, "Alert not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto id = AlertId(precheck.id);
+    auto a = usecase.getById(tenantId, id);
+    if (a.isNull)
+      return errorResponse("Alert not found", 404);
 
-      auto resp = Json.emptyObject
-        .set("id", a.id)
-        .set("instanceId", a.instanceId)
-        .set("name", a.name)
-        .set("description", a.description)
-        .set("severity", a.severity.to!string)
-        .set("status", a.status.to!string)
-        .set("category", a.category.to!string)
-        .set("metricName", a.metricName)
-        .set("triggeredAt", a.triggeredAt)
-        .set("acknowledgedAt", a.acknowledgedAt)
-        .set("acknowledgedBy", a.acknowledgedBy)
-        .set("resolvedAt", a.resolvedAt)
-        .set("createdAt", a.createdAt);
+    auto responseData = Json.emptyObject
+      .set("id", a.id)
+      .set("instanceId", a.instanceId)
+      .set("name", a.name)
+      .set("description", a.description)
+      .set("severity", a.severity.to!string)
+      .set("status", a.status.to!string)
+      .set("category", a.category.to!string)
+      .set("metricName", a.metricName)
+      .set("triggeredAt", a.triggeredAt)
+      .set("acknowledgedAt", a.acknowledgedAt)
+      .set("acknowledgedBy", a.acknowledgedBy)
+      .set("resolvedAt", a.resolvedAt)
+      .set("createdAt", a.createdAt);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Alert retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
+    auto tenantId = precheck.tenantId;
 
-      auto data = precheck.data;
-      UpdateAlertRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.severity = data.getString("severity");
-      r.warningValue = getDouble(j, "warningValue");
-      r.criticalValue = getDouble(j, "criticalValue");
+    auto data = precheck.data;
+    UpdateAlertRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.severity = data.getString("severity");
+    r.warningValue = getDouble(j, "warningValue");
+    r.criticalValue = getDouble(j, "criticalValue");
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Alert updated successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Alert updated successfully", 200, responseData);
+  }
+
+  protected Json acknowledgeHandler(HTTPServerRequest req) {
+    auto precheck = super.acknowledgeHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto path = precheck.path;
+    auto ackIdx = lastIndexOf(path, "/acknowledge");
+    if (ackIdx < 0)
+      return errorResponse("Invalid path for acknowledge", 400);
+
+    auto sub = path[0 .. ackIdx];
+    auto id = AlertId(extractIdFromPath(sub));
+    if (id.isNull)
+      return errorResponse("Invalid alert ID", 400);
+
+    auto data = precheck.data;
+    AcknowledgeAlertRequest r;
+    r.tenantId = tenantId;
+    r.alertId = id;
+    r.acknowledgedBy = data.getString("acknowledgedBy");
+
+    auto result = usecase.acknowledge(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Alert acknowledged successfully", 200, resp);
   }
 
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      
-      import std.string : lastIndexOf;
-
-      auto path = precheck.path;
-      auto ackIdx = lastIndexOf(path, "/acknowledge");
-      if (ackIdx < 0) {
-        writeError(res, 400, "Invalid path");
-        return;
-      }
-      auto sub = path[0 .. ackIdx];
-      auto id = extractIdFromPath(sub);
-
-      auto data = precheck.data;
-      AcknowledgeAlertRequest r;
-      r.tenantId = tenantId;
-      r.id = id;
-      r.acknowledgedBy = data.getString("acknowledgedBy");
-
-      auto result = usecase.acknowledge(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Alert acknowledged");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto response = acknowledgeHandler(req);
+      res.writeJson(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = AlertId(precheck.id);
-      auto result = usecase.deleteAlert(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = AlertId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid alert ID", 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Alert deleted successfully", 200, responseData);
+    auto result = usecase.deleteAlert(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Alert deleted successfully", 200, responseData);
   }
 }

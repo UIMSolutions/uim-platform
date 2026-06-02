@@ -40,8 +40,7 @@ class ApiRuleController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateApiRuleRequest r;
     r.namespaceId = data.getString("namespaceId");
     r.environmentId = data.getString("environmentId");

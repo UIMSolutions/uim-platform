@@ -33,154 +33,111 @@ class TrainingJobController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateTrainingJobRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentTypeId = data.getString("documentTypeId");
-      r.schemaId = data.getString("schemaId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
+    auto data = precheck.data;
 
-      auto result = usecase.createTrainingJob(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Training job created");
+    CreateTrainingJobRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.documentTypeId = data.getString("documentTypeId");
+    r.schemaId = data.getString("schemaId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.createTrainingJob(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Training job created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto jobs = usecase.listTrainingJobs(tenantId, clientId);
+    auto tenantId = precheck.tenantId;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto jobs = usecase.listTrainingJobs(tenantId, clientId);
 
-      auto jarr = jobs.map!(tj => jobToJson(tj)).array.toJson;
+    auto list = jobs.map!(tj => jobToJson(tj)).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", jobs.length)
-        .set("resources", jarr)
-        .set("message", "Training job list retrieved successfully");
+    auto resp = Json.emptyObject
+      .set("count", jobs.length)
+      .set("resources", list);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Training job list retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = TrainingJobId(precheck.id);
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto tj = usecase.getTrainingJob(tenantId, id, clientId);
-      if (tj.isNull) {
-        writeError(res, 404, "Training job not found");
-        return;
-      }
+    auto tj = usecase.getTrainingJob(tenantId, id, clientId);
+    if (tj.isNull)
+      return errorResponse("Training job not found", 404);
 
-      res.writeJsonBody(jobToJson(tj), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Training job retrieved successfully", 200, jobToJson(tj));
+  }
+
+  protected Json handlePatch(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = TrainingJobId(precheck.id);
+    auto data = precheck.data;
+    PatchTrainingJobRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.trainingJobId = id;
+    r.targetStatus = data.getString("targetStatus");
+
+    auto result = usecase.patchTrainingJob(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Training job updated successfully", 200, resp);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      PatchTrainingJobRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.trainingJobId = id;
-      r.targetStatus = data.getString("targetStatus");
-
-      auto result = usecase.patchTrainingJob(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Training job updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = patchHandler(req);
+      res.writeJson(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto result = usecase.deleteTrainingJob(tenantId, id, clientId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto result = usecase.deleteTrainingJob(tenantId, id, clientId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  private Json jobToJson(TrainingJob tj) {
-    auto mArr = Json.emptyArray;
-    foreach (m; tj.metrics) {
-      mArr ~= Json.emptyObject
-        .set("name", m.name)
-        .set("value", m.value)
-        .set("timestamp", m.timestamp);
-    }
-
-    return Json.emptyObject
-      .set("id", tj.id)
-      .set("documentTypeId", tj.documentTypeId)
-      .set("schemaId", tj.schemaId)
-      .set("name", tj.name)
-      .set("description", tj.description)
-      .set("modelVersion", tj.modelVersion)
-      .set("status", tj.status.to!string)
-      .set("statusMessage", tj.statusMessage)
-      .set("documentCount", tj.documentCount)
-      .set("accuracy", tj.accuracy)
-      .set("startedAt", tj.startedAt)
-      .set("completedAt", tj.completedAt)
-      .set("createdAt", tj.createdAt)
-      .set("updatedAt", tj.updatedAt)
-      .set("metrics", mArr);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Training job deleted successfully", 200, responseData);
   }
 }

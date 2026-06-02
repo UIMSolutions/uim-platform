@@ -37,8 +37,7 @@ class RemoteTableController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateRemoteTableRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -97,7 +96,7 @@ class RemoteTableController : ManageController {
     auto id = RemoteTableId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid remote table ID", 400);
-      
+
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);

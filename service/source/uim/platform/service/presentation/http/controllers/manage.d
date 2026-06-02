@@ -53,7 +53,6 @@ class ManageController : PlatformController {
   // #endregion list
 
   // #region create
-
   protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
@@ -79,19 +78,6 @@ class ManageController : PlatformController {
       return precheck; // Return error response from precheck
 
     return successResponse(precheck, "Get handler not implemented", 200);
-  }
-
-  override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto response = getHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
   // #endregion get
 
@@ -139,8 +125,8 @@ class ManageController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-}
-// #endregion delete
+  }
+  // #endregion delete
 }
 ///
 unittest {

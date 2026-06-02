@@ -39,8 +39,7 @@ class ChannelController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
+    
     CreateNotificationChannelRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
