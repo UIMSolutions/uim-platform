@@ -62,17 +62,9 @@ class ChannelController : ManageController {
       auto result = usecase.createChannel(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Notification channel created");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Notification channel created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -89,10 +81,7 @@ class ChannelController : ManageController {
         .set("totalCount", Json(channels.length))
         .set("message", "Notification channels retrieved successfully");
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Notification channels retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -102,15 +91,15 @@ class ChannelController : ManageController {
 
         auto tenantId = precheck.tenantId;
       auto id = NotificationChannelId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid notification channel ID", 400);
+        
       auto ch = usecase.getChannel(tenantId, id);
-      if (ch.isNull) {
-        writeError(res, 404, "Notification channel not found");
-        return;
-      }
-      res.writeJsonBody(ch.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (ch.isNull) 
+        return errorResponse("Notification channel not found", 404);
+      
+      auto responseData = ch.toJson();
+      return successResponse("Notification channel retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -124,7 +113,7 @@ class ChannelController : ManageController {
       
       UpdateNotificationChannelRequest r;
       r.tenantId = tenantId;
-      r.id = id;
+      r.channelId = id;
       r.description = data.getString("description");
       r.state = data.getString("state");
       r.emailRecipients = data.getStrings("emailRecipients");
@@ -138,17 +127,9 @@ class ChannelController : ManageController {
       auto result = usecase.updateChannel(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto response = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Notification channel updated successfully");
 
-        res.writeJsonBody(response, 200);
-      } else {
-        writeError(res, result.message == "Notification channel not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Notification channel updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -158,21 +139,15 @@ class ChannelController : ManageController {
 
         auto tenantId = precheck.tenantId;
       auto id = NotificationChannelId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid notification channel ID", 400);
 
       auto result = usecase.deleteChannel(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto response = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Notification channel deleted successfully");
 
-        res.writeJsonBody(response, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Notification channel deleted successfully", "Deleted", 200, responseData);
   }
 
 }

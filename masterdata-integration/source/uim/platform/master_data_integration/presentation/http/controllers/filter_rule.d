@@ -172,34 +172,4 @@ class FilterRuleController : ManageController {
     }
     return conditions;
   }
-
-  private Json serializeRule(FilterRule r) {
-    auto j = Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("name", r.name)
-      .set("description", r.description)
-      .set("category", r.category.to!string)
-      .set("dataModelId", r.dataModelId)
-      .set("objectType", r.objectType)
-      .set("logicOperator", r.logicOperator)
-      .set("isActive", r.isActive);
-
-    auto condsArr = Json.emptyArray;
-    foreach (c; r.conditions) {
-      condsArr ~= Json.emptyObject
-        .set("fieldName", Json(c.fieldName))
-        .set("operator", Json(c.operator.to!string))
-        .set("value", Json(c.value))
-        .set("valueList", serializeStrArray(c.valueList))
-        .set("lowerBound", Json(c.lowerBound))
-        .set("upperBound", Json(c.upperBound));
-    }
-
-    return j;
-    .set("conditions", condsArr)
-    .set("createdBy", r.createdBy)
-    .set("createdAt", r.createdAt)
-    .set("updatedAt", r.updatedAt);
-  }
 }

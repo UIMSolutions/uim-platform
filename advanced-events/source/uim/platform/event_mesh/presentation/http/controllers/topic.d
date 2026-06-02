@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.topic;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -53,8 +55,18 @@ class TopicController : ManageController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
+    auto createId = precheck.id;
+    if (createId.isEmpty) {
+      try {
+        createId = req.params["id"];
+      } catch (Exception) {
+      }
+    }
+    if (createId.isEmpty)
+      createId = randomUUID().toString();
+
     TopicDTO dto;
-    dto.topicId = TopicId(precheck.id);
+    dto.topicId = TopicId(createId);
     dto.tenantId = tenantId;
     dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
     dto.name = data.getString("name");
@@ -144,4 +156,70 @@ class TopicController : ManageController {
 
     return successResponse("Topic deleted successfully", "Deleted", 200, resp);
   }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class TopicControllerTest : ControllerTestBase {
+    void runTests() {
+      // 1. Setup
+      auto repo = new MemoryTopicRepository();
+      auto usecase = new ManageTopicsUseCase(repo);
+      auto controller = new TopicController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // 2. Test List Handler
+      auto reqList = createMockRequest("GET", "/api/v1/event-mesh/topics", tenantId);
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getString("status") != "error");
+      assert(resList["data"]["count"].get!int == 0);
+
+      // 3. Test Create Handler
+      Json createData = Json.emptyObject
+        .set("brokerServiceId", "broker-1")
+        .set("name", "Test Topic")
+        .set("topicString", "test/topic")
+        .set("createdBy", "user-1");
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/event-mesh/topics", tenantId, createData);
+      reqCreate.params["id"] = "topic-1";
+      auto resCreate = controller.createHandler(reqCreate);
+      assert(resCreate.getString("status") != "error");
+      assert(resCreate["data"]["id"].get!string == "topic-1");
+
+      // 4. Test Get Handler
+      auto reqGet = createMockRequest("GET", "/api/v1/event-mesh/topics/topic-1", tenantId);
+      reqGet.params["id"] = "topic-1";
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getString("status") != "error");
+      assert(resGet["data"]["name"].get!string == "Test Topic");
+
+      // 5. Test Update Handler
+      Json updateData = Json.emptyObject
+        .set("name", "Updated Topic")
+        .set("updatedBy", "user-2");
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/event-mesh/topics/topic-1", tenantId, updateData);
+      reqUpdate.params["id"] = "topic-1";
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getString("status") != "error");
+
+      // Verify update
+      auto resGet2 = controller.getHandler(reqGet);
+      assert(resGet2["data"]["name"].get!string == "Updated Topic");
+
+      // 6. Test Delete Handler
+      auto reqDelete = createMockRequest("DELETE", "/api/v1/event-mesh/topics/topic-1", tenantId);
+      reqDelete.params["id"] = "topic-1";
+      auto resDelete = controller.deleteHandler(reqDelete);
+      assert(resDelete.getString("status") != "error");
+
+      // Verify deletion
+      auto resGet3 = controller.getHandler(reqGet);
+      assert(resGet3.getString("status") == "error"); // Expect 404
+    }
+  }
+
+  auto runner = new TopicControllerTest();
+  runner.runTests();
 }

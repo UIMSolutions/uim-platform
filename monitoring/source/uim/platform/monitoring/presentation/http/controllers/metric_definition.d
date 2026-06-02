@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.presentation.http.controllers.metric_definition;
 
-
-
-
 // import uim.platform.monitoring.application.usecases.manage.metrics;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.metric_definition;
@@ -36,136 +33,104 @@ class MetricDefinitionController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateMetricDefinitionRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.displayName = data.getString("displayName");
-      r.description = data.getString("description");
-      r.category = data.getString("category");
-      r.unit = data.getString("unit");
-      r.aggregation = data.getString("aggregation");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateMetricDefinitionRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.displayName = data.getString("displayName");
+    r.description = data.getString("description");
+    r.category = data.getString("category");
+    r.unit = data.getString("unit");
+    r.aggregation = data.getString("aggregation");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.createDefinition(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Metric definition created successfully");
+    auto result = usecase.createDefinition(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Metric definition created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto defs = usecase.listDefinitions(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto defs = usecase.listDefinitions(tenantId);
 
-      auto arr = defs.map!(d => d.toJson).array.toJson;
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", defs.length)
-        .set("message", "Metric definitions retrieved successfully");
+    auto list = defs.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", defs.length)
+      .set("resources", list);
+    return successResponse("Metric definition list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MetricDefinitionId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = MetricDefinitionId(precheck.id);
 
-      auto d = usecase.getDefinition(tenantId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Metric definition not found");
-        return;
-      }
-      res.writeJsonBody(d.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto d = usecase.getDefinition(tenantId, id);
+    if (d.isNull)
+      return errorResponse("Metric definition not found", 404);
+
+    auto responseData = d.toJson();
+    return successResponse("Metric definition retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MetricDefinitionId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = MetricDefinitionId(precheck.id);
 
-      auto data = precheck.data;
-      UpdateMetricDefinitionRequest request;
-      request.tenantId = tenantId;
-      request.id = id;
-      request.displayName = data.getString("displayName");
-      request.description = data.getString("description");
-      request.aggregation = data.getString("aggregation");
-      request.isEnabled = data.getBoolean("isEnabled", true);
+    auto data = precheck.data;
+    UpdateMetricDefinitionRequest request;
+    request.tenantId = tenantId;
+    request.id = id;
+    request.displayName = data.getString("displayName");
+    request.description = data.getString("description");
+    request.aggregation = data.getString("aggregation");
+    request.isEnabled = data.getBoolean("isEnabled", true);
 
-      auto result = usecase.updateDefinition(request);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Metric definition updated successfully");
+    auto result = usecase.updateDefinition(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, result.message == "Metric definition not found" ? 404 : 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Metric definition updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MetricDefinitionId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = MetricDefinitionId(precheck.id);
 
-      auto result = usecase.deleteMetricDefinition(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("id", result.id)
-          .set("message", "Metric definition deleted successfully");
+    auto result = usecase.deleteMetricDefinition(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Metric definition deleted successfully", "Deleted", 200, responseData);
   }
 
 }

@@ -42,3 +42,9 @@ configuration "verbose" {
     targetType "library"
     versions "show_module" "show_test" "show_init" "show_calls"
 }
+
+configuration "guiGtkD" {
+    targetType "library"
+    versions "GtkD"
+    dependency "gtk-d" version=">=3.10.0"
+}

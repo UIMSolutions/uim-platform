@@ -209,24 +209,4 @@ class WorkflowController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeWorkflow(const Workflow w) {
-    return Json.emptyObject
-      .set("id", w.id)
-      .set("tenantId", w.tenantId)
-      .set("scenarioId", w.scenarioId)
-      .set("name", w.name)
-      .set("description", w.description)
-      .set("status", w.status.to!string)
-      .set("currentStepIndex", w.currentStepIndex)
-      .set("totalSteps", w.totalSteps)
-      .set("completedSteps", w.completedSteps)
-      .set("sourceSystemConnectionId", w.sourceSystemConnectionId)
-      .set("targetSystemConnectionId", w.targetSystemConnectionId)
-      .set("createdBy", w.createdBy)
-      .set("startedAt", w.startedAt)
-      .set("completedAt", w.completedAt)
-      .set("createdAt", w.createdAt)
-      .set("updatedAt", w.updatedAt);
-  }
 }

@@ -73,7 +73,7 @@ unittest {
 
   auto tenantId = TenantId("tenant1");
   auto subaccountId = SubaccountId("sa1");
-  auto envType = EnvironmentType.production;
+  auto envType = EnvironmentType.kyma;
   auto status = EnvironmentStatus.active; 
   auto envId = EnvironmentInstanceId("env1"); 
   auto env = EnvironmentInstance(tenantId);

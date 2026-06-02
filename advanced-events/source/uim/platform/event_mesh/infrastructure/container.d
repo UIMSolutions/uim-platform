@@ -29,6 +29,22 @@ struct Container {
     EventSchemaController eventSchemaController;
     EventApplicationController eventApplicationController;
     MeshBridgeController meshBridgeController;
+    ODataBrokerServiceController odataBrokerServiceController;
+    ODataQueueController odataQueueController;
+    ODataTopicController odataTopicController;
+    ODataSubscriptionController odataSubscriptionController;
+    ODataEventMessageController odataEventMessageController;
+    ODataEventSchemaController odataEventSchemaController;
+    ODataEventApplicationController odataEventApplicationController;
+    ODataMeshBridgeController odataMeshBridgeController;
+    WebBrokerServiceController webBrokerServiceController;
+    WebQueueController webQueueController;
+    WebTopicController webTopicController;
+    WebSubscriptionController webSubscriptionController;
+    WebEventMessageController webEventMessageController;
+    WebEventSchemaController webEventSchemaController;
+    WebEventApplicationController webEventApplicationController;
+    WebMeshBridgeController webMeshBridgeController;
     HealthController healthController;
 }
 
@@ -36,14 +52,34 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto brokerServiceRepo = new MemoryBrokerServiceRepository();
-    auto queueRepo = new MemoryQueueRepository();
-    auto topicRepo = new MemoryTopicRepository();
-    auto subscriptionRepo = new MemorySubscriptionRepository();
-    auto eventMessageRepo = new MemoryEventMessageRepository();
-    auto eventSchemaRepo = new MemoryEventSchemaRepository();
-    auto eventApplicationRepo = new MemoryEventApplicationRepository();
-    auto meshBridgeRepo = new MemoryMeshBridgeRepository();
+    BrokerServiceRepository brokerServiceRepo;
+    QueueRepository queueRepo;
+    TopicRepository topicRepo;
+    SubscriptionRepository subscriptionRepo;
+    EventMessageRepository eventMessageRepo;
+    EventSchemaRepository eventSchemaRepo;
+    EventApplicationRepository eventApplicationRepo;
+    MeshBridgeRepository meshBridgeRepo;
+
+    if (config.repositoryBackend == "file") {
+        brokerServiceRepo = new FileBrokerServiceRepository(config.fileRepositoryBasePath);
+        queueRepo = new FileQueueRepository(config.fileRepositoryBasePath);
+        topicRepo = new FileTopicRepository(config.fileRepositoryBasePath);
+        subscriptionRepo = new FileSubscriptionRepository(config.fileRepositoryBasePath);
+        eventMessageRepo = new FileEventMessageRepository(config.fileRepositoryBasePath);
+        eventSchemaRepo = new FileEventSchemaRepository(config.fileRepositoryBasePath);
+        eventApplicationRepo = new FileEventApplicationRepository(config.fileRepositoryBasePath);
+        meshBridgeRepo = new FileMeshBridgeRepository(config.fileRepositoryBasePath);
+    } else {
+        brokerServiceRepo = new MemoryBrokerServiceRepository();
+        queueRepo = new MemoryQueueRepository();
+        topicRepo = new MemoryTopicRepository();
+        subscriptionRepo = new MemorySubscriptionRepository();
+        eventMessageRepo = new MemoryEventMessageRepository();
+        eventSchemaRepo = new MemoryEventSchemaRepository();
+        eventApplicationRepo = new MemoryEventApplicationRepository();
+        meshBridgeRepo = new MemoryMeshBridgeRepository();
+    }
 
     // Use Cases
     c.manageBrokerServicesUseCase = new ManageBrokerServicesUseCase(brokerServiceRepo);
@@ -64,6 +100,38 @@ Container buildContainer(SrvConfig config) {
     c.eventSchemaController = new EventSchemaController(c.manageEventSchemasUseCase);
     c.eventApplicationController = new EventApplicationController(c.manageEventApplicationsUseCase);
     c.meshBridgeController = new MeshBridgeController(c.manageMeshBridgesUseCase);
+    c.odataBrokerServiceController = new ODataBrokerServiceController(c.manageBrokerServicesUseCase);
+    c.odataQueueController = new ODataQueueController(c.manageQueuesUseCase);
+    c.odataTopicController = new ODataTopicController(c.manageTopicsUseCase);
+    c.odataSubscriptionController = new ODataSubscriptionController(c.manageSubscriptionsUseCase);
+    c.odataEventMessageController = new ODataEventMessageController(c.manageEventMessagesUseCase);
+    c.odataEventSchemaController = new ODataEventSchemaController(c.manageEventSchemasUseCase);
+    c.odataEventApplicationController = new ODataEventApplicationController(c.manageEventApplicationsUseCase);
+    c.odataMeshBridgeController = new ODataMeshBridgeController(c.manageMeshBridgesUseCase);
+    c.webBrokerServiceController = new WebBrokerServiceController(
+        new WebBrokerServiceModel(c.manageBrokerServicesUseCase),
+        new WebBrokerServiceView());
+    c.webQueueController = new WebQueueController(
+        new WebQueueModel(c.manageQueuesUseCase),
+        new WebQueueView());
+    c.webTopicController = new WebTopicController(
+        new WebTopicModel(c.manageTopicsUseCase),
+        new WebTopicView());
+    c.webSubscriptionController = new WebSubscriptionController(
+        new WebSubscriptionModel(c.manageSubscriptionsUseCase),
+        new WebSubscriptionView());
+    c.webEventMessageController = new WebEventMessageController(
+        new WebEventMessageModel(c.manageEventMessagesUseCase),
+        new WebEventMessageView());
+    c.webEventSchemaController = new WebEventSchemaController(
+        new WebEventSchemaModel(c.manageEventSchemasUseCase),
+        new WebEventSchemaView());
+    c.webEventApplicationController = new WebEventApplicationController(
+        new WebEventApplicationModel(c.manageEventApplicationsUseCase),
+        new WebEventApplicationView());
+    c.webMeshBridgeController = new WebMeshBridgeController(
+        new WebMeshBridgeModel(c.manageMeshBridgesUseCase),
+        new WebMeshBridgeView());
     c.healthController = new HealthController();
 
     return c;

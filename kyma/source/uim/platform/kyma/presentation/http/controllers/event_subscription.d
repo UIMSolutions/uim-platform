@@ -67,17 +67,9 @@ class EventSubscriptionController : ManageController {
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -146,14 +138,11 @@ class EventSubscriptionController : ManageController {
       r.labels = data.jsonStrMap("labels");
 
       auto result = usecase.updateSubscription(tenantId, id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription updated successfully", "Updated", 200, responseData);
   }
 
   protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -194,14 +183,11 @@ class EventSubscriptionController : ManageController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteSubscription(tenantId, id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
   }
 
 }

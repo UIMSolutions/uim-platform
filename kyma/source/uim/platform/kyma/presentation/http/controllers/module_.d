@@ -120,14 +120,11 @@ class ModuleController : ManageController {
       r.configurationJson = data.getString("configuration");
 
       auto result = usecase.updateModule(KymaModuleId(id), r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Module updated successfully", "Updated", 200, responseData);
   }
 
   protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -153,32 +150,10 @@ class ModuleController : ManageController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteModule(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-  private Json serializeModule(KymaModule m) {
-    return Json.emptyObject
-     .set("id", m.id)
-     .set("environmentId", m.environmentId)
-     .set("tenantId", m.tenantId)
-     .set("name", m.name)
-     .set("description", m.description)
-     .set("moduleType", m.moduleType.to!string)
-     .set("status", m.status.to!string)
-     .set("version", m.version_)
-     .set("channel", m.channel)
-     .set("customResourcePolicy", m.customResourcePolicy)
-     .set("configuration", m.configurationJson)
-     .set("requiredModules", serializeStrArray(m.requiredModules))
-     .set("enabledBy", m.enabledBy)
-     .set("enabledAt", m.enabledAt)
-     .set("updatedAt", m.updatedAt);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Module deleted successfully", "Deleted", 200, responseData);
   }
 }

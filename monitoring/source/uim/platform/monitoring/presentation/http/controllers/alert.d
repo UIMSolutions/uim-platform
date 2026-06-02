@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.presentation.http.controllers.alert;
 
-
-
-
 // import uim.platform.monitoring.application.usecases.manage.alerts;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.alert;
@@ -35,81 +32,78 @@ class AlertController : ManageController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto state = req.params.get("state", "");
-      auto severity = req.params.get("severity", "");
+    auto tenantId = precheck.tenantId;
+    auto state = req.params.get("state", "");
+    auto severity = req.params.get("severity", "");
 
-      Alert[] alerts;
-      if (state.length > 0)
-        alerts = usecase.listByState(tenantId, state.to!AlertState);
-      else if (severity.length > 0)
-        alerts = usecase.listBySeverity(tenantId, severity.to!AlertSeverity);
-      else
-        alerts = usecase.listAlerts(tenantId);
+    Alert[] alerts;
+    if (state.length > 0)
+      alerts = usecase.listByState(tenantId, state.to!AlertState);
+    else if (severity.length > 0)
+      alerts = usecase.listBySeverity(tenantId, severity.to!AlertSeverity);
+    else
+      alerts = usecase.listAlerts(tenantId);
 
-      auto arr = alerts.map!(a => a.toJson).array.toJson;
+    auto arr = alerts.map!(a => a.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", alerts.length)
-        .set("message", "Alerts retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", alerts.length);
+    return successResponse("Alert list retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = AlertId(precheck.id);
-      auto a = usecase.getAlert(tenantId, id);
-      if (a.isNull) {
-        writeError(res, 404, "Alert not found");
-        return;
-      }
-      res.writeJsonBody(a.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = AlertId(precheck.id);
+    auto a = usecase.getAlert(tenantId, id);
+    if (a.isNull)
+      return errorResponse("Alert not found", 404);
+
+    return successResponse("Alert retrieved successfully", "Retrieved", 200, a.toJson);
+  }
+
+  protected Json acknowledgeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    AcknowledgeAlertRequest r;
+    r.alertId = AlertId(data.getString("alertId"));
+    r.tenantId = tenantId;
+    r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.acknowledgeAlert(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("state", "acknowledged")
+      .set("message", "Alert acknowledged successfully");
+
+    return successResponse("Alert acknowledged successfully", "Acknowledged", 200, resp);
   }
 
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      AcknowledgeAlertRequest r;
-      r.alertId = AlertId(data.getString("alertId"));
-      r.tenantId = tenantId;
-      r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.acknowledgeAlert(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("state", "acknowledged")
-          .set("message", "Alert acknowledged successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = acknowledgeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       ResolveAlertRequest r;
@@ -119,62 +113,40 @@ class AlertController : ManageController {
 
       auto result = usecase.resolveAlert(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("state", "resolved")
-          .set("message", "Alert resolved successfully");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("state", "resolved")
+        .set("message", "Alert resolved successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else {
+      writeError(res, 400, result.message);
     }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = AlertId(precheck.id);
-      auto result = usecase.deleteAlert(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Alert deleted successfully");
+  auto tenantId = precheck.tenantId;
+  auto id = AlertId(precheck.id);
+  auto result = usecase.deleteAlert(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+  auto resp = Json.emptyObject
+    .set("deleted", true)
+    .set("message", "Alert deleted successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeAlert(const ref Alert a) {
-    return Json.emptyObject
-      .set("id", a.id)
-      .set("tenantId", a.tenantId)
-      .set("ruleId", a.ruleId.value)
-      .set("resourceId", a.resourceId.value)
-      .set("ruleName", a.ruleName)
-      .set("metricName", a.metricName)
-      .set("currentValue", a.currentValue)
-      .set("thresholdValue", a.thresholdValue)
-      .set("operator", a.operator_.to!string())
-      .set("severity", a.severity.to!string())
-      .set("state", a.state.to!string())
-      .set("message", a.message)
-      .set("acknowledgedBy", a.acknowledgedBy)
-      .set("resolvedBy", a.resolvedBy)
-      .set("triggeredAt", a.triggeredAt)
-      .set("acknowledgedAt", a.acknowledgedAt)
-      .set("resolvedAt", a.resolvedAt);
-  }
+  res.writeJsonBody(resp, 200);
+} else {
+  writeError(res, 404, result.message);
+}
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
 }

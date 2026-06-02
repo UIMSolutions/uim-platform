@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.event_schema;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -52,8 +54,13 @@ class EventSchemaController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
+
+        auto id = EventSchemaId(precheck.id);
+        if (id.isNull)
+            id = EventSchemaId(randomUUID().toString);
+
         EventSchemaDTO dto;
-        dto.schemaId = EventSchemaId(precheck.id);
+        dto.schemaId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -77,7 +84,6 @@ class EventSchemaController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = EventSchemaId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid event schema ID", 400);
@@ -123,7 +129,6 @@ class EventSchemaController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = EventSchemaId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid event schema ID", 400);
@@ -137,4 +142,71 @@ class EventSchemaController : ManageController {
 
         return successResponse("Event schema deleted successfully", "Deleted", 200, resp);
     }
+}
+
+unittest {
+    import uim.platform.service.tests;
+
+    @safe class EventSchemaControllerTest : ControllerTestBase {
+        void runTests() {
+            // 1. Setup
+            auto repo = new MemoryEventSchemaRepository();
+            auto usecase = new ManageEventSchemasUseCase(repo);
+            auto controller = new EventSchemaController(usecase);
+            auto tenantId = TenantId("test-tenant");
+
+            // 2. Test List Handler
+            auto reqList = createMockRequest("GET", "/api/v1/event-mesh/schemas", tenantId);
+            auto resList = controller.listHandler(reqList);
+            assert(resList.getString("status") != "error");
+            assert(resList["data"]["count"].get!int == 0);
+
+            // 3. Test Create Handler
+            Json createData = Json.emptyObject
+                .set("name", "Test Schema")
+                .set("description", "A test event schema")
+                .set("version", "1.0.0")
+                .set("schemaContent", "{}")
+                .set("createdBy", "user-1");
+
+            auto reqCreate = createMockRequest("POST", "/api/v1/event-mesh/schemas", tenantId, createData);
+            reqCreate.params["id"] = "schema-1";
+            auto resCreate = controller.createHandler(reqCreate);
+            assert(resCreate.getString("status") != "error");
+            assert(resCreate["data"]["id"].get!string == "schema-1");
+
+            // 4. Test Get Handler
+            auto reqGet = createMockRequest("GET", "/api/v1/event-mesh/schemas/schema-1", tenantId);
+            reqGet.params["id"] = "schema-1";
+            auto resGet = controller.getHandler(reqGet);
+            assert(resGet.getString("status") != "error");
+            assert(resGet["data"]["name"].get!string == "Test Schema");
+
+            // 5. Test Update Handler
+            Json updateData = Json.emptyObject
+                .set("name", "Updated Schema")
+                .set("updatedBy", "user-2");
+            auto reqUpdate = createMockRequest("PUT", "/api/v1/event-mesh/schemas/schema-1", tenantId, updateData);
+            reqUpdate.params["id"] = "schema-1";
+            auto resUpdate = controller.updateHandler(reqUpdate);
+            assert(resUpdate.getString("status") != "error");
+
+            // Verify update
+            auto resGet2 = controller.getHandler(reqGet);
+            assert(resGet2["data"]["name"].get!string == "Updated Schema");
+
+            // 6. Test Delete Handler
+            auto reqDelete = createMockRequest("DELETE", "/api/v1/event-mesh/schemas/schema-1", tenantId);
+            reqDelete.params["id"] = "schema-1";
+            auto resDelete = controller.deleteHandler(reqDelete);
+            assert(resDelete.getString("status") != "error");
+
+            // Verify deletion
+            auto resGet3 = controller.getHandler(reqGet);
+            assert(resGet3.getString("status") == "error"); // Expect 404
+        }
+    }
+
+    auto runner = new EventSchemaControllerTest();
+    runner.runTests();
 }

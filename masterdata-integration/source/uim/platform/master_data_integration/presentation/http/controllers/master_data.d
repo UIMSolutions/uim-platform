@@ -64,16 +64,9 @@ class MasterDataController : ManageController {
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Master data object created successfully");
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Master data object created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -157,13 +150,11 @@ class MasterDataController : ManageController {
       r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.updateObject(id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Master data object updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -173,36 +164,11 @@ class MasterDataController : ManageController {
 
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto result = usecase.deleteObject(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+      auto result = usecase.deleteObject(tenantId, id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-  private Json serializeObj(MasterDataObject o) {
-    return Json.emptyObject
-      .set("id", Json(o.id))
-      .set("tenantId", Json(o.tenantId))
-      .set("dataModelId", Json(o.dataModelId))
-      .set("category", Json(o.category.to!string))
-      .set("status", Json(o.status.to!string))
-      .set("objectType", Json(o.objectType))
-      .set("displayName", Json(o.displayName))
-      .set("description", Json(o.description))
-      .set("currentVersion", Json(o.currentVersion))
-      .set("versionNumber", Json(o.versionNumber))
-      .set("localId", Json(o.localId))
-      .set("globalId", Json(o.globalId))
-      .set("attributes", serializeStrMap(o.attributes))
-      .set("sourceSystem", Json(o.sourceSystem))
-      .set("sourceClient", Json(o.sourceClient))
-      .set("createdBy", Json(o.createdBy))
-      .set("createdAt", Json(o.createdAt))
-      .set("updatedAt", Json(o.updatedAt))
-      .set("updatedBy", Json(o.updatedBy));
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Master data object deleted successfully", "Deleted", 200, responseData);
   }
 }

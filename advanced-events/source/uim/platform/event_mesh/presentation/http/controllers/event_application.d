@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.event_application;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -52,8 +54,21 @@ class EventApplicationController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
+
+        auto createId = precheck.id;
+        if (createId.isEmpty)
+            createId = data.getString("id");
+        if (createId.isEmpty) {
+            try {
+                createId = req.params["id"];
+            } catch (Exception) {
+            }
+        }
+        if (createId.isEmpty)
+            createId = randomUUID().toString();
+
         EventApplicationDTO dto;
-        dto.applicationId = EventApplicationId(data.getString("id"));
+        dto.applicationId = EventApplicationId(createId);
         dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.name = data.getString("name");

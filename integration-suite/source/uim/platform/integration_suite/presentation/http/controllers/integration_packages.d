@@ -39,9 +39,11 @@ public:
       r.tags        = data.getStrings("tags");
       r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
-      if (result.success) res.writeJsonBody(result.data, 201);
-      else writeError(res, 400, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Integration package created successfully", "Created", 201, responseData);
   }
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -83,9 +85,11 @@ public:
       r.tags        = data.getStrings("tags");
       r.metadata    = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
-      if (result.success) res.writeJsonBody(result.data, 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Integration package updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -95,8 +99,10 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto result = _usecase.remove(req.getTenantId, precheck.id);
-      if (result.success) res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Integration package deleted successfully", "Deleted", 200, responseData);
   }
 }

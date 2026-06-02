@@ -40,9 +40,11 @@ public:
       r.deadLetterQueueName = data.getString("deadLetterQueueName");
       r.metadata            = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
-      if (result.success) res.writeJsonBody(result.data, 201);
-      else writeError(res, 400, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Message queue created successfully", "Created", 201, responseData);
   }
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -60,9 +62,11 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto result = _usecase.getById(req.getTenantId, precheck.id);
-      if (result.success) res.writeJsonBody(result.data, 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue retrieved successfully", "OK", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -81,11 +85,12 @@ public:
       r.retentionPeriod = data.getInteger("retentionPeriod");
       r.metadata        = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
-      if (result.success) res.writeJsonBody(result.data, 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-  }
+     if (result.hasError)
+            return errorResponse(result.message, 400);
 
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue updated successfully", "Updated", 200, responseData);}
+}
   override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
@@ -93,8 +98,10 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto result = _usecase.remove(req.getTenantId, precheck.id);
-      if (result.success) res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue deleted successfully", "Deleted", 200, responseData);
   }
 }

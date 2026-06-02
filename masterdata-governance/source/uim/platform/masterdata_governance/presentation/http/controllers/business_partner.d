@@ -48,12 +48,16 @@ class BusinessPartnerController : ManageController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+
         auto tenantId = precheck.tenantId;
-        auto id = BusinessPartnerId(
-            Id(precheck.id);
+        auto id = BusinessPartnerId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid business partner ID", 400);
+
         auto bp = usecase.getBusinessPartner(tenantId, id);
         if (bp.isNull)
             return errorResponse("Business partner not found", 404);
+        
         auto responseData = bp.toJson();
         return successResponse("Business partner retrieved successfully", "Retrieved", 200, responseData);
     }
@@ -136,7 +140,6 @@ class BusinessPartnerController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = BusinessPartnerId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid business partner ID", 400);

@@ -61,7 +61,7 @@ class ManagePermissionsUseCase {
             try { perm.permissionType = dto.permissionType.to!PermissionType; } catch (Exception) {}
         }
         import std.datetime.systime : Clock;
-        perm.grantedAt = Clock.currTime.toISOExtString;
+        perm.grantedAt = currentTimestamp;
         if (!DmsValidator.isValidPermission(perm))
             return CommandResult(false, "", "Invalid permission: principalId and target (documentId or folderId) are required");
         repo.save(perm);

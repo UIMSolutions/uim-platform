@@ -150,14 +150,11 @@ class ApiRuleController : ManageController {
       r.rules = j.toRuleEntries;
 
       auto result = usecase.updateApiRule(tenantId, id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("API rule updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -168,14 +165,11 @@ class ApiRuleController : ManageController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.deleteApiRule(tenantId, id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("API rule deleted successfully", "Deleted", 200, responseData);
   }
 
   

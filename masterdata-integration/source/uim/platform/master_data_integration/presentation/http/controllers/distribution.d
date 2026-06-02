@@ -206,27 +206,4 @@ class DistributionController : ManageController {
     }
   }
 
-  private Json serializeModel(DistributionModel m) {
-    auto catsArr = Json.emptyArray;
-    foreach (cat; m.categories)
-      catsArr ~= Json(cat.to!string);
-
-    return Json.emptyObject
-      .set("id", m.id)
-      .set("tenantId", m.tenantId)
-      .set("name", m.name)
-      .set("description", m.description)
-      .set("status", m.status.to!string)
-      .set("direction", m.direction.to!string)
-      .set("sourceClientId", m.sourceClientId)
-      .set("targetClientIds", serializeStrArray(m.targetClientIds))
-      .set("categories", catsArr)
-      .set("dataModelIds", serializeStrArray(m.dataModelIds))
-      .set("filterRuleIds", serializeStrArray(m.filterRuleIds))
-      .set("autoReplicate", m.autoReplicate)
-      .set("cronSchedule", m.cronSchedule)
-      .set("createdBy", m.createdBy)
-      .set("createdAt", m.createdAt)
-      .set("updatedAt", m.updatedAt);
-  }
 }

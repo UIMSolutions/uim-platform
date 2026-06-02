@@ -25,6 +25,7 @@ struct Workflow {
   SystemConnectionId sourceSystemConnectionId; // selected source system
   SystemConnectionId targetSystemConnectionId; // selected target system
   long startedAt;
+  long completedAt;
 
   Json toJson() const {
     return entityToJson()
@@ -37,6 +38,7 @@ struct Workflow {
       .set("completedSteps", completedSteps)
       .set("sourceSystemConnectionId", sourceSystemConnectionId.value)
       .set("targetSystemConnectionId", targetSystemConnectionId.value)
-      .set("startedAt", startedAt);
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
   }
 }

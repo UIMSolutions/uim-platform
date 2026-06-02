@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.presentation.http.controllers.metric;
 
-
-
-
 // import uim.platform.monitoring.application.usecases.manage.metrics;
 // import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.domain.entities.metric;
@@ -34,37 +31,42 @@ class MetricController : ManageController {
     router.get("/api/v1/metrics/summary", &handleSummary);
   }
 
+  protected Json pushHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    PushMetricRequest r;
+    r.tenantId = tenantId;
+    r.resourceId = data.getString("resourceId");
+    r.name = data.getString("name");
+    r.value_ = getDouble(j, "value");
+    r.unit = data.getString("unit");
+    r.category = data.getString("category");
+
+    auto result = usecase.pushMetric(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Metric pushed successfully", "Created", 201, responseData);
+  }
+
   protected void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      PushMetricRequest r;
-      r.tenantId = tenantId;
-      r.resourceId = data.getString("resourceId");
-      r.name = data.getString("name");
-      r.value_ = getDouble(j, "value");
-      r.unit = data.getString("unit");
-      r.category = data.getString("category");
-
-      auto result = usecase.pushMetric(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+    try {
+      auto response = pushHandler(req);
+      res.writeJsonBody(response.data, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
@@ -124,7 +126,6 @@ class MetricController : ManageController {
       auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
       auto metricName = req.params.get("name", "");
 
-    
       auto now = Clock.currTime().toUnixTime();
       auto windowStart = now - 3600; // Default 1 hour window
 

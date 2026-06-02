@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.mesh_bridge;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -70,8 +72,21 @@ class MeshBridgeController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
+
+        auto createId = precheck.id;
+        if (createId.isEmpty)
+            createId = data.getString("id");
+        if (createId.isEmpty) {
+            try {
+                createId = req.params["id"];
+            } catch (Exception) {
+            }
+        }
+        if (createId.isEmpty)
+            createId = randomUUID().toString();
+
         MeshBridgeDTO dto;
-        dto.bridgeId = MeshBridgeId(data.getString("id"));
+        dto.bridgeId = MeshBridgeId(createId);
         dto.tenantId = tenantId;
         dto.sourceServiceId = BrokerServiceId(data.getString("sourceServiceId"));
         dto.targetServiceId = BrokerServiceId(data.getString("targetServiceId"));

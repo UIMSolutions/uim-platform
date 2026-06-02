@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.queue;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -71,8 +73,19 @@ class QueueController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
+
+        auto createId = precheck.id;
+        if (createId.isEmpty) {
+            try {
+                createId = req.params["id"];
+            } catch (Exception) {
+            }
+        }
+        if (createId.isEmpty)
+            createId = randomUUID().toString();
+
         QueueDTO dto;
-        dto.queueId = QueueId(precheck.id);
+        dto.queueId = QueueId(createId);
         dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.name = data.getString("name");
@@ -143,4 +156,70 @@ class QueueController : ManageController {
 
         return successResponse("Queue deleted successfully", "Deleted", 200, resp);
     }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class QueueControllerTest : ControllerTestBase {
+    void runTests() {
+      // 1. Setup
+      auto repo = new MemoryQueueRepository();
+      auto usecase = new ManageQueuesUseCase(repo);
+      auto controller = new QueueController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // 2. Test List Handler
+      auto reqList = createMockRequest("GET", "/api/v1/event-mesh/queues", tenantId);
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getString("status") != "error");
+      assert(resList["data"]["count"].get!int == 0);
+
+      // 3. Test Create Handler
+      Json createData = Json.emptyObject
+        .set("brokerServiceId", "broker-1")
+        .set("name", "Test Queue")
+        .set("description", "A test queue")
+        .set("createdBy", "user-1");
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/event-mesh/queues", tenantId, createData);
+      reqCreate.params["id"] = "queue-1";
+      auto resCreate = controller.createHandler(reqCreate);
+      assert(resCreate.getString("status") != "error");
+      assert(resCreate["data"]["id"].get!string == "queue-1");
+
+      // 4. Test Get Handler
+      auto reqGet = createMockRequest("GET", "/api/v1/event-mesh/queues/queue-1", tenantId);
+      reqGet.params["id"] = "queue-1";
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getString("status") != "error");
+      assert(resGet["data"]["name"].get!string == "Test Queue");
+
+      // 5. Test Update Handler
+      Json updateData = Json.emptyObject
+        .set("name", "Updated Queue")
+        .set("updatedBy", "user-2");
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/event-mesh/queues/queue-1", tenantId, updateData);
+      reqUpdate.params["id"] = "queue-1";
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getString("status") != "error");
+
+      // Verify update
+      auto resGet2 = controller.getHandler(reqGet);
+      assert(resGet2["data"]["name"].get!string == "Updated Queue");
+
+      // 6. Test Delete Handler
+      auto reqDelete = createMockRequest("DELETE", "/api/v1/event-mesh/queues/queue-1", tenantId);
+      reqDelete.params["id"] = "queue-1";
+      auto resDelete = controller.deleteHandler(reqDelete);
+      assert(resDelete.getString("status") != "error");
+
+      // Verify deletion
+      auto resGet3 = controller.getHandler(reqGet);
+      assert(resGet3.getString("status") == "error"); // Expect 404
+    }
+  }
+
+  auto runner = new QueueControllerTest();
+  runner.runTests();
 }

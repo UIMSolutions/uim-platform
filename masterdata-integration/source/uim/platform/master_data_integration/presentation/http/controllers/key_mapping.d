@@ -200,26 +200,4 @@ class KeyMappingController : ManageController {
     }
     return entries;
   }
-
-  private Json serializeMapping(KeyMapping m) {
-    auto entriesArr = Json.emptyArray;
-    foreach (e; m.entries) {
-      entriesArr ~= Json.emptyObject
-        .set("clientId", e.clientId)
-        .set("systemId", e.systemId)
-        .set("localKey", e.localKey)
-        .set("sourceType", e.sourceType.to!string)
-        .set("isPrimary", e.isPrimary);
-    }
-
-    return Json.emptyObject
-      .set("id", m.id)
-      .set("tenantId", m.tenantId)
-      .set("masterDataObjectId", m.masterDataObjectId)
-      .set("category", m.category.to!string)
-      .set("objectType", m.objectType)
-      .set("entries", entriesArr)
-      .set("createdAt", Json(m.createdAt))
-      .set("updatedAt", Json(m.updatedAt));
-  }
 }

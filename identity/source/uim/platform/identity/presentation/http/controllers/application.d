@@ -76,9 +76,11 @@ class ApplicationController : ManageController {
             dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
             auto result = usecase.createApplication(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Application created successfully"), 201);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application created successfully", "Created", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -100,9 +102,11 @@ class ApplicationController : ManageController {
             dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
             auto result = usecase.updateApplication(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Application updated successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -113,8 +117,10 @@ class ApplicationController : ManageController {
         auto tenantId = precheck.tenantId;
             auto id = ApplicationId(precheck.id);
             auto result = usecase.deleteApplication(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "Application deleted successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application deleted successfully", "Deleted", 200, responseData);
     }
 }

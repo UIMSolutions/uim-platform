@@ -31,4 +31,37 @@ struct KymaModule {
   // Dependencies — other modules that must be enabled
   string[] requiredModules;
 
+  Json toJson() const {
+    return entityToJson
+      .set("environmentId", environmentId)
+      .set("name", name)
+      .set("description", description)
+      .set("moduleType", moduleType.to!string)
+      .set("status", status.to!string)
+      .set("version", version_)
+      .set("channel", channel)
+      .set("customResourcePolicy", customResourcePolicy)
+      .set("configurationJson", configurationJson)
+      .set("requiredModules", requiredModules);
+  }
 }
+
+//   private Json serializeModule(KymaModule m) {
+//     return Json.emptyObject
+//      .set("id", m.id)
+//      .set("environmentId", m.environmentId)
+//      .set("tenantId", m.tenantId)
+//      .set("name", m.name)
+//      .set("description", m.description)
+//      .set("moduleType", m.moduleType.to!string)
+//      .set("status", m.status.to!string)
+//      .set("version", m.version_)
+//      .set("channel", m.channel)
+//      .set("customResourcePolicy", m.customResourcePolicy)
+//      .set("configuration", m.configurationJson)
+//      .set("requiredModules", serializeStrArray(m.requiredModules))
+//      .set("enabledBy", m.enabledBy)
+//      .set("enabledAt", m.enabledAt)
+//      .set("updatedAt", m.updatedAt);
+//   }
+// }

@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.cli;
+
+public {
+	import uim.platform.event_mesh.presentation.cli.mvc;
+}

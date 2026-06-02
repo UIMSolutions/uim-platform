@@ -76,10 +76,11 @@ class ProvisioningJobController : ManageController {
             dto.type_ = data.getString("type");
 
             auto result = usecase.createJob(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Provisioning job created successfully"), 201);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Provisioning job created successfully", "Created", 201, responseData);}
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         // Status updates via start/cancel action endpoints; generic PUT not supported
@@ -95,9 +96,11 @@ class ProvisioningJobController : ManageController {
             auto path = precheck.path;
             auto id = ProvisioningJobId(precheck.id);
             auto result = usecase.deleteJob(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "Provisioning job deleted successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Provisioning job deleted successfully", "Deleted", 200, responseData);
     }
 
     private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -108,11 +111,13 @@ class ProvisioningJobController : ManageController {
             string id = parts.length >= 6 ? parts[$ - 2] : "";
             if (id.length == 0) { writeError(res, 400, "Missing job ID"); return; }
             auto result = usecase.startJob(tenantId, ProvisioningJobId(id));
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Provisioning job started"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+            if (result.hasError)
+            return errorResponse(result.message, 400);
 
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Provisioning job started successfully", "Started", 200, responseData);
+        } 
+        
     private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
@@ -120,8 +125,10 @@ class ProvisioningJobController : ManageController {
             string id = parts.length >= 6 ? parts[$ - 2] : "";
             if (id.length == 0) { writeError(res, 400, "Missing job ID"); return; }
             auto result = usecase.cancelJob(tenantId, ProvisioningJobId(id));
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Provisioning job cancelled"), 200);
+            if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Provisioning job cancelled successfully", "Cancelled", 200, responseData);
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
 }

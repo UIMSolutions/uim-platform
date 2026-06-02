@@ -65,15 +65,9 @@ class EnvironmentController : ManageController {
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Environment created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -141,13 +135,11 @@ class EnvironmentController : ManageController {
       r.administrators = data.getStrings("administrators");
 
       auto result = usecase.updateEnvironment(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Environment updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -158,12 +150,10 @@ class EnvironmentController : ManageController {
         auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
       auto result = usecase.deleteEnvironment(tenantId, id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Environment deleted successfully", "Deleted", 200, responseData);
   }
 }

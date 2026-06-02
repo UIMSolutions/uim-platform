@@ -4,3 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.web;
+
+public {
+	import uim.platform.event_mesh.presentation.web.controllers;
+	import uim.platform.event_mesh.presentation.web.models;
+	import uim.platform.event_mesh.presentation.web.views;
+
+}

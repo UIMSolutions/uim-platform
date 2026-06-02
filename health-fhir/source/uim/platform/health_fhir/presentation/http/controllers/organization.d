@@ -51,12 +51,11 @@ class OrganizationController : ManageController {
       r.name_           = data.getString("name");
       r.active_         = j.get("active", Json(true)).get!bool;
       auto result = usecase.createOrganization(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Organization").set("id", result.id), 201);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Organization created successfully", "Created", 201, responseData);
     }
   }
 
@@ -108,13 +107,11 @@ class OrganizationController : ManageController {
       r.name_   = data.getString("name");
       r.active_ = j.get("active", Json(true)).get!bool;
       auto result = usecase.updateOrganization(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Organization").set("id", result.id), 200);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Organization updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -124,11 +121,14 @@ class OrganizationController : ManageController {
 
         auto tenantId = precheck.tenantId;
       auto id = OrganizationId(precheck.id);
+      if (id.isNull) 
+        return errorResponse("Invalid organization ID", 400);
+
       auto result = usecase.deleteOrganization(tenantId, id);
-      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Organization deleted successfully", "Deleted", 200, responseData);
   }
 }

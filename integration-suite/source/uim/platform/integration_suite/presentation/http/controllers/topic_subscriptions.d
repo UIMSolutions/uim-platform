@@ -38,9 +38,11 @@ public:
       r.endpoint     = data.getString("endpoint");
       r.metadata     = data.jsonStrMap("metadata");
       auto result = _usecase.create(r);
-      if (result.success) res.writeJsonBody(result.data, 201);
-      else writeError(res, 400, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
   override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -76,16 +78,18 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateSubscriptionRequest r;
-      r.tenantId     = req.getTenantId;
+      r.tenantId     = tenantId;
       r.id           = precheck.id;
       r.status       = data.getString("status");
       r.topicPattern = data.getString("topicPattern");
       r.endpoint     = data.getString("endpoint");
       r.metadata     = data.jsonStrMap("metadata");
       auto result = _usecase.update(r);
-      if (result.success) res.writeJsonBody(result.data, 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -94,9 +98,11 @@ public:
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto result = _usecase.remove(req.getTenantId, precheck.id);
-      if (result.success) res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      auto result = _usecase.remove(tenantId, precheck.id);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
   }
 }

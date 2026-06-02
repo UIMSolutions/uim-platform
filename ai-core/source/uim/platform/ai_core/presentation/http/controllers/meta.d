@@ -14,7 +14,13 @@ class MetaController : PlatformController {
     router.get("/api/v2/lm/meta", &handleMeta);
   }
 
-  protected void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json metaHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
     auto j = Json.emptyObject;
 
     auto logs = Json.emptyObject
@@ -72,6 +78,15 @@ class MetaController : PlatformController {
     j["runtimeApiVersion"] = Json("2.21.0");
     j["runtimeIdentifier"] = Json("uim-ai-core");
 
-    res.writeJsonBody(j, 200);
+    return successResponse("Meta information retrieved successfully", "Retrieved", 200, j);
+  }
+
+  protected void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = metaHandler(req);
+      res.writeJsonBody(response, response.statusCode);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
   }
 }

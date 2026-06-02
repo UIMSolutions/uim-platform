@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.http.controllers.event_message;
 
+import std.uuid : randomUUID;
+
 import uim.platform.event_mesh;
 
 mixin(ShowModule!());
@@ -24,7 +26,7 @@ class EventMessageController : ManageController {
         router.get("/api/v1/event-mesh/messages", &handleList);
         router.get("/api/v1/event-mesh/messages/*", &handleGet);
         router.post("/api/v1/event-mesh/messages", &handlePublish);
-        router.put("/api/v1/event-mesh/messages/*/acknowledge", &handleAcknowledge);
+        // router.put("/api/v1/event-mesh/messages/*/acknowledge", &handleAcknowledge);
         router.delete_("/api/v1/event-mesh/messages/*", &handleDelete);
     }
 
@@ -73,8 +75,21 @@ class EventMessageController : ManageController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
+
+        auto createId = precheck.id;
+        if (createId.isEmpty)
+            createId = data.getString("id");
+        if (createId.isEmpty) {
+            try {
+                createId = req.params["id"];
+            } catch (Exception) {
+            }
+        }
+        if (createId.isEmpty)
+            createId = randomUUID().toString();
+
         EventMessageDTO dto;
-        dto.messageId = EventMessageId(precheck.id);
+        dto.messageId = EventMessageId(createId);
         dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.topicId = data.getString("topicId");
