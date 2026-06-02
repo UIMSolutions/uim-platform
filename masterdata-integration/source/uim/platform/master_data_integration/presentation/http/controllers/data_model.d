@@ -184,36 +184,4 @@ class DataModelController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private Json serializeModel(DataModel m) {
-    auto fieldsArr = Json.emptyArray;
-    foreach (fd; m.fields) {
-      fieldsArr ~= Json.emptyObject
-        .set("name", fd.name)
-        .set("displayName", fd.displayName)
-        .set("type", fd.type_.to!string)
-        .set("isRequired", fd.isRequired)
-        .set("isKey", fd.isKey)
-        .set("defaultValue", fd.defaultValue)
-        .set("maxLength", fd.maxLength)
-        .set("referenceModel", fd.referenceModel)
-        .set("description", fd.description);
-    }
-
-    return Json.emptyObject
-      .set("id", m.id)
-      .set("tenantId", m.tenantId)
-      .set("name", m.name)
-      .set("namespace", m.namespace)
-      .set("version", m.version_)
-      .set("description", m.description)
-      .set("category", m.category.to!string)
-      .set("isActive", m.isActive)
-      .set("keyFields", serializeStrArray(m.keyFields))
-      .set("requiredFields", serializeStrArray(m.requiredFields))
-      .set("fields", fieldsArr)
-      .set("createdBy", Json(m.createdBy))
-      .set("createdAt", Json(m.createdAt))
-      .set("updatedAt", Json(m.updatedAt));
-  }
 }

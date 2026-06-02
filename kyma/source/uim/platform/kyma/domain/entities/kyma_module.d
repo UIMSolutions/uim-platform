@@ -46,22 +46,3 @@ struct KymaModule {
   }
 }
 
-//   private Json serializeModule(KymaModule m) {
-//     return Json.emptyObject
-//      .set("id", m.id)
-//      .set("environmentId", m.environmentId)
-//      .set("tenantId", m.tenantId)
-//      .set("name", m.name)
-//      .set("description", m.description)
-//      .set("moduleType", m.moduleType.to!string)
-//      .set("status", m.status.to!string)
-//      .set("version", m.version_)
-//      .set("channel", m.channel)
-//      .set("customResourcePolicy", m.customResourcePolicy)
-//      .set("configuration", m.configurationJson)
-//      .set("requiredModules", serializeStrArray(m.requiredModules))
-//      .set("enabledBy", m.enabledBy)
-//      .set("enabledAt", m.enabledAt)
-//      .set("updatedAt", m.updatedAt);
-//   }
-// }

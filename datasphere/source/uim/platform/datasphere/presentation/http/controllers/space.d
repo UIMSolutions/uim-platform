@@ -31,147 +31,121 @@ class SpaceController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateSpaceRequest r;
-      r.tenantId = tenantId;
-      r.spaceId = SpaceId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.businessName = data.getString("businessName");
-      r.priority = data.getInteger("priority", 0);
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateSpaceRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.businessName = data.getString("businessName");
+    r.priority = data.getInteger("priority", 0);
 
-      auto result = usecase.createSpace(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Space created");
+    auto result = usecase.createSpace(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Space created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto spaces = usecase.listSpaces(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto spaces = usecase.listSpaces(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (s; spaces) {
-        jarr ~= Json.emptyObject
-          .set("id", s.id)
-          .set("name", s.name)
-          .set("description", s.description)
-          .set("businessName", s.businessName)
-          .set("priority", s.priority)
-          .set("createdAt", s.createdAt)
-          .set("updatedAt", s.updatedAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", Json(spaces.length))
-        .set("resources", jarr)
-        .set("message", "Spaces retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = SpaceId(precheck.id);
-      auto s = usecase.getSpace(tenantId, id);
-      if (s.isNull) {
-        writeError(res, 404, "Space not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto list = Json.emptyArray;
+    foreach (s; spaces) {
+      list ~= Json.emptyObject
         .set("id", s.id)
         .set("name", s.name)
         .set("description", s.description)
         .set("businessName", s.businessName)
         .set("priority", s.priority)
-        .set("enableAuditLog", s.enableAuditLog)
         .set("createdAt", s.createdAt)
-        .set("updatedAt", s.updatedAt)
-        .set("message", "Space retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("updatedAt", s.updatedAt);
     }
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Spaces retrieved successfully", 0, responseData);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = SpaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid space ID", 400);
+
+    auto s = usecase.getSpace(tenantId, id);
+    if (s.isNull)
+      return errorResponse("Space not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", s.id)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("businessName", s.businessName)
+      .set("priority", s.priority)
+      .set("enableAuditLog", s.enableAuditLog)
+      .set("createdAt", s.createdAt)
+      .set("updatedAt", s.updatedAt)
+      .set("message", "Space retrieved successfully");
+
+    return successResponse("Space retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateSpaceRequest r;
-      r.tenantId = tenantId;
-      r.spaceId = SpaceId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.businessName = data.getString("businessName");
-      r.priority = data.getInteger("priority", 0);
+    auto tenantId = precheck.tenantId;
+    UpdateSpaceRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.businessName = data.getString("businessName");
+    r.priority = data.getInteger("priority", 0);
 
-      auto result = usecase.updateSpace(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Space updated");
+    auto result = usecase.updateSpace(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Space updated successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = SpaceId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = SpaceId(precheck.id);
 
-      auto result = usecase.deleteSpace(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteSpace(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    res.writeJsonBody(Json.emptyObject, 204);
   }
 }

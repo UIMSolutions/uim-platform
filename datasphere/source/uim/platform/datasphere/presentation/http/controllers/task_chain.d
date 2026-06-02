@@ -30,121 +30,104 @@ class TaskChainController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateTaskChainRequest r;
-      r.tenantId = tenantId;
-      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.scheduleExpression = data.getString("scheduleExpression");
-      r.scheduleFrequency = data.getString("scheduleFrequency");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateTaskChainRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.scheduleExpression = data.getString("scheduleExpression");
+    r.scheduleFrequency = data.getString("scheduleFrequency");
 
-      auto now = Clock.currTime();
-      // r.createdAt = now;
-      // r.updatedAt = now;
+    auto result = usecase.createTaskChain(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      auto result = usecase.createTaskChain(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Task chain created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Task chain created successfully", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      
-      auto chains = usecase.listTaskChains(spaceId);
-      auto jarr = Json.emptyArray;
-      foreach (tc; chains) {
-        jarr ~= Json.emptyObject
-          .set("id", tc.id)
-          .set("name", tc.name)
-          .set("description", tc.description)
-          .set("lastRunAt", tc.lastRunAt)
-          .set("lastRunDurationMs", tc.lastRunDurationMs)
-          .set("createdAt", tc.createdAt);
-      }
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto response = Json.emptyObject
-        .set("count", Json(chains.length))
-        .set("resources", jarr)
-        .set("message", "Task chains retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = TaskChainId(precheck.id);
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-
-      auto tc = usecase.getTaskChain(spaceId, id);
-      if (tc.isNull) {
-        writeError(res, 404, "Task chain not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto chains = usecase.listTaskChains(spaceId);
+    auto list = Json.emptyArray;
+    foreach (tc; chains) {
+      list ~= Json.emptyObject
         .set("id", tc.id)
         .set("name", tc.name)
         .set("description", tc.description)
-        .set("scheduleExpression", tc.scheduleExpression)
         .set("lastRunAt", tc.lastRunAt)
         .set("lastRunDurationMs", tc.lastRunDurationMs)
-        .set("lastRunMessage", tc.lastRunMessage)
-        .set("createdAt", tc.createdAt)
-        .set("updatedAt", tc.updatedAt)
-        .set("message", "Task chain retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("createdAt", tc.createdAt);
     }
+
+    auto response = Json.emptyObject
+      .set("count", Json(chains.length))
+      .set("resources", list);
+    return successResponse("Task chains retrieved successfully", 0, response);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = TaskChainId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid task chain ID", 400);
+
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+
+    auto tc = usecase.getTaskChain(spaceId, id);
+    if (tc.isNull)
+      return errorResponse("Task chain not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", tc.id)
+      .set("name", tc.name)
+      .set("description", tc.description)
+      .set("scheduleExpression", tc.scheduleExpression)
+      .set("lastRunAt", tc.lastRunAt)
+      .set("lastRunDurationMs", tc.lastRunDurationMs)
+      .set("lastRunMessage", tc.lastRunMessage)
+      .set("createdAt", tc.createdAt)
+      .set("updatedAt", tc.updatedAt)
+      .set("message", "Task chain retrieved successfully");
+
+    return successResponse("Task chain retrieved successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      auto id = TaskChainId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    auto id = TaskChainId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid task chain ID", 400);
 
-      auto result = usecase.deleteTaskChain(tenantId, spaceId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteTaskChain(tenantId, spaceId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Task chain deleted successfully", 204, Json.emptyObject);
   }
 }

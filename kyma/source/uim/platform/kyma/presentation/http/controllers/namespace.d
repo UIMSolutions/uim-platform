@@ -74,8 +74,12 @@ class NamespaceController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto envIdParam = req.params.get("environmentId");
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
@@ -155,27 +159,5 @@ class NamespaceController : ManageController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json serializeNs(Namespace ns) {
-    return Json.emptyObject
-      .set("id", ns.id)
-      .set("environmentId", ns.environmentId)
-      .set("tenantId", ns.tenantId)
-      .set("name", ns.name)
-      .set("description", ns.description)
-      .set("status", ns.status.to!string)
-      .set("cpuLimit", ns.cpuLimit)
-      .set("memoryLimit", ns.memoryLimit)
-      .set("cpuRequest", ns.cpuRequest)
-      .set("memoryRequest", ns.memoryRequest)
-      .set("podLimit", ns.podLimit)
-      .set("quotaEnforcement", ns.quotaEnforcement.to!string)
-      .set("istioInjection", ns.istioInjection)
-      .set("labels", serializeStrMap(ns.labels))
-      .set("annotations", serializeStrMap(ns.annotations))
-      .set("createdBy", ns.createdBy)
-      .set("createdAt", ns.createdAt)
-      .set("updatedAt", ns.updatedAt);
   }
 }

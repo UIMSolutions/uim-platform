@@ -49,8 +49,12 @@ public:
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto result = _usecase.getAll(req.getTenantId);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 500, result.message);

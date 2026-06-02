@@ -33,138 +33,124 @@ class DocumentTypeController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDocumentTypeRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.category = data.getString("category");
-      r.defaultSchemaId = data.getString("defaultSchemaId");
-      r.supportedFileTypes = data.getStrings("supportedFileTypes");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateDocumentTypeRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.category = data.getString("category");
+    r.defaultSchemaId = data.getString("defaultSchemaId");
+    r.supportedFileTypes = data.getStrings("supportedFileTypes");
 
-      auto result = usecase.createDocumentType(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Document type created");
+    auto result = usecase.createDocumentType(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Document type created");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Document type created successfully", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto types = usecase.listDocumentTypes(clientId);
-      auto jarr = types.map!(dt => dt.toJson).array.toJson;
-      auto resp = Json.emptyObject
-        .set("count", Json(types.length))
-        .set("resources", list);
+    auto tenantId = precheck.tenantId;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto types = usecase.listDocumentTypes(tenantId, clientId);
+    auto list = types.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Document types retrieved successfully", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeId(precheck.id);
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentTypeId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document type ID", 400);
 
-      auto dt = usecase.getDocumentType(tenantId, id, clientId);
-      if (dt.isNull) {
-        writeError(res, 404, "Document type not found");
-        return;
-      }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      auto resp = Json.emptyObject
-        .set("id", dt.id)
-        .set("name", dt.name)
-        .set("description", dt.description)
-        .set("category", dt.category)
-        .set("defaultSchemaId", dt.defaultSchemaId)
-        .set("supportedFileTypes", dt.supportedFileTypes)
-        .set("createdAt", dt.createdAt)
-        .set("updatedAt", dt.updatedAt);
+    auto dt = usecase.getDocumentType(tenantId, id, clientId);
+    if (dt.isNull)
+      return errorResponse("Document type not found", 404);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("id", dt.id)
+      .set("name", dt.name)
+      .set("description", dt.description)
+      .set("category", dt.category)
+      .set("defaultSchemaId", dt.defaultSchemaId)
+      .set("supportedFileTypes", dt.supportedFileTypes)
+      .set("createdAt", dt.createdAt)
+      .set("updatedAt", dt.updatedAt);
+
+    return successResponse("Document type retrieved successfully", 0, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeId(precheck.id);
-      auto data = precheck.data;
-      UpdateDocumentTypeRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentTypeId = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.category = data.getString("category");
-      r.defaultSchemaId = data.getString("defaultSchemaId");
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentTypeId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document type ID", 400);
 
-      auto result = usecase.updateDocumentType(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Document type updated");
+    auto data = precheck.data;
+    UpdateDocumentTypeRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.documentTypeId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.category = data.getString("category");
+    r.defaultSchemaId = data.getString("defaultSchemaId");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateDocumentType(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Document type updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DocumentTypeId(precheck.id);
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentTypeId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document type ID", 400);
 
-      auto result = usecase.deleteDocumentType(tenantId, id, clientId);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+
+    auto result = usecase.deleteDocumentType(tenantId, id, clientId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Document type deleted successfully", 204, Json.emptyObject);
   }
 }

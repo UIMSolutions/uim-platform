@@ -161,17 +161,9 @@ class TaskController : ManageController {
       auto result = taskUsecase.updateTask(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "PATask updated");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("TASK updated successfully", 200, responseData);
   }
 
   protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -260,16 +252,8 @@ class TaskController : ManageController {
       auto result = taskUsecase.deleteTask(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "PATask deleted");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("TASK deleted successfully", 200, responseData);
   }
 }

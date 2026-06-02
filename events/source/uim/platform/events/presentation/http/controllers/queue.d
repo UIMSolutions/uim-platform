@@ -84,10 +84,11 @@ class QueueController : ManageController {
             auto result = usecase.createQueue(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue created"), 201);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue created successfully", 201, responseData);
     }
+
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
@@ -110,10 +111,11 @@ class QueueController : ManageController {
             auto result = usecase.updateQueue(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue updated"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue updated successfully", 200, responseData);
     }
+
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -125,8 +127,8 @@ class QueueController : ManageController {
             auto result = usecase.deleteQueue(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Queue deleted"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Queue deleted successfully", 200, responseData);
     }
 }

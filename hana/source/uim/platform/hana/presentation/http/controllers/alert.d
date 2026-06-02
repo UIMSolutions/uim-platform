@@ -154,17 +154,9 @@ class AlertController : ManageController {
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Alert updated");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Alert updated successfully", 200, responseData);
   }
 
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -213,12 +205,8 @@ class AlertController : ManageController {
       auto result = usecase.deleteAlert(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Alert deleted successfully", 200, responseData);
   }
 }

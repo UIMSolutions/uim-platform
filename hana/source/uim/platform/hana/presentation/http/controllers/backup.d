@@ -148,17 +148,9 @@ class BackupController : ManageController {
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Backup updated");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Backup updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -171,12 +163,8 @@ class BackupController : ManageController {
       auto result = usecase.deleteBackup(id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Backup deleted successfully", 200, responseData);
   }
 }

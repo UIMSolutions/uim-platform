@@ -29,128 +29,94 @@ class AddressController : PlatformController {
     router.get("/api/v1/addresses", &handleList);
   }
 
+  protected Json cleanseHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = CleanseAddressRequest();
+    r.tenantId = tenantId;
+    r.sourceRecordId = data.getString("sourceRecordId");
+    r.line1 = data.getString("line1");
+    r.line2 = data.getString("line2");
+    r.city = data.getString("city");
+    r.region = data.getString("region");
+    r.postalCode = data.getString("postalCode");
+    r.country = data.getString("country");
+
+    auto result = usecase.cleanse(r);
+    return successResponse("Address cleansed successfully", 0, result.toJson);
+  }
+
   protected void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = CleanseAddressRequest();
-      r.tenantId = tenantId;
-      r.sourceRecordId = data.getString("sourceRecordId");
-      r.line1 = data.getString("line1");
-      r.line2 = data.getString("line2");
-      r.city = data.getString("city");
-      r.region = data.getString("region");
-      r.postalCode = data.getString("postalCode");
-      r.country = data.getString("country");
-
-      auto result = usecase.cleanse(r);
-      res.writeJsonBody(result.toJson, 200);
+      auto response = cleanseHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json cleanseBatchHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto batchReq = CleanseBatchAddressRequest();
+    batchReq.tenantId = tenantId;
+
+    foreach (item; data.getArray("addresses")) {
+      if (item.isObject) {
+        CleanseAddressRequest a;
+        a.tenantId = batchReq.tenantId;
+        a.sourceRecordId = item.getString("sourceRecordId");
+        a.line1 = item.getString("line1");
+        a.line2 = item.getString("line2");
+        a.city = item.getString("city");
+        a.region = item.getString("region");
+        a.postalCode = item.getString("postalCode");
+        a.country = item.getString("country");
+        batchReq.addresses ~= a;
+      }
+    }
+
+    auto results = usecase.cleanseBatch(batchReq);
+    auto arr = results.map!(r => r.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("results", arr)
+      .set("totalCount", Json(results.length))
+      .set("message", "Address cleansing results retrieved successfully");
+
+    return successResponse("Address cleansing batch processed successfully", 0, resp);
+  }
+
   protected void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto batchReq = CleanseBatchAddressRequest();
-      batchReq.tenantId = tenantId;
-
-      foreach (item; j.getArray("addresses")) {
-        if (item.isObject) {
-          CleanseAddressRequest a;
-          a.tenantId = batchReq.tenantId;
-          a.sourceRecordId = item.getString("sourceRecordId");
-          a.line1 = item.getString("line1");
-          a.line2 = item.getString("line2");
-          a.city = item.getString("city");
-          a.region = item.getString("region");
-          a.postalCode = item.getString("postalCode");
-          a.country = item.getString("country");
-          batchReq.addresses ~= a;
-        }
-      }
-
-      auto results = usecase.cleanseBatch(batchReq);
-      auto arr = results.map!(r => r.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("results", arr)
-        .set("totalCount", Json(results.length))
-        .set("message", "Address cleansing results retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = cleanseBatchHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto records = usecase.getByTenant(tenantId);
-      auto arr = records.map!(r => r.toJson).array.toJson;
+    auto records = usecase.getByTenant(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(records.length))
-        .set("message", "Address records retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeAddress(const AddressRecord r) {
-    // Input
-    auto input = Json.emptyObject;
-    input["line1"] = Json(r.inputLine1);
-    input["line2"] = Json(r.inputLine2);
-    input["city"] = Json(r.inputCity);
-    input["region"] = Json(r.inputRegion);
-    input["postalCode"] = Json(r.inputPostalCode);
-    input["country"] = Json(r.inputCountry);
-
-    // Cleansed output
-    auto output = Json.emptyObject
-      .set("line1", r.line1)
-      .set("line2", r.line2)
-      .set("city", r.city)
-      .set("region", r.region)
-      .set("postalCode", r.postalCode)
-      .set("country", r.country)
-      .set("countryIso2", r.countryIso2);
-
-    // Geocoding
-    auto geo = Json.emptyObject
-      .set("latitude", r.latitude)
-      .set("longitude", r.longitude)
-      .set("precision", r.geocodePrecision.to!string);
-
-    auto j = Json.emptyObject
-      .set("id", r.id)
-      .set("tenantId", r.tenantId)
-      .set("sourceRecordId", r.sourceRecordId)
-      .set("input", input)
-      .set("output", output)
-      .set("addressType", r.addressType.to!string)
-      .set("quality", r.quality.to!string)
-      .set("geocoding", geo)
-      .set("cleansedAt", r.cleansedAt);
-
-    if (r.changeLog.length > 0) {
-      auto changes = Json.emptyArray;
-      foreach (ch; r.changeLog)
-        changes ~= Json(ch);
-      j["changeLog"] = changes;
-    }
-
-    return j;
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Addresses retrieved successfully", 0, responseData);
   }
 }

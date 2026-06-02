@@ -30,8 +30,12 @@ class AutomationController : ManageController {
         router.delete_("/api/v1/process-automation/automations/*", &handleDelete);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto tenantId = precheck.tenantId;
 
             auto data = precheck.data;
@@ -163,8 +167,12 @@ class AutomationController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
             auto tenantId = precheck.tenantId;
 

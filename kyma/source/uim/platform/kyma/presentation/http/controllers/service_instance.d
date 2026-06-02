@@ -155,13 +155,11 @@ class ServiceInstanceController : ManageController {
       auto id = ServiceInstanceId(
         Id(precheck.id);
       auto result = usecase.deleteServiceInstance(tenantId, id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service instance deleted successfully", 200, responseData);
   }
 
 }

@@ -46,42 +46,4 @@ class DashboardController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeDashboard(const QualityDashboard d) {
-    // Record metrics
-    auto records = Json.emptyObject;
-    records["total"] = Json(d.totalRecords);
-    records["valid"] = Json(d.validRecords);
-    records["invalid"] = Json(d.invalidRecords);
-    records["duplicates"] = Json(d.duplicateRecords);
-    records["cleansed"] = Json(d.cleansedRecords);
-
-    // Scores
-    auto scores = Json.emptyObject;
-    scores["overall"] = Json(d.overallScore);
-    scores["completeness"] = Json(d.completenessScore);
-    scores["validity"] = Json(d.validityScore);
-    scores["uniqueness"] = Json(d.uniquenessScore);
-    scores["consistency"] = Json(d.consistencyScore);
-    scores["accuracy"] = Json(d.accuracyScore);
-
-    // Violations by severity
-    auto sevArr = Json.emptyArray;
-    foreach (s; d.violationsBySeverity) {
-      sevArr ~= Json.emptyObject
-        .set("severity", s.severity.to!string)
-        .set("count", s.count);
-    }
-
-    return Json.emptyObject
-      .set("tenantId", d.tenantId)
-      .set("datasetId", d.datasetId)
-      .set("datasetName", d.datasetName)
-      .set("records", records)
-      .set("scores", scores)
-      .set("rating", d.rating.to!string)
-      .set("violationCount", d.violationCount)
-      .set("violationsBySeverity", sevArr)
-      .set("computedAt", d.computedAt);
-  }
 }

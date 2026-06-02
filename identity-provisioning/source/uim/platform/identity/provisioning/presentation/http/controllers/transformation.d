@@ -169,18 +169,4 @@ class TransformationController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeTransformation(const Transformation t) {
-    return Json.emptyObject
-      .set("id", t.id)
-      .set("tenantId", t.tenantId)
-      .set("systemId", t.systemId)
-      .set("systemRole", t.systemRole.to!string)
-      .set("name", t.name)
-      .set("mappingRules", t.mappingRules)
-      .set("conditions", t.conditions)
-      .set("createdBy", t.createdBy)
-      .set("createdAt", t.createdAt)
-      .set("updatedAt", t.updatedAt);
-  }
 }

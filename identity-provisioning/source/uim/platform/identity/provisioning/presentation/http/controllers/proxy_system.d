@@ -190,20 +190,4 @@ class ProxySystemController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeSystem(const ProxySystem s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("tenantId", s.tenantId)
-      .set("name", s.name)
-      .set("description", s.description)
-      .set("systemType", s.systemType.to!string)
-      .set("status", s.status.to!string)
-      .set("connectionConfig", s.connectionConfig)
-      .set("sourceSystemId", s.sourceSystemId)
-      .set("targetSystemId", s.targetSystemId)
-      .set("createdBy", s.createdBy)
-      .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt);
-  }
 }

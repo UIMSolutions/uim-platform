@@ -77,9 +77,9 @@ class TaskController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
       auto tasks = usecase.listTasks(tenantId, spaceId);
-      auto jarr = Json.emptyArray;
+      auto list = Json.emptyArray;
       foreach (t; tasks) {
-        jarr ~= Json.emptyObject
+        list ~= Json.emptyObject
           .set("id", t.id)
           .set("name", t.name)
           .set("description", t.description)
@@ -88,15 +88,13 @@ class TaskController : ManageController {
           .set("createdAt", t.createdAt);
       }
 
-      auto resp = Json.emptyObject
-        .set("count", tasks.length)
-        .set("resources", jarr)
-        .set("message", "Tasks retrieved successfully");
+     auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Tasks retrieved successfully", 0, responseData);
+      }
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

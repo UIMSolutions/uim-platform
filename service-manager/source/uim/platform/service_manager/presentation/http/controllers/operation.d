@@ -104,10 +104,11 @@ class OperationController : ManageController {
             auto result = usecase.updateOperation(r);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Operation updated successfully", 200, responseData);
     }
+
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -120,8 +121,8 @@ class OperationController : ManageController {
             auto result = usecase.deleteOperation(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject, 204);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Operation deleted successfully", 200, responseData);
     }
 }

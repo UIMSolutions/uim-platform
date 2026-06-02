@@ -148,17 +148,4 @@ class MetricController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeMetric(const ref Metric m) {
-    return Json.emptyObject
-      .set("id", m.id)
-      .set("tenantId", m.tenantId)
-      .set("resourceId", m.resourceId)
-      .set("definitionId", m.definitionId)
-      .set("name", m.name)
-      .set("value", m.value_)
-      .set("unit", m.unit.to!string)
-      .set("category", m.category.to!string)
-      .set("timestamp", m.timestamp);
-  }
 }

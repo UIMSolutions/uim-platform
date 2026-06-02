@@ -51,17 +51,9 @@ class HDIContainerController : ManageController {
       auto result = usecase.createHDIContainer(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "HDI Container created");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("HDI Container created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -143,17 +135,9 @@ class HDIContainerController : ManageController {
       auto result = usecase.updateHDIContainer(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "HDI Container updated");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("HDI Container updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -165,14 +149,10 @@ class HDIContainerController : ManageController {
       auto id = HDIContainerId(precheck.id);
 
       auto result = usecase.deleteHDIContainer(tenantId, id);
-      if (result.hasError)
+     if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("HDI Container deleted successfully", 200, responseData);
   }
 }

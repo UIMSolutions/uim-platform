@@ -30,72 +30,65 @@ class CleansingJobController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateCleansingJobRequest();
-      r.tenantId = tenantId;
-      r.datasetId = data.getString("datasetId");
-      r.requestedBy = data.getString("requestedBy");
-      r.ruleIds = data.getStrings("ruleIds");
+    auto data = precheck.data;
+    auto r = CreateCleansingJobRequest();
+    r.tenantId = tenantId;
+    r.datasetId = data.getString("datasetId");
+    r.requestedBy = data.getString("requestedBy");
+    r.ruleIds = data.getStrings("ruleIds");
 
-      auto result = usecase.createCleansingJob(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("status", "pending")
-            .set("message", "Cleansing job created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-      auto jobs = usecase.listCleansingJobs(tenantId);
-      auto arr = jobs.map!(j => j.toJson).array.toJson;
-
+    auto result = usecase.createCleansingJob(r);
+    if (result.isSuccess()) {
       auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(jobs.length))
-            .set("message", "Cleansing jobs retrieved successfully");
+        .set("id", result.id)
+        .set("status", "pending")
+        .set("message", "Cleansing job created successfully");
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 201);
+    } else {
+      writeError(res, 400, result.message);
     }
   }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = CleansingJobId(precheck.id);
-
-      auto job = usecase.getCleansingJob(tenantId, id);
-      if (job.isNull) {
-        writeError(res, 404, "Cleansing job not found");
-        return;
-      }
-      res.writeJsonBody(job.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+
+  auto jobs = usecase.listCleansingJobs(tenantId);
+  auto arr = jobs.map!(j => j.toJson).array.toJson;
+
+  auto resp = Json.emptyObject
+    .set("items", arr)
+    .set("totalCount", Json(jobs.length));
+  return successResponse("Cleansing jobs retrieved successfully", 0, resp);
+}
+
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = CleansingJobId(precheck.id);
+
+  auto job = usecase.getCleansingJob(tenantId, id);
+  if (job.isNull)
+    return errorResponse("Cleansing job not found", 404);
+
+  return successResponse("Cleansing job retrieved successfully", 200, job.toJson);
+}
+
 }

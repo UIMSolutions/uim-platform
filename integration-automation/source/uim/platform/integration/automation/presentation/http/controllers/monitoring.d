@@ -135,19 +135,4 @@ class MonitoringController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeLog(const ExecutionLog l) {
-    return Json.emptyObject
-    .set("id", l.id)
-    .set("workflowId", l.workflowId)
-    .set("stepId", l.stepId)
-    .set("tenantId", l.tenantId)
-    .set("action", l.action)
-    .set("outcome", l.outcome.to!string)
-    .set("message", l.message)
-    .set("details", l.details)
-    .set("executedBy", l.executedBy)
-    .set("durationMs", l.durationMs)
-    .set("timestamp", l.timestamp);
-  }
 }

@@ -95,37 +95,4 @@ class ValidateController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeResult(const ValidationResult r) {
-    auto j = Json.emptyObject
-      .set("recordId", r.recordId)
-      .set("tenantId", r.tenantId)
-      .set("datasetId", r.datasetId)
-      .set("totalRulesChecked", r.totalRulesChecked)
-      .set("passedRules", r.passedRules)
-      .set("failedRules", r.failedRules)
-      .set("qualityScore", r.qualityScore)
-      .set("validatedAt", r.validatedAt);
-
-    if (r.violations.length > 0) {
-      auto violations = Json.emptyArray;
-      foreach (v; r.violations) {
-        auto vj = Json.emptyObject
-          .set("ruleId", v.ruleId)
-          .set("ruleName", v.ruleName)
-          .set("fieldName", v.fieldName)
-          .set("fieldValue", v.fieldValue)
-          .set("severity", v.severity.to!string)
-          .set("message", v.message);
-
-        if (v.suggestedValue.length > 0)
-          vj = vj.set("suggestedValue", v.suggestedValue);
-
-        violations ~= vj;
-      }
-      j["violations"] = violations;
-    }
-
-    return j;
-  }
 }

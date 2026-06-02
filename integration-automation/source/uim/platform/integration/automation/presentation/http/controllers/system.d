@@ -191,40 +191,5 @@ class SystemController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeSystem(const SystemConnection s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("tenantId", s.tenantId)
-      .set("name", s.name)
-      .set("description", s.description)
-      .set("systemType", s.systemType.to!string)
-      .set("host", s.host)
-      .set("port", s.port)
-      .set("client", s.client)
-      .set("protocol", s.protocol)
-      .set("status", s.status.to!string)
-      .set("environment", s.environment)
-      .set("region", s.region)
-      .set("systemId", s.systemId)
-      .set("tenant", s.tenant)
-      .set("createdBy", s.createdBy)
-      .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt);
-  }
 }
 
-ConnectionStatus parseConnectionStatus(string status) {
-  switch (status.toLower()) {
-  case "active":
-    return ConnectionStatus.active;
-  case "inactive":
-    return ConnectionStatus.inactive;
-  case "error":
-    return ConnectionStatus.error;
-  case "testing":
-    return ConnectionStatus.testing;
-  default:
-    return ConnectionStatus.inactive;
-  }
-}

@@ -30,123 +30,106 @@ class ConnectionController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateConnectionRequest r;
-      r.tenantId = tenantId;
-      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.type = data.getString("type");
-      r.host = data.getString("host");
-      r.port = data.getInteger("port", 0);
-      r.database = data.getString("database");
-      r.user = data.getString("user");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateConnectionRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.type = data.getString("type");
+    r.host = data.getString("host");
+    r.port = data.getInteger("port", 0);
+    r.database = data.getString("database");
+    r.user = data.getString("user");
 
-      auto result = usecase.createConnection(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Connection created");
+    auto result = usecase.createConnection(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Connection created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto connections = usecase.listConnections(tenantId, spaceId);
-      auto jarr = Json.emptyArray;
-      foreach (c; connections) {
-        jarr ~= Json.emptyObject
-          .set("id", c.id)
-          .set("name", c.name)
-          .set("description", c.description)
-          .set("isValid", c.isValid)
-          .set("statusMessage", c.statusMessage)
-          .set("createdAt", c.createdAt)
-          .set("updatedAt", c.updatedAt);
-      }
-
-auto list = items.map!(item => item.toJson()).array.toJson;
-
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("", 0, responseData);
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = ConnectionId(precheck.id);
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-
-      auto c = usecase.getConnection(tenantId, spaceId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Connection not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto connections = usecase.listConnections(tenantId, spaceId);
+    auto list = Json.emptyArray;
+    foreach (c; connections) {
+      list ~= Json.emptyObject
         .set("id", c.id)
         .set("name", c.name)
         .set("description", c.description)
-        .set("host", c.host)
-        .set("port", c.port)
-        .set("database", c.database)
         .set("isValid", c.isValid)
         .set("statusMessage", c.statusMessage)
         .set("createdAt", c.createdAt)
-        .set("updatedAt", c.updatedAt)
-        .set("message", "Connection retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("updatedAt", c.updatedAt);
     }
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Connections retrieved successfully", 0, responseData);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ConnectionId(precheck.id);
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+
+    auto c = usecase.getConnection(tenantId, spaceId, id);
+    if (c.isNull)
+      return errorResponse("Connection not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", c.id)
+      .set("name", c.name)
+      .set("description", c.description)
+      .set("host", c.host)
+      .set("port", c.port)
+      .set("database", c.database)
+      .set("isValid", c.isValid)
+      .set("statusMessage", c.statusMessage)
+      .set("createdAt", c.createdAt)
+      .set("updatedAt", c.updatedAt)
+      .set("message", "Connection retrieved successfully");
+
+    return successResponse("Connection retrieved successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ConnectionId(precheck.id);
-      auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = ConnectionId(precheck.id);
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-      auto result = usecase.deleteConnection(tenantId, spaceId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteConnection(tenantId, spaceId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Connection deleted successfully", 204, Json.emptyObject);
   }
 }

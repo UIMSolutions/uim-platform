@@ -100,47 +100,4 @@ class ProfileController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeProfile(const DataProfile p) {
-    auto j = Json.emptyObject
-      .set("id", p.id)
-      .set("tenantId", p.tenantId)
-      .set("datasetId", p.datasetId)
-      .set("datasetName", p.datasetName)
-      .set("totalRecords", p.totalRecords)
-      .set("profiledRecords", p.profiledRecords)
-      .set("overallQualityScore", p.overallQualityScore)
-      .set("rating", p.rating.to!string)
-      .set("profiledAt", p.profiledAt)
-      .set("duration", p.duration);
-
-    auto cols = Json.emptyArray;
-    foreach (c; p.columns) {
-      auto cj = Json.emptyObject
-        .set("fieldName", c.fieldName)
-        .set("detectedType", c.detectedType.to!string)
-        .set("totalValues", c.totalValues)
-        .set("nullCount", c.nullCount)
-        .set("emptyCount", c.emptyCount)
-        .set("uniqueCount", c.uniqueCount)
-        .set("duplicateCount", c.duplicateCount)
-        .set("completeness", c.completeness)
-        .set("uniqueness", c.uniqueness)
-        .set("validity", c.validity)
-        .set("minLength", c.minLength)
-        .set("maxLength", c.maxLength)
-        .set("avgLength", c.avgLength);
-
-      if (c.topValues.length > 0) {
-        auto tv = Json.emptyArray;
-        foreach (v; c.topValues)
-          tv ~= Json(v);
-        cj["topValues"] = tv;
-      }
-      cols ~= cj;
-    }
-    j["columns"] = cols;
-
-    return j;
-  }
 }

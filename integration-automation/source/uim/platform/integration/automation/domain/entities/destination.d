@@ -29,4 +29,22 @@ struct Destination {
   string audience;
   string scope_; // OAuth scope
   bool isEnabled = true;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("systemId", systemId)
+      .set("destinationType", destinationType.to!string())
+      .set("url", url)
+      .set("authenticationType", authenticationType.to!string())
+      .set("proxyType", proxyType.to!string())
+      .set("cloudConnectorLocationId", cloudConnectorLocationId)
+      .set("user", user) // consider masking in real implementation
+      .set("tokenServiceUrl", tokenServiceUrl)
+      .set("tokenServiceUser", tokenServiceUser)
+      .set("audience", audience)
+      .set("scope", scope_)
+      .set("isEnabled", isEnabled);
+  }
 }

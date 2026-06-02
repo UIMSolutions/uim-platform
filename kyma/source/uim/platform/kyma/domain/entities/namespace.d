@@ -35,7 +35,7 @@ struct Namespace {
   bool istioInjection = true;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("environmentId", environmentId.value)
       .set("name", name)
       .set("description", description)
@@ -49,6 +49,5 @@ struct Namespace {
       .set("istioInjection", istioInjection)
       .set("labels", labels)
       .set("annotations", annotations);
-    return j;
   }
 }

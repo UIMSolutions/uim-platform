@@ -62,21 +62,11 @@ class ValidationRuleController : ManageController {
       r.priority = data.getInteger("priority");
 
       auto result = usecase.create(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Validation rule created successfully");
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-      {
-        writeError(res, 400, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Validation rule created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -86,17 +76,12 @@ class ValidationRuleController : ManageController {
 
         auto tenantId = precheck.tenantId;
       auto rules = usecase.listByTenant(tenantId);
-      auto arr = rules.map!(r => r.toJson).array.toJson;
+      auto list = rules.map!(item => item.toJson()).array.toJson;
 
-      auto resp = Json.emptyObject
-            .set("items", arr)
-            .set("totalCount", Json(rules.length));
-
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -146,21 +131,11 @@ class ValidationRuleController : ManageController {
       r.priority = data.getInteger("priority");
 
       auto result = usecase.update(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Validation rule updated successfully");
-            
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        writeError(res, 400, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Validation rule updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -172,89 +147,9 @@ class ValidationRuleController : ManageController {
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto result = usecase.deleteValidationRule(tenantId, id);
-      if (result.isSuccess())
-        res.writeJsonBody(Json.emptyObject, 204);
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+     if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Validation rule deleted successfully", 200, responseData);
   }
-
-  private static Json serializeRule(const ValidationRule r) {
-    auto j = Json.emptyObject
-    .set("id", r.id)
-    .set("tenantId", r.tenantId)
-    .set("name", r.name)
-    .set("description", r.description)
-    .set("datasetPattern", r.datasetPattern)
-    .set("fieldName", r.fieldName)
-    .set("ruleType", r.ruleType.to!string)
-    .set("severity", r.severity.to!string)
-    .set("status", r.status.to!string)
-    .set("pattern", r.pattern)
-    .set("minValue", r.minValue)
-    .set("maxValue", r.maxValue)
-    .set("category", r.category)
-    .set("priority", r.priority)
-    .set("createdAt", r.createdAt)
-    .set("updatedAt", r.updatedAt);
-
-    if (r.allowedValues.length > 0) {
-      auto arr = Json.emptyArray;
-      foreach (v; r.allowedValues)
-        arr ~= Json(v);
-      j["allowedValues"] = arr;
-    }
-
-    return j;
-  }
-
-  private static RuleType parseRuleType(string s) {
-    switch (s) {
-    case "required":
-      return RuleType.required;
-    case "format":
-      return RuleType.format_;
-    case "range":
-      return RuleType.range;
-    case "enumeration":
-      return RuleType.enumeration;
-    case "length":
-      return RuleType.length;
-    case "crossField":
-      return RuleType.crossField;
-    case "custom":
-      return RuleType.custom;
-    case "referenceData":
-      return RuleType.referenceData;
-    default:
-      return RuleType.required;
-    }
-  }
-
-  private static RuleSeverity parseSeverity(string s) {
-    switch (s) {
-    case "warning":
-      return RuleSeverity.warning;
-    case "error":
-      return RuleSeverity.error;
-    case "critical":
-      return RuleSeverity.critical;
-    default:
-      return RuleSeverity.info;
-    }
-  }
-
-  private static RuleStatus parseRuleStatus(string s) {
-    switch (s) {
-    case "active":
-      return RuleStatus.active;
-    case "inactive":
-      return RuleStatus.inactive;
-    default:
-      return RuleStatus.draft;
-    }
-  }
-}

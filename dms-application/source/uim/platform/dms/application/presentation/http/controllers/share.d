@@ -126,29 +126,10 @@ auto list = items.map!(item => item.toJson()).array.toJson;
       auto id = ShareId(precheck.id);
       
       auto result = usecase.deleteShare(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("deleted", true);
+      if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private static Json serializeShare(const Share s) {
-    return Json.emptyObject
-      .set("id", s.id)
-      .set("tenantId", s.tenantId)
-      .set("documentId", s.documentId)
-      .set("shareType", s.shareType.to!string)
-      .set("sharedWith", s.sharedWith)
-      .set("permissionLevel", s.permissionLevel.to!string)
-      .set("status", s.status.to!string)
-      .set("expiresAt", s.expiresAt)
-      .set("createdBy", s.createdBy)
-      .set("createdAt", s.createdAt);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Share deleted successfully", 200, responseData);
   }
 }

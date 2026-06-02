@@ -30,76 +30,79 @@ class RemoteTableController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateRemoteTableRequest r;
-      r.tenantId = tenantId;
-      r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-      r.connectionId = ConnectionId(data.getString("connectionId"));
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.remoteSchema = data.getString("remoteSchema");
-      r.remoteObjectName = data.getString("remoteObjectName");
-      r.replicationMode = data.getString("replicationMode");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateRemoteTableRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    r.connectionId = ConnectionId(data.getString("connectionId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.remoteSchema = data.getString("remoteSchema");
+    r.remoteObjectName = data.getString("remoteObjectName");
+    r.replicationMode = data.getString("replicationMode");
 
-      auto result = usecase.createRemoteTable(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-        
-      auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
-}
+    auto result = usecase.createRemoteTable(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-
-  auto tables = usecase.listRemoteTables(tenantId, spaceId);
-  auto list = Json.emptyArray;
-  foreach (rt; tables) {
-    list ~= Json.emptyObject
-      .set("id", rt.id)
-      .set("name", rt.name)
-      .set("description", rt.description)
-      .set("connectionId", rt.connectionId)
-      .set("remoteSchema", rt.remoteSchema)
-      .set("remoteObjectName", rt.remoteObjectName)
-      .set("rowCount", rt.rowCount)
-      .set("lastReplicatedAt", rt.lastReplicatedAt)
-      .set("createdAt", rt.createdAt);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Remote table created successfully", 0, responseData);
   }
 
-  auto responseData = Json.emptyObject
-    .set("count", list.length)
-    .set("resources", list);
-  return successResponse("", 0, responseData);
-}
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-        auto tenantId = precheck.tenantId;
+    auto tables = usecase.listRemoteTables(tenantId, spaceId);
+    auto list = Json.emptyArray;
+    foreach (rt; tables) {
+      list ~= Json.emptyObject
+        .set("id", rt.id)
+        .set("name", rt.name)
+        .set("description", rt.description)
+        .set("connectionId", rt.connectionId)
+        .set("remoteSchema", rt.remoteSchema)
+        .set("remoteObjectName", rt.remoteObjectName)
+        .set("rowCount", rt.rowCount)
+        .set("lastReplicatedAt", rt.lastReplicatedAt)
+        .set("createdAt", rt.createdAt);
+    }
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Remote tables retrieved successfully", 0, responseData);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = RemoteTableId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid remote table ID", 400);
+      
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
-    if (rt.isNull) {
-      writeError(res, 404, "Remote table not found");
-      return;
-    }
+    if (rt.isNull)
+      return errorResponse("Remote table not found", 404);
 
     auto resp = Json.emptyObject
       .set("id", rt.id)
@@ -114,30 +117,25 @@ override protected Json getHandler(HTTPServerRequest req) {
       .set("updatedAt", rt.updatedAt)
       .set("message", "Remote table retrieved successfully");
 
-    res.writeJsonBody(resp, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    return successResponse("Remote table retrieved successfully", 200, resp);
   }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
     auto id = RemoteTableId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid remote table ID", 400);
+
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto result = usecase.deleteRemoteTable(tenantId, spaceId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    res.writeJsonBody(Json.emptyObject, 204);
-  } else {
-    writeError(res, 404, result.message);
+
+    return successResponse("Remote table deleted successfully", 204, Json.emptyObject);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 }

@@ -31,7 +31,7 @@ struct DataProfile {
       .set("datasetName", datasetName)
       .set("totalRecords", totalRecords)
       .set("profiledRecords", profiledRecords)
-      .set("columns", columns)
+      .set("columns", columns.map!(c => c.toJson()).array)
       .set("overallQualityScore", overallQualityScore)
       .set("rating", rating.to!string)
       .set("profiledAt", profiledAt)

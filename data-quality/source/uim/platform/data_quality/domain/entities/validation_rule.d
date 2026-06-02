@@ -35,4 +35,24 @@ struct ValidationRule {
   int priority; // execution order (lower = first)
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("datasetPattern", datasetPattern)
+      .set("fieldName", fieldName)
+      .set("ruleType", ruleType.to!string())
+      .set("severity", severity.to!string())
+      .set("status", status.to!string())
+      .set("pattern", pattern)
+      .set("minValue", minValue)
+      .set("maxValue", maxValue)
+      .set("allowedValues", allowedValues.toJson)
+      .set("expression", expression)
+      .set("referenceDataset", referenceDataset)
+      .set("crossFieldName", crossFieldName)
+      .set("category", category)
+      .set("priority", priority);
+  }
 }

@@ -81,25 +81,4 @@ class ChangeLogController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private Json serializeEntry(ChangeLogEntry e) {
-    return Json.emptyObject
-      .set("id", e.id)
-      .set("tenantId", e.tenantId)
-      .set("objectId", e.objectId)
-      .set("dataModelId", e.dataModelId)
-      .set("category", e.category.to!string)
-      .set("changeType", e.changeType.to!string)
-      .set("objectType", e.objectType)
-      .set("changedFields", e.changedFields)
-      .set("oldValues", e.oldValues)
-      .set("newValues", e.newValues)
-      .set("sourceSystem", e.sourceSystem)
-      .set("sourceClient", e.sourceClient)
-      .set("changedBy", e.changedBy)
-      .set("fromVersion", e.fromVersion)
-      .set("toVersion", e.toVersion)
-      .set("deltaToken", e.deltaToken)
-      .set("timestamp", e.timestamp);
-  }
 }

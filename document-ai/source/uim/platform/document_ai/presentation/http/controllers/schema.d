@@ -32,170 +32,116 @@ class SchemaController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateSchemaRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentTypeId = data.getString("documentTypeId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.headerFields = jsonFieldArray(j, "headerFields");
-      r.lineItemFields = jsonFieldArray(j, "lineItemFields");
-      r.supportedLanguages = data.getStrings("supportedLanguages");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateSchemaRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.documentTypeId = data.getString("documentTypeId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.headerFields = jsonFieldArray(j, "headerFields");
+    r.lineItemFields = jsonFieldArray(j, "lineItemFields");
+    r.supportedLanguages = data.getStrings("supportedLanguages");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Schema created");
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Schema created successfully", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto schemas = usecase.list(clientId);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto jarr = Json.emptyArray;
-      foreach (s; schemas) {
-        jarr ~= schemaToJson(s);
-      }
+    auto tenantId = precheck.tenantId;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto schemas = usecase.list(tenantId, clientId);
 
-      auto resp = Json.emptyObject
-        .set("count", Json(schemas.length))
-        .set("resources", jarr)
-        .set("message", "Schema list retrieved successfully");
+    auto list = schemas.map!(s => s.toJson).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("count", Json(schemas.length))
+      .set("resources", list);
+
+    return successResponse("Schemas retrieved successfully", 0, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = SchemaId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid schema ID", 400);
 
-      auto s = usecase.getById(id, clientId);
-      if (s.isNull) {
-        writeError(res, 404, "Schema not found");
-        return;
-      }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      res.writeJsonBody(schemaToJson(s), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto s = usecase.getById(tenantId, id, clientId);
+    if (s.isNull)
+      return errorResponse("Schema not found", 404);
+
+    auto resp = s.toJson;
+    ;
+    return successResponse("Schema retrieved successfully", 0, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateSchemaRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.schemaId = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.status = data.getString("status");
+    auto tenantId = precheck.tenantId;
+    auto id = SchemaId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid schema ID", 400);
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject  
-          .set("id", result.id)
-          .set("message", "Schema updated");
+    auto data = precheck.data;
+    UpdateSchemaRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.schemaId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.status = data.getString("status");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Schema updated successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = SchemaId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid schema ID", 400);
 
-      auto result = usecase.deleteSchema(SchemaId(id), clientId);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-  private Json schemaToJson(Schema s) {
-    
+    auto result = usecase.deleteSchema(tenantId, id, clientId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto sj = Json.emptyObject
-      .set("id", s.id)
-      .set("documentTypeId", s.documentTypeId)
-      .set("name", s.name)
-      .set("description", s.description)
-      .set("status", s.status.to!string)
-      .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt);
-
-    auto hArr = Json.emptyArray;
-    foreach (f; s.headerFields) {
-      hArr ~= Json.emptyObject
-        .set("name", f.name)
-        .set("label", f.label)
-        .set("type", f.type.to!string)
-        .set("required", f.required);
-    }
-    sj["headerFields"] = hArr;
-
-    auto liArr = Json.emptyArray;
-    foreach (f; s.lineItemFields) {
-      liArr ~= Json.emptyObject
-        .set("name", f.name)
-        .set("label", f.label)
-        .set("type", f.type.to!string)
-        .set("required", f.required);
-    }
-    sj["lineItemFields"] = liArr;
-
-    sj["supportedLanguages"] = toJsonArray(s.supportedLanguages);
-
-    return sj;
+    return successResponse("Schema deleted successfully", 200, Json.emptyObject.set("id", id));
   }
 }

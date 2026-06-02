@@ -46,26 +46,40 @@ struct QualityDashboard {
   long computedAt;
 
   Json toJson() const {
+    // Scores
+    auto scores = Json.emptyObject
+      .set("overall", overallScore)
+      .set("completeness", completenessScore)
+      .set("validity", validityScore)
+      .set("uniqueness", uniquenessScore)
+      .set("consistency", consistencyScore)
+      .set("accuracy", accuracyScore);
+
+    auto records = Json.emptyObject
+      .set("total", totalRecords)
+      .set("valid", validRecords)
+      .set("invalid", invalidRecords)
+      .set("duplicates", duplicateRecords)
+      .set("cleansed", cleansedRecords);
+
+    auto sevArr = Json.emptyArray;
+    foreach (s; violationsBySeverity) {
+      sevArr ~= Json.emptyObject
+        .set("severity", s.severity.to!string)
+        .set("count", s.count);
+    }
+
     return entityToJson
       .set("datasetId", datasetId)
       .set("datasetName", datasetName)
-      .set("totalRecords", totalRecords)
-      .set("validRecords", validRecords)
-      .set("invalidRecords", invalidRecords)
-      .set("duplicateRecords", duplicateRecords)
-      .set("cleansedRecords", cleansedRecords)
-      .set("overallScore", overallScore)
-      .set("completenessScore", completenessScore)
-      .set("validityScore", validityScore)
-      .set("uniquenessScore", uniquenessScore)
-      .set("consistencyScore", consistencyScore)
-      .set("accuracyScore", accuracyScore)
+      .set("records", records)
       .set("rating", rating.to!string)
       .set("totalRules", totalRules)
       .set("activeRules", activeRules)
       .set("violationCount", violationCount)
-      .set("violationsBySeverity", violationsBySeverity)
+      .set("violationsBySeverity", sevArr)
       .set("trend", trend)
+      .set("scores", scores)
       .set("computedAt", computedAt);
   }
 }

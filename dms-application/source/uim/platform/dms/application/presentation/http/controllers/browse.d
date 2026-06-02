@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers.browse;
 
-
 // 
 // 
 // import uim.platform.dms.application.application.usecases.browse_content;
@@ -37,7 +36,7 @@ class BrowseController : PlatformController {
     router.delete_("/api/v1/favorites/*", &handleDeleteFavorite);
   }
 
-  override protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = FolderId(precheck.id);
       auto tenantId = precheck.tenantId;
@@ -85,7 +84,7 @@ class BrowseController : PlatformController {
   }
 
   protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = CreateFavoriteRequest();
@@ -108,18 +107,16 @@ class BrowseController : PlatformController {
     }
   }
 
-  override protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
       auto userId = UserId(req.headers.get("X-User-Id", "system"));
       auto items = usecase.getFavorites(tenantId, userId);
 
-      auto arr = items.map!(f => f.toJson).array.toJson;
-
+      auto list = items.map!(f => f.toJson).array.toJson;
       auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Favorites retrieved successfully");
+        .set("items", list)
+        .set("totalCount", items.length);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -127,17 +124,17 @@ class BrowseController : PlatformController {
     }
   }
 
-  override protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = FavoriteId(precheck.id);
-      
+
       auto result = usecase.deleteFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("deleted", true)
           .set("message", "Favorite removed successfully");
-          
+
         res.writeJsonBody(resp, 200);
       } else
         writeError(res, 404, result.message);

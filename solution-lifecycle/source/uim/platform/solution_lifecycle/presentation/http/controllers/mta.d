@@ -91,8 +91,12 @@ class MtaController : ManageController {
         }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateMtaRequest r;
             r.tenantId            = req.getTenantId;
@@ -118,8 +122,12 @@ class MtaController : ManageController {
         }
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             DeleteMtaRequest r;
             r.tenantId  = req.getTenantId;
             r.mtaId     = extractIdFromPath(req.requestURI.to!string);

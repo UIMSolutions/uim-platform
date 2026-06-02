@@ -69,8 +69,12 @@ class UserController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       TenantId tenantId = req.params.get("tenantId", "");
       if (tenantId.isEmpty)
         tenantId = req.getTenantId;

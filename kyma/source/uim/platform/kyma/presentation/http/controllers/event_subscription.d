@@ -72,8 +72,12 @@ class EventSubscriptionController : ManageController {
         return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
       auto source = req.params.get("source");

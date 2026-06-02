@@ -54,8 +54,12 @@ class SaasApplicationController : ManageController {
         }
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto tenantId = precheck.tenantId;
             auto body_    = req.json;
 

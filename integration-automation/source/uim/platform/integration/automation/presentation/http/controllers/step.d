@@ -224,34 +224,4 @@ class StepController : ManageController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeStep(const WorkflowStep s) {
-    auto j = Json.emptyObject
-      .set("id", Json(s.id))
-      .set("workflowId", Json(s.workflowId))
-      .set("tenantId", Json(s.tenantId))
-      .set("name", Json(s.name))
-      .set("description", Json(s.description))
-      .set("type", Json(s.type_.to!string))
-      .set("status", Json(s.status.to!string))
-      .set("priority", Json(s.priority.to!string))
-      .set("sequenceNumber", Json(s.sequenceNumber))
-      .set("assignedTo", Json(s.assignedTo))
-      .set("assignedRole", Json(s.assignedRole))
-      .set("instructions", Json(s.instructions))
-      .set("automationEndpoint", Json(s.automationEndpoint))
-      .set("sourceSystemConnectionId", Json(s.sourceSystemConnectionId))
-      .set("targetSystemConnectionId", Json(s.targetSystemConnectionId))
-      .set("result", Json(s.result))
-      .set("errorMessage", Json(s.errorMessage))
-      .set("startedAt", Json(s.startedAt))
-      .set("completedAt", Json(s.completedAt))
-      .set("createdAt", Json(s.createdAt))
-      .set("estimatedDurationMinutes", Json(s.estimatedDurationMinutes));
-
-    if (s.dependencies.length > 0)
-      j["dependencies"] = toJsonArray(s.dependencies);
-
-    return j;
-  }
 }

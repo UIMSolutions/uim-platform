@@ -13,6 +13,12 @@ mixin(ShowModule!());
 struct EnrichmentField {
   string key;
   string value;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
+  }
 }
 
 struct EnrichmentData {
@@ -26,16 +32,12 @@ struct EnrichmentData {
   EnrichmentField[] fields;
 
   Json toJson() const {
-    auto j = entityToJson
+    return entityToJson
       .set("clientId", clientId.value)
       .set("documentTypeId", documentTypeId.value)
       .set("name", name)
       .set("description", description)
       .set("subtype", subtype)
-      .set("fields", fields.map!(f => Json.init
-        .set("key", f.key)
-        .set("value", f.value)).array.toJson);
-
-    return j;
+      .set("fields", fields.map!(f => f.toJson()).array.toJson);
   }
 }

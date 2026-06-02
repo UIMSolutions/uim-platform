@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.controllers.api_rule;
 
-
-
-
 // import uim.platform.kyma.application.usecases.manage.api_rules;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.api_rule;
@@ -36,181 +33,141 @@ class ApiRuleController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateApiRuleRequest r;
+    r.namespaceId = data.getString("namespaceId");
+    r.environmentId = data.getString("environmentId");
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.serviceName = data.getString("serviceName");
+    r.servicePort = data.getInteger("servicePort");
+    r.gateway = data.getString("gateway");
+    r.host = data.getString("host");
+    r.tlsEnabled = data.getBoolean("tlsEnabled", true);
+    r.tlsSecretName = data.getString("tlsSecretName");
+    r.corsEnabled = data.getBoolean("corsEnabled");
+    r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
+    r.corsAllowMethods = data.getStrings("corsAllowMethods");
+    r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
+    r.labels = data.jsonStrMap("labels");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+
+    // Parse rules array
+    r.rules = j.toRuleEntries;
+
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    res.writeJsonBody(resp, 201);
+  } else
+    writeError(res, 400, result.message);
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
 
         auto tenantId = precheck.tenantId;
+    auto nsId = req.params.get("namespaceId");
+    auto envId = req.params.get("environmentId");
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateApiRuleRequest r;
-      r.namespaceId = data.getString("namespaceId");
-      r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.serviceName = data.getString("serviceName");
-      r.servicePort = data.getInteger("servicePort");
-      r.gateway = data.getString("gateway");
-      r.host = data.getString("host");
-      r.tlsEnabled = data.getBoolean("tlsEnabled", true);
-      r.tlsSecretName = data.getString("tlsSecretName");
-      r.corsEnabled = data.getBoolean("corsEnabled");
-      r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
-      r.corsAllowMethods = data.getStrings("corsAllowMethods");
-      r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
-      r.labels = data.jsonStrMap("labels");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    ApiRule[] items;
+    if (!nsId.isEmpty)
+      items = usecase.listByNamespace(nsId);
+    else if (!envId.isEmpty)
+      items = usecase.listByEnvironment(envId);
 
-      // Parse rules array
-      r.rules = j.toRuleEntries;
+    auto arr = items.map!(rule => rule.toJson).array.toJson;
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "API rules retrieved successfully");
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    res.writeJsonBody(resp, 200);
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto nsId = req.params.get("namespaceId");
-      auto envId = req.params.get("environmentId");
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      ApiRule[] items;
-      if (!nsId.isEmpty)
-        items = usecase.listByNamespace(nsId);
-      else if (!envId.isEmpty)
-        items = usecase.listByEnvironment(envId);
-
-      auto arr = items.map!(rule => rule.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length)
-          .set("message", "API rules retrieved successfully");
-      
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto rule = usecase.getApiRule(tenantId, id);
+  if (rule.isNull) {
+    writeError(res, 404, "API rule not found");
+    return;
   }
+  res.writeJsonBody(rule.toJson, 200);
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto rule = usecase.getApiRule(tenantId, id);
-      if (rule.isNull) {
-        writeError(res, 404, "API rule not found");
-        return;
-      }
-      res.writeJsonBody(rule.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto data = precheck.data;
+  UpdateApiRuleRequest r;
+  r.description = data.getString("description");
+  r.serviceName = data.getString("serviceName");
+  r.servicePort = data.getInteger("servicePort");
+  r.host = data.getString("host");
+  r.tlsEnabled = data.getBoolean("tlsEnabled", true);
+  r.tlsSecretName = data.getString("tlsSecretName");
+  r.corsEnabled = data.getBoolean("corsEnabled");
+  r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
+  r.corsAllowMethods = data.getStrings("corsAllowMethods");
+  r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
+  r.labels = data.jsonStrMap("labels");
+  r.rules = j.toRuleEntries;
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto result = usecase.updateApiRule(tenantId, id, r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateApiRuleRequest r;
-      r.description = data.getString("description");
-      r.serviceName = data.getString("serviceName");
-      r.servicePort = data.getInteger("servicePort");
-      r.host = data.getString("host");
-      r.tlsEnabled = data.getBoolean("tlsEnabled", true);
-      r.tlsSecretName = data.getString("tlsSecretName");
-      r.corsEnabled = data.getBoolean("corsEnabled");
-      r.corsAllowOrigins = data.getStrings("corsAllowOrigins");
-      r.corsAllowMethods = data.getStrings("corsAllowMethods");
-      r.corsAllowHeaders = data.getStrings("corsAllowHeaders");
-      r.labels = data.jsonStrMap("labels");
-      r.rules = j.toRuleEntries;
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("API rule updated successfully", "Updated", 200, responseData);
+}
 
-      auto result = usecase.updateApiRule(tenantId, id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("API rule updated successfully", "Updated", 200, responseData);
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto result = usecase.deleteApiRule(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteApiRule(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("API rule deleted successfully", "Deleted", 200, responseData);
-  }
-
-  
-
-  private Json serializeRule(ApiRule rule) {
-    auto json = Json.emptyObject
-    .set("id", rule.id)
-    .set("namespaceId", rule.namespaceId)
-    .set("environmentId", rule.environmentId)
-    .set("tenantId", rule.tenantId)
-    .set("name", rule.name)
-    .set("description", rule.description)
-    .set("status", rule.status.to!string)
-    .set("serviceName", rule.serviceName)
-    .set("servicePort", rule.servicePort)
-    .set("gateway", rule.gateway)
-    .set("host", rule.host)
-    .set("tlsEnabled", rule.tlsEnabled)
-    .set("corsEnabled", rule.corsEnabled)
-    .set("labels", serializeStrMap(rule.labels))
-    .set("createdBy", rule.createdBy)
-    .set("createdAt", rule.createdAt)
-    .set("updatedAt", rule.updatedAt);
-
-    auto rulesArr = Json.emptyArray;
-    foreach (entry; rule.rules) {
-      auto mArr = Json.emptyArray;
-      foreach (m; entry.methods)
-        mArr ~= Json(m.to!string);
-
-      auto ej = Json.emptyObject
-      .set("path", entry.path)
-      .set("accessStrategy", entry.accessStrategy.to!string)
-      .set("requiredScopes", entry.requiredScopes.toJson)
-      .set("audiences", entry.audiences.toJson)
-      .set("methods", mArr);
-
-      rulesArr ~= ej;
-    }
-    json["rules"] = rulesArr;
-
-    return json;
-  }
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("API rule deleted successfully", "Deleted", 200, responseData);
+}
 }

@@ -73,9 +73,9 @@ class DataFlowController : ManageController {
       auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
       auto flows = usecase.list(spaceId);
 
-      auto jarr = Json.emptyArray;
+      auto list = Json.emptyArray;
       foreach (df; flows) {
-        jarr ~= Json.emptyObject
+        list ~= Json.emptyObject
           .set("id", df.id)
           .set("name", df.name)
           .set("description", df.description)
@@ -84,14 +84,12 @@ class DataFlowController : ManageController {
           .set("createdAt", df.createdAt);
       }
 
-      auto resp = Json.emptyObject
-        .set("count", flows.length)
-        .set("resources", list);
+      auto list = items.map!(item => item.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse(
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

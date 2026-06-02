@@ -33,211 +33,199 @@ class DocumentController : PlatformController {
     router.get("/api/v1/document/jobs/results/*", &handleResult);
   }
 
+  protected Json uploadHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    CreateDocumentRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.fileName = data.getString("fileName");
+    r.mimeType = data.getString("mimeType");
+    r.fileSize = data.getLong("fileSize");
+    r.schemaId = data.getString("schemaId");
+    r.templateId = data.getString("templateId");
+    r.documentTypeId = data.getString("documentTypeId");
+    r.language = data.getString("language");
+    r.labels = jsonKeyValuePairs(data, "labels");
+
+    auto result = usecase.upload(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", Json("pending"))
+      .set("message", "Document uploaded for processing");
+
+    return successResponse("Document uploaded successfully", 201, resp);
+  }
+
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UploadDocumentRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.fileName = data.getString("fileName");
-      r.mimeType = data.getString("mimeType");
-      r.fileSize = data.getLong("fileSize");
-      r.schemaId = data.getString("schemaId");
-      r.templateId = data.getString("templateId");
-      r.documentTypeId = data.getString("documentTypeId");
-      r.language = data.getString("language");
-      r.labels = jsonKeyValuePairs(j, "labels");
-
-      auto result = usecase.upload(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", Json("pending"))
-          .set("message", "Document uploaded for processing");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = uploadHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto docs = usecase.list(clientId);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto jarr = docs.map!(d => toJson(d)).array.toJson;
+    auto tenantId = precheck.tenantId;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto docs = usecase.list(tenantId, clientId);
 
-      auto resp = Json.emptyObject
-        .set("count", Json(docs.length))
-        .set("resources", jarr)
-        .set("message", "Document list retrieved successfully");
+    auto list = docs.map!(d => toJson(d)).array.toJson;
+    auto resp = Json.emptyObject
+      .set("count", Json(docs.length))
+      .set("resources", list);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Documents retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
 
-      auto d = usecase.getById(id, clientId);
-      if (d.isNull) {
-        writeError(res, 404, "Document not found");
-        return;
-      }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      res.writeJsonBody(toJson(d), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto d = usecase.getById(tenantId, id, clientId);
+    if (d.isNull)
+      return errorResponse("Document not found", 404);
+
+    return successResponse("Document retrieved successfully", 200, toJson(d));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
 
-      auto result = usecase.deleteDocument(DocumentId(id), clientId);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+
+    auto result = usecase.deleteDocument(tenantId, id, clientId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Document deleted successfully", 200, responseData);
+  }
+
+  protected Json confirmHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
+
+    auto data = precheck.data;
+    ConfirmDocumentRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.documentId = id;
+    r.correctedFields = jsonKeyValuePairs(data, "correctedFields");
+
+    auto result = usecase.confirm(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Document confirmed successfully", 200, responseData);
   }
 
   protected void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      ConfirmDocumentRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentId = id;
-      r.correctedFields = jsonKeyValuePairs(j, "correctedFields");
-
-      auto result = usecase.confirm(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "confirmed")
-          .set("message", "Document confirmed for feedback");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = confirmHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json resultHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
+
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+
+    auto result = usecase.getExtractionResult(tenantId, id, clientId);
+    if (result.isNull)
+      return errorResponse("Extraction result not found", 404);
+
+
+    auto rj = Json.emptyObject
+      .set("id", result.id)
+      .set("documentId", result.documentId)
+      .set("schemaId", result.schemaId)
+      .set("method", result.method.to!string)
+      .set("overallConfidence", result.overallConfidence)
+      .set("extractedFieldCount", result.extractedFieldCount)
+      .set("totalPages", result.totalPages)
+      .set("processedAt", result.processedAt);
+
+    auto hArr = Json.emptyArray;
+    foreach (f; result.headerFields) {
+      hArr ~= Json.emptyObject
+        .set("name", f.name)
+        .set("value", f.value)
+        .set("type", f.type.to!string)
+        .set("confidence", f.confidence)
+        .set("page", f.page);
+    }
+    rj["headerFields"] = hArr;
+
+    auto liArr = Json.emptyArray;
+    foreach (li; result.lineItems) {
+      auto lij = Json.emptyObject;
+      lij["rowIndex"] = Json(li.rowIndex);
+      auto liFields = Json.emptyArray;
+      foreach (f; li.fields) {
+        liFields ~= Json.emptyObject
+          .set("name", f.name)
+          .set("value", f.value)
+          .set("type", f.type.to!string)
+          .set("confidence", f.confidence);
+      }
+      lij["fields"] = liFields;
+      liArr ~= lij;
+    }
+    rj["lineItems"] = liArr;
+    return successResponse("Extraction result retrieved successfully", 200, rj);
   }
 
   protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-
-      auto docid = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-
-      auto result = usecase.getExtractionResult(docId, clientId);
-      if (result.isNull) {
-        writeError(res, 404, "Extraction result not found");
-        return;
-      }
-
-      auto rj = Json.emptyObject
-        .set("id", result.id)
-        .set("documentId", result.documentId)
-        .set("schemaId", result.schemaId)
-        .set("method", result.method.to!string)
-        .set("overallConfidence", result.overallConfidence)
-        .set("extractedFieldCount", result.extractedFieldCount)
-        .set("totalPages", result.totalPages)
-        .set("processedAt", result.processedAt);
-
-      auto hArr = Json.emptyArray;
-      foreach (f; result.headerFields) {
-        hArr ~= Json.emptyObject
-          .set("name", f.name)
-          .set("value", f.value)
-          .set("type", f.type.to!string)
-          .set("confidence", f.confidence)
-          .set("page", f.page);
-      }
-      rj["headerFields"] = hArr;
-
-      auto liArr = Json.emptyArray;
-      foreach (li; result.lineItems) {
-        auto lij = Json.emptyObject;
-        lij["rowIndex"] = Json(li.rowIndex);
-        auto liFields = Json.emptyArray;
-        foreach (f; li.fields) {
-          liFields ~= Json.emptyObject
-            .set("name", f.name)
-            .set("value", f.value)
-            .set("type", f.type.to!string)
-            .set("confidence", f.confidence);
-        }
-        lij["fields"] = liFields;
-        liArr ~= lij;
-      }
-      rj["lineItems"] = liArr;
-
-      res.writeJsonBody(rj, 200);
+      auto response = resultHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private Json documentToJson(Document d) {
-
-    auto dj = Json.emptyObject
-      .set("id", d.id)
-      .set("fileName", d.fileName)
-      .set("fileType", d.fileType.to!string)
-      .set("category", d.category.to!string)
-      .set("documentTypeId", d.documentTypeId)
-      .set("status", d.status.to!string)
-      .set("language", d.language)
-      .set("fileSize", d.fileSize)
-      .set("mimeType", d.mimeType)
-      .set("schemaId", d.schemaId)
-      .set("templateId", d.templateId)
-      .set("extractionMethod", d.extractionMethod.to!string)
-      .set("uploadedAt", d.uploadedAt)
-      .set("processedAt", d.processedAt)
-      .set("createdAt", d.createdAt)
-      .set("updatedAt", d.updatedAt);
-
-    auto lArr = Json.emptyArray;
-    foreach (lbl; d.labels) {
-      lArr ~= Json.emptyObject
-        .set("key", lbl.key)
-        .set("value", lbl.value);
-    }
-    dj["labels"] = lArr;
-
-    return dj;
   }
 }

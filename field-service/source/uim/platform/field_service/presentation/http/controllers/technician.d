@@ -125,17 +125,9 @@ class TechnicianController : ManageController {
             auto result = usecase.updateTechnician(dto);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Technician updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Technician updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -146,18 +138,13 @@ class TechnicianController : ManageController {
         auto tenantId = precheck.tenantId;
             auto path = precheck.path;
             auto id = TechnicianId(precheck.id);
-            auto result = usecase.deleteTechnician(tenantId, id);
+            if (id.isNull) 
+            return errorResponse("Invalid technician ID", 400);
+                        auto result = usecase.deleteTechnician(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Technician deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Technician deleted successfully", 200, responseData);
     }
 }

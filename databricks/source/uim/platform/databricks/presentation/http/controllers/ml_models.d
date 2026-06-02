@@ -38,13 +38,21 @@ public:
       r.source      = data.getString("source");
       r.tags        = data.getString("tags");
       auto result = _usecase.create(r);
-      if (result.success) res.writeJsonBody(serializeToJson(result.data), 201);
-      else writeError(res, 400, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("ML model created successfully", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+
+
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto result = _usecase.list(req.getTenantId);
       res.writeJsonBody(serializeToJson(result.data));
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }
@@ -83,10 +91,13 @@ public:
         try { r.latestStage = stageStr.to!ModelStage; } catch (ConvException) {}
       }
       auto result = _usecase.update(r);
-      if (result.success) res.writeJsonBody(serializeToJson(result.data));
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("ML model updated successfully", 200, responseData);
   }
+
 
   override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -97,8 +108,9 @@ public:
       
       auto id     = req.requestPath.to!string.split("/")[$-1];
       auto result = _usecase.remove(req.getTenantId, id);
-      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeError(res, 404, result.message);
-    } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+      if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("ML model deleted successfully", 200, responseData);
   }
-}

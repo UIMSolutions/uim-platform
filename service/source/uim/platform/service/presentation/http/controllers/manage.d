@@ -81,8 +81,12 @@ class ManageController : PlatformController {
     return successResponse(precheck, "Get handler not implemented", 200);
   }
 
-  override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto response = getHandler(req);
       res.writeJsonBody(response, response.code);
     } catch (Exception e) {

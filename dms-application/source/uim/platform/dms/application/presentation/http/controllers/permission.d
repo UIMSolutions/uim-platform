@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers.permission;
 
-
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.permissions;
@@ -36,7 +35,7 @@ class PermissionController : ManageController {
   }
 
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = CreatePermissionRequest();
@@ -49,16 +48,14 @@ class PermissionController : ManageController {
 
       auto result = permissions.grantPermission(r);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject  
+        auto resp = Json.emptyObject
           .set("id", result.id)
           .set("message", "Permission granted");
 
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -79,8 +76,7 @@ class PermissionController : ManageController {
         .set("message", "Permissions for resource retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -99,14 +95,13 @@ class PermissionController : ManageController {
         .set("message", "Permissions for user retrieved successfully");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto resourceId = data.getString("resourceId");
@@ -125,46 +120,37 @@ class PermissionController : ManageController {
         .set("message", "Access check completed");
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = PermissionId(precheck.id);
-      auto data = precheck.data;
-      auto r = UpdatePermissionRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.level = data.getString("level").to!PermissionLevel;
+    auto tenantId = precheck.tenantId;
+    auto id = PermissionId(precheck.id);
+    auto data = precheck.data;
+    auto r = UpdatePermissionRequest();
+    r.id = id;
+    r.tenantId = tenantId;
+    r.level = data.getString("level").to!PermissionLevel;
 
-      auto result = permissions.updatePermission(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Permission updated");
+    auto result = permissions.updatePermission(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Permission updated successfully", 200, responseData);
   }
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = PermissionId(precheck.id);
-      
+
       auto result = permissions.revokePermission(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -172,11 +158,9 @@ class PermissionController : ManageController {
           .set("message", "Permission revoked");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

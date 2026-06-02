@@ -63,8 +63,12 @@ class MenuItemController : ManageController {
     }
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto siteId = req.headers.get("X-Site-Id", "");
       auto items = useCase.listMenuItems(siteId);
       auto response = Json.emptyObject

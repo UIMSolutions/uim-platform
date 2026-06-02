@@ -30,8 +30,12 @@ class VisibilityController : ManageController {
         router.delete_("/api/v1/process-automation/visibility/*", &handleDelete);
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto tenantId = precheck.tenantId;
 
             auto data = precheck.data;
@@ -48,14 +52,9 @@ class VisibilityController : ManageController {
             auto result = visibilityUsecase.createVisibility(r);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Visibility dashboard created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Visibility dashboard created successfully", 201, responseData);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -140,21 +139,17 @@ class VisibilityController : ManageController {
             auto result = visibilityUsecase.updateVisibility(r);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Visibility dashboard updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Visibility dashboard updated successfully", 200, responseData);
     }
 
-    override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
 
             auto tenantId = precheck.tenantId;
 
@@ -162,16 +157,9 @@ class VisibilityController : ManageController {
             auto result = visibilityUsecase.deleteVisibility(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Visibility dashboard deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Visibility dashboard deleted successfully", 200, responseData);
         }
     }
 }

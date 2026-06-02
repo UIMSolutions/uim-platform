@@ -32,150 +32,116 @@ class EnrichmentDataController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateEnrichmentDataRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.documentTypeId = data.getString("documentTypeId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.subtype = data.getString("subtype");
-      r.fields = jsonKeyValuePairs(j, "fields");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateEnrichmentDataRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.documentTypeId = data.getString("documentTypeId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.subtype = data.getString("subtype");
+    r.fields = jsonKeyValuePairs(j, "fields");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Enrichment data created");
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Enrichment data created successfully", 201, resp);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      auto data = usecase.list(clientId);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto jarr = Json.emptyArray;
-      foreach (ed; data) {
-        jarr ~= enrichmentToJson(ed);
-      }
+    auto tenantId = precheck.tenantId;
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto data = usecase.list(tenantId, clientId);
 
-      auto resp = Json.emptyObject
-        .set("count", Json(data.length))
-        .set("resources", jarr)
-        .set("message", "Enrichment data list retrieved successfully");
+    auto list = data.map!(ed => ed.toJson()).array.toJson;
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+
+    return successResponse("Enrichment data list retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = EnrichmentDataId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid enrichment data ID", 400);
 
-      auto ed = usecase.getById(id, clientId);
-      if (ed.isNull) {
-        writeError(res, 404, "Enrichment data not found");
-        return;
-      }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-      res.writeJsonBody(enrichmentToJson(ed), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto ed = usecase.getById(tenantId, id, clientId);
+    if (ed.isNull)
+      return errorResponse("Enrichment data not found", 404);
+
+    auto responseData = ed.toJson();
+    return successResponse("Enrichment data retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateEnrichmentDataRequest r;
-      r.tenantId = tenantId;
-      r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
-      r.enrichmentDataId = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.fields = jsonKeyValuePairs(j, "fields");
+    auto tenantId = precheck.tenantId;
+    auto id = EnrichmentDataId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid enrichment data ID", 400);
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Enrichment data updated");
+    auto data = precheck.data;
+    UpdateEnrichmentDataRequest r;
+    r.tenantId = tenantId;
+    r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    r.enrichmentDataId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.fields = jsonKeyValuePairs(j, "fields");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Enrichment data updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto tenantId = precheck.tenantId;
+    auto id = EnrichmentDataId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid enrichment data ID", 400);
 
-      auto result = usecase.deleteEnrichmentData(EnrichmentDataId(id), clientId);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-  private Json enrichmentToJson(EnrichmentData ed) {
-    auto fArr = Json.emptyArray;
-    foreach (f; ed.fields) {
-      fArr ~= Json.emptyObject
-        .set("key", f.key)
-        .set("value", f.value);
-    }
+    auto result = usecase.deleteEnrichmentData(tenantId, id, clientId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("id", ed.id)
-      .set("documentTypeId", ed.documentTypeId)
-      .set("name", ed.name)
-      .set("description", ed.description)
-      .set("subtype", ed.subtype)
-      .set("createdAt", ed.createdAt)
-      .set("fields", fArr);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Enrichment data deleted successfully", 200, responseData);
   }
 }

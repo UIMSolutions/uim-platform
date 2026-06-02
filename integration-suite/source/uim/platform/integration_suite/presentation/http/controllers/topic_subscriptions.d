@@ -45,8 +45,12 @@ public:
         return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
-  override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
       auto queueId = req.query.get("queueId", "");
       CommandResult result;
       if (queueId.length > 0)

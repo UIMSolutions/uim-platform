@@ -128,41 +128,4 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private static Json serializeGroup(const MatchGroup g) {
-    auto json = Json.emptyObject
-      .set("id", g.id)
-      .set("tenantId", g.tenantId)
-      .set("datasetId", g.datasetId)
-      .set("strategy", g.strategy.to!string)
-      .set("survivorRecordId", g.survivorRecordId)
-      .set("resolved", g.resolved)
-      .set("detectedAt", g.detectedAt);
-
-    auto candidates = Json.emptyArray;
-    foreach (c; g.candidates) {
-      candidates ~= Json.emptyObject
-        .set("recordId", c.recordId)
-        .set("score", c.score)
-        .set("confidence", c.confidence.to!string)
-        .set("isSurvivor", c.isSurvivor);
-    }
-    json["candidates"] = candidates;
-
-    return json;
   }
-
-  private static MatchStrategy parseStrategy(string s) {
-    switch (s) {
-    case "exact":
-      return MatchStrategy.exact;
-    case "fuzzy":
-      return MatchStrategy.fuzzy;
-    case "phonetic":
-      return MatchStrategy.phonetic;
-    case "composite":
-      return MatchStrategy.composite;
-    default:
-      return MatchStrategy.fuzzy;
-    }
-  }
-}

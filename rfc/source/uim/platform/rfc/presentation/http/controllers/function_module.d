@@ -46,8 +46,12 @@ class FunctionModuleController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;
@@ -90,8 +94,12 @@ class FunctionModuleController : PlatformController {
         } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateFunctionModuleRequest r;
             r.tenantId      = req.getTenantId;

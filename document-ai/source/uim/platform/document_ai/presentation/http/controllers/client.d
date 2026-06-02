@@ -32,136 +32,97 @@ class ClientController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateClientRequest r;
-      r.tenantId = tenantId;
-      r.clientName = data.getString("clientName");
-      r.description = data.getString("description");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CreateClientRequest r;
+    r.tenantId = tenantId;
+    r.clientName = data.getString("clientName");
+    r.description = data.getString("description");
 
-      auto result = usecase.createClient(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("clientId", result.id)
-          .set("message", "Client created");
+    auto result = usecase.createClient(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Client created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto clients = usecase.listClients(tenantId);
-      auto jarr = Json.emptyArray;
-      foreach (c; clients) {
-        jarr ~= clientToJson(c);
-      }
+    auto clients = usecase.listClients(tenantId);
+    auto list = clients.map!(c => c.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("count", Json(clients.length))
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Clients retrieved successfully", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
+    auto id = ClientId(precheck.id);
+    auto tenantId = precheck.tenantId;
 
-      auto c = usecase.getClient(tenantId, id);
-      if (c.clientId.isEmpty) {
-        writeError(res, 404, "Client not found");
-        return;
-      }
+    auto c = usecase.getClient(tenantId, id);
+    if (c.isNull)
+      return errorResponse("Client not found", 404);
 
-      res.writeJsonBody(clientToJson(c), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = c.toJson();
+    return successResponse("Client retrieved successfully", 0, responseData);
+  }
+
+  protected Json handlePatch(HTTPServerRequest req) {
+    auto precheck = super.patchHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid client ID", 400);
+
+    auto data = precheck.data;
+    PatchClientRequest r;
+    r.tenantId = tenantId;
+    r.clientId = id;
+    r.clientName = data.getString("clientName");
+    r.description = data.getString("description");
+
+    auto result = usecase.patchClient(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Client updated");
+
+    return successResponse("Client updated successfully", 200, resp);
   }
 
   protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      PatchClientRequest r;
-      r.tenantId = tenantId;
-      r.clientId = id;
-      r.clientName = data.getString("clientName");
-      r.description = data.getString("description");
-
-      auto result = usecase.patchClient(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("clientId", result.id)
-          .set("message", "Client updated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = patchHandler(req);
+      res.writeJson(response);
     } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJson(errorResponse(e.msg, 500));
     }
-  }
-
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-
-      auto result = usecase.deleteClient(tenantId, ClientId(id));
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  private Json clientToJson(Client c) {
-    return Json.emptyObject
-      .set("clientId", Json(c.clientId))
-      .set("tenantId", Json(c.tenantId))
-      .set("clientName", Json(c.clientName))
-      .set("description", Json(c.description))
-      .set("isActive", Json(c.isActive))
-      .set("createdAt", Json(c.createdAt))
-      .set("updatedAt", Json(c.updatedAt));
   }
 }

@@ -205,23 +205,4 @@ class ProvisioningJobController : PlatformController {
       writeError(res, 500, "Internal server error");
     }
   }
-
-  private static Json serializeJob(const ProvisioningJob j) {
-    auto job = Json.emptyObject;
-    job["id"] = Json(j.id);
-    job["tenantId"] = Json(j.tenantId);
-    job["sourceSystemId"] = Json(j.sourceSystemId);
-    job["targetSystemId"] = Json(j.targetSystemId);
-    job["jobType"] = Json(j.jobType.to!string);
-    job["status"] = Json(j.status.to!string);
-    job["schedule"] = Json(j.schedule);
-    job["totalEntities"] = Json(j.totalEntities);
-    job["processedEntities"] = Json(j.processedEntities);
-    job["failedEntities"] = Json(j.failedEntities);
-    job["startedAt"] = Json(j.startedAt);
-    job["completedAt"] = Json(j.completedAt);
-    job["createdBy"] = Json(j.createdBy);
-    job["createdAt"] = Json(j.createdAt);
-    return job;
-  }
 }

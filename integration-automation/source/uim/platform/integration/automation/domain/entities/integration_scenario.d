@@ -26,16 +26,16 @@ struct IntegrationScenario {
   ScenarioStepTemplate[] stepTemplates; // ordered step definitions
 
   Json toJson() const {
-      return entityToJson()
-          .set("name", name)
-          .set("description", description)
-          .set("category", category.to!string)
-          .set("version", version_)
-          .set("status", status.to!string)
-          .set("sourceSystemType", sourceSystemType.to!string)
-          .set("targetSystemType", targetSystemType.to!string)
-          .set("prerequisites", prerequisites.array.toJson)
-          .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array.toJson);
+    return entityToJson()
+      .set("name", name)
+      .set("description", description)
+      .set("category", category.to!string)
+      .set("version", version_)
+      .set("status", status.to!string)
+      .set("sourceSystemType", sourceSystemType.to!string)
+      .set("targetSystemType", targetSystemType.to!string)
+      .set("prerequisites", prerequisites.array.toJson)
+      .set("stepTemplates", stepTemplates.map!(s => s.toJson()).array.toJson);
   }
 }
 /// Template for a step within a scenario — used to instantiate WorkflowSteps.
@@ -55,19 +55,19 @@ struct ScenarioStepTemplate {
   int estimatedDurationMinutes;
 
   Json toJson() const {
-      return Json.emptyObject
-          .set("name", name)
-          .set("description", description)
-          .set("type", type_.to!string)
-          .set("priority", priority.to!string)
-          .set("sequenceNumber", sequenceNumber)
-          .set("assignedRole", assignedRole)
-          .set("instructions", instructions)
-          .set("automationEndpoint", automationEndpoint)
-          .set("automationPayload", automationPayload)
-          .set("requiresSourceSystem", requiresSourceSystem)
-          .set("requiresTargetSystem", requiresTargetSystem)
-          .set("dependsOnSteps", dependsOnSteps.array.toJson)
-          .set("estimatedDurationMinutes", estimatedDurationMinutes);
+    return Json.emptyObject
+      .set("name", name)
+      .set("description", description)
+      .set("type", type_.to!string)
+      .set("priority", priority.to!string)
+      .set("sequenceNumber", sequenceNumber)
+      .set("assignedRole", assignedRole)
+      .set("instructions", instructions)
+      .set("automationEndpoint", automationEndpoint)
+      .set("automationPayload", automationPayload)
+      .set("requiresSourceSystem", requiresSourceSystem)
+      .set("requiresTargetSystem", requiresTargetSystem)
+      .set("dependsOnSteps", dependsOnSteps.array.toJson)
+      .set("estimatedDurationMinutes", estimatedDurationMinutes);
   }
 }

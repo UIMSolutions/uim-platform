@@ -47,6 +47,22 @@ struct AddressRecord {
   long cleansedAt;
   long geocodedAt;
 
+ // Cleansed output
+    auto output = Json.emptyObject
+      .set("line1", line1)
+      .set("line2", line2)
+      .set("city", city)
+      .set("region", region)
+      .set("postalCode", postalCode)
+      .set("country", country)
+      .set("countryIso2", countryIso2);
+
+// Geocoding
+    auto geo = Json.emptyObject
+      .set("latitude", latitude)
+      .set("longitude", longitude)
+      .set("precision", geocodePrecision.to!string);
+
   Json toJson() const {
     return entityToJson
       .set("sourceRecordId", sourceRecordId)
@@ -56,18 +72,10 @@ struct AddressRecord {
       .set("inputRegion", inputRegion)
       .set("inputPostalCode", inputPostalCode)
       .set("inputCountry", inputCountry)
-      .set("line1", line1)
-      .set("line2", line2)
-      .set("city", city)
-      .set("region", region)
-      .set("postalCode", postalCode)
-      .set("country", country)
-      .set("countryIso2", countryIso2)
+      .set("output", output)
       .set("addressType", addressType.to!string)
       .set("quality", quality.to!string)
-      .set("latitude", latitude)
-      .set("longitude", longitude)
-      .set("geocodePrecision", geocodePrecision.to!string)
+      .set("geocoding", geo)
       .set("appliedActions", appliedActions)
       .set("changeLog", changeLog)
       .set("cleansedAt", cleansedAt)
