@@ -342,6 +342,7 @@ Json errorJson(string message, int code = 400) {
     .set("error", message)
     .set("code", code);
 }
+
 /// Helper: envelope a result with metadata.
 Json envelopeJson(string key, Json data) {
   auto j = Json.emptyObject;

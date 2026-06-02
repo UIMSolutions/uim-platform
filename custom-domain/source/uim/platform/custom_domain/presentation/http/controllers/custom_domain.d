@@ -218,7 +218,7 @@ class CustomDomainController : ManageController {
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto response = deactivateHandler(req);
-            res.writeJsonBody(response, 200);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

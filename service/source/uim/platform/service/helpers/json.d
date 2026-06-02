@@ -34,6 +34,7 @@ Json errorResponse(string message = "Internal Server Error", int code = 500) {
     return Json.emptyObject
         .set("status", "error")
         .set("message", message)
+        .set("category", "General")
         .set("code", code);
 }
 ///
@@ -42,6 +43,23 @@ unittest {
     assert(response.getString("status") == "error");
     assert(response.getString("message") == "Not Found");
     assert(response.getInteger("code") == 404);
+    assert(response.getString("category") == "General");
+}
+
+Json errorResponse(string message = "Internal Server Error", string category, int code = 500) {
+    return Json.emptyObject
+        .set("status", "error")
+        .set("message", message)
+        .set("category", category)
+        .set("code", code);
+}
+///
+unittest {
+    auto response = errorResponse("Not Found", "General", 404);
+    assert(response.getString("status") == "error");
+    assert(response.getString("message") == "Not Found");
+    assert(response.getInteger("code") == 404);
+    assert(response.getString("category") == "General");
 }
 
 Json errorResponse(Json json, string message = "Internal Server Error", int code = 500) {

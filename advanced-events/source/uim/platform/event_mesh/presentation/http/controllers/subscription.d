@@ -71,8 +71,8 @@ class SubscriptionController : ManageController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Subscription created successfully", "Created", 201, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Subscription created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -118,7 +118,7 @@ class SubscriptionController : ManageController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Subscription updated successfully", "Updated", 200, resp);
+        return successResponse("Subscription updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {

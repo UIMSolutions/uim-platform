@@ -58,7 +58,7 @@ class BrokerServiceController : ManageController {
 
     auto service = usecase.getService(tenantId, id);
     if (service.isNull)
-      return errorResponse("Broker service not found", "NotFound", 404);
+      return errorResponse("Broker service not found", "Not Found", 404);
 
     auto resp = Json.emptyObject
       .set("message", "Broker service retrieved successfully")
@@ -90,8 +90,8 @@ class BrokerServiceController : ManageController {
     dto.createdBy = UserId(data.getString("createdBy"));
 
     auto service = usecase.createService(dto);
-    if (service.isNull)
-      return errorResponse("Failed to create broker service", "BadRequest", 400);
+    if (service.hasError)
+      return errorResponse("Failed to create broker service", "Bad Request", 400);
 
     auto resp = Json.emptyObject
       .set("id", service.id);
@@ -108,7 +108,7 @@ class BrokerServiceController : ManageController {
     auto path = precheck.path;
     auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid broker service ID", "BadRequest", 400);
+      return errorResponse("Invalid broker service ID", "Bad Request", 400);
 
     auto data = precheck.data;
 
@@ -125,10 +125,10 @@ class BrokerServiceController : ManageController {
 
     auto result = usecase.updateService(dto);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.message, "Bad Request", 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Broker service updated successfully", "Updated", 200, resp);
+    return successResponse("Broker service updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -140,11 +140,11 @@ class BrokerServiceController : ManageController {
     auto path = precheck.path;
     auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid broker service ID", 400);
+      return errorResponse("Invalid broker service ID", "Bad Request", 400);
 
     auto result = usecase.deleteService(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.message, "Bad Request", 400);
 
     auto resp = Json.emptyObject
       .set("message", "Broker service deleted");
