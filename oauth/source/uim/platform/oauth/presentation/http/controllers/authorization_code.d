@@ -35,19 +35,14 @@ class AuthorizationCodeController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
+        auto items = usecase.listCodes(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
 
-            auto items = usecase.listCodes(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr);
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Authorization codes retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Authorization codes retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -57,17 +52,13 @@ class AuthorizationCodeController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto path = precheck.path;
-            auto id = precheck.id;
-            auto e = usecase.getCode(req.getTenantId, AuthorizationCodeId(id));
-            if (e.isNull) {
-                writeError(res, 404, "Authorization code not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = AuthorizationCodeId(precheck.id);
+        auto e = usecase.getCode(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Authorization code not found", 404);
+
+        return successResponse("Authorization code retrieved successfully", "Retrieved", 200, e
+                .toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -76,53 +67,49 @@ class AuthorizationCodeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
+        auto id = AuthorizationCodeId(precheck.id);
 
-            auto data = precheck.data;
-            AuthorizationCodeDTO dto;
-            dto.codeId = AuthorizationCodeId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.code = data.getString("code");
-            dto.clientId = data.getString("clientId");
-            dto.userId = data.getString("userId");
-            dto.redirectUri = data.getString("redirectUri");
-            dto.scopes = data.getString("scopes");
-            dto.expiresAt = 0;
-            dto.createdBy = UserId(data.getString("createdBy"));
+        auto data = precheck.data;
+        AuthorizationCodeDTO dto;
+        dto.codeId = id;
+        dto.tenantId = tenantId;
+        dto.code = data.getString("code");
+        dto.clientId = data.getString("clientId");
+        dto.userId = data.getString("userId");
+        dto.redirectUri = data.getString("redirectUri");
+        dto.scopes = data.getString("scopes");
+        dto.expiresAt = 0;
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createCode(dto);
-            if (result.hasError)
+        auto result = usecase.createCode(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Authorization code created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Authorization code created successfully", "Created", 201, resp);
+    }
+
+    protected Json markUsedHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = AuthorizationCodeId(precheck.id);
+
+        auto result = usecase.markUsedCode(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", id);
+        return successResponse("Authorization code marked as used successfully", "Updated", 200, resp);
     }
 
     protected void handleMarkUsed(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = AuthorizationCodeId(precheck.id);
-
-            auto result = usecase.markUsedCode(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", id)
-                    .set("message", "Authorization code marked as used");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = markUsedHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -134,20 +121,15 @@ class AuthorizationCodeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = AuthorizationCodeId(precheck.id);
-            auto result = usecase.deleteCode(tenantId, id);
-            if (result.hasError)
+        auto id = AuthorizationCodeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid authorization code ID", 400);
+            
+        auto result = usecase.deleteCode(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Authorization code deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Authorization code deleted successfully", "Deleted", 200, resp);
     }
 }

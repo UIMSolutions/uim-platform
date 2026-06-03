@@ -1,51 +1,44 @@
 name "analytics"
-description "BTP Site Manager style design-time service using D, uim-framework and vibe.d"
-homepage "https://github.com/UIMSolutions/uim/platform/analytics"
-authors "Ozan Nurettin Süel" "UI Manufaktur"
-copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+description "Analytics Service inspired by SAP Analytics Cloud capability areas"
+authors "Ozan Nurettin Suel"
+copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
-
-targetType "executable"
 targetName "uim-analytics-platform-service"
-targetPath "build"
+
+dependency "uim-platform:service" path=".."
+
 sourcePaths "source"
 importPaths "source"
-// Dependency on the core framework
-dependency "uim-platform:service" path=".."
-// Build settings
-buildRequirements "allowWarnings" "silenceDeprecations"
-buildOptions "ignoreDeprecations" "debugInfo"
-// Configurations 
+
 configuration "defaultRun" {
-	targetType "executable"
+    targetType "executable"
 }
 
 configuration "defaultTest" {
-	targetType "library"
+    targetType "library"
 }
 
 configuration "modules" {
-	targetType "library"
-	versions "show_module"
+    targetType "library"
+    versions "show_module"
 }
 
 configuration "tests" {
-	targetType "library"
-	versions "show_module" "show_test"
+    targetType "library"
+    versions "show_module" "show_test"
 }
 
 configuration "inits" {
-	targetType "library"
-	versions "show_module" "show_init"
+    targetType "library"
+    versions "show_module" "show_init"
 }
 
 configuration "calls" {
-	targetType "library"
-	versions "show_module" "show_test" "show_function"
+    targetType "library"
+    versions "show_module" "show_calls"
 }
 
 configuration "verbose" {
-	targetType "library"
-	versions "show_module" "show_test" "show_init" "show_function"
+    targetType "library"
+    versions "show_module" "show_test" "show_init" "show_calls"
 }
-

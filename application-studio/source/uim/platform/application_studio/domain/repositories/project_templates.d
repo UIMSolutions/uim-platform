@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface ProjectTemplateRepository : ITenantRepository!(ProjectTemplate, ProjectTemplateId) {
 
-    size_t countByCategoryCount(TemplateCategory category);
-    ProjectTemplate[] findByCategory(TemplateCategory category, size_t offset = 0, size_t limit = 100);
-    void removeByCategory(TemplateCategory category);
+    size_t countByCategoryCount(TenantId tenantId, TemplateCategory category);
+    ProjectTemplate[] findByCategory(TenantId tenantId, TemplateCategory category); // size_t offset = 0, size_t limit = 100);
+    void removeByCategory(TenantId tenantId, TemplateCategory category);
 
 }

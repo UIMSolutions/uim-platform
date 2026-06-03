@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
 
-    size_t countByOwner(string owner);
-    DevSpace[] findByOwner(string owner);
-    void removeByOwner(string owner);
+    size_t countByOwner(TenantId tenantId, string owner);
+    DevSpace[] findByOwner(TenantId tenantId, string owner);
+    void removeByOwner(TenantId tenantId, string owner);
 
-    size_t countByStatus(DevSpaceStatus status);
-    DevSpace[] findByStatus(DevSpaceStatus status);
-    void removeByStatus(DevSpaceStatus status);
+    size_t countByStatus(TenantId tenantId, DevSpaceStatus status);
+    DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status);
+    void removeByStatus(TenantId tenantId, DevSpaceStatus status);
 
 }

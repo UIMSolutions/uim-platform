@@ -47,7 +47,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         auto existing = spaceTypes.findById(DevSpaceTypeId(dto.id));
         if (existing.isNull) 
             return CommandResult(false, "", "Dev space type not found");
-De
+
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.predefinedExtensions.length > 0) existing.predefinedExtensions = dto.predefinedExtensions;

@@ -36,32 +36,24 @@ class ConsentRecordController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateConsentRecordRequest r;
-            r.tenantId = tenantId;
-            r.dataSubjectId = data.getString("dataSubjectId");
-            r.purposeId = data.getString("purposeId");
-            r.consentText = data.getString("consentText");
-            r.consentVersion = data.getString("consentVersion");
-            r.expiresAt = data.getLong("expiresAt");
-            r.ipAddress = data.getString("ipAddress");
-            r.userAgent = data.getString("userAgent");
-            r.source = data.getString("source");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateConsentRecordRequest r;
+        r.tenantId = tenantId;
+        r.dataSubjectId = data.getString("dataSubjectId");
+        r.purposeId = data.getString("purposeId");
+        r.consentText = data.getString("consentText");
+        r.consentVersion = data.getString("consentVersion");
+        r.expiresAt = data.getLong("expiresAt");
+        r.ipAddress = data.getString("ipAddress");
+        r.userAgent = data.getString("userAgent");
+        r.source = data.getString("source");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Consent record created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Consent record created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -71,23 +63,20 @@ class ConsentRecordController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto dataSubjectId = params.get("dataSubjectId", "");
+        auto params = req.queryParams();
+        auto dataSubjectId = params.get("dataSubjectId", "");
 
-            ConsentRecord[] consents = dataSubjectId.isEmpty
-                ? usecase.listConsentRecords(tenantId) : usecase.listConsentRecords(tenantId, dataSubjectId);
+        ConsentRecord[] consents = dataSubjectId.isEmpty
+            ? usecase.listConsentRecords(
+                tenantId) : usecase.listConsentRecords(tenantId, dataSubjectId);
 
-            auto jarr = consents.map!(c => c.toJson).array.toJson;
+        auto jarr = consents.map!(c => c.toJson).array.toJson;
 
-            auto response = Json.emptyObject
-                .set("count", consents.length)
-                .set("resources", jarr)
-                .set("message", "Consent records retrieved successfully");
+        auto response = Json.emptyObject
+            .set("count", consents.length)
+            .set("resources", jarr);
 
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Consent records retrieved successfully", "Retrieved", 200, response);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -96,26 +85,24 @@ class ConsentRecordController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
-                return;
+        auto path = precheck.path;
+        if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
+            return;
 
-            auto id = ConsentRecordId(precheck.id);
-            if (!usecase.hasConsentRecord(tenantId, id)) {
-                writeError(res, 404, "Consent record not found");
-                return;
-            }
+        auto id = ConsentRecordId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid consent record ID", 400);
 
-            auto consent = usecase.getConsentRecord(tenantId, id);
-            res.writeJsonBody(consent.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto consent = usecase.getConsentRecord(tenantId, id);
+        if (consent.isNull)
+            return errorResponse("Consent record not found", 404);
+
+        return successResponse("Consent record retrieved successfully", "Retrieved", 200, consent
+                .toJson);
     }
 
     protected void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-
             auto path = precheck.path;
             auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
             auto id = ConsentRecordId(extractIdFromPath(stripped));
@@ -128,41 +115,33 @@ class ConsentRecordController : ManageController {
 
             auto result = usecase.withdraw(r);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Consent withdrawn");
+                return errorResponse(result.message, 400);
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Consent withdrawn");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            res.writeJsonBody(resp, 200);
+        } else {
+            writeError(res, 404, result.message);
         }
+    } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-            auto id = ConsentRecordId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = ConsentRecordId(precheck.id);
 
-            auto result = usecase.deleteConsentRecord(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Consent record deleted");
+    auto result = usecase.deleteConsentRecord(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Consent record deleted successfully", "Deleted", 200, resp);}
+}
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface RunConfigurationRepository : ITenantRepository!(RunConfiguration, RunConfigurationId) {
     
-    size_t countByProject(ProjectId projectId);
-    RunConfiguration[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    RunConfiguration[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
 }

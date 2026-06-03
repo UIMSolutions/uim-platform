@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
 
-    size_t countByDevSpace(DevSpaceId devSpaceId);
-    Project[] findByDevSpace(DevSpaceId devSpaceId);
-    void removeByDevSpace(DevSpaceId devSpaceId);
+    size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
+    Project[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
+    void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
 
-    size_t countByType(ProjectType projectType);
-    Project[] findByType(ProjectType projectType);
-    void removeByType(ProjectType projectType);
+    size_t countByType(TenantId tenantId, ProjectType projectType);
+    Project[] findByType(TenantId tenantId, ProjectType projectType);
+    void removeByType(TenantId tenantId, ProjectType projectType);
 
 }

@@ -6,7 +6,7 @@
 module uim.platform.credential_store.application.usecases.get.audit_logs;
 // import uim.platform.credential_store.domain.ports.repositories.audit_logs;
 // import uim.platform.credential_store.domain.entities.audit_log_entry;
-// import uim.platform.credential_store.domain.types;
+
 // import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store;
 

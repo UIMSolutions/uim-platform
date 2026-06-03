@@ -13,15 +13,15 @@ mixin(ShowModule!());
 
 class MemoryProjectTemplateRepository : TenantRepository!(ProjectTemplate, ProjectTemplateId), ProjectTemplateRepository {
 
-    size_t countByCategory(TemplateCategory category) {
-        return findByCategory(category).length;
+    size_t countByCategory(TenantId tenantId, TemplateCategory category) {
+        return findByCategory(tenantId, category).length;
     }
 
-    ProjectTemplate[] findByCategory(TemplateCategory category) {
+    ProjectTemplate[] findByCategory(TenantId tenantId, TemplateCategory category) {
         return findByTenant(tenantId).filter!(e => e.category == category).array;
     }
 
-    void removeByCategory(TemplateCategory category) {
-        findByCategory(category).each!(e => remove(e));
+    void removeByCategory(TenantId tenantId, TemplateCategory category) {
+        findByCategory(tenantId, category).each!(e => remove(e));
     }
 }

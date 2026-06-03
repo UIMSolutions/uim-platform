@@ -102,6 +102,19 @@ mixin template TenantEntity(TId) {
       .set("updatedBy", updatedBy)
       .set("updatedAt", updatedAt);
   }
+
+  Json entityFromJson(Json src) {
+    if (!src.isObject) {
+      throw new JSONException("Expected JSON object for TenantEntity");
+    }
+    id = src.getString("id");
+    tenantId = TenantId(src.getString("tenantId"));
+    createdBy = UserId(src.getString("createdBy"));
+    createdAt = src.getLong("createdAt");
+    updatedBy = UserId(src.getString("updatedBy"));
+    updatedAt = src.getLong("updatedAt");
+    return src;
+  }
 }
 ///
 unittest {

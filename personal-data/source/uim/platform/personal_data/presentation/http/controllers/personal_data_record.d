@@ -53,16 +53,8 @@ class PersonalDataRecordController : ManageController {
             if (result.hasError)
             return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Personal data record created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                    .set("id", result.id);
+                return successResponse("Personal data record created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -91,29 +83,21 @@ class PersonalDataRecordController : ManageController {
 
             auto resp = Json.emptyObject
                 .set("count", records.length)
-                .set("resources", jarr)
-                .set("message", "Personal data records retrieved successfully");
+                .set("resources", jarr);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    return successResponse("Personal data records retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)            return precheck;
             
-
             auto id = precheck.id;
             auto r = usecase.getById(tenantId, id);
-            if (r.isNull) {
-                writeError(res, 404, "Personal data record not found");
-                return;
-            }
-            res.writeJsonBody(toJson(r), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            if (r.isNull)
+                return errorResponse("Personal data record not found", 404);
+
+        return successResponse("Personal data record retrieved successfully", "Retrieved", 200, r.toJson);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -129,15 +113,8 @@ class PersonalDataRecordController : ManageController {
             if (result.hasError)
             return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Personal data record deleted");
+                  .set("id", result.id);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Personal data record deleted successfully", "Deleted", 200, resp);
     }
 }

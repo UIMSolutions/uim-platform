@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.domain.entities.credential;
-// import uim.platform.credential_store.domain.types;
+
 import uim.platform.credential_store;
 
 mixin(ShowModule!());

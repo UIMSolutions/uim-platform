@@ -52,7 +52,7 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    BrokerServiceRepository brokerServiceRepo;
+    IBrokerServiceRepository brokerServiceRepo;
     QueueRepository queueRepo;
     TopicRepository topicRepo;
     SubscriptionRepository subscriptionRepo;

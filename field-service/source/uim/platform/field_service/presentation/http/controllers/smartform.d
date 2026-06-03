@@ -20,7 +20,7 @@ class SmartformController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/field-service/smartforms", &handleList);
         router.get("/api/v1/field-service/smartforms/*", &handleGet);
         router.post("/api/v1/field-service/smartforms", &handleCreate);
@@ -35,17 +35,14 @@ class SmartformController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listSmartforms(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
-            
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", list);
+        auto items = usecase.listSmartforms(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+
+        return successResponse("Smartforms retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -54,15 +51,13 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = SmartformId(precheck.id);
+        auto path = precheck.path;
+        auto id = SmartformId(precheck.id);
 
-            auto e = usecase.getSmartform(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Smartform not found"); return; }
-            res.writeJsonBody(e.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = usecase.getSmartform(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Smartform not found", 404);
+        return successResponse("Smartform retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -73,32 +68,25 @@ class SmartformController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            SmartformDTO dto;
-            dto.smartformId = SmartformId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
-            dto.activityId = ActivityId(data.getString("activityId"));
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.formType = data.getString("formType");
-            dto.templateId = data.getString("templateId");
-            dto.safetyLabel = data.getString("safetyLabel");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        SmartformDTO dto;
+        dto.smartformId = SmartformId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
+        dto.activityId = ActivityId(data.getString("activityId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.formType = data.getString("formType");
+        dto.templateId = data.getString("templateId");
+        dto.safetyLabel = data.getString("safetyLabel");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createSmartform(dto);
-            if (result.hasError)
+        auto result = usecase.createSmartform(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Smartform created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Smartform created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -107,34 +95,27 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            SmartformDTO dto;
-            dto.smartformId = SmartformId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.formData = data.getString("formData");
-            dto.signatureData = data.getString("signatureData");
-            dto.submittedBy = UserId(data.getString("submittedBy"));
-            dto.submittedDate = data.getString("submittedDate");
-            dto.approvedBy = UserId(data.getString("approvedBy"));
-            dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateSmartform(dto);
-            if (result.hasError)
+        auto data = precheck.data;
+        SmartformDTO dto;
+        dto.smartformId = SmartformId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.formData = data.getString("formData");
+        dto.signatureData = data.getString("signatureData");
+        dto.submittedBy = UserId(data.getString("submittedBy"));
+        dto.submittedDate = data.getString("submittedDate");
+        dto.approvedBy = UserId(data.getString("approvedBy"));
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateSmartform(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Smartform updated");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Smartform updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -143,20 +124,12 @@ class SmartformController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = SmartformId(precheck.id);
-            auto result = usecase.deleteSmartform(tenantId, id);
-            if (result.hasError)
+        auto id = SmartformId(precheck.id);
+        auto result = usecase.deleteSmartform(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                .set("message", "Smartform deleted");
-                
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Smartform deleted successfully", "Deleted", 200, resp);
     }
 }

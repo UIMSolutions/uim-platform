@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface BuildConfigurationRepository : ITenantRepository!(BuildConfiguration, BuildConfigurationId) {
 
-    size_t countByProject(ProjectId projectId);
-    BuildConfiguration[] findByProject(ProjectId projectId);
-    void removeByProject(ProjectId projectId);
+    size_t countByProject(TenantId tenantId, ProjectId projectId);
+    BuildConfiguration[] findByProject(TenantId tenantId, ProjectId projectId);
+    void removeByProject(TenantId tenantId, ProjectId projectId);
 
-    size_t countByStatus(BuildStatus status);
-    BuildConfiguration[] findByStatus(BuildStatus status);
-    void removeByStatus(BuildStatus status);
+    size_t countByStatus(TenantId tenantId, BuildStatus status);
+    BuildConfiguration[] findByStatus(TenantId tenantId, BuildStatus status);
+    void removeByStatus(TenantId tenantId, BuildStatus status);
 
 }

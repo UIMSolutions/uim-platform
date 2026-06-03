@@ -169,7 +169,7 @@ unittest {
   @safe class BrokerServiceControllerTest : ControllerTestBase {
     void runTests() {
       // 1. Setup
-      auto repo = new MemoryBrokerServiceRepository();
+      auto repo = new FileBrokerServiceRepository();
       auto usecase = new ManageBrokerServicesUseCase(repo);
       auto controller = new BrokerServiceController(usecase);
       auto tenantId = TenantId("test-tenant");

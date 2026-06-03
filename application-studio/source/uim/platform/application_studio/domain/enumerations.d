@@ -20,16 +20,43 @@ enum DevSpaceStatus {
     archived,
     hibernated
 }
+DevSpaceStatus toDevSpaceStatus(string s) {
+    final map = [
+        "starting": DevSpaceStatus.starting,
+        "running": DevSpaceStatus.running,
+        "stopped": DevSpaceStatus.stopped,
+        "stopping": DevSpaceStatus.stopping,
+        "error": DevSpaceStatus.error,
+        "archived": DevSpaceStatus.archived,
+        "hibernated": DevSpaceStatus.hibernated
+    ];
+    return map.get(s.toLower, DevSpaceStatus.error);
+}
 
 enum DevSpacePlan {
     free,
     standard,
     professional
 }
+DevSpacePlan toDevSpacePlan(string s) {
+    final map = [
+        "free": DevSpacePlan.free,
+        "standard": DevSpacePlan.standard,
+        "professional": DevSpacePlan.professional
+    ];
+    return map.get(s.toLower, DevSpacePlan.free);
+}
 
 enum DevSpaceTypeCategory {
     predefined,
     custom
+}
+DevSpaceTypeCategory toDevSpaceTypeCategory(string s) {
+    final map = [
+        "predefined": DevSpaceTypeCategory.predefined,
+        "custom": DevSpaceTypeCategory.custom
+    ];
+    return map.get(s.toLower, DevSpaceTypeCategory.predefined);
 }
 
 enum ExtensionScope {
@@ -37,11 +64,27 @@ enum ExtensionScope {
     additional,
     thirdParty
 }
+ExtensionScope toExtensionScope(string s) {
+    final map = [
+        "predefined": ExtensionScope.predefined,
+        "additional": ExtensionScope.additional,
+        "thirdparty": ExtensionScope.thirdParty
+    ];
+    return map.get(s.toLower, ExtensionScope.predefined);
+}
 
 enum ExtensionStatus {
     active,
     inactive,
     deprecated_
+}
+ExtensionStatus toExtensionStatus(string s) {
+    final map = [
+        "active": ExtensionStatus.active,
+        "inactive": ExtensionStatus.inactive,
+        "deprecated": ExtensionStatus.deprecated_
+    ];
+    return map.get(s.toLower, ExtensionStatus.inactive);
 }
 
 enum ProjectType {
@@ -55,6 +98,20 @@ enum ProjectType {
     multitarget,
     basic
 }
+ProjectType toProjectType(string s) {
+    final map = [
+        "sapfiori": ProjectType.sapFiori,
+        "capnodejs": ProjectType.capNodeJs,
+        "capjava": ProjectType.capJava,
+        "hananative": ProjectType.hanaNative,
+        "sapui5": ProjectType.sapUi5,
+        "mdk": ProjectType.mdk,
+        "workflow": ProjectType.workflow,
+        "multitarget": ProjectType.multitarget,
+        "basic": ProjectType.basic
+    ];
+    return map.get(s.toLower, ProjectType.basic);
+}
 
 enum ProjectStatus {
     active,
@@ -62,6 +119,16 @@ enum ProjectStatus {
     building,
     deploying,
     error
+}
+ProjectStatus toProjectStatus(string s) {
+    final map = [
+        "active": ProjectStatus.active,
+        "archived": ProjectStatus.archived,
+        "building": ProjectStatus.building,
+        "deploying": ProjectStatus.deploying,
+        "error": ProjectStatus.error
+    ];
+    return map.get(s.toLower, ProjectStatus.active);
 }
 
 enum TemplateCategory {
@@ -72,6 +139,17 @@ enum TemplateCategory {
     sapWorkflow,
     general
 }
+TemplateCategory toTemplateCategory(string s) {
+    final map = [
+        "sapfiori": TemplateCategory.sapFiori,
+        "sapcap": TemplateCategory.sapCap,
+        "saphana": TemplateCategory.sapHana,
+        "sapmdk": TemplateCategory.sapMdk,
+        "sapworkflow": TemplateCategory.sapWorkflow,
+        "general": TemplateCategory.general
+    ];
+    return map.get(s.toLower, TemplateCategory.general);
+}
 
 enum ServiceProviderType {
     sapBtp,
@@ -80,18 +158,45 @@ enum ServiceProviderType {
     externalOData,
     externalRest
 }
+ServiceProviderType toServiceProviderType(string s) {
+    final map = [
+        "sapbtp": ServiceProviderType.sapBtp,
+        "saps4hana": ServiceProviderType.sapS4Hana,
+        "sapsuccessfactors": ServiceProviderType.sapSuccessFactors,
+        "externalodata": ServiceProviderType.externalOData,
+        "externalrest": ServiceProviderType.externalRest
+    ];
+    return map.get(s.toLower, ServiceProviderType.externalRest);
+}
 
 enum BindingStatus {
     connected,
     disconnected,
     error
 }
+BindingStatus toBindingStatus(string s) {
+    final map = [
+        "connected": BindingStatus.connected,
+        "disconnected": BindingStatus.disconnected,
+        "error": BindingStatus.error
+    ];
+    return map.get(s.toLower, BindingStatus.disconnected);
+}
 
 enum RunMode {
     run,
-    debug,
+    debug_,
     test,
     preview
+}
+RunMode toRunMode(string s) {
+    final map = [
+        "run": RunMode.run,
+        "debug": RunMode.debug_,
+        "test": RunMode.test,
+        "preview": RunMode.preview
+    ];
+    return map.get(s.toLower, RunMode.run);
 }
 
 enum RunStatus {
@@ -99,6 +204,15 @@ enum RunStatus {
     running,
     stopped,
     error
+}
+RunStatus toRunStatus(string s) {
+    final map = [
+        "idle": RunStatus.idle,
+        "running": RunStatus.running,
+        "stopped": RunStatus.stopped,
+        "error": RunStatus.error
+    ];
+    return map.get(s.toLower, RunStatus.idle);
 }
 
 enum BuildStatus {
@@ -108,6 +222,16 @@ enum BuildStatus {
     failed,
     cancelled
 }
+BuildStatus toBuildStatus(string s) {
+    final map = [
+        "pending": BuildStatus.pending,
+        "building": BuildStatus.building,
+        "succeeded": BuildStatus.succeeded,
+        "failed": BuildStatus.failed,
+        "cancelled": BuildStatus.cancelled
+    ];
+    return map.get(s.toLower, BuildStatus.pending);
+}
 
 enum DeployTarget {
     cloudFoundry,
@@ -115,4 +239,14 @@ enum DeployTarget {
     abap,
     html5Repository,
     docker
+}
+DeployTarget toDeployTarget(string s) {
+    final map = [
+        "cloudfoundry": DeployTarget.cloudFoundry,
+        "kyma": DeployTarget.kyma,
+        "abap": DeployTarget.abap,
+        "html5repository": DeployTarget.html5Repository,
+        "docker": DeployTarget.docker
+    ];
+    return map.get(s.toLower, DeployTarget.cloudFoundry);
 }

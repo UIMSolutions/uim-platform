@@ -35,17 +35,14 @@ class OAuthScopeController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listScopes(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto items = usecase.listScopes(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", list);
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("OAuth scope list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -54,18 +51,14 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = OAuthScopeId(precheck.id);
+        auto path = precheck.path;
+        auto id = OAuthScopeId(precheck.id);
 
-            auto e = usecase.getScope(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "OAuth scope not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = usecase.getScope(tenantId, id);
+        if (e.isNull)
+            return errorResponse("OAuth scope not found", 404);
+
+        return successResponse("OAuth scope retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -76,28 +69,20 @@ class OAuthScopeController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            OAuthScopeDTO dto;
-            dto.tenantId = tenantId;
-            dto.scopeId = OAuthScopeId(precheck.id);
-            dto.applicationId = data.getString("applicationId");
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        OAuthScopeDTO dto;
+        dto.tenantId = tenantId;
+        dto.scopeId = OAuthScopeId(precheck.id);
+        dto.applicationId = data.getString("applicationId");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createScope(dto);
-            if (result.hasError)
+        auto result = usecase.createScope(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "OAuth scope created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("OAuth scope created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -106,17 +91,17 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            OAuthScopeDTO dto;
-            dto.tenantId = tenantId;
-            dto.scopeId = OAuthScopeId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateScope(dto);
-            if (result.hasError)
+        auto data = precheck.data;
+        OAuthScopeDTO dto;
+        dto.tenantId = tenantId;
+        dto.scopeId = OAuthScopeId(precheck.id);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateScope(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -129,10 +114,12 @@ class OAuthScopeController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = OAuthScopeId(precheck.id);
-            auto result = usecase.deleteOAuthScope(tenantId, id);
-            if (result.hasError)
+        auto id = OAuthScopeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid OAuth scope ID", 400);
+
+        auto result = usecase.deleteOAuthScope(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);

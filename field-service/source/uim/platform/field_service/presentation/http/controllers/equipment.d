@@ -20,7 +20,7 @@ class EquipmentController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/field-service/equipment", &handleList);
         router.get("/api/v1/field-service/equipment/*", &handleGet);
         router.post("/api/v1/field-service/equipment", &handleCreate);
@@ -35,18 +35,15 @@ class EquipmentController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listEquipments(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
+        auto items = usecase.listEquipments(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Equipment list retrieved");
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list)
+            .set("message", "Equipment list retrieved");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Equipment list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -55,14 +52,16 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = EquipmentId(precheck.id);
-            auto equipment = usecase.getEquipment(tenantId, id);
-            if (equipment.isNull) { writeError(res, 404, "Equipment not found"); return; }
-            res.writeJsonBody(equipment.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = EquipmentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid equipment ID", 400);
+
+        auto equipment = usecase.getEquipment(tenantId, id);
+        if (equipment.isNull)
+            return errorResponse("Equipment not found", 404);
+
+        return successResponse("Equipment retrieved successfully", "Retrieved", 200, equipment
+                .toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -73,38 +72,32 @@ class EquipmentController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            EquipmentDTO dto;
-            dto.equipmentId = EquipmentId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.customerId = CustomerId(data.getString("customerId"))  ;
-            dto.serialNumber = data.getString("serialNumber");
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.equipmentType = data.getString("equipmentType");
-            dto.manufacturer = data.getString("manufacturer");
-            dto.model = data.getString("model");
-            dto.installationDate = data.getString("installationDate");
-            dto.warrantyEndDate = data.getString("warrantyEndDate");
-            dto.locationAddress = data.getString("locationAddress");
-            dto.latitude = data.getString("latitude");
-            dto.longitude = data.getString("longitude");
-            dto.measuringPoint = data.getString("measuringPoint");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        EquipmentDTO dto;
+        dto.equipmentId = EquipmentId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.customerId = CustomerId(data.getString("customerId"));
+        dto.serialNumber = data.getString("serialNumber");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.equipmentType = data.getString("equipmentType");
+        dto.manufacturer = data.getString("manufacturer");
+        dto.model = data.getString("model");
+        dto.installationDate = data.getString("installationDate");
+        dto.warrantyEndDate = data.getString("warrantyEndDate");
+        dto.locationAddress = data.getString("locationAddress");
+        dto.latitude = data.getString("latitude");
+        dto.longitude = data.getString("longitude");
+        dto.measuringPoint = data.getString("measuringPoint");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createEquipment(dto);
-            if (result.hasError)
+        auto result = usecase.createEquipment(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Equipment created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Equipment created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Equipment created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -113,34 +106,28 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            EquipmentDTO dto;
-            dto.equipmentId = EquipmentId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.manufacturer = data.getString("manufacturer");
-            dto.model = data.getString("model");
-            dto.locationAddress = data.getString("locationAddress");
-            dto.lastServiceDate = data.getString("lastServiceDate");
-            dto.nextServiceDate = data.getString("nextServiceDate");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto path = precheck.path;
+        auto data = precheck.data;
+        EquipmentDTO dto;
+        dto.equipmentId = EquipmentId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.manufacturer = data.getString("manufacturer");
+        dto.model = data.getString("model");
+        dto.locationAddress = data.getString("locationAddress");
+        dto.lastServiceDate = data.getString("lastServiceDate");
+        dto.nextServiceDate = data.getString("nextServiceDate");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateEquipment(dto);
-            if (result.hasError)
+        auto result = usecase.updateEquipment(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Equipment updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Equipment updated successfully", "Updated", 200, resp);
+
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -149,20 +136,16 @@ class EquipmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = EquipmentId(precheck.id);
-            auto result = usecase.deleteEquipment(tenantId, id);
-            if (result.hasError)
+        auto path = precheck.path;
+        auto id = EquipmentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid equipment ID", 400);
+
+        auto result = usecase.deleteEquipment(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Equipment deleted");
-                  
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Equipment deleted successfully", "Deleted", 200, resp);
     }
 }

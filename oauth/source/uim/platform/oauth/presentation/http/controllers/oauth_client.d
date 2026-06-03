@@ -35,19 +35,14 @@ class OAuthClientController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
+        auto items = usecase.listClients(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
 
-            auto items = usecase.listClients(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "OAuth client list retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("OAuth clients retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -56,18 +51,15 @@ class OAuthClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = OAuthClientId(precheck.id);
+        auto id = OAuthClientId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid OAuth client ID", 400);
 
-            auto e = usecase.getClient(tenantId, id);
-            if (e.isNull) {
-                writeError(res, 404, "OAuth client not found");
-                return;
-            }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = usecase.getClient(tenantId, id);
+        if (e.isNull)
+            return errorResponse("OAuth client not found", 404);
+
+        return successResponse("OAuth client retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -78,38 +70,29 @@ class OAuthClientController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            OAuthClientDTO dto;
-            dto.tenantId = tenantId;
-            dto.clientId = precheck.id;
-            dto.tenantId = tenantId;
-            dto.parentClientId = data.getString("clientId");
-            dto.clientSecret = data.getString("clientSecret");
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.clientType = data.getString("clientType");
-            dto.redirectUris = data.getString("redirectUris");
-            dto.allowedScopes = data.getString("allowedScopes");
-            dto.grantTypes = data.getString("grantTypes");
-            dto.accessTokenValidity = data.getString("accessTokenValidity").length > 0 ? 3600 : 3600;
-            dto.refreshTokenValidity = data.getString("refreshTokenValidity").length > 0 ? 86400
-                : 86400;
-            dto.contacts = data.getString("contacts");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        OAuthClientDTO dto;
+        dto.tenantId = tenantId;
+        dto.clientId = precheck.id;
+        dto.tenantId = tenantId;
+        dto.parentClientId = data.getString("clientId");
+        dto.clientSecret = data.getString("clientSecret");
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.clientType = data.getString("clientType");
+        dto.redirectUris = data.getString("redirectUris");
+        dto.allowedScopes = data.getString("allowedScopes");
+        dto.grantTypes = data.getString("grantTypes");
+        dto.accessTokenValidity = data.getString("accessTokenValidity").length > 0 ? 3600 : 3600;
+        dto.refreshTokenValidity = data.getString("refreshTokenValidity").length > 0 ? 86400 : 86400;
+        dto.contacts = data.getString("contacts");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createClient(dto);
-            if (result.hasError)
+        auto result = usecase.createClient(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "OAuth client created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("OAuth client created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -118,20 +101,20 @@ class OAuthClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            OAuthClientDTO dto;
-            dto.tenantId = tenantId;
-            dto.clientId = OAuthClientId(precheck.id);
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.redirectUris = data.getString("redirectUris");
-            dto.allowedScopes = data.getString("allowedScopes");
-            dto.contacts = data.getString("contacts");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto path = precheck.path;
+        auto data = precheck.data;
+        OAuthClientDTO dto;
+        dto.tenantId = tenantId;
+        dto.clientId = OAuthClientId(precheck.id);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.redirectUris = data.getString("redirectUris");
+        dto.allowedScopes = data.getString("allowedScopes");
+        dto.contacts = data.getString("contacts");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateClient(dto);
-            if (result.hasError)
+        auto result = usecase.updateClient(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -144,16 +127,16 @@ class OAuthClientController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto tenantId = precheck.tenantId;
-            auto id = OAuthClientId(precheck.id);
-            
-            auto result = usecase.deleteClient(tenantId, id);
-           if (result.hasError)
+        auto tenantId = precheck.tenantId;
+        auto id = OAuthClientId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid OAuth client ID", 400);
+
+        auto result = usecase.deleteClient(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("OAuth client deleted successfully", 200, responseData);
-       
     }
 }

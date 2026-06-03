@@ -46,6 +46,23 @@ mixin template DomainId() {
   Json toJson() const {
     return Json(value);
   }
+
+  // static LicenseKey fromJson(Json src) {
+  //       // Kontrollierte Prüfung des rohen JSON-Werts
+  //       if (src.type != Json.Type.string) {
+  //           throw new JSONException("Lizenzschlüssel muss ein String sein!");
+  //       }
+
+  //       string rawKey = src.get!string;
+
+  //       // Kontrollierte Validierung / Transformation während des Mappings
+  //       if (!rawKey.startsWith("KEY-")) {
+  //           throw new JSONException("Ungültiges Format: Schlüssel muss mit 'KEY-' beginnen.");
+  //       }
+
+  //       // Rückgabe des fertig gemappten Structs
+  //       return LicenseKey(rawKey);
+  //   }
 }
 ///
 unittest {

@@ -8,7 +8,7 @@ module uim.platform.credential_store.application.usecases.get.overview;
 // import uim.platform.credential_store.domain.ports.repositories.credentials;
 // import uim.platform.credential_store.domain.ports.repositories.service_bindings;
 // import uim.platform.credential_store.domain.ports.repositories.audit_logs;
-// import uim.platform.credential_store.domain.types;
+
 // import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store;
 

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 
 interface DevSpaceTypeRepository : ITenantRepository!(DevSpaceType, DevSpaceTypeId) {
 
-    size_t countByCategory(DevSpaceTypeCategory category);
-    DevSpaceType[] findByCategory(DevSpaceTypeCategory category);
-    void removeByCategory(DevSpaceTypeCategory category);
+    size_t countByCategory(TenantId tenantId, DevSpaceTypeCategory category);
+    DevSpaceType[] findByCategory(TenantId tenantId, DevSpaceTypeCategory category);
+    void removeByCategory(TenantId tenantId, DevSpaceTypeCategory category);
 
 }

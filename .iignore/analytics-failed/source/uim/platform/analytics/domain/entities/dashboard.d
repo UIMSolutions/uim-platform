@@ -1,0 +1,72 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.analytics.domain.entities.dashboard;
+
+import uim.platform.analytics;
+
+mixin(ShowModule!());
+@safe:
+/// A Dashboard is a collection of pages, each containing analytical widgets.
+/// Corresponds to an "Analytic Application" in SAP Analytics Cloud.
+struct Dashboard {
+  mixin TenantEntity!DashboardId;
+
+  string name;
+  string description;
+  EntityId ownerId;
+  Visibility visibility;
+  ArtifactStatus status;
+  Page[] pages;
+  AuditInfo audit;
+  string[] tags;
+
+  Json toJson() {
+    auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
+        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array.toJson))
+      .array.toJson;
+
+    return entityToJson()
+      .set("id", id.value).set("name", name)
+      .set("description", description).set("ownerId", ownerId.value)
+      .set("visibility", to!string(visibility)).set("status", to!string(status))
+      .set("pages", jPages)
+      .set("audit", Json.emptyObject
+          .set("createdBy",
+            audit.createdBy)
+          .set("createdAt", audit.createdAt.toISOExtString())
+          .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
+        tags.toJson);
+  }
+  static Dashboard create(string name, string description, string ownerId) {
+    Dashboard d;
+    d.id = DashboardId(EntityId.generate().value);
+    d.name = name;
+    d.description = description;
+    d.ownerId = EntityId(ownerId);
+    d.visibility = Visibility.Private;
+    d.status = ArtifactStatus.Draft;
+    return d;
+  }
+
+  void addPage(string title) {
+    pages ~= Page(EntityId.generate(), title, []);
+  }
+
+  void publish() { status = ArtifactStatus.Published; }
+  void archive() { status = ArtifactStatus.Archived; }
+}
+/// A page / tab within a dashboard.
+struct Page {
+  EntityId id;
+  string title;
+  EntityId[] widgetIds;
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("id", id.value).set("title", title)
+      .set("widgetIds", widgetIds.map!(wid => wid.value).array.toJson);
+  }
+}

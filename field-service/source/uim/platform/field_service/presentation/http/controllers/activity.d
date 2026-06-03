@@ -35,18 +35,15 @@ class ActivityController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listActivities(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
+        auto items = usecase.listActivities(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Activities retrieved successfully");
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list)
+            .set("message", "Activities retrieved successfully");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Activities retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -55,17 +52,13 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = ActivityId(precheck.id);
-            Activity activity = usecase.getActivity(tenantId, id);
-            if (activity.isNull) {
-                writeError(res, 404, "Activity not found");
-                return;
-            }
-            res.writeJsonBody(activity.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto path = precheck.path;
+        auto id = ActivityId(precheck.id);
+        Activity activity = usecase.getActivity(tenantId, id);
+        if (activity.isNull)
+            return errorResponse("Activity not found", 404);
+
+        return successResponse("Activity retrieved successfully", "Retrieved", 200, activity.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -76,36 +69,30 @@ class ActivityController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            ActivityDTO dto;
-            dto.activityId = ActivityId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
-            dto.technicianId = TechnicianId(data.getString("technicianId"));
-            dto.subject = data.getString("subject");
-            dto.description = data.getString("description");
-            dto.activityType = data.getString("activityType");
-            dto.plannedStart = data.getString("plannedStart");
-            dto.plannedEnd = data.getString("plannedEnd");
-            dto.address = data.getString("address");
-            dto.latitude = data.getString("latitude");
-            dto.longitude = data.getString("longitude");
-            dto.notes = data.getString("notes");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        ActivityDTO dto;
+        dto.activityId = ActivityId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
+        dto.technicianId = TechnicianId(data.getString("technicianId"));
+        dto.subject = data.getString("subject");
+        dto.description = data.getString("description");
+        dto.activityType = data.getString("activityType");
+        dto.plannedStart = data.getString("plannedStart");
+        dto.plannedEnd = data.getString("plannedEnd");
+        dto.address = data.getString("address");
+        dto.latitude = data.getString("latitude");
+        dto.longitude = data.getString("longitude");
+        dto.notes = data.getString("notes");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createActivity(dto);
-            if (result.hasError)
+        auto result = usecase.createActivity(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Activity created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Activity created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -114,35 +101,29 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            ActivityDTO dto;
-            dto.activityId = ActivityId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.subject = data.getString("subject");
-            dto.description = data.getString("description");
-            dto.plannedStart = data.getString("plannedStart");
-            dto.plannedEnd = data.getString("plannedEnd");
-            dto.actualStart = data.getString("actualStart");
-            dto.actualEnd = data.getString("actualEnd");
-            dto.notes = data.getString("notes");
-            dto.feedbackCode = data.getString("feedbackCode");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateActivity(dto);
-            if (result.hasError)
+        auto data = precheck.data;
+        ActivityDTO dto;
+        dto.activityId = ActivityId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.subject = data.getString("subject");
+        dto.description = data.getString("description");
+        dto.plannedStart = data.getString("plannedStart");
+        dto.plannedEnd = data.getString("plannedEnd");
+        dto.actualStart = data.getString("actualStart");
+        dto.actualEnd = data.getString("actualEnd");
+        dto.notes = data.getString("notes");
+        dto.feedbackCode = data.getString("feedbackCode");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateActivity(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Activity updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Activity updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -151,20 +132,14 @@ class ActivityController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = ActivityId(precheck.id);
-            auto result = usecase.deleteActivity(tenantId, id);
-            if (result.hasError)
+        auto path = precheck.path;
+        auto id = ActivityId(precheck.id);
+        auto result = usecase.deleteActivity(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Activity deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+
+        return successResponse("Activity deleted successfully", "Deleted", 200, resp);
     }
 }

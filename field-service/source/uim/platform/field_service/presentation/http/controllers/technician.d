@@ -20,7 +20,7 @@ class TechnicianController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/field-service/technicians", &handleList);
         router.get("/api/v1/field-service/technicians/*", &handleGet);
         router.post("/api/v1/field-service/technicians", &handleCreate);
@@ -35,16 +35,14 @@ class TechnicianController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listTechnicians(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
-            
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", list);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listTechnicians(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+
+        return successResponse("Technicians retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -53,14 +51,15 @@ class TechnicianController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = TechnicianId(precheck.id);
-            auto e = usecase.getTechnician(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Technician not found"); return; }
-            res.writeJsonBody(e.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TechnicianId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid technician ID", 400); 
+
+        auto e = usecase.getTechnician(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Technician not found", 404);
+
+        return successResponse("Technician retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -71,36 +70,31 @@ class TechnicianController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            TechnicianDTO dto;
-            dto.technicianId = TechnicianId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.firstName = data.getString("firstName");
-            dto.lastName = data.getString("lastName");
-            dto.email = data.getString("email");
-            dto.phone = data.getString("phone");
-            dto.region = data.getString("region");
-            dto.address = data.getString("address");
-            dto.latitude = data.getString("latitude");
-            dto.longitude = data.getString("longitude");
-            dto.availabilityStart = data.getString("availabilityStart");
-            dto.availabilityEnd = data.getString("availabilityEnd");
-            dto.maxWorkload = data.getString("maxWorkload");
-            dto.travelRadius = data.getString("travelRadius");
-            dto.createdBy = UserId(data.getString("createdBy"));
+        TechnicianDTO dto;
+        dto.technicianId = TechnicianId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.email = data.getString("email");
+        dto.phone = data.getString("phone");
+        dto.region = data.getString("region");
+        dto.address = data.getString("address");
+        dto.latitude = data.getString("latitude");
+        dto.longitude = data.getString("longitude");
+        dto.availabilityStart = data.getString("availabilityStart");
+        dto.availabilityEnd = data.getString("availabilityEnd");
+        dto.maxWorkload = data.getString("maxWorkload");
+        dto.travelRadius = data.getString("travelRadius");
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createTechnician(dto);
-            if (result.hasError)
+        auto result = usecase.createTechnician(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Technician created");
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Technician created successfully", "Created", 201, resp);
+
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -109,25 +103,24 @@ class TechnicianController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto data = precheck.data;
-            TechnicianDTO dto;
-            dto.technicianId = TechnicianId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.firstName = data.getString("firstName");
-            dto.lastName = data.getString("lastName");
-            dto.email = data.getString("email");
-            dto.phone = data.getString("phone");
-            dto.region = data.getString("region");
-            dto.address = data.getString("address");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        TechnicianDTO dto;
+        dto.technicianId = TechnicianId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.email = data.getString("email");
+        dto.phone = data.getString("phone");
+        dto.region = data.getString("region");
+        dto.address = data.getString("address");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateTechnician(dto);
-            if (result.hasError)
+        auto result = usecase.updateTechnician(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Technician updated successfully", 200, responseData);
+        return successResponse("Technician updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -136,15 +129,15 @@ class TechnicianController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = TechnicianId(precheck.id);
-            if (id.isNull) 
+        auto id = TechnicianId(precheck.id);
+        if (id.isNull)
             return errorResponse("Invalid technician ID", 400);
-                        auto result = usecase.deleteTechnician(tenantId, id);
-            if (result.hasError)
+
+        auto result = usecase.deleteTechnician(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Technician deleted successfully", 200, responseData);
+        return successResponse("Technician deleted successfully", "Deleted", 200, responseData);
     }
 }

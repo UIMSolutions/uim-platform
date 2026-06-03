@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: analytics-config
+  labels:
+    app: analytics
+data:
+  ANALYTICS_HOST: "0.0.0.0"
+  ANALYTICS_PORT: "8112"
+  ANALYTICS_STORAGE: "memory"
+  ANALYTICS_DATA_PATH: "/data/analytics"
+  ANALYTICS_MONGO_DB: "analytics"

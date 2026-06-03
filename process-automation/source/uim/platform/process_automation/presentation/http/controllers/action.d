@@ -36,38 +36,30 @@ class ActionController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            CreateActionRequest r;
-            r.tenantId = tenantId;
-            r.projectId = ProjectId(data.getString("projectId"));
-            r.actionId = ActionId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.method = data.getString("method");
-            r.baseUrl = data.getString("baseUrl");
-            r.path = data.getString("path");
-            r.authType = data.getString("authType");
-            r.destinationName = data.getString("destinationName");
-            r.version_ = data.getString("version");
-            r.createdBy = UserId(data.getString("createdBy"));
+        auto data = precheck.data;
+        CreateActionRequest r;
+        r.tenantId = tenantId;
+        r.projectId = ProjectId(data.getString("projectId"));
+        r.actionId = ActionId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.method = data.getString("method");
+        r.baseUrl = data.getString("baseUrl");
+        r.path = data.getString("path");
+        r.authType = data.getString("authType");
+        r.destinationName = data.getString("destinationName");
+        r.version_ = data.getString("version");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = actionUsecase.createAction(r);
-            if (result.hasError)
+        auto result = actionUsecase.createAction(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Action created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Action created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -77,30 +69,27 @@ class ActionController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto actions = actionUsecase.listActions(tenantId);
+        auto actions = actionUsecase.listActions(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (a; actions) {
-                jarr ~= Json.emptyObject
-                    .set("id", a.id)
-                    .set("name", a.name)
-                    .set("description", a.description)
-                    .set("status", a.status.to!string)
-                    .set("type", a.type.to!string)
-                    .set("baseUrl", a.baseUrl)
-                    .set("version", a.version_)
-                    .set("createdAt", a.createdAt)
-                    .set("updatedAt", a.updatedAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", actions.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto jarr = Json.emptyArray;
+        foreach (a; actions) {
+            jarr ~= Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("status", a.status.to!string)
+                .set("type", a.type.to!string)
+                .set("baseUrl", a.baseUrl)
+                .set("version", a.version_)
+                .set("createdAt", a.createdAt)
+                .set("updatedAt", a.updatedAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", actions.length)
+            .set("resources", list);
+
+        return successResponse("Actions retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -144,21 +133,21 @@ class ActionController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateActionRequest r;
-            r.tenantId = tenantId;
-            r.actionId = ActionId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.baseUrl = data.getString("baseUrl");
-            r.path = data.getString("path");
-            r.authType = data.getString("authType");
-            r.destinationName = data.getString("destinationName");
-            r.version_ = data.getString("version");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        UpdateActionRequest r;
+        r.tenantId = tenantId;
+        r.actionId = ActionId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.baseUrl = data.getString("baseUrl");
+        r.path = data.getString("path");
+        r.authType = data.getString("authType");
+        r.destinationName = data.getString("destinationName");
+        r.version_ = data.getString("version");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = actionUsecase.updateAction(r);
-            if (result.hasError)
+        auto result = actionUsecase.updateAction(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -172,9 +161,12 @@ class ActionController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = ActionId(precheck.id);
-            auto result = actionUsecase.deleteAction(tenantId, id);
-            if (result.hasError)
+        auto id = ActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+            
+        auto result = actionUsecase.deleteAction(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);

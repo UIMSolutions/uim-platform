@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics
+  labels:
+    app: analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+      - name: analytics
+        image: uim-platform/analytics:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8112
+        envFrom:
+        - configMapRef:
+            name: analytics-config
+        env:
+        - name: ANALYTICS_MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: analytics-secrets
+              key: mongo-uri
+              optional: true
+        volumeMounts:
+        - mountPath: /data/analytics
+          name: analytics-data
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8112
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8112
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 100m
+          limits:
+            memory: 256Mi
+            cpu: 500m
+      volumes:
+      - name: analytics-data
+        emptyDir: {}

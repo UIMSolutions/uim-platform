@@ -39,34 +39,27 @@ class DataSubjectController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateDataSubjectRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.subjectType = data.getString("subjectType");
-            r.firstName = data.getString("firstName");
-            r.lastName = data.getString("lastName");
-            r.email = data.getString("email");
-            r.phone = data.getString("phone");
-            r.dateOfBirth = data.getString("dateOfBirth");
-            r.organizationName = data.getString("organizationName");
-            r.organizationId = data.getString("organizationId");
-            r.externalId = data.getString("externalId");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateDataSubjectRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.subjectType = data.getString("subjectType");
+        r.firstName = data.getString("firstName");
+        r.lastName = data.getString("lastName");
+        r.email = data.getString("email");
+        r.phone = data.getString("phone");
+        r.dateOfBirth = data.getString("dateOfBirth");
+        r.organizationName = data.getString("organizationName");
+        r.organizationId = data.getString("organizationId");
+        r.externalId = data.getString("externalId");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data subject created");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Data subject created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -76,18 +69,15 @@ class DataSubjectController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            auto subjects = usecase.listDataSubjects(tenantId);
+        auto subjects = usecase.listDataSubjects(tenantId);
 
-            auto jarr = subjects.map!(s => s.toJson).array.toJson;
+        auto jarr = subjects.map!(s => s.toJson).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", subjects.length)
-                .set("resources", list);
+        auto resp = Json.emptyObject
+            .set("count", subjects.length)
+            .set("resources", jarr);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Data subjects retrieved successfully", "Retrieved", 200, resp);
     }
 
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -124,23 +114,23 @@ class DataSubjectController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            if (path.length > 6 && path[$ - 6 .. $] == "/block")
-                return;
-            if (path.length > 6 && path[$ - 6 .. $] == "/erase")
-                return;
+        auto path = precheck.path;
+        if (path.length > 6 && path[$ - 6 .. $] == "/block")
+            return;
+        if (path.length > 6 && path[$ - 6 .. $] == "/erase")
+            return;
 
-            auto id = DataSubjectId(precheck.id);
-            if (!usecase.hasDataSubject(tenantId, id)) {
-                writeError(res, 404, "Data subject not found");
-                return;
-            }
+        auto id = DataSubjectId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
 
-            auto subject = usecase.getDataSubject(tenantId, id);
-            res.writeJsonBody(subject.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto subject = usecase.getDataSubject(tenantId, id);
+        if (subject.isNull)
+            return errorResponse("Data subject not found", 404);
+
+        return successResponse("Data subject retrieved successfully", "Retrieved", 200, subject
+                .toJson);
+
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -149,101 +139,101 @@ class DataSubjectController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateDataSubjectRequest request;
-            request.tenantId = tenantId;
-            request.id = DataSubjectId(precheck.id);
-            request.firstName = data.getString("firstName");
-            request.lastName = data.getString("lastName");
-            request.email = data.getString("email");
-            request.phone = data.getString("phone");
-            request.dateOfBirth = data.getString("dateOfBirth");
-            request.organizationName = data.getString("organizationName");
-            request.organizationId = data.getString("organizationId");
-            request.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        UpdateDataSubjectRequest request;
+        request.tenantId = tenantId;
+        request.id = DataSubjectId(precheck.id);
+        request.firstName = data.getString("firstName");
+        request.lastName = data.getString("lastName");
+        request.email = data.getString("email");
+        request.phone = data.getString("phone");
+        request.dateOfBirth = data.getString("dateOfBirth");
+        request.organizationName = data.getString("organizationName");
+        request.organizationId = data.getString("organizationId");
+        request.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateDataSubject(request);
-            if (result.hasError)
+        auto result = usecase.updateDataSubject(request);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data subject updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Data subject updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        res.writeJsonBody(resp, 200);
+    } else {
+        writeError(res, 404, result.message);
     }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto stripped = path[0 .. $ - 6]; // remove "/block"
-            auto id = DataSubjectId(extractIdFromPath(stripped));
-
-            auto result = usecase.block(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data subject blocked");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto stripped = path[0 .. $ - 6]; // remove "/erase"
-            auto id = DataSubjectId(extractIdFromPath(stripped));
-
-            auto result = usecase.eraseDataSubject(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data subject erased (anonymized)");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
+protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
         auto tenantId = precheck.tenantId;
-            auto id = DataSubjectId(precheck.id);
-            auto result = usecase.deleteDataSubject(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data subject deleted");
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 6]; // remove "/block"
+        auto id = DataSubjectId(extractIdFromPath(stripped));
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = usecase.block(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Data subject blocked");
+
+        res.writeJsonBody(resp, 200);
+    } else {
+        writeError(res, 404, result.message);
     }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
+
+protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 6]; // remove "/erase"
+        auto id = DataSubjectId(extractIdFromPath(stripped));
+
+        auto result = usecase.eraseDataSubject(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Data subject erased (anonymized)");
+
+        res.writeJsonBody(resp, 200);
+    } else {
+        writeError(res, 404, result.message);
+    }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DataSubjectId(precheck.id);
+    auto result = usecase.deleteDataSubject(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Data subject deleted");
+
+    res.writeJsonBody(resp, 200);
+} else {
+    writeError(res, 404, result.message);
+}
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 }

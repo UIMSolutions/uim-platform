@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
-    size_t countByDevSpace(DevSpaceId devSpaceId);
-    ServiceBinding[] findByDevSpace(DevSpaceId devSpaceId);
-    void removeByDevSpace(DevSpaceId devSpaceId);
+    size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
+    ServiceBinding[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
+    void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
     
-    size_t countByStatus(BindingStatus status);
-    ServiceBinding[] findByStatus(BindingStatus status);
-    void removeByStatus(BindingStatus status);
+    size_t countByStatus(TenantId tenantId, BindingStatus status);
+    ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status);
+    void removeByStatus(TenantId tenantId, BindingStatus status);
 
 }
