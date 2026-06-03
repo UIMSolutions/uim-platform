@@ -31,7 +31,7 @@ class TotpMfaService : MfaService {
   void sendOtp(MfaType mfaType, string destination, string code) {
     // In production: integrate with SMS gateway or email service.
     // For now, log to stdout.
-    // import std.stdio : writefln;
+    
 
     writefln("[MFA] Sending OTP %s to %s via %s", code, destination, mfaType.to!string);
   }

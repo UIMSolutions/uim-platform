@@ -8,7 +8,7 @@ module app;
 
 // import uim.platform.data.privacy.infrastructure.config;
 // import uim.platform.data.privacy.infrastructure.container;
-// import std.stdio : writefln;
+
 import uim.platform.data.privacy;
 
 mixin(ShowModule!());

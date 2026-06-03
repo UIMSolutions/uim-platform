@@ -8,7 +8,7 @@ module app;
 
 // import uim.platform.portal.infrastructure.config;
 // import uim.platform.portal.infrastructure.container;
-// import std.stdio : writefln;
+
 import uim.platform.portal;
 
 mixin(ShowModule!());

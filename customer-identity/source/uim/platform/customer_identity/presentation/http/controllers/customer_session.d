@@ -60,10 +60,11 @@ class CustomerSessionController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = sessions.createSession(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Session created").set("status", "success").set(
-                "statusCode", 201);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Session created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -80,10 +81,9 @@ class CustomerSessionController : ManageController {
 
         auto e = sessions.getSession(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Session not found")
-                .set("status", "error").set("statusCode", 404);
+            return errorResponse("Session not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Session retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -99,9 +99,10 @@ class CustomerSessionController : ManageController {
                 .set("status", "error").set("statusCode", 400);
 
         auto result = sessions.revokeSession(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("message", "Session revoked")
-                .set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Session deleted successfully", "Deleted", 200, responseData);
     }
 }

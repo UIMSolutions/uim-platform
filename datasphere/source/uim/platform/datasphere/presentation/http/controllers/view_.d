@@ -37,7 +37,7 @@ class ViewController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    
+
     CreateViewRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
@@ -56,129 +56,122 @@ class ViewController : ManageController {
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "View created");
+      .set("id", result.id);
 
-    res.writeJsonBody(resp, 201);
-  } else {
-    writeError(res, 400, result.message);
+    return successResponse("View created successfully", "Created", 201, resp);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-  auto views = usecase.list(spaceId);
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    auto views = usecase.list(spaceId);
 
-  auto list = Json.emptyArray;
-  foreach (v; views) {
-    list ~= Json.emptyObject
+    auto list = Json.emptyArray;
+    foreach (v; views) {
+      list ~= Json.emptyObject
+        .set("id", v.id)
+        .set("name", v.name)
+        .set("description", v.description)
+        .set("businessName", v.businessName)
+        .set("isExposed", v.isExposed)
+        .set("isPersisted", v.isPersisted)
+        .set("rowCount", v.rowCount)
+        .set("createdAt", v.createdAt);
+    }
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Views retrieved successfully", 200, responseData);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ViewId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid view ID", 400);
+
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
+    auto v = usecase.getById(spaceId, id);
+    if (v.isNull)
+      return errorResponse("View not found", 404);
+
+    auto resp = Json.emptyObject
       .set("id", v.id)
       .set("name", v.name)
       .set("description", v.description)
       .set("businessName", v.businessName)
+      .set("sqlExpression", v.sqlExpression)
       .set("isExposed", v.isExposed)
       .set("isPersisted", v.isPersisted)
       .set("rowCount", v.rowCount)
-      .set("createdAt", v.createdAt);
+      .set("createdAt", v.createdAt)
+      .set("updatedAt", v.updatedAt)
+      .set("message", "View retrieved successfully");
+
+    return successResponse("View retrieved successfully", 200, resp);
   }
 
-  auto list = items.map!(item => item.toJson()).array.toJson;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto responseData = Json.emptyObject
-    .set("count", list.length)
-    .set("resources", list);
-  return successResponse("Views retrieved successfully", 200, responseData);
-}
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    UpdateViewRequest r;
+    r.tenantId = tenantId;
+    r.spaceId = SpaceId(
+      req.headers.get("X-Space-Id", ""));
+    r.viewId = ViewId(precheck.id);
+    r.name = data.getString(
+      "name");
+    r.description = data.getString("description");
+    r.businessName = data.getString(
+      "businessName");
+    r.sqlExpression = data.getString("sqlExpression");
+    r
+      .isExposed = data.getBoolean("isExposed", false);
+    r.isPersisted = data.getBoolean(
+      "isPersisted", false);
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(
+        result.message, 400);
 
-  auto tenantId = precheck.tenantId;
-  auto id = ViewId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid view ID", 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("View updated successfully", 200, resp);
+  }
 
-  auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-  auto v = usecase.getById(spaceId, id);
-  if (v.isNull)
-    return errorResponse("View not found", 404);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto resp = Json.emptyObject
-    .set("id", v.id)
-    .set("name", v.name)
-    .set("description", v.description)
-    .set("businessName", v.businessName)
-    .set("sqlExpression", v.sqlExpression)
-    .set("isExposed", v.isExposed)
-    .set("isPersisted", v.isPersisted)
-    .set("rowCount", v.rowCount)
-    .set("createdAt", v.createdAt)
-    .set("updatedAt", v.updatedAt)
-    .set("message", "View retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto spaceId = SpaceId(
+      req.headers.get("X-Space-Id", ""));
+    auto id = ViewId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid view ID", 400);
 
-  return successResponse("View retrieved successfully", 200, resp);
-}
+    auto result = usecase.deleteView(spaceId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto data = precheck.data;
-
-  UpdateViewRequest r;
-  r.tenantId = tenantId;
-  r.spaceId = SpaceId(
-    req.headers.get("X-Space-Id", ""));
-  r.viewId = ViewId(precheck.id);
-  r.name = data.getString(
-    "name");
-  r.description = data.getString("description");
-  r.businessName = data.getString(
-    "businessName");
-  r.sqlExpression = data.getString("sqlExpression");
-  r
-    .isExposed = data.getBoolean("isExposed", false);
-  r.isPersisted = data.getBoolean(
-    "isPersisted", false);
-  auto result = usecase.update(r);
-  if (result.hasError)
-    return errorResponse(
-      result.message, 400);
-
-  auto resp = Json.emptyObject
-    .set("id", result.id);
-  return successResponse("View updated successfully", 200, resp);
-}
-
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto spaceId = SpaceId(
-    req.headers.get("X-Space-Id", ""));
-  auto id = ViewId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid view ID", 400);
-
-  auto result = usecase.deleteView(spaceId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-
-  auto resp = Json.emptyObject.set("id", result.id);
-  return successResponse("View deleted successfully", 204, responseData);
-}
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("View deleted successfully", 204, responseData);
+  }
 }

@@ -65,9 +65,11 @@ class IdentityProviderController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = identityProviders.createIdentityProvider(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Identity provider created").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Identity provider created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -83,9 +85,9 @@ class IdentityProviderController : ManageController {
 
         auto e = identityProviders.getIdentityProvider(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Identity provider not found").set("status", "error").set("statusCode", 404);
+            return errorResponse("Identity provider not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Identity provider retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -113,9 +115,11 @@ class IdentityProviderController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = identityProviders.updateIdentityProvider(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Identity provider updated").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Identity provider updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -130,8 +134,10 @@ class IdentityProviderController : ManageController {
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 
         auto result = identityProviders.deleteIdentityProvider(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("message", "Identity provider deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Identity provider deleted successfully", "Deleted", 200, responseData);
     }
 }

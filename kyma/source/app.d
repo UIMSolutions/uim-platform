@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-// import std.stdio : writefln;
+
 @safe:
 
 version (unittest) {

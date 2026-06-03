@@ -10,7 +10,7 @@ module app;
 // import uim.platform.management.infrastructure.config;
 // import uim.platform.management.infrastructure.container;
 // 
-// import std.stdio : writefln;
+
 
 import uim.platform.management;
 

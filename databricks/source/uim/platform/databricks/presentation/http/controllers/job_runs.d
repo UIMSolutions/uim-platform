@@ -61,10 +61,9 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto result = _usecase.list(req.getTenantId);
-      res.writeJsonBody(serializeToJson(result.data));
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+        auto responseData = Json.emptyObject.set("count", result.data.length).set("resources", serializeToJson(result.data));
+        return successResponse("Job runs retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -76,14 +75,11 @@ public:
 
     auto id = req.requestPath.to!string.split("/")[$ - 1];
     auto result = _usecase.get(tenantId, id);
-    if (result.success)
-      res.writeJsonBody(serializeToJson(result.data));
-    else
-      writeError(res, 404, result.message);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+      if (result.isNull)
+            return errorResponse("Job run not found", 404);
+
+        auto responseData = result.toJson();
+        return successResponse("Job run retrieved successfully", "Retrieved", 200, responseData);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {

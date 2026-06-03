@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.connections;
-// import uim.platform.datasphere.domain.types;
+
 // import uim.platform.datasphere.domain.entities.connection;
 // import uim.platform.datasphere.domain.ports.repositories.connections;
 // import uim.platform.datasphere.application.dto;

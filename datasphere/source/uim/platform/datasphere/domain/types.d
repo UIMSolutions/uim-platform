@@ -10,16 +10,6 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-// ID aliases
-struct SpaceId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct RemoteTableId {
   string value;

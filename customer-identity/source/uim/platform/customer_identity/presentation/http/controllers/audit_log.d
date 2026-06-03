@@ -62,10 +62,11 @@ class AuditLogController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = auditLogs.recordAuditEvent(dto);
-        if (result.success)
-            return successResponse("Audit event recorded successfully", "Created", 201, Json.emptyObject.set("id", result
-                    .id));
-        return errorResponse(result.message, 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Audit event recorded successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -99,7 +100,9 @@ class AuditLogController : ManageController {
 
         auto result = auditLogs.deleteAuditLog(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.message, 400);
-        return successResponse("Audit log deleted successfully", "Deleted", 200, Json.emptyObject);
+            return errorResponse(result.message, 404);
+            
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Audit log deleted successfully", "Deleted", 200, responseData);
     }
 }

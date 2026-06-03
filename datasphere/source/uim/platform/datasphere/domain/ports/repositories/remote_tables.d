@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.domain.ports.repositories.remote_tables;
-// import uim.platform.datasphere.domain.types;
+
 // import uim.platform.datasphere.domain.entities.remote_table;
 import uim.platform.datasphere;
 

@@ -63,9 +63,11 @@ class ScreenSetController : ManageController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = screenSets.createScreenSet(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Screen set created").set("status", "success").set("statusCode", 201);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Screen set created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -81,9 +83,9 @@ class ScreenSetController : ManageController {
 
         auto e = screenSets.getScreenSet(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Screen set not found").set("status", "error").set("statusCode", 404);
+            return errorResponse("Screen set not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Screen set retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -111,9 +113,11 @@ class ScreenSetController : ManageController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = screenSets.updateScreenSet(dto);
-        if (result.success)
-            return Json.emptyObject.set("id", result.id).set("message", "Screen set updated").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Screen set updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -128,8 +132,10 @@ class ScreenSetController : ManageController {
             return Json.emptyObject.set("error", "Invalid Screen Set ID").set("status", "error").set("statusCode", 400);
 
         auto result = screenSets.deleteScreenSet(tenantId, id);
-        if (result.success)
-            return Json.emptyObject.set("message", "Screen set deleted").set("status", "success").set("statusCode", 200);
-        return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 404);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Screen set deleted successfully", "Deleted", 200, responseData);
     }
 }
