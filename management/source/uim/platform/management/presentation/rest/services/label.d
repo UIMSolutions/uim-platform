@@ -36,3 +36,19 @@ class LabelApi : ILabelApi {
         return Label.init;
     }
 }
+///
+unittest {
+    auto repo = new MemoryLabelRepository();
+    auto usecase = new ManageLabelsUseCase(repo);
+    auto api = new LabelApi(usecase);
+    
+    string tenantId = "tenant-rest";
+    
+    // Test GET /rest/v1/labels
+    auto labels = api.getLabels(tenantId);
+    assert(labels is null); // Da wir noch keine Labels erstellt haben
+    
+    // Test GET /rest/v1/labels/:id
+    auto label = api.getLabel(tenantId, "label-1");
+    assert(label == Label.init); // Da wir noch kein Label mit id "label-1" erstellt haben
+}

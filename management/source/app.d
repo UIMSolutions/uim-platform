@@ -25,13 +25,14 @@ version (unittest) {
   auto container = buildContainer(config);
 
   auto router = new URLRouter();
+  router.registerRestInterface(new LabelApi(container.manageLabels), "/rest/v1/");
 
   // Register all controller routes (driving adapters)
   container.globalAccountController.registerRoutes(router);
   container.directoryController.registerRoutes(router);
   container.subaccountController.registerRoutes(router);
   container.entitlementController.registerRoutes(router);
-  container.EnvironmentController.registerRoutes(router);
+  container.environmentController.registerRoutes(router);
   container.subscriptionController.registerRoutes(router);
   container.servicePlanController.registerRoutes(router);
   container.labelController.registerRoutes(router);

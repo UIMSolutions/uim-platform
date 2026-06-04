@@ -24,7 +24,7 @@ class ServicePlanApi : IServicePlanApi {
         return null;
     }
 
-    override ServicePlan getServicePlan(string id, string tenantId) {
+    override ServicePlan getServicePlan(string tenantId, string id) {
         // Hier hast du Zugriff auf die tenantId
         logInfo("Anfrage für Tenant-ID: %s", tenantId);
         

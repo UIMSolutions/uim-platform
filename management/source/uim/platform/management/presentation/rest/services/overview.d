@@ -6,11 +6,11 @@ mixin(ShowModule!());
 
 @safe:
 class OverviewApi : IOverviewApi {
-    // private OverviewUseCase usecase;
+    private GetAccountOverviewUseCase usecase;
 // 
-    // this(OverviewUseCase usecase) {
-        // this.usecase = usecase;
-    // }
+    this(GetAccountOverviewUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override Json getOverview(string tenantId) {
         // Hier hast du Zugriff auf die tenantId

@@ -103,3 +103,34 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
   // #endregion ByStatus
   
 }
+///
+unittest {
+  auto repo = new MemorySubaccountRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto gaId = GlobalAccountId("ga1");
+  auto subaccountId = SubaccountId("sa1");  
+
+  auto subaccount = Subaccount(tenantId);
+  subaccount.id = subaccountId;
+  subaccount.globalAccountId = gaId;
+  subaccount.subdomain = "subdomain1";
+  subaccount.region = "region1";
+  subaccount.status = SubaccountStatus.active;  
+  repo.save(subaccount);
+
+  assert(repo.existsBySubdomain(tenantId, "subdomain1"));
+  assert(repo.findBySubdomain(tenantId, "subdomain1").id == subaccountId);  
+  assert(repo.countByGlobalAccount(tenantId, gaId) == 1);
+  assert(repo.findByGlobalAccount(tenantId, gaId).length == 1);
+  assert(repo.findByGlobalAccount(tenantId, gaId)[0].id == subaccountId);
+  assert(repo.countByDirectory(tenantId, DirectoryId("dir1")) == 0);
+  assert(repo.countByRegion(tenantId, gaId, "region1") == 1);  
+  assert(repo.countByStatus(tenantId, gaId, SubaccountStatus.active) == 1);
+
+  // repo.removeBySubdomain(tenantId, "subdomain1"); 
+  // assert(!repo.existsBySubdomain(tenantId, "subdomain1"));
+  // assert(repo.countByGlobalAccount(tenantId, gaId) == 0);
+  // assert(repo.countByRegion(tenantId, gaId, "region1") == 0);  
+  // assert(repo.countByStatus(tenantId, gaId, SubaccountStatus.active) == 0);
+}

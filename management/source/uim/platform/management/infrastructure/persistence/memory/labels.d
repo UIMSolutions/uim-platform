@@ -91,3 +91,24 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
   // #endregion ByKeyValue
 
 }
+///
+unittest {
+  auto repo = new MemoryLabelRepository();
+  auto tenantId = TenantId("tenant1");
+  auto labelId = LabelId("label1");
+  auto label = Label(tenantId);
+  label.id = labelId;
+  label.resourceType = LabeledResourceType.globalAccount;
+  label.resourceId = "ga1";
+  label.key = "env";
+  label.values = ["prod", "staging"];
+
+  repo.save(label);
+
+  assert(repo.countByResourceType(tenantId, LabeledResourceType.globalAccount) == 1);
+  assert(repo.findByResourceType(tenantId, LabeledResourceType.globalAccount).length == 1);
+  assert(repo.findByResourceType(tenantId, LabeledResourceType.globalAccount)[0].id == labelId);
+
+  repo.removeByResourceType(tenantId, LabeledResourceType.globalAccount);
+  assert(repo.countByResourceType(tenantId, LabeledResourceType.globalAccount) == 0);
+}

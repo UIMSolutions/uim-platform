@@ -73,3 +73,26 @@ class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId
   // #endregion ByRegion
 
 }
+///
+unittest {
+  auto repo = new MemoryServicePlanRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto servicePlanId = ServicePlanId("plan1");
+  auto servicePlan = ServicePlan(tenantId);
+  servicePlan.id = servicePlanId;
+  servicePlan.serviceName = "Service 1";
+  servicePlan.category = ServicePlanCategory.service;
+  servicePlan.availableRegions = ["region1", "region2"];
+
+  repo.save(servicePlan);
+
+  assert(repo.countByService(tenantId, "Service 1") == 1);
+  assert(repo.findByService(tenantId, "Service 1").length == 1);
+  assert(repo.findByService(tenantId, "Service 1")[0].id == servicePlanId); 
+  
+  repo.removeByService(tenantId, "Service 1");
+  assert(repo.countByService(tenantId, "Service 1") == 0);
+  assert(repo.countByCategory(tenantId, ServicePlanCategory.service) == 0);
+  assert(repo.countByRegion(tenantId, "region1") == 0);
+}

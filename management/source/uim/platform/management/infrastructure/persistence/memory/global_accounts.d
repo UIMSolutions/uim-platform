@@ -35,3 +35,22 @@ class MemoryGlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAcc
   }
 
 }
+///
+unittest {
+  auto repo = new MemoryGlobalAccountRepository();
+  auto tenantId = TenantId("tenant1");
+  auto gaId = GlobalAccountId("ga1");
+  auto ga = GlobalAccount(tenantId);
+  ga.id = gaId;
+  ga.displayName = "Global Account 1";
+  ga.status = GlobalAccountStatus.active;
+
+  repo.save(ga);
+
+  assert(repo.countByStatus(tenantId, GlobalAccountStatus.active) == 1);
+  assert(repo.findByStatus(tenantId, GlobalAccountStatus.active).length == 1);
+  assert(repo.findByStatus(tenantId, GlobalAccountStatus.active)[0].id == gaId);
+
+  repo.removeByStatus(tenantId, GlobalAccountStatus.active);
+  assert(repo.countByStatus(tenantId, GlobalAccountStatus.active) == 0);
+}
