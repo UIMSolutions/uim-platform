@@ -38,9 +38,7 @@ class OfflineStoreController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateOfflineStoreRequest r;
+              CreateOfflineStoreRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.name = data.getString("name");

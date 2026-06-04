@@ -42,9 +42,7 @@ class PlatformController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateEnvironmentRequest r;
+              CreateEnvironmentRequest r;
       r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = data.getString("name");

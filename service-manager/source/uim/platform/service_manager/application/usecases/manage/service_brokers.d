@@ -13,7 +13,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceBroker[] listServiceBrokers(TenantId tenantId) {
+    ServiceBroker[] listBrokers(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
@@ -40,7 +40,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateBroker(UpdateServiceBrokerRequest dto) {
-        auto broker = repo.findById(dto.tenantId, dto.serviceBrokerId);
+        auto broker = repo.findById(dto.tenantId, dto.brokerId);
         if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");
 

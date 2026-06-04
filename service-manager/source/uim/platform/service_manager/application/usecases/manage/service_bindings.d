@@ -31,7 +31,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         binding.id = ServiceBindingId(currentTimestamp.to!string);
         binding.tenantId = dto.tenantId;
         binding.name = dto.name;
-        binding.instanceId = ServiceInstanceId(dto.instanceId);
+        binding.instanceId = dto.instanceId;
         binding.parameters = dto.parameters;
         binding.bindResource = dto.bindResource;
         binding.context = dto.context;
@@ -42,7 +42,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service binding name is required");
-        if (dto.instanceId.length == 0)
+        if (dto.instanceId.isNull)
             return CommandResult(false, "", "Service instance ID is required");
 
         repo.save(binding);

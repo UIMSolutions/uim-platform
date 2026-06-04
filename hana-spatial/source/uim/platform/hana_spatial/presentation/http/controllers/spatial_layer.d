@@ -34,9 +34,7 @@ class SpatialLayerController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateSpatialLayerRequest r;
+              CreateSpatialLayerRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");

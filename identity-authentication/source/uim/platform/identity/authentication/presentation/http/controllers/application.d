@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.controllers.application;
 
-
-
 // import uim.platform.identity.authentication.application.usecases.manage.applications;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.application;
@@ -33,131 +31,115 @@ class ApplicationController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateAppRequest request;
-      request.tenantId = tenantId;
-      request.name = data.getString("name");
-      request.description = data.getString("description");
-      request.protocol = SsoProtocol.oidc;
-      request.redirectUris = data.getStrings("redirectUris");
-      request.allowedScopes = data.getStrings("allowedScopes");
-      request.samlEntityId = data.getString("samlEntityId");
-      request.samlAcsUrl = data.getString("samlAcsUrl");
+    auto data = precheck.data;
+    CreateAppRequest request;
+    request.tenantId = tenantId;
+    request.name = data.getString("name");
+    request.description = data.getString("description");
+    request.protocol = SsoProtocol.oidc;
+    request.redirectUris = data.getStrings("redirectUris");
+    request.allowedScopes = data.getStrings("allowedScopes");
+    request.samlEntityId = data.getString("samlEntityId");
+    request.samlAcsUrl = data.getString("samlAcsUrl");
 
-      auto result = useCase.createApplication(request);
+    auto result = useCase.createApplication(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["applicationId"] = Json(result.applicationId);
-        response["clientId"] = Json(result.clientId);
-        response["clientSecret"] = Json(result.clientSecret);
-        res.writeJsonBody(response, 201);
-      } else {
-        auto response = Json.emptyObject;
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 400);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto responseData = Json.emptyObject
+      .set("applicationId", result.applicationId)
+      .set("clientId", result.clientId)
+      .set("clientSecret", result.clientSecret);
+    return successResponse("Application created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto apps = useCase.listApplications(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = apps.length.toJson;
-      response["resources"] = apps.toJson;
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto tenantId = precheck.tenantId;
+    auto apps = useCase.listApplications(tenantId);
+    auto responseData = Json.emptyObject
+      .set("totalResults", apps.length)
+      .set("resources", apps.toJson);
+    return successResponse("Scan job list retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      // import std.string : lastIndexOf;
-      auto tenantId = precheck.tenantId;
-      auto path = req.requestURI;
-      auto idx = path.lastIndexOf('/');
-      auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto tenantId = precheck.tenantId;
+    auto path = req.requestURI;
+    auto idx = path.lastIndexOf('/');
+    auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto app = useCase.getApplication(tenantId, appId);
-      if (app == Application.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("Application not found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
-
-      auto response = toJsonValue(app);
-      response.remove("clientSecret"); // Don't expose secret on GET
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
+    auto app = useCase.getApplication(tenantId, appId);
+    if (app == Application.init) {
       auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
+      errRes["error"] = Json("Application not found");
+      res.writeJsonBody(errRes, 404);
+      return;
     }
+
+    auto response = toJsonValue(app);
+    response.remove("clientSecret"); // Don't expose secret on GET
+    res.writeJsonBody(response, 200);
   }
-
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      // import std.string : lastIndexOf;
-
-      auto tenantId = precheck.tenantId;
-      auto path = req.requestURI;
-      auto idx = path.lastIndexOf('/');
-      auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
-
-      auto data = precheck.data;
-      UpdateAppRequest request;
-      request.tenantId = tenantId;
-      request.applicationId = appId;
-      request.name = data.getString("name");
-      request.redirectUris = data.getStrings("redirectUris");
-      request.allowedScopes = data.getStrings("allowedScopes");
-
-      auto error = useCase.updateApplication(request);
-      if (error.length > 0) {
-        auto errRes = Json.emptyObject
-          .set("error", error);
-
-        res.writeJsonBody(errRes, 404);
-      } else {
-        auto resp = Json.emptyObject
-          .set("status", "updated");
-
-        res.writeJsonBody(resp, 200);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject
-        .set("error", "Internal server error");
-
-      res.writeJsonBody(errRes, 500);
-    }
+ catch (Exception e) {
+    auto errRes = Json.emptyObject;
+    errRes["error"] = Json("Internal server error");
+    res.writeJsonBody(errRes, 500);
   }
+}
+
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  // import std.string : lastIndexOf;
+
+  auto tenantId = precheck.tenantId;
+  auto path = req.requestURI;
+  auto idx = path.lastIndexOf('/');
+  auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+  auto data = precheck.data;
+  UpdateAppRequest request;
+  request.tenantId = tenantId;
+  request.applicationId = appId;
+  request.name = data.getString("name");
+  request.redirectUris = data.getStrings("redirectUris");
+  request.allowedScopes = data.getStrings("allowedScopes");
+
+  auto error = useCase.updateApplication(request);
+  if (error.length > 0) {
+    auto errRes = Json.emptyObject
+      .set("error", error);
+
+    res.writeJsonBody(errRes, 404);
+  } else {
+    auto resp = Json.emptyObject
+      .set("status", "updated");
+
+    res.writeJsonBody(resp, 200);
+  }
+}
+ catch (Exception e) {
+  auto errRes = Json.emptyObject
+    .set("error", "Internal server error");
+
+  res.writeJsonBody(errRes, 500);
+}
+}
 }

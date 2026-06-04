@@ -39,9 +39,7 @@ class FlexDraftsController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFlexDraftRequest r;
+              CreateFlexDraftRequest r;
       r.tenantId       = tenantId;
       r.draftId        = FlexDraftId(precheck.id);
       r.appId          = data.getString("appId");

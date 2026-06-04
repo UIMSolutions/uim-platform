@@ -41,9 +41,7 @@ class ServiceInstanceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateServiceInstanceRequest r;
+              CreateServiceInstanceRequest r;
       r.tenantId = tenantId;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");

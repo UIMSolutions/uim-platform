@@ -43,9 +43,7 @@ class ObservationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateObservationRequest r;
+              CreateObservationRequest r;
       r.tenantId        = tenantId;
       r.observationId   = ObservationId(precheck.id);
       r.status_         = parseStatus(data.getString("status"));

@@ -34,9 +34,7 @@ class GeocodingJobController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateGeocodingJobRequest r;
+              CreateGeocodingJobRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");

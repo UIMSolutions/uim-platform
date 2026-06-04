@@ -44,9 +44,7 @@ class EventSubscriptionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateEventSubscriptionRequest r;
+              CreateEventSubscriptionRequest r;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;

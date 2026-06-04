@@ -38,9 +38,7 @@ class ReplicationTaskController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateReplicationTaskRequest r;
+              CreateReplicationTaskRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;

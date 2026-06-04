@@ -25,10 +25,10 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         return repo.findByResource(tenantId, resourceType, resourceId);
     }
 
-    CommandResult createLabel(TenantId tenantId, CreateLabelRequest dto) {
+    CommandResult createLabel(CreateLabelRequest dto) {
         Label e;
         e.id = LabelId(currentTimestamp.to!string);
-        e.tenantId = tenantId;
+        e.tenantId = dto.tenantId;
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;
         e.key = dto.key;
@@ -43,7 +43,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateLabel(UpdateLabelRequest dto) {
-        auto existing = repo.findById(dto.tenantId, LabelId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.labelId);
         if (existing.isNull)
             return CommandResult(false, "", "Label not found");
 

@@ -45,9 +45,7 @@ class KeyMappingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateKeyMappingRequest r;
+              CreateKeyMappingRequest r;
       r.tenantId = tenantId;
       r.masterDataObjectId = data.getString("masterDataObjectId");
       r.category = data.getString("category");

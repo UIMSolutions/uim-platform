@@ -38,9 +38,7 @@ class AutomationRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateAutomationRuleRequest r;
+              CreateAutomationRuleRequest r;
       r.tenantId = tenantId;
       r.situationTemplateId = SituationTemplateId(data.getString("templateId"));
       r.automationRuleId = AutomationRuleId(precheck.id);

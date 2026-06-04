@@ -39,9 +39,7 @@ class UserSessionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateUserSessionRequest r;
+              CreateUserSessionRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.deviceId = data.getString("deviceId");

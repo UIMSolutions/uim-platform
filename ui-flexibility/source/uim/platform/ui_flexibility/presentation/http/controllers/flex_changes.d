@@ -40,9 +40,7 @@ class FlexChangesController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFlexChangeRequest r;
+              CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = FlexChangeId(precheck.id);
       r.appId      = data.getString("appId");

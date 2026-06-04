@@ -38,9 +38,7 @@ class AppRouteController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateAppRouteRequest request;
+              CreateAppRouteRequest request;
       with (request) {
         tenantId = tenantId;
         appId = data.getString("appId");

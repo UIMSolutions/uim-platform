@@ -37,9 +37,7 @@ class HtmlAppController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateHtmlAppRequest r;
+              CreateHtmlAppRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.namespace_ = data.getString("namespace");

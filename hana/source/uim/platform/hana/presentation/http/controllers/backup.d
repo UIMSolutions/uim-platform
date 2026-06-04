@@ -37,9 +37,7 @@ class BackupController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateBackupRequest r;
+              CreateBackupRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;

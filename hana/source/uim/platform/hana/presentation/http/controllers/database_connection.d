@@ -36,9 +36,7 @@ class DatabaseConnectionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDatabaseConnectionRequest r;
+              CreateDatabaseConnectionRequest r;
       r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;

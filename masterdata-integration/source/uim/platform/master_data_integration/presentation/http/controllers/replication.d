@@ -45,9 +45,7 @@ class ReplicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateReplicationJobRequest r;
+              CreateReplicationJobRequest r;
       r.tenantId = tenantId;
       r.distributionModelId = data.getString("distributionModelId");
       r.name = data.getString("name");

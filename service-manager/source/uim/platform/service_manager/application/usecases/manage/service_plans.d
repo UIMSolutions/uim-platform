@@ -29,7 +29,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         plan.name = dto.name;
         plan.description = dto.description;
         plan.catalogName = dto.catalogName;
-        plan.offeringId = ServiceOfferingId(dto.offeringId);
+        plan.offeringId = dto.offeringId;
         plan.maxInstances = dto.maxInstances;
         plan.schemas = dto.schemas;
         plan.metadata = dto.metadata;

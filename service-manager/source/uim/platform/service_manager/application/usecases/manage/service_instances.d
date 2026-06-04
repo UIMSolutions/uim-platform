@@ -28,9 +28,9 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         instance.id = ServiceInstanceId(currentTimestamp.to!string);
         instance.tenantId = dto.tenantId;
         instance.name = dto.name;
-        instance.planId = ServicePlanId(dto.planId);
-        instance.offeringId = ServiceOfferingId(dto.offeringId);
-        instance.platformId = PlatformId(dto.platformId);
+        instance.planId = dto.planId;
+        instance.offeringId = dto.offeringId;
+        instance.platformId = dto.platformId;
         instance.context = dto.context;
         instance.parameters = dto.parameters;
         instance.labels = dto.labels;
@@ -54,7 +54,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Service instance not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
-        if (!dto.planId.isNull) existing.planId = ServicePlanId(dto.planId);
+        if (!dto.planId.isNull) existing.planId = dto.planId;
         if (dto.parameters.length > 0) existing.parameters = dto.parameters;
         if (dto.labels.length > 0) existing.labels = dto.labels;
         existing.updatedAt = currentTimestamp;

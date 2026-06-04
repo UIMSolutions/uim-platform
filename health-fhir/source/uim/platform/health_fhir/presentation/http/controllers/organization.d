@@ -43,9 +43,7 @@ class OrganizationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateOrganizationRequest r;
+              CreateOrganizationRequest r;
       r.tenantId        = tenantId;
       r.organizationId  = OrganizationId(precheck.id);
       r.name_           = data.getString("name");

@@ -41,9 +41,7 @@ class UserController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateUserRequest request;
+              CreateUserRequest request;
       request.tenantId = tenantId;
       request.userName = data.getString("userName");
       request.email = data.getString("email");

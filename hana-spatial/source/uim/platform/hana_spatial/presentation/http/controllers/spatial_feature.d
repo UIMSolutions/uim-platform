@@ -34,9 +34,7 @@ class SpatialFeatureController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateSpatialFeatureRequest r;
+              CreateSpatialFeatureRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
       r.layerId = data.getString("layerId");

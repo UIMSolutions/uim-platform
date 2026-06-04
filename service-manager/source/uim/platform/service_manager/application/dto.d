@@ -10,6 +10,7 @@ mixin(ShowModule!());
 
 struct CreatePlatformRequest {
     TenantId tenantId;
+    PlatformId platformId;
 
     string name;
     string description;
@@ -36,6 +37,7 @@ struct UpdatePlatformRequest {
 
 struct CreateServiceBrokerRequest {
     TenantId tenantId;
+    ServiceBrokerId brokerId;
 
     string name;
     string description;
@@ -55,6 +57,7 @@ struct UpdateServiceBrokerRequest {
 
 struct CreateServiceOfferingRequest {
     TenantId tenantId;
+    ServiceOfferingId offeringId;
     ServiceBrokerId brokerId;
 
     string name;
@@ -82,6 +85,7 @@ struct UpdateServiceOfferingRequest {
 
 struct CreateServicePlanRequest {
     TenantId tenantId;
+    ServicePlanId planId;
 
     string name;
     string description;
@@ -98,7 +102,7 @@ struct CreateServicePlanRequest {
 struct UpdateServicePlanRequest {
     TenantId tenantId;
     ServicePlanId planId;
-    
+
     string name;
     string description;
     string pricing;
@@ -111,11 +115,12 @@ struct UpdateServicePlanRequest {
 
 struct CreateServiceInstanceRequest {
     TenantId tenantId;
+    ServiceInstanceId instanceId;
 
     string name;
-    string planId;
-    string offeringId;
-    string platformId;
+    ServicePlanId planId;
+    ServiceOfferingId offeringId;
+    PlatformId platformId;
     string context;
     string parameters;
     string labels;
@@ -137,9 +142,10 @@ struct UpdateServiceInstanceRequest {
 
 struct CreateServiceBindingRequest {
     TenantId tenantId;
-    
+    ServiceBindingId bindingId;
+
     string name;
-    string instanceId;
+    ServiceInstanceId instanceId;
     string parameters;
     string bindResource;
     string context;
@@ -159,6 +165,7 @@ struct UpdateServiceBindingRequest {
 
 struct CreateOperationRequest {
     TenantId tenantId;
+    OperationId operationId;
 
     string resourceId;
     string resourceType;
@@ -167,7 +174,7 @@ struct CreateOperationRequest {
 }
 
 struct UpdateOperationRequest {
-    TenantId tenantId;  
+    TenantId tenantId;
     OperationId operationId;
 
     string status;
@@ -178,6 +185,7 @@ struct UpdateOperationRequest {
 
 struct CreateLabelRequest {
     TenantId tenantId;
+    LabelId labelId;
 
     string resourceId;
     string resourceType;

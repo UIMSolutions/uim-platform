@@ -39,9 +39,7 @@ class FeatureRestrictionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFeatureRestrictionRequest r;
+              CreateFeatureRestrictionRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.featureKey = data.getString("featureKey");

@@ -43,9 +43,7 @@ class MedicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateMedicationRequest r;
+              CreateMedicationRequest r;
       r.tenantId    = tenantId;
       r.medicationId = MedicationId(precheck.id);
       auto result = usecase.createMedication(r);

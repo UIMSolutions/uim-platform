@@ -42,9 +42,7 @@ class NamespaceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateNamespaceRequest r;
+              CreateNamespaceRequest r;
       r.environmentId = data.getString("environmentId");
       r.tenantId = tenantId;
       r.name = data.getString("name");

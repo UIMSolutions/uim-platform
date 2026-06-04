@@ -24,7 +24,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     CommandResult createOffering(CreateServiceOfferingRequest dto) {
         auto e = ServiceOffering(dto.tenantId);
 
-        e.id = dto.offeringId;
+        e.id = dto.offeringId.isNull ? ServiceOfferingId(randomUUID.to!string) : dto.offeringId;
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;

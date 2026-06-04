@@ -35,9 +35,7 @@ class GeofenceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateGeofenceZoneRequest r;
+              CreateGeofenceZoneRequest r;
       r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");

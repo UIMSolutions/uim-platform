@@ -39,9 +39,7 @@ class FlexApplicationsController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFlexApplicationRequest r;
+              CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = FlexApplicationId(precheck.id);
       r.namespace_     = data.getString("namespace");

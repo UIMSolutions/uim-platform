@@ -56,9 +56,7 @@ class MedicationRequestController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateMedicationOrderRequest r;
+              CreateMedicationOrderRequest r;
       r.tenantId              = tenantId;
       r.medicationRequestId   = MedicationRequestId(precheck.id);
       r.status_               = parseStatus(data.getString("status"));

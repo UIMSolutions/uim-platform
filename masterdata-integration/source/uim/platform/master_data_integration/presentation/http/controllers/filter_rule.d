@@ -39,9 +39,7 @@ class FilterRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFilterRuleRequest r;
+              CreateFilterRuleRequest r;
       r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");

@@ -38,9 +38,7 @@ class ClientResourceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateClientResourceRequest r;
+              CreateClientResourceRequest r;
       r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.name = data.getString("name");

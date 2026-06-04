@@ -40,9 +40,7 @@ class FlexVersionsController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateFlexVersionRequest r;
+              CreateFlexVersionRequest r;
       r.tenantId    = tenantId;
       r.versionId   = FlexVersionId(precheck.id);
       r.appId       = data.getString("appId");

@@ -39,9 +39,7 @@ class ContentCacheController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateContentCacheRequest r;
+              CreateContentCacheRequest r;
       r.tenantId = tenantId;
       r.fileId = data.getString("fileId");
       r.filePath = data.getString("filePath");

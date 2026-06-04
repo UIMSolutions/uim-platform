@@ -57,9 +57,7 @@ class EncounterController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateEncounterRequest r;
+              CreateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = EncounterId(precheck.id);
       r.status_     = parseStatus(data.getString("status"));
