@@ -78,7 +78,7 @@ struct Container {
   ManageApplicationsUseCase manageApplications;
 
   // Controllers (driving adapters)
-  EnvironmentController environmentController;
+  PlatformController PlatformController;
   NamespaceController namespaceController;
   FunctionController functionController;
   ApiRuleController apiRuleController;
@@ -120,7 +120,7 @@ Container buildContainer(SrvConfig config) {
   c.manageApplications = new ManageApplicationsUseCase(c.appRepo);
 
   // Presentation controllers
-  c.environmentController = new EnvironmentController(c.manageEnvironments);
+  c.PlatformController = new PlatformController(c.manageEnvironments);
   c.namespaceController = new NamespaceController(c.manageNamespaces);
   c.functionController = new FunctionController(c.manageFunctions);
   c.apiRuleController = new ApiRuleController(c.manageApiRules);

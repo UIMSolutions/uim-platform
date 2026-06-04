@@ -17,7 +17,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class EnvironmentController : ManageHttpController {
+class PlatformController : ManageHttpController {
   private ManageEnvironmentsUseCase usecase;
 
   this(ManageEnvironmentsUseCase usecase) {

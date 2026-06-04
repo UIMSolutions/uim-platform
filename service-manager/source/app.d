@@ -14,7 +14,7 @@ version (unittest) {
         auto router = new URLRouter();
 
         // Register all controllers
-        container.environmentController.registerRoutes(router);
+        container.PlatformController.registerRoutes(router);
         container.serviceBrokerController.registerRoutes(router);
         container.serviceOfferingController.registerRoutes(router);
         container.servicePlanController.registerRoutes(router);

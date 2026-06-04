@@ -16,7 +16,7 @@ struct Container {
     ManageOperationsUseCase manageOperationsUseCase;
     ManageLabelsUseCase manageLabelsUseCase;
 
-    EnvironmentController environmentController;
+    PlatformController PlatformController;
     ServiceBrokerController serviceBrokerController;
     ServiceOfferingController serviceOfferingController;
     ServicePlanController servicePlanController;
@@ -51,7 +51,7 @@ Container buildContainer(SrvConfig config) {
     c.manageLabelsUseCase = new ManageLabelsUseCase(labelRepo);
 
     // Controllers
-    c.environmentController = new EnvironmentController(c.managePlatformsUseCase);
+    c.PlatformController = new PlatformController(c.managePlatformsUseCase);
     c.serviceBrokerController = new ServiceBrokerController(c.manageServiceBrokersUseCase);
     c.serviceOfferingController = new ServiceOfferingController(c.manageServiceOfferingsUseCase);
     c.servicePlanController = new ServicePlanController(c.manageServicePlansUseCase);

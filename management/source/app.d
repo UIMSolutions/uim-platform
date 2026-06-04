@@ -31,7 +31,7 @@ version (unittest) {
   container.directoryController.registerRoutes(router);
   container.subaccountController.registerRoutes(router);
   container.entitlementController.registerRoutes(router);
-  container.environmentController.registerRoutes(router);
+  container.PlatformController.registerRoutes(router);
   container.subscriptionController.registerRoutes(router);
   container.servicePlanController.registerRoutes(router);
   container.labelController.registerRoutes(router);

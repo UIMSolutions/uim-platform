@@ -80,7 +80,7 @@ struct Container {
   DirectoryController directoryController;
   SubaccountController subaccountController;
   EntitlementController entitlementController;
-  EnvironmentController environmentController;
+  PlatformController PlatformController;
   SubscriptionController subscriptionController;
   ServicePlanController servicePlanController;
   LabelController labelController;
@@ -126,7 +126,7 @@ Container buildContainer(SrvConfig config) {
   c.directoryController = new DirectoryController(c.manageDirectories);
   c.subaccountController = new SubaccountController(c.manageSubaccounts);
   c.entitlementController = new EntitlementController(c.manageEntitlements);
-  c.environmentController = new EnvironmentController(c.manageEnvironments);
+  c.PlatformController = new PlatformController(c.manageEnvironments);
   c.subscriptionController = new SubscriptionController(c.manageSubscriptions);
   c.servicePlanController = new ServicePlanController(c.manageServicePlans);
   c.labelController = new LabelController(c.manageLabels);

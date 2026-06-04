@@ -107,7 +107,7 @@ classDiagram
 ```mermaid
 flowchart TB
     subgraph Presentation["Presentation Layer (HTTP)"]
-        C1[KymaEnvironmentController]
+        C1[KymaPlatformController]
         C2[NamespaceController]
         C3[KymaModuleController]
         C4[ApplicationController]

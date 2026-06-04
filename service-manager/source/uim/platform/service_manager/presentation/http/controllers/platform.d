@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EnvironmentController : ManageHttpController {
+class PlatformController : ManageHttpController {
     private ManagePlatformsUseCase usecase;
 
     this(ManagePlatformsUseCase usecase) {

@@ -26,7 +26,7 @@ else {
     auto router = new URLRouter();
 
     // Register all controller routes (driving adapters)
-    container.environmentController.registerRoutes(router);
+    container.PlatformController.registerRoutes(router);
     container.namespaceController.registerRoutes(router);
     container.functionController.registerRoutes(router);
     container.apiRuleController.registerRoutes(router);
