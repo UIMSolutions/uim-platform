@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.labels;
 // import uim.platform.management.domain.entities.label;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());

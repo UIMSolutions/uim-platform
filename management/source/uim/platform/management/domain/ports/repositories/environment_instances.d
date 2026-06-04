@@ -5,17 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.environment_instances;
 // import uim.platform.management.domain.entities.environment_instance;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — environment instance persistence.
-interface EnvironmentInstanceRepository : ITenantRepository!(EnvironmentInstance, EnvironmentInstanceId) {
+interface EnvironmentRepository : ITenantRepository!(Environment, EnvironmentId) {
 
-  EnvironmentInstance[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
-  EnvironmentInstance[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType);
-  EnvironmentInstance[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status);
+  Environment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+  Environment[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType);
+  Environment[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status);
 
 }

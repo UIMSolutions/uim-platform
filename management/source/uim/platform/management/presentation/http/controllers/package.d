@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.presentation.http.controllers;
 
-public {
+public:
     import uim.platform.management.presentation.http.controllers.directory;
     import uim.platform.management.presentation.http.controllers.entitlement;
     import uim.platform.management.presentation.http.controllers.environment;
@@ -16,4 +16,3 @@ public {
     import uim.platform.management.presentation.http.controllers.service_plan;
     import uim.platform.management.presentation.http.controllers.subaccount;
     import uim.platform.management.presentation.http.controllers.subscription;
-}

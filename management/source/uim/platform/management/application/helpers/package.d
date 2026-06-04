@@ -5,20 +5,20 @@ import uim.platform.management;
 mixin(ShowModule!());
 
 @safe:
-void emitEvent(PlatformEventRepository eventRepo, string gaId, string subId, PlatformEventCategory cat,
+void emitEvent(EnvironmentEventRepository eventRepo, string gaId, string subId, EnvironmentEventCategory cat,
   string eventType, string desc, UserId initiatedBy) {
   emitEvent(eventRepo, GlobalAccountId(gaId), SubaccountId(subId), cat, eventType, desc, initiatedBy);
 }
 
-void emitEvent(PlatformEventRepository eventRepo,GlobalAccountId gaId, SubaccountId subId, PlatformEventCategory cat,
+void emitEvent(EnvironmentEventRepository eventRepo,GlobalAccountId gaId, SubaccountId subId, EnvironmentEventCategory cat,
   string eventType, string desc, UserId initiatedBy, string sourceService = "cloud-management") {
 
-  auto event = PlatformEvent(); 
+  auto event = EnvironmentEvent(); 
   
   event.globalAccountId = gaId;
   event.subaccountId = subId;
   event.category = cat;
-  event.severity = PlatformEventSeverity.info;
+  event.severity = EnvironmentEventSeverity.info;
   event.eventType = eventType;
   event.description = desc;
   event.initiatedBy = initiatedBy;

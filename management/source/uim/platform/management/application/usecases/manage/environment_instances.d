@@ -10,26 +10,26 @@ module uim.platform.management.application.usecases.manage.environment_instances
 // import uim.platform.management.domain.ports.repositories.environment_instances;
 // import uim.platform.management.domain.ports.repositories.subaccounts;
 // import uim.platform.management.domain.services.environment_provisioner;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
 
 @safe:
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
-class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
-  private EnvironmentInstanceRepository repo;
+class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
+  private EnvironmentRepository repo;
   private SubaccountRepository subaccountRepo;
   private EnvironmentProvisioner provisioner;
 
-  this(EnvironmentInstanceRepository repo, SubaccountRepository subaccountRepo,
+  this(EnvironmentRepository repo, SubaccountRepository subaccountRepo,
       EnvironmentProvisioner provisioner) {
     this.repo = repo;
     this.subaccountRepo = subaccountRepo;
     this.provisioner = provisioner;
   }
 
-  CommandResult createEnvironmentInstance(CreateEnvironmentInstanceRequest req) {
+  CommandResult createEnvironment(CreateEnvironmentRequest req) {
     if (req.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.name.length == 0)
@@ -47,7 +47,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     if (!validation.valid)
       return CommandResult(false, "", validation.reason);
 
-    auto inst = EnvironmentInstance(req.tenantId);
+    auto inst = Environment(req.tenantId);
     inst.subaccountId = req.subaccountId;
     inst.globalAccountId = req.globalAccountId;
     inst.name = req.name;
@@ -75,7 +75,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, inst.id.value, "");
   }
 
-  CommandResult updateEnvironmentInstance(UpdateEnvironmentInstanceRequest req) {
+  CommandResult updateEnvironment(UpdateEnvironmentRequest req) {
     auto instance = repo.findById(req.tenantId, req.instanceId);
     if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
@@ -98,7 +98,7 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, instance.id.value, "");
   }
   
-  CommandResult deprovisionEnvironmentInstance(TenantId tenantId, EnvironmentInstanceId id) {
+  CommandResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id) {
     auto instance = repo.findById(tenantId, id);
     if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
@@ -114,15 +114,15 @@ class ManageEnvironmentInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  EnvironmentInstance getEnvironmentInstance(TenantId tenantId, EnvironmentInstanceId id) {
+  Environment getEnvironment(TenantId tenantId, EnvironmentId id) {
     return repo.findById(tenantId, id);
   }
 
-  EnvironmentInstance[] listEnvironmentInstances(TenantId tenantId, SubaccountId subId) {
+  Environment[] listEnvironments(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
   }
 
-  EnvironmentInstance[] listEnvironmentInstances(TenantId tenantId, SubaccountId subId, string envType) {
+  Environment[] listEnvironments(TenantId tenantId, SubaccountId subId, string envType) {
     return repo.findByType(tenantId, subId, envType.toEnvironmentType);
   }
 }

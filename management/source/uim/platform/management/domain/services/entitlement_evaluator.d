@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.services.entitlement_evaluator;
 // import uim.platform.management.domain.entities.entitlement;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());

@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.infrastructure.persistence.memory.platform_events;
-// import uim.platform.management.domain.types;
+
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.ports.repositories.platform_events;
 // 
@@ -14,19 +14,19 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPlatformEventRepository : TenantRepository!(PlatformEvent, PlatformEventId), PlatformEventRepository {
-  // TODO: mixin IdRepositoryTemplate!(MemoryPlatformEventRepository, PlatformEvent, PlatformEventId);
+class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, EnvironmentEventId), EnvironmentEventRepository {
+  // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentEventRepository, EnvironmentEvent, EnvironmentEventId);
 
   // #region ByGlobalAccount
   size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 
-  PlatformEvent[] filterByGlobalAccount(PlatformEvent[] items, GlobalAccountId globalAccountId) {
+  EnvironmentEvent[] filterByGlobalAccount(EnvironmentEvent[] items, GlobalAccountId globalAccountId) {
     return items.filter!(e => e.globalAccountId == globalAccountId).array;
   }
 
-  PlatformEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+  EnvironmentEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
@@ -40,11 +40,11 @@ class MemoryPlatformEventRepository : TenantRepository!(PlatformEvent, PlatformE
     return findBySubaccount(tenantId, subaccountId).length;
   }
 
-  PlatformEvent[] filterBySubaccount(PlatformEvent[] items, SubaccountId subaccountId) {
+  EnvironmentEvent[] filterBySubaccount(EnvironmentEvent[] items, SubaccountId subaccountId) {
     return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  PlatformEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+  EnvironmentEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
@@ -54,37 +54,37 @@ class MemoryPlatformEventRepository : TenantRepository!(PlatformEvent, PlatformE
   // #endregion BySubaccount
 
   // #region ByCategory
-  size_t countByCategory(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventCategory category) {
+  size_t countByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category) {
     return findByCategory(tenantId, globalAccountId, category).length;
   }
 
-  PlatformEvent[] filterByCategory(PlatformEvent[] items, PlatformEventCategory category) {
+  EnvironmentEvent[] filterByCategory(EnvironmentEvent[] items, EnvironmentEventCategory category) {
     return items.filter!(e => e.category == category).array;
   }
 
-  PlatformEvent[] findByCategory(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventCategory category) {
+  EnvironmentEvent[] findByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category) {
     return filterByCategory(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), category);
   }
 
-  void removeByCategory(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventCategory category) {
+  void removeByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category) {
     findByCategory(tenantId, globalAccountId, category).each!(e => remove(e));
   }
   // #endregion ByCategory
 
   // #region BySeverity
-  size_t countBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
+  size_t countBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity) {
     return findBySeverity(tenantId, globalAccountId, severity).length;
   }
 
-  PlatformEvent[] filterBySeverity(PlatformEvent[] items, PlatformEventSeverity severity) {
+  EnvironmentEvent[] filterBySeverity(EnvironmentEvent[] items, EnvironmentEventSeverity severity) {
     return items.filter!(e => e.severity == severity).array;
   }
 
-  PlatformEvent[] findBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
+  EnvironmentEvent[] findBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity) {
     return filterBySeverity(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), severity);
   }
   
-  void removeBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventSeverity severity) {
+  void removeBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity) {
     findBySeverity(tenantId, globalAccountId, severity).each!(e => remove(e));
   }
   // #endregion BySeverity
@@ -94,11 +94,11 @@ class MemoryPlatformEventRepository : TenantRepository!(PlatformEvent, PlatformE
     return findSince(tenantId, globalAccountId, sinceTimestamp).length;
   }
 
-  PlatformEvent[] filterSince(PlatformEvent[] items, long sinceTimestamp) {
+  EnvironmentEvent[] filterSince(EnvironmentEvent[] items, long sinceTimestamp) {
     return items.filter!(e => e.timestamp >= sinceTimestamp).array;
   }
 
-  PlatformEvent[] findSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp) {
+  EnvironmentEvent[] findSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp) {
     return filterSince(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), sinceTimestamp);
   }
 

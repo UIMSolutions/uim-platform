@@ -12,7 +12,7 @@ module uim.platform.management.application.usecases.get_account_overview;
 // import uim.platform.management.domain.ports.repositories.environment_instances;
 // import uim.platform.management.domain.ports.repositories.subscriptions;
 // import uim.platform.management.domain.ports.repositories.platform_events;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
@@ -23,13 +23,13 @@ class GetAccountOverviewUseCase { // TODO: UIMUseCase {
   private SubaccountRepository subaccountRepo;
   private DirectoryRepository directoryRepo;
   private EntitlementRepository entitlementRepo;
-  private EnvironmentInstanceRepository environmentRepo;
+  private EnvironmentRepository environmentRepo;
   private SubscriptionRepository subscriptionRepo;
-  private PlatformEventRepository eventRepo;
+  private EnvironmentEventRepository eventRepo;
 
   this(SubaccountRepository subaccountRepo, DirectoryRepository directoryRepo, EntitlementRepository entitlementRepo,
-      EnvironmentInstanceRepository environmentRepo,
-      SubscriptionRepository subscriptionRepo, PlatformEventRepository eventRepo) {
+      EnvironmentRepository environmentRepo,
+      SubscriptionRepository subscriptionRepo, EnvironmentEventRepository eventRepo) {
     this.subaccountRepo = subaccountRepo;
     this.directoryRepo = directoryRepo;
     this.entitlementRepo = entitlementRepo;

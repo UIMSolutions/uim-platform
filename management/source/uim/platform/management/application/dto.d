@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.application.dto;
-// import uim.platform.management.domain.types;
+
 
 import uim.platform.management;
 
@@ -129,7 +129,7 @@ struct UpdateEntitlementQuotaRequest {
 }
 /// --- Environment Instance DTOs ---
 
-struct CreateEnvironmentInstanceRequest {
+struct CreateEnvironmentRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
@@ -147,9 +147,9 @@ struct CreateEnvironmentInstanceRequest {
   string[string] labels;
 }
 
-struct UpdateEnvironmentInstanceRequest {
+struct UpdateEnvironmentRequest {
   TenantId tenantId;
-  EnvironmentInstanceId instanceId;
+  EnvironmentId instanceId;
 
   string description;
   int memoryQuotaMb;

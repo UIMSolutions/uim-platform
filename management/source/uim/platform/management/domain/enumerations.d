@@ -276,7 +276,7 @@ EnvironmentType toEnvironmentType(string s) {
 }
 
 /// Category of a platform event.
-enum PlatformEventCategory {
+enum EnvironmentEventCategory {
   subaccountLifecycle,
   entitlementChange,
   environmentLifecycle,
@@ -286,33 +286,33 @@ enum PlatformEventCategory {
   quotaChange,
   securityEvent,
 }
-PlatformEventCategory toPlatformEventCategory(string s) {
+EnvironmentEventCategory toEnvironmentEventCategory(string s) {
   switch (s.toLower()) {
-    case "subaccountlifecycle": return PlatformEventCategory.subaccountLifecycle;
-    case "entitlementchange": return PlatformEventCategory.entitlementChange;
-    case "environmentlifecycle": return PlatformEventCategory.environmentLifecycle;
-    case "subscriptionlifecycle": return PlatformEventCategory.subscriptionLifecycle;
-    case "directorychange": return PlatformEventCategory.directoryChange;
-    case "globalaccountchange": return PlatformEventCategory.globalAccountChange;
-    case "quotachange": return PlatformEventCategory.quotaChange;
-    case "securityevent": return PlatformEventCategory.securityEvent;
-    default: return PlatformEventCategory.subaccountLifecycle; // default
+    case "subaccountlifecycle": return EnvironmentEventCategory.subaccountLifecycle;
+    case "entitlementchange": return EnvironmentEventCategory.entitlementChange;
+    case "environmentlifecycle": return EnvironmentEventCategory.environmentLifecycle;
+    case "subscriptionlifecycle": return EnvironmentEventCategory.subscriptionLifecycle;
+    case "directorychange": return EnvironmentEventCategory.directoryChange;
+    case "globalaccountchange": return EnvironmentEventCategory.globalAccountChange;
+    case "quotachange": return EnvironmentEventCategory.quotaChange;
+    case "securityevent": return EnvironmentEventCategory.securityEvent;
+    default: return EnvironmentEventCategory.subaccountLifecycle; // default
   }
 }
 /// Severity of a platform event.
-enum PlatformEventSeverity {
+enum EnvironmentEventSeverity {
   info,
   warning,
   error,
   critical,
 }
-PlatformEventSeverity toPlatformEventSeverity(string s) {
+EnvironmentEventSeverity toEnvironmentEventSeverity(string s) {
   switch (s.toLower()) {
-    case "info": return PlatformEventSeverity.info;
-    case "warning": return PlatformEventSeverity.warning;
-    case "error": return PlatformEventSeverity.error;
-    case "critical": return PlatformEventSeverity.critical;
-    default: return PlatformEventSeverity.info; // default
+    case "info": return EnvironmentEventSeverity.info;
+    case "warning": return EnvironmentEventSeverity.warning;
+    case "error": return EnvironmentEventSeverity.error;
+    case "critical": return EnvironmentEventSeverity.critical;
+    default: return EnvironmentEventSeverity.info; // default
   }
 }
 /// Type of labeled resource.
@@ -320,7 +320,7 @@ enum LabeledResourceType {
   subaccount,
   globalAccount,
   directory,
-  environmentInstance,
+  Environment,
   subscription
 }
 LabeledResourceType toLabeledResourceType(string s) {
@@ -328,7 +328,7 @@ LabeledResourceType toLabeledResourceType(string s) {
     case "subaccount": return LabeledResourceType.subaccount;
     case "globalaccount": return LabeledResourceType.globalAccount;
     case "directory": return LabeledResourceType.directory;
-    case "environmentinstance": return LabeledResourceType.environmentInstance;
+    case "Environment": return LabeledResourceType.Environment;
     case "subscription": return LabeledResourceType.subscription;
     default: return LabeledResourceType.subaccount; // default
   }

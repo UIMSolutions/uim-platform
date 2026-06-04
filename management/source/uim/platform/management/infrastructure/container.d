@@ -53,10 +53,10 @@ struct Container {
   MemoryDirectoryRepository directoryRepo;
   MemorySubaccountRepository subaccountRepo;
   MemoryEntitlementRepository entitlementRepo;
-  MemoryEnvironmentInstanceRepository environmentRepo;
+  MemoryEnvironmentRepository environmentRepo;
   MemorySubscriptionRepository subscriptionRepo;
   MemoryServicePlanRepository servicePlanRepo;
-  MemoryPlatformEventRepository eventRepo;
+  MemoryEnvironmentEventRepository eventRepo;
   MemoryLabelRepository labelRepo;
 
   // Domain services
@@ -68,11 +68,11 @@ struct Container {
   ManageDirectoriesUseCase manageDirectories;
   ManageSubaccountsUseCase manageSubaccounts;
   ManageEntitlementsUseCase manageEntitlements;
-  ManageEnvironmentInstancesUseCase manageEnvironments;
+  ManageEnvironmentsUseCase manageEnvironments;
   ManageSubscriptionsUseCase manageSubscriptions;
   ManageServicePlansUseCase manageServicePlans;
   ManageLabelsUseCase manageLabels;
-  QueryPlatformEventsUseCase queryEvents;
+  QueryEnvironmentEventsUseCase queryEvents;
   GetAccountOverviewUseCase getOverview;
 
   // Controllers (driving adapters)
@@ -80,7 +80,7 @@ struct Container {
   DirectoryController directoryController;
   SubaccountController subaccountController;
   EntitlementController entitlementController;
-  PlatformController platformController;
+  EnvironmentController environmentController;
   SubscriptionController subscriptionController;
   ServicePlanController servicePlanController;
   LabelController labelController;
@@ -97,10 +97,10 @@ Container buildContainer(SrvConfig config) {
   c.directoryRepo = new MemoryDirectoryRepository();
   c.subaccountRepo = new MemorySubaccountRepository();
   c.entitlementRepo = new MemoryEntitlementRepository();
-  c.environmentRepo = new MemoryEnvironmentInstanceRepository();
+  c.environmentRepo = new MemoryEnvironmentRepository();
   c.subscriptionRepo = new MemorySubscriptionRepository();
   c.servicePlanRepo = new MemoryServicePlanRepository();
-  c.eventRepo = new MemoryPlatformEventRepository();
+  c.eventRepo = new MemoryEnvironmentEventRepository();
   c.labelRepo = new MemoryLabelRepository();
 
   // Domain services
@@ -112,12 +112,12 @@ Container buildContainer(SrvConfig config) {
   c.manageDirectories = new ManageDirectoriesUseCase(c.directoryRepo);
   c.manageSubaccounts = new ManageSubaccountsUseCase(c.subaccountRepo, c.eventRepo);
   c.manageEntitlements = new ManageEntitlementsUseCase(c.entitlementRepo, c.entitlementEvaluator);
-  c.manageEnvironments = new ManageEnvironmentInstancesUseCase(c.environmentRepo,
+  c.manageEnvironments = new ManageEnvironmentsUseCase(c.environmentRepo,
       c.subaccountRepo, c.environmentProvisioner);
   c.manageSubscriptions = new ManageSubscriptionsUseCase(c.subscriptionRepo, c.eventRepo);
   c.manageServicePlans = new ManageServicePlansUseCase(c.servicePlanRepo);
   c.manageLabels = new ManageLabelsUseCase(c.labelRepo);
-  c.queryEvents = new QueryPlatformEventsUseCase(c.eventRepo);
+  c.queryEvents = new QueryEnvironmentEventsUseCase(c.eventRepo);
   c.getOverview = new GetAccountOverviewUseCase(c.subaccountRepo, c.directoryRepo,
       c.entitlementRepo, c.environmentRepo, c.subscriptionRepo, c.eventRepo);
 
@@ -126,7 +126,7 @@ Container buildContainer(SrvConfig config) {
   c.directoryController = new DirectoryController(c.manageDirectories);
   c.subaccountController = new SubaccountController(c.manageSubaccounts);
   c.entitlementController = new EntitlementController(c.manageEntitlements);
-  c.platformController = new PlatformController(c.manageEnvironments);
+  c.environmentController = new EnvironmentController(c.manageEnvironments);
   c.subscriptionController = new SubscriptionController(c.manageSubscriptions);
   c.servicePlanController = new ServicePlanController(c.manageServicePlans);
   c.labelController = new LabelController(c.manageLabels);

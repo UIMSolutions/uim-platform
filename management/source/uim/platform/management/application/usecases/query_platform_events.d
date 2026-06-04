@@ -7,7 +7,7 @@ module uim.platform.management.application.usecases.query_platform_events;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.ports.repositories.platform_events;
-// import uim.platform.management.domain.types;
+
 
 import uim.platform.management;
 
@@ -15,72 +15,72 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: query platform events for audit and monitoring.
-class QueryPlatformEventsUseCase { // TODO: UIMUseCase {
-  private PlatformEventRepository repo;
+class QueryEnvironmentEventsUseCase { // TODO: UIMUseCase {
+  private EnvironmentEventRepository repo;
 
-  this(PlatformEventRepository repo) {
+  this(EnvironmentEventRepository repo) {
     this.repo = repo;
   }
 
-  PlatformEvent getEvent(TenantId tenantId, PlatformEventId id) {
+  EnvironmentEvent getEvent(TenantId tenantId, EnvironmentEventId id) {
     return repo.findById(tenantId, id);
   }
 
-  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId) {
+  EnvironmentEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId) {
     return repo.findByGlobalAccount(tenantId, gaId);
   }
 
-  PlatformEvent[] listEvents(TenantId tenantId, SubaccountId subId) {
+  EnvironmentEvent[] listEvents(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
   }
 
-  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, PlatformEventCategory category) {
+  EnvironmentEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, EnvironmentEventCategory category) {
     return repo.findByCategory(tenantId, gaId, category);
   }
 
-  PlatformEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, PlatformEventSeverity severity) {
+  EnvironmentEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId, EnvironmentEventSeverity severity) {
     return repo.findBySeverity(tenantId, gaId, severity);
   }
 
-  PlatformEvent[] listSince(TenantId tenantId, GlobalAccountId gaId, long sinceTimestamp) {
+  EnvironmentEvent[] listSince(TenantId tenantId, GlobalAccountId gaId, long sinceTimestamp) {
     return repo.findSince(tenantId, gaId, sinceTimestamp);
   }
 
-  private PlatformEventCategory parseCategory(string category) {
+  private EnvironmentEventCategory parseCategory(string category) {
     switch (category) {
     case "subaccountLifecycle":
-      return PlatformEventCategory.subaccountLifecycle;
+      return EnvironmentEventCategory.subaccountLifecycle;
     case "entitlementChange":
-      return PlatformEventCategory.entitlementChange;
+      return EnvironmentEventCategory.entitlementChange;
     case "environmentLifecycle":
-      return PlatformEventCategory.environmentLifecycle;
+      return EnvironmentEventCategory.environmentLifecycle;
     case "subscriptionLifecycle":
-      return PlatformEventCategory.subscriptionLifecycle;
+      return EnvironmentEventCategory.subscriptionLifecycle;
     case "directoryChange":
-      return PlatformEventCategory.directoryChange;
+      return EnvironmentEventCategory.directoryChange;
     case "globalAccountChange":
-      return PlatformEventCategory.globalAccountChange;
+      return EnvironmentEventCategory.globalAccountChange;
     case "quotaChange":
-      return PlatformEventCategory.quotaChange;
+      return EnvironmentEventCategory.quotaChange;
     case "securityEvent":
-      return PlatformEventCategory.securityEvent;
+      return EnvironmentEventCategory.securityEvent;
     default:
-      return PlatformEventCategory.subaccountLifecycle;
+      return EnvironmentEventCategory.subaccountLifecycle;
     }
   }
 
-  private PlatformEventSeverity parseSeverity(string severity) {
+  private EnvironmentEventSeverity parseSeverity(string severity) {
     switch (severity) {
     case "info":
-      return PlatformEventSeverity.info;
+      return EnvironmentEventSeverity.info;
     case "warning":
-      return PlatformEventSeverity.warning;
+      return EnvironmentEventSeverity.warning;
     case "error":
-      return PlatformEventSeverity.error;
+      return EnvironmentEventSeverity.error;
     case "critical":
-      return PlatformEventSeverity.critical;
+      return EnvironmentEventSeverity.critical;
     default:
-      return PlatformEventSeverity.info;
+      return EnvironmentEventSeverity.info;
     }
   }
 }

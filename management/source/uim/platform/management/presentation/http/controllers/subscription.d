@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.subscription;
 // import uim.platform.management.application.usecases.manage.subscriptions;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.subscription;
-// import uim.platform.management.domain.types;
+
 
 import uim.platform.management;
 
@@ -122,6 +122,7 @@ class SubscriptionController : ManageHttpController {
         auto data = precheck.data;
         UpdateSubscriptionRequest r;
         r.tenantId = tenantId;
+        r.subscriptionId = id;
         r.planName = data.getString("planName");
         // r.status = data.getString("status");
         // r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
@@ -159,4 +160,72 @@ class SubscriptionController : ManageHttpController {
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class SubscriptionControllerTest : ControllerTestBase {
+    void runTests() {
+      auto repo = new MemorySubscriptionRepository();
+      auto eventRepo = new MemoryEnvironmentEventRepository();
+      auto usecase = new ManageSubscriptionsUseCase(repo, eventRepo);
+      auto controller = new SubscriptionController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      auto reqListEmpty = createMockRequest("GET", "/api/v1/subscriptions", tenantId);
+      reqListEmpty.params["subaccountId"] = "sub-1";
+      auto resListEmpty = controller.listHandler(reqListEmpty);
+      assert(resListEmpty.getInteger("code") == 200);
+      assert(resListEmpty["data"].getInteger("count") == 0);
+
+      Json createData = Json.emptyObject
+        .set("subaccountId", "sub-1")
+        .set("globalAccountId", "ga-1")
+        .set("appName", "demo-app")
+        .set("planName", "starter")
+        .set("parameters", Json.emptyObject.set("region", "eu10"))
+        .set("labels", Json.emptyObject.set("team", "platform"));
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/subscriptions", tenantId, createData);
+      auto resCreate = controller.subscribeHandler(reqCreate);
+      assert(resCreate.getInteger("code") == 201);
+      auto createdId = resCreate["data"].getString("id");
+      assert(createdId.length > 0);
+
+      auto reqList = createMockRequest("GET", "/api/v1/subscriptions", tenantId);
+      reqList.params["subaccountId"] = "sub-1";
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getInteger("code") == 200);
+      assert(resList["data"].getInteger("count") == 1);
+
+      auto reqGet = createMockRequest("GET", "/api/v1/subscriptions/" ~ createdId, tenantId);
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getInteger("code") == 200);
+      assert(resGet["data"].getString("appName") == "demo-app");
+      assert(resGet["data"].getString("planName") == "starter");
+
+      Json updateData = Json.emptyObject
+        .set("planName", "premium")
+        .set("parameters", Json.emptyObject.set("region", "us10"));
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/subscriptions/" ~ createdId, tenantId, updateData);
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getInteger("code") == 200);
+
+      auto resGetUpdated = controller.getHandler(reqGet);
+      assert(resGetUpdated.getInteger("code") == 200);
+      assert(resGetUpdated["data"].getString("planName") == "premium");
+      assert(resGetUpdated["data"]["parameters"].getString("region") == "us10");
+
+      auto reqUnsubscribe = createMockRequest("POST", "/api/v1/subscriptions/unsubscribe/" ~ createdId, tenantId);
+      auto resUnsubscribe = controller.unsubscribeHandler(reqUnsubscribe);
+      assert(resUnsubscribe.getInteger("code") == 200);
+
+      auto resUnsubscribeAgain = controller.unsubscribeHandler(reqUnsubscribe);
+      assert(resUnsubscribeAgain.getInteger("code") == 400);
+    }
+  }
+
+  auto runner = new SubscriptionControllerTest();
+  runner.runTests();
 }

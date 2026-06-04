@@ -9,7 +9,7 @@ module uim.platform.management.application.usecases.manage.global_accounts;
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.ports.repositories.global_accounts;
 // import uim.platform.management.domain.ports.repositories.platform_events;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
@@ -18,9 +18,9 @@ mixin(ShowModule!());
 /// Use case: manage global account lifecycle.
 class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   private GlobalAccountRepository repo;
-  private PlatformEventRepository eventRepo;
+  private EnvironmentEventRepository eventRepo;
 
-  this(GlobalAccountRepository repo, PlatformEventRepository eventRepo) {
+  this(GlobalAccountRepository repo, EnvironmentEventRepository eventRepo) {
     this.repo = repo;
     this.eventRepo = eventRepo;
   }
@@ -45,7 +45,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.customProperties = req.customProperties;
 
     repo.save(globalAccount);
-    emitEvent(eventRepo, globalAccount.id.value, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, globalAccount.id.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, globalAccount.id.value, "");
@@ -84,7 +84,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
     repo.update(globalAccount);
 
-    emitEvent(eventRepo, accountId.value, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, accountId.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.suspended", "Global account suspended", UserId("system"));
     return CommandResult(true, accountId.value, "");
   }
@@ -101,7 +101,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     globalAccount.updatedAt = clockSeconds();
 
     repo.update(globalAccount);
-    emitEvent(eventRepo, accountId.value, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, accountId.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.reactivated", "Global account reactivated", UserId("system")); 
     return CommandResult(true, accountId.value, "");
   }

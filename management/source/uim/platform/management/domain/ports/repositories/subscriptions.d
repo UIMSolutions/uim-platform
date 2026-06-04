@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.subscriptions;
 // import uim.platform.management.domain.entities.subscription;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());

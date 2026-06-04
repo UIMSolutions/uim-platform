@@ -8,10 +8,10 @@ module uim.platform.management.domain.entities;
 public {
     import uim.platform.management.domain.entities.directory;
     import uim.platform.management.domain.entities.entitlement;
-    import uim.platform.management.domain.entities.environment_instance;
+    import uim.platform.management.domain.entities.environment;
     import uim.platform.management.domain.entities.global_account;
     import uim.platform.management.domain.entities.label;
-    import uim.platform.management.domain.entities.platform_event;
+    import uim.platform.management.domain.entities.environment_event;
     import uim.platform.management.domain.entities.service_plan;
     import uim.platform.management.domain.entities.subscription;
     import uim.platform.management.domain.entities.subaccount;

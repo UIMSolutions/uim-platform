@@ -8,15 +8,15 @@ module uim.platform.management.presentation.http.controllers.event;
 // 
 // import uim.platform.management.application.usecases.query_platform_events;
 // import uim.platform.management.domain.entities.platform_event;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
 class EventController : ManageHttpController {
-  private QueryPlatformEventsUseCase usecase;
+  private QueryEnvironmentEventsUseCase usecase;
 
-  this(QueryPlatformEventsUseCase usecase) {
+  this(QueryEnvironmentEventsUseCase usecase) {
     this.usecase = usecase;
   }
 
@@ -38,13 +38,13 @@ class EventController : ManageHttpController {
     auto category = req.params.get("category");
     auto severity = req.params.get("severity");
 
-    PlatformEvent[] items;
+    EnvironmentEvent[] items;
     if (!subId.isEmpty)
       items = usecase.listEvents(tenantId, subId);
     else if (!category.isEmpty && !gaId.isEmpty)
-      items = usecase.listEvents(tenantId, gaId, category.toPlatformEventCategory);
+      items = usecase.listEvents(tenantId, gaId, category.toEnvironmentEventCategory);
     else if (!severity.isEmpty && !gaId.isEmpty)
-      items = usecase.listEvents(tenantId, gaId, severity.toPlatformEventSeverity);
+      items = usecase.listEvents(tenantId, gaId, severity.toEnvironmentEventSeverity);
     else if (!gaId.isEmpty)
       items = usecase.listEvents(tenantId, gaId);
 
@@ -63,7 +63,7 @@ class EventController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = PlatformEventId(precheck.id);
+    auto id = EnvironmentEventId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid event ID", 400);
 

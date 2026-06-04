@@ -34,7 +34,7 @@ struct EntitlementId {
   mixin DomainId;
 }
 
-struct EnvironmentInstanceId {
+struct EnvironmentId {
   string value;
 
   this(string value) {
@@ -64,7 +64,7 @@ struct ServicePlanId {
   mixin DomainId;
 }
 
-struct PlatformEventId {
+struct EnvironmentEventId {
   string value;
 
   this(string value) {

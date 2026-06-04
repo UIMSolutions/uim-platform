@@ -102,12 +102,12 @@ Account Management
 |---|---|
 | `GlobalAccount` | Root; parent of Directories and Subaccounts |
 | `Directory` | Organisational unit; self-referential nesting |
-| `Subaccount` | Deployment unit; owns Subscriptions, Entitlements, EnvironmentInstances |
+| `Subaccount` | Deployment unit; owns Subscriptions, Entitlements, Environments |
 | `Subscription` | Application subscription in a Subaccount |
 | `ServicePlan` | Catalogue entry; referenced by Entitlements |
 | `Entitlement` | Quota assignment linking Subaccount to ServicePlan |
-| `EnvironmentInstance` | CF or Kyma runtime in a Subaccount |
-| `PlatformEvent` | Lifecycle event for audit |
+| `Environment` | CF or Kyma runtime in a Subaccount |
+| `EnvironmentEvent` | Lifecycle event for audit |
 | `Label` | Polymorphic key-value metadata for any resource |
 
 ---

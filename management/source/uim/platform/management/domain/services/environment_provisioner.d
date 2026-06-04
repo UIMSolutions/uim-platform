@@ -6,7 +6,7 @@
 module uim.platform.management.domain.services.environment_provisioner;
 // import uim.platform.management.domain.entities.environment_instance;
 // import uim.platform.management.domain.entities.subaccount;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class EnvironmentProvisioner {
   /// Validate that an environment can be provisioned in the given subaccount.
   ProvisionValidation validateProvisioning(EnvironmentType envType,
-    string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances) {
+    string planName, Subaccount subaccount, Environment[] existingInstances) {
     ProvisionValidation v;
     v.valid = true;
 
@@ -50,7 +50,7 @@ class EnvironmentProvisioner {
   }
 
   /// Determine if an environment can be deleted.
-  bool canDelete(EnvironmentInstance inst) {
+  bool canDelete(Environment inst) {
     return inst.status == EnvironmentStatus.active
       || inst.status == EnvironmentStatus.error || inst.status == EnvironmentStatus.suspended;
   }

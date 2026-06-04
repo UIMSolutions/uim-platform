@@ -9,7 +9,7 @@ module uim.platform.management.application.usecases.manage.subaccounts;
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.ports.repositories.subaccounts;
 // import uim.platform.management.domain.ports.repositories.platform_events;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
@@ -18,9 +18,9 @@ mixin(ShowModule!());
 /// Use case: manage subaccount lifecycle within global accounts.
 class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   private SubaccountRepository repository;
-  private PlatformEventRepository eventRepo;
+  private EnvironmentEventRepository eventRepo;
 
-  this(SubaccountRepository repository, PlatformEventRepository eventRepo) {
+  this(SubaccountRepository repository, EnvironmentEventRepository eventRepo) {
     this.repository = repository;
     this.eventRepo = eventRepo;
   }
@@ -63,7 +63,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
 
-    emitEvent(subaccount.tenantId, subaccount.globalAccountId.value, subaccount.id.value, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(subaccount.tenantId, subaccount.globalAccountId.value, subaccount.id.value, EnvironmentEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, subaccount.id.value, "");
@@ -164,21 +164,21 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Subaccount is already being deleted");
 
     repository.remove(subaccount);
-    emitEvent(tenantId, subaccount.globalAccountId.value, id.value, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(tenantId, subaccount.globalAccountId.value, id.value, EnvironmentEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, UserId("system"));
     return CommandResult(true, id.value, "");
   }
 
-  private void emitEvent(TenantId tenantId, string gaId, string subId, PlatformEventCategory cat,
+  private void emitEvent(TenantId tenantId, string gaId, string subId, EnvironmentEventCategory cat,
       string eventType, string desc, UserId initiatedBy) {
 
-    PlatformEvent event;
+    EnvironmentEvent event;
     event.initEntity(tenantId);
 
     event.globalAccountId = gaId;
     event.subaccountId = subId;
     event.category = cat;
-    event.severity = PlatformEventSeverity.info;
+    event.severity = EnvironmentEventSeverity.info;
     event.eventType = eventType;
     event.description = desc;
     event.initiatedBy = initiatedBy;

@@ -5,19 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.platform_events;
 // import uim.platform.management.domain.entities.platform_event;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — platform event persistence.
-interface PlatformEventRepository : ITenantRepository!(PlatformEvent, PlatformEventId) {
+interface EnvironmentEventRepository : ITenantRepository!(EnvironmentEvent, EnvironmentEventId) {
 
-  PlatformEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
-  PlatformEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
-  PlatformEvent[] findByCategory(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventCategory category);
-  PlatformEvent[] findBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, PlatformEventSeverity severity);
-  PlatformEvent[] findSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp);
+  EnvironmentEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
+  EnvironmentEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
+  EnvironmentEvent[] findByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category);
+  EnvironmentEvent[] findBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity);
+  EnvironmentEvent[] findSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp);
   
 }

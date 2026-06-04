@@ -9,7 +9,7 @@ module uim.platform.management.application.usecases.manage.subscriptions;
 // import uim.platform.management.domain.entities.platform_event;
 // import uim.platform.management.domain.ports.repositories.subscriptions;
 // import uim.platform.management.domain.ports.repositories.platform_events;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
@@ -18,9 +18,9 @@ mixin(ShowModule!());
 /// Use case: manage SaaS application subscriptions.
 class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   private SubscriptionRepository repo;
-  private PlatformEventRepository eventRepo;
+  private EnvironmentEventRepository eventRepo;
 
-  this(SubscriptionRepository repo, PlatformEventRepository eventRepo) {
+  this(SubscriptionRepository repo, EnvironmentEventRepository eventRepo) {
     this.repo = repo;
     this.eventRepo = eventRepo;
   }
@@ -59,7 +59,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.tenantId = "tenant-" ~ subscription.id.value[0 .. 8];
     repo.update(subscription);
 
-    emitEvent(eventRepo, request.globalAccountId.value, request.subaccountId.value, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, request.globalAccountId.value, request.subaccountId.value, EnvironmentEventCategory.subscriptionLifecycle,
       "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
     return CommandResult(true, subscription.id.value, "");
@@ -80,7 +80,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.status = SubscriptionStatus.unsubscribed;
     repo.update(subscription);
 
-    emitEvent(eventRepo, subscription.globalAccountId.value, subscription.subaccountId.value, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, subscription.globalAccountId.value, subscription.subaccountId.value, EnvironmentEventCategory.subscriptionLifecycle,
       "subscription.deleted", "Unsubscribed from " ~ subscription.appName, UserId("system"));
 
     return CommandResult(true, subscription.id.value, "");

@@ -63,8 +63,8 @@ classDiagram
         +string assignmentStatus
         +Json toJson()
     }
-    class EnvironmentInstance {
-        +EnvironmentInstanceId id
+    class Environment {
+        +EnvironmentId id
         +TenantId tenantId
         +SubaccountId subaccountId
         +string environmentType
@@ -72,8 +72,8 @@ classDiagram
         +string landscapeLabel
         +Json toJson()
     }
-    class PlatformEvent {
-        +PlatformEventId id
+    class EnvironmentEvent {
+        +EnvironmentEventId id
         +TenantId tenantId
         +string eventType
         +string resourceType
@@ -98,7 +98,7 @@ classDiagram
     Directory "1" --> "0..*" Subaccount : contains
     Subaccount "1" --> "0..*" Subscription : subscribes
     Subaccount "1" --> "0..*" Entitlement : entitled
-    Subaccount "1" --> "0..*" EnvironmentInstance : runs
+    Subaccount "1" --> "0..*" Environment : runs
     ServicePlan "1" --> "0..*" Entitlement : granted
 ```
 
@@ -115,8 +115,8 @@ flowchart TB
         C4[SubscriptionController]
         C5[ServicePlanController]
         C6[EntitlementController]
-        C7[EnvironmentInstanceController]
-        C8[PlatformEventController]
+        C7[EnvironmentController]
+        C8[EnvironmentEventController]
         C9[LabelController]
         HC[HealthController]
     end

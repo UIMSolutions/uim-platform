@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.management.infrastructure.persistence.memory.environment_instances;
-// import uim.platform.management.domain.types;
+
 // import uim.platform.management.domain.entities.environment_instance;
 // import uim.platform.management.domain.ports.repositories.environment_instances;
 // 
@@ -15,18 +15,18 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstance, EnvironmentInstanceId), EnvironmentInstanceRepository {
-  // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentInstanceRepository, EnvironmentInstance, EnvironmentInstanceId);
+class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId), EnvironmentRepository {
+  // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentRepository, Environment, EnvironmentId);
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }
 
-  EnvironmentInstance[] filterBySubaccount(EnvironmentInstance[] items, SubaccountId subaccountId) {
+  Environment[] filterBySubaccount(Environment[] items, SubaccountId subaccountId) {
     return items.filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  EnvironmentInstance[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
+  Environment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
@@ -38,11 +38,11 @@ class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstanc
     return findByType(tenantId, subaccountId, envType).length;
   }
 
-  EnvironmentInstance[] filterByType(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentType envType) {
+  Environment[] filterByType(Environment[] items, SubaccountId subaccountId, EnvironmentType envType) {
     return items.filter!(e => e.subaccountId == subaccountId && e.environmentType == envType).array;
   }
   
-  EnvironmentInstance[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
+  Environment[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
     return filterByType(findByTenant(tenantId), subaccountId, envType);
   }
 
@@ -54,11 +54,11 @@ class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstanc
     return findByStatus(tenantId, subaccountId, status).length;
   }
 
-  EnvironmentInstance[] filterByStatus(EnvironmentInstance[] items, SubaccountId subaccountId, EnvironmentStatus status) {
+  Environment[] filterByStatus(Environment[] items, SubaccountId subaccountId, EnvironmentStatus status) {
     return items.filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
-  EnvironmentInstance[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
+  Environment[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
     return filterByStatus(findByTenant(tenantId), subaccountId, status);
   }
 
@@ -69,14 +69,14 @@ class MemoryEnvironmentInstanceRepository : TenantRepository!(EnvironmentInstanc
 }
 ///
 unittest {
-  auto repo = new MemoryEnvironmentInstanceRepository();
+  auto repo = new MemoryEnvironmentRepository();
 
   auto tenantId = TenantId("tenant1");
   auto subaccountId = SubaccountId("sa1");
   auto envType = EnvironmentType.kyma;
   auto status = EnvironmentStatus.active; 
-  auto envId = EnvironmentInstanceId("env1"); 
-  auto env = EnvironmentInstance(tenantId);
+  auto envId = EnvironmentId("env1"); 
+  auto env = Environment(tenantId);
   env.id = envId;
   env.subaccountId = subaccountId;
   env.environmentType = envType;

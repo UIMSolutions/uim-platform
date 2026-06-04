@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.label;
 // import uim.platform.management.application.usecases.manage.labels;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.label;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());

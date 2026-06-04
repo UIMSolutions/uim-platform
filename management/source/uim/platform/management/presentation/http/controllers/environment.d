@@ -9,15 +9,15 @@ module uim.platform.management.presentation.http.controllers.environment;
 // import uim.platform.management.application.usecases.manage.environment_instances;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.environment_instance;
-// import uim.platform.management.domain.types;
+
 import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class PlatformController : ManageHttpController {
-  private ManageEnvironmentInstancesUseCase usecase;
+class EnvironmentController : ManageHttpController {
+  private ManageEnvironmentsUseCase usecase;
 
-  this(ManageEnvironmentInstancesUseCase usecase) {
+  this(ManageEnvironmentsUseCase usecase) {
     this.usecase = usecase;
   }
 
@@ -38,11 +38,11 @@ class PlatformController : ManageHttpController {
     auto subId = SubaccountId(req.params.get("subaccountId"));
     auto envType = req.params.get("environmentType");
 
-    EnvironmentInstance[] items;
+    Environment[] items;
     if (envType.length > 0 && !subId.isEmpty)
-      items = usecase.listEnvironmentInstances(tenantId, subId, envType);
+      items = usecase.listEnvironments(tenantId, subId, envType);
     else if (!subId.isEmpty)
-      items = usecase.listEnvironmentInstances(tenantId, subId);
+      items = usecase.listEnvironments(tenantId, subId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
 
@@ -60,7 +60,7 @@ class PlatformController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    CreateEnvironmentInstanceRequest r;
+    CreateEnvironmentRequest r;
     r.tenantId = tenantId;
     r.subaccountId = data.getString("subaccountId");
     r.globalAccountId = data.getString("globalAccountId");
@@ -76,7 +76,7 @@ class PlatformController : ManageHttpController {
     r.parameters = data.jsonStrMap("parameters");
     r.labels = data.jsonStrMap("labels");
 
-    auto result = usecase.createEnvironmentInstance(r);
+    auto result = usecase.createEnvironment(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -91,11 +91,11 @@ class PlatformController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = EnvironmentInstanceId(precheck.id);
+    auto id = EnvironmentId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid environment instance ID", 400);
 
-    auto inst = usecase.getEnvironmentInstance(tenantId, id);
+    auto inst = usecase.getEnvironment(tenantId, id);
     if (inst.isNull)
       return errorResponse("Environment instance not found", 404);
 
@@ -110,12 +110,12 @@ class PlatformController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = EnvironmentInstanceId(precheck.id);
+    auto id = EnvironmentId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid environment instance ID", 400);
 
     auto data = precheck.data;
-    UpdateEnvironmentInstanceRequest request;
+    UpdateEnvironmentRequest request;
     request.tenantId = tenantId;
     request.instanceId = id;
     request.description = data.getString("description");
@@ -125,7 +125,7 @@ class PlatformController : ManageHttpController {
     request.parameters = data.jsonStrMap("parameters");
     request.labels = data.jsonStrMap("labels");
 
-    auto result = usecase.updateEnvironmentInstance(request);
+    auto result = usecase.updateEnvironment(request);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -139,11 +139,11 @@ class PlatformController : ManageHttpController {
       return precheck;
 
       auto tenantId = precheck.tenantId;
-      auto id = EnvironmentInstanceId(precheck.id);
+      auto id = EnvironmentId(precheck.id);
       if (id.isNull)
         return errorResponse("Invalid environment instance ID", 400);
 
-      auto result = usecase.deprovisionEnvironmentInstance(tenantId, id);
+      auto result = usecase.deprovisionEnvironment(tenantId, id);
       if (result.hasError)
         return errorResponse(result.message, 400);
 
