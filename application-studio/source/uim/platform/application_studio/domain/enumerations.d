@@ -21,7 +21,7 @@ enum DevSpaceStatus {
     hibernated
 }
 DevSpaceStatus toDevSpaceStatus(string s) {
-    final map = [
+    const map = [
         "starting": DevSpaceStatus.starting,
         "running": DevSpaceStatus.running,
         "stopped": DevSpaceStatus.stopped,
@@ -39,7 +39,7 @@ enum DevSpacePlan {
     professional
 }
 DevSpacePlan toDevSpacePlan(string s) {
-    final map = [
+    const map = [
         "free": DevSpacePlan.free,
         "standard": DevSpacePlan.standard,
         "professional": DevSpacePlan.professional
@@ -52,7 +52,7 @@ enum DevSpaceTypeCategory {
     custom
 }
 DevSpaceTypeCategory toDevSpaceTypeCategory(string s) {
-    final map = [
+    const map = [
         "predefined": DevSpaceTypeCategory.predefined,
         "custom": DevSpaceTypeCategory.custom
     ];
@@ -65,7 +65,7 @@ enum ExtensionScope {
     thirdParty
 }
 ExtensionScope toExtensionScope(string s) {
-    final map = [
+    const map = [
         "predefined": ExtensionScope.predefined,
         "additional": ExtensionScope.additional,
         "thirdparty": ExtensionScope.thirdParty
@@ -79,7 +79,7 @@ enum ExtensionStatus {
     deprecated_
 }
 ExtensionStatus toExtensionStatus(string s) {
-    final map = [
+    const map = [
         "active": ExtensionStatus.active,
         "inactive": ExtensionStatus.inactive,
         "deprecated": ExtensionStatus.deprecated_
@@ -99,7 +99,7 @@ enum ProjectType {
     basic
 }
 ProjectType toProjectType(string s) {
-    final map = [
+    const map = [
         "sapfiori": ProjectType.sapFiori,
         "capnodejs": ProjectType.capNodeJs,
         "capjava": ProjectType.capJava,
@@ -121,7 +121,7 @@ enum ProjectStatus {
     error
 }
 ProjectStatus toProjectStatus(string s) {
-    final map = [
+    const map = [
         "active": ProjectStatus.active,
         "archived": ProjectStatus.archived,
         "building": ProjectStatus.building,
@@ -140,7 +140,7 @@ enum TemplateCategory {
     general
 }
 TemplateCategory toTemplateCategory(string s) {
-    final map = [
+    const map = [
         "sapfiori": TemplateCategory.sapFiori,
         "sapcap": TemplateCategory.sapCap,
         "saphana": TemplateCategory.sapHana,
@@ -159,7 +159,7 @@ enum ServiceProviderType {
     externalRest
 }
 ServiceProviderType toServiceProviderType(string s) {
-    final map = [
+    const map = [
         "sapbtp": ServiceProviderType.sapBtp,
         "saps4hana": ServiceProviderType.sapS4Hana,
         "sapsuccessfactors": ServiceProviderType.sapSuccessFactors,
@@ -175,7 +175,7 @@ enum BindingStatus {
     error
 }
 BindingStatus toBindingStatus(string s) {
-    final map = [
+    const map = [
         "connected": BindingStatus.connected,
         "disconnected": BindingStatus.disconnected,
         "error": BindingStatus.error
@@ -190,7 +190,7 @@ enum RunMode {
     preview
 }
 RunMode toRunMode(string s) {
-    final map = [
+    const map = [
         "run": RunMode.run,
         "debug": RunMode.debug_,
         "test": RunMode.test,
@@ -206,7 +206,7 @@ enum RunStatus {
     error
 }
 RunStatus toRunStatus(string s) {
-    final map = [
+    const map = [
         "idle": RunStatus.idle,
         "running": RunStatus.running,
         "stopped": RunStatus.stopped,
@@ -223,7 +223,7 @@ enum BuildStatus {
     cancelled
 }
 BuildStatus toBuildStatus(string s) {
-    final map = [
+    const map = [
         "pending": BuildStatus.pending,
         "building": BuildStatus.building,
         "succeeded": BuildStatus.succeeded,
@@ -241,7 +241,7 @@ enum DeployTarget {
     docker
 }
 DeployTarget toDeployTarget(string s) {
-    final map = [
+    const map = [
         "cloudfoundry": DeployTarget.cloudFoundry,
         "kyma": DeployTarget.kyma,
         "abap": DeployTarget.abap,

@@ -13,7 +13,7 @@ enum DomainStatus {
     deactivated,
 }
 DomainStatus toDomainStatus(string s) {
-    final map = [
+    const map = [
         "pending": DomainStatus.pending,
         "active": DomainStatus.active,
         "inactive": DomainStatus.inactive,
@@ -29,7 +29,7 @@ enum DomainEnvironment {
     neo,
 }
 DomainEnvironment toDomainEnvironment(string s) {
-    final map = [
+    const map = [
         "cloudFoundry": DomainEnvironment.cloudFoundry,
         "kyma": DomainEnvironment.kyma,
         "neo": DomainEnvironment.neo,
@@ -46,7 +46,7 @@ enum KeyAlgorithm {
 }
 
 KeyAlgorithm toKeyAlgorithm(string s) {
-    final map = [
+    const map = [
         "rsa2048": KeyAlgorithm.rsa2048,
         "rsa4096": KeyAlgorithm.rsa4096,
         "ecdsaP256": KeyAlgorithm.ecdsaP256,
@@ -62,7 +62,7 @@ enum KeyStatus {
 }
 
 KeyStatus toKeyStatus(string s) {
-    final map = [
+    const map = [
         "active": KeyStatus.active,
         "inactive": KeyStatus.inactive,
         "deleted": KeyStatus.deleted,
@@ -80,7 +80,7 @@ enum CertificateStatus {
     deactivated,
 }
 CertificateStatus toCertificateStatus(string s) {
-    final map = [
+    const map = [
         "pending": CertificateStatus.pending,
         "active": CertificateStatus.active,
         "expired": CertificateStatus.expired,
@@ -96,7 +96,7 @@ enum CertificateType {
     multiDomain,
 }
 CertificateType toCertificateType(string s) {
-    final map = [
+    const map = [
         "standard": CertificateType.standard,
         "wildcard": CertificateType.wildcard,
         "multiDomain": CertificateType.multiDomain,
@@ -112,7 +112,7 @@ enum TlsProtocolVersion {
     tls1_3,
 }
 TlsProtocolVersion toTlsProtocolVersion(string s) {
-    final map = [
+    const map = [
         "tls1_0": TlsProtocolVersion.tls1_0,
         "tls1_1": TlsProtocolVersion.tls1_1,
         "tls1_2": TlsProtocolVersion.tls1_2,
@@ -127,7 +127,7 @@ enum CipherSuiteStrength {
     weak,
 }
 CipherSuiteStrength toCipherSuiteStrength(string s) {
-    final map = [
+    const map = [
         "strong": CipherSuiteStrength.strong,
         "medium": CipherSuiteStrength.medium,
         "weak": CipherSuiteStrength.weak,
@@ -143,7 +143,7 @@ enum MappingStatus {
     error,
 }
 MappingStatus toMappingStatus(string s) {
-    final map = [
+    const map = [
         "active": MappingStatus.active,
         "inactive": MappingStatus.inactive,
         "pending": MappingStatus.pending,
@@ -158,7 +158,7 @@ enum MappingType {
     staticRoute,
 }
 MappingType toMappingType(string s) {
-    final map = [
+    const map = [
         "applicationRoute": MappingType.applicationRoute,
         "saasRoute": MappingType.saasRoute,
         "staticRoute": MappingType.staticRoute,
@@ -173,7 +173,7 @@ enum TrustedCertificateStatus {
     expired,
 }
 TrustedCertificateStatus toTrustedCertificateStatus(string s) {
-    final map = [
+    const map = [
         "active": TrustedCertificateStatus.active,
         "inactive": TrustedCertificateStatus.inactive,
         "expired": TrustedCertificateStatus.expired,
@@ -187,7 +187,7 @@ enum ClientAuthMode {
     disabled,
 }
 ClientAuthMode toClientAuthMode(string s) {
-    final map = [
+    const map = [
         "required": ClientAuthMode.required,
         "optional": ClientAuthMode.optional,
         "disabled": ClientAuthMode.disabled,
@@ -204,7 +204,7 @@ enum DnsRecordType {
     mxRecord,
 }
 DnsRecordType toDnsRecordType(string s) {
-    final map = [
+    const map = [
         "aRecord": DnsRecordType.aRecord,
         "aaaaRecord": DnsRecordType.aaaaRecord,
         "cnameRecord": DnsRecordType.cnameRecord,
@@ -221,7 +221,7 @@ enum DnsValidationStatus {
     expired,
 }
 DnsValidationStatus toDnsValidationStatus(string s) {
-    final map = [
+    const map = [
         "pending": DnsValidationStatus.pending,
         "validated": DnsValidationStatus.validated,
         "failed": DnsValidationStatus.failed,
@@ -242,7 +242,7 @@ enum DashboardMetricType {
     mappingCount,
 }
 DashboardMetricType toDashboardMetricType(string s) {
-    final map = [
+    const map = [
         "certificateExpiration": DashboardMetricType.certificateExpiration,
         "domainHealth": DashboardMetricType.domainHealth,
         "requestVolume": DashboardMetricType.requestVolume,
@@ -262,7 +262,7 @@ enum HealthStatus {
     unknown,
 }
 HealthStatus toHealthStatus(string s) {
-    final map = [
+    const map = [
         "healthy": HealthStatus.healthy,
         "warning": HealthStatus.warning,
         "critical": HealthStatus.critical,
@@ -279,7 +279,7 @@ enum ExpirationSeverity {
     expired,
 }
 ExpirationSeverity toExpirationSeverity(string s) {
-    final map = [
+    const map = [
         "none": ExpirationSeverity.none,
         "info": ExpirationSeverity.info,
         "warning": ExpirationSeverity.warning,

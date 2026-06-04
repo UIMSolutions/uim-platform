@@ -10,7 +10,7 @@ enum ColumnRole {
 }
 
 ColumnRole toColumnRole(string role) {
-  final map = [
+  const map = [
     "dimension": ColumnRole.Dimension,
     "measure": ColumnRole.Measure,
     "attribute": ColumnRole.Attribute,
@@ -28,7 +28,7 @@ enum ColumnDataType {
 }
 
 ColumnDataType toColumnDataType(string type) {
-  final map = [
+  const map = [
     "string": ColumnDataType.String,
     "integer": ColumnDataType.Integer,
     "decimal": ColumnDataType.Decimal,

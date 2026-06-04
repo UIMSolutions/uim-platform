@@ -17,7 +17,7 @@ enum DataSourceType {
   LiveConnection,
 }
 DataSourceType toDataSourceType(string type) {
-  final map = [
+  const map = [
     "database": DataSourceType.Database,
     "csv": DataSourceType.CSV,
     "excel": DataSourceType.Excel,
@@ -39,7 +39,7 @@ enum DataSourceStatus {
   Importing
 }
 DataSourceStatus toDataSourceStatus(string status) {
-  final map = [
+  const map = [
     "connected": DataSourceStatus.Connected,
     "disconnected": DataSourceStatus.Disconnected,
     "error": DataSourceStatus.Error,

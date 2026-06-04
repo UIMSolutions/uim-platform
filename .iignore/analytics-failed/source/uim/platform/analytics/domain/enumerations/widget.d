@@ -16,7 +16,7 @@ enum FilterOperator {
   IsNotNull,
 }
 FilterOperator toFilterOperator(string operator) {
-  final map = [
+  const map = [
     "equals": FilterOperator.Equals,
     "notequals": FilterOperator.NotEquals,
     "greaterthan": FilterOperator.GreaterThan,

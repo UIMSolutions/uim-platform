@@ -11,7 +11,7 @@ enum PlanningStatus {
   Published,
 }
 PlanningStatus toPlanningStatus(string status) {
-  final map = [
+  const map = [
     "draft": PlanningStatus.Draft,
     "inprogress": PlanningStatus.InProgress,
     "locked": PlanningStatus.Locked,
@@ -28,7 +28,7 @@ enum PlanningVersionType {
   WhatIf
 }
 PlanningVersionType toPlanningVersionType(string type) {
-  final map = [
+  const map = [
     "actual": PlanningVersionType.Actual,
     "plan": PlanningVersionType.Plan,
     "forecast": PlanningVersionType.Forecast,

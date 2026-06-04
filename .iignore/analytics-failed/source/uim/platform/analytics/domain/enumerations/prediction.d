@@ -11,7 +11,7 @@ enum PredictionType {
   AnomalyDetection,
 }
 PredictionType toPredictionType(string type) {
-  final map = [
+  const map = [
     "classification": PredictionType.Classification,
     "regression": PredictionType.Regression,
     "timeseries": PredictionType.TimeSeries,
@@ -29,7 +29,7 @@ enum PredictionStatus {
   Archived,
 }
 PredictionStatus toPredictionStatus(string status) {
-  final map = [
+  const map = [
     "created": PredictionStatus.Created,
     "training": PredictionStatus.Training,
     "ready": PredictionStatus.Ready,
